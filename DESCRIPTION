@@ -1,0 +1,17 @@
+Package: fcaR
+Title: Tools for Formal Concept Analysis
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Domingo",
+           family = "López Rodríguez",
+           role = c("aut", "cre"),
+           email = "neuroimaginador@gmail.com",
+           comment = c(ORCID = "0000-0002-0172-1585"))
+Description: Tha aim of this package is to provide tools to perform FCA from within R.
+License: GPL-3
+Suggests: 
+    testthat
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.0
