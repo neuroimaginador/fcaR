@@ -9,7 +9,7 @@ Authors@R:
            comment = c(ORCID = "0000-0002-0172-1585"))
 Description: Tha aim of this package is to provide tools to perform FCA from within R.
 License: GPL-3
-Imports: reticulate
+Imports: sets, hasseDiagram
 Suggests: 
     testthat,
     covr
