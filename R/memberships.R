@@ -1,3 +1,4 @@
+#' @import sets
 .get_object_memberships <- function(A, I) {
 
   objects <- rownames(I)
@@ -19,6 +20,7 @@
 
 }
 
+#' @import sets
 .get_attribute_memberships <- function(B, I) {
 
   attributes <- colnames(I)

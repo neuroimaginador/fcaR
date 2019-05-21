@@ -13,10 +13,7 @@
 
     lower_attr <- attributes[1:(a_i - 1)]
 
-    ms <- .get_attribute_memberships(B, I)[lower_attr]
-
-    lowerB <- gset(support = lower_attr,
-                   memberships = ms)
+    lowerB <- gset(support = lower_attr)
 
   }
 

@@ -41,7 +41,7 @@ fc$plot()
 #                                                          #
 ##%######################################################%##
 
-grades_set <- seq(0, 1, by = 0.1)
+grades_set <- seq(0, 1, by = 0.5)
 
 I <- sample(grades_set,
             size = n_objects * n_attributes,

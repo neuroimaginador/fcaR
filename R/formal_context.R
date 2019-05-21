@@ -1,10 +1,15 @@
 #' @export
 formal_context <- R6::R6Class(
+
   classname = "FormalContext",
 
   public = list(
 
     I = NULL,
+
+    attributes = NULL,
+
+    objects = NULL,
 
     grades_set = NULL,
 
@@ -18,6 +23,9 @@ formal_context <- R6::R6Class(
       self$I <- I
       self$grades_set <- grades_set
 
+      self$objects <- rownames(I)
+      self$attributes <- colnames(I)
+
     },
 
     get_concepts = function() {
@@ -26,6 +34,8 @@ formal_context <- R6::R6Class(
 
       self$concepts <- .get_fuzzy_concepts(self$I,
                                            self$grades_set)
+
+      return(self$concepts)
 
     },
 

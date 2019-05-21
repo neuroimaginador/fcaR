@@ -1,4 +1,3 @@
-
 # Total order in Y x L (attributes x truth values)
 .is_lower_than <- function(attr_i, grade_i, attr_j, grade_j, I) {
 

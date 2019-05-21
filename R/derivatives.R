@@ -2,7 +2,6 @@
 
   # Names of objects and attributes
   attributes <- colnames(I)
-  objects <- rownames(I)
 
   # Membership of each object in fuzzy set A
   ms_objects <- .get_object_memberships(A, I)
@@ -33,7 +32,6 @@
 .extent <- function(B, I) {
 
   # Names of objects and attributes
-  attributes <- colnames(I)
   objects <- rownames(I)
 
   # Memberships of the attributes in fuzzy set B

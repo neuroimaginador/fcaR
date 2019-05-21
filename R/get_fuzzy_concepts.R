@@ -28,21 +28,15 @@
 
     exit_cond <- (B == oldB) || (B == Y)
 
-    if (!exit_cond) {
+    intents[[n]] <- B
+    cat("New concept:\n")
+    print(B)
 
-      intents[[n]] <- B
-      cat("New concept:\n")
-      print(B)
-
-      n <- n + 1
-
-    }
+    n <- n + 1
 
     oldB <- B
 
   }
-
-
 
   concepts <- lapply(intents, function(b) {
 

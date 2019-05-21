@@ -10,11 +10,9 @@
 #' @import hasseDiagram
 .draw_Hasse <- function(L, I) {
 
-  L2 <- L
-  L2[[length(L) + 1]] <- list(.empty_attributes_set(I), 0)
-  M <- .get_ordering_matrix(L2, I)
+  M <- .get_ordering_matrix(L, I)
 
-  labels <- c(sapply(L, .concept_to_string), "{}")
+  labels <- sapply(L, .concept_to_string)
 
   hasse(data = t(M),
         labels = labels,
