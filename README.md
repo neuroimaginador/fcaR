@@ -15,46 +15,78 @@ status](https://travis-ci.org/neuroimaginador/fcaR.svg?branch=master)](https://t
 coverage](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg)](https://codecov.io/gh/neuroimaginador/fcaR?branch=master)
 <!-- badges: end -->
 
-The goal of fcaR is to …
+The goal of fcaR is to provide FCA tools inside the R environment.
 
 ## Installation
 
-You can install the released version of fcaR from
-[CRAN](https://CRAN.R-project.org) with:
+The development version of this package can be installed with
 
-``` r
-install.packages("fcaR")
-```
+    remotes::install_github("neuroimaginador/fcaR")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
 ``` r
-#library(fcaR)
-## basic example code
+
+library(fcaR)
+
+# Define objects and attributes
+objects <- paste0(1:5)
+n_objects <- length(objects)
+
+attributes <- letters[1:6]
+n_attributes <- length(attributes)
+
+# The formal context is just a simple matrix
+I <- matrix(data = c(1, 1, 1, 0, 1,
+                     1, 0, 1, 1, 0,
+                     0, 0, 1, 0, 0,
+                     0, 0, 1, 1, 0,
+                     0, 0, 0, 1, 0,
+                     0, 0, 1, 1, 0),
+            nrow = n_objects,
+            byrow = FALSE)
+
+colnames(I) <- attributes
+rownames(I) <- objects
+
+print(I)
+#>   a b c d e f
+#> 1 1 1 0 0 0 0
+#> 2 1 0 0 0 0 0
+#> 3 1 1 1 1 0 1
+#> 4 0 1 0 1 1 1
+#> 5 1 0 0 0 0 0
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+# By default, the set of grades are the unique
+# values in the (fuzzy) formal context
+grades_set <- sort(unique(as.vector(I)))
+
+# Let us build the formal_context object
+fc <- formal_context$new(I, grades_set)
+
+# Compute all concepts
+concept_list <- fc$get_concepts()
+#> First concept:
+#> {}
+#> New concept:
+#> {"b"}
+#> New concept:
+#> {"b", "d", "f"}
+#> New concept:
+#> {"b", "d", "e", "f"}
+#> New concept:
+#> {"a"}
+#> New concept:
+#> {"a", "b"}
+#> New concept:
+#> {"a", "b", "c", "d", "f"}
+#> New concept:
+#> {"a", "b", "c", "d", "e", "f"}
+
+# And plot the concept lattice
+fc$plot()
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub\!
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
