@@ -46,6 +46,28 @@ formal_context <- R6::R6Class(
         .draw_Hasse(self$concepts, self$I)
 
       }
+
+    },
+
+    iceberg_lattice = function(minsupp) {
+
+      if (length(self$concepts) > 0) {
+
+        concept_support <- sapply(self$concepts,
+                                  function(s) {
+
+                                    .intent_support(s[[2]], self$I)
+
+                                  })
+
+        idx <- which(concept_support >= minsupp)
+
+        .draw_Hasse(self$concepts[idx], self$I)
+
+        return(self$concepts[idx])
+
+      }
+
     }
 
   )
