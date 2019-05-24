@@ -23,7 +23,7 @@
   the_sum <- gset_union(gset_intersection(B, lowerB),
                         unitB)
 
-  the_sum <- .closure(the_sum, I)
+  # the_sum <- .closure(the_sum, I)
 
   return(the_sum)
 

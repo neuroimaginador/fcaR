@@ -1,7 +1,13 @@
+.gset_to_string <- function(S) {
+
+  strwrap(format(S), width = 5000, exdent = 1L)
+
+}
+
 .concept_to_string <- function(C) {
 
-  A <- strwrap(format(C[[1]]), width = 5000, exdent = 1L)
-  B <- strwrap(format(C[[2]]), width = 5000, exdent = 1L)
+  A <- .gset_to_string(C[[1]])
+  B <- .gset_to_string(C[[2]])
 
   return(paste0("[", A, ", ", B, "]"))
 

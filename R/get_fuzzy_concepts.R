@@ -1,5 +1,5 @@
 #' @import sets
-.get_fuzzy_concepts <- function(I, grades_set) {
+.get_fuzzy_concepts <- function(I, grades_set, verbose = FALSE) {
 
   empty <- .empty_attributes_set(I)
   Y <- gset(support = colnames(I))
@@ -8,11 +8,11 @@
 
   n <- 1
 
-  cat("First concept:\n")
+  if (verbose) cat("First concept:\n")
 
   B <- .closure(empty, I)
 
-  print(B)
+  if (verbose) print(B)
 
   oldB <- B
 
@@ -24,13 +24,20 @@
 
   while (!exit_cond) {
 
-    B <- .compute_next_intent(B, I, grades_set)
+    B <- .next_closure(B, I, grades_set,
+                       closure_function = pryr::partial(.closure,
+                                                        I = I))
 
     exit_cond <- (B == oldB) || (B == Y)
 
     intents[[n]] <- B
-    cat("New concept:\n")
-    print(B)
+
+    if (verbose) {
+
+      cat("New concept:\n")
+      print(B)
+
+    }
 
     n <- n + 1
 

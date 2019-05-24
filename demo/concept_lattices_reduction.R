@@ -32,7 +32,15 @@ print(I)
 
 fc <- formal_context$new(I, grades_set)
 
-fc$get_concepts()
+fc$compute_concepts()
 
-fc$plot()
+fc$extract_implications_concepts()
+
+fc$implications
+
+fc$implications$reduce()
+
+fc$implications
+
+fc$plot_lattice()
 

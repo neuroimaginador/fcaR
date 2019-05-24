@@ -1,5 +1,6 @@
 #' @import sets
-.compute_next_intent <- function(B, I, grades_set) {
+.next_closure <- function(B, I, grades_set,
+                          closure_function = .closure) {
 
   attributes <- colnames(I)
 
@@ -10,6 +11,8 @@
     for (grade_i in greater_grades) {
 
       candidateBmax <- .direct_sum(B, attr_i, grade_i, I)
+
+      candidateBmax <- closure_function(candidateBmax)
 
       if (.is_set_preceding_i_j(B = B,
                                 C = candidateBmax,

@@ -1,4 +1,5 @@
 #' @export
+#' @import scales RColorBrewer
 formal_context <- R6::R6Class(
 
   classname = "FormalContext",
@@ -15,6 +16,8 @@ formal_context <- R6::R6Class(
 
     concepts = NULL,
 
+    implications = NULL,
+
     initialize = function(I, grades_set) {
 
       stopifnot(length(colnames(I)) == ncol(I))
@@ -28,24 +31,45 @@ formal_context <- R6::R6Class(
 
     },
 
-    get_concepts = function() {
+    compute_concepts = function(verbose = FALSE) {
 
       if (!is.null(self$concepts)) return(self$concepts)
 
       self$concepts <- .get_fuzzy_concepts(self$I,
-                                           self$grades_set)
+                                           self$grades_set,
+                                           verbose = verbose)
 
       return(self$concepts)
 
     },
 
-    plot = function() {
+    extract_implications_concepts = function(verbose = FALSE) {
+
+      c(concepts, implications) := .get_concepts_implications(self$I,
+                                                              self$grades_set,
+                                                              verbose = verbose)
+
+      self$concepts <- concepts
+      self$implications <- implications
+
+    },
+
+    plot_lattice = function() {
 
       if (length(self$concepts) > 0) {
 
         .draw_Hasse(self$concepts, self$I)
 
       }
+
+    },
+
+    plot_context = function() {
+
+      color_function <- colour_ramp(brewer.pal(11, "Greys"))
+      heatmap(self$I, Rowv = NA, Colv = NA,
+              col = color_function(seq(0, 1, 0.01)),
+              scale = "none")
 
     },
 

@@ -32,9 +32,17 @@ print(I)
 
 fc <- formal_context$new(I, grades_set)
 
-fc$get_concepts()
+fc$compute_concepts()
 
-fc$plot()
+fc$extract_implications_concepts()
+
+fc$implications
+
+fc$implications$reduce()
+
+fc$implications
+
+fc$plot_lattice()
 
 ##%######################################################%##
 #                                                          #
@@ -54,8 +62,16 @@ rownames(I2) <- objects
 
 print(I2)
 
-fc2 <- formal_context$new(I2, grades_set)
+fc2 <- formal_context$new(I, grades_set)
 
-fc2$get_concepts()
+fc2$compute_concepts()
 
-fc2$plot()
+fc2$extract_implications_concepts()
+
+fc2$implications
+
+fc2$implications$reduce()
+
+fc2$implications
+
+fc2$plot_lattice()
