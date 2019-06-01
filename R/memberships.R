@@ -25,6 +25,15 @@
 
   attributes <- colnames(I)
 
+  ms_attr <- .get_grades(B, attributes)
+
+  return(ms_attr)
+
+}
+
+#' @import sets
+.get_grades <- function(B, attributes) {
+
   ms_attr <- rep(0, length(attributes))
   names(ms_attr) <- attributes
 

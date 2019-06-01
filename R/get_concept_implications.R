@@ -4,10 +4,13 @@
                                        verbose = FALSE) {
 
   empty <- .empty_attributes_set(I)
-  Y <- gset(support = colnames(I))
+
+  attributes <- colnames(I)
+  Y <- gset(support = attributes)
 
   intents <- list()
-  DGbasis <- implication_set$new("DGbasis")
+  DGbasis <- implication_set$new(name = "DGbasis",
+                                 attributes = colnames(I))
 
   A <- .closure(empty, I)
 
@@ -56,7 +59,7 @@
 
     } else {
 
-      rhs <- gset_difference(B, A)
+      rhs <- fuzzy_gset_difference(B, A)
 
       imp <- implication$new(lhs = A,
                              rhs = rhs)

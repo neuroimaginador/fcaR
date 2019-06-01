@@ -18,16 +18,28 @@ formal_context <- R6::R6Class(
 
     implications = NULL,
 
-    initialize = function(I, grades_set) {
+    initialize = function(I, grades_set = sort(unique(as.vector(I)))) {
 
       stopifnot(length(colnames(I)) == ncol(I))
-      stopifnot(length(rownames(I)) == nrow(I))
+
+      # Let us invent object names if not provided
+      if (!(length(rownames(I)) == nrow(I))) {
+
+        rownames(I) <- paste0(seq(nrow(I)))
+
+      }
 
       self$I <- I
       self$grades_set <- grades_set
 
       self$objects <- rownames(I)
       self$attributes <- colnames(I)
+
+    },
+
+    add_implications = function(impl_set) {
+
+      self$implications <- impl_set
 
     },
 
@@ -70,6 +82,25 @@ formal_context <- R6::R6Class(
       heatmap(self$I, Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")
+
+    },
+
+    get_concept_support = function() {
+
+      sapply(self$concepts,
+             function(s) {
+
+               .intent_support(s[[2]], self$I)
+
+             })
+
+    },
+
+    get_implication_support = function() {
+
+      sapply(self$implications$get_implications(),
+
+             function(imp) .intent_support(imp$get_lhs(), self$I))
 
     },
 
