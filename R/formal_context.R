@@ -18,7 +18,9 @@ formal_context <- R6::R6Class(
 
     implications = NULL,
 
-    initialize = function(I, grades_set = sort(unique(as.vector(I)))) {
+    # Object constructor
+    initialize = function(I,
+                          grades_set = sort(unique(as.vector(I)))) {
 
       stopifnot(length(colnames(I)) == ncol(I))
 
@@ -29,7 +31,9 @@ formal_context <- R6::R6Class(
 
       }
 
-      self$I <- I
+      # Transform the formal context to sparse
+      self$I <- as(Matrix(t(I),
+                       sparse = TRUE), "dgCMatrix")
       self$grades_set <- grades_set
 
       self$objects <- rownames(I)
@@ -37,45 +41,57 @@ formal_context <- R6::R6Class(
 
     },
 
+    # Add a precomputed implication set
     add_implications = function(impl_set) {
 
-      self$implications <- impl_set
+      self$implications <- impl_set$clone()
 
     },
 
+    # Use Ganter Algorithm to compute concepts
     compute_concepts = function(verbose = FALSE) {
 
       if (!is.null(self$concepts)) return(self$concepts)
 
-      self$concepts <- .get_fuzzy_concepts(self$I,
+      self$concepts <- .get_fuzzy_concepts(as.matrix(t(self$I)),
                                            self$grades_set,
                                            verbose = verbose)
+
+      private$concepts_to_sparse()
 
       return(self$concepts)
 
     },
 
+    # Use modified Ganter algorithm to compute both
+    # concepts and implications
     extract_implications_concepts = function(verbose = FALSE) {
 
-      c(concepts, implications) := .get_concepts_implications(self$I,
-                                                              self$grades_set,
-                                                              verbose = verbose)
+      c(concepts, implications) :=
+        .get_concepts_implications(as.matrix(t(self$I)),
+                                   self$grades_set,
+                                   verbose = verbose)
 
       self$concepts <- concepts
+      private$concepts_to_sparse()
+
       self$implications <- implications
+      self$implications$compute_sparse_matrix()
 
     },
 
+    # Plot the concept lattice
     plot_lattice = function() {
 
       if (length(self$concepts) > 0) {
 
-        .draw_Hasse(self$concepts, self$I)
+        .draw_Hasse(self$concepts, as.matrix(self$I))
 
       }
 
     },
 
+    # Plot the formal context table
     plot_context = function() {
 
       color_function <- colour_ramp(brewer.pal(11, "Greys"))
@@ -85,43 +101,60 @@ formal_context <- R6::R6Class(
 
     },
 
+    # Get support of each concept
     get_concept_support = function() {
 
-      sapply(self$concepts,
-             function(s) {
+      my_I <- self$I
+      my_I@x <- as.numeric(my_I@x)
 
-               .intent_support(s[[2]], self$I)
+      subsets <- .is_subset_sparse(private$intents, my_I)
 
-             })
+      support <- rowMeans(subsets)
+
+      return(support)
 
     },
 
+    # Compute support of each implication
     get_implication_support = function() {
 
-      sapply(self$implications$get_implications(),
+      LHS <- self$implications$get_LHS_matrix()
+      my_I <- self$I
+      my_I@x <- as.numeric(my_I@x)
 
-             function(imp) .intent_support(imp$get_lhs(), self$I))
+      subsets <- .is_subset_sparse(LHS, my_I)
 
-    },
+      support <- rowMeans(subsets)
 
-    iceberg_lattice = function(minsupp) {
+      return(support)
 
-      if (length(self$concepts) > 0) {
+    }
 
-        concept_support <- sapply(self$concepts,
-                                  function(s) {
+  ),
 
-                                    .intent_support(s[[2]], self$I)
+  private = list(
 
-                                  })
+    extents = NULL,
 
-        idx <- which(concept_support >= minsupp)
+    intents = NULL,
 
-        .draw_Hasse(self$concepts[idx], self$I)
+    concepts_to_sparse = function() {
 
-        return(self$concepts[idx])
+      n_concepts <- length(self$concepts)
 
-      }
+      # Compute intents in sparse format
+      v <- lapply(seq(n_concepts),
+                  function(i) fuzzy_set_to_sparse_coord(i,
+                                                        set = self$concepts[[i]][[2]],
+                                                        attributes = self$attributes))
+
+      m <- Reduce(rbind, v)
+
+      private$intents <- sparseMatrix(i = m[, "idx"],
+                          j = m[, "i"],
+                          x = m[, "values"],
+                          dims = c(n_attributes,
+                                   n_concepts))
 
     }
 
