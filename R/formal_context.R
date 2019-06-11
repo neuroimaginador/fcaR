@@ -33,7 +33,7 @@ formal_context <- R6::R6Class(
 
       # Transform the formal context to sparse
       self$I <- as(Matrix(t(I),
-                       sparse = TRUE), "dgCMatrix")
+                          sparse = TRUE), "dgCMatrix")
       self$grades_set <- grades_set
 
       self$objects <- rownames(I)
@@ -53,11 +53,9 @@ formal_context <- R6::R6Class(
 
       if (!is.null(self$concepts)) return(self$concepts)
 
-      self$concepts <- .get_fuzzy_concepts(as.matrix(t(self$I)),
-                                           self$grades_set,
-                                           verbose = verbose)
-
-      private$concepts_to_sparse()
+      self$concepts <- .get_fuzzy_concepts_sparse(as.matrix(t(self$I)),
+                                                  self$grades_set,
+                                                  verbose = verbose)
 
       return(self$concepts)
 
@@ -68,15 +66,13 @@ formal_context <- R6::R6Class(
     extract_implications_concepts = function(verbose = FALSE) {
 
       c(concepts, implications) :=
-        .get_concepts_implications(as.matrix(t(self$I)),
-                                   self$grades_set,
-                                   verbose = verbose)
+        .get_concepts_implications_sparse(as.matrix(t(self$I)),
+                                          self$grades_set,
+                                          verbose = verbose)
 
       self$concepts <- concepts
-      private$concepts_to_sparse()
 
       self$implications <- implications
-      self$implications$compute_sparse_matrix()
 
     },
 
@@ -95,7 +91,7 @@ formal_context <- R6::R6Class(
     plot_context = function() {
 
       color_function <- colour_ramp(brewer.pal(11, "Greys"))
-      heatmap(self$I, Rowv = NA, Colv = NA,
+      heatmap(t(as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")
 
@@ -107,7 +103,10 @@ formal_context <- R6::R6Class(
       my_I <- self$I
       my_I@x <- as.numeric(my_I@x)
 
-      subsets <- .is_subset_sparse(private$intents, my_I)
+      intents <- lapply(self$concepts, function(s) s[[2]])
+      intents <- do.call(cbind, args = intents)
+
+      subsets <- .is_subset_sparse(intents, my_I)
 
       support <- rowMeans(subsets)
 
@@ -151,10 +150,10 @@ formal_context <- R6::R6Class(
       m <- Reduce(rbind, v)
 
       private$intents <- sparseMatrix(i = m[, "idx"],
-                          j = m[, "i"],
-                          x = m[, "values"],
-                          dims = c(n_attributes,
-                                   n_concepts))
+                                      j = m[, "i"],
+                                      x = m[, "values"],
+                                      dims = c(n_attributes,
+                                               n_concepts))
 
     }
 

@@ -16,18 +16,9 @@
 
       ids_to_merge <- which_at_col(equal_LHS, replicas[rep_id])
 
-      #which(equal_LHS[replicas[rep_id], ])
+      B <- .flatten_union(RHS[, ids_to_merge])
 
-      allRHS <- as.matrix(RHS[, ids_to_merge])
-
-      B <- apply_F_rowwise(x = allRHS,
-                           type = paste0(logic_name, "_S"),
-                           init_value = 0)
-
-      RHS[, ids_to_merge[1]] <- Matrix(B,
-                                       ncol = 1,
-                                       nrow = nrow(RHS),
-                                       sparse = TRUE)
+      RHS[, ids_to_merge[1]] <- B
 
       marked_to_remove[ids_to_merge[-1]] <- TRUE
 
