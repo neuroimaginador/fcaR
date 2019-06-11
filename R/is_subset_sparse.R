@@ -24,8 +24,8 @@
 
   p <- as.integer(rep(0, x@Dim[2]+1))
   i <- is_subset_C(x@p, x@i, x@Dim, my_x,
-             y@p, y@i, y@Dim, my_y,
-             as.logical(proper), p)
+                   y@p, y@i, y@Dim, my_y,
+                   as.logical(proper), p)
 
   t(new("ngCMatrix", p = p, i = i,
         Dim = c(y@Dim[2], x@Dim[2])))
@@ -58,10 +58,38 @@
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
   i <- is_equal_set_C(x@p, x@i, x@Dim, my_x,
-                   y@p, y@i, y@Dim, my_y,
-                   as.logical(proper), p)
+                      y@p, y@i, y@Dim, my_y,
+                      as.logical(proper), p)
 
   t(new("ngCMatrix", p = p, i = i,
         Dim = c(y@Dim[2], x@Dim[2])))
+
+}
+
+.is_subset_binary <- function(x, y = NULL,
+                              proper = FALSE,
+                              transpose = FALSE) {
+
+  if (is.null(y)) y <- x
+
+  p <- as.integer(rep(0, x@Dim[2] + 1))
+
+  i <- .Call("R_is_subset",
+             x@p, x@i, x@Dim,
+             y@p, y@i, y@Dim,
+             as.logical(proper), p,
+             PACKAGE = "arules")
+
+  if (transpose) {
+
+    return(t(new("ngCMatrix", p = p, i = i,
+                 Dim = c(y@Dim[2], x@Dim[2]))))
+
+  } else {
+
+    return(new("ngCMatrix", p = p, i = i,
+               Dim = c(y@Dim[2], x@Dim[2])))
+
+  }
 
 }

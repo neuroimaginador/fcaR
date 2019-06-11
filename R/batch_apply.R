@@ -1,4 +1,5 @@
 #' @import tictoc
+#' @import parallel
 .batch_apply <- function(LHS, RHS,
                          rules = c("generalization",
                                    "composition"),
@@ -18,78 +19,43 @@
 
   }
 
-  # Initialize results
-  new_LHS <- Matrix(0,
-                    nrow = nrow(LHS),
-                    ncol = 1,
-                    sparse = TRUE)
-
-  new_RHS <- Matrix(0,
-                    nrow = nrow(LHS),
-                    ncol = 1,
-                    sparse = TRUE)
-
   # Make batches
   idx <- c(seq(1, n_implications, by = batch_size),
            n_implications + 1)
 
+  # Parallel execution?
+  if (requireNamespace("parallel")) {
 
-  my_functions <- c("generalization" = .remove_redundancies_lhs_rhs_general,
-                    "composition"    = .compose_lhs_rhs_equal,
-                    "reduction"      = .reduce_lhs_rhs,
-                    "simplification" = .simplify_lhs_rhs,
-                    "simpl_ijar"     = .simplify_IJAR_lhs_rhs)
+    cat("Using parallel execution\n")
 
-  idx_rules <- match(rules, names(my_functions))
-  idx_rules <- idx_rules[!is.na(idx_rules)]
-  rules_to_apply <- my_functions[idx_rules]
-  rule_names <- names(my_functions)[idx_rules]
+    my_apply <- function(x, FUN) parallel::mclapply(x, FUN, mc.cores = parallel::detectCores())
 
-  # In each batch, use the needed functions
-  for (i in seq_along(idx[-1])) {
+    verbose <- FALSE
 
-    # Begin the timing
-    tic("batch")
+  } else {
 
-    cat("Processing chunk", i, "out of", length(idx) - 1, "\n")
+    my_apply <- lapply
 
-    old_LHS <- LHS[, idx[i]:(idx[i + 1] - 1)]
-    old_RHS <- RHS[, idx[i]:(idx[i + 1] - 1)]
-    new_cols <- idx[i + 1] - idx[i]
-
-    # Loop over all functions
-    for (j in seq_along(idx_rules)) {
-
-      current_cols <- new_cols
-
-      current_rule <- rules_to_apply[[j]]
-
-      tic("rule")
-      L <- current_rule(old_LHS, old_RHS)
-
-      rule_time <- toc(quiet = TRUE)
-      old_LHS <- L$lhs
-      old_RHS <- L$rhs
-
-      new_cols <- ncol(old_LHS)
-
-      cat("-->", rule_names[j], ": from", current_cols, "to",
-          new_cols, "in", rule_time$toc - rule_time$tic, "secs. \n")
-
-    }
-
-    # Add the computed implications to the set
-    new_LHS <- cbind(new_LHS, old_LHS)
-    new_RHS <- cbind(new_RHS, old_RHS)
-
-    batch_toc <- toc(quiet = TRUE)
-
-    cat("Batch took", batch_toc$toc - batch_toc$tic, "secs. \n")
+    verbose <- TRUE
 
   }
 
-  LHS <- new_LHS[, -1]
-  RHS <- new_RHS[, -1]
+  # Process each batch
+  RES <- my_apply(seq_along(idx[-1]),
+                  function(i) {
+
+                    .process_batch(LHS = LHS[, idx[i]:(idx[i + 1] - 1)],
+                                   RHS = RHS[, idx[i]:(idx[i + 1] - 1)],
+                                   rules = rules,
+                                   verbose = verbose)
+
+                  })
+
+  LHS <- lapply(RES, function(r) r$lhs)
+  RHS <- lapply(RES, function(r) r$rhs)
+
+  LHS <- do.call(cbind, args = LHS)
+  RHS <- do.call(cbind, args = RHS)
 
   return(list(lhs = LHS, rhs = RHS))
 

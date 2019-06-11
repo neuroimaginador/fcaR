@@ -42,6 +42,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// flatten_sparse_C
+NumericVector flatten_sparse_C(IntegerVector p, IntegerVector i, NumericVector x, NumericVector dims);
+RcppExport SEXP _fcaR_flatten_sparse_C(SEXP pSEXP, SEXP iSEXP, SEXP xSEXP, SEXP dimsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type i(iSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dims(dimsSEXP);
+    rcpp_result_gen = Rcpp::wrap(flatten_sparse_C(p, i, x, dims));
+    return rcpp_result_gen;
+END_RCPP
+}
 // is_subset_C
 SEXP is_subset_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, SEXP Y_DIM, SEXP Y, SEXP PROPER, SEXP OUT_P);
 RcppExport SEXP _fcaR_is_subset_C(SEXP X_PSEXP, SEXP X_ISEXP, SEXP X_DIMSEXP, SEXP XSEXP, SEXP Y_PSEXP, SEXP Y_ISEXP, SEXP Y_DIMSEXP, SEXP YSEXP, SEXP PROPERSEXP, SEXP OUT_PSEXP) {
@@ -102,6 +116,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// is_subset_binary
+SEXP is_subset_binary(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP Y_P, SEXP Y_I, SEXP Y_DIM, SEXP PROPER, SEXP OUT_P);
+RcppExport SEXP _fcaR_is_subset_binary(SEXP X_PSEXP, SEXP X_ISEXP, SEXP X_DIMSEXP, SEXP Y_PSEXP, SEXP Y_ISEXP, SEXP Y_DIMSEXP, SEXP PROPERSEXP, SEXP OUT_PSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type X_P(X_PSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type X_I(X_ISEXP);
+    Rcpp::traits::input_parameter< SEXP >::type X_DIM(X_DIMSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type Y_P(Y_PSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type Y_I(Y_ISEXP);
+    Rcpp::traits::input_parameter< SEXP >::type Y_DIM(Y_DIMSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type PROPER(PROPERSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type OUT_P(OUT_PSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_subset_binary(X_P, X_I, X_DIM, Y_P, Y_I, Y_DIM, PROPER, OUT_P));
+    return rcpp_result_gen;
+END_RCPP
+}
 // apply_F_colwise
 NumericVector apply_F_colwise(NumericMatrix x, CharacterVector type, double init_value);
 RcppExport SEXP _fcaR_apply_F_colwise(SEXP xSEXP, SEXP typeSEXP, SEXP init_valueSEXP) {
@@ -159,9 +191,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compare_elements_first", (DL_FUNC) &_fcaR_compare_elements_first, 1},
     {"_fcaR_compare_elements_other", (DL_FUNC) &_fcaR_compare_elements_other, 3},
     {"_fcaR_compare_equality_other", (DL_FUNC) &_fcaR_compare_equality_other, 3},
+    {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 10},
     {"_fcaR_is_equal_set_C", (DL_FUNC) &_fcaR_is_equal_set_C, 10},
+    {"_fcaR_is_subset_binary", (DL_FUNC) &_fcaR_is_subset_binary, 8},
     {"_fcaR_apply_F_colwise", (DL_FUNC) &_fcaR_apply_F_colwise, 3},
     {"_fcaR_apply_F_rowwise", (DL_FUNC) &_fcaR_apply_F_rowwise, 3},
     {"_fcaR_apply_F_rowwise_xy", (DL_FUNC) &_fcaR_apply_F_rowwise_xy, 3},

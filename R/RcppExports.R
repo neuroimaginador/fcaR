@@ -13,6 +13,10 @@ compare_equality_other <- function(x, idx_i, idx_j) {
     .Call(`_fcaR_compare_equality_other`, x, idx_i, idx_j)
 }
 
+flatten_sparse_C <- function(p, i, x, dims) {
+    .Call(`_fcaR_flatten_sparse_C`, p, i, x, dims)
+}
+
 is_subset_C <- function(X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P) {
     .Call(`_fcaR_is_subset_C`, X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P)
 }
@@ -23,6 +27,10 @@ intersects_C <- function(X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P) 
 
 is_equal_set_C <- function(X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P) {
     .Call(`_fcaR_is_equal_set_C`, X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P)
+}
+
+is_subset_binary <- function(X_P, X_I, X_DIM, Y_P, Y_I, Y_DIM, PROPER, OUT_P) {
+    .Call(`_fcaR_is_subset_binary`, X_P, X_I, X_DIM, Y_P, Y_I, Y_DIM, PROPER, OUT_P)
 }
 
 apply_F_colwise <- function(x, type, init_value) {
