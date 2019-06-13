@@ -56,8 +56,8 @@
       my_composition <- .compose_lhs_rhs_equal(LHS = Matrix(C_B, sparse = TRUE),
                                                RHS = Matrix(D_B, sparse = TRUE))
 
-      new_LHS <- cbind(new_LHS, my_composition$lhs)
-      new_RHS <- cbind(new_RHS, my_composition$rhs)
+      new_LHS <- add_cols(new_LHS, my_composition$lhs)
+      new_RHS <- add_cols(new_RHS, my_composition$rhs)
 
     }
 

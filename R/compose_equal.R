@@ -35,6 +35,7 @@
 
   }
 
-  return(list(lhs = LHS, rhs = RHS))
+  return(list(lhs = Matrix(LHS, sparse = TRUE),
+              rhs = Matrix(RHS, sparse = TRUE)))
 
 }

@@ -135,28 +135,7 @@ formal_context <- R6::R6Class(
 
     extents = NULL,
 
-    intents = NULL,
-
-    concepts_to_sparse = function() {
-
-      n_concepts <- length(self$concepts)
-
-      # Compute intents in sparse format
-      v <- lapply(seq(n_concepts),
-                  function(i) fuzzy_set_to_sparse_coord(i,
-                                                        set = self$concepts[[i]][[2]],
-                                                        attributes = self$attributes))
-
-      m <- Reduce(rbind, v)
-
-      private$intents <- sparseMatrix(i = m[, "idx"],
-                                      j = m[, "i"],
-                                      x = m[, "values"],
-                                      dims = c(n_attributes,
-                                               n_concepts))
-
-    }
-
+    intents = NULL
   )
 
 )

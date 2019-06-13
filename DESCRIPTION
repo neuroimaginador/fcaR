@@ -10,7 +10,6 @@ Authors@R:
 Description: Tha aim of this package is to provide tools to perform FCA from within R.
 License: GPL-3
 Imports: 
-    sets,
     hasseDiagram,
     RColorBrewer,
     scales,
