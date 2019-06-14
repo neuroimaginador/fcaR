@@ -40,9 +40,9 @@
       D <- as.matrix(RHS)
 
       CD <- apply_F_rowwise_xy(x = C,
-                            y = D,
-                            type = paste0(tolower(fuzzy_logic()$name),
-                                          "_S"))
+                               y = D,
+                               type = paste0(tolower(fuzzy_logic()$name),
+                                             "_S"))
 
       B <- as.matrix(S)
 
