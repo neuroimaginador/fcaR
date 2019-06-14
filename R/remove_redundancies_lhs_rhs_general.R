@@ -27,7 +27,9 @@
       if (!marked_as_single[this_row]) next
 
       # Select C -> D with A subset of C and B superset of D
-      idx_subset <- which_at_col(ALL_subsets, this_row)
+      idx_subset <- which_at_col_C(ALL_subsets@i,
+                                   ALL_subsets@p,
+                                   this_row)
 
       idx_subset <- setdiff(idx_subset, this_row)
 

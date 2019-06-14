@@ -5,6 +5,60 @@
 
 using namespace Rcpp;
 
+// which_at_col_C
+IntegerVector which_at_col_C(IntegerVector x_i, IntegerVector x_p, int col);
+RcppExport SEXP _fcaR_which_at_col_C(SEXP x_iSEXP, SEXP x_pSEXP, SEXP colSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x_i(x_iSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type x_p(x_pSEXP);
+    Rcpp::traits::input_parameter< int >::type col(colSEXP);
+    rcpp_result_gen = Rcpp::wrap(which_at_col_C(x_i, x_p, col));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pre_condition
+bool pre_condition(IntegerVector x_i, IntegerVector y_i);
+RcppExport SEXP _fcaR_pre_condition(SEXP x_iSEXP, SEXP y_iSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x_i(x_iSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type y_i(y_iSEXP);
+    rcpp_result_gen = Rcpp::wrap(pre_condition(x_i, y_i));
+    return rcpp_result_gen;
+END_RCPP
+}
+// is_pre_condition
+bool is_pre_condition(IntegerVector x_i, IntegerVector x_p, IntegerVector y_i, IntegerVector y_p);
+RcppExport SEXP _fcaR_is_pre_condition(SEXP x_iSEXP, SEXP x_pSEXP, SEXP y_iSEXP, SEXP y_pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x_i(x_iSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type x_p(x_pSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type y_i(y_iSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type y_p(y_pSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_pre_condition(x_i, x_p, y_i, y_p));
+    return rcpp_result_gen;
+END_RCPP
+}
+// is_subset_individual
+bool is_subset_individual(IntegerVector x_i, NumericVector x, IntegerVector y_i, NumericVector y, int len);
+RcppExport SEXP _fcaR_is_subset_individual(SEXP x_iSEXP, SEXP xSEXP, SEXP y_iSEXP, SEXP ySEXP, SEXP lenSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x_i(x_iSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type y_i(y_iSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< int >::type len(lenSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_subset_individual(x_i, x, y_i, y, len));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compare_elements_first
 List compare_elements_first(NumericVector x);
 RcppExport SEXP _fcaR_compare_elements_first(SEXP xSEXP) {
@@ -188,6 +242,10 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_fcaR_which_at_col_C", (DL_FUNC) &_fcaR_which_at_col_C, 3},
+    {"_fcaR_pre_condition", (DL_FUNC) &_fcaR_pre_condition, 2},
+    {"_fcaR_is_pre_condition", (DL_FUNC) &_fcaR_is_pre_condition, 4},
+    {"_fcaR_is_subset_individual", (DL_FUNC) &_fcaR_is_subset_individual, 5},
     {"_fcaR_compare_elements_first", (DL_FUNC) &_fcaR_compare_elements_first, 1},
     {"_fcaR_compare_elements_other", (DL_FUNC) &_fcaR_compare_elements_other, 3},
     {"_fcaR_compare_equality_other", (DL_FUNC) &_fcaR_compare_equality_other, 3},

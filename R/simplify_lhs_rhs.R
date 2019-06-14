@@ -36,7 +36,9 @@
 
       this_row <- are_subset[subs]
 
-      my_idx <- which_at_col(LHS_subsets, this_row)
+      my_idx <- which_at_col_C(LHS_subsets@i,
+                               LHS_subsets@p,
+                               this_row)
       my_idx <- setdiff(my_idx, this_row)
       marked_as_single[my_idx] <- FALSE
 

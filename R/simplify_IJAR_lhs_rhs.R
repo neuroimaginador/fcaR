@@ -11,7 +11,9 @@
 
   for (i in seq(ncol(LHS))) {
 
-    with_intersection <- which_at_col(intersections, i)
+    with_intersection <- which_at_col_C(intersections@i,
+                                        intersections@p,
+                                        i)
 
     with_intersection <- setdiff(with_intersection, i)
 

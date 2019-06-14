@@ -23,26 +23,37 @@ I <- matrix(data = c(0.1, 0.1, 0.8, 0.7,
             nrow = n_objects,
             byrow = FALSE)
 
-grades_set <- sort(unique(as.vector(I)))
-
 colnames(I) <- attributes
 rownames(I) <- objects
 
 print(I)
 
-fc <- formal_context$new(I, grades_set)
+fc <- formal_context$new(I)
 
 fc$compute_concepts()
 
-fc$extract_implications_concepts()
+fc$extract_implications_concepts(verbose = TRUE)
+fc$implications$length()
 
-fc$implications
+system.time(
+  fc$implications$batch_apply(rules = c("composition",
+                                        "generalization",
+                                        "composition",
+                                        "reduction"),
+                              batch_size = 25000L)
+)
+fc$implications$length()
 
-fc$implications$reduce()
-
-fc$implications
 
 fc$plot_lattice()
+fc$plot_context()
+
+fc$get_concept_support()
+fc$get_implication_support()
+
+fc$plot_lattice()
+
+fc$plot_context()
 
 ##%######################################################%##
 #                                                          #
@@ -55,14 +66,12 @@ fc$plot_lattice()
 I2 <- I * (I > 0.5)
 I2[I2 > 0] <- 1
 
-grades_set <- sort(unique(as.vector(I2)))
-
 colnames(I2) <- attributes
 rownames(I2) <- objects
 
 print(I2)
 
-fc2 <- formal_context$new(I, grades_set)
+fc2 <- formal_context$new(I)
 
 fc2$compute_concepts()
 
@@ -70,7 +79,12 @@ fc2$extract_implications_concepts()
 
 fc2$implications
 
-fc2$implications$reduce()
+system.time(
+  fc2$implications$batch_apply(rules = c("composition",
+                                        "generalization"),
+                              batch_size = 25000L)
+)
+fc2$implications$length()
 
 fc2$implications
 
