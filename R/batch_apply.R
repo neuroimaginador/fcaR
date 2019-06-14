@@ -30,7 +30,7 @@
 
     my_apply <- function(x, FUN) parallel::mclapply(x, FUN, mc.cores = parallel::detectCores())
 
-    verbose <- FALSE
+    verbose <- TRUE
 
   } else {
 

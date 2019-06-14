@@ -36,7 +36,9 @@
 
       this_row <- are_subset[subs]
 
-      my_idx <- which_at_col(LHS_subsets, this_row)
+      my_idx <- which_at_col_C(LHS_subsets@i,
+                               LHS_subsets@p,
+                               this_row)
       my_idx <- setdiff(my_idx, this_row)
       marked_as_single[my_idx] <- FALSE
 
@@ -56,8 +58,8 @@
       my_composition <- .compose_lhs_rhs_equal(LHS = Matrix(C_B, sparse = TRUE),
                                                RHS = Matrix(D_B, sparse = TRUE))
 
-      new_LHS <- cbind(new_LHS, my_composition$lhs)
-      new_RHS <- cbind(new_RHS, my_composition$rhs)
+      new_LHS <- add_cols(new_LHS, my_composition$lhs)
+      new_RHS <- add_cols(new_RHS, my_composition$rhs)
 
     }
 

@@ -1,9 +1,3 @@
-.gset_to_string <- function(S) {
-
-  strwrap(format(S), width = 5000, exdent = 1L)
-
-}
-
 .sparse_set_to_string <- function(S, attributes) {
 
   idx <- which(S > 0)
@@ -29,15 +23,6 @@
 
   A <- .sparse_set_to_string(C[[1]], attributes)
   B <- .sparse_set_to_string(C[[2]], attributes)
-
-  return(paste0("[", A, ", ", B, "]"))
-
-}
-
-.concept_to_string <- function(C) {
-
-  A <- .gset_to_string(C[[1]])
-  B <- .gset_to_string(C[[2]])
 
   return(paste0("[", A, ", ", B, "]"))
 

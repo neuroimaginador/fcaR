@@ -23,24 +23,21 @@ I <- matrix(data = c(1, 1, 1, 0, 1,
             nrow = n_objects,
             byrow = FALSE)
 
-grades_set <- sort(unique(as.vector(I)))
-
 colnames(I) <- attributes
 rownames(I) <- objects
 
 print(I)
 
-fc <- formal_context$new(I, grades_set)
-
-fc$compute_concepts()
+fc <- formal_context$new(I)
 
 fc$extract_implications_concepts()
+fc$implications$length()
 
-fc$implications
+fc$implications$batch_apply(rules = c("composition",
+                                      "generalization"))
+fc$implications$length()
 
-fc$implications$reduce()
-
-fc$implications
+fc$plot_context()
 
 fc$plot_lattice()
 
