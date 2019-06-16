@@ -56,8 +56,6 @@ I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
             nrow = n_objects,
             byrow = FALSE)
 
-grades_set <- sort(unique(as.vector(I)))
-
 colnames(I) <- attributes
 rownames(I) <- objects
 
@@ -67,10 +65,8 @@ print(I)
 ```{r}
 # By default, the set of grades are the unique
 # values in the (fuzzy) formal context
-grades_set <- sort(unique(as.vector(I)))
-
 # Let us build the formal_context object
-fc <- formal_context$new(I, grades_set)
+fc <- formal_context$new(I)
 
 # Compute all concepts
 concept_list <- fc$compute_concepts()
@@ -87,9 +83,11 @@ fc$extract_implications_concepts()
 # Which implications have been extracted
 fc$implications
 
-# Reduce the number of implications using a simple
-# rule 
-fc$implications$reduce()
+# Reduce the number of implications using two simple
+# rules. The algorithm applies the specified rules
+# in batches, if the number of rules is high.
+fc$implications$batch_apply(rules = c("composition",
+                                      "generalization"))
 
 # Reduced set of implications
 fc$implications
@@ -129,10 +127,8 @@ print(I)
 ```{r}
 # By default, the set of grades are the unique
 # values in the (fuzzy) formal context
-grades_set <- sort(unique(as.vector(I)))
-
 # Let us build the formal_context object
-fc <- formal_context$new(I, grades_set)
+fc <- formal_context$new(I)
 
 # Compute all concepts
 concept_list <- fc$compute_concepts()
@@ -149,9 +145,11 @@ fc$extract_implications_concepts()
 # Which implications have been extracted
 fc$implications
 
-# Reduce the number of implications using a simple
-# rule 
-fc$implications$reduce()
+# Reduce the number of implications using two simple
+# rules. The algorithm applies the specified rules
+# in batches, if the number of rules is high.
+fc$implications$batch_apply(rules = c("composition",
+                                      "generalization"))
 
 # Reduced set of implications
 fc$implications

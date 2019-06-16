@@ -30,16 +30,12 @@ print(I)
 
 fc <- formal_context$new(I)
 
-fc$compute_concepts()
-
 fc$extract_implications_concepts(verbose = TRUE)
 fc$implications$length()
 
 system.time(
   fc$implications$batch_apply(rules = c("composition",
-                                        "generalization",
-                                        "composition",
-                                        "reduction"),
+                                        "generalization"),
                               batch_size = 25000L)
 )
 fc$implications$length()
@@ -51,9 +47,6 @@ fc$plot_context()
 fc$get_concept_support()
 fc$get_implication_support()
 
-fc$plot_lattice()
-
-fc$plot_context()
 
 ##%######################################################%##
 #                                                          #
@@ -73,8 +66,6 @@ print(I2)
 
 fc2 <- formal_context$new(I)
 
-fc2$compute_concepts()
-
 fc2$extract_implications_concepts()
 
 fc2$implications
@@ -89,3 +80,7 @@ fc2$implications$length()
 fc2$implications
 
 fc2$plot_lattice()
+
+fc$get_concept_support()
+fc$get_implication_support()
+
