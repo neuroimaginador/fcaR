@@ -47,7 +47,7 @@
 
   concepts <- lapply(intents, function(b) {
 
-    a <- .extent(b, I)
+    a <- .extent_sparse(b, I)
 
     list(a, b)
 
