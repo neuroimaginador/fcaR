@@ -91,6 +91,10 @@ fc$implications$batch_apply(rules = c("composition",
 
 # Reduced set of implications
 fc$implications
+
+# We can obtain the support of both implications and concepts
+fc$get_implication_support()
+fc$get_concept_support()
 ```
 
 
@@ -153,5 +157,9 @@ fc$implications$batch_apply(rules = c("composition",
 
 # Reduced set of implications
 fc$implications
+
+# We can obtain the support of both implications and concepts
+fc$get_implication_support()
+fc$get_concept_support()
 ```
 

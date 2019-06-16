@@ -18,6 +18,10 @@ formal_context <- R6::R6Class(
 
     implications = NULL,
 
+    concept_support = NULL,
+
+    implications_support = NULL,
+
     # Object constructor
     initialize = function(I,
                           grades_set = sort(unique(as.vector(I)))) {
@@ -108,9 +112,9 @@ formal_context <- R6::R6Class(
 
       subsets <- .is_subset_sparse(intents, my_I)
 
-      support <- rowMeans(subsets)
+      self$concept_support <- rowMeans(subsets)
 
-      return(support)
+      return(self$concept_support)
 
     },
 
@@ -123,9 +127,9 @@ formal_context <- R6::R6Class(
 
       subsets <- .is_subset_sparse(LHS, my_I)
 
-      support <- rowMeans(subsets)
+      self$implications_support <- rowMeans(subsets)
 
-      return(support)
+      return(self$implications_support)
 
     }
 
