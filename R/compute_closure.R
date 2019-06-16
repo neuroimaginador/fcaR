@@ -1,4 +1,4 @@
-.compute_closure <- function(S, LHS, RHS, reduce = FALSE) {
+.compute_closure <- function(S, LHS, RHS, reduce = FALSE, verbose = FALSE) {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) return(S)
 
@@ -12,7 +12,11 @@
 
     S <- .flatten_union(cbind(RHS[, idx_subsets], S))
 
-    cat("Reducing", length(idx_subsets), " rules\n")
+    if (verbose) {
+
+      cat("Reducing", length(idx_subsets), " rules\n")
+
+    }
 
     LHS <- Matrix(LHS[, -idx_subsets], sparse = TRUE)
     RHS <- Matrix(RHS[, -idx_subsets], sparse = TRUE)
@@ -34,7 +38,11 @@
 
     if (reduce) {
 
-      cat("Simplification stage\n")
+      if (verbose) {
+
+        cat("Simplification stage\n")
+
+      }
 
       C <- as.matrix(LHS)
       D <- as.matrix(RHS)
@@ -61,7 +69,11 @@
 
       idx_zeros <- which(colSums(D_B) == 0)
 
-      cat("Reducing", length(idx_zeros), " rules\n")
+      if (verbose) {
+
+        cat("Reducing", length(idx_zeros), " rules\n")
+
+      }
 
       LHS <- cbind(Matrix(C_B[, -idx_zeros], sparse = TRUE),
                    Matrix(C[, -idx_not_empty], sparse = TRUE))

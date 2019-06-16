@@ -62,11 +62,12 @@ implication_set <- R6::R6Class(
     },
 
     # Compute the sintactic closure of a set wrt the implications
-    compute_closure = function(S) {
+    compute_closure = function(S, reduce = FALSE) {
 
       .compute_closure(S,
                        LHS = private$lhs_matrix,
-                       RHS = private$rhs_matrix)
+                       RHS = private$rhs_matrix,
+                       reduce = reduce)
 
     },
 
