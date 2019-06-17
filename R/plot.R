@@ -19,9 +19,9 @@
 
 }
 
-.sparse_concept_to_string <- function(C, attributes) {
+.sparse_concept_to_string <- function(C, objects, attributes) {
 
-  A <- .sparse_set_to_string(C[[1]], attributes)
+  A <- .sparse_set_to_string(C[[1]], objects)
   B <- .sparse_set_to_string(C[[2]], attributes)
 
   return(paste0("[", A, ", ", B, "]"))
@@ -33,9 +33,12 @@
 
   M <- .get_ordering_matrix_sparse(L, I)
 
-  attributes <- colnames(I)
+  attributes <- rownames(I)
+  objects <- colnames(I)
 
-  labels <- sapply(L, function(l) .sparse_concept_to_string(l, attributes))
+  labels <- sapply(L, function(l) .sparse_concept_to_string(l,
+                                                            objects,
+                                                            attributes))
 
   hasse(data = M,
         labels = labels,

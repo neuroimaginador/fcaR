@@ -25,6 +25,9 @@ implication_set <- R6::R6Class(
       private$lhs_matrix <- as(arules_imp@lhs@data, "dgCMatrix")
       private$rhs_matrix <- as(arules_imp@rhs@data, "dgCMatrix")
 
+      rownames(private$lhs_matrix) <- private$attributes
+      rownames(private$rhs_matrix) <- private$attributes
+
     },
 
 
@@ -58,15 +61,27 @@ implication_set <- R6::R6Class(
 
       }
 
+      rownames(private$lhs_matrix) <- private$attributes
+      rownames(private$rhs_matrix) <- private$attributes
 
     },
 
     # Compute the sintactic closure of a set wrt the implications
-    compute_closure = function(S) {
+    compute_closure = function(S, reduce = FALSE) {
 
       .compute_closure(S,
                        LHS = private$lhs_matrix,
-                       RHS = private$rhs_matrix)
+                       RHS = private$rhs_matrix,
+                       reduce = reduce)
+
+    },
+
+    recommend = function(S, attribute_filter) {
+
+      .recommend_attribute(S = S,
+                           LHS = private$lhs_matrix,
+                           RHS = private$rhs_matrix,
+                           attribute_filter = attribute_filter)
 
     },
 
