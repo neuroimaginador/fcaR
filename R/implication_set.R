@@ -105,6 +105,19 @@ implication_set <- R6::R6Class(
 
     },
 
+    apply_rules = function(rules = c("composition", "generalization"),
+                           batch_size = 25000L) {
+
+      L <- .batch_apply(LHS = private$lhs_matrix,
+                        RHS = private$rhs_matrix,
+                        rules = rules,
+                        batch_size = batch_size)
+
+      private$lhs_matrix <- L$lhs
+      private$rhs_matrix <- L$rhs
+
+    },
+
     # Print all implications to output
     print = function() {
 
