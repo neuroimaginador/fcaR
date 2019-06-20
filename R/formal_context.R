@@ -79,7 +79,7 @@ formal_context <- R6::R6Class(
 
     },
 
-    convert_implications_to_arules <- function(quality = TRUE) {
+    convert_implications_to_arules = function(quality = TRUE) {
 
       R <- self$implications$to_arules()
 
