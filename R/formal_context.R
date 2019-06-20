@@ -79,6 +79,21 @@ formal_context <- R6::R6Class(
 
     },
 
+    convert_implications_to_arules <- function(quality = TRUE) {
+
+      R <- self$implications$to_arules()
+
+      if (quality) {
+
+        quality(R) <- interestMeasure(R,
+                                      transactions = as(self$I, "itemMatrix"))
+
+      }
+
+      return(R)
+
+    },
+
     # Plot the concept lattice
     plot_lattice = function() {
 
