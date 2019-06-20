@@ -69,14 +69,13 @@ formal_context <- R6::R6Class(
     # concepts and implications
     extract_implications_concepts = function(verbose = FALSE) {
 
-      c(concepts, implications) :=
-        .get_concepts_implications_sparse(as.matrix(t(self$I)),
+      tmp <- .get_concepts_implications_sparse(as.matrix(t(self$I)),
                                           self$grades_set,
                                           verbose = verbose)
 
-      self$concepts <- concepts
+      self$concepts <- tmp[[1]] # concepts
 
-      self$implications <- implications
+      self$implications <- tmp[[2]] # implications
 
     },
 

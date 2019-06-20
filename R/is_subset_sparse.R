@@ -22,11 +22,20 @@
 
   }
 
-  p <- as.integer(rep(0, x@Dim[2]+1))
+  p <- as.integer(rep(0, x@Dim[2] + 1))
+
+  # i <- is_subset_C(y@p, y@i, y@Dim, my_y,
+  #                  x@p, x@i, x@Dim, my_x,
+  #                  as.logical(proper), p)
+  #
+  # # browser()
+
+  # new("ngCMatrix", p = p, i = i, Dim = c(x@Dim[2], y@Dim[2]))
+
   i <- is_subset_C(x@p, x@i, x@Dim, my_x,
                    y@p, y@i, y@Dim, my_y,
                    as.logical(proper), p)
-
+  #
   t(new("ngCMatrix", p = p, i = i,
         Dim = c(y@Dim[2], x@Dim[2])))
 

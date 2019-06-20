@@ -5,7 +5,8 @@
   # Which are the rules applicable to the set S?
   S_subsets <- .is_subset_sparse(LHS, S)
 
-  idx_subsets <- which(S_subsets)
+  # idx_subsets <- which(S_subsets)
+  idx_subsets <- S_subsets@i + 1
 
   # While there are applicable rules, apply!!
   while (length(idx_subsets) > 0) {
@@ -84,7 +85,7 @@
 
     S_subsets <- .is_subset_sparse(LHS, S)
 
-    idx_subsets <- which(S_subsets)
+    idx_subsets <- S_subsets@i + 1
 
   }
 
