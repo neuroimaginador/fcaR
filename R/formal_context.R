@@ -86,7 +86,7 @@ formal_context <- R6::R6Class(
       if (quality) {
 
         quality(R) <- interestMeasure(R,
-                                      transactions = as(self$I, "itemMatrix"))
+                                      transactions = as(as(self$I, "ngCMatrix"), "transactions"))
 
       }
 
