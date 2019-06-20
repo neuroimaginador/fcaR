@@ -37,8 +37,8 @@ is_subset_C <- function(X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P) {
     .Call(`_fcaR_is_subset_C`, X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P)
 }
 
-intersects_C <- function(X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P) {
-    .Call(`_fcaR_intersects_C`, X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P)
+intersects_C <- function(X_P, X_I, X_DIM, Y_P, Y_I, Y_DIM, OUT_P) {
+    .Call(`_fcaR_intersects_C`, X_P, X_I, X_DIM, Y_P, Y_I, Y_DIM, OUT_P)
 }
 
 is_equal_set_C <- function(X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P) {

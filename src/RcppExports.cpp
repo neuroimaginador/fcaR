@@ -131,22 +131,19 @@ BEGIN_RCPP
 END_RCPP
 }
 // intersects_C
-SEXP intersects_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, SEXP Y_DIM, SEXP Y, SEXP PROPER, SEXP OUT_P);
-RcppExport SEXP _fcaR_intersects_C(SEXP X_PSEXP, SEXP X_ISEXP, SEXP X_DIMSEXP, SEXP XSEXP, SEXP Y_PSEXP, SEXP Y_ISEXP, SEXP Y_DIMSEXP, SEXP YSEXP, SEXP PROPERSEXP, SEXP OUT_PSEXP) {
+SEXP intersects_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP Y_P, SEXP Y_I, SEXP Y_DIM, SEXP OUT_P);
+RcppExport SEXP _fcaR_intersects_C(SEXP X_PSEXP, SEXP X_ISEXP, SEXP X_DIMSEXP, SEXP Y_PSEXP, SEXP Y_ISEXP, SEXP Y_DIMSEXP, SEXP OUT_PSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type X_P(X_PSEXP);
     Rcpp::traits::input_parameter< SEXP >::type X_I(X_ISEXP);
     Rcpp::traits::input_parameter< SEXP >::type X_DIM(X_DIMSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type X(XSEXP);
     Rcpp::traits::input_parameter< SEXP >::type Y_P(Y_PSEXP);
     Rcpp::traits::input_parameter< SEXP >::type Y_I(Y_ISEXP);
     Rcpp::traits::input_parameter< SEXP >::type Y_DIM(Y_DIMSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type Y(YSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type PROPER(PROPERSEXP);
     Rcpp::traits::input_parameter< SEXP >::type OUT_P(OUT_PSEXP);
-    rcpp_result_gen = Rcpp::wrap(intersects_C(X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P));
+    rcpp_result_gen = Rcpp::wrap(intersects_C(X_P, X_I, X_DIM, Y_P, Y_I, Y_DIM, OUT_P));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -251,7 +248,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compare_equality_other", (DL_FUNC) &_fcaR_compare_equality_other, 3},
     {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
-    {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 10},
+    {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},
     {"_fcaR_is_equal_set_C", (DL_FUNC) &_fcaR_is_equal_set_C, 10},
     {"_fcaR_is_subset_binary", (DL_FUNC) &_fcaR_is_subset_binary, 8},
     {"_fcaR_apply_F_colwise", (DL_FUNC) &_fcaR_apply_F_colwise, 3},

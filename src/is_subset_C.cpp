@@ -135,7 +135,7 @@ void populateMatchesEqual(int* matches_for_y, int* x_i, int* x_p, double* x, int
 
 }
 
-void populateMatchesIntersect(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p, int* y_i, double* y, int y_index, int num_rows, int proper){
+void populateMatchesIntersect(int* matches_for_y, int* x_i, int* x_p, int* y_p, int* y_i, int y_index, int num_rows){
 
   int y_start_index = x_p[y_index], y_end_index = x_p[y_index+1];
 
@@ -174,10 +174,6 @@ void populateMatchesIntersect(int* matches_for_y, int* x_i, int* x_p, double* x,
       matches_for_y[num_matches++] = x_index;
 
     }
-
-    // if(curr_col == y_end_index){
-    //   matches_for_y[num_matches++] = x_index;
-    // }
 
   }
 
@@ -262,15 +258,10 @@ SEXP is_subset_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, SEX
 }
 
 // [[Rcpp::export]]
-SEXP intersects_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, SEXP Y_DIM, SEXP Y, SEXP PROPER, SEXP OUT_P){
+SEXP intersects_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP Y_P, SEXP Y_I, SEXP Y_DIM, SEXP OUT_P){
 
   int* x_p = INTEGER(X_P);
   int* x_i = INTEGER(X_I);
-
-  double* x = REAL(X);
-  double* y = REAL(Y);
-
-  int proper = LOGICAL(PROPER)[0];
 
   int* y_p = INTEGER(Y_P);
   int* y_i = INTEGER(Y_I);
@@ -278,10 +269,6 @@ SEXP intersects_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, SE
   int x_p_length = INTEGER(X_DIM)[1];
 
   int y_p_length = INTEGER(Y_DIM)[1];
-
-  /* MFH: unused
-   * int y_i_max    = INTEGER(Y_DIM)[0];
-   */
 
   int output_i_length = y_p_length;
   int output_i_last   = -1;
@@ -292,10 +279,10 @@ SEXP intersects_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, SE
 
   int* y_matches = (int*)malloc((output_i_length+1) * sizeof(int));
 
-  //For every item in y, list all matches in x
+  //For every item in y, list all intersections in x
   for(int y_index = 0; y_index < x_p_length; y_index++){
 
-    populateMatchesIntersect(y_matches, x_i, x_p, x, y_p, y_i, y, y_index, y_p_length, proper);
+    populateMatchesIntersect(y_matches, x_i, x_p, y_p, y_i, y_index, y_p_length);
 
     curr_p += copyMatches(y_matches, &output_i, &output_i_length, &output_i_last);
     output_p[y_index+1] = curr_p;
