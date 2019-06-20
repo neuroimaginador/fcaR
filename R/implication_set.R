@@ -30,6 +30,21 @@ implication_set <- R6::R6Class(
 
     },
 
+    to_arules = function() {
+
+      LHS <- as(private$lhs_matrix, "ngCMatrix")
+      LHS <- as(LHS, "itemMatrix")
+      itemLabels(LHS) <- private$attributes
+
+      RHS <- as(private$rhs_matrix, "ngCMatrix")
+      RHS <- as(RHS, "itemMatrix")
+      itemLabels(RHS) <- private$attributes
+
+      rules <- new("rules", lhs = LHS, rhs = RHS)
+
+      return(rules)
+
+    },
 
     # Number of implications in the set
     length = function() {
