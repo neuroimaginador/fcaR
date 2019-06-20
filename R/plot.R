@@ -1,3 +1,4 @@
+#' @import stringr
 .sparse_set_to_string <- function(S, attributes) {
 
   idx <- which(S > 0)
@@ -7,9 +8,11 @@
     A <- S[idx]
     att <- attributes[idx]
 
-    paste0("{",
-           stringr::str_flatten(paste0(att, " [", A, "]"),
+    tmp <- paste0("{",
+           str_flatten(paste0(att, " [", A, "]"),
                                 collapse = ", "), "}")
+
+    gsub(pattern = "( \\[1\\])", replacement = "", x = tmp)
 
   } else {
 
