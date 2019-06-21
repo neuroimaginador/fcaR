@@ -1,4 +1,4 @@
-.process_batch <- function(LHS, RHS, rules, verbose = TRUE) {
+.process_batch <- function(LHS, RHS, attributes, rules, verbose = TRUE) {
 
   # Initialize results
   new_LHS <- Matrix(0,
@@ -14,7 +14,7 @@
   my_functions <- c("generalization" = .remove_redundancies_lhs_rhs_general,
                     "composition"    = .compose_lhs_rhs_equal,
                     "reduction"      = .reduce_lhs_rhs,
-                    "simplification" = .simplify_lhs_rhs,
+                    "simplification" = .simplify2_lhs_rhs,
                     "simpl_ijar"     = .simplify_IJAR_lhs_rhs)
 
   idx_rules <- match(rules, names(my_functions))
@@ -43,7 +43,7 @@
     current_rule <- rules_to_apply[[j]]
 
     tic("rule")
-    L <- current_rule(old_LHS, old_RHS)
+    L <- current_rule(old_LHS, old_RHS, attributes)
 
     rule_time <- toc(quiet = TRUE)
     old_LHS <- L$lhs

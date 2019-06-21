@@ -1,4 +1,4 @@
-.reduce_lhs_rhs <- function(LHS, RHS) {
+.reduce_lhs_rhs <- function(LHS, RHS, attributes) {
 
   LHS <- as.matrix(LHS)
   RHS <- as.matrix(RHS)

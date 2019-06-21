@@ -1,4 +1,4 @@
-.compose_lhs_rhs_equal <- function(LHS, RHS) {
+.compose_lhs_rhs_equal <- function(LHS, RHS, attributes) {
 
   # logic_name <- tolower(fuzzy_logic()$name)
 

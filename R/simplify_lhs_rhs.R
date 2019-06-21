@@ -3,12 +3,7 @@
 
   LHS_subsets <- t(.is_subset_sparse(LHS))
 
-  logic_name <- tolower(fuzzy_logic()$name)
-
-  intersections <-
-    apply_F_elementwise(x = as.matrix(LHS),
-                        y = as.matrix(RHS),
-                        type = paste0(logic_name, "_T"))
+  intersections <- self_intersection_sparse(LHS, RHS)
 
   new_LHS <- Matrix(0,
                     nrow = nrow(LHS),
@@ -24,7 +19,7 @@
   condition1 <- colSums(LHS_subsets) > 1
 
   # This gives those LHS which are disjoint to their RHS
-  condition2 <- colSums(intersections) == 0
+  condition2 <- intersections == 0
 
   are_subset <- which(condition1 & condition2)
 

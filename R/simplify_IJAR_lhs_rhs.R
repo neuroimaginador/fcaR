@@ -1,5 +1,5 @@
 # A(C-B) -> D (only for C not disjoint to B)
-.simplify_IJAR_lhs_rhs <- function(LHS, RHS) {
+.simplify_IJAR_lhs_rhs <- function(LHS, RHS, attributes) {
 
   intersections <- .intersects_sparse(RHS, LHS)
 

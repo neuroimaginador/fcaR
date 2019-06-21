@@ -1,4 +1,4 @@
-.remove_redundancies_lhs_rhs_general <- function(LHS, RHS) {
+.remove_redundancies_lhs_rhs_general <- function(LHS, RHS, attributes) {
 
   # A -> B and C -> D,
   # with A subset of C (axiom C -> A)

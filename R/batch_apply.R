@@ -1,6 +1,6 @@
 #' @import tictoc
 #' @import parallel
-.batch_apply <- function(LHS, RHS,
+.batch_apply <- function(LHS, RHS, attributes,
                          rules = c("generalization",
                                    "composition"),
                          batch_size = ncol(LHS),
@@ -46,6 +46,7 @@
 
                     .process_batch(LHS = LHS[, idx[i]:(idx[i + 1] - 1)],
                                    RHS = RHS[, idx[i]:(idx[i + 1] - 1)],
+                                   attributes = attributes,
                                    rules = rules,
                                    verbose = verbose)
 
