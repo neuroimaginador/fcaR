@@ -106,12 +106,15 @@ implication_set <- R6::R6Class(
     },
 
     apply_rules = function(rules = c("composition", "generalization"),
-                           batch_size = 25000L) {
+                           batch_size = 25000L,
+                           reorder= TRUE) {
 
       L <- .batch_apply(LHS = private$lhs_matrix,
                         RHS = private$rhs_matrix,
+                        attributes = private$attributes,
                         rules = rules,
-                        batch_size = batch_size)
+                        batch_size = batch_size,
+                        reorder = reorder)
 
       private$lhs_matrix <- L$lhs
       private$rhs_matrix <- L$rhs
@@ -155,14 +158,29 @@ implication_set <- R6::R6Class(
 
       idx_attr <- match(attr_filter, private$attributes)
 
-      idx <- which(RHS[idx_attr, ])
+      if (length(idx_attr) > 1) {
 
-      imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
-                                 attributes = private$attributes,
-                                 lhs = Matrix(LHS[, idx], sparse = TRUE),
-                                 rhs = Matrix(RHS[, idx], sparse = TRUE))
+        idx <- which(colSums(RHS[idx_attr, ]) > 0)
 
-      return(imp)
+      } else {
+
+        idx <- which(RHS[idx_attr, ] > 0)
+
+      }
+
+      if (length(idx) > 0) {
+
+        imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
+                                   attributes = private$attributes,
+                                   lhs = Matrix(LHS[, idx], sparse = TRUE),
+                                   rhs = Matrix(RHS[, idx], sparse = TRUE))
+
+        return(imp)
+
+      }
+
+      warning("No RHS with that attribute, sorry.")
+      return(invisible(NULL))
 
 
     }
