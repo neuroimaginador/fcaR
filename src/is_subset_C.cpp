@@ -3,8 +3,10 @@
  Author: Ian Johnson
  */
 
-#include <R.h>
-#include <Rdefines.h>
+// #include <R.h>
+// #include <Rdefines.h>
+#include <Rcpp.h>
+using namespace Rcpp;
 
 
 void populateMatches(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p, int* y_i, double* y, int y_index, int num_rows, int proper){
@@ -100,7 +102,7 @@ void populateMatchesEqual(int* matches_for_y, int* x_i, int* x_p, double* x, int
 
   for(int x_index = 0; x_index < num_rows; x_index++){
 
-    int loc = y_p[x_index], end_loc = y_p[x_index+1], curr_col;
+    int loc = y_p[x_index], end_loc = y_p[x_index+1];
 
     // To be equal, they have to have the same number of nnz rows.
     if (end_loc - loc != y_end_index - y_start_index) continue;
@@ -135,6 +137,71 @@ void populateMatchesEqual(int* matches_for_y, int* x_i, int* x_p, double* x, int
 
 }
 
+// [[Rcpp::export]]
+IntegerVector self_intersection_C(IntegerVector x_i,
+                                  IntegerVector x_p,
+                                  IntegerVector y_i,
+                                  IntegerVector y_p) {
+
+  int num_rows = y_p.size() - 1;
+  IntegerVector res(num_rows);
+
+  for (int i = 0; i < num_rows; i++) {
+
+    int y_start_index = x_p[i], y_end_index = x_p[i + 1];
+    int loc = y_p[i], end_loc = y_p[i + 1], curr_col;
+
+    curr_col = y_start_index;
+
+    bool has_intersection = false;
+    bool out = false;
+
+    for (int i1 = y_start_index; i1 < y_end_index; i1++) {
+
+      for (int i2 = loc; i2 < end_loc; i2++) {
+
+        if (y_i[i2] == x_i[i1]) {
+
+          has_intersection = true;
+          out = true;
+          break;
+
+        }
+
+      }
+
+      if (out) break;
+
+    }
+
+    // while (loc < end_loc) {
+    //
+    //   if (y_i[loc] == x_i[curr_col]) {
+    //
+    //     has_intersection = true;
+    //
+    //     break;
+    //
+    //   } else curr_col++;
+    //
+    //   if(curr_col == y_end_index) break;
+    //
+    //   if (x_i[curr_col] >= y_i[loc]) {
+    //
+    //     loc++;
+    //
+    //   }
+    //
+    // }
+
+    if (has_intersection) res[i] = 1;
+
+  }
+
+  return(res);
+
+}
+
 void populateMatchesIntersect(int* matches_for_y, int* x_i, int* x_p, int* y_p, int* y_i, int y_index, int num_rows){
 
   int y_start_index = x_p[y_index], y_end_index = x_p[y_index+1];
@@ -148,26 +215,45 @@ void populateMatchesIntersect(int* matches_for_y, int* x_i, int* x_p, int* y_p, 
     curr_col = y_start_index;
 
     bool has_intersection = false;
+    bool out = false;
 
-    while(loc < end_loc){
+    for (int i1 = y_start_index; i1 < y_end_index; i1++) {
 
-      if (y_i[loc] == x_i[curr_col]) {
+      for (int i2 = loc; i2 < end_loc; i2++) {
 
-        has_intersection = true;
+        if (y_i[i2] == x_i[i1]) {
 
-        break;
+          has_intersection = true;
+          out = true;
+          break;
 
-      } else curr_col++;
-
-      if(curr_col == y_end_index) break;
-
-      if (x_i[curr_col] >= y_i[loc]) {
-
-        loc++;
+        }
 
       }
 
+      if (out) break;
+
     }
+
+    // while(loc < end_loc){
+    //
+    //   if (y_i[loc] == x_i[curr_col]) {
+    //
+    //     has_intersection = true;
+    //
+    //     break;
+    //
+    //   } else curr_col++;
+    //
+    //   if(curr_col == y_end_index) break;
+    //
+    //   if (x_i[curr_col] >= y_i[loc]) {
+    //
+    //     loc++;
+    //
+    //   }
+    //
+    // }
 
     if (has_intersection) {
 
@@ -246,7 +332,7 @@ SEXP is_subset_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, SEX
 
   free(y_matches);
 
-  SEXP OUT_I = allocVector(INTSXP, output_i_last+1);
+  SEXP OUT_I = Rf_allocVector(INTSXP, output_i_last+1);
   for(int i = 0; i < output_i_last+1; i++){
     INTEGER(OUT_I)[i] = output_i[i];
   }
@@ -291,7 +377,7 @@ SEXP intersects_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP Y_P, SEXP Y_I, SEXP Y_DIM
 
   free(y_matches);
 
-  SEXP OUT_I = allocVector(INTSXP, output_i_last+1);
+  SEXP OUT_I = Rf_allocVector(INTSXP, output_i_last+1);
   for(int i = 0; i < output_i_last+1; i++){
     INTEGER(OUT_I)[i] = output_i[i];
   }
@@ -345,7 +431,7 @@ SEXP is_equal_set_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, 
 
   free(y_matches);
 
-  SEXP OUT_I = allocVector(INTSXP, output_i_last+1);
+  SEXP OUT_I = Rf_allocVector(INTSXP, output_i_last+1);
   for(int i = 0; i < output_i_last+1; i++){
     INTEGER(OUT_I)[i] = output_i[i];
   }

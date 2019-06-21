@@ -110,6 +110,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// self_intersection_C
+IntegerVector self_intersection_C(IntegerVector x_i, IntegerVector x_p, IntegerVector y_i, IntegerVector y_p);
+RcppExport SEXP _fcaR_self_intersection_C(SEXP x_iSEXP, SEXP x_pSEXP, SEXP y_iSEXP, SEXP y_pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type x_i(x_iSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type x_p(x_pSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type y_i(y_iSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type y_p(y_pSEXP);
+    rcpp_result_gen = Rcpp::wrap(self_intersection_C(x_i, x_p, y_i, y_p));
+    return rcpp_result_gen;
+END_RCPP
+}
 // is_subset_C
 SEXP is_subset_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, SEXP Y_DIM, SEXP Y, SEXP PROPER, SEXP OUT_P);
 RcppExport SEXP _fcaR_is_subset_C(SEXP X_PSEXP, SEXP X_ISEXP, SEXP X_DIMSEXP, SEXP XSEXP, SEXP Y_PSEXP, SEXP Y_ISEXP, SEXP Y_DIMSEXP, SEXP YSEXP, SEXP PROPERSEXP, SEXP OUT_PSEXP) {
@@ -247,6 +261,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compare_elements_other", (DL_FUNC) &_fcaR_compare_elements_other, 3},
     {"_fcaR_compare_equality_other", (DL_FUNC) &_fcaR_compare_equality_other, 3},
     {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
+    {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},
     {"_fcaR_is_equal_set_C", (DL_FUNC) &_fcaR_is_equal_set_C, 10},

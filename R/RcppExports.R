@@ -33,6 +33,10 @@ flatten_sparse_C <- function(p, i, x, dims) {
     .Call(`_fcaR_flatten_sparse_C`, p, i, x, dims)
 }
 
+self_intersection_C <- function(x_i, x_p, y_i, y_p) {
+    .Call(`_fcaR_self_intersection_C`, x_i, x_p, y_i, y_p)
+}
+
 is_subset_C <- function(X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P) {
     .Call(`_fcaR_is_subset_C`, X_P, X_I, X_DIM, X, Y_P, Y_I, Y_DIM, Y, PROPER, OUT_P)
 }
