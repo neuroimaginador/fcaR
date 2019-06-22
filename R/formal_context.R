@@ -126,7 +126,7 @@ formal_context <- R6::R6Class(
     # Plot the formal context table
     plot_context = function() {
 
-      color_function <- colour_ramp(brewer.pal(11, "Greys"))
+      color_function <- colour_ramp(brewer.pal(9, "Greys"))
       heatmap(t(as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")
