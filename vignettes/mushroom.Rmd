@@ -1,0 +1,150 @@
+---
+title: "Simplification Logic for Mushroom Dataset"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mushroom}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fcaR)
+```
+
+# Introduction
+
+This is a simple example of some of the functionalities introduced in package `fcaR`:
+
+- Import from/export to `arules` format.
+- Removal of redundancies in implications.
+- Computation of closures.
+
+# Data
+
+In this example, we'll use the well-known [_Mushroom_ dataset](http://archive.ics.uci.edu/ml/datasets/Mushroom), from the `arules` package. 
+
+We'll use the _a priori_ algorithm to extract a large number of implications from the dataset.
+
+```{r}
+library(arules)
+
+data("Mushroom", package = "arules")
+
+mush <- apriori(Mushroom, parameter = list(conf = 1))
+```
+
+The number of implications extracted by the algorithm (with this configuration) is `length(mush) = ` `r length(mush)`.
+
+# Preprocessing
+
+Next step is to remove the redundant rules in the implications set. To this end, let us use the `is.redundant()` function in `arules`.
+
+```{r}
+system.time(
+  idx_redundant <- is.redundant(mush)
+)
+
+mush_clean <- mush[!idx_redundant]
+```
+After this, the number of implications is `length(mush_clean) = ` `r length(mush_clean)`, that is, just a `r round(length(mush_clean) / length(mush) * 100, 3)` percent of the original ruleset.
+
+# Importing in fcaR
+
+To use the functionalities in this package, one must import all objects (the formal context and implications above) into our data model.
+
+This is accomplished by just typing:
+```{r}
+fc <- formal_context$new(I = Mushroom)
+
+fc$add_implications(mush_clean)
+```
+
+We can check some of the properties of the ruleset:
+
+```{r}
+# Cadinality
+fc$implications$cardinality()
+
+# Rule size
+sizes <- fc$implications$size()
+
+# Mean size for LHS and RHS
+colMeans(sizes)
+```
+
+# Applying Rules
+
+We can improve the redudancy removal performed by `arules`, using some simplification rules. Currently, the following rules are implemented:
+
+- Composition.
+- Generalization.
+- Simplification.
+
+We can apply them one by one, just to see their effect, or we could use them sequentially.
+
+```{r}
+# Use composition to reduce the number of implications
+fc$implications$apply_rules(rules = c("composition"))
+
+fc$implications$cardinality()
+sizes <- fc$implications$size()
+colMeans(sizes)
+
+# Simplification
+fc$implications$apply_rules(rules = c("simplification"))
+
+fc$implications$cardinality()
+sizes <- fc$implications$size()
+colMeans(sizes)
+
+# At this moment, we're at a fixed point, but we could apply
+# some more rules if needed:
+fc$implications$apply_rules(rules = c("composition",
+                                      "generalization",
+                                      "simplification"))
+```
+
+Also, we can compute the support of each implication:
+```{r}
+supp <- fc$get_implication_support()
+
+head(supp)
+```
+
+
+# Computing Closure
+
+Given a fuzzy set representd by a sparse matrix, we can compute its closure wrt the implications in the ruleset.
+
+```{r}
+# LHS of the fifth rule
+A <- fc$implications$get_LHS_matrix()[, 5]
+# Associated attributes
+print_set(A, fc$attributes)
+
+# Compute the closure
+cl <- fc$implications$compute_closure(A)
+# Associated attributes
+print_set(cl, fc$attributes)
+```
+
+
+# Re-Exporting to `arules`
+
+After this phase of redudancy removal, we can export the obtained ruleset to `arules format`.
+
+```{r}
+R <- fc$convert_implications_to_arules()
+
+R
+
+class(R)
+```
+
