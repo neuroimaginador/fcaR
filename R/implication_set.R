@@ -1,4 +1,5 @@
-#' import sets Matrix
+#' @import Matrix
+#' @export
 implication_set <- R6::R6Class(
 
   classname = "ImplicationSet",
@@ -51,13 +52,6 @@ implication_set <- R6::R6Class(
 
     },
 
-    # Number of implications in the set
-    length = function() {
-
-      ncol(private$lhs_matrix)
-
-    },
-
     # Add new implication
     add_implication = function(lhs, rhs) {
 
@@ -86,13 +80,35 @@ implication_set <- R6::R6Class(
 
     },
 
+    # Number of implications in the set
+    cardinality = function() {
+
+      ncol(private$lhs_matrix)
+
+    },
+
+    size = function() {
+
+      lhs_size <- colSums(private$lhs_matrix)
+      rhs_size <- colSums(private$rhs_matrix)
+
+      return(cbind(LHS = lhs_size, RHS = rhs_size))
+
+    },
+
     # Compute the sintactic closure of a set wrt the implications
     compute_closure = function(S, reduce = FALSE) {
 
-      .compute_closure(S,
-                       LHS = private$lhs_matrix,
-                       RHS = private$rhs_matrix,
-                       reduce = reduce)
+      S <- Matrix(S, sparse = TRUE)
+
+      cl <- .compute_closure(S,
+                             LHS = private$lhs_matrix,
+                             RHS = private$rhs_matrix,
+                             reduce = reduce)
+
+      rownames(cl) <- private$attributes
+
+      return(cl)
 
     },
 
