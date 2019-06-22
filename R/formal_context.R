@@ -26,29 +26,47 @@ formal_context <- R6::R6Class(
     initialize = function(I,
                           grades_set = sort(unique(as.vector(I)))) {
 
-      stopifnot(length(colnames(I)) == ncol(I))
+      # Transform the formal context to sparse
+      if (inherits(I, "transactions")) {
 
-      # Let us invent object names if not provided
-      if (!(length(rownames(I)) == nrow(I))) {
+        attributes <- I@itemInfo$labels
+        I <- as(I@data, "dgCMatrix")
+        objects <- paste0(seq(ncol(I)))
 
-        rownames(I) <- paste0(seq(nrow(I)))
+      } else {
+
+        attributes <- colnames(I)
+        objects <- rownames(I)
+        I <- as(Matrix(t(I),
+                  sparse = TRUE), "dgCMatrix")
 
       }
 
-      # Transform the formal context to sparse
-      self$I <- as(Matrix(t(I),
-                          sparse = TRUE), "dgCMatrix")
+      self$I <- I
       self$grades_set <- grades_set
 
-      self$objects <- rownames(I)
-      self$attributes <- colnames(I)
+      self$objects <- colnames(I)
+      self$attributes <- attributes
 
     },
 
     # Add a precomputed implication set
     add_implications = function(impl_set) {
 
-      self$implications <- impl_set$clone()
+      if (inherits(impl_set, "rules")) {
+
+        # If it comes from arules
+        implications <- implication_set$new()
+        implications$from_arules(mush_clean)
+
+        self$implications <- implications$clone()
+
+      } else {
+
+        # If it's already an implication set.
+        self$implications <- impl_set$clone()
+
+      }
 
     },
 
