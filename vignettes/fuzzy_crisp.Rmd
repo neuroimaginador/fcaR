@@ -57,22 +57,29 @@ rownames(I) <- objects
 
 ## Computing Implications and Concepts
 
+Once we create the formal context object, with the previous data matrix I, we can compute all concepts and implications using Ganter's algorithm:
 ```{r}
 fc <- formal_context$new(I)
 
+# Compute implications
 fc$extract_implications_concepts(verbose = FALSE)
+
+# Cardinality and mean size in the ruleset
 fc$implications$cardinality()
 sizes <- fc$implications$size()
 colMeans(sizes)
 ```
 
+The obtained implications are:
 ```{r}
 fc$implications
 ```
 
 ## Visualization
 
-```{r}
+We provide functions to plot both the concept lattice and the formal context:
+
+```{r fig.width=7.5}
 # Visualize the concept lattice
 fc$plot_lattice()
 # And the formal context
@@ -81,23 +88,26 @@ fc$plot_context()
 
 ## Redudancy Removal
 
+Let us apply some simplifcation rules:
 ```{r}
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization",
                                       "simplification"))
 
+# Compute cardinality and size in the transformed ruleset:
 fc$implications$cardinality()
 sizes <- fc$implications$size()
 colMeans(sizes)
 ```
 
+The transformed ruleset:
 ```{r}
 fc$implications
 ```
 
 # Fuzzy version
 
-The crisp version of the data appears in Table 2 in the mentioned paper.
+The fuzzy version of the data appears in Table 2 in the mentioned paper.
 
 ```{r}
 objects <- paste0("O", 1:6)
@@ -121,22 +131,29 @@ rownames(I) <- objects
 
 ## Computing Implications and Concepts
 
+As before, we build the formal context object and compute all implications:
+
 ```{r}
 fc <- formal_context$new(I)
 
+# Compute
 fc$extract_implications_concepts(verbose = FALSE)
+
+# Some properties of the ruleset
 fc$implications$cardinality()
 sizes <- fc$implications$size()
 colMeans(sizes)
 ```
 
+The extracted ruleset is:
 ```{r}
 fc$implications
 ```
 
 ## Visualization
 
-```{r}
+Let us plot the concept lattice and the formal context.
+```{r fig.width=7.5}
 # Visualize the concept lattice
 fc$plot_lattice()
 # And the formal context
@@ -145,13 +162,14 @@ fc$plot_context()
 
 ## Redudancy Removal
 
+Let us apply some functions to remove redudancies in the set of implications:
+
 ```{r}
 fc$implications$apply_rules(rules = c("composition"), 
                             reorder = FALSE)
 fc$implications$cardinality()
 sizes <- fc$implications$size()
 colMeans(sizes)
-
 
 fc$implications$apply_rules(rules = c("simplification"), 
                             reorder = FALSE)
@@ -167,7 +185,21 @@ sizes <- fc$implications$size()
 colMeans(sizes)
 ```
 
+The reduced ruleset is:
 ```{r}
 fc$implications
+```
+
+## Closures
+
+Let us show how to compute the closure of a set S with respect to the implication set.
+```{r}
+S <- build_set(attrs = c("P2", "P3"),
+               values = c(0.5, 0.5),
+               fc$attributes)
+print_set(S, fc$attributes)
+
+cl <- fc$implications$compute_closure(S)
+print_set(cl, fc$attributes)
 ```
 
