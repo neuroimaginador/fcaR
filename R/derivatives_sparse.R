@@ -1,3 +1,4 @@
+#' @importFrom sets .I.
 .intent_sparse <- function(A, I) {
 
   # Use the derivation expression
@@ -23,6 +24,7 @@
 
 }
 
+#' @importFrom sets .I.
 .extent_sparse <- function(B, I) {
 
   # Compute the memberships of the derived extention

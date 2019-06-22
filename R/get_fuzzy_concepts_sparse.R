@@ -1,4 +1,3 @@
-#' @import sets
 .get_fuzzy_concepts_sparse <- function(I, grades_set, verbose = FALSE) {
 
   empty <- Matrix(0, ncol = 1, nrow = ncol(I))

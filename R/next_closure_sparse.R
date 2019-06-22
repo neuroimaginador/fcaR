@@ -1,6 +1,5 @@
-#' @import sets
 .next_closure_sparse <- function(B, I, grades_set,
-                                 closure_function = .closure) {
+                                 closure_function = .closure_sparse) {
 
   attributes <- colnames(I)
 

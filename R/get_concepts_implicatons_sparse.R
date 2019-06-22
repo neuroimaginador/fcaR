@@ -1,4 +1,3 @@
-#' @import sets
 .get_concepts_implications_sparse <- function(I,
                                               grades_set,
                                               verbose = FALSE) {
