@@ -1,13 +1,8 @@
 .reduce_lhs_rhs <- function(LHS, RHS, attributes) {
 
-  LHS <- as.matrix(LHS)
-  RHS <- as.matrix(RHS)
+  RHS <- sparse_set_difference(RHS, LHS)
 
-  RHS <- apply_F_elementwise(x = RHS,
-                             y = LHS,
-                             type = "set_diff")
-
-  return(list(lhs = Matrix(LHS, sparse = TRUE),
-              rhs = Matrix::Matrix(RHS, sparse = TRUE)))
+  return(list(lhs = LHS,
+              rhs = RHS))
 
 }
