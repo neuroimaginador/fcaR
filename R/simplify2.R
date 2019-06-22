@@ -82,11 +82,13 @@
 
     }
 
-    new_subsets <- t(.is_subset_sparse(
-      Matrix(LHS[, my_idx], sparse = TRUE),
-      LHS))
+    LHS_subsets <- t(.is_subset_sparse(LHS))
 
-    LHS_subsets[, my_idx] <- new_subsets
+    # new_subsets <- t(.is_subset_sparse(
+    #   Matrix(LHS[, my_idx], sparse = TRUE),
+    #   LHS))
+    #
+    # LHS_subsets[, my_idx] <- new_subsets
 
     condition1 <- colSums(LHS_subsets) > 1
 
