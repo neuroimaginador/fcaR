@@ -45,28 +45,32 @@
 
       }
 
-      C <- as.matrix(LHS)
-      D <- as.matrix(RHS)
+      C <- LHS
+      D <- RHS
 
-      CD <- apply_F_rowwise_xy(x = C,
-                               y = D,
+      CD <- apply_F_rowwise_xy(x = as.matrix(C),
+                               y = as.matrix(D),
                                type = paste0(tolower(fuzzy_logic()$name),
                                              "_S"))
 
-      B <- as.matrix(S)
+      B <- S
 
       intersections <- .intersects_sparse(x = S,
                                           y = Matrix(CD,
                                                      sparse = TRUE))
       idx_not_empty <- which(colSums(intersections) > 0)
 
-      C_B <- apply_F_rowwise_xy(x = C[, idx_not_empty],
-                                y = B,
-                                type = "set_diff")
+      C_B <- sparse_set_difference(C[, idx_not_empty], B)
 
-      D_B <- apply_F_rowwise_xy(x = D[, idx_not_empty],
-                                y = B,
-                                type = "set_diff")
+      # C_B <- apply_F_rowwise_xy(x = C[, idx_not_empty],
+      #                           y = B,
+      #                           type = "set_diff")
+
+      D_B <- sparse_set_difference(D[, idx_not_empty], B)
+
+      # D_B <- apply_F_rowwise_xy(x = D[, idx_not_empty],
+      #                           y = B,
+      #                           type = "set_diff")
 
       idx_zeros <- which(colSums(D_B) == 0)
 
