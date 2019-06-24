@@ -11,3 +11,5 @@
 ^\.travis\.yml$
 ^codecov\.yml$
 ^\.covrignore$
+^doc$
+^Meta$
