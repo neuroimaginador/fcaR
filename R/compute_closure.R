@@ -11,7 +11,17 @@
   # While there are applicable rules, apply!!
   while (length(idx_subsets) > 0) {
 
-    S <- .flatten_union(cbind(RHS[, idx_subsets], S))
+    if (length(idx_subsets) == 1) {
+
+      A <- Matrix(RHS[, idx_subsets], sparse = TRUE)
+
+    } else {
+
+      A <- RHS[, idx_subsets]
+
+    }
+
+    S <- .flatten_union(add_col(A, S))
 
     if (verbose) {
 

@@ -14,9 +14,13 @@
               nrow = n_attributes,
               sparse = TRUE)
 
+  LHS <- NULL
+
+  RHS <- NULL
+
   intents <- list()
-  DGbasis <- implication_set$new(name = "DGbasis",
-                                 attributes = colnames(I))
+  # DGbasis <- implication_set$new(name = "DGbasis",
+  #                                attributes = colnames(I))
 
   A <- .closure_sparse(empty, I)
 
@@ -27,7 +31,10 @@
   if (sum(A) > 0) {
 
     # Add the empty -> A implication
-    DGbasis$add_implication(lhs = empty, rhs = A)
+    # DGbasis$add_implication(lhs = empty, rhs = A)
+
+    LHS <- Matrix(empty, sparse = TRUE)
+    RHS <- Matrix(A, sparse = TRUE)
 
     if (verbose) {
 
@@ -39,10 +46,19 @@
 
   exit_cond <- FALSE
 
+  i <- n_attributes
+  imax <- n_attributes
+
   while (!exit_cond) {
 
-    A <- .next_closure_sparse(A, I, grades_set,
-                              closure_function = DGbasis$compute_closure)
+    .closure_implications <- function(S) {.compute_closure(S, LHS, RHS)}
+
+    # A <- .next_closure_sparse(A, I, grades_set,
+    #                           closure_function = DGbasis$compute_closure)
+
+    A <- .next_closure_sparse(A, i, imax,
+                              grades_set,
+                              closure_function = .closure_implications)
 
     B <- .closure_sparse(A, I)
 
@@ -72,13 +88,37 @@
       }
 
       # Add the A -> B\A implication
-      DGbasis$add_implication(lhs = A, rhs = rhs)
+      # DGbasis$add_implication(lhs = A, rhs = rhs)
+
+      if (is.null(LHS)) {
+
+        LHS <- Matrix(A, sparse = TRUE)
+
+      } else {
+
+        LHS <- add_col(LHS, A)
+
+      }
+
+      if (is.null(RHS)) {
+
+        RHS <- Matrix(rhs, sparse = TRUE)
+
+      } else {
+
+        RHS <- add_col(RHS, rhs)
+
+      }
 
     }
 
     exit_cond <- all(A == Y)
 
   }
+
+  DGbasis <- implication_set$new(name = "DGbasis",
+                                 attributes = colnames(I),
+                                 lhs = LHS, rhs = RHS)
 
   concepts <- lapply(intents, function(b) {
 

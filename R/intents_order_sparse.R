@@ -1,9 +1,6 @@
 .is_set_preceding_i_j_sparse <- function(B,
                                          C,
-                                         attr_i, grade_i,
-                                         I) {
-  attributes <- colnames(I)
-  a_i <- which(attributes == attr_i)
+                                         a_i, grade_i) {
 
   ms_B <- B[a_i]
 

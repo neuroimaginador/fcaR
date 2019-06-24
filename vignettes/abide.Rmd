@@ -72,7 +72,10 @@ scaled2 <- scaled_data[, -thk_vars]
 # Implications
 
 ```{r}
-fc <- formal_context$new(scaled2)
+
+idx <- sample(seq(nrow(scaled2)), size = 200)
+
+fc <- formal_context$new(scaled2[idx, ])
 fc$extract_implications_concepts(verbose = FALSE)
 
 fc$implications$cardinality()

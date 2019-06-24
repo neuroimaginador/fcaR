@@ -35,9 +35,10 @@
   i <- is_subset_C(x@p, x@i, x@Dim, my_x,
                    y@p, y@i, y@Dim, my_y,
                    as.logical(proper), p)
-  #
-  t(new("ngCMatrix", p = p, i = i,
-        Dim = c(y@Dim[2], x@Dim[2])))
+
+  M <- build_sparse_matrix(i = i, p = p, dims = c(y@Dim[2], x@Dim[2]))
+
+  t(M)
 
 }
 
