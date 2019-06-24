@@ -21,9 +21,12 @@
 
   exit_cond <- FALSE
 
+  i <- ncol(I)
+  imax <- ncol(I)
+
   while (!exit_cond) {
 
-    B <- .next_closure_sparse(B, I, grades_set,
+    B <- .next_closure_sparse(B, i, imax, grades_set,
                               closure_function = pryr::partial(.closure_sparse,
                                                                I = I))
 
