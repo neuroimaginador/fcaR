@@ -24,6 +24,7 @@
 
   A <- .closure_sparse(empty, I)
 
+  implication_count <- 0
   n_intents <- 1
   intents[[1]] <- A
   n_intents <- n_intents + 1
@@ -35,6 +36,8 @@
 
     LHS <- Matrix(empty, sparse = TRUE)
     RHS <- Matrix(A, sparse = TRUE)
+
+    implication_count <- implication_count + 1
 
     if (verbose) {
 
@@ -51,10 +54,7 @@
 
   while (!exit_cond) {
 
-    .closure_implications <- function(S) {.compute_closure(S, LHS, RHS)}
-
-    # A <- .next_closure_sparse(A, I, grades_set,
-    #                           closure_function = DGbasis$compute_closure)
+    .closure_implications <- function(S) {.compute_closure2(S, LHS, RHS)}
 
     A <- .next_closure_sparse(A, i, imax,
                               grades_set,
@@ -109,6 +109,9 @@
         RHS <- add_col(RHS, rhs)
 
       }
+
+      implication_count <- implication_count + 1
+      print(implication_count)
 
     }
 
