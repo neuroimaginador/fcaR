@@ -167,7 +167,7 @@ implication_set <- R6::R6Class(
 
     },
 
-    filter_by_rhs = function(attr_filter) {
+    filter_by_rhs = function(attr_filter, drop = FALSE) {
 
       RHS <- private$rhs_matrix
       LHS <- private$lhs_matrix
@@ -186,10 +186,28 @@ implication_set <- R6::R6Class(
 
       if (length(idx) > 0) {
 
-        imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
-                                   attributes = private$attributes,
-                                   lhs = Matrix(LHS[, idx], sparse = TRUE),
-                                   rhs = Matrix(RHS[, idx], sparse = TRUE))
+        if (drop) {
+
+          newLHS <- LHS[, idx]
+          newRHS <- RHS[, idx]
+
+          other_idx <- setdiff(seq(nrow(RHS)), idx_attr)
+          newLHS[other_idx, ] <- 0
+          newRHS[other_idx, ] <- 0
+
+          imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
+                                     attributes = private$attributes,
+                                     lhs = Matrix(newLHS, sparse = TRUE),
+                                     rhs = Matrix(newRHS, sparse = TRUE))
+
+        } else {
+
+          imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
+                                     attributes = private$attributes,
+                                     lhs = Matrix(LHS[, idx], sparse = TRUE),
+                                     rhs = Matrix(RHS[, idx], sparse = TRUE))
+
+        }
 
         return(imp)
 
