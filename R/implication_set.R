@@ -192,7 +192,6 @@ implication_set <- R6::R6Class(
           newRHS <- RHS[, idx]
 
           other_idx <- setdiff(seq(nrow(RHS)), idx_attr)
-          newLHS[other_idx, ] <- 0
           newRHS[other_idx, ] <- 0
 
           imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
