@@ -18,6 +18,16 @@
 
   RHS <- NULL
 
+  on.exit({
+
+    DGbasis <- implication_set$new(name = "DGbasis",
+                                   attributes = colnames(I),
+                                   lhs = LHS, rhs = RHS)
+
+    assign("DGbasis", DGbasis, envir = globalenv())
+
+  })
+
   intents <- list()
   # DGbasis <- implication_set$new(name = "DGbasis",
   #                                attributes = colnames(I))
@@ -111,7 +121,8 @@
       }
 
       implication_count <- implication_count + 1
-      print(implication_count)
+
+      if (implication_count %% 10 == 0)   print(implication_count)
 
     }
 
