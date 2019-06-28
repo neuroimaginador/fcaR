@@ -33,8 +33,6 @@
 
     do_not_use[idx_subsets] <- TRUE
 
-    # LHS <- Matrix(LHS[, -idx_subsets], sparse = TRUE)
-    # RHS <- Matrix(RHS[, -idx_subsets], sparse = TRUE)
 
     if (is.null(LHS) || (ncol(LHS) == 0)) {
 
