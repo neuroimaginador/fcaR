@@ -87,13 +87,72 @@ formal_context <- R6::R6Class(
     # concepts and implications
     extract_implications_concepts = function(verbose = FALSE) {
 
-      tmp <- .get_implications_opt(as.matrix(t(self$I)),
+      on.exit({
+
+        DGbasis <- get("DGbasis", envir = globalenv())
+        self$implications <- DGbasis$clone()
+        rm("DGbasis", envir = globalenv())
+
+      })
+
+      tmp <- .get_concepts_implications_sparse(as.matrix(t(self$I)),
                                           self$grades_set,
                                           verbose = verbose)
 
       self$concepts <- tmp[[1]] # concepts
 
       self$implications <- tmp[[2]] # implications
+
+    },
+
+    extract_implications = function(verbose = FALSE) {
+
+      on.exit({
+
+        read_from_fca_env(DGbasis)
+        self$implications <- DGbasis$clone()
+
+        remove_from_fca_env(DGbasis)
+
+      })
+
+      tmp <- .get_implications_in_binary(as.matrix(t(self$I)))
+
+
+      self$implications <- tmp # implications
+
+    },
+
+    run_apriori = function(...) {
+
+      I <- as.matrix(t(self$I))
+
+      grades_set <- sort(unique(as.vector(I)))
+      grades_set <- grades_set[grades_set > 0]
+
+      my_I <- .expand_dataset(I,
+                              grades_set,
+                              implications = FALSE)
+
+      r <- apriori(as(my_I, "transactions"), parameter = c(conf = 1, list(...)))
+
+      r <- r[!is.redundant(r)]
+
+      LHS <- t(as.matrix(r@lhs@data))
+      RHS <- t(as.matrix(r@rhs@data))
+
+      LHS <- .recode_to_original_grades(LHS,
+                                        grades_set)
+      RHS <- .recode_to_original_grades(RHS,
+                                        grades_set)
+
+      LHS <- t(Matrix(LHS, sparse = TRUE))
+      RHS <- t(Matrix(RHS, sparse = TRUE))
+
+      self$implications <- implication_set$new(name = "apriori",
+                                               attributes = self$attributes,
+                                               lhs = LHS,
+                                               rhs = RHS)
 
     },
 
