@@ -216,6 +216,55 @@ implication_set <- R6::R6Class(
       return(invisible(NULL))
 
 
+    },
+
+    filter_by_lhs = function(attr_filter) {
+
+      RHS <- private$rhs_matrix
+      LHS <- private$lhs_matrix
+
+      idx_attr <- match(attr_filter, private$attributes)
+
+      if (length(idx_attr) > 1) {
+
+        idx <- which(colSums(LHS[idx_attr, ]) > 0)
+
+      } else {
+
+        idx <- which(LHS[idx_attr, ] > 0)
+
+      }
+
+      if (length(idx) > 0) {
+
+
+        imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
+                                   attributes = private$attributes,
+                                   lhs = Matrix(LHS[, idx], sparse = TRUE),
+                                   rhs = Matrix(RHS[, idx], sparse = TRUE))
+
+        return(imp)
+
+      }
+
+      warning("No LHS with that attribute, sorry.")
+      return(invisible(NULL))
+
+
+    },
+
+    get_rules = function(idx) {
+
+      RHS <- private$rhs_matrix
+      LHS <- private$lhs_matrix
+
+      imp <- implication_set$new(name = paste0(private$name, "_", paste0(idx)),
+                                 attributes = private$attributes,
+                                 lhs = Matrix(LHS[, idx], sparse = TRUE),
+                                 rhs = Matrix(RHS[, idx], sparse = TRUE))
+
+      return(imp)
+
     }
 
   ),
