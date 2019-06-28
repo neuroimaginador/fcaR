@@ -33,6 +33,22 @@ flatten_sparse_C <- function(p, i, x, dims) {
     .Call(`_fcaR_flatten_sparse_C`, p, i, x, dims)
 }
 
+intent_C <- function(A, I) {
+    .Call(`_fcaR_intent_C`, A, I)
+}
+
+extent_C <- function(A, I) {
+    .Call(`_fcaR_extent_C`, A, I)
+}
+
+closure_C <- function(A, I) {
+    .Call(`_fcaR_closure_C`, A, I)
+}
+
+ganters_algorithm <- function(I, grades_set, n_attributes) {
+    .Call(`_fcaR_ganters_algorithm`, I, grades_set, n_attributes)
+}
+
 self_intersection_C <- function(x_i, x_p, y_i, y_p) {
     .Call(`_fcaR_self_intersection_C`, x_i, x_p, y_i, y_p)
 }
