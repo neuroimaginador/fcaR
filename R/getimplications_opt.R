@@ -18,6 +18,16 @@
 
   RHS <- NULL
 
+  on.exit({
+
+    DGbasis <- implication_set$new(name = "DGbasis",
+                                   attributes = colnames(I),
+                                   lhs = LHS, rhs = RHS)
+
+    assign("DGbasis", DGbasis, envir = globalenv())
+
+  })
+
   intents <- list()
   # DGbasis <- implication_set$new(name = "DGbasis",
   #                                attributes = colnames(I))
@@ -52,8 +62,6 @@
   i <- n_attributes
   imax <- n_attributes
 
-  # browser()
-
   while (!exit_cond) {
 
     .closure_implications <- function(S) {.compute_closure2(S, LHS, RHS)}
@@ -65,11 +73,7 @@
     A <- L$A
     i <- L$i
 
-    # cat(print_set(A, attributes = attributes), "\n")
-    # cat(i, "\n")
-
     B <- .closure_sparse(A, I)
-    # cat(print_set(B, attributes = attributes), "\n")
 
     if (all(A == B)) {
 
@@ -93,32 +97,15 @@
 
       m <- min(c(rhs@i + 1, imax))
 
-      if (m >= i) {
-
-        A <- B
-        i <- imax
-
-      } else {
-
-        if (i < imax) {
-
-          A[(i + 1):imax] <- 0
-
-        }
-
-      }
 
       if (verbose) {
 
         cat("Added implication to basis:\n")
-        # print(A)
         cat(.implication_to_string(lhs = A, rhs = rhs, attributes), "\n")
 
       }
 
       # Add the A -> B\A implication
-      # DGbasis$add_implication(lhs = A, rhs = rhs)
-
       if (is.null(LHS)) {
 
         LHS <- Matrix(A, sparse = TRUE)
@@ -138,6 +125,22 @@
         RHS <- add_col(RHS, rhs)
 
       }
+
+      if (m >= i) {
+
+        A <- B
+        i <- imax
+
+      } else {
+
+        if (i < imax) {
+
+          A[(i + 1):imax] <- 0
+
+        }
+
+      }
+
 
       implication_count <- implication_count + 1
 

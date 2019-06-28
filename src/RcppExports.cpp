@@ -110,6 +110,55 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// intent_C
+NumericVector intent_C(NumericVector A, NumericMatrix I);
+RcppExport SEXP _fcaR_intent_C(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(intent_C(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// extent_C
+NumericVector extent_C(NumericVector A, NumericMatrix I);
+RcppExport SEXP _fcaR_extent_C(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(extent_C(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// closure_C
+NumericVector closure_C(NumericVector A, NumericMatrix I);
+RcppExport SEXP _fcaR_closure_C(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(closure_C(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ganters_algorithm
+List ganters_algorithm(NumericMatrix I, NumericVector grades_set, int n_attributes);
+RcppExport SEXP _fcaR_ganters_algorithm(SEXP ISEXP, SEXP grades_setSEXP, SEXP n_attributesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
+    rcpp_result_gen = Rcpp::wrap(ganters_algorithm(I, grades_set, n_attributes));
+    return rcpp_result_gen;
+END_RCPP
+}
 // self_intersection_C
 IntegerVector self_intersection_C(IntegerVector x_i, IntegerVector x_p, IntegerVector y_i, IntegerVector y_p);
 RcppExport SEXP _fcaR_self_intersection_C(SEXP x_iSEXP, SEXP x_pSEXP, SEXP y_iSEXP, SEXP y_pSEXP) {
@@ -261,6 +310,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compare_elements_other", (DL_FUNC) &_fcaR_compare_elements_other, 3},
     {"_fcaR_compare_equality_other", (DL_FUNC) &_fcaR_compare_equality_other, 3},
     {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
+    {"_fcaR_intent_C", (DL_FUNC) &_fcaR_intent_C, 2},
+    {"_fcaR_extent_C", (DL_FUNC) &_fcaR_extent_C, 2},
+    {"_fcaR_closure_C", (DL_FUNC) &_fcaR_closure_C, 2},
+    {"_fcaR_ganters_algorithm", (DL_FUNC) &_fcaR_ganters_algorithm, 3},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},
