@@ -72,6 +72,8 @@
                               proper = FALSE,
                               transpose = FALSE) {
 
+  library(arules)
+
   if (is.null(y)) y <- x
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
