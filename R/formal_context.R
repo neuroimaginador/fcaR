@@ -37,6 +37,18 @@ formal_context <- R6::R6Class(
 
         attributes <- colnames(I)
         objects <- rownames(I)
+
+        constant_cols <- which(apply(I, 2, max) == apply(I, 2, min))
+
+        if (length(constant_cols) > 0) {
+
+          message(paste0("Removed constant columns: ", str_flatten(attributes[constant_cols], collapse = ", ")))
+
+          I <- I[, -constant_cols]
+          attributes <- attributes[-constant_cols]
+
+        }
+
         I <- as(Matrix(t(I),
                   sparse = TRUE), "dgCMatrix")
 
@@ -109,10 +121,10 @@ formal_context <- R6::R6Class(
 
       on.exit({
 
-        read_from_fca_env(DGbasis)
-        self$implications <- DGbasis$clone()
+        read_from_fca_env(implications)
+        self$implications <- implications$clone()
 
-        remove_from_fca_env(DGbasis)
+        # remove_from_fca_env(implications)
 
       })
 
@@ -133,8 +145,9 @@ formal_context <- R6::R6Class(
       my_I <- .expand_dataset(I,
                               grades_set,
                               implications = FALSE)
+      binaries <- my_I$binaries
 
-      r <- apriori(as(my_I, "transactions"), parameter = c(conf = 1, list(...)))
+      r <- apriori(as(my_I$I, "transactions"), parameter = c(conf = 1, list(...)))
 
       r <- r[!is.redundant(r)]
 
@@ -142,9 +155,11 @@ formal_context <- R6::R6Class(
       RHS <- t(as.matrix(r@rhs@data))
 
       LHS <- .recode_to_original_grades(LHS,
-                                        grades_set)
+                                        grades_set,
+                                        binaries = binaries)
       RHS <- .recode_to_original_grades(RHS,
-                                        grades_set)
+                                        grades_set,
+                                        binaries = binaries)
 
       LHS <- t(Matrix(LHS, sparse = TRUE))
       RHS <- t(Matrix(RHS, sparse = TRUE))

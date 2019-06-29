@@ -1,9 +1,6 @@
 .detect_binary_columns <- function(I) {
 
-  L <- lapply(seq(ncol(I)), function(col) unique(I[, col]))
+  sapply(seq(ncol(I)), function(col) all(sort(unique(I[, col])) == c(0, 1)))
 
-  lengths <- sapply(L, length)
-
-  lengths == 2
 
 }

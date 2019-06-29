@@ -4,13 +4,13 @@
   grades_set <- grades_set[grades_set > 0]
   attributes <- colnames(I)
 
-  if (grades_set[2] == 1) {
+  if (grades_set[1] == 1) {
 
     # Crisp
     #
     on.exit({
 
-      DGbasis <- read_from_fca_env(DGbasis)
+      read_from_fca_env(DGbasis)
 
       implications <- implication_set$new(name = "DGbasis",
                                           attributes = colnames(I),
@@ -31,15 +31,16 @@
 
     imp_basis <- expI$implications
     my_I <- expI$I
+    binaries <- expI$binaries
 
     on.exit({
 
-      DGbasis <- read_from_fca_env(DGbasis)
+      read_from_fca_env(DGbasis)
 
-      LHS <- .recode_to_original_grades(t(DGbasis$get_LHS_matrix()), grades_set = grades_set[grades_set > 0])
+      LHS <- .recode_to_original_grades(t(DGbasis$get_LHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
       LHS <- Matrix(t(LHS), sparse = TRUE)
 
-      RHS <- .recode_to_original_grades(t(DGbasis$get_RHS_matrix()), grades_set = grades_set[grades_set > 0])
+      RHS <- .recode_to_original_grades(t(DGbasis$get_RHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
       RHS <- Matrix(t(RHS), sparse = TRUE)
 
       implications <- implication_set$new(name = "DGbasis",
@@ -52,10 +53,10 @@
 
     r <- .get_dgbasis_binary_opt(my_I, imp_basis = imp_basis)
 
-    LHS <- .recode_to_original_grades(t(r$get_LHS_matrix()), grades_set = grades_set[grades_set > 0])
+    LHS <- .recode_to_original_grades(t(r$get_LHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
     LHS <- Matrix(t(LHS), sparse = TRUE)
 
-    RHS <- .recode_to_original_grades(t(r$get_RHS_matrix()), grades_set = grades_set[grades_set > 0])
+    RHS <- .recode_to_original_grades(t(r$get_RHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
     RHS <- Matrix(t(RHS), sparse = TRUE)
 
     implications <- implication_set$new(name = "",

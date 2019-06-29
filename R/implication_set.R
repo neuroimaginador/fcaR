@@ -117,7 +117,7 @@ implication_set <- R6::R6Class(
       .recommend_attribute(S = S,
                            LHS = private$lhs_matrix,
                            RHS = private$rhs_matrix,
-                           attribute_filter = attribute_filter)
+                           attribute_filter = attribute_filter, attributes = private$attributes)
 
     },
 

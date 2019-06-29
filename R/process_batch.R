@@ -64,6 +64,8 @@
   new_LHS <- cbind(new_LHS, old_LHS)
   new_RHS <- cbind(new_RHS, old_RHS)
 
+  L <- .clean_lhs_rhs(new_LHS, new_RHS)
+
   batch_toc <- toc(quiet = TRUE)
 
   if (verbose) {
@@ -72,6 +74,6 @@
 
   }
 
-  return(list(lhs = new_LHS[, -1], rhs = new_RHS[, -1]))
+  return(list(lhs = L$lhs, rhs = L$rhs))
 
 }
