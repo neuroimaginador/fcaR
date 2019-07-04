@@ -89,6 +89,8 @@
 
       } else {
 
+        # browser()
+
         LHS <- add_col(LHS, A)
 
       }
@@ -114,9 +116,13 @@
     }
 
     # There is any attribute with index <= i in the closure
-    if (sum(rhs[1:i]) > 0) {
+    if (sum(rhs[1:(i - 1)]) > 0) {
 
-      A[i:imax] <- 0
+      if (i < imax) {
+
+        A[(i + 1):imax] <- 0
+
+      }
 
     } else {
 
@@ -172,6 +178,8 @@
 
     }
 
+
+
   }
 
   if (length(n_implications_basis) > 0) {
@@ -181,9 +189,13 @@
 
   }
 
+  n_implications_basis <- c()
+
   DGbasis <- implication_set$new(name = "DGbasis",
                                  attributes = colnames(I),
                                  lhs = LHS, rhs = RHS)
+
+  print(DGbasis)
 
   return(DGbasis)
 
