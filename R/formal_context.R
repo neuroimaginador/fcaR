@@ -128,7 +128,7 @@ formal_context <- R6::R6Class(
 
       })
 
-      tmp <- .get_implications_in_binary(as.matrix(t(self$I)))
+      tmp <- .get_implications_in_binary(as.matrix(t(self$I)), verbose = verbose)
 
 
       self$implications <- tmp # implications

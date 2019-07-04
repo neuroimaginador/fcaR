@@ -1,4 +1,4 @@
-.get_implications_in_binary <- function(I) {
+.get_implications_in_binary <- function(I, verbose = FALSE) {
 
   grades_set <- sort(unique(as.vector(I)))
   grades_set <- grades_set[grades_set > 0]
@@ -21,7 +21,7 @@
 
     })
 
-    implications <- .get_dgbasis_binary_opt(I)
+    implications <- .get_dgbasis_binary_opt(I, verbose = verbose)
 
   } else {
 
@@ -51,7 +51,9 @@
 
     })
 
-    r <- .get_dgbasis_binary_opt(my_I, imp_basis = imp_basis)
+    r <- .get_dgbasis_binary_opt(I = my_I,
+                                 imp_basis = imp_basis,
+                                 verbose = verbose)
 
     LHS <- .recode_to_original_grades(t(r$get_LHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
     LHS <- Matrix(t(LHS), sparse = TRUE)
