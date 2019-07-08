@@ -69,7 +69,7 @@ formal_context <- R6::R6Class(
 
         # If it comes from arules
         implications <- implication_set$new()
-        implications$from_arules(mush_clean)
+        implications$from_arules(impl_set)
 
         self$implications <- implications$clone()
 
