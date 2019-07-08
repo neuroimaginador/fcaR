@@ -83,7 +83,15 @@ implication_set <- R6::R6Class(
     # Number of implications in the set
     cardinality = function() {
 
+      if (self$is_empty()) return(0)
+
       ncol(private$lhs_matrix)
+
+    },
+
+    is_empty = function() {
+
+      is.null(private$lhs_matrix)
 
     },
 
@@ -163,14 +171,40 @@ implication_set <- R6::R6Class(
     # Get the sparse matrix for LHS
     get_LHS_matrix = function() {
 
-      private$lhs_matrix
+      if (self$is_empty()) {
+
+        LHS <- Matrix(FALSE,
+               nrow = length(private$attributes),
+               ncol = 1,
+               sparse = TRUE)
+
+      } else {
+
+        LHS <- private$lhs_matrix
+
+      }
+
+      return(LHS)
 
     },
 
     # Get the sparse matrix for RHS
     get_RHS_matrix = function() {
 
-      private$rhs_matrix
+      if (self$is_empty()) {
+
+        RHS <- Matrix(FALSE,
+                      nrow = length(private$attributes),
+                      ncol = 1,
+                      sparse = TRUE)
+
+      } else {
+
+        RHS <- private$rhs_matrix
+
+      }
+
+      return(RHS)
 
     },
 
