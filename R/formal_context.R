@@ -119,12 +119,19 @@ formal_context <- R6::R6Class(
 
     extract_implications = function(verbose = FALSE) {
 
+      remove_from_fca_env(implications)
+
       on.exit({
 
         read_from_fca_env(implications)
-        self$implications <- implications$clone()
 
-        # remove_from_fca_env(implications)
+        if (!is.null(implications)) {
+
+          self$implications <- implications$clone()
+
+          # remove_from_fca_env(implications)
+
+        }
 
       })
 

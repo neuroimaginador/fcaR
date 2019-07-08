@@ -1,5 +1,7 @@
 .get_implications_in_binary <- function(I, verbose = FALSE) {
 
+  remove_from_fca_env(implications)
+
   grades_set <- sort(unique(as.vector(I)))
   grades_set <- grades_set[grades_set > 0]
   attributes <- colnames(I)
@@ -33,21 +35,27 @@
     my_I <- expI$I
     binaries <- expI$binaries
 
+    ok <- FALSE
+
     on.exit({
 
-      read_from_fca_env(DGbasis)
+      if (!ok) {
 
-      LHS <- .recode_to_original_grades(t(DGbasis$get_LHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
-      LHS <- Matrix(t(LHS), sparse = TRUE)
+        read_from_fca_env(DGbasis)
 
-      RHS <- .recode_to_original_grades(t(DGbasis$get_RHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
-      RHS <- Matrix(t(RHS), sparse = TRUE)
+        LHS <- .recode_to_original_grades(t(DGbasis$get_LHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
+        LHS <- Matrix(t(LHS), sparse = TRUE)
 
-      implications <- implication_set$new(name = "DGbasis",
-                                          attributes = colnames(I),
-                                          lhs = LHS, rhs = RHS)
+        RHS <- .recode_to_original_grades(t(DGbasis$get_RHS_matrix()), grades_set = grades_set[grades_set > 0], binaries = binaries)
+        RHS <- Matrix(t(RHS), sparse = TRUE)
 
-      save_in_fca_env(implications)
+        implications <- implication_set$new(name = "DGbasis",
+                                            attributes = colnames(I),
+                                            lhs = LHS, rhs = RHS)
+
+        save_in_fca_env(implications)
+
+      }
 
     })
 
@@ -65,6 +73,8 @@
                                         attributes = attributes,
                                         lhs = LHS,
                                         rhs = RHS)
+
+    ok <- TRUE
 
   }
 

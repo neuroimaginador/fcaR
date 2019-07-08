@@ -3,6 +3,8 @@
                                     imp_basis = NULL,
                                     verbose = FALSE) {
 
+  remove_from_fca_env(DGbasis)
+
   # close is the closure wrt implications
   # aclose is .closure_sparse
 
