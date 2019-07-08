@@ -101,17 +101,29 @@ implication_set <- R6::R6Class(
 
       S <- Matrix(S, sparse = TRUE)
 
-      cl <- .compute_closure(S,
+      cl <- .compute_closure2(S,
                              LHS = private$lhs_matrix,
                              RHS = private$rhs_matrix,
                              reduce = reduce)
 
-      rownames(cl) <- private$attributes
+ #     rownames(cl) <- private$attributes
 
       return(cl)
 
     },
+    compute_closure2 = function(S, reduce = FALSE) {
+      S <- Matrix(S, sparse = TRUE)
 
+      cl <- .compute_closure2(S,
+                             LHS = private$lhs_matrix,
+                             RHS = private$rhs_matrix,
+                             reduce = reduce)
+
+      #rownames(cl$closure) <- private$attributes
+
+      return(cl)
+
+    },
     recommend = function(S, attribute_filter) {
 
       .recommend_attribute(S = S,

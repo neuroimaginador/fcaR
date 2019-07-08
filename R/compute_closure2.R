@@ -62,8 +62,7 @@
 
       CD <- apply_F_rowwise_xy(x = as.matrix(C),
                                y = as.matrix(D),
-                               type = paste0(tolower(fuzzy_logic()$name),
-                                             "_S"))
+                               type = paste0("zadeh_S"))
 
       B <- S
 
