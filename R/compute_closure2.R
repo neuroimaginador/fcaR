@@ -1,6 +1,20 @@
 .compute_closure2 <- function(S, LHS, RHS, reduce = FALSE, verbose = FALSE) {
 
-  if (is.null(LHS) || (ncol(LHS) == 0)) return(S)
+  if (is.null(LHS) || (ncol(LHS) == 0)) {
+
+    if (!reduce) {
+
+      return(S)
+
+    } else {
+
+      return(list(closure = S,
+                  implications = list(lhs = LHS,
+                                      rhs = RHS)))
+
+    }
+
+  }
 
   # Which are the rules applicable to the set S?
   S_subsets <- .is_subset_sparse(LHS, S)
