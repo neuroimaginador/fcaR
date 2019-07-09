@@ -3,7 +3,7 @@
 
   intersections <- .intersects_sparse(RHS, LHS)
 
-  logic_name <- tolower(fuzzy_logic()$name)
+  # logic_name <- tolower(fuzzy_logic()$name)
 
   new_LHS <- LHS
 
@@ -31,7 +31,7 @@
 
       AC_B <- apply_F_rowwise_xy(x = C_B,
                                  y = A,
-                                 type = paste0(logic_name, "_S"))
+                                 type = paste0("zadeh_S"))
 
       AC_B <- Matrix(AC_B, sparse = TRUE)
       my_RHS <- Matrix(RHS[, with_intersection], sparse = TRUE)
