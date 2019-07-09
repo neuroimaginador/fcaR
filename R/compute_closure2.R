@@ -71,30 +71,33 @@
                                                      sparse = TRUE))
       idx_not_empty <- which(colSums(intersections) > 0)
 
-      C_B <- sparse_set_difference(C[, idx_not_empty], B)
+      if (length(idx_not_empty) > 0) {
 
-      # C_B <- apply_F_rowwise_xy(x = C[, idx_not_empty],
-      #                           y = B,
-      #                           type = "set_diff")
+        C_B <- sparse_set_difference(C[, idx_not_empty], B)
 
-      D_B <- sparse_set_difference(D[, idx_not_empty], B)
+        D_B <- sparse_set_difference(D[, idx_not_empty], B)
 
-      # D_B <- apply_F_rowwise_xy(x = D[, idx_not_empty],
-      #                           y = B,
-      #                           type = "set_diff")
+        idx_zeros <- which(colSums(D_B) == 0)
 
-      idx_zeros <- which(colSums(D_B) == 0)
+        if (verbose) {
 
-      if (verbose) {
+          cat("Reducing", length(idx_zeros), " rules\n")
 
-        cat("Reducing", length(idx_zeros), " rules\n")
+        }
+
+        if (length(idx_zeros) > 0) {
+
+          C_B <- Matrix(C_B[, -idx_zeros], sparse = TRUE)
+          D_B <- Matrix(D_B[, -idx_zeros], sparse = TRUE)
+
+        }
+
+        LHS <- cbind(C_B,
+                     Matrix(C[, -idx_not_empty], sparse = TRUE))
+        RHS <- cbind(D_B,
+                     Matrix(D[, -idx_not_empty], sparse = TRUE))
 
       }
-
-      LHS <- cbind(Matrix(C_B[, -idx_zeros], sparse = TRUE),
-                   Matrix(C[, -idx_not_empty], sparse = TRUE))
-      RHS <- cbind(Matrix(D_B[, -idx_zeros], sparse = TRUE),
-                   Matrix(D[, -idx_not_empty], sparse = TRUE))
 
     }
 
