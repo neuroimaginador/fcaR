@@ -50,7 +50,7 @@ formal_context <- R6::R6Class(
         }
 
         I <- as(Matrix(t(I),
-                  sparse = TRUE), "dgCMatrix")
+                       sparse = TRUE), "dgCMatrix")
 
       }
 
@@ -108,8 +108,8 @@ formal_context <- R6::R6Class(
       })
 
       tmp <- .get_concepts_implications_sparse(as.matrix(t(self$I)),
-                                          self$grades_set,
-                                          verbose = verbose)
+                                               self$grades_set,
+                                               verbose = verbose)
 
       self$concepts <- tmp[[1]] # concepts
 
@@ -139,6 +139,74 @@ formal_context <- R6::R6Class(
 
 
       self$implications <- tmp # implications
+
+    },
+
+    run_arm = function(type = "apriori",
+                       parameter = NULL,
+                       appearance = NULL,
+                       control = NULL) {
+
+      I <- as.matrix(t(self$I))
+
+      grades_set <- sort(unique(as.vector(I)))
+      grades_set <- grades_set[grades_set > 0]
+
+      my_I <- .expand_dataset(I,
+                              grades_set,
+                              implications = FALSE)
+      binaries <- my_I$binaries
+
+      my_transactions <- as(my_I$I, "transactions")
+
+      r <- switch(tolower(type),
+
+                  "apriori" = {
+
+                    parameter <- c(parameter, conf = 1)
+                    parameter <- as.list(parameter)
+                    apriori(my_transactions,
+                            parameter = parameter,
+                            appearance = appearance,
+                            control = control)
+
+                  },
+
+                  "eclat" = {
+
+                    itemsets <- eclat(my_transactions,
+                                      parameter = parameter,
+                                      control = control)
+
+                    ruleInduction(itemsets,
+                                  my_transactions,
+                                  confidence = 1)
+
+                  }
+
+      )
+
+      # r <- apriori(as(my_I$I, "transactions"), parameter = c(conf = 1, list(...)))
+
+      # r <- r[!is.redundant(r)]
+
+      LHS <- t(as.matrix(r@lhs@data))
+      RHS <- t(as.matrix(r@rhs@data))
+
+      LHS <- .recode_to_original_grades(LHS,
+                                        grades_set,
+                                        binaries = binaries)
+      RHS <- .recode_to_original_grades(RHS,
+                                        grades_set,
+                                        binaries = binaries)
+
+      LHS <- t(Matrix(LHS, sparse = TRUE))
+      RHS <- t(Matrix(RHS, sparse = TRUE))
+
+      self$implications <- implication_set$new(name = "apriori",
+                                               attributes = self$attributes,
+                                               lhs = LHS,
+                                               rhs = RHS)
 
     },
 
