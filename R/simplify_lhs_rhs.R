@@ -42,13 +42,9 @@
       C <- as.matrix(LHS[, my_idx])
       D <- as.matrix(RHS[, my_idx])
 
-      C_B <- apply_F_rowwise_xy(x = C,
-                                y = B,
-                                type = "set_diff")
+      C_B <- sparse_set_difference(C, B)
 
-      D_B <- apply_F_rowwise_xy(x = D,
-                                y = B,
-                                type = "set_diff")
+      D_B <- sparse_set_difference(D, B)
 
       my_composition <- .compose_lhs_rhs_equal(LHS = Matrix(C_B, sparse = TRUE),
                                                RHS = Matrix(D_B, sparse = TRUE))
