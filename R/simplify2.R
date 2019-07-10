@@ -70,12 +70,12 @@
     LHS[, my_idx] <- newLHS
     RHS[, my_idx] <- newRHS
 
-    final_set <- implication_set$new(name = "set",
-                                           attributes = attributes,
-                                           lhs = Matrix(LHS, sparse = TRUE),
-                                           rhs = Matrix(RHS, sparse = TRUE))
-
     if (trace) {
+
+      final_set <- implication_set$new(name = "set",
+                                       attributes = attributes,
+                                       lhs = Matrix(LHS, sparse = TRUE),
+                                       rhs = Matrix(RHS, sparse = TRUE))
 
       cat("** Resulting set\n")
       print(final_set)
@@ -83,12 +83,6 @@
     }
 
     LHS_subsets <- t(.is_subset_sparse(LHS))
-
-    # new_subsets <- t(.is_subset_sparse(
-    #   Matrix(LHS[, my_idx], sparse = TRUE),
-    #   LHS))
-    #
-    # LHS_subsets[, my_idx] <- new_subsets
 
     condition1 <- colSums(LHS_subsets) > 1
 
