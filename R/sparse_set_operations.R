@@ -46,7 +46,8 @@ sparse_set_union <- function(A, B) {
 
   if (ncol(A) == ncol(B)) {
 
-    A[B > A] <- B[B > A]
+    idx <- which(B > A)
+    A[idx] <- B[idx]
 
     return(A)
 
@@ -58,7 +59,8 @@ sparse_set_union <- function(A, B) {
 
     newB <- replicate_sparse_col(B, n)
 
-    A[newB > A] <- newB[newB > A]
+    idx <- which(newB > A)
+    A[idx] <- newB[idx]
 
     return(A)
 
@@ -70,7 +72,8 @@ sparse_set_union <- function(A, B) {
 
     newA <- replicate_sparse_col(A, n)
 
-    newA[B > newA] <- B[B > newA]
+    idx <- which(B > newA)
+    newA[idx] <- B[idx]
 
     return(newA)
 
@@ -79,8 +82,6 @@ sparse_set_union <- function(A, B) {
   stop("Case not implemented yet.")
 
 }
-
-
 
 replicate_sparse_col <- function(A, n) {
 
