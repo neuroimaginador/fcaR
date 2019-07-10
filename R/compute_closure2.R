@@ -74,28 +74,24 @@
       C <- LHS
       D <- RHS
 
-      CD <- apply_F_rowwise_xy(x = as.matrix(C),
-                               y = as.matrix(D),
-                               type = paste0("zadeh_S"))
+      CD <- sparse_set_union(LHS, RHS)
 
-      B <- S
-
-      intersections <- .intersects_sparse(x = S,
-                                          y = Matrix(CD,
-                                                     sparse = TRUE))
+      intersections <- .intersects_sparse(x = S, y = CD)
       idx_not_empty <- which(colSums(intersections) > 0)
+
 
       if (length(idx_not_empty) > 0) {
 
-        C_B <- sparse_set_difference(C[, idx_not_empty], B)
+        C_B <- sparse_set_difference(C[, idx_not_empty], S)
 
-        D_B <- sparse_set_difference(D[, idx_not_empty], B)
+        D_B <- sparse_set_difference(D[, idx_not_empty], S)
 
         idx_zeros <- which(colSums(D_B) == 0)
 
         if (verbose) {
 
-          cat("Reducing", length(idx_zeros), " rules\n")
+          cat("Reducing", length(idx_zeros), " rules:\n")
+          cat(" ** ", idx_not_empty, "\n")
 
         }
 

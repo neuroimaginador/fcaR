@@ -105,14 +105,17 @@ implication_set <- R6::R6Class(
     },
 
     # Compute the sintactic closure of a set wrt the implications
-    compute_closure = function(S, reduce = FALSE) {
+    compute_closure = function(S,
+                               reduce = FALSE,
+                               verbose = FALSE) {
 
       S <- Matrix(S, sparse = TRUE)
 
       cl <- .compute_closure2(S,
                              LHS = private$lhs_matrix,
                              RHS = private$rhs_matrix,
-                             reduce = reduce)
+                             reduce = reduce,
+                             verbose = verbose)
 
       if (!reduce) {
 
