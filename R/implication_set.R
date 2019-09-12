@@ -80,6 +80,24 @@ implication_set <- R6::R6Class(
 
     },
 
+    append_implications = function(implications) {
+
+      LHS <- implications$get_LHS_matrix()
+      RHS <- implications$get_RHS_matrix()
+
+      if (length(private$attributes) == nrow(LHS)) {
+
+        private$lhs_matrix <- cbind(private$lhs_matrix, LHS)
+        private$rhs_matrix <- cbind(private$rhs_matrix, RHS)
+
+      } else {
+
+        stop("Dimensions mismatch.")
+
+      }
+
+    },
+
     # Number of implications in the set
     cardinality = function() {
 
@@ -308,6 +326,18 @@ implication_set <- R6::R6Class(
                                  rhs = Matrix(RHS[, idx], sparse = TRUE))
 
       return(imp)
+
+    },
+
+    remove_rules = function(idx) {
+
+      idx <- idx[idx < ncol(private$lhs_matrix)]
+
+      if (length(idx) > 0) {
+
+        private$lhs_matrix <- private$lhs_matrix[, -idx]
+        private$rhs_matrix <- private$rhs_matrix[, -idx]
+      }
 
     }
 

@@ -29,8 +29,6 @@
   })
 
   intents <- list()
-  # DGbasis <- implication_set$new(name = "DGbasis",
-  #                                attributes = colnames(I))
 
   A <- .closure_sparse(empty, I)
 
@@ -42,7 +40,6 @@
   if (sum(A) > 0) {
 
     # Add the empty -> A implication
-    # DGbasis$add_implication(lhs = empty, rhs = A)
 
     LHS <- Matrix(empty, sparse = TRUE)
     RHS <- Matrix(A, sparse = TRUE)
@@ -64,11 +61,10 @@
 
   while (!exit_cond) {
 
-    .closure_implications <- function(S) {.compute_closure2(S, LHS, RHS)}
+    A <- .next_closure_sparse_espec(A, i, imax,
+                                    grades_set, LHS, RHS,
+                                    attributes)
 
-    A <- .next_closure_sparse(A, i, imax,
-                              grades_set,
-                              closure_function = .closure_implications)
 
     B <- .closure_sparse(A, I)
 
@@ -79,7 +75,7 @@
 
       if (verbose) {
 
-        print("New concept:")
+        cat("Added concept:\n")
         cat(.sparse_set_to_string(A, attributes), "\n")
 
       }
@@ -98,7 +94,6 @@
       }
 
       # Add the A -> B\A implication
-      # DGbasis$add_implication(lhs = A, rhs = rhs)
 
       if (is.null(LHS)) {
 

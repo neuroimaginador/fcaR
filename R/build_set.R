@@ -7,6 +7,6 @@ build_set <- function(attrs, values, attributes) {
 
   v[attrs] <- values
 
-  Matrix(v, nrow = length(attributes), ncol = 1)
+  Matrix(v, nrow = length(attributes), ncol = 1, sparse = TRUE)
 
 }

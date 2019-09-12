@@ -1,4 +1,4 @@
-.compute_closure2 <- function(S, LHS, RHS, reduce = FALSE, verbose = FALSE) {
+.compute_closure2 <- function(S, LHS, RHS, attributes, reduce = FALSE, verbose = FALSE) {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) {
 
@@ -41,7 +41,13 @@
 
     if (verbose) {
 
-      cat("Reducing", length(idx_subsets), " rules\n")
+      # cat("Reducing", length(idx_subsets), " rules\n")
+      cat("Using rules:\n")
+      imp <- implication_set$new(attributes = attributes,
+                                 lhs = Matrix(LHS[, idx_subsets],
+                                              sparse = TRUE),
+                                 rhs = A)
+      cat(imp$print())
 
     }
 
@@ -67,7 +73,7 @@
 
       if (verbose) {
 
-        cat("Simplification stage\n")
+        # cat("Simplification stage\n")
 
       }
 
@@ -90,8 +96,8 @@
 
         if (verbose) {
 
-          cat("Reducing", length(idx_zeros), " rules:\n")
-          cat(" ** ", idx_not_empty, "\n")
+          # cat("Reducing", length(idx_zeros), " rules:\n")
+          # cat(" ** ", idx_not_empty, "\n")
 
         }
 

@@ -45,8 +45,104 @@ closure_C <- function(A, I) {
     .Call(`_fcaR_closure_C`, A, I)
 }
 
+direct_sum_C <- function(A, a_i, grade_i, imax) {
+    .Call(`_fcaR_direct_sum_C`, A, a_i, grade_i, imax)
+}
+
+is_set_preceding_C <- function(B, C, a_i, grade_i) {
+    .Call(`_fcaR_is_set_preceding_C`, B, C, a_i, grade_i)
+}
+
+next_closure_C <- function(A, i, imax, grades_set, I) {
+    .Call(`_fcaR_next_closure_C`, A, i, imax, grades_set, I)
+}
+
 ganters_algorithm <- function(I, grades_set, n_attributes) {
     .Call(`_fcaR_ganters_algorithm`, I, grades_set, n_attributes)
+}
+
+is_subset_one <- function(A, LHS) {
+    .Call(`_fcaR_is_subset_one`, A, LHS)
+}
+
+semantic_closure_C <- function(A, LHS, RHS) {
+    .Call(`_fcaR_semantic_closure_C`, A, LHS, RHS)
+}
+
+next_closure_implications_C <- function(A, i, imax, grades_set, LHS, RHS) {
+    .Call(`_fcaR_next_closure_implications_C`, A, i, imax, grades_set, LHS, RHS)
+}
+
+setdifferenceC <- function(x, y) {
+    .Call(`_fcaR_setdifferenceC`, x, y)
+}
+
+ganters_algorithm_implications <- function(I, grades_set, n_attributes) {
+    .Call(`_fcaR_ganters_algorithm_implications`, I, grades_set, n_attributes)
+}
+
+concat_sparse <- function(A, B) {
+    .Call(`_fcaR_concat_sparse`, A, B)
+}
+
+intent_sparse_C <- function(A, I) {
+    .Call(`_fcaR_intent_sparse_C`, A, I)
+}
+
+extent_sparse_C <- function(A, I) {
+    .Call(`_fcaR_extent_sparse_C`, A, I)
+}
+
+closure_sparse_C <- function(A, I) {
+    .Call(`_fcaR_closure_sparse_C`, A, I)
+}
+
+direct_sum_sparse_C <- function(A, a_i, grade_i, imax) {
+    .Call(`_fcaR_direct_sum_sparse_C`, A, a_i, grade_i, imax)
+}
+
+is_set_preceding_sparse_C <- function(B, C, a_i, grade_i) {
+    .Call(`_fcaR_is_set_preceding_sparse_C`, B, C, a_i, grade_i)
+}
+
+empty_sparse_C <- function(n) {
+    .Call(`_fcaR_empty_sparse_C`, n)
+}
+
+next_closure_sparse_C <- function(A, i, imax, grades_set, I) {
+    .Call(`_fcaR_next_closure_sparse_C`, A, i, imax, grades_set, I)
+}
+
+cardinal_sparse_C <- function(A) {
+    .Call(`_fcaR_cardinal_sparse_C`, A)
+}
+
+ganters_algorithm_sparse <- function(I, grades_set, n_attributes) {
+    .Call(`_fcaR_ganters_algorithm_sparse`, I, grades_set, n_attributes)
+}
+
+is_subset_one_sparse_C <- function(x, y) {
+    .Call(`_fcaR_is_subset_one_sparse_C`, x, y)
+}
+
+extract_col_sparse_C <- function(x, j) {
+    .Call(`_fcaR_extract_col_sparse_C`, x, j)
+}
+
+semantic_closure_sparse_C <- function(A, LHS, RHS) {
+    .Call(`_fcaR_semantic_closure_sparse_C`, A, LHS, RHS)
+}
+
+next_closure_implications_sparse_C <- function(A, i, imax, grades_set, LHS, RHS) {
+    .Call(`_fcaR_next_closure_implications_sparse_C`, A, i, imax, grades_set, LHS, RHS)
+}
+
+setdifference_sparse_C <- function(x, y) {
+    .Call(`_fcaR_setdifference_sparse_C`, x, y)
+}
+
+ganters_algorithm_implications_sparse_C <- function(I, grades_set, n_attributes) {
+    .Call(`_fcaR_ganters_algorithm_implications_sparse_C`, I, grades_set, n_attributes)
 }
 
 self_intersection_C <- function(x_i, x_p, y_i, y_p) {
@@ -83,5 +179,61 @@ apply_F_rowwise_xy <- function(x, y, type) {
 
 apply_F_elementwise <- function(x, y, type) {
     .Call(`_fcaR_apply_F_elementwise`, x, y, type)
+}
+
+printImplicationTree <- function(ext) {
+    invisible(.Call(`_fcaR_printImplicationTree`, ext))
+}
+
+createImplicationTree <- function(n_attributes) {
+    .Call(`_fcaR_createImplicationTree`, n_attributes)
+}
+
+addImplicationToTree_XPtr <- function(ext, A) {
+    invisible(.Call(`_fcaR_addImplicationToTree_XPtr`, ext, A))
+}
+
+is_subset_tree_XPtr <- function(ext, A) {
+    .Call(`_fcaR_is_subset_tree_XPtr`, ext, A)
+}
+
+compute_intent_S4 <- function(A, I) {
+    .Call(`_fcaR_compute_intent_S4`, A, I)
+}
+
+compute_extent_S4 <- function(A, I) {
+    .Call(`_fcaR_compute_extent_S4`, A, I)
+}
+
+compute_closure_S4 <- function(A, I) {
+    .Call(`_fcaR_compute_closure_S4`, A, I)
+}
+
+is_subset_tree_C <- function(LIST, DEGREE, COUNT, n_implications, S) {
+    .Call(`_fcaR_is_subset_tree_C`, LIST, DEGREE, COUNT, n_implications, S)
+}
+
+ganters_algorithm_implications_struct <- function(I, grades_set, n_attributes) {
+    .Call(`_fcaR_ganters_algorithm_implications_struct`, I, grades_set, n_attributes)
+}
+
+ganters_algorithm_implications_tree <- function(I, grades_set, n_attributes) {
+    .Call(`_fcaR_ganters_algorithm_implications_tree`, I, grades_set, n_attributes)
+}
+
+ganters_algorithm_implications_tree_final <- function(I, grades_set, attrs, verbose = FALSE) {
+    .Call(`_fcaR_ganters_algorithm_implications_tree_final`, I, grades_set, attrs, verbose)
+}
+
+is_subset_struct <- function(L, S) {
+    .Call(`_fcaR_is_subset_struct`, L, S)
+}
+
+init_is_subset_struct <- function(L, S) {
+    invisible(.Call(`_fcaR_init_is_subset_struct`, L, S))
+}
+
+compute_closure_struct_C <- function(A, I, attributes) {
+    .Call(`_fcaR_compute_closure_struct_C`, A, I, attributes)
 }
 

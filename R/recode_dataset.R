@@ -28,6 +28,7 @@
                  ncol = n_new_attributes)
 
   my_col <- 1
+  fuzzy_columns <- c()
 
   for (i in seq(n_attributes)) {
 
@@ -52,6 +53,9 @@
       j <- lapply(j, function(s) n_grades - seq(s) + 1)
       j <- do.call(c, j)
 
+      fuzzy_columns <- c(fuzzy_columns,
+                         my_col:(my_col + n_grades - 1))
+
       resI[(j  + my_col - 2) * nrow(I) + idx] <- TRUE
 
       my_col <- my_col + n_grades
@@ -60,6 +64,7 @@
 
   }
 
+  fuzzy_columns <- sort(unique(fuzzy_columns))
   colnames(resI) <- new_attributes
 
   if (!implications) return(list(I = resI, binaries = binaries))
@@ -76,9 +81,11 @@
 
   fuzzy_attributes <- setdiff(seq(n_attributes), which(binaries))
 
+  fuzzy_columns <- matrix(fuzzy_columns, nrow = n_grades)
+
   for (g in seq(n_grades - 1)) {
 
-    j_lhs <- g + n_grades * (fuzzy_attributes - 1)
+    j_lhs <- fuzzy_columns[g, ]
     j_rhs <- j_lhs + 1
 
     i <- g + (seq_along(fuzzy_attributes) - 1) * (n_grades - 1)

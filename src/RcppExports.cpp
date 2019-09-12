@@ -146,6 +146,49 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// direct_sum_C
+NumericVector direct_sum_C(NumericVector A, int a_i, double grade_i, int imax);
+RcppExport SEXP _fcaR_direct_sum_C(SEXP ASEXP, SEXP a_iSEXP, SEXP grade_iSEXP, SEXP imaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< int >::type a_i(a_iSEXP);
+    Rcpp::traits::input_parameter< double >::type grade_i(grade_iSEXP);
+    Rcpp::traits::input_parameter< int >::type imax(imaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(direct_sum_C(A, a_i, grade_i, imax));
+    return rcpp_result_gen;
+END_RCPP
+}
+// is_set_preceding_C
+bool is_set_preceding_C(NumericVector B, NumericVector C, int a_i, double grade_i);
+RcppExport SEXP _fcaR_is_set_preceding_C(SEXP BSEXP, SEXP CSEXP, SEXP a_iSEXP, SEXP grade_iSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type B(BSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type C(CSEXP);
+    Rcpp::traits::input_parameter< int >::type a_i(a_iSEXP);
+    Rcpp::traits::input_parameter< double >::type grade_i(grade_iSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_set_preceding_C(B, C, a_i, grade_i));
+    return rcpp_result_gen;
+END_RCPP
+}
+// next_closure_C
+NumericVector next_closure_C(NumericVector A, int i, int imax, NumericVector grades_set, NumericMatrix I);
+RcppExport SEXP _fcaR_next_closure_C(SEXP ASEXP, SEXP iSEXP, SEXP imaxSEXP, SEXP grades_setSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type imax(imaxSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_C(A, i, imax, grades_set, I));
+    return rcpp_result_gen;
+END_RCPP
+}
 // ganters_algorithm
 List ganters_algorithm(NumericMatrix I, NumericVector grades_set, int n_attributes);
 RcppExport SEXP _fcaR_ganters_algorithm(SEXP ISEXP, SEXP grades_setSEXP, SEXP n_attributesSEXP) {
@@ -156,6 +199,276 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
     Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
     rcpp_result_gen = Rcpp::wrap(ganters_algorithm(I, grades_set, n_attributes));
+    return rcpp_result_gen;
+END_RCPP
+}
+// is_subset_one
+LogicalVector is_subset_one(NumericVector A, std::list<NumericVector> LHS);
+RcppExport SEXP _fcaR_is_subset_one(SEXP ASEXP, SEXP LHSSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< std::list<NumericVector> >::type LHS(LHSSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_subset_one(A, LHS));
+    return rcpp_result_gen;
+END_RCPP
+}
+// semantic_closure_C
+NumericVector semantic_closure_C(NumericVector A, std::list<NumericVector> LHS, std::list<NumericVector> RHS);
+RcppExport SEXP _fcaR_semantic_closure_C(SEXP ASEXP, SEXP LHSSEXP, SEXP RHSSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< std::list<NumericVector> >::type LHS(LHSSEXP);
+    Rcpp::traits::input_parameter< std::list<NumericVector> >::type RHS(RHSSEXP);
+    rcpp_result_gen = Rcpp::wrap(semantic_closure_C(A, LHS, RHS));
+    return rcpp_result_gen;
+END_RCPP
+}
+// next_closure_implications_C
+NumericVector next_closure_implications_C(NumericVector A, int i, int imax, List grades_set, std::list<NumericVector> LHS, std::list<NumericVector> RHS);
+RcppExport SEXP _fcaR_next_closure_implications_C(SEXP ASEXP, SEXP iSEXP, SEXP imaxSEXP, SEXP grades_setSEXP, SEXP LHSSEXP, SEXP RHSSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type imax(imaxSEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< std::list<NumericVector> >::type LHS(LHSSEXP);
+    Rcpp::traits::input_parameter< std::list<NumericVector> >::type RHS(RHSSEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_implications_C(A, i, imax, grades_set, LHS, RHS));
+    return rcpp_result_gen;
+END_RCPP
+}
+// setdifferenceC
+NumericVector setdifferenceC(NumericVector x, NumericVector y);
+RcppExport SEXP _fcaR_setdifferenceC(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(setdifferenceC(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ganters_algorithm_implications
+List ganters_algorithm_implications(NumericMatrix I, List grades_set, int n_attributes);
+RcppExport SEXP _fcaR_ganters_algorithm_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP n_attributesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
+    rcpp_result_gen = Rcpp::wrap(ganters_algorithm_implications(I, grades_set, n_attributes));
+    return rcpp_result_gen;
+END_RCPP
+}
+// concat_sparse
+S4 concat_sparse(S4 A, S4 B);
+RcppExport SEXP _fcaR_concat_sparse(SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< S4 >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(concat_sparse(A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// intent_sparse_C
+S4 intent_sparse_C(S4 A, NumericMatrix I);
+RcppExport SEXP _fcaR_intent_sparse_C(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(intent_sparse_C(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// extent_sparse_C
+S4 extent_sparse_C(S4 A, NumericMatrix I);
+RcppExport SEXP _fcaR_extent_sparse_C(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(extent_sparse_C(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// closure_sparse_C
+S4 closure_sparse_C(S4 A, NumericMatrix I);
+RcppExport SEXP _fcaR_closure_sparse_C(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(closure_sparse_C(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// direct_sum_sparse_C
+S4 direct_sum_sparse_C(S4 A, int a_i, double grade_i, int imax);
+RcppExport SEXP _fcaR_direct_sum_sparse_C(SEXP ASEXP, SEXP a_iSEXP, SEXP grade_iSEXP, SEXP imaxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< int >::type a_i(a_iSEXP);
+    Rcpp::traits::input_parameter< double >::type grade_i(grade_iSEXP);
+    Rcpp::traits::input_parameter< int >::type imax(imaxSEXP);
+    rcpp_result_gen = Rcpp::wrap(direct_sum_sparse_C(A, a_i, grade_i, imax));
+    return rcpp_result_gen;
+END_RCPP
+}
+// is_set_preceding_sparse_C
+bool is_set_preceding_sparse_C(S4 B, S4 C, int a_i, double grade_i);
+RcppExport SEXP _fcaR_is_set_preceding_sparse_C(SEXP BSEXP, SEXP CSEXP, SEXP a_iSEXP, SEXP grade_iSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type B(BSEXP);
+    Rcpp::traits::input_parameter< S4 >::type C(CSEXP);
+    Rcpp::traits::input_parameter< int >::type a_i(a_iSEXP);
+    Rcpp::traits::input_parameter< double >::type grade_i(grade_iSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_set_preceding_sparse_C(B, C, a_i, grade_i));
+    return rcpp_result_gen;
+END_RCPP
+}
+// empty_sparse_C
+S4 empty_sparse_C(int n);
+RcppExport SEXP _fcaR_empty_sparse_C(SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(empty_sparse_C(n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// next_closure_sparse_C
+S4 next_closure_sparse_C(S4 A, int i, int imax, NumericVector grades_set, NumericMatrix I);
+RcppExport SEXP _fcaR_next_closure_sparse_C(SEXP ASEXP, SEXP iSEXP, SEXP imaxSEXP, SEXP grades_setSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type imax(imaxSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_sparse_C(A, i, imax, grades_set, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cardinal_sparse_C
+double cardinal_sparse_C(S4 A);
+RcppExport SEXP _fcaR_cardinal_sparse_C(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(cardinal_sparse_C(A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ganters_algorithm_sparse
+List ganters_algorithm_sparse(NumericMatrix I, NumericVector grades_set, int n_attributes);
+RcppExport SEXP _fcaR_ganters_algorithm_sparse(SEXP ISEXP, SEXP grades_setSEXP, SEXP n_attributesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
+    rcpp_result_gen = Rcpp::wrap(ganters_algorithm_sparse(I, grades_set, n_attributes));
+    return rcpp_result_gen;
+END_RCPP
+}
+// is_subset_one_sparse_C
+LogicalVector is_subset_one_sparse_C(S4 x, S4 y);
+RcppExport SEXP _fcaR_is_subset_one_sparse_C(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type x(xSEXP);
+    Rcpp::traits::input_parameter< S4 >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(is_subset_one_sparse_C(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// extract_col_sparse_C
+S4 extract_col_sparse_C(S4 x, int j);
+RcppExport SEXP _fcaR_extract_col_sparse_C(SEXP xSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(extract_col_sparse_C(x, j));
+    return rcpp_result_gen;
+END_RCPP
+}
+// semantic_closure_sparse_C
+S4 semantic_closure_sparse_C(S4 A, S4 LHS, S4 RHS);
+RcppExport SEXP _fcaR_semantic_closure_sparse_C(SEXP ASEXP, SEXP LHSSEXP, SEXP RHSSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< S4 >::type LHS(LHSSEXP);
+    Rcpp::traits::input_parameter< S4 >::type RHS(RHSSEXP);
+    rcpp_result_gen = Rcpp::wrap(semantic_closure_sparse_C(A, LHS, RHS));
+    return rcpp_result_gen;
+END_RCPP
+}
+// next_closure_implications_sparse_C
+S4 next_closure_implications_sparse_C(S4 A, int i, int imax, List grades_set, S4 LHS, S4 RHS);
+RcppExport SEXP _fcaR_next_closure_implications_sparse_C(SEXP ASEXP, SEXP iSEXP, SEXP imaxSEXP, SEXP grades_setSEXP, SEXP LHSSEXP, SEXP RHSSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type imax(imaxSEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< S4 >::type LHS(LHSSEXP);
+    Rcpp::traits::input_parameter< S4 >::type RHS(RHSSEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_implications_sparse_C(A, i, imax, grades_set, LHS, RHS));
+    return rcpp_result_gen;
+END_RCPP
+}
+// setdifference_sparse_C
+S4 setdifference_sparse_C(S4 x, S4 y);
+RcppExport SEXP _fcaR_setdifference_sparse_C(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type x(xSEXP);
+    Rcpp::traits::input_parameter< S4 >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(setdifference_sparse_C(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ganters_algorithm_implications_sparse_C
+List ganters_algorithm_implications_sparse_C(NumericMatrix I, List grades_set, int n_attributes);
+RcppExport SEXP _fcaR_ganters_algorithm_implications_sparse_C(SEXP ISEXP, SEXP grades_setSEXP, SEXP n_attributesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
+    rcpp_result_gen = Rcpp::wrap(ganters_algorithm_implications_sparse_C(I, grades_set, n_attributes));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -300,6 +613,177 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// printImplicationTree
+void printImplicationTree(SEXP ext);
+RcppExport SEXP _fcaR_printImplicationTree(SEXP extSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type ext(extSEXP);
+    printImplicationTree(ext);
+    return R_NilValue;
+END_RCPP
+}
+// createImplicationTree
+SEXP createImplicationTree(int n_attributes);
+RcppExport SEXP _fcaR_createImplicationTree(SEXP n_attributesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
+    rcpp_result_gen = Rcpp::wrap(createImplicationTree(n_attributes));
+    return rcpp_result_gen;
+END_RCPP
+}
+// addImplicationToTree_XPtr
+void addImplicationToTree_XPtr(SEXP ext, S4 A);
+RcppExport SEXP _fcaR_addImplicationToTree_XPtr(SEXP extSEXP, SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type ext(extSEXP);
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    addImplicationToTree_XPtr(ext, A);
+    return R_NilValue;
+END_RCPP
+}
+// is_subset_tree_XPtr
+LogicalVector is_subset_tree_XPtr(SEXP ext, S4 A);
+RcppExport SEXP _fcaR_is_subset_tree_XPtr(SEXP extSEXP, SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type ext(extSEXP);
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(is_subset_tree_XPtr(ext, A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_intent_S4
+S4 compute_intent_S4(S4 A, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_intent_S4(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_intent_S4(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_extent_S4
+S4 compute_extent_S4(S4 A, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_extent_S4(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_extent_S4(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_closure_S4
+S4 compute_closure_S4(S4 A, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_closure_S4(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_closure_S4(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// is_subset_tree_C
+LogicalVector is_subset_tree_C(ListOf<IntegerVector> LIST, ListOf<NumericVector> DEGREE, IntegerVector COUNT, int n_implications, S4 S);
+RcppExport SEXP _fcaR_is_subset_tree_C(SEXP LISTSEXP, SEXP DEGREESEXP, SEXP COUNTSEXP, SEXP n_implicationsSEXP, SEXP SSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< ListOf<IntegerVector> >::type LIST(LISTSEXP);
+    Rcpp::traits::input_parameter< ListOf<NumericVector> >::type DEGREE(DEGREESEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type COUNT(COUNTSEXP);
+    Rcpp::traits::input_parameter< int >::type n_implications(n_implicationsSEXP);
+    Rcpp::traits::input_parameter< S4 >::type S(SSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_subset_tree_C(LIST, DEGREE, COUNT, n_implications, S));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ganters_algorithm_implications_struct
+List ganters_algorithm_implications_struct(NumericMatrix I, List grades_set, int n_attributes);
+RcppExport SEXP _fcaR_ganters_algorithm_implications_struct(SEXP ISEXP, SEXP grades_setSEXP, SEXP n_attributesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
+    rcpp_result_gen = Rcpp::wrap(ganters_algorithm_implications_struct(I, grades_set, n_attributes));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ganters_algorithm_implications_tree
+List ganters_algorithm_implications_tree(NumericMatrix I, List grades_set, int n_attributes);
+RcppExport SEXP _fcaR_ganters_algorithm_implications_tree(SEXP ISEXP, SEXP grades_setSEXP, SEXP n_attributesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
+    rcpp_result_gen = Rcpp::wrap(ganters_algorithm_implications_tree(I, grades_set, n_attributes));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ganters_algorithm_implications_tree_final
+List ganters_algorithm_implications_tree_final(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
+RcppExport SEXP _fcaR_ganters_algorithm_implications_tree_final(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(ganters_algorithm_implications_tree_final(I, grades_set, attrs, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
+// is_subset_struct
+LogicalVector is_subset_struct(List L, S4 S);
+RcppExport SEXP _fcaR_is_subset_struct(SEXP LSEXP, SEXP SSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type L(LSEXP);
+    Rcpp::traits::input_parameter< S4 >::type S(SSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_subset_struct(L, S));
+    return rcpp_result_gen;
+END_RCPP
+}
+// init_is_subset_struct
+void init_is_subset_struct(List L, S4 S);
+RcppExport SEXP _fcaR_init_is_subset_struct(SEXP LSEXP, SEXP SSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type L(LSEXP);
+    Rcpp::traits::input_parameter< S4 >::type S(SSEXP);
+    init_is_subset_struct(L, S);
+    return R_NilValue;
+END_RCPP
+}
+// compute_closure_struct_C
+S4 compute_closure_struct_C(S4 A, NumericMatrix I, StringVector attributes);
+RcppExport SEXP _fcaR_compute_closure_struct_C(SEXP ASEXP, SEXP ISEXP, SEXP attributesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attributes(attributesSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_closure_struct_C(A, I, attributes));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_which_at_col_C", (DL_FUNC) &_fcaR_which_at_col_C, 3},
@@ -313,7 +797,31 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_intent_C", (DL_FUNC) &_fcaR_intent_C, 2},
     {"_fcaR_extent_C", (DL_FUNC) &_fcaR_extent_C, 2},
     {"_fcaR_closure_C", (DL_FUNC) &_fcaR_closure_C, 2},
+    {"_fcaR_direct_sum_C", (DL_FUNC) &_fcaR_direct_sum_C, 4},
+    {"_fcaR_is_set_preceding_C", (DL_FUNC) &_fcaR_is_set_preceding_C, 4},
+    {"_fcaR_next_closure_C", (DL_FUNC) &_fcaR_next_closure_C, 5},
     {"_fcaR_ganters_algorithm", (DL_FUNC) &_fcaR_ganters_algorithm, 3},
+    {"_fcaR_is_subset_one", (DL_FUNC) &_fcaR_is_subset_one, 2},
+    {"_fcaR_semantic_closure_C", (DL_FUNC) &_fcaR_semantic_closure_C, 3},
+    {"_fcaR_next_closure_implications_C", (DL_FUNC) &_fcaR_next_closure_implications_C, 6},
+    {"_fcaR_setdifferenceC", (DL_FUNC) &_fcaR_setdifferenceC, 2},
+    {"_fcaR_ganters_algorithm_implications", (DL_FUNC) &_fcaR_ganters_algorithm_implications, 3},
+    {"_fcaR_concat_sparse", (DL_FUNC) &_fcaR_concat_sparse, 2},
+    {"_fcaR_intent_sparse_C", (DL_FUNC) &_fcaR_intent_sparse_C, 2},
+    {"_fcaR_extent_sparse_C", (DL_FUNC) &_fcaR_extent_sparse_C, 2},
+    {"_fcaR_closure_sparse_C", (DL_FUNC) &_fcaR_closure_sparse_C, 2},
+    {"_fcaR_direct_sum_sparse_C", (DL_FUNC) &_fcaR_direct_sum_sparse_C, 4},
+    {"_fcaR_is_set_preceding_sparse_C", (DL_FUNC) &_fcaR_is_set_preceding_sparse_C, 4},
+    {"_fcaR_empty_sparse_C", (DL_FUNC) &_fcaR_empty_sparse_C, 1},
+    {"_fcaR_next_closure_sparse_C", (DL_FUNC) &_fcaR_next_closure_sparse_C, 5},
+    {"_fcaR_cardinal_sparse_C", (DL_FUNC) &_fcaR_cardinal_sparse_C, 1},
+    {"_fcaR_ganters_algorithm_sparse", (DL_FUNC) &_fcaR_ganters_algorithm_sparse, 3},
+    {"_fcaR_is_subset_one_sparse_C", (DL_FUNC) &_fcaR_is_subset_one_sparse_C, 2},
+    {"_fcaR_extract_col_sparse_C", (DL_FUNC) &_fcaR_extract_col_sparse_C, 2},
+    {"_fcaR_semantic_closure_sparse_C", (DL_FUNC) &_fcaR_semantic_closure_sparse_C, 3},
+    {"_fcaR_next_closure_implications_sparse_C", (DL_FUNC) &_fcaR_next_closure_implications_sparse_C, 6},
+    {"_fcaR_setdifference_sparse_C", (DL_FUNC) &_fcaR_setdifference_sparse_C, 2},
+    {"_fcaR_ganters_algorithm_implications_sparse_C", (DL_FUNC) &_fcaR_ganters_algorithm_implications_sparse_C, 3},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},
@@ -323,6 +831,20 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_apply_F_rowwise", (DL_FUNC) &_fcaR_apply_F_rowwise, 3},
     {"_fcaR_apply_F_rowwise_xy", (DL_FUNC) &_fcaR_apply_F_rowwise_xy, 3},
     {"_fcaR_apply_F_elementwise", (DL_FUNC) &_fcaR_apply_F_elementwise, 3},
+    {"_fcaR_printImplicationTree", (DL_FUNC) &_fcaR_printImplicationTree, 1},
+    {"_fcaR_createImplicationTree", (DL_FUNC) &_fcaR_createImplicationTree, 1},
+    {"_fcaR_addImplicationToTree_XPtr", (DL_FUNC) &_fcaR_addImplicationToTree_XPtr, 2},
+    {"_fcaR_is_subset_tree_XPtr", (DL_FUNC) &_fcaR_is_subset_tree_XPtr, 2},
+    {"_fcaR_compute_intent_S4", (DL_FUNC) &_fcaR_compute_intent_S4, 2},
+    {"_fcaR_compute_extent_S4", (DL_FUNC) &_fcaR_compute_extent_S4, 2},
+    {"_fcaR_compute_closure_S4", (DL_FUNC) &_fcaR_compute_closure_S4, 2},
+    {"_fcaR_is_subset_tree_C", (DL_FUNC) &_fcaR_is_subset_tree_C, 5},
+    {"_fcaR_ganters_algorithm_implications_struct", (DL_FUNC) &_fcaR_ganters_algorithm_implications_struct, 3},
+    {"_fcaR_ganters_algorithm_implications_tree", (DL_FUNC) &_fcaR_ganters_algorithm_implications_tree, 3},
+    {"_fcaR_ganters_algorithm_implications_tree_final", (DL_FUNC) &_fcaR_ganters_algorithm_implications_tree_final, 4},
+    {"_fcaR_is_subset_struct", (DL_FUNC) &_fcaR_is_subset_struct, 2},
+    {"_fcaR_init_is_subset_struct", (DL_FUNC) &_fcaR_init_is_subset_struct, 2},
+    {"_fcaR_compute_closure_struct_C", (DL_FUNC) &_fcaR_compute_closure_struct_C, 3},
     {NULL, NULL, 0}
 };
 

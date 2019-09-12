@@ -1,22 +1,29 @@
-.next_closure_sparse <- function(B, i, imax, grades_set,
-                                 closure_function = .closure_sparse) {
+.next_closure_sparse_tree <- function(B, i, imax,
+                                       expanded_grades_set,
+                                       tree, RHS) {
 
   # i is the index of the last attribute
 
+  count <- 0
   for (a_i in seq(i, 1)) {
 
-    greater_grades <- grades_set#[grades_set > B[a_i]]
+    greater_grades <- expanded_grades_set[[a_i]]#[grades_set > B[a_i]]
 
     for (grade_i in greater_grades) {
 
       candidateBmax <- .direct_sum_sparse(B, a_i, grade_i, imax)
 
-      candidateBmax <- closure_function(candidateBmax)
+      candidateBmax <- .compute_closure3(candidateBmax,
+                                         tree,
+                                         RHS = RHS)
+
+      count <- count + 1
 
       if (.is_set_preceding_i_j_sparse(B = B,
                                        C = candidateBmax,
                                        a_i = a_i,
                                        grade_i = grade_i)) {
+        # cat("Used", count, "iterations in next_closure\n")
 
         return(candidateBmax)
 
