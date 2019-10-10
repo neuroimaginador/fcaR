@@ -1,8 +1,6 @@
 #include <Rcpp.h>
 #include <Rdefines.h>
 #include <Rcpp/Benchmark/Timer.h>
-// #include <RcppArmadillo.h>
-// [[Rcpp::depends(RcppArmadillo)]]
 
 using namespace Rcpp;
 // using namespace arma;

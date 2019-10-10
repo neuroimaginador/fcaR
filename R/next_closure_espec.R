@@ -1,5 +1,5 @@
 .next_closure_sparse_espec <- function(B, i, imax,
-                                       expanded_grades_set,
+                                       grades_set,
                                        LHS, RHS,
                                        attributes) {
 
@@ -8,7 +8,7 @@
   count <- 0
   for (a_i in seq(i, 1)) {
 
-    greater_grades <- expanded_grades_set[[a_i]]#[grades_set > B[a_i]]
+    greater_grades <- grades_set#[grades_set > B[a_i]]
 
     for (grade_i in greater_grades) {
 
@@ -19,7 +19,8 @@
 
       candidateBmax <- .compute_closure2(candidateBmax,
                                          LHS = LHS,
-                                         RHS = RHS)
+                                         RHS = RHS,
+                                         attributes = attributes)
 
       # cat("After SCT3\n")
       # cat(.sparse_set_to_string(candidateBmax, attributes), "\n")

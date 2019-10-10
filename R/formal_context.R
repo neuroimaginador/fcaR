@@ -63,16 +63,6 @@ formal_context <- R6::R6Class(
       self$objects <- colnames(I)
       self$attributes <- attributes
 
-      # lengths <- sapply(expanded_grades_set, length)
-      # o <- order(lengths, decreasing = TRUE)
-      #
-      # self$I <- I[o, ]
-      # self$grades_set <- grades_set
-      # self$expanded_grades_set <- expanded_grades_set[o]
-      #
-      # self$objects <- colnames(I)
-      # self$attributes <- attributes[o]
-
     },
 
     # Add a precomputed implication set
@@ -135,41 +125,31 @@ formal_context <- R6::R6Class(
 
     # Use modified Ganter algorithm to compute both
     # concepts and implications
-    extract_implications_concepts = function(sort = c("none", "decreasing", "increasing"),
-                                             verbose = FALSE) {
+    extract_implications_concepts = function(verbose = FALSE) {
 
-      # on.exit({
-      #
-      #   DGbasis <- get("DGbasis", envir = globalenv())
-      #   self$implications <- DGbasis$clone()
-      #   rm("DGbasis", envir = globalenv())
-      #
-      # })
-      #
-      sort <- match.arg(sort,
-                        choices = c("none", "decreasing", "increasing"))
-
-      lengths <- sapply(self$expanded_grades_set, length)
-      o <- order(lengths, decreasing = TRUE)
-
-      o <- switch(tolower(sort),
-                  "none" = seq_along(self$attributes),
-                  "decreasing" = o,
-                  "increasing" = rev(o))
-
-      my_I <- as.matrix(t(self$I))[, o]
-      grades_set <- self$expanded_grades_set[o]
-      attrs <- self$attributes[o]
+      my_I <- as.matrix(t(self$I))
+      grades_set <- rep(list(self$grades_set), length(self$attributes))
+      attrs <- self$attributes
 
       L <- ganters_algorithm_implications_tree_final(I = my_I,
                                                      grades_set = grades_set,
                                                      attrs = attrs)
 
-      # Undo the permutation
-      v <- order(o)
-      my_concepts <- L$concepts[v, ]
-      my_LHS <- L$LHS[v, -1]
-      my_RHS <- L$RHS[v, -1]
+      my_intents <- L$concepts[, -1]
+
+      my_concepts <- list()
+
+      for (n in seq(ncol(my_intents))) {
+
+        intent <- extract_column_sparse(my_intents, n)
+        extent <- .extent_sparse(intent, my_I)
+
+        my_concepts <- c(my_concepts, list(list(extent, intent)))
+
+      }
+
+      my_LHS <- L$LHS[, -1]
+      my_RHS <- L$RHS[, -1]
 
       if (is.null(self$concepts)) {
 
@@ -197,136 +177,13 @@ formal_context <- R6::R6Class(
 
     },
 
-    # extract_implications = function(verbose = FALSE) {
-    #
-    #   remove_from_fca_env(implications)
-    #
-    #   on.exit({
-    #
-    #     read_from_fca_env(implications)
-    #
-    #     if (!is.null(implications)) {
-    #
-    #       self$implications <- implications$clone()
-    #
-    #       # remove_from_fca_env(implications)
-    #
-    #     }
-    #
-    #   })
-    #
-    #   tmp <- .get_implications_in_binary(as.matrix(t(self$I)), verbose = verbose)
-    #
-    #
-    #   self$implications <- tmp # implications
-    #
-    # },
+    convert_to_transactions = function() {
 
-    run_arm = function(type = "apriori",
-                       parameter = NULL,
-                       appearance = NULL,
-                       control = NULL) {
-
-      I <- as.matrix(t(self$I))
-
-      grades_set <- sort(unique(as.vector(I)))
-      grades_set <- grades_set[grades_set > 0]
-
-      my_I <- .expand_dataset(I,
-                              grades_set,
-                              implications = FALSE)
-      binaries <- my_I$binaries
-
-      my_transactions <- as(my_I$I, "transactions")
-
-      r <- switch(tolower(type),
-
-                  "apriori" = {
-
-                    parameter <- c(parameter, conf = 1)
-                    parameter <- as.list(parameter)
-                    apriori(my_transactions,
-                            parameter = parameter,
-                            appearance = appearance,
-                            control = control)
-
-                  },
-
-                  "eclat" = {
-
-                    itemsets <- eclat(my_transactions,
-                                      parameter = parameter,
-                                      control = control)
-
-                    ruleInduction(itemsets,
-                                  my_transactions,
-                                  confidence = 1)
-
-                  }
-
-      )
-
-      # r <- apriori(as(my_I$I, "transactions"), parameter = c(conf = 1, list(...)))
-
-      r <- r[!is.redundant(r)]
-
-      LHS <- t(as.matrix(r@lhs@data))
-      RHS <- t(as.matrix(r@rhs@data))
-
-      LHS <- .recode_to_original_grades(LHS,
-                                        grades_set,
-                                        binaries = binaries)
-      RHS <- .recode_to_original_grades(RHS,
-                                        grades_set,
-                                        binaries = binaries)
-
-      LHS <- t(Matrix(LHS, sparse = TRUE))
-      RHS <- t(Matrix(RHS, sparse = TRUE))
-
-      self$implications <- implication_set$new(name = "apriori",
-                                               attributes = self$attributes,
-                                               lhs = LHS,
-                                               rhs = RHS)
+      return(as(as(self$I, "ngCMatrix"), "transactions"))
 
     },
 
-    # run_apriori = function(...) {
-    #
-    #   I <- as.matrix(t(self$I))
-    #
-    #   grades_set <- sort(unique(as.vector(I)))
-    #   grades_set <- grades_set[grades_set > 0]
-    #
-    #   my_I <- .expand_dataset(I,
-    #                           grades_set,
-    #                           implications = FALSE)
-    #   binaries <- my_I$binaries
-    #
-    #   r <- apriori(as(my_I$I, "transactions"), parameter = c(conf = 1, list(...)))
-    #
-    #   r <- r[!is.redundant(r)]
-    #
-    #   LHS <- t(as.matrix(r@lhs@data))
-    #   RHS <- t(as.matrix(r@rhs@data))
-    #
-    #   LHS <- .recode_to_original_grades(LHS,
-    #                                     grades_set,
-    #                                     binaries = binaries)
-    #   RHS <- .recode_to_original_grades(RHS,
-    #                                     grades_set,
-    #                                     binaries = binaries)
-    #
-    #   LHS <- t(Matrix(LHS, sparse = TRUE))
-    #   RHS <- t(Matrix(RHS, sparse = TRUE))
-    #
-    #   self$implications <- implication_set$new(name = "apriori",
-    #                                            attributes = self$attributes,
-    #                                            lhs = LHS,
-    #                                            rhs = RHS)
-    #
-    # },
-
-    convert_implications_to_arules = function(quality = TRUE) {
+    export_implications_to_arules = function(quality = TRUE) {
 
       R <- self$implications$to_arules()
 
@@ -384,7 +241,6 @@ formal_context <- R6::R6Class(
 
       LHS <- self$implications$get_LHS_matrix()
       my_I <- self$I
-      # my_I@x <- as.numeric(my_I@x)
 
       subsets <- .is_subset_sparse(LHS, my_I)
 
@@ -394,13 +250,6 @@ formal_context <- R6::R6Class(
 
     }
 
-  ),
-
-  private = list(
-
-    extents = NULL,
-
-    intents = NULL
   )
 
 )

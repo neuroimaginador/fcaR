@@ -1,3 +1,5 @@
+#' R6 Class for Set of implications
+#'
 #' @import Matrix
 #' @export
 implication_set <- R6::R6Class(
@@ -6,7 +8,16 @@ implication_set <- R6::R6Class(
 
   public = list(
 
-    # Initialize with an optional name
+    #' @description
+    #' Initialize with an optional name
+    #'
+    #' @param name (character string) Optional name of the implication set.
+    #' @param attributes (character vector) Vector of names of the attributes on which we define the implications.
+    #' @param lhs (a \code{dgCMatrix}) Optional initial LHS of the implications stored.
+    #' @param rhs (a \code{dgCMatrix}) Optional initial RHS of the implications stored.
+    #'
+    #' @return A new \code{implication_set} object.
+    #'
     initialize = function(name = "",
                           attributes = c(),
                           lhs = NULL,

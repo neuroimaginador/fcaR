@@ -2127,21 +2127,15 @@ using namespace Rcpp;
       initVector(&LHS, n_attributes);
       initVector(&RHS, n_attributes);
 
-      // std::list <S4> LHS_S4;
-      // std::list <S4> RHS_S4;
-
       SparseVector empty, B, rhs;
 
       initVector(&empty, n_attributes);
       initVector(&B, n_attributes);
       initVector(&rhs, n_attributes);
 
-      // Rprintf("Antes de tree\n");
-
       ImplicationTree tree;
       initImplicationTree(&tree, n_attributes);
 
-      // Rcout << "Antes de closure_empty" << std::endl << std::endl << std::endl;
       SparseVector A = compute_closure_struct(empty, I);
 
       if (cardinal_struct(A) > 0) {
@@ -2149,28 +2143,17 @@ using namespace Rcpp;
         add_column(&LHS, empty);
         add_column(&RHS, A);
 
-        // LHS.push_back(empty);
-        // RHS.push_back(A);
-
-        // LHS_S4.push_back(SparseToS4(empty));
-        // RHS_S4.push_back(SparseToS4(A));
-
       } else {
 
         add_column(&concepts, A);
-        // res2.push_back(SparseToS4(A));
 
       }
 
       int count = 0;
-      // Rcout << "Antes de while" << std::endl << std::endl << std::endl;
 
       double pctg, old_pctg = 0;
 
       while ((cardinal_struct(A) < n_attributes)){
-
-        // Rcout << "Antes de next_closure" << std::endl << std::endl << std::endl;
-
 
         A = next_closure_implications_tree3(A,
                                             n_attributes,
@@ -2179,26 +2162,20 @@ using namespace Rcpp;
                                             tree, LHS, RHS,
                                             attrs);
 
-        pctg = (100 * (n_attributes - A.i.array[0])) / n_attributes;
+        if (verbose) {
 
-        if (pctg != old_pctg) {
+          pctg = (100 * (n_attributes - A.i.array[0])) / n_attributes;
 
-          Rprintf("Completed = %.2f\n", pctg);
-          old_pctg = pctg;
+          if (pctg != old_pctg) {
+
+            Rprintf("Completed = %.2f\n %", pctg);
+            old_pctg = pctg;
+
+          }
 
         }
-        //
-        // Rcout << "NextClosure" << std::endl << std::endl << std::endl;
 
-        // printVector(A, attrs);
-        // Rprintf("\n");
-
-        // Rcout << "Antes de closure" << std::endl << std::endl << std::endl;
         B = compute_closure_struct(A, I);
-
-        // Rcout << "Closure" << std::endl << std::endl << std::endl;
-        // printVector(B, attrs);
-        // Rprintf("\n");
 
         rhs = setdifference_struct(B, A);
 
@@ -2214,29 +2191,18 @@ using namespace Rcpp;
             Rprintf("\n");
 
           }
-          // res2.push_back(SparseToS4(A));//[count++] = A;
 
         } else {
 
           add_column(&LHS, A);
           add_column(&RHS, rhs);
 
-          // LHS.push_back(A);
-          // RHS.push_back(rhs);
-
           if (verbose) {
 
             Rcout << "Added implication to basis" << std::endl << std::endl << std::endl;
-            // Rprintf("Added implication to basis:\n");
             printImpl(A, rhs, attrs);
 
           }
-
-          // printArray(RHS.p);
-          // printArray(RHS.i);
-
-          // LHS_S4.push_back(SparseToS4(A));
-          // RHS_S4.push_back(SparseToS4(rhs));
 
           addImplicationToTree(&tree, A);
 
@@ -2246,14 +2212,11 @@ using namespace Rcpp;
 
         }
 
-        // timer.step("push");
-
         if (checkInterrupt3()) { // user interrupted ...
 
           List res = List::create(_["concepts"] = SparseToS4(concepts),
                                   _["LHS"] = SparseToS4(LHS),
                                   _["RHS"] = SparseToS4(RHS));
-          // _["timer"] = timer);
 
           Rprintf("User interrupted.\n");
           return res;
