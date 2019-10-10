@@ -143,6 +143,7 @@ implication_set <- R6::R6Class(
       cl <- .compute_closure2(S,
                              LHS = private$lhs_matrix,
                              RHS = private$rhs_matrix,
+                             attributes = private$attributes,
                              reduce = reduce,
                              verbose = verbose)
 
@@ -164,7 +165,8 @@ implication_set <- R6::R6Class(
       .recommend_attribute(S = S,
                            LHS = private$lhs_matrix,
                            RHS = private$rhs_matrix,
-                           attribute_filter = attribute_filter, attributes = private$attributes)
+                           attribute_filter = attribute_filter,
+                           attributes = private$attributes)
 
     },
 
