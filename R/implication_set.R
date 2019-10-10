@@ -30,6 +30,12 @@ implication_set <- R6::R6Class(
 
     },
 
+    get_attributes = function() {
+
+      return(private$attributes)
+
+    },
+
     # Import from arules object
     from_arules = function(arules_imp) {
 
@@ -199,6 +205,13 @@ implication_set <- R6::R6Class(
                                                 .implication_to_string(LHS[, i], RHS[, i], attributes)))
 
       cat(implications, sep = "\n")
+
+    },
+
+    to_latex = function(ncols = 1) {
+
+      imp_to_latex(self, ncols = ncols)
+
 
     },
 

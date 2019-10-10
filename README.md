@@ -85,54 +85,80 @@ fc$extract_implications_concepts()
 
 # Which implications have been extracted
 fc$implications
-#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6 [1]}
+#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
 #> Rule 2: {P5 [0.5]} -> {P4 [0.5]}
-#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2 [1], P5 [1]}
-#> Rule 4: {P3 [0.5], P4 [1]} -> {P3 [1]}
-#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2 [1], P3 [0.5], P5 [1]}
-#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2 [1]}
-#> Rule 7: {P2 [1], P3 [1], P4 [0.5], P5 [1]} -> {P4 [1]}
-#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1 [1], P2 [1], P3 [1], P4 [1], P5 [1], P6 [1]}
-#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1 [1], P2 [1], P3 [1]}
-#> Rule 10: {P1 [0.5], P2 [1]} -> {P1 [1]}
-#> Rule 11: {P1 [1], P2 [0.5]} -> {P2 [1]}
-#> Rule 12: {P1 [1], P2 [1], P3 [1], P6 [1]} -> {P4 [1], P5 [1]}
+#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
+#> Rule 4: {P3 [0.5], P4} -> {P3}
+#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
+#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2}
+#> Rule 7: {P2, P3, P4 [0.5], P5} -> {P4}
+#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
+#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
+#> Rule 10: {P1 [0.5], P2} -> {P1}
+#> Rule 11: {P1, P2 [0.5]} -> {P2}
+#> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
 
 # Reduce the number of implications using two simple
 # rules. The algorithm applies the specified rules
 # in batches, if the number of rules is high.
-fc$implications$batch_apply(rules = c("composition",
+fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 12 to 12 in 0.002 secs. 
-#> --> generalization : from 12 to 12 in 0.007 secs. 
-#> Batch took 0.011 secs.
+#> --> composition : from 12 to 12 in 0.01 secs. 
+#> --> generalization : from 12 to 12 in 0.019 secs. 
+#> Batch took 0.032 secs.
 
 # Reduced set of implications
 fc$implications
-#> Rule 1: {P3 [0.5], P4 [1]} -> {P3 [1]}
-#> Rule 2: {P2 [1], P3 [1], P4 [0.5], P5 [1]} -> {P4 [1]}
-#> Rule 3: {P1 [0.5], P2 [1]} -> {P1 [1]}
-#> Rule 4: {P1 [1], P2 [0.5]} -> {P2 [1]}
-#> Rule 5: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6 [1]}
-#> Rule 6: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2 [1], P5 [1]}
-#> Rule 7: {P1 [0.5], P3 [0.5]} -> {P1 [1], P2 [1], P3 [1]}
-#> Rule 8: {P2 [0.5], P3 [0.5]} -> {P2 [1]}
-#> Rule 9: {P1 [0.5], P4 [0.5]} -> {P1 [1], P2 [1], P3 [1], P4 [1], P5 [1], P6 [1]}
-#> Rule 10: {P1 [1], P2 [1], P3 [1], P6 [1]} -> {P4 [1], P5 [1]}
-#> Rule 11: {P5 [0.5]} -> {P4 [0.5]}
-#> Rule 12: {P2 [0.5], P4 [0.5]} -> {P2 [1], P3 [0.5], P5 [1]}
+#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
+#> Rule 2: {P5 [0.5]} -> {P4 [0.5]}
+#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
+#> Rule 4: {P3 [0.5], P4} -> {P3}
+#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
+#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2}
+#> Rule 7: {P2, P3, P4 [0.5], P5} -> {P4}
+#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
+#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
+#> Rule 10: {P1 [0.5], P2} -> {P1}
+#> Rule 11: {P1, P2 [0.5]} -> {P2}
+#> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
 
 # We can obtain the support of both implications and concepts
 fc$get_implication_support()
-#>  [1] 0.0000000 0.0000000 0.1666667 0.1666667 0.1666667 0.1666667 0.1666667
-#>  [8] 0.3333333 0.0000000 0.0000000 0.3333333 0.1666667
+#>  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000
+#>  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000
 fc$get_concept_support()
 #>  [1] 0.8333333 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000
 #>  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333
 #> [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667
-#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000
+#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000 0.8333333 0.5000000
+#> [29] 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333
+#> [36] 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333 0.3333333 0.1666667
+#> [43] 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667
+#> [50] 0.0000000 0.1666667 0.0000000
+```
+
+Even we can export the implications to \(\LaTeX\) :
+
+``` r
+fc$implications$to_latex()
+#> $$
+#> \begin{array}{rcl}
+#> \ensuremath{\{{^{0.5}}\!/P6\}}&\ensuremath{\Rightarrow}&\ensuremath{\{{^{0.5}}\!/P1,\, {^{0.5}}\!/P2,\, P6\}}\\
+#> \ensuremath{\{{^{0.5}}\!/P5\}}&\ensuremath{\Rightarrow}&\ensuremath{\{{^{0.5}}\!/P4\}}\\
+#> \ensuremath{\{{^{0.5}}\!/P3,\, {^{0.5}}\!/P4,\, {^{0.5}}\!/P5\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P2,\, P5\}}\\
+#> \ensuremath{\{{^{0.5}}\!/P3,\, P4\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P3\}}\\
+#> \ensuremath{\{{^{0.5}}\!/P2,\, {^{0.5}}\!/P4\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P2,\, {^{0.5}}\!/P3,\, P5\}}\\
+#> \ensuremath{\{{^{0.5}}\!/P2,\, {^{0.5}}\!/P3\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P2\}}\\
+#> \ensuremath{\{P2,\, P3,\, {^{0.5}}\!/P4,\, P5\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P4\}}\\
+#> \ensuremath{\{{^{0.5}}\!/P1,\, {^{0.5}}\!/P4\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P1,\, P2,\, P3,\, P4,\, P5,\, P6\}}\\
+#> \ensuremath{\{{^{0.5}}\!/P1,\, {^{0.5}}\!/P3\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P1,\, P2,\, P3\}}\\
+#> \ensuremath{\{{^{0.5}}\!/P1,\, P2\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P1\}}\\
+#> \ensuremath{\{P1,\, {^{0.5}}\!/P2\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P2\}}\\
+#> \ensuremath{\{P1,\, P2,\, P3,\, P6\}}&\ensuremath{\Rightarrow}&\ensuremath{\{P4,\, P5\}}\\
+#> \end{array}
+#> $$
 ```
 
 ## Example in Crisp Formal Context
@@ -183,7 +209,7 @@ concept_list <- fc$compute_concepts()
 fc$plot_lattice()
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 We can also extract implications from the formal context:
 
@@ -193,34 +219,34 @@ fc$extract_implications_concepts()
 
 # Which implications have been extracted
 fc$implications
-#> Rule 1: {f [1]} -> {b [1], d [1]}
-#> Rule 2: {e [1]} -> {b [1], d [1], f [1]}
-#> Rule 3: {d [1]} -> {b [1], f [1]}
-#> Rule 4: {c [1]} -> {a [1], b [1], d [1], f [1]}
-#> Rule 5: {a [1], b [1], d [1], f [1]} -> {c [1]}
+#> Rule 1: {f} -> {b, d}
+#> Rule 2: {e} -> {b, d, f}
+#> Rule 3: {d} -> {b, f}
+#> Rule 4: {c} -> {a, b, d, f}
+#> Rule 5: {a, b, d, f} -> {c}
 
 # Reduce the number of implications using two simple
 # rules. The algorithm applies the specified rules
 # in batches, if the number of rules is high.
-fc$implications$batch_apply(rules = c("composition",
+fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 5 to 5 in 0.001 secs. 
-#> --> generalization : from 5 to 5 in 0.002 secs. 
-#> Batch took 0.005 secs.
+#> --> composition : from 5 to 5 in 0.002 secs. 
+#> --> generalization : from 5 to 5 in 0.006 secs. 
+#> Batch took 0.01 secs.
 
 # Reduced set of implications
 fc$implications
-#> Rule 1: {f [1]} -> {b [1], d [1]}
-#> Rule 2: {d [1]} -> {b [1], f [1]}
-#> Rule 3: {a [1], b [1], d [1], f [1]} -> {c [1]}
-#> Rule 4: {e [1]} -> {b [1], d [1], f [1]}
-#> Rule 5: {c [1]} -> {a [1], b [1], d [1], f [1]}
+#> Rule 1: {f} -> {b, d}
+#> Rule 2: {e} -> {b, d, f}
+#> Rule 3: {d} -> {b, f}
+#> Rule 4: {c} -> {a, b, d, f}
+#> Rule 5: {a, b, d, f} -> {c}
 
 # We can obtain the support of both implications and concepts
 fc$get_implication_support()
-#> [1] 0.4 0.4 0.2 0.2 0.2
+#> [1] 0.4 0.2 0.4 0.2 0.2
 fc$get_concept_support()
-#> [1] 0.8 0.6 0.4 0.2 0.8 0.4 0.2 0.0
+#>  [1] 0.8 0.6 0.4 0.2 0.8 0.4 0.2 0.0 0.8 0.6 0.4 0.2 0.8 0.4 0.2 0.0
 ```

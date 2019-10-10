@@ -86,7 +86,7 @@ fc$implications
 # Reduce the number of implications using two simple
 # rules. The algorithm applies the specified rules
 # in batches, if the number of rules is high.
-fc$implications$batch_apply(rules = c("composition",
+fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 
 # Reduced set of implications
@@ -95,6 +95,12 @@ fc$implications
 # We can obtain the support of both implications and concepts
 fc$get_implication_support()
 fc$get_concept_support()
+```
+
+Even we can export the implications to $\LaTeX$ :
+
+```{r}
+fc$implications$to_latex()
 ```
 
 
@@ -152,7 +158,7 @@ fc$implications
 # Reduce the number of implications using two simple
 # rules. The algorithm applies the specified rules
 # in batches, if the number of rules is high.
-fc$implications$batch_apply(rules = c("composition",
+fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 
 # Reduced set of implications
