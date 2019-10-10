@@ -121,7 +121,7 @@ head(supp)
 
 # Computing Closure
 
-Given a fuzzy set representd by a sparse matrix, we can compute its closure wrt the implications in the ruleset.
+Given a fuzzy set represented by a sparse matrix, we can compute its closure with respect to the implications in the ruleset.
 
 ```{r}
 # LHS of the fifth rule

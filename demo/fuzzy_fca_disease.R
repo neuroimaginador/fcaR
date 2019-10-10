@@ -30,16 +30,30 @@ print(I)
 
 fc <- formal_context$new(I)
 
-fc$extract_implications_concepts(verbose = TRUE)
-fc$implications$length()
+fc$extract_implications_concepts(verbose = FALSE)
 
-system.time(
-  fc$implications$batch_apply(rules = c("composition",
-                                        "generalization"),
-                              batch_size = 25000L)
-)
-fc$implications$length()
+fc$implications$cardinality()
 
+sizes <- fc$implications$size()
+colMeans(sizes)
+
+fc$implications$apply_rules(rules = c("simplification"),
+                            reorder = FALSE)
+fc$implications$cardinality()
+sizes <- fc$implications$size()
+colMeans(sizes)
+
+fc$implications$apply_rules(rules = c("composition"),
+                            reorder = FALSE)
+fc$implications$cardinality()
+sizes <- fc$implications$size()
+colMeans(sizes)
+
+fc$implications$apply_rules(rules = c("generalization"),
+                            reorder = FALSE)
+fc$implications$cardinality()
+sizes <- fc$implications$size()
+colMeans(sizes)
 
 fc$plot_lattice()
 fc$plot_context()
@@ -64,23 +78,25 @@ rownames(I2) <- objects
 
 print(I2)
 
-fc2 <- formal_context$new(I)
+fc2 <- formal_context$new(I2)
 
 fc2$extract_implications_concepts()
 
 fc2$implications
 
-system.time(
-  fc2$implications$batch_apply(rules = c("composition",
-                                        "generalization"),
-                              batch_size = 25000L)
-)
-fc2$implications$length()
+fc2$implications$cardinality()
+sizes <- fc$implications$size()
+colMeans(sizes)
 
-fc2$implications
+fc2$implications$apply_rules(rules = c("composition",
+                                       "generalization"))
+fc2$implications$cardinality()
+sizes <- fc$implications$size()
+colMeans(sizes)
+
 
 fc2$plot_lattice()
 
-fc$get_concept_support()
-fc$get_implication_support()
+fc2$get_concept_support()
+fc2$get_implication_support()
 
