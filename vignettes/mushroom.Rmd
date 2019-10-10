@@ -141,7 +141,7 @@ print_set(cl, fc$attributes)
 After this phase of redudancy removal, we can export the obtained ruleset to `arules format`.
 
 ```{r}
-R <- fc$convert_implications_to_arules()
+R <- fc$export_implications_to_arules()
 
 R
 
