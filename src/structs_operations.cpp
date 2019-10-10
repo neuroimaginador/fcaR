@@ -2208,7 +2208,11 @@ using namespace Rcpp;
 
           count++;
 
-          if (count % 10 == 0) Rprintf("%u\n", count);
+          if (verbose) {
+
+            if (count % 10 == 0) Rprintf("%u\n", count);
+
+          }
 
         }
 
@@ -2229,7 +2233,8 @@ using namespace Rcpp;
                               _["LHS"] = SparseToS4(LHS),
                               _["RHS"] = SparseToS4(RHS));
 
-      Rprintf("Finished.\n");
+      if (verbose)
+        Rprintf("Finished.\n");
 
       return res;
 

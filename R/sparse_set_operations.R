@@ -83,6 +83,14 @@ sparse_set_union <- function(A, B) {
 
 }
 
+.flatten_union <- function(M) {
+
+  v <- flatten_sparse_C(M@p, M@i, M@x, M@Dim)
+
+  return(Matrix(v, ncol = 1, sparse = TRUE))
+
+}
+
 replicate_sparse_col <- function(A, n) {
 
   new_i <- rep(A@i, n)

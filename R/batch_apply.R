@@ -4,7 +4,7 @@
                          rules = c("generalization",
                                    "composition"),
                          batch_size = ncol(LHS),
-                         reorder = TRUE) {
+                         reorder = FALSE) {
 
   n_implications <- ncol(LHS)
 

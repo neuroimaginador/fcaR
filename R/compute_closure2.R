@@ -145,10 +145,3 @@
   return(S)
 
 }
-
-.flatten_union <- function(M) {
-
-  v <- flatten_sparse_C(M@p, M@i, M@x, M@Dim)
-
-  return(Matrix(v, ncol = 1, sparse = TRUE))
-}

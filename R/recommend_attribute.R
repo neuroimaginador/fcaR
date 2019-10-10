@@ -1,7 +1,10 @@
-.recommend_attribute <- function(S, LHS, RHS, attribute_filter, attributes) {
+.recommend_attribute <- function(S, LHS, RHS,
+                                 attribute_filter,
+                                 attributes) {
 
   # Compute closure
-  S <- .compute_closure2(S, LHS, RHS)
+  S <- .compute_closure2(S, LHS, RHS,
+                         attributes = attributes)
 
   # Which attributes are seeked
   idx <- match(attribute_filter, attributes)

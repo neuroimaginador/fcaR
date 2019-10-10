@@ -14,8 +14,7 @@
   my_functions <- c("generalization" = .remove_redundancies_lhs_rhs_general,
                     "composition"    = .compose_lhs_rhs_equal,
                     "reduction"      = .reduce_lhs_rhs,
-                    "simplification" = .simplify2_lhs_rhs,
-                    "simpl_ijar"     = .simplify_IJAR_lhs_rhs)
+                    "simplification" = .simplify2_lhs_rhs)
 
   idx_rules <- match(rules, names(my_functions))
   idx_rules <- idx_rules[!is.na(idx_rules)]
