@@ -104,7 +104,7 @@ fc$implications$to_latex()
 ```
 
 And the output in a LaTeX document will be as follows:
-![Implications in a LaTeX document](impl_latex.png){width=60%}
+![Implications in a LaTeX document](images/impl_latex.png){width=60%}
 
 ## Example in Crisp Formal Context
 
