@@ -174,26 +174,6 @@ IntegerVector self_intersection_C(IntegerVector x_i,
 
     }
 
-    // while (loc < end_loc) {
-    //
-    //   if (y_i[loc] == x_i[curr_col]) {
-    //
-    //     has_intersection = true;
-    //
-    //     break;
-    //
-    //   } else curr_col++;
-    //
-    //   if(curr_col == y_end_index) break;
-    //
-    //   if (x_i[curr_col] >= y_i[loc]) {
-    //
-    //     loc++;
-    //
-    //   }
-    //
-    // }
-
     if (has_intersection) res[i] = 1;
 
   }
@@ -234,26 +214,6 @@ void populateMatchesIntersect(int* matches_for_y, int* x_i, int* x_p, int* y_p, 
       if (out) break;
 
     }
-
-    // while(loc < end_loc){
-    //
-    //   if (y_i[loc] == x_i[curr_col]) {
-    //
-    //     has_intersection = true;
-    //
-    //     break;
-    //
-    //   } else curr_col++;
-    //
-    //   if(curr_col == y_end_index) break;
-    //
-    //   if (x_i[curr_col] >= y_i[loc]) {
-    //
-    //     loc++;
-    //
-    //   }
-    //
-    // }
 
     if (has_intersection) {
 
