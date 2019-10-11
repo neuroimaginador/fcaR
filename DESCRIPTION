@@ -17,6 +17,7 @@ Imports:
     Rcpp
 Suggests: 
     arules,
+    tictoc,
     testthat (>= 2.1.0),
     covr,
     knitr,
