@@ -1,4 +1,46 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
+r: bioc-release
 cache: packages
+warnings_are_errors: true
+use_bioc: true
+bioc_required: true
+cran: http://cran.rstudio.com
+
+bioc_packages:
+  - graph
+  - Rgraphviz
+
+os:
+- linux
+- osx
+osx_image: xcode9
+r:
+- release
+- devel
+matrix:
+  allow_failures:
+  - r: devel
+env:
+  global:
+  - R_BUILD_ARGS="--no-manual"
+  - R_CHECK_ARGS="--as-cran --install-args=--build"
+
+
+
+r_github_packages:
+  - r-lib/covr
+after_success:
+- if [[ "${TRAVIS_OS_NAME}" == "linux" && ${TRAVIS_R_VERSION_STRING} = "release" ]];
+  then echo 'covr::coveralls(type = "all", quiet = FALSE)' > neuroc_covr.R ; travis_wait
+  100 Rscript neuroc_covr.R ; rm neuroc_covr.R ; fi
+before_deploy:
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then PKG_TARBALL=$(ls -1t *.tgz | head -n 1);
+  PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tgz/_'"R${rver}"'.tgz/'` ; mv ${PKG_TARBALL}
+  ${PKG_TARBALL_WITH_R} ; echo "Built tarball is ${PKG_TARBALL_WITH_R}" ; fi
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then PKG_TARBALL=$(ls -1t *.tar.gz | head -n
+  1); PKG_TARBALL_WITH_R=`echo $PKG_TARBALL | sed 's/.tar.gz/_'"R${rver}"'.tar.gz/'`
+  ; mv ${PKG_TARBALL} ${PKG_TARBALL_WITH_R} ; echo "Built tarball is ${PKG_TARBALL_WITH_R}"
+  ; fi
+- if [[ "${TRAVIS_OS_NAME}" = "osx" ]]; then rm -f *.tar.gz; fi
