@@ -15,10 +15,12 @@ Imports:
     RColorBrewer,
     scales,
     sets,
-    Rcpp
-Suggests: 
     arules,
     tictoc,
+    digest,
+    Matrix,
+    Rcpp
+Suggests: 
     testthat (>= 2.1.0),
     covr,
     knitr,
