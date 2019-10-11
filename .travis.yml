@@ -2,20 +2,3 @@
 
 language: R
 cache: packages
-
-matrix:
-  include:
-  - r: devel
-  - r: release
-    after_success:
-    - Rscript -e 'covr::codecov()'
-  - r: oldrel
-  - r: 3.3
-  - r: 3.2
-  - r: 3.1
-
-before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
-  deploy:
-    provider: script
-    script: Rscript -e 'pkgdown::deploy_site_github()'
-    skip_cleanup: true
