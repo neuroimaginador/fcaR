@@ -106,8 +106,8 @@ fc$implications$apply_rules(rules = c("composition",
 #> Using parallel execution
 #> Processing batch
 #> --> composition : from 12 to 12 in 0.01 secs. 
-#> --> generalization : from 12 to 12 in 0.019 secs. 
-#> Batch took 0.032 secs.
+#> --> generalization : from 12 to 12 in 0.008 secs. 
+#> Batch took 0.021 secs.
 
 # Reduced set of implications
 fc$implications
@@ -139,7 +139,7 @@ fc$get_concept_support()
 #> [50] 0.0000000 0.1666667 0.0000000
 ```
 
-Even we can export the implications to \(\LaTeX\) :
+Even we can export the implications to LaTeX :
 
 ``` r
 fc$implications$to_latex()
@@ -160,6 +160,9 @@ fc$implications$to_latex()
 #> \end{array}
 #> $$
 ```
+
+And the output in a LaTeX document will be as follows: ![Implications in
+a LaTeX document](impl_latex.png)
 
 ## Example in Crisp Formal Context
 
@@ -232,9 +235,9 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 5 to 5 in 0.002 secs. 
-#> --> generalization : from 5 to 5 in 0.006 secs. 
-#> Batch took 0.01 secs.
+#> --> composition : from 5 to 5 in 0.001 secs. 
+#> --> generalization : from 5 to 5 in 0.002 secs. 
+#> Batch took 0.004 secs.
 
 # Reduced set of implications
 fc$implications

@@ -97,13 +97,14 @@ fc$get_implication_support()
 fc$get_concept_support()
 ```
 
-Even we can export the implications to $\LaTeX$ :
+Even we can export the implications to LaTeX :
 
 ```{r}
 fc$implications$to_latex()
 ```
 
-
+And the output in a LaTeX document will be as follows:
+![Implications in a LaTeX document](impl_latex.png){width=60%}
 
 ## Example in Crisp Formal Context
 
