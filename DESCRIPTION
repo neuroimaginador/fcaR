@@ -11,6 +11,7 @@ Description: Tha aim of this package is to provide tools to perform FCA from wit
 License: GPL-3
 Imports: 
     stringr,
+    pryr,
     hasseDiagram,
     RColorBrewer,
     scales,
