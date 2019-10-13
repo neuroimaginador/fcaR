@@ -27,13 +27,11 @@ env:
   - R_BUILD_ARGS="--no-manual"
   - R_CHECK_ARGS="--as-cran --install-args=--build"
 
-
-
 r_github_packages:
   - r-lib/covr
 after_success:
 - if [[ "${TRAVIS_OS_NAME}" == "linux" && ${TRAVIS_R_VERSION_STRING} = "release" ]];
-  then echo 'covr::coveralls(type = "all", quiet = FALSE)' > neuroc_covr.R ; travis_wait
+  then echo 'covr::codecov(type = "all", quiet = FALSE)' > neuroc_covr.R ; travis_wait
   100 Rscript neuroc_covr.R ; rm neuroc_covr.R ; fi
 before_deploy:
 - if [ "$TRAVIS_OS_NAME" = "osx" ]; then PKG_TARBALL=$(ls -1t *.tgz | head -n 1);

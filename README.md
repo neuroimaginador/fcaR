@@ -10,8 +10,7 @@
 status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
 [![Build
 Status](https://travis-ci.com/neuroimaginador/fcaR.svg?token=MLhMMg8zTrQjhhSXhmgz&branch=master)](https://travis-ci.com/neuroimaginador/fcaR)
-[![Codecov test
-coverage](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg)](https://codecov.io/gh/neuroimaginador/fcaR?branch=master)
+[![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://codecov.io/gh/neuroimaginador/fcaR)
 <!-- badges: end -->
 
 The goal of fcaR is to provide FCA tools inside the R environment.
@@ -105,8 +104,8 @@ fc$implications$apply_rules(rules = c("composition",
 #> Using parallel execution
 #> Processing batch
 #> --> composition : from 12 to 12 in 0.011 secs. 
-#> --> generalization : from 12 to 12 in 0.011 secs. 
-#> Batch took 0.026 secs.
+#> --> generalization : from 12 to 12 in 0.012 secs. 
+#> Batch took 0.029 secs.
 
 # Reduced set of implications
 fc$implications
@@ -234,9 +233,9 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 5 to 5 in 0.002 secs. 
-#> --> generalization : from 5 to 5 in 0.003 secs. 
-#> Batch took 0.008 secs.
+#> --> composition : from 5 to 5 in 0.001 secs. 
+#> --> generalization : from 5 to 5 in 0.002 secs. 
+#> Batch took 0.007 secs.
 
 # Reduced set of implications
 fc$implications
