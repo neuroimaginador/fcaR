@@ -5,12 +5,11 @@
 
 <!-- badges: start -->
 
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
-[![Travis build
-status](https://travis-ci.org/neuroimaginador/fcaR.svg?branch=master)](https://travis-ci.org/neuroimaginador/fcaR)
+[![Build
+Status](https://travis-ci.com/neuroimaginador/fcaR.svg?token=MLhMMg8zTrQjhhSXhmgz&branch=master)](https://travis-ci.com/neuroimaginador/fcaR)
 [![Codecov test
 coverage](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg)](https://codecov.io/gh/neuroimaginador/fcaR?branch=master)
 <!-- badges: end -->
@@ -105,9 +104,9 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 12 to 12 in 0.005 secs. 
-#> --> generalization : from 12 to 12 in 0.009 secs. 
-#> Batch took 0.018 secs.
+#> --> composition : from 12 to 12 in 0.011 secs. 
+#> --> generalization : from 12 to 12 in 0.011 secs. 
+#> Batch took 0.026 secs.
 
 # Reduced set of implications
 fc$implications
@@ -236,7 +235,7 @@ fc$implications$apply_rules(rules = c("composition",
 #> Using parallel execution
 #> Processing batch
 #> --> composition : from 5 to 5 in 0.002 secs. 
-#> --> generalization : from 5 to 5 in 0.005 secs. 
+#> --> generalization : from 5 to 5 in 0.003 secs. 
 #> Batch took 0.008 secs.
 
 # Reduced set of implications
