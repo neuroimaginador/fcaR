@@ -1,6 +1,6 @@
 .intersects_sparse <- function(x, y = NULL, proper = FALSE) {
 
-  if (is.null(y)) y <- x
+  y <- ifelse(is.null(y), x, y)
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
   i <- intersects_C(x@p, x@i, x@Dim,
