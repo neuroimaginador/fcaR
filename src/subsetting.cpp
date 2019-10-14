@@ -51,49 +51,6 @@ void populateMatches(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p
 
 }
 
-void populateMatchesSubset(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p, int* y_i, double* y, int y_index, int num_rows, int proper){
-
-  int y_start_index = x_p[y_index], y_end_index = x_p[y_index+1];
-
-  int num_matches = 0;
-
-  for(int x_index = 0; x_index < num_rows; x_index++){
-
-    int loc = y_p[x_index], end_loc = y_p[x_index+1], curr_col;
-
-    // For X to be subset of Y, must have less nnz rows
-    if (end_loc - loc < y_end_index - y_start_index) continue;
-
-    curr_col = y_start_index;
-
-    while(loc < end_loc){
-
-      if (y_i[loc] == x_i[curr_col]) {
-
-        if (y[loc] >= x[curr_col]) {
-
-          curr_col++;
-
-        } else break;
-
-      }
-      if(curr_col == y_end_index) break;
-
-      loc++;
-
-    }
-
-
-    if(curr_col == y_end_index){
-      matches_for_y[num_matches++] = x_index;
-    }
-
-  }
-
-  matches_for_y[num_matches] = -1;
-
-}
-
 void populateMatchesEqual(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p, int* y_i, double* y, int y_index, int num_rows, int proper){
 
   int y_start_index = x_p[y_index], y_end_index = x_p[y_index+1];

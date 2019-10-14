@@ -215,7 +215,7 @@ test_that("fcaR computes concept support", {
 
   fc <- formal_context$new(I = I)
 
-  fc$extract_implications_concepts()
+  fc$extract_implications_concepts(verbose = TRUE)
 
   expect_error(fc$get_concept_support(), NA)
 

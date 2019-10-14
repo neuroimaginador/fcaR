@@ -21,10 +21,10 @@ static void
 
 void initImplicationTree(struct ImplicationTree *t, int n_attributes);
 
-// void printImplicationTree(SEXP ext);
+void printImplicationTree(SEXP ext);
 
-// SEXP createImplicationTree(int n_attributes);
+SEXP createImplicationTree(int n_attributes);
 
 void addImplicationToTree(struct ImplicationTree *t, SparseVector A);
 
-// void addImplicationToTree_XPtr(SEXP ext, S4 A);
+void addImplicationToTree_XPtr(SEXP ext, S4 A);

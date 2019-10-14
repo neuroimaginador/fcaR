@@ -38,31 +38,33 @@ void initImplicationTree(struct ImplicationTree *t, int n_attributes) {
 
 }
 
-// void printImplicationTree(SEXP ext) {
-//
-//   struct ImplicationTree *tree = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
-//
-//   Rprintf("ImplicationTree\n");
-//   Rprintf("Number of attributes: %u\n", tree->n_attributes);
-//   Rprintf("Number of implications: %d\n", tree->n_implications);
-//
-//   printArray(tree->CARD);
-//   printArray(tree->COUNT);
-//
-// }
-//
-// SEXP createImplicationTree(int n_attributes) {
-//
-//   struct ImplicationTree *t = Calloc(1, struct ImplicationTree);
-//   initImplicationTree(t, n_attributes);
-//
-//   SEXP ext = PROTECT(R_MakeExternalPtr(t, R_NilValue, R_NilValue));
-//   R_RegisterCFinalizerEx(ext, _finalizer, TRUE);
-//   UNPROTECT(1);
-//
-//   return ext;
-//
-// }
+// [[Rcpp::export]]
+void printImplicationTree(SEXP ext) {
+
+  struct ImplicationTree *tree = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
+
+  Rprintf("ImplicationTree\n");
+  Rprintf("Number of attributes: %u\n", tree->n_attributes);
+  Rprintf("Number of implications: %d\n", tree->n_implications);
+
+  printArray(tree->CARD);
+  printArray(tree->COUNT);
+
+}
+
+// [[Rcpp::export]]
+SEXP createImplicationTree(int n_attributes) {
+
+  struct ImplicationTree *t = Calloc(1, struct ImplicationTree);
+  initImplicationTree(t, n_attributes);
+
+  SEXP ext = PROTECT(R_MakeExternalPtr(t, R_NilValue, R_NilValue));
+  R_RegisterCFinalizerEx(ext, _finalizer, TRUE);
+  UNPROTECT(1);
+
+  return ext;
+
+}
 
 void addImplicationToTree(struct ImplicationTree *t, SparseVector A) {
 
@@ -92,12 +94,13 @@ void addImplicationToTree(struct ImplicationTree *t, SparseVector A) {
 
 }
 
-// void addImplicationToTree_XPtr(SEXP ext, S4 A) {
-//
-//   // printImplicationTree(ext);
-//
-//   SparseVector S = S4toSparse(A);
-//   struct ImplicationTree *tree = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
-//   addImplicationToTree(tree, S);
-//
-// }
+// [[Rcpp::export]]
+void addImplicationToTree_XPtr(SEXP ext, S4 A) {
+
+  // printImplicationTree(ext);
+
+  SparseVector S = S4toSparse(A);
+  struct ImplicationTree *tree = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
+  addImplicationToTree(tree, S);
+
+}

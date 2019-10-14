@@ -34,7 +34,8 @@ test_that("fcaR operates on implications", {
   expect_error(fc$implications$apply_rules(rules = c("composition",
                                                      "generalization",
                                                      "simplification",
-                                                     "reduction")), NA)
+                                                     "reduction"),
+                                           reorder = TRUE), NA)
   expect_is(fc$implications, "ImplicationSet")
 
 })
@@ -140,11 +141,24 @@ test_that("fcaR makes a recommendation", {
 
 })
 
+test_that("fcaR filters and removes implications", {
 
-# test_that("fcaR subsets implications", {
-#
-#   fc <- formal_context$new(I = Mushroom)
-#
-#   fc$add_implications(mush_clean)
-#
-# })
+  fc <- formal_context$new(I = Mushroom)
+
+  fc$add_implications(mush_clean)
+
+  expect_error(fc$implications$filter_by_lhs(attr_filter = fc$attributes[1]), NA)
+
+  expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1]), NA)
+  expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1],
+                                drop = TRUE), NA)
+
+  n <- fc$implications$cardinality()
+
+  expect_error(fc$implications$remove_rules(1:2), NA)
+
+  n2 <- fc$implications$cardinality()
+
+  expect_equal(n2, n - 2)
+
+})
