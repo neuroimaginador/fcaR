@@ -55,7 +55,7 @@ test_that("fcaR adds and appends implications", {
 
   fc$add_implications(mush_clean)
 
-  fc$implications$append_implications(mush_clean)
+  fc$implications$append_implications(fc$implications)
   first_lhs <- fc$implications$get_LHS_matrix()[, 1]
   first_rhs <- fc$implications$get_RHS_matrix()[, 1]
 
@@ -84,8 +84,8 @@ test_that("fcaR gets LHS and RHS of implications", {
 
   fc$add_implications(mush_clean)
 
-  expect_is(fc$implications$get_LHS_matrix(), "dgCMatrix")
-  expect_is(fc$implications$get_RHS_matrix(), "dgCMatrix")
+  expect_is(fc$implications$get_LHS_matrix(), "lgCMatrix")
+  expect_is(fc$implications$get_RHS_matrix(), "lgCMatrix")
 
 })
 
@@ -98,7 +98,7 @@ test_that("fcaR computes closure wrt implications", {
   # LHS of the fifth rule
   A <- fc$implications$get_LHS_matrix()[, 5]
   # Associated attributes
-  print_set(A, fc$attributes)
+  A <- build_set(fc$attributes, A, fc$attributes)
 
   # Compute the closure
   expect_error(cl <- fc$implications$compute_closure(A, reduce = TRUE, verbose = TRUE), NA)
@@ -121,6 +121,7 @@ test_that("fcaR simplifies implications", {
 
   L <- .simplify2_lhs_rhs(LHS = fc$implications$get_LHS_matrix(),
                           RHS = fc$implications$get_RHS_matrix(),
+                          attributes = fc$attributes,
                           trace = TRUE)
 
   expect_is(L, "list")
@@ -134,7 +135,7 @@ test_that("fcaR makes a recommendation", {
   fc$add_implications(mush_clean)
 
   # LHS of the fifth rule
-  S <- fc$implications$get_LHS_matrix()[, 5]
+  S <- build_set(fc$attributes, fc$implications$get_LHS_matrix()[, 5], fc$attributes)
   expect_error(fc$implications$recommend(S = S, attribute_filter = fc$attributes[1]), NA)
 
 })
