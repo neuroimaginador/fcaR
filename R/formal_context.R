@@ -117,7 +117,8 @@ formal_context <- R6::R6Class(
 
       self$concepts <- .get_fuzzy_concepts_sparse(as.matrix(t(self$I)),
                                                   self$grades_set,
-                                                  verbose = verbose)
+                                                  verbose = verbose,
+                                                  attributes = self$attributes)
 
       return(self$concepts)
 

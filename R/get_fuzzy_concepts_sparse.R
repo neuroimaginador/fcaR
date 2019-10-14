@@ -1,4 +1,4 @@
-.get_fuzzy_concepts_sparse <- function(I, grades_set, verbose = FALSE) {
+.get_fuzzy_concepts_sparse <- function(I, attributes, grades_set, verbose = FALSE) {
 
   empty <- Matrix(0, ncol = 1, nrow = ncol(I))
   Y <- Matrix(1, ncol = 1, nrow = ncol(I))
@@ -11,7 +11,7 @@
 
   B <- .closure_sparse(empty, I)
 
-  if (verbose) cat(.sparse_set_to_string(B, colnames(I)), "\n")
+  if (verbose) cat(.sparse_set_to_string(B, attributes), "\n")
 
   oldB <- B
 
@@ -37,7 +37,7 @@
     if (verbose) {
 
       cat("New concept:\n")
-      cat(.sparse_set_to_string(B), "\n")
+      cat(.sparse_set_to_string(B, attributes), "\n")
 
     }
 
