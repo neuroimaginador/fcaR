@@ -51,58 +51,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// apply_F_colwise
-NumericVector apply_F_colwise(NumericMatrix x, CharacterVector type, double init_value);
-RcppExport SEXP _fcaR_apply_F_colwise(SEXP xSEXP, SEXP typeSEXP, SEXP init_valueSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< CharacterVector >::type type(typeSEXP);
-    Rcpp::traits::input_parameter< double >::type init_value(init_valueSEXP);
-    rcpp_result_gen = Rcpp::wrap(apply_F_colwise(x, type, init_value));
-    return rcpp_result_gen;
-END_RCPP
-}
-// apply_F_rowwise
-NumericVector apply_F_rowwise(NumericMatrix x, CharacterVector type, double init_value);
-RcppExport SEXP _fcaR_apply_F_rowwise(SEXP xSEXP, SEXP typeSEXP, SEXP init_valueSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< CharacterVector >::type type(typeSEXP);
-    Rcpp::traits::input_parameter< double >::type init_value(init_valueSEXP);
-    rcpp_result_gen = Rcpp::wrap(apply_F_rowwise(x, type, init_value));
-    return rcpp_result_gen;
-END_RCPP
-}
-// apply_F_rowwise_xy
-NumericMatrix apply_F_rowwise_xy(NumericMatrix x, NumericVector y, CharacterVector type);
-RcppExport SEXP _fcaR_apply_F_rowwise_xy(SEXP xSEXP, SEXP ySEXP, SEXP typeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
-    Rcpp::traits::input_parameter< CharacterVector >::type type(typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(apply_F_rowwise_xy(x, y, type));
-    return rcpp_result_gen;
-END_RCPP
-}
-// apply_F_elementwise
-NumericMatrix apply_F_elementwise(NumericMatrix x, NumericMatrix y, CharacterVector type);
-RcppExport SEXP _fcaR_apply_F_elementwise(SEXP xSEXP, SEXP ySEXP, SEXP typeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type y(ySEXP);
-    Rcpp::traits::input_parameter< CharacterVector >::type type(typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(apply_F_elementwise(x, y, type));
-    return rcpp_result_gen;
-END_RCPP
-}
 // self_intersection_C
 IntegerVector self_intersection_C(IntegerVector x_i, IntegerVector x_p, IntegerVector y_i, IntegerVector y_p);
 RcppExport SEXP _fcaR_self_intersection_C(SEXP x_iSEXP, SEXP x_pSEXP, SEXP y_iSEXP, SEXP y_pSEXP) {
@@ -207,10 +155,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_createImplicationTree", (DL_FUNC) &_fcaR_createImplicationTree, 1},
     {"_fcaR_addImplicationToTree_XPtr", (DL_FUNC) &_fcaR_addImplicationToTree_XPtr, 2},
     {"_fcaR_ganters_algorithm_implications_tree_final", (DL_FUNC) &_fcaR_ganters_algorithm_implications_tree_final, 4},
-    {"_fcaR_apply_F_colwise", (DL_FUNC) &_fcaR_apply_F_colwise, 3},
-    {"_fcaR_apply_F_rowwise", (DL_FUNC) &_fcaR_apply_F_rowwise, 3},
-    {"_fcaR_apply_F_rowwise_xy", (DL_FUNC) &_fcaR_apply_F_rowwise_xy, 3},
-    {"_fcaR_apply_F_elementwise", (DL_FUNC) &_fcaR_apply_F_elementwise, 3},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},

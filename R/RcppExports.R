@@ -17,22 +17,6 @@ ganters_algorithm_implications_tree_final <- function(I, grades_set, attrs, verb
     .Call(`_fcaR_ganters_algorithm_implications_tree_final`, I, grades_set, attrs, verbose)
 }
 
-apply_F_colwise <- function(x, type, init_value) {
-    .Call(`_fcaR_apply_F_colwise`, x, type, init_value)
-}
-
-apply_F_rowwise <- function(x, type, init_value) {
-    .Call(`_fcaR_apply_F_rowwise`, x, type, init_value)
-}
-
-apply_F_rowwise_xy <- function(x, y, type) {
-    .Call(`_fcaR_apply_F_rowwise_xy`, x, y, type)
-}
-
-apply_F_elementwise <- function(x, y, type) {
-    .Call(`_fcaR_apply_F_elementwise`, x, y, type)
-}
-
 self_intersection_C <- function(x_i, x_p, y_i, y_p) {
     .Call(`_fcaR_self_intersection_C`, x_i, x_p, y_i, y_p)
 }

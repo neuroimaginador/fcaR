@@ -20,7 +20,8 @@ Imports:
     tictoc,
     digest,
     Matrix,
-    Rcpp
+    Rcpp,
+    methods
 Suggests: 
     testthat (>= 2.1.0),
     covr,

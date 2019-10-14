@@ -147,11 +147,11 @@ implication_set <- R6::R6Class(
       S <- Matrix(S, sparse = TRUE)
 
       cl <- .compute_closure2(S,
-                             LHS = private$lhs_matrix,
-                             RHS = private$rhs_matrix,
-                             attributes = private$attributes,
-                             reduce = reduce,
-                             verbose = verbose)
+                              LHS = private$lhs_matrix,
+                              RHS = private$rhs_matrix,
+                              attributes = private$attributes,
+                              reduce = reduce,
+                              verbose = verbose)
 
       if (!reduce) {
 
@@ -221,9 +221,9 @@ implication_set <- R6::R6Class(
       if (self$is_empty()) {
 
         LHS <- Matrix(FALSE,
-               nrow = length(private$attributes),
-               ncol = 1,
-               sparse = TRUE)
+                      nrow = length(private$attributes),
+                      ncol = 1,
+                      sparse = TRUE)
 
       } else {
 
