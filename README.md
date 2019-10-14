@@ -17,9 +17,10 @@ The goal of fcaR is to provide FCA tools inside the R environment.
 
 ## Installation
 
-The development version of this package can be installed with
+The development version of this package can be installed
+    with
 
-    remotes::install_github("neuroimaginador/fcaR")
+    remotes::install_github("neuroimaginador/fcaR", build_vignettes = TRUE)
 
 ## Example in Fuzzy Formal Context
 
@@ -103,9 +104,9 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 12 to 12 in 0.011 secs. 
-#> --> generalization : from 12 to 12 in 0.012 secs. 
-#> Batch took 0.029 secs.
+#> --> composition : from 12 to 12 in 0.007 secs. 
+#> --> generalization : from 12 to 12 in 0.009 secs. 
+#> Batch took 0.018 secs.
 
 # Reduced set of implications
 fc$implications
@@ -130,11 +131,7 @@ fc$get_concept_support()
 #>  [1] 0.8333333 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000
 #>  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333
 #> [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667
-#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000 0.8333333 0.5000000
-#> [29] 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333
-#> [36] 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333 0.3333333 0.1666667
-#> [43] 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667
-#> [50] 0.0000000 0.1666667 0.0000000
+#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000
 ```
 
 Even we can export the implications to LaTeX :
@@ -234,8 +231,8 @@ fc$implications$apply_rules(rules = c("composition",
 #> Using parallel execution
 #> Processing batch
 #> --> composition : from 5 to 5 in 0.001 secs. 
-#> --> generalization : from 5 to 5 in 0.002 secs. 
-#> Batch took 0.007 secs.
+#> --> generalization : from 5 to 5 in 0.003 secs. 
+#> Batch took 0.006 secs.
 
 # Reduced set of implications
 fc$implications
@@ -249,5 +246,5 @@ fc$implications
 fc$get_implication_support()
 #> [1] 0.4 0.2 0.4 0.2 0.2
 fc$get_concept_support()
-#>  [1] 0.8 0.6 0.4 0.2 0.8 0.4 0.2 0.0 0.8 0.6 0.4 0.2 0.8 0.4 0.2 0.0
+#> [1] 0.8 0.6 0.4 0.2 0.8 0.4 0.2 0.0
 ```

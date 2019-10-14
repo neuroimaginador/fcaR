@@ -1,6 +1,6 @@
-#' @export
 #' @import scales RColorBrewer
 #' @importFrom methods as is slotNames
+#' @export
 formal_context <- R6::R6Class(
 
   classname = "FormalContext",

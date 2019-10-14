@@ -28,7 +28,7 @@ The goal of fcaR is to provide FCA tools inside the R environment.
 The development version of this package can be installed with
 
 ```
-remotes::install_github("neuroimaginador/fcaR")
+remotes::install_github("neuroimaginador/fcaR", build_vignettes = TRUE)
 ```
 
 ## Example in Fuzzy Formal Context
