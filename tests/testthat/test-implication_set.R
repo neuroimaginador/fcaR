@@ -48,6 +48,20 @@ test_that("fcaR prints implications", {
 
 })
 
+test_that("fcaR adds and appends implications", {
+
+  fc <- formal_context$new(I = Mushroom)
+
+  fc$add_implications(mush_clean)
+
+  fc$implications$append_implications(mush_clean)
+  first_lhs <- fc$implications$get_LHS_matrix()[, 1]
+  first_rhs <- fc$implications$get_RHS_matrix()[, 1]
+
+  expect_error(fc$implications$add_implication(lhs = first_lhs, rhs = first_rhs), NA)
+
+})
+
 test_that("fcaR exports implications to latex", {
 
   fc <- formal_context$new(I = Mushroom)
@@ -61,6 +75,11 @@ test_that("fcaR exports implications to latex", {
 test_that("fcaR gets LHS and RHS of implications", {
 
   fc <- formal_context$new(I = Mushroom)
+
+  fc$implications <- implication_set$new(attributes = fc$attributes)
+
+  expect_is(fc$implications$get_LHS_matrix(), "dgCMatrix")
+  expect_is(fc$implications$get_RHS_matrix(), "dgCMatrix")
 
   fc$add_implications(mush_clean)
 
@@ -93,13 +112,31 @@ test_that("fcaR computes closure wrt implications", {
 
 })
 
-# test_that("fcaR makes a recommendation", {
-#
-#   fc <- formal_context$new(I = Mushroom)
-#
-#   fc$add_implications(mush_clean)
-#
-# })
+test_that("fcaR simplifies implications", {
+
+  fc <- formal_context$new(I = Mushroom)
+
+  fc$add_implications(mush_clean)
+
+  L <- .simplify2_lhs_rhs(LHS = fc$implications$get_LHS_matrix(),
+                          RHS = fc$implications$get_RHS_matrix(),
+                          trace = TRUE)
+
+  expect_is(L, "list")
+
+})
+
+test_that("fcaR makes a recommendation", {
+
+  fc <- formal_context$new(I = Mushroom)
+
+  fc$add_implications(mush_clean)
+
+  # LHS of the fifth rule
+  S <- fc$implications$get_LHS_matrix()[, 5]
+  expect_error(fc$implications$recommend(S = S, attribute_filter = fc$attributes[1]), NA)
+
+})
 
 
 # test_that("fcaR subsets implications", {

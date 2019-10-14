@@ -68,32 +68,32 @@
 
 }
 
-.is_subset_binary <- function(x, y = NULL,
-                              proper = FALSE,
-                              transpose = FALSE) {
-
-  library(arules)
-
-  if (is.null(y)) y <- x
-
-  p <- as.integer(rep(0, x@Dim[2] + 1))
-
-  i <- .Call("R_is_subset",
-             x@p, x@i, x@Dim,
-             y@p, y@i, y@Dim,
-             as.logical(proper), p,
-             PACKAGE = "arules")
-
-  if (transpose) {
-
-    return(t(new("ngCMatrix", p = p, i = i,
-                 Dim = c(y@Dim[2], x@Dim[2]))))
-
-  } else {
-
-    return(new("ngCMatrix", p = p, i = i,
-               Dim = c(y@Dim[2], x@Dim[2])))
-
-  }
-
-}
+# .is_subset_binary <- function(x, y = NULL,
+#                               proper = FALSE,
+#                               transpose = FALSE) {
+#
+#   library(arules)
+#
+#   if (is.null(y)) y <- x
+#
+#   p <- as.integer(rep(0, x@Dim[2] + 1))
+#
+#   i <- .Call("R_is_subset",
+#              x@p, x@i, x@Dim,
+#              y@p, y@i, y@Dim,
+#              as.logical(proper), p,
+#              PACKAGE = "arules")
+#
+#   if (transpose) {
+#
+#     return(t(new("ngCMatrix", p = p, i = i,
+#                  Dim = c(y@Dim[2], x@Dim[2]))))
+#
+#   } else {
+#
+#     return(new("ngCMatrix", p = p, i = i,
+#                Dim = c(y@Dim[2], x@Dim[2])))
+#
+#   }
+#
+# }
