@@ -5,38 +5,6 @@
 
 using namespace Rcpp;
 
-// printImplicationTree
-void printImplicationTree(SEXP ext);
-RcppExport SEXP _fcaR_printImplicationTree(SEXP extSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type ext(extSEXP);
-    printImplicationTree(ext);
-    return R_NilValue;
-END_RCPP
-}
-// createImplicationTree
-SEXP createImplicationTree(int n_attributes);
-RcppExport SEXP _fcaR_createImplicationTree(SEXP n_attributesSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type n_attributes(n_attributesSEXP);
-    rcpp_result_gen = Rcpp::wrap(createImplicationTree(n_attributes));
-    return rcpp_result_gen;
-END_RCPP
-}
-// addImplicationToTree_XPtr
-void addImplicationToTree_XPtr(SEXP ext, S4 A);
-RcppExport SEXP _fcaR_addImplicationToTree_XPtr(SEXP extSEXP, SEXP ASEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type ext(extSEXP);
-    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
-    addImplicationToTree_XPtr(ext, A);
-    return R_NilValue;
-END_RCPP
-}
 // ganters_algorithm_implications_tree_final
 List ganters_algorithm_implications_tree_final(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
 RcppExport SEXP _fcaR_ganters_algorithm_implications_tree_final(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
@@ -151,9 +119,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_fcaR_printImplicationTree", (DL_FUNC) &_fcaR_printImplicationTree, 1},
-    {"_fcaR_createImplicationTree", (DL_FUNC) &_fcaR_createImplicationTree, 1},
-    {"_fcaR_addImplicationToTree_XPtr", (DL_FUNC) &_fcaR_addImplicationToTree_XPtr, 2},
     {"_fcaR_ganters_algorithm_implications_tree_final", (DL_FUNC) &_fcaR_ganters_algorithm_implications_tree_final, 4},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
