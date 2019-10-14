@@ -151,15 +151,17 @@ formal_context <- R6::R6Class(
       my_LHS <- L$LHS[, -1]
       my_RHS <- L$RHS[, -1]
 
-      if (is.null(self$concepts)) {
+      # if (is.null(self$concepts)) {
+      #
+      #   self$concepts <- my_concepts
+      #
+      # } else {
+      #
+      #   self$concepts <- cbind(self$concepts, my_concepts)
+      #
+      # }
 
-        self$concepts <- my_concepts
-
-      } else {
-
-        self$concepts <- cbind(self$concepts, my_concepts)
-
-      }
+      self$concepts <- my_concepts
 
       extracted_implications <- implication_set$new(attributes = self$attributes,
                                                     lhs = my_LHS,

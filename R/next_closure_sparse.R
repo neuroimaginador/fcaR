@@ -26,6 +26,7 @@
 
   }
 
-  return(Matrix(0, ncol = 1, nrow = imax, sparse = TRUE))
+  # Never get to this line
+  # return(Matrix(0, ncol = 1, nrow = imax, sparse = TRUE))
 
 }

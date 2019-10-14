@@ -35,6 +35,32 @@ test_that("fcaR creates a formal context", {
 
 })
 
+test_that("fcaR imports a formal context with constant columns", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 1, 1, 1, 1,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- formal_context$new(I = I)
+
+  expect_is(fc, "FormalContext")
+
+})
+
 test_that("fcaR extracts concepts", {
 
   objects <- paste0("O", 1:6)
@@ -57,8 +83,11 @@ test_that("fcaR extracts concepts", {
 
   fc <- formal_context$new(I = I)
 
-  concepts <- fc$compute_concepts()
+  concepts <- fc$compute_concepts(verbose = TRUE)
 
+  expect_is(concepts, "list")
+
+  concepts <- fc$compute_concepts(verbose = TRUE)
   expect_is(concepts, "list")
 
 })
@@ -132,7 +161,10 @@ test_that("fcaR imports implications from arules", {
 
   fc <- formal_context$new(I = Mushroom)
   fc$add_implications(mush_clean)
+  expect_is(fc$implications, "ImplicationSet")
 
+  imps <- fc$implications$clone()
+  fc$add_implications(imps)
   expect_is(fc$implications, "ImplicationSet")
 
 })
