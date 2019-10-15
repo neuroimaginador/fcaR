@@ -31,8 +31,8 @@ test_that("fcaR operates on implications", {
 
   # At this moment, we're at a fixed point, but we could apply
   # some more rules if needed:
-  expect_error(fc$implications$apply_rules(rules = c("composition",
-                                                     "generalization",
+  expect_error(fc$implications$apply_rules(rules = c("generalization",
+                                                     "composition",
                                                      "simplification",
                                                      "reduction"),
                                            reorder = TRUE), NA)
@@ -123,7 +123,7 @@ test_that("fcaR simplifies implications", {
   L <- .simplify2_lhs_rhs(LHS = fc$implications$get_LHS_matrix(),
                           RHS = fc$implications$get_RHS_matrix(),
                           attributes = fc$attributes,
-                          trace = FALSE)
+                          trace = TRUE)
 
   expect_is(L, "list")
 
@@ -148,8 +148,10 @@ test_that("fcaR filters and removes implications", {
   fc$add_implications(mush_clean)
 
   expect_error(fc$implications$filter_by_lhs(attr_filter = fc$attributes[1]), NA)
+  expect_error(fc$implications$filter_by_lhs(attr_filter = fc$attributes[1:2]), NA)
 
   expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1]), NA)
+  expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1:2]), NA)
   expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1],
                                 drop = TRUE), NA)
 
@@ -160,5 +162,123 @@ test_that("fcaR filters and removes implications", {
   n2 <- fc$implications$cardinality()
 
   expect_equal(n2, n - 2)
+
+})
+
+test_that("fcaR adds implications from scratch", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- formal_context$new(I = I)
+
+  fc$implications <- implication_set$new(attributes = fc$attributes)
+  expect_equal(fc$implications$cardinality(), 0)
+
+  lhs1 <- build_set(attrs = fc$attributes[1],
+                    values = 1,
+                    attributes = fc$attributes)
+  rhs1 <- build_set(attrs = fc$attributes[c(2,4)],
+                    values = c(1, 1),
+                    attributes = fc$attributes)
+  expect_error(fc$implications$add_implication(lhs = lhs1, rhs = rhs1), NA)
+
+})
+
+test_that("fcaR can use generalization", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- formal_context$new(I = I)
+
+  fc$implications <- implication_set$new(attributes = fc$attributes)
+  expect_equal(fc$implications$cardinality(), 0)
+
+  lhs1 <- build_set(attrs = fc$attributes[1],
+                    values = 1,
+                    attributes = fc$attributes)
+  rhs1 <- build_set(attrs = fc$attributes[c(2,4)],
+                    values = c(1, 1),
+                    attributes = fc$attributes)
+  fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
+
+  lhs2 <- build_set(attrs = fc$attributes[c(1, 3)],
+                    values = c(1, 1),
+                    attributes = fc$attributes)
+  rhs2 <- build_set(attrs = fc$attributes[4],
+                    values = 1,
+                    attributes = fc$attributes)
+  fc$implications$add_implication(lhs = lhs2, rhs = rhs2)
+
+  expect_error(fc$implications$apply_rules(rules = "generalization", parallelize = FALSE), NA)
+
+})
+
+test_that("fcaR filters implications", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- formal_context$new(I = I)
+
+  fc$implications <- implication_set$new(attributes = fc$attributes)
+  expect_equal(fc$implications$cardinality(), 0)
+
+  lhs1 <- build_set(attrs = fc$attributes[1],
+                    values = 1,
+                    attributes = fc$attributes)
+  rhs1 <- build_set(attrs = fc$attributes[c(2,4)],
+                    values = c(1, 1),
+                    attributes = fc$attributes)
+  fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
+
+  expect_error(fc$implications$filter_by_lhs(attr_filter = fc$attributes[5]), NA)
+  expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[5]), NA)
 
 })
