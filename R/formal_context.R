@@ -169,15 +169,17 @@ formal_context <- R6::R6Class(
                                                     lhs = my_LHS,
                                                     rhs = my_RHS)
 
-      if (is.null(self$implications)) {
+      # if (is.null(self$implications)) {
+      #
+      #   self$implications <- extracted_implications
+      #
+      # } else {
+      #
+      #   self$add_implications(extracted_implications)
+      #
+      # }
 
-        self$implications <- extracted_implications
-
-      } else {
-
-        self$add_implications(extracted_implications)
-
-      }
+      self$implications <- extracted_implications
 
     },
 
