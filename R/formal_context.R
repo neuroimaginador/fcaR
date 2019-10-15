@@ -1,4 +1,19 @@
-#' @import scales RColorBrewer
+#' @title
+#' R6 class for a formal context
+#'
+#' @description
+#' This class implements the data structure and methods for formal contexts.
+#'
+#' @section Public fields:
+#' * `I`: the table for the formal context.
+#' * `attributes`: name of the attributes in the formal context.
+#' * `objects`: name of the objects in the context.
+#' * `grades_set`: set of grades (in [0, 1]) of the attributes.
+#' * `concepts`: list of concepts (extent, intent).
+#' * `implications`: extracted implications as an \code{ImplicationSet}.
+#' * `concept_support`: vector with the support of the concepts.
+#' * `implications_support`: vector with support of the extracted implications.
+#'
 #' @importFrom methods as is slotNames
 #' @export
 formal_context <- R6::R6Class(
@@ -24,22 +39,39 @@ formal_context <- R6::R6Class(
 
     implications_support = NULL,
 
-    # Object constructor
+    #' @description
+    #' Creator for the Fomal Context class
+    #'
+    #' @param I           (numeric matrix) The table of the formal context.
+    #' @param grades_set  (numeric vector, optional) the anumeration of the grades of the attributes.
+    #'
+    #' @details
+    #' Columns of \code{I} must be named, and are the names of the attributes of the formal context.
+    #'
+    #' @return An object of the \code{FormalContext} class.
+    #' @export
+    #'
+    #' @import Matrix
+    #' @import arules
+    #' @importFrom methods as is slotNames
     initialize = function(I,
                           grades_set = sort(unique(as.vector(I)))) {
 
       # Transform the formal context to sparse
       if (inherits(I, "transactions")) {
 
+        # If it comes from the arules package
         attributes <- I@itemInfo$labels
         I <- as(I@data, "dgCMatrix")
         objects <- paste0(seq(ncol(I)))
 
       } else {
 
+        # Or if it comes from a numeric table
         attributes <- colnames(I)
         objects <- rownames(I)
 
+        # Remove the constant columns
         constant_cols <- which(apply(I, 2, max) == apply(I, 2, min))
 
         if (length(constant_cols) > 0) {
@@ -56,6 +88,7 @@ formal_context <- R6::R6Class(
 
       }
 
+      # Assign everything to its corresponding field
       expanded_grades_set <- compute_grades(t(I))
 
       self$I <- I
@@ -66,7 +99,15 @@ formal_context <- R6::R6Class(
 
     },
 
-    # Add a precomputed implication set
+    #' @description
+    #' Add a precomputed implication set
+    #'
+    #' @param impl_set   (\code{ImplicationSet} object) The implications to add to this formal context.
+    #'
+    #' @return Nothing, just updates the internal \code{implications} field.
+    #'
+    #' @import arules
+    #' @export
     add_implications = function(impl_set) {
 
       if (inherits(impl_set, "rules")) {
@@ -76,8 +117,6 @@ formal_context <- R6::R6Class(
         implications <- implication_set$new()
         implications$from_arules(impl_set)
 
-        # self$implications <- implications$clone()
-
       } else {
 
         # If it's already an implication set
@@ -86,6 +125,7 @@ formal_context <- R6::R6Class(
 
       }
 
+      # Initialize or add the implications field
       if (is.null(self$implications)) {
 
         self$implications <- implications
@@ -111,9 +151,16 @@ formal_context <- R6::R6Class(
 
     },
 
-    # Use Ganter Algorithm to compute concepts
+    #' @description
+    #' Use Ganter Algorithm to compute concepts
+    #'
+    #' @param verbose   (logical) TRUE will provide a verbose output.
+    #'
+    #' @return A list with all the concepts in the formal context.
+    #' @export
     compute_concepts = function(verbose = FALSE) {
 
+      # If already computed, no need to compute them again
       if (!is.null(self$concepts)) return(self$concepts)
 
       self$concepts <- .get_fuzzy_concepts_sparse(as.matrix(t(self$I)),
@@ -125,8 +172,14 @@ formal_context <- R6::R6Class(
 
     },
 
-    # Use modified Ganter algorithm to compute both
-    # concepts and implications
+    #' @description
+    #' Use modified Ganter algorithm to compute both concepts and implications
+    #'
+    #' @param verbose   (logical) TRUE will provide a verbose output.
+    #'
+    #' @return Nothing, just updates the internal fields \code{concepts} and \code{implications}.
+    #'
+    #' @export
     extract_implications_concepts = function(verbose = FALSE) {
 
       my_I <- as.matrix(t(self$I))
@@ -135,8 +188,12 @@ formal_context <- R6::R6Class(
 
       L <- ganters_algorithm_implications_tree_final(I = my_I,
                                                      grades_set = grades_set,
-                                                     attrs = attrs)
+                                                     attrs = attrs,
+                                                     verbose = verbose)
 
+      # Since the previous function gives the list of intents of
+      # the computed concepts, now we will compute the corresponding
+      # extents.
       my_intents <- L$concepts[, -1]
 
       my_concepts <- list()
@@ -150,18 +207,9 @@ formal_context <- R6::R6Class(
 
       }
 
+      # Now, add the computed implications
       my_LHS <- L$LHS[, -1]
       my_RHS <- L$RHS[, -1]
-
-      # if (is.null(self$concepts)) {
-      #
-      #   self$concepts <- my_concepts
-      #
-      # } else {
-      #
-      #   self$concepts <- cbind(self$concepts, my_concepts)
-      #
-      # }
 
       self$concepts <- my_concepts
 
@@ -169,26 +217,35 @@ formal_context <- R6::R6Class(
                                                     lhs = my_LHS,
                                                     rhs = my_RHS)
 
-      # if (is.null(self$implications)) {
-      #
-      #   self$implications <- extracted_implications
-      #
-      # } else {
-      #
-      #   self$add_implications(extracted_implications)
-      #
-      # }
-
       self$implications <- extracted_implications
 
     },
 
+    #' @description
+    #' Convert the formal context to object of class \code{transactions} from the \code{arules} package
+    #'
+    #' @return A \code{transactions} object.
+    #'
+    #' @importFrom methods as
+    #' @import arules
+    #' @export
     convert_to_transactions = function() {
 
       return(as(as(self$I, "ngCMatrix"), "transactions"))
 
     },
 
+    #' @description
+    #' Export implications to \code{arules} format
+    #'
+    #' @param quality   (logical) Compute the interest measures for each rule?
+    #'
+    #' @return A \code{rules} object from \code{arules} package. If \code{quality == TRUE}, the function \code{interestMeasure} from \code{arules} is used.
+    #'
+    #' @import arules
+    #' @importFrom methods as
+    #'
+    #' @export
     export_implications_to_arules = function(quality = TRUE) {
 
       R <- self$implications$to_arules()
@@ -204,7 +261,11 @@ formal_context <- R6::R6Class(
 
     },
 
-    # Plot the concept lattice
+    #' @description
+    #' Plot the concept lattice
+    #'
+    #' @return Nothing, just plots the graph of the concept lattice.
+    #' @export
     plot_lattice = function() {
 
       if (length(self$concepts) > 0) {
@@ -215,7 +276,14 @@ formal_context <- R6::R6Class(
 
     },
 
-    # Plot the formal context table
+    #' @description
+    #' Plot the formal context table
+    #'
+    #' @return Nothing, just plots the formal context.
+    #'
+    #' @import scales RColorBrewer
+    #'
+    #' @export
     plot_context = function() {
 
       color_function <- colour_ramp(brewer.pal(9, "Greys"))
@@ -225,7 +293,11 @@ formal_context <- R6::R6Class(
 
     },
 
-    # Get support of each concept
+    #' @description
+    #' Get support of each concept
+    #'
+    #' @return A vector with the support of each concept.
+    #' @export
     get_concept_support = function() {
 
       my_I <- self$I
@@ -242,7 +314,11 @@ formal_context <- R6::R6Class(
 
     },
 
-    # Compute support of each implication
+    #' @description
+    #' Compute support of each implication
+    #'
+    #' @return A vector with the support of each implication
+    #' @export
     get_implication_support = function() {
 
       LHS <- self$implications$get_LHS_matrix()
