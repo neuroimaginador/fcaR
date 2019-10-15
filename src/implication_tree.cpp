@@ -5,18 +5,18 @@ using namespace Rcpp;
 // Implication Tree
 
 
-static void
-  _finalizer(SEXP ext)
-  {
-    struct ImplicationTree *ptr = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
-    Rprintf("Destroying pointer.\n");
-    freeArray(&(ptr->CARD));
-    freeArray(&(ptr->COUNT));
-    free(ptr->DEGREE);
-    free(ptr->LIST);
-    Free(ptr);
-
-  }
+// static void
+//   _finalizer(SEXP ext)
+//   {
+//     struct ImplicationTree *ptr = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
+//     Rprintf("Destroying pointer.\n");
+//     freeArray(&(ptr->CARD));
+//     freeArray(&(ptr->COUNT));
+//     free(ptr->DEGREE);
+//     free(ptr->LIST);
+//     Free(ptr);
+//
+//   }
 
 
 void initImplicationTree(struct ImplicationTree *t, int n_attributes) {

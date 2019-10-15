@@ -15,8 +15,8 @@ struct ImplicationTree {
 
 };
 
-static void
-  _finalizer(SEXP ext);
+// static void
+//   _finalizer(SEXP ext);
 
 
 void initImplicationTree(struct ImplicationTree *t, int n_attributes);

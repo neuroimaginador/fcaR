@@ -114,7 +114,7 @@ test_that("fcaR extracts implications", {
 
   fc <- formal_context$new(I = I)
 
-  fc$extract_implications_concepts()
+  fc$extract_implications_concepts(verbose = TRUE)
 
   expect_is(fc$implications, "ImplicationSet")
 
