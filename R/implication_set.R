@@ -178,12 +178,14 @@ implication_set <- R6::R6Class(
 
     apply_rules = function(rules = c("composition", "generalization"),
                            batch_size = 25000L,
+                           parallelize = TRUE,
                            reorder= FALSE) {
 
       L <- .batch_apply(LHS = private$lhs_matrix,
                         RHS = private$rhs_matrix,
                         attributes = private$attributes,
                         rules = rules,
+                        parallelize = parallelize,
                         batch_size = batch_size,
                         reorder = reorder)
 
