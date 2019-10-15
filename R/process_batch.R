@@ -11,10 +11,10 @@
                     ncol = 1,
                     sparse = TRUE)
 
-  my_functions <- c("generalization" = .remove_redundancies_lhs_rhs_general,
-                    "composition"    = .compose_lhs_rhs_equal,
-                    "reduction"      = .reduce_lhs_rhs,
-                    "simplification" = .simplify2_lhs_rhs)
+  my_functions <- c("generalization" = .generalization,
+                    "composition"    = .composition,
+                    "reduction"      = .reduction,
+                    "simplification" = .simplification)
 
   idx_rules <- match(rules, names(my_functions))
   idx_rules <- idx_rules[!is.na(idx_rules)]
@@ -63,7 +63,7 @@
   new_LHS <- cbind(new_LHS, old_LHS)
   new_RHS <- cbind(new_RHS, old_RHS)
 
-  L <- .clean_lhs_rhs(new_LHS, new_RHS)
+  L <- .clean(new_LHS, new_RHS)
 
   batch_toc <- toc(quiet = TRUE)
 

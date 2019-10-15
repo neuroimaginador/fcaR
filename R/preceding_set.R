@@ -1,4 +1,4 @@
-.is_set_preceding_i_j_sparse <- function(B,
+.is_set_preceding <- function(B,
                                          C,
                                          a_i, grade_i) {
 

@@ -163,10 +163,10 @@ formal_context <- R6::R6Class(
       # If already computed, no need to compute them again
       if (!is.null(self$concepts)) return(self$concepts)
 
-      self$concepts <- .get_fuzzy_concepts_sparse(as.matrix(t(self$I)),
-                                                  self$grades_set,
-                                                  verbose = verbose,
-                                                  attributes = self$attributes)
+      self$concepts <- .concepts(as.matrix(t(self$I)),
+                                 self$grades_set,
+                                 verbose = verbose,
+                                 attributes = self$attributes)
 
       return(self$concepts)
 
@@ -186,10 +186,10 @@ formal_context <- R6::R6Class(
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       attrs <- self$attributes
 
-      L <- ganters_algorithm_implications_tree_final(I = my_I,
-                                                     grades_set = grades_set,
-                                                     attrs = attrs,
-                                                     verbose = verbose)
+      L <- next_closure_implications(I = my_I,
+                                     grades_set = grades_set,
+                                     attrs = attrs,
+                                     verbose = verbose)
 
       # Since the previous function gives the list of intents of
       # the computed concepts, now we will compute the corresponding
@@ -200,8 +200,8 @@ formal_context <- R6::R6Class(
 
       for (n in seq(ncol(my_intents))) {
 
-        intent <- extract_column_sparse(my_intents, n)
-        extent <- .extent_sparse(intent, my_I)
+        intent <- .extract_column(my_intents, n)
+        extent <- .extent(intent, my_I)
 
         my_concepts <- c(my_concepts, list(list(extent, intent)))
 
@@ -270,7 +270,7 @@ formal_context <- R6::R6Class(
 
       if (length(self$concepts) > 0) {
 
-        .draw_Hasse(self$concepts, as.matrix(self$I))
+        .draw_lattice(self$concepts, as.matrix(self$I))
 
       }
 
@@ -306,7 +306,7 @@ formal_context <- R6::R6Class(
       intents <- lapply(self$concepts, function(s) s[[2]])
       intents <- do.call(cbind, args = intents)
 
-      subsets <- .is_subset_sparse(intents, my_I)
+      subsets <- .subset(intents, my_I)
 
       self$concept_support <- rowMeans(subsets)
 
@@ -324,7 +324,7 @@ formal_context <- R6::R6Class(
       LHS <- self$implications$get_LHS_matrix()
       my_I <- self$I
 
-      subsets <- .is_subset_sparse(LHS, my_I)
+      subsets <- .subset(LHS, my_I)
 
       self$implications_support <- rowMeans(subsets)
 

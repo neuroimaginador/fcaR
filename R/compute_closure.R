@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-.compute_closure2 <- function(S, LHS, RHS, attributes, reduce = FALSE, verbose = FALSE) {
+.compute_closure <- function(S, LHS, RHS, attributes, reduce = FALSE, verbose = FALSE) {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) {
 
@@ -32,7 +32,7 @@
   }
 
   # Which are the rules applicable to the set S?
-  S_subsets <- .is_subset_sparse(LHS, S)
+  S_subsets <- .subset(LHS, S)
 
   # idx_subsets <- which(S_subsets)
   idx_subsets <- S_subsets@i + 1
@@ -52,7 +52,7 @@
 
     }
 
-    S <- .flatten_union(add_col(A, S))
+    S <- .multiunion(add_col(A, S))
 
     if (verbose) {
 
@@ -95,17 +95,17 @@
       C <- LHS
       D <- RHS
 
-      CD <- sparse_set_union(LHS, RHS)
+      CD <- .union(LHS, RHS)
 
-      intersections <- .intersects_sparse(x = S, y = CD)
+      intersections <- .intersection(x = S, y = CD)
       idx_not_empty <- which(colSums(intersections) > 0)
 
 
       if (length(idx_not_empty) > 0) {
 
-        C_B <- sparse_set_difference(C[, idx_not_empty], S)
+        C_B <- .difference(C[, idx_not_empty], S)
 
-        D_B <- sparse_set_difference(D[, idx_not_empty], S)
+        D_B <- .difference(D[, idx_not_empty], S)
 
         idx_zeros <- which(colSums(D_B) == 0)
 
@@ -132,7 +132,7 @@
 
     }
 
-    S_subsets <- .is_subset_sparse(LHS, S)
+    S_subsets <- .subset(LHS, S)
 
     idx_subsets <- S_subsets@i + 1
     idx_subsets <- setdiff(idx_subsets, which(do_not_use))

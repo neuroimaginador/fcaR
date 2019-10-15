@@ -1,4 +1,4 @@
-extract_column_sparse <- function(M, j) {
+.extract_column <- function(M, j) {
 
   i <- M@i + 1
   ends <- c(M@p[j] + 1, M@p[j + 1])

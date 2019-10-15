@@ -3,8 +3,8 @@
                                  attributes) {
 
   # Compute closure
-  S <- .compute_closure2(S, LHS, RHS,
-                         attributes = attributes)
+  S <- .compute_closure(S, LHS, RHS,
+                        attributes = attributes)
 
   # Which attributes are seeked
   idx <- match(attribute_filter, attributes)

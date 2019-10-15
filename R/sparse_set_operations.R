@@ -1,4 +1,4 @@
-sparse_set_difference <- function(A, B) {
+.difference <- function(A, B) {
 
   if (is.numeric(A)) A <- Matrix(A, sparse = TRUE)
   if (is.numeric(B)) B <- Matrix(B, sparse = TRUE)
@@ -18,7 +18,7 @@ sparse_set_difference <- function(A, B) {
 
     n <- ncol(A)
 
-    newB <- replicate_sparse_col(B, n)
+    newB <- .replicate_col(B, n)
 
     A[newB >= A] <- 0
 
@@ -30,7 +30,7 @@ sparse_set_difference <- function(A, B) {
 
     n <- ncol(B)
 
-    newA <- replicate_sparse_col(A, n)
+    newA <- .replicate_col(A, n)
 
     newA[B >= newA] <- 0
 
@@ -40,7 +40,7 @@ sparse_set_difference <- function(A, B) {
 
 }
 
-sparse_set_union <- function(A, B) {
+.union <- function(A, B) {
 
   if (is.numeric(A)) A <- Matrix(A, sparse = TRUE)
   if (is.numeric(B)) B <- Matrix(B, sparse = TRUE)
@@ -61,7 +61,7 @@ sparse_set_union <- function(A, B) {
 
     n <- ncol(A)
 
-    newB <- replicate_sparse_col(B, n)
+    newB <- .replicate_col(B, n)
 
     idx <- which(newB > A)
     A[idx] <- newB[idx]
@@ -74,7 +74,7 @@ sparse_set_union <- function(A, B) {
 
     n <- ncol(B)
 
-    newA <- replicate_sparse_col(A, n)
+    newA <- .replicate_col(A, n)
 
     idx <- which(B > newA)
     newA[idx] <- B[idx]
@@ -85,7 +85,7 @@ sparse_set_union <- function(A, B) {
 
 }
 
-.flatten_union <- function(M) {
+.multiunion <- function(M) {
 
   v <- flatten_sparse_C(M@p, M@i, M@x, M@Dim)
 
@@ -93,21 +93,11 @@ sparse_set_union <- function(A, B) {
 
 }
 
-replicate_sparse_col <- function(A, n) {
+.replicate_col <- function(A, n) {
 
   new_i <- rep(A@i, n)
 
   stopifnot("x" %in% slotNames(A))
-
-  # if ("x" %in% slotNames(A)) {
-  #
-  #   new_x <- rep(A@x, n)
-  #
-  # } else {
-  #
-  #   new_x <- rep(TRUE, length(new_i))
-  #
-  # }
 
   new_p <- c(0, A@p[2] * seq(n))
 

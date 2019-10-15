@@ -46,7 +46,7 @@
 
       D_B <- sparse_set_difference(D, B)
 
-      my_composition <- .compose_lhs_rhs_equal(LHS = Matrix(C_B, sparse = TRUE),
+      my_composition <- .composition(LHS = Matrix(C_B, sparse = TRUE),
                                                RHS = Matrix(D_B, sparse = TRUE))
 
       new_LHS <- add_cols(new_LHS, my_composition$lhs)

@@ -1,5 +1,5 @@
-.next_closure_sparse <- function(B, i, imax, grades_set,
-                                 closure_function = .closure_sparse) {
+.next_closure <- function(B, i, imax, grades_set,
+                                 closure_function = .closure) {
 
   # i is the index of the last attribute
 
@@ -9,11 +9,11 @@
 
     for (grade_i in greater_grades) {
 
-      candidateBmax <- .direct_sum_sparse(B, a_i, grade_i, imax)
+      candidateBmax <- .direct_sum(B, a_i, grade_i, imax)
 
       candidateBmax <- closure_function(candidateBmax)
 
-      if (.is_set_preceding_i_j_sparse(B = B,
+      if (.is_set_preceding(B = B,
                                        C = candidateBmax,
                                        a_i = a_i,
                                        grade_i = grade_i)) {

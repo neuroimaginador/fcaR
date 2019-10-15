@@ -1,4 +1,4 @@
-.get_fuzzy_concepts_sparse <- function(I, attributes, grades_set, verbose = FALSE) {
+.concepts <- function(I, attributes, grades_set, verbose = FALSE) {
 
   empty <- Matrix(0, ncol = 1, nrow = ncol(I))
   Y <- Matrix(1, ncol = 1, nrow = ncol(I))
@@ -9,9 +9,9 @@
 
   if (verbose) cat("First concept:\n")
 
-  B <- .closure_sparse(empty, I)
+  B <- .closure(empty, I)
 
-  if (verbose) cat(.sparse_set_to_string(B, attributes), "\n")
+  if (verbose) cat(.set_to_string(B, attributes), "\n")
 
   oldB <- B
 
@@ -26,8 +26,8 @@
 
   while (!exit_cond) {
 
-    B <- .next_closure_sparse(B, i, imax, grades_set,
-                              closure_function = pryr::partial(.closure_sparse,
+    B <- .next_closure(B, i, imax, grades_set,
+                              closure_function = pryr::partial(.closure,
                                                                I = I))
 
     exit_cond <- all(B == oldB) || all(B == Y)
@@ -37,7 +37,7 @@
     if (verbose) {
 
       cat("New concept:\n")
-      cat(.sparse_set_to_string(B, attributes), "\n")
+      cat(.set_to_string(B, attributes), "\n")
 
     }
 
@@ -49,7 +49,7 @@
 
   concepts <- lapply(intents, function(b) {
 
-    a <- .extent_sparse(b, I)
+    a <- .extent(b, I)
 
     list(a, b)
 

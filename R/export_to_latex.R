@@ -1,6 +1,6 @@
 #' @import stringr
 #' @export
-print_set_latex <- function(S, attributes) {
+set_to_latex <- function(S, attributes) {
 
   idx <- which(S > 0)
 
@@ -43,8 +43,8 @@ imp_to_latex <- function(imp_set, ncols = 1) {
     rhs <- Matrix(RHS[, i], sparse = TRUE)
 
     output <- c(output,
-    paste0(print_set_latex(lhs, attributes), "&\\ensuremath{\\Rightarrow}&",
-           print_set_latex(rhs, attributes)))
+                paste0(set_to_latex(lhs, attributes), "&\\ensuremath{\\Rightarrow}&",
+                       set_to_latex(rhs, attributes)))
 
   }
 

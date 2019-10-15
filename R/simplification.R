@@ -1,8 +1,8 @@
-.simplify2_lhs_rhs <- function(LHS, RHS, attributes, trace = FALSE) {
+.simplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
-  LHS_subsets <- t(.is_subset_sparse(LHS))
+  LHS_subsets <- t(.subset(LHS))
 
-  intersections <- self_intersection_sparse(LHS, RHS)
+  intersections <- .self_intersection(LHS, RHS)
 
   # This gives the LHS that are subsets of other LHS
   condition1 <- colSums(LHS_subsets) > 1
@@ -20,9 +20,9 @@
 
     this_row <- are_subset[1]
 
-    my_idx <- which_at_col_C(LHS_subsets@i,
-                             LHS_subsets@p,
-                             this_row)
+    my_idx <- which_at_col(LHS_subsets@i,
+                           LHS_subsets@p,
+                           this_row)
     my_idx <- setdiff(my_idx, this_row)
 
     if (trace) {
@@ -41,8 +41,8 @@
 
     # this_row is subset of all my_idx
     # So, we must do C-B -> D-B in every my_idx rule.
-    newLHS <- sparse_set_difference(LHS[, my_idx], RHS[, this_row])
-    newRHS <- sparse_set_difference(RHS[, my_idx], RHS[, this_row])
+    newLHS <- .difference(LHS[, my_idx], RHS[, this_row])
+    newRHS <- .difference(RHS[, my_idx], RHS[, this_row])
 
     if (trace) {
 
@@ -82,11 +82,11 @@
 
     }
 
-    LHS_subsets <- t(.is_subset_sparse(LHS))
+    LHS_subsets <- t(.subset(LHS))
 
     condition1 <- colSums(LHS_subsets) > 1
 
-    intersections <- self_intersection_sparse(LHS, RHS)
+    intersections <- .self_intersection(LHS, RHS)
     condition2 <- (intersections == 0) & (colSums(RHS) > 0)
 
     black_list[this_row] <- TRUE

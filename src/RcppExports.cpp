@@ -5,9 +5,9 @@
 
 using namespace Rcpp;
 
-// ganters_algorithm_implications_tree_final
-List ganters_algorithm_implications_tree_final(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
-RcppExport SEXP _fcaR_ganters_algorithm_implications_tree_final(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+// next_closure_implications
+List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
+RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -15,7 +15,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
     Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(ganters_algorithm_implications_tree_final(I, grades_set, attrs, verbose));
+    rcpp_result_gen = Rcpp::wrap(next_closure_implications(I, grades_set, attrs, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -90,16 +90,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// which_at_col_C
-IntegerVector which_at_col_C(IntegerVector x_i, IntegerVector x_p, int col);
-RcppExport SEXP _fcaR_which_at_col_C(SEXP x_iSEXP, SEXP x_pSEXP, SEXP colSEXP) {
+// which_at_col
+IntegerVector which_at_col(IntegerVector x_i, IntegerVector x_p, int col);
+RcppExport SEXP _fcaR_which_at_col(SEXP x_iSEXP, SEXP x_pSEXP, SEXP colSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerVector >::type x_i(x_iSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type x_p(x_pSEXP);
     Rcpp::traits::input_parameter< int >::type col(colSEXP);
-    rcpp_result_gen = Rcpp::wrap(which_at_col_C(x_i, x_p, col));
+    rcpp_result_gen = Rcpp::wrap(which_at_col(x_i, x_p, col));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -119,12 +119,12 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_fcaR_ganters_algorithm_implications_tree_final", (DL_FUNC) &_fcaR_ganters_algorithm_implications_tree_final, 4},
+    {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 4},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},
     {"_fcaR_is_equal_set_C", (DL_FUNC) &_fcaR_is_equal_set_C, 10},
-    {"_fcaR_which_at_col_C", (DL_FUNC) &_fcaR_which_at_col_C, 3},
+    {"_fcaR_which_at_col", (DL_FUNC) &_fcaR_which_at_col, 3},
     {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
     {NULL, NULL, 0}
 };

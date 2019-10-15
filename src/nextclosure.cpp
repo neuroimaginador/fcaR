@@ -2,19 +2,19 @@
 #include "implication_tree.h"
 using namespace Rcpp;
 
-static void chkIntFn3(void *dummy) {
+static void chkIntFn(void *dummy) {
   R_CheckUserInterrupt();
 }
 
 // this will call the above in a top-level context so it won't longjmp-out of your context
-bool checkInterrupt3() {
-  return (R_ToplevelExec(chkIntFn3, NULL) == FALSE);
+bool checkInterrupt() {
+  return (R_ToplevelExec(chkIntFn, NULL) == FALSE);
 }
 
 
 // Ganter's Next Closure Algorithm
 
-double cardinal_struct(SparseVector A) {
+double cardinal(SparseVector A) {
 
   double res = 0;
   for (int i = 0; i < A.i.used; i++) {
@@ -27,7 +27,7 @@ double cardinal_struct(SparseVector A) {
 
 }
 
-SparseVector setdifference_struct(SparseVector x,
+SparseVector setdifference(SparseVector x,
                                   SparseVector y) {
 
   SparseVector res;
@@ -69,7 +69,7 @@ SparseVector setdifference_struct(SparseVector x,
 
 }
 
-SparseVector compute_intent_struct (SparseVector V,
+SparseVector compute_intent (SparseVector V,
                                     NumericMatrix I) {
 
   SparseVector R;
@@ -105,7 +105,7 @@ SparseVector compute_intent_struct (SparseVector V,
 
 }
 
-SparseVector compute_extent_struct (SparseVector V,
+SparseVector compute_extent (SparseVector V,
                                     NumericMatrix I) {
 
   SparseVector R;
@@ -141,11 +141,11 @@ SparseVector compute_extent_struct (SparseVector V,
 
 }
 
-SparseVector compute_closure_struct (SparseVector V,
+SparseVector compute_closure (SparseVector V,
                                      NumericMatrix I) {
 
-  SparseVector A = compute_extent_struct(V, I);
-  SparseVector B = compute_intent_struct(A, I);
+  SparseVector A = compute_extent(V, I);
+  SparseVector B = compute_intent(A, I);
 
   return B;
 
@@ -153,7 +153,7 @@ SparseVector compute_closure_struct (SparseVector V,
 
 // Functions to compute the next pseudo-closed set
 
-void direct_sum_struct3(SparseVector A,
+void compute_direct_sum(SparseVector A,
                         int a_i,
                         double grade_i,
                         int imax,
@@ -184,7 +184,7 @@ void direct_sum_struct3(SparseVector A,
 
 }
 
-void is_subset_tree_struct3(SparseVector A,
+void is_subset(SparseVector A,
                             const struct ImplicationTree t,
                             IntArray *res,
                             bool* black_list) {
@@ -225,7 +225,7 @@ void is_subset_tree_struct3(SparseVector A,
 
 }
 
-void set_union_sparsevector(SparseVector RHS,
+void setunion(SparseVector RHS,
                             IntArray subsets,
                             SparseVector *res2) {
 
@@ -274,7 +274,7 @@ void set_union_sparsevector(SparseVector RHS,
 
 }
 
-void setunion_struct2(SparseVector x,
+void setunion2(SparseVector x,
                       SparseVector y,
                       SparseVector *res) {
 
@@ -326,7 +326,7 @@ void setunion_struct2(SparseVector x,
 
 }
 
-void semantic_closure_tree4(SparseVector A,
+void semantic_closure(SparseVector A,
                             ImplicationTree t,
                             SparseVector LHS,
                             SparseVector RHS,
@@ -359,13 +359,13 @@ void semantic_closure_tree4(SparseVector A,
 
     }
 
-    is_subset_tree_struct3(A, t, &subsets, black_list);
+    is_subset(A, t, &subsets, black_list);
 
     while (subsets.used > 0) {
 
-      set_union_sparsevector(RHS, subsets, &res2);
+      setunion(RHS, subsets, &res2);
 
-      setunion_struct2(*res, res2, &res3);
+      setunion2(*res, res2, &res3);
 
       cloneVector(res, res3);
 
@@ -378,7 +378,7 @@ void semantic_closure_tree4(SparseVector A,
 
       }
 
-      is_subset_tree_struct3(*res, t, &subsets, black_list);
+      is_subset(*res, t, &subsets, black_list);
 
     }
 
@@ -393,7 +393,7 @@ void semantic_closure_tree4(SparseVector A,
 
 }
 
-bool is_set_preceding_struct(SparseVector B,
+bool is_set_preceding(SparseVector B,
                              SparseVector C,
                              int a_i,
                              double grade_i) {
@@ -510,7 +510,7 @@ bool is_set_preceding_struct(SparseVector B,
 
 }
 
-SparseVector next_closure_implications_tree3(SparseVector A, int i,
+SparseVector compute_next_closure(SparseVector A, int i,
                                              int imax,
                                              ListOf<NumericVector> grades_set,
                                              ImplicationTree t,
@@ -532,12 +532,12 @@ SparseVector next_closure_implications_tree3(SparseVector A, int i,
 
     for (int grade_idx = 0; grade_idx < n_grades; grade_idx++) {
 
-      direct_sum_struct3(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
+      compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
 
-      semantic_closure_tree4(candB, t, LHS, RHS, &candB2);
+      semantic_closure(candB, t, LHS, RHS, &candB2);
       cloneVector(&candB, candB2);
 
-      if (is_set_preceding_struct(A, candB, a_i, grades_set[a_i][grade_idx])) {
+      if (is_set_preceding(A, candB, a_i, grades_set[a_i][grade_idx])) {
 
         freeVector(&candB2);
         return candB;
@@ -556,7 +556,7 @@ SparseVector next_closure_implications_tree3(SparseVector A, int i,
 
 
 // [[Rcpp::export]]
-List ganters_algorithm_implications_tree_final(NumericMatrix I,
+List next_closure_implications(NumericMatrix I,
                                                List grades_set,
                                                StringVector attrs,
                                                bool verbose = false) {
@@ -578,9 +578,9 @@ List ganters_algorithm_implications_tree_final(NumericMatrix I,
   ImplicationTree tree;
   initImplicationTree(&tree, n_attributes);
 
-  SparseVector A = compute_closure_struct(empty, I);
+  SparseVector A = compute_closure(empty, I);
 
-  if (cardinal_struct(A) > 0) {
+  if (cardinal(A) > 0) {
 
     add_column(&LHS, empty);
     add_column(&RHS, A);
@@ -595,9 +595,9 @@ List ganters_algorithm_implications_tree_final(NumericMatrix I,
 
   double pctg, old_pctg = 0;
 
-  while ((cardinal_struct(A) < n_attributes)){
+  while ((cardinal(A) < n_attributes)){
 
-    A = next_closure_implications_tree3(A,
+    A = compute_next_closure(A,
                                         n_attributes,
                                         n_attributes,
                                         grades_set,
@@ -617,11 +617,11 @@ List ganters_algorithm_implications_tree_final(NumericMatrix I,
 
     }
 
-    B = compute_closure_struct(A, I);
+    B = compute_closure(A, I);
 
-    rhs = setdifference_struct(B, A);
+    rhs = setdifference(B, A);
 
-    if (cardinal_struct(rhs) == 0) {
+    if (cardinal(rhs) == 0) {
 
       // Concept
       add_column(&concepts, A);
@@ -658,7 +658,7 @@ List ganters_algorithm_implications_tree_final(NumericMatrix I,
 
     }
 
-    if (checkInterrupt3()) { // user interrupted ...
+    if (checkInterrupt()) { // user interrupted ...
 
       List res = List::create(_["concepts"] = SparseToS4(concepts),
                               _["LHS"] = SparseToS4(LHS),

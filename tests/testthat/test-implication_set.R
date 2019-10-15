@@ -57,8 +57,8 @@ test_that("fcaR adds and appends implications", {
   fc$add_implications(mush_clean)
 
   fc$implications$append_implications(fc$implications)
-  first_lhs <- extract_column_sparse(fc$implications$get_LHS_matrix(), 1)
-  first_rhs <- extract_column_sparse(fc$implications$get_RHS_matrix(), 1)
+  first_lhs <- .extract_column(fc$implications$get_LHS_matrix(), 1)
+  first_rhs <- .extract_column(fc$implications$get_RHS_matrix(), 1)
 
   expect_error(fc$implications$add_implication(lhs = first_lhs, rhs = first_rhs), NA)
 
@@ -120,7 +120,7 @@ test_that("fcaR simplifies implications", {
 
   fc$add_implications(mush_clean)
 
-  L <- .simplify2_lhs_rhs(LHS = fc$implications$get_LHS_matrix(),
+  L <- .simplification(LHS = fc$implications$get_LHS_matrix(),
                           RHS = fc$implications$get_RHS_matrix(),
                           attributes = fc$attributes,
                           trace = TRUE)

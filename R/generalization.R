@@ -1,12 +1,12 @@
-.remove_redundancies_lhs_rhs_general <- function(LHS, RHS, attributes) {
+.generalization <- function(LHS, RHS, attributes) {
 
   # A -> B and C -> D,
   # with A subset of C (axiom C -> A)
   # and D subset of B (axiom B -> D)
   #  => remove C -> D
 
-  RHS_subsets <- .is_subset_sparse(RHS)
-  LHS_subsets <- t(.is_subset_sparse(LHS))
+  RHS_subsets <- .subset(RHS)
+  LHS_subsets <- t(.subset(LHS))
 
   ALL_subsets <- LHS_subsets & RHS_subsets
 
@@ -27,7 +27,7 @@
       if (!marked_as_single[this_row]) next
 
       # Select C -> D with A subset of C and B superset of D
-      idx_subset <- which_at_col_C(ALL_subsets@i,
+      idx_subset <- which_at_col(ALL_subsets@i,
                                    ALL_subsets@p,
                                    this_row)
 

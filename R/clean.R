@@ -1,4 +1,4 @@
-.clean_lhs_rhs <- function(LHS, RHS) {
+.clean <- function(LHS, RHS) {
 
   idx <- which(colSums(RHS) == 0)
 

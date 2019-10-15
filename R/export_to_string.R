@@ -1,5 +1,5 @@
 #' @import stringr
-.sparse_set_to_string <- function(S, attributes) {
+.set_to_string <- function(S, attributes) {
 
   idx <- which(S > 0)
 
@@ -22,10 +22,10 @@
 
 }
 
-.sparse_concept_to_string <- function(C, objects, attributes) {
+.concept_to_string <- function(C, objects, attributes) {
 
-  A <- .sparse_set_to_string(C[[1]], objects)
-  B <- .sparse_set_to_string(C[[2]], attributes)
+  A <- .set_to_string(C[[1]], objects)
+  B <- .set_to_string(C[[2]], attributes)
 
   return(paste0("[", A, ", ", B, "]"))
 
@@ -36,6 +36,6 @@ print_set <- function(A, attributes) {
 
   A <- Matrix(A, sparse = TRUE)
 
-  .sparse_set_to_string(A, attributes)
+  .set_to_string(A, attributes)
 
 }

@@ -362,7 +362,7 @@ SEXP is_equal_set_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, 
 // From here, own code
 
 // [[Rcpp::export]]
-IntegerVector which_at_col_C(IntegerVector x_i, IntegerVector x_p, int col) {
+IntegerVector which_at_col(IntegerVector x_i, IntegerVector x_p, int col) {
 
   col--;
   if (x_p[col + 1] == x_p[col]) return 0;

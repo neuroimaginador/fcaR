@@ -1,8 +1,8 @@
-.compose_lhs_rhs_equal <- function(LHS, RHS, attributes) {
+.composition <- function(LHS, RHS, attributes) {
 
   # logic_name <- tolower(fuzzy_logic()$name)
 
-  equal_LHS <- .is_equal_set_sparse(LHS)
+  equal_LHS <- .equal_sets(LHS)
 
   replicas <- which(colSums(equal_LHS) > 1)
 
@@ -14,11 +14,11 @@
 
       if (marked_to_remove[replicas[rep_id]]) next
 
-      ids_to_merge <- which_at_col_C(equal_LHS@i,
+      ids_to_merge <- which_at_col(equal_LHS@i,
                                      equal_LHS@p,
                                      replicas[rep_id])
 
-      B <- .flatten_union(RHS[, ids_to_merge])
+      B <- .multiunion(RHS[, ids_to_merge])
 
       RHS[, ids_to_merge[1]] <- B
 

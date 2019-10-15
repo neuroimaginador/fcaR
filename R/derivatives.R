@@ -1,5 +1,5 @@
 #' @importFrom sets .I.
-.intent_sparse <- function(A, I) {
+.intent <- function(A, I) {
 
   # Use the derivation expression
   ms <- sapply(seq(ncol(I)),
@@ -25,7 +25,7 @@
 }
 
 #' @importFrom sets .I.
-.extent_sparse <- function(B, I) {
+.extent <- function(B, I) {
 
   # Compute the memberships of the derived extention
   ms <- sapply(seq(nrow(I)),
@@ -50,9 +50,9 @@
 
 }
 
-.closure_sparse <- function(B, I) {
+.closure <- function(B, I) {
 
   # Double derivative starting from a fuzzy set of attributes.
-  .intent_sparse(.extent_sparse(B, I), I)
+  .intent(.extent(B, I), I)
 
 }
