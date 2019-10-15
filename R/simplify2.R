@@ -57,13 +57,13 @@
       count <- count + 1
 
       cat("** A -> B\n")
-      print(original_rule)
+      # print(original_rule)
 
       cat("** C -> D\n")
-      print(original_set)
+      # print(original_set)
 
       cat("** C-B -> D-B\n")
-      print(transformed_set)
+      # print(transformed_set)
 
     }
 
@@ -78,7 +78,7 @@
                                        rhs = Matrix(RHS, sparse = TRUE))
 
       cat("** Resulting set\n")
-      print(final_set)
+      # print(final_set)
 
     }
 
