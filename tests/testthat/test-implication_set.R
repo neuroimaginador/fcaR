@@ -278,7 +278,7 @@ test_that("fcaR filters implications", {
                     attributes = fc$attributes)
   fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
 
-  expect_error(fc$implications$filter_by_lhs(attr_filter = fc$attributes[5]), NA)
-  expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[5]), NA)
+  expect_warning(fc$implications$filter_by_lhs(attr_filter = fc$attributes[5]))
+  expect_warning(fc$implications$filter_by_rhs(attr_filter = fc$attributes[5]))
 
 })
