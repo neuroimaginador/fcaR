@@ -3,6 +3,9 @@ sparse_set_difference <- function(A, B) {
   if (is.numeric(A)) A <- Matrix(A, sparse = TRUE)
   if (is.numeric(B)) B <- Matrix(B, sparse = TRUE)
 
+  applicable <- (ncol(A) == ncol(B)) || (ncol(B) == 1) || (ncol(A) == 1)
+  stopifnot(applicable)
+
   if (ncol(A) == ncol(B)) {
 
     A[B >= A] <- 0
@@ -35,14 +38,15 @@ sparse_set_difference <- function(A, B) {
 
   }
 
-  stop("Case not implemented yet.")
-
 }
 
 sparse_set_union <- function(A, B) {
 
   if (is.numeric(A)) A <- Matrix(A, sparse = TRUE)
   if (is.numeric(B)) B <- Matrix(B, sparse = TRUE)
+
+  applicable <- (ncol(A) == ncol(B)) || (ncol(B) == 1) || (ncol(A) == 1)
+  stopifnot(applicable)
 
   if (ncol(A) == ncol(B)) {
 
@@ -79,8 +83,6 @@ sparse_set_union <- function(A, B) {
 
   }
 
-  stop("Case not implemented yet.")
-
 }
 
 .flatten_union <- function(M) {
@@ -95,21 +97,23 @@ replicate_sparse_col <- function(A, n) {
 
   new_i <- rep(A@i, n)
 
-  if ("x" %in% slotNames(A)) {
+  stopifnot("x" %in% slotNames(A))
 
-    new_x <- rep(A@x, n)
-
-  } else {
-
-    new_x <- rep(TRUE, length(new_i))
-
-  }
+  # if ("x" %in% slotNames(A)) {
+  #
+  #   new_x <- rep(A@x, n)
+  #
+  # } else {
+  #
+  #   new_x <- rep(TRUE, length(new_i))
+  #
+  # }
 
   new_p <- c(0, A@p[2] * seq(n))
 
   newA <- sparseMatrix(i = new_i + 1,
                        p = new_p,
-                       x = new_x,
+                       x = A@x,
                        dims = c(nrow(A), n))
 
   return(newA)

@@ -2,30 +2,33 @@
 
   if (is.null(y)) y <- x
 
-  if ("x" %in% slotNames(x)) {
+  stopifnot("x" %in% slotNames(x))
 
-    my_x <- x@x
+  # if ("x" %in% slotNames(x)) {
+  #
+  #   my_x <- x@x
+  #
+  # } else {
+  #
+  #   my_x <- rep(1, length(x@i))
+  #
+  # }
 
-  } else {
-
-    my_x <- rep(1, length(x@i))
-
-  }
-
-  if ("x" %in% slotNames(y)) {
-
-    my_y <- y@x
-
-  } else {
-
-    my_y <- rep(1, length(y@i))
-
-  }
+  stopifnot("x" %in% slotNames(y))
+  # if ("x" %in% slotNames(y)) {
+  #
+  #   my_y <- y@x
+  #
+  # } else {
+  #
+  #   my_y <- rep(1, length(y@i))
+  #
+  # }
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
 
-  i <- is_subset_C(x@p, x@i, x@Dim, my_x,
-                   y@p, y@i, y@Dim, my_y,
+  i <- is_subset_C(x@p, x@i, x@Dim, x@x,
+                   y@p, y@i, y@Dim, y@x,
                    as.logical(proper), p)
 
   M <- build_sparse_matrix(i = i, p = p, dims = c(y@Dim[2], x@Dim[2]))
@@ -38,29 +41,32 @@
 
   if (is.null(y)) y <- x
 
-  if ("x" %in% slotNames(x)) {
+  stopifnot("x" %in% slotNames(x))
+  stopifnot("x" %in% slotNames(y))
 
-    my_x <- x@x
-
-  } else {
-
-    my_x <- rep(1, length(x@i))
-
-  }
-
-  if ("x" %in% slotNames(y)) {
-
-    my_y <- y@x
-
-  } else {
-
-    my_y <- rep(1, length(y@i))
-
-  }
+  # if ("x" %in% slotNames(x)) {
+  #
+  #   my_x <- x@x
+  #
+  # } else {
+  #
+  #   my_x <- rep(1, length(x@i))
+  #
+  # }
+  #
+  # if ("x" %in% slotNames(y)) {
+  #
+  #   my_y <- y@x
+  #
+  # } else {
+  #
+  #   my_y <- rep(1, length(y@i))
+  #
+  # }
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
-  i <- is_equal_set_C(x@p, x@i, x@Dim, my_x,
-                      y@p, y@i, y@Dim, my_y,
+  i <- is_equal_set_C(x@p, x@i, x@Dim, x@x,
+                      y@p, y@i, y@Dim, y@x,
                       as.logical(proper), p)
 
   t(new("ngCMatrix", p = p, i = i,
