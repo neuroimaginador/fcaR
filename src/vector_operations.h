@@ -51,5 +51,5 @@ void cloneVector(SparseVector *a, SparseVector b);
 
 void add_column(SparseVector *a, SparseVector b);
 
-SparseVector S4toSparse(S4 A);
+// SparseVector S4toSparse(S4 A);
 S4 SparseToS4(SparseVector V);

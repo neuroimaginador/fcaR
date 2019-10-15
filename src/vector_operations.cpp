@@ -231,37 +231,37 @@ void add_column(SparseVector *a, SparseVector b) {
 
 }
 
-SparseVector S4toSparse(S4 A) {
-
-  std::vector<int> ap = A.slot("p");
-  std::vector<int> ai = A.slot("i");
-  std::vector<double> ax = A.slot("x");
-  IntegerVector adims = A.slot("Dim");
-
-  SparseVector V;
-  initVector(&V, adims[0]);
-
-  for (int i = 0; i < ai.size(); i++) {
-
-    insertArray(&(V.i), ai[i]);
-    insertArray(&(V.x), ax[i]);
-
-  }
-  insertArray(&(V.p), 0);
-
-  if (V.i.used > 0) {
-
-    insertArray(&(V.p), V.i.used);
-
-  } else {
-
-    insertArray(&(V.p), 0);
-
-  }
-
-  return V;
-
-}
+// SparseVector S4toSparse(S4 A) {
+//
+//   std::vector<int> ap = A.slot("p");
+//   std::vector<int> ai = A.slot("i");
+//   std::vector<double> ax = A.slot("x");
+//   IntegerVector adims = A.slot("Dim");
+//
+//   SparseVector V;
+//   initVector(&V, adims[0]);
+//
+//   for (int i = 0; i < ai.size(); i++) {
+//
+//     insertArray(&(V.i), ai[i]);
+//     insertArray(&(V.x), ax[i]);
+//
+//   }
+//   insertArray(&(V.p), 0);
+//
+//   if (V.i.used > 0) {
+//
+//     insertArray(&(V.p), V.i.used);
+//
+//   } else {
+//
+//     insertArray(&(V.p), 0);
+//
+//   }
+//
+//   return V;
+//
+// }
 
 S4 SparseToS4(SparseVector V) {
 
