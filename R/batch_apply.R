@@ -4,6 +4,7 @@
                          rules = c("generalization",
                                    "composition"),
                          batch_size = ncol(LHS),
+                         parallelize = TRUE,
                          reorder = FALSE) {
 
   n_implications <- ncol(LHS)
@@ -24,7 +25,7 @@
            n_implications + 1)
 
   # Parallel execution?
-  if (requireNamespace("parallel")) {
+  if (parallelize && requireNamespace("parallel")) {
 
     cat("Using parallel execution\n")
 
