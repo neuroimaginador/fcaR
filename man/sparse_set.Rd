@@ -21,57 +21,107 @@ This class implements the data structure and methods for fuzzy sets.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
+Creator for objects of class \code{SparseSet}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{sparse_set$new(attributes, M = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{attributes}}{(character vector) Names of the attributes that will be available in the fuzzy set.}
+
+\item{\code{M}}{(numeric vector or column \code{Matrix}) Values (grades) to be assigned to the attributes.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+If \code{M} is omitted, the fuzzy set is the empty set. Later, one can use the \code{assign} method to assign grades to any of its attributes.
+}
+
+\subsection{Returns}{
+An object of class \code{SparseSet}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-assign"></a>}}
 \subsection{Method \code{assign()}}{
+Assign grades to attributes in the set
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{sparse_set$assign(attributes, values)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{attributes}}{(character vector) Names of the attributes to assign a grade to.}
+
+\item{\code{values}}{(numeric vector) Grades to be assigned to the previous \code{attributes}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_vector"></a>}}
 \subsection{Method \code{get_vector()}}{
+Internal \code{Matrix}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{sparse_set$get_vector()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The internal sparse \code{Matrix} representation of the set.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_attributes"></a>}}
 \subsection{Method \code{get_attributes()}}{
+Attributes defined for the set
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{sparse_set$get_attributes()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A character vector with the names of the attributes.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-length"></a>}}
 \subsection{Method \code{length()}}{
+Number of attributes
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{sparse_set$length()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The number of attributes that are defined for this fuzzy set.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
 \subsection{Method \code{print()}}{
+Prints the set to console
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{sparse_set$print()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A string with the elements of the set and their grades between brackets {}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_latex"></a>}}
 \subsection{Method \code{to_latex()}}{
+Write the set in LaTeX format
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{sparse_set$to_latex()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The fuzzy set in LaTeX.
+}
 }
 }

@@ -29,6 +29,7 @@ formal_context <- R6::R6Class(
     objects = NULL,
 
     grades_set = NULL,
+
     expanded_grades_set = NULL,
 
     concepts = NULL,
