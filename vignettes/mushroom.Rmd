@@ -124,15 +124,13 @@ head(supp)
 Given a fuzzy set represented by a sparse matrix, we can compute its closure with respect to the implications in the ruleset.
 
 ```{r}
-# LHS of the fifth rule
-A <- fc$implications$get_LHS_matrix()[, 5]
-# Associated attributes
-print_set(A, fc$attributes)
+# A fuzzy set
+A <- sparse_set$new(attributes = fc$attributes)
+A$assign(attributes = "CapColor=white", values = 1)
 
 # Compute the closure
-cl <- fc$implications$compute_closure(A)
-# Associated attributes
-print_set(cl, fc$attributes)
+fc$implications$compute_closure(A)
+
 ```
 
 

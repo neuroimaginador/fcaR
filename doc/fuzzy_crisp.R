@@ -122,11 +122,10 @@ colMeans(sizes)
 fc$implications
 
 ## ------------------------------------------------------------------------
-S <- build_set(attrs = c("P2", "P3"),
-               values = c(0.5, 0.5),
-               fc$attributes)
-print_set(S, fc$attributes)
+S <- sparse_set$new(attributes = fc$attributes)
+S$assign(attributes = c("P2", "P3"),
+         values = c(0.5, 0.5))
+S
 
-cl <- fc$implications$compute_closure(S)
-print_set(cl, fc$attributes)
+fc$implications$compute_closure(S)
 

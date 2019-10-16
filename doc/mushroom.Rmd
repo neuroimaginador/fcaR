@@ -121,18 +121,16 @@ head(supp)
 
 # Computing Closure
 
-Given a fuzzy set representd by a sparse matrix, we can compute its closure wrt the implications in the ruleset.
+Given a fuzzy set represented by a sparse matrix, we can compute its closure with respect to the implications in the ruleset.
 
 ```{r}
-# LHS of the fifth rule
-A <- fc$implications$get_LHS_matrix()[, 5]
-# Associated attributes
-print_set(A, fc$attributes)
+# A fuzzy set
+A <- sparse_set$new(attributes = fc$attributes)
+A$assign(attributes = "CapColor=white", values = 1)
 
 # Compute the closure
-cl <- fc$implications$compute_closure(A)
-# Associated attributes
-print_set(cl, fc$attributes)
+fc$implications$compute_closure(A)
+
 ```
 
 
@@ -141,7 +139,7 @@ print_set(cl, fc$attributes)
 After this phase of redudancy removal, we can export the obtained ruleset to `arules format`.
 
 ```{r}
-R <- fc$convert_implications_to_arules()
+R <- fc$export_implications_to_arules()
 
 R
 
