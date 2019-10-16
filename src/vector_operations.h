@@ -10,7 +10,7 @@ typedef struct {
 } IntArray;
 
 void initArray(IntArray *a, size_t initialSize);
-void printArray(IntArray a);
+// void printArray(IntArray a);
 void insertArray(IntArray *a, int element);
 void freeArray(IntArray *a);
 
@@ -25,7 +25,7 @@ typedef struct {
 void initArray(DoubleArray *a, size_t initialSize);
 void reinitArray(DoubleArray *a);
 void reinitArray(IntArray *a);
-void printArray(DoubleArray a);
+// void printArray(DoubleArray a);
 void insertArray(DoubleArray *a, double element);
 void freeArray(DoubleArray *a);
 

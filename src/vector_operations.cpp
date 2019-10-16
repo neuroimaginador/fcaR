@@ -13,18 +13,19 @@ void initArray(IntArray *a, size_t initialSize) {
   a->size = initialSize;
 }
 
-void printArray(IntArray a) {
-
-  Rprintf("Array:\n");
-  Rprintf("Used / Size = %u / %u\n", a.used, a.size);
-  for (int i = 0; i < a.used; i++) {
-
-    Rprintf("%d ", a.array[i]);
-
-  }
-
-  Rprintf("\n");
-}
+// void printArray(IntArray a) {
+//
+//   Rprintf("Array:\n");
+//   Rprintf("Used / Size = %u / %u\n", a.used, a.size);
+//   for (int i = 0; i < a.used; i++) {
+//
+//     Rprintf("%d ", a.array[i]);
+//
+//   }
+//
+//   Rprintf("\n");
+//
+// }
 
 void insertArray(IntArray *a, int element) {
   // a->used is the number of used entries, because a->array[a->used++] updates a->used only *after* the array has been accessed.
@@ -60,18 +61,19 @@ void reinitArray(IntArray *a) {
 
 }
 
-void printArray(DoubleArray a) {
-
-  Rprintf("Array:\n");
-  Rprintf("Used / Size = %u / %u\n", a.used, a.size);
-  for (int i = 0; i < a.used; i++) {
-
-    Rprintf("%f ", a.array[i]);
-
-  }
-
-  Rprintf("\n");
-}
+// void printArray(DoubleArray a) {
+//
+//   Rprintf("Array:\n");
+//   Rprintf("Used / Size = %u / %u\n", a.used, a.size);
+//   for (int i = 0; i < a.used; i++) {
+//
+//     Rprintf("%f ", a.array[i]);
+//
+//   }
+//
+//   Rprintf("\n");
+//
+// }
 
 void insertArray(DoubleArray *a, double element) {
   // a->used is the number of used entries, because a->array[a->used++] updates a->used only *after* the array has been accessed.
