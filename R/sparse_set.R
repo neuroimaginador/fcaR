@@ -106,8 +106,8 @@ sparse_set <- R6::R6Class(
 
       if (sum(private$v) > 0) {
 
-        cat(print_set(A = private$v,
-                      attributes = private$attributes))
+        cat(.set_to_string(S = private$v,
+                           attributes = private$attributes))
 
       } else {
 

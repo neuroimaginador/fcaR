@@ -30,11 +30,3 @@
   return(paste0("[", A, ", ", B, "]"))
 
 }
-
-print_set <- function(A, attributes) {
-
-  A <- Matrix(A, sparse = TRUE)
-
-  .set_to_string(A, attributes)
-
-}
