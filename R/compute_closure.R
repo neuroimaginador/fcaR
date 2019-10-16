@@ -10,9 +10,6 @@
 #' @param verbose
 #'
 #' @return
-#' @export
-#'
-#' @examples
 .compute_closure <- function(S, LHS, RHS, attributes, reduce = FALSE, verbose = FALSE) {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) {

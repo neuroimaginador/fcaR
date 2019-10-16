@@ -1,5 +1,4 @@
 #' @import stringr
-#' @export
 set_to_latex <- function(S, attributes) {
 
   idx <- which(S > 0)
@@ -28,7 +27,6 @@ set_to_latex <- function(S, attributes) {
 }
 
 #' @import stringr
-#' @export
 imp_to_latex <- function(imp_set, ncols = 1) {
 
   LHS <- imp_set$get_LHS_matrix()
