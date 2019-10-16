@@ -31,7 +31,6 @@
 
 }
 
-#' @export
 print_set <- function(A, attributes) {
 
   A <- Matrix(A, sparse = TRUE)

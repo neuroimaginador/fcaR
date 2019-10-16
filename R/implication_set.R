@@ -201,7 +201,7 @@ implication_set <- R6::R6Class(
     #' @description
     #' Compute the semantic closure of a fuzzy set with respect to the implication set
     #'
-    #' @param S        (a vector) Vector with the grades of each attribute (a fuzzy set).
+    #' @param S        (a \code{SparseSet} object)  Fuzzy set to compute its closure. Use class \code{SparseSet} to build it.
     #' @param reduce   (logical) Reduce the implications using simplification logic?
     #' @param verbose  (logical) Show verbose output?
     #'
@@ -212,7 +212,11 @@ implication_set <- R6::R6Class(
                                reduce = FALSE,
                                verbose = FALSE) {
 
-      S <- Matrix(S, sparse = TRUE)
+      if (inherits(S, "SparseSet")) {
+
+        S <- S$get_vector()
+
+      }
 
       cl <- .compute_closure(S,
                              LHS = private$lhs_matrix,
@@ -223,11 +227,14 @@ implication_set <- R6::R6Class(
 
       if (!reduce) {
 
-        rownames(cl) <- private$attributes
+        cl <- sparse_set$new(attributes = private$attributes,
+                             M = cl)
 
       } else {
 
-        rownames(cl$closure) <- private$attributes
+        cl$closure <- sparse_set$new(attributes = private$attributes,
+                                     M = cl$closure)
+
       }
 
       return(cl)
@@ -244,6 +251,12 @@ implication_set <- R6::R6Class(
     #'
     #' @export
     recommend = function(S, attribute_filter) {
+
+      if (inherits(S, "SparseSet")) {
+
+        S <- S$get_vector()
+
+      }
 
       .recommend_attribute(S = S,
                            LHS = private$lhs_matrix,
