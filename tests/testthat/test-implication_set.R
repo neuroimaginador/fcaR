@@ -96,21 +96,16 @@ test_that("fcaR computes closure wrt implications", {
 
   fc$add_implications(mush_clean)
 
-  # LHS of the fifth rule
-  A <- fc$implications$get_LHS_matrix()[, 5]
-  # Associated attributes
-  A <- build_set(fc$attributes, A, fc$attributes)
+  # A fuzzy set
+  A <- sparse_set$new(attributes = fc$attributes)
+  A$assign(attributes = "CapColor=white", values = 1)
 
   # Compute the closure
   expect_error(cl <- fc$implications$compute_closure(A, reduce = TRUE, verbose = TRUE), NA)
   # Associated attributes
-  print_set(cl$closure, fc$attributes)
+  expect_is(cl$closure, "SparseSet")
 
-  new_impls <- implication_set$new(lhs = cl$implications$lhs,
-                                   rhs = cl$implications$rhs,
-                                   name = "reduced")
-
-  expect_is(new_impls, "ImplicationSet")
+  expect_is(cl$implications, "ImplicationSet")
 
 })
 
@@ -121,9 +116,9 @@ test_that("fcaR simplifies implications", {
   fc$add_implications(mush_clean)
 
   L <- .simplification(LHS = fc$implications$get_LHS_matrix(),
-                          RHS = fc$implications$get_RHS_matrix(),
-                          attributes = fc$attributes,
-                          trace = TRUE)
+                       RHS = fc$implications$get_RHS_matrix(),
+                       attributes = fc$attributes,
+                       trace = TRUE)
 
   expect_is(L, "list")
 
@@ -135,8 +130,10 @@ test_that("fcaR makes a recommendation", {
 
   fc$add_implications(mush_clean)
 
-  # LHS of the fifth rule
-  S <- build_set(fc$attributes, fc$implications$get_LHS_matrix()[, 5], fc$attributes)
+  # A fuzzy set
+  S <- sparse_set$new(attributes = fc$attributes)
+  S$assign(attributes = "CapColor=white", values = 1)
+
   expect_error(fc$implications$recommend(S = S, attribute_filter = fc$attributes[1]), NA)
 
 })
@@ -153,7 +150,7 @@ test_that("fcaR filters and removes implications", {
   expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1]), NA)
   expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1:2]), NA)
   expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1],
-                                drop = TRUE), NA)
+                                             drop = TRUE), NA)
 
   n <- fc$implications$cardinality()
 
@@ -190,12 +187,14 @@ test_that("fcaR adds implications from scratch", {
   fc$implications <- implication_set$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
-  lhs1 <- build_set(attrs = fc$attributes[1],
-                    values = 1,
-                    attributes = fc$attributes)
-  rhs1 <- build_set(attrs = fc$attributes[c(2,4)],
-                    values = c(1, 1),
-                    attributes = fc$attributes)
+  lhs1 <- sparse_set$new(attributes = fc$attributes)
+  lhs1$assign(attributes = fc$attributes[1],
+              values = 1)
+
+  rhs1 <- sparse_set$new(attributes = fc$attributes)
+  rhs1$assign(fc$attributes[c(2,4)],
+              values = c(1, 1))
+
   expect_error(fc$implications$add_implication(lhs = lhs1, rhs = rhs1), NA)
 
 })
@@ -225,20 +224,24 @@ test_that("fcaR can use generalization", {
   fc$implications <- implication_set$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
-  lhs1 <- build_set(attrs = fc$attributes[1],
-                    values = 1,
-                    attributes = fc$attributes)
-  rhs1 <- build_set(attrs = fc$attributes[c(2,4)],
-                    values = c(1, 1),
-                    attributes = fc$attributes)
+  lhs1 <- sparse_set$new(attributes = fc$attributes)
+  lhs1$assign(attributes = fc$attributes[1],
+              values = 1)
+
+  rhs1 <- sparse_set$new(attributes = fc$attributes)
+  rhs1$assign(fc$attributes[c(2,4)],
+              values = c(1, 1))
+
   fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
 
-  lhs2 <- build_set(attrs = fc$attributes[c(1, 3)],
-                    values = c(1, 1),
-                    attributes = fc$attributes)
-  rhs2 <- build_set(attrs = fc$attributes[4],
-                    values = 1,
-                    attributes = fc$attributes)
+  lhs2 <- sparse_set$new(attributes = fc$attributes)
+  lhs2$assign(attributes = fc$attributes[c(1, 3)],
+              values = c(1, 1))
+
+  rhs2 <- sparse_set$new(attributes = fc$attributes)
+  rhs2$assign(fc$attributes[4],
+              values = 1)
+
   fc$implications$add_implication(lhs = lhs2, rhs = rhs2)
 
   expect_error(fc$implications$apply_rules(rules = "generalization", parallelize = FALSE), NA)
@@ -270,12 +273,14 @@ test_that("fcaR filters implications", {
   fc$implications <- implication_set$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
-  lhs1 <- build_set(attrs = fc$attributes[1],
-                    values = 1,
-                    attributes = fc$attributes)
-  rhs1 <- build_set(attrs = fc$attributes[c(2,4)],
-                    values = c(1, 1),
-                    attributes = fc$attributes)
+  lhs1 <- sparse_set$new(attributes = fc$attributes)
+  lhs1$assign(attributes = fc$attributes[1],
+              values = 1)
+
+  rhs1 <- sparse_set$new(attributes = fc$attributes)
+  rhs1$assign(fc$attributes[c(2,4)],
+              values = c(1, 1))
+
   fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
 
   expect_warning(fc$implications$filter_by_lhs(attr_filter = fc$attributes[5]))

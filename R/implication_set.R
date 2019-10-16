@@ -106,6 +106,18 @@ implication_set <- R6::R6Class(
     #' @export
     add_implication = function(lhs, rhs) {
 
+      if (inherits(lhs, "SparseSet")) {
+
+        lhs <- lhs$get_vector()
+
+      }
+
+      if (inherits(rhs, "SparseSet")) {
+
+        rhs <- rhs$get_vector()
+
+      }
+
       if (is.null(private$lhs_matrix)) {
 
         private$lhs_matrix <- lhs
@@ -234,6 +246,11 @@ implication_set <- R6::R6Class(
 
         cl$closure <- sparse_set$new(attributes = private$attributes,
                                      M = cl$closure)
+
+        cl$implications <- implication_set$new(attributes = private$attributes,
+                                               name = "reduced",
+                                               lhs = cl$implications$lhs,
+                                               rhs = cl$implications$rhs)
 
       }
 

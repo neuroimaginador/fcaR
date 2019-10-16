@@ -3,7 +3,7 @@
 export(build_set)
 export(formal_context)
 export(implication_set)
-export(print_set)
+export(sparse_set)
 import(Matrix)
 import(RColorBrewer)
 import(arules)
