@@ -1,3 +1,13 @@
+#' @title
+#' R6 class for a fuzzy set with sparse internal representation
+#'
+#' @description
+#' This class implements the data structure and methods for fuzzy sets.
+#'
+#' @importFrom methods as is slotNames
+#' @import Matrix
+#'
+#' @export
 sparse_set <- R6::R6Class(
 
   classname = "SparseSet",
@@ -12,22 +22,22 @@ sparse_set <- R6::R6Class(
 
         private$v <- Matrix(M, sparse = TRUE)
 
+      } else {
+
+        private$v <- Matrix(0,
+                            nrow = length(attributes),
+                            ncol = 1,
+                            sparse = TRUE)
+
       }
-
-    },
-
-    zero = function() {
-
-      private$v <- 0 * private$v
 
     },
 
     assign = function(attributes, values) {
 
-      private$v <- private$v +
-        build_set(attrs = attributes,
-                  values = values,
-                  attributes = private$attributes)
+      idx <- match(attributes, private$attributes)
+
+      private$v[idx] <- values
 
     },
 
@@ -43,27 +53,15 @@ sparse_set <- R6::R6Class(
 
     },
 
-    ncol = function() {
+    length = function() {
 
-      ncol(private$v)
-
-    },
-
-    nrow = function() {
-
-      nrow(private$v)
-
-    },
-
-    dim = function() {
-
-      c(self$nrow(), self$ncol())
+      length(private$attributes)
 
     },
 
     print = function() {
 
-      if (!is.null(self$ncol())) {
+      if (sum(private$v) > 0) {
 
         cat(print_set(A = private$v,
                       attributes = private$attributes))
@@ -78,7 +76,7 @@ sparse_set <- R6::R6Class(
 
     to_latex = function() {
 
-      if (!is.null(self$ncol())) {
+      if (sum(private$v) > 0) {
 
         cat(set_to_latex(S = private$v,
                          attributes = private$attributes))
