@@ -63,18 +63,16 @@ supp <- fc$get_implication_support()
 head(supp)
 
 ## ------------------------------------------------------------------------
-# LHS of the fifth rule
-A <- fc$implications$get_LHS_matrix()[, 5]
-# Associated attributes
-print_set(A, fc$attributes)
+# A fuzzy set
+A <- sparse_set$new(attributes = fc$attributes)
+A$assign(attributes = "CapColor=white", values = 1)
 
 # Compute the closure
-cl <- fc$implications$compute_closure(A)
-# Associated attributes
-print_set(cl, fc$attributes)
+fc$implications$compute_closure(A)
+
 
 ## ------------------------------------------------------------------------
-R <- fc$convert_implications_to_arules()
+R <- fc$export_implications_to_arules()
 
 R
 

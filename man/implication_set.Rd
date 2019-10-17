@@ -186,7 +186,7 @@ Compute the semantic closure of a fuzzy set with respect to the implication set
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(a vector) Vector with the grades of each attribute (a fuzzy set).}
+\item{\code{S}}{(a \code{SparseSet} object)  Fuzzy set to compute its closure. Use class \code{SparseSet} to build it.}
 
 \item{\code{reduce}}{(logical) Reduce the implications using simplification logic?}
 
