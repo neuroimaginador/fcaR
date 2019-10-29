@@ -263,6 +263,40 @@ formal_context <- R6::R6Class(
     },
 
     #' @description
+    #' Dimensions of the formal context
+    #'
+    #' @return A vector with (number of objects, number of attributes).
+    #'
+    #' @export
+    dim = function() {
+
+      return(c(length(self$objects), length(self$attributes)))
+
+    },
+
+    #' @description
+    #' Prints the formal context
+    #'
+    #' @return Prints information regarding the formal context.
+    #'
+    #' @export
+    print = function() {
+
+      dims <- self$dim()
+
+      I <- as.matrix(t(self$I))
+
+      cat("FormalContext with", dims[1], "objects and",
+          dims[2], "attributes.\n")
+      cat("Attributes' names are:",
+          str_flatten(self$attributes, collapse = ", "),
+          "\n")
+      cat("Matrix:\n")
+      print(I)
+
+    },
+
+    #' @description
     #' Plot the concept lattice
     #'
     #' @return Nothing, just plots the graph of the concept lattice.

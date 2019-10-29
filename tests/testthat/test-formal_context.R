@@ -33,6 +33,9 @@ test_that("fcaR creates a formal context", {
 
   expect_is(fc, "FormalContext")
 
+  expect_equal(fc$dim(), c(n_objects, n_attributes))
+  expect_output(fc$print())
+
 })
 
 test_that("fcaR imports a formal context with constant columns", {

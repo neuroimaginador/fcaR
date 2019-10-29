@@ -29,6 +29,8 @@ This class implements the data structure and methods for formal contexts.
 \item \href{#method-extract_implications_concepts}{\code{formal_context$extract_implications_concepts()}}
 \item \href{#method-convert_to_transactions}{\code{formal_context$convert_to_transactions()}}
 \item \href{#method-export_implications_to_arules}{\code{formal_context$export_implications_to_arules()}}
+\item \href{#method-dim}{\code{formal_context$dim()}}
+\item \href{#method-print}{\code{formal_context$print()}}
 \item \href{#method-plot_lattice}{\code{formal_context$plot_lattice()}}
 \item \href{#method-plot_context}{\code{formal_context$plot_context()}}
 \item \href{#method-get_concept_support}{\code{formal_context$get_concept_support()}}
@@ -146,6 +148,30 @@ Export implications to \code{arules} format
 }
 \subsection{Returns}{
 A \code{rules} object from \code{arules} package. If \code{quality == TRUE}, the function \code{interestMeasure} from \code{arules} is used.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-dim"></a>}}
+\subsection{Method \code{dim()}}{
+Dimensions of the formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{formal_context$dim()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A vector with (number of objects, number of attributes).
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\subsection{Method \code{print()}}{
+Prints the formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{formal_context$print()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Prints information regarding the formal context.
 }
 }
 \if{html}{\out{<hr>}}
