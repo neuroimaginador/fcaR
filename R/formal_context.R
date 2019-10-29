@@ -93,7 +93,7 @@ formal_context <- R6::R6Class(
       expanded_grades_set <- compute_grades(t(I))
 
       self$I <- I
-      self$grades_set <- grades_set
+      self$grades_set <- unique(c(0, grades_set, 1))
       self$expanded_grades_set <- expanded_grades_set
       self$objects <- colnames(I)
       self$attributes <- attributes
