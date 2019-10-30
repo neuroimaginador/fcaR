@@ -86,11 +86,11 @@ implication_set <- R6::R6Class(
                       RHS = private$rhs_matrix,
                       attributes = private$attributes)
 
-      LHS <- as(L$LHS, "ngCMatrix")
+      LHS <- as(L$lhs, "ngCMatrix")
       LHS <- as(LHS, "itemMatrix")
       itemLabels(LHS) <- private$attributes
 
-      RHS <- as(L$RHS, "ngCMatrix")
+      RHS <- as(L$rhs, "ngCMatrix")
       RHS <- as(RHS, "itemMatrix")
       itemLabels(RHS) <- private$attributes
 
