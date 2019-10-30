@@ -81,11 +81,16 @@ implication_set <- R6::R6Class(
     #' @export
     to_arules = function() {
 
-      LHS <- as(private$lhs_matrix, "ngCMatrix")
+      # Needed to export to arules
+      L <- .reduction(LHS = private$lhs_matrix,
+                      RHS = private$rhs_matrix,
+                      attributes = private$attributes)
+
+      LHS <- as(L$LHS, "ngCMatrix")
       LHS <- as(LHS, "itemMatrix")
       itemLabels(LHS) <- private$attributes
 
-      RHS <- as(private$rhs_matrix, "ngCMatrix")
+      RHS <- as(L$RHS, "ngCMatrix")
       RHS <- as(RHS, "itemMatrix")
       itemLabels(RHS) <- private$attributes
 
