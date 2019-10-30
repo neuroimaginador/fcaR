@@ -65,6 +65,7 @@ formal_context <- R6::R6Class(
         attributes <- I@itemInfo$labels
         I <- as(I@data, "dgCMatrix")
         objects <- paste0(seq(ncol(I)))
+        dimnames(I) <- list(attributes, objects)
 
       } else {
 
@@ -278,7 +279,7 @@ formal_context <- R6::R6Class(
     #' Prints the formal context
     #'
     #' @return Prints information regarding the formal context.
-    #'
+    #' @importFrom stringr str_flatten str_wrap
     #' @export
     print = function() {
 
@@ -286,13 +287,30 @@ formal_context <- R6::R6Class(
 
       I <- as.matrix(t(self$I))
 
+      if (dims[2] > 6) {
+
+        my_attributes <- c(self$attributes[1:6], "...")
+        warning("Too many attributes, output will be truncated.\n",
+                call. = FALSE,
+                noBreaks. = FALSE,
+                immediate. = TRUE)
+
+      } else {
+
+        my_attributes <- self$attributes
+
+      }
+
       cat("FormalContext with", dims[1], "objects and",
           dims[2], "attributes.\n")
-      cat("Attributes' names are:",
-          str_flatten(self$attributes, collapse = ", "),
-          "\n")
-      cat("Matrix:\n")
-      print(I)
+
+      str <- paste0("Attributes' names are: ",
+                    str_flatten(my_attributes, collapse = ", "),
+                    "\n")
+      cat(str_wrap(str, exdent = 2))
+      cat("\nMatrix:\n")
+
+      print(head(I[, seq_along(my_attributes)]))
 
     },
 
