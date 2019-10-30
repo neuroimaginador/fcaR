@@ -16,8 +16,8 @@
 
     for (idx_A2 in seq(n_concepts)) {
 
-      M[idx_A1, idx_A2] <- .subconcept(A1 = L[[idx_A1]][[1]],
-                                       A2 = L[[idx_A2]][[1]])
+      M[idx_A1, idx_A2] <- .subconcept(A1 = L[[idx_A1]]$get_extent()$get_vector(),
+                                       A2 = L[[idx_A2]]$get_extent()$get_vector())
     }
 
   }

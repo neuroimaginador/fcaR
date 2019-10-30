@@ -170,7 +170,14 @@ formal_context <- R6::R6Class(
                                  verbose = verbose,
                                  attributes = self$attributes)
 
-      return(self$concepts)
+      self$concepts <- lapply(self$concepts,
+                              function(x) {
+                                .concept_to_sparse_set(x,
+                                                       objects = self$objects,
+                                                       attributes = self$attributes)
+                              })
+
+      return(invisible(self$concepts))
 
     },
 
@@ -213,7 +220,12 @@ formal_context <- R6::R6Class(
       my_LHS <- L$LHS[, -1]
       my_RHS <- L$RHS[, -1]
 
-      self$concepts <- my_concepts
+      self$concepts <- lapply(my_concepts,
+                              function(x) {
+                                .concept_to_sparse_set(x,
+                                                       objects = self$objects,
+                                                       attributes = self$attributes)
+                              })
 
       extracted_implications <- implication_set$new(attributes = self$attributes,
                                                     lhs = my_LHS,
@@ -356,7 +368,7 @@ formal_context <- R6::R6Class(
       my_I <- self$I
       my_I@x <- as.numeric(my_I@x)
 
-      intents <- lapply(self$concepts, function(s) s[[2]])
+      intents <- lapply(self$concepts, function(s) s$get_intent()$get_vector())
       intents <- do.call(cbind, args = intents)
 
       subsets <- .subset(intents, my_I)

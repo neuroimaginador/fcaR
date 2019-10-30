@@ -7,8 +7,8 @@
   objects <- colnames(I)
 
   labels <- sapply(L, function(l) .concept_to_string(l,
-                                                            objects,
-                                                            attributes))
+                                                     objects,
+                                                     attributes))
 
   hasse(data = M,
         labels = labels,
