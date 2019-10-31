@@ -101,13 +101,16 @@ sparse_set <- R6::R6Class(
     #'
     #' @return A string with the elements of the set and their grades between brackets {}.
     #'
+    #' @importFrom stringr str_wrap
     #' @export
     print = function() {
 
       if (sum(private$v) > 0) {
 
-        cat(.set_to_string(S = private$v,
-                           attributes = private$attributes))
+        cat(str_wrap(.set_to_string(S = private$v,
+                           attributes = private$attributes),
+                     width = 75,
+                     exdent = 2))
 
       } else {
 
