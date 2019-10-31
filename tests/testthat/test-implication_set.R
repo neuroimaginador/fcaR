@@ -144,12 +144,11 @@ test_that("fcaR filters and removes implications", {
 
   fc$add_implications(mush_clean)
 
-  expect_error(fc$implications$filter_by_lhs(attr_filter = fc$attributes[1]), NA)
-  expect_error(fc$implications$filter_by_lhs(attr_filter = fc$attributes[1:2]), NA)
+  expect_warning(fc$implications$filter(lhs = fc$attributes[1], rhs = fc$attributes[1:2]))
 
-  expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1]), NA)
-  expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1:2]), NA)
-  expect_error(fc$implications$filter_by_rhs(attr_filter = fc$attributes[1],
+  expect_error(fc$implications$filter(rhs = fc$attributes[1]), NA)
+  expect_error(fc$implications$filter(lhs = fc$attributes[1:2]), NA)
+  expect_error(fc$implications$filter(rhs = fc$attributes[1],
                                              drop = TRUE), NA)
 
   n <- fc$implications$cardinality()
@@ -283,7 +282,6 @@ test_that("fcaR filters implications", {
 
   fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
 
-  expect_warning(fc$implications$filter_by_lhs(attr_filter = fc$attributes[5]))
-  expect_warning(fc$implications$filter_by_rhs(attr_filter = fc$attributes[5]))
+  expect_warning(fc$implications$filter(lhs = fc$attributes[5]))
 
 })

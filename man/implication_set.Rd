@@ -25,8 +25,7 @@ This class implements the structure needed to store implications and the methods
 \item \href{#method-to_latex}{\code{implication_set$to_latex()}}
 \item \href{#method-get_LHS_matrix}{\code{implication_set$get_LHS_matrix()}}
 \item \href{#method-get_RHS_matrix}{\code{implication_set$get_RHS_matrix()}}
-\item \href{#method-filter_by_rhs}{\code{implication_set$filter_by_rhs()}}
-\item \href{#method-filter_by_lhs}{\code{implication_set$filter_by_lhs()}}
+\item \href{#method-filter}{\code{implication_set$filter()}}
 \item \href{#method-get_rules}{\code{implication_set$get_rules()}}
 \item \href{#method-remove_rules}{\code{implication_set$remove_rules()}}
 }
@@ -309,43 +308,26 @@ A sparse matrix representing the RHS of the implications in the set.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-filter_by_rhs"></a>}}
-\subsection{Method \code{filter_by_rhs()}}{
-Filter implications by attribute in RHS
+\if{html}{\out{<a id="method-filter"></a>}}
+\subsection{Method \code{filter()}}{
+Filter implications by attributes in LHS and RHS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{implication_set$filter_by_rhs(attr_filter, drop = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{implication_set$filter(lhs = NULL, rhs = NULL, drop = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{attr_filter}}{(character vector) Names of the attributes to filter by.}
+\item{\code{lhs}}{(character vector) Names of the attributes to filter the LHS by. If \code{NULL}, no filtering is done on the LHS.}
+
+\item{\code{rhs}}{(character vector) Names of the attributes to filter the RHS by. If \code{NULL}, no filtering is done on the RHS.}
 
 \item{\code{drop}}{(logical) Remove the rest of attributes in RHS?}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{attribute_filter} in their RHS.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-filter_by_lhs"></a>}}
-\subsection{Method \code{filter_by_lhs()}}{
-Filter implications by attribute in LHS
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{implication_set$filter_by_lhs(attr_filter)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{attr_filter}}{(character vector) Names of the attributes to filter by.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{attribute_filter} in their LHS.
+An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
 }
 }
 \if{html}{\out{<hr>}}

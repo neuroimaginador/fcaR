@@ -143,9 +143,6 @@ implication_set <- R6::R6Class(
 
       }
 
-      rownames(private$lhs_matrix) <- private$attributes
-      rownames(private$rhs_matrix) <- private$attributes
-
     },
 
     #' @description
@@ -414,34 +411,86 @@ implication_set <- R6::R6Class(
     },
 
     #' @description
-    #' Filter implications by attribute in RHS
+    #' Filter implications by attributes in LHS and RHS
     #'
-    #' @param attr_filter  (character vector) Names of the attributes to filter by.
-    #' @param drop         (logical) Remove the rest of attributes in RHS?
+    #' @param lhs  (character vector) Names of the attributes to filter the LHS by. If \code{NULL}, no filtering is done on the LHS.
+    #' @param rhs  (character vector) Names of the attributes to filter the RHS by. If \code{NULL}, no filtering is done on the RHS.
+    #' @param drop  (logical) Remove the rest of attributes in RHS?
     #'
-    #' @return An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{attribute_filter} in their RHS.
+    #' @return An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
     #'
     #' @export
-    filter_by_rhs = function(attr_filter, drop = FALSE) {
+    filter = function(lhs = NULL,
+                      rhs = NULL,
+                      drop = FALSE) {
 
       RHS <- private$rhs_matrix
       LHS <- private$lhs_matrix
 
-      idx_attr <- match(attr_filter, private$attributes)
+      if (!is.null(lhs)) {
 
-      if (length(idx_attr) > 1) {
+        # Filter the implications which have
+        # the given lhs
+        idx_attr <- match(lhs,
+                          private$attributes)
 
-        idx <- which(colSums(RHS[idx_attr, ]) > 0)
+        if (length(idx_attr) > 1) {
+
+          idx_lhs <- which(colSums(LHS[idx_attr, ]) > 0)
+
+        } else {
+
+          idx_lhs <- which(LHS[idx_attr, ] > 0)
+
+        }
 
       } else {
 
-        idx <- which(RHS[idx_attr, ] > 0)
+        # If not specified a filter for LHS,
+        # select all implications
+        idx_lhs <- seq(ncol(LHS))
+
+      }
+
+      if (!is.null(rhs)) {
+
+        # Filter the implications which have
+        # the given lhs
+        idx_attr <- match(rhs,
+                          private$attributes)
+
+        if (length(idx_attr) > 1) {
+
+          idx_rhs <- which(colSums(RHS[idx_attr, ]) > 0)
+
+        } else {
+
+          idx_rhs <- which(RHS[idx_attr, ] > 0)
+
+        }
+
+      } else {
+
+        # If not specified a filter for RHS,
+        # select all implications
+        idx_rhs <- seq(ncol(RHS))
+
+      }
+
+      idx <- intersect(idx_lhs, idx_rhs)
+
+      if (length(idx) == 0) {
+
+        warning("No combination of given LHS and RHS found.\n",
+                call. = FALSE,
+                immediate. = TRUE)
+        return(invisible(NULL))
 
       }
 
       if (length(idx) > 0) {
 
-        if (drop) {
+        if (drop && !is.null(rhs)) {
 
           newLHS <- LHS[, idx]
           newRHS <- RHS[, idx]
@@ -449,14 +498,14 @@ implication_set <- R6::R6Class(
           other_idx <- setdiff(seq(nrow(RHS)), idx_attr)
           newRHS[other_idx, ] <- 0
 
-          imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
+          imp <- implication_set$new(name = paste0(private$name, "_filtered"),
                                      attributes = private$attributes,
                                      lhs = Matrix(newLHS, sparse = TRUE),
                                      rhs = Matrix(newRHS, sparse = TRUE))
 
         } else {
 
-          imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
+          imp <- implication_set$new(name = paste0(private$name, "_filtered"),
                                      attributes = private$attributes,
                                      lhs = Matrix(LHS[, idx], sparse = TRUE),
                                      rhs = Matrix(RHS[, idx], sparse = TRUE))
@@ -466,51 +515,6 @@ implication_set <- R6::R6Class(
         return(imp)
 
       }
-
-      warning("No RHS with that attribute, sorry.")
-      return(invisible(NULL))
-
-    },
-
-    #' @description
-    #' Filter implications by attribute in LHS
-    #'
-    #' @param attr_filter  (character vector) Names of the attributes to filter by.
-    #'
-    #' @return An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{attribute_filter} in their LHS.
-    #'
-    #' @export
-    filter_by_lhs = function(attr_filter) {
-
-      RHS <- private$rhs_matrix
-      LHS <- private$lhs_matrix
-
-      idx_attr <- match(attr_filter, private$attributes)
-
-      if (length(idx_attr) > 1) {
-
-        idx <- which(colSums(LHS[idx_attr, ]) > 0)
-
-      } else {
-
-        idx <- which(LHS[idx_attr, ] > 0)
-
-      }
-
-      if (length(idx) > 0) {
-
-
-        imp <- implication_set$new(name = paste0(private$name, "_filter_", attr_filter),
-                                   attributes = private$attributes,
-                                   lhs = Matrix(LHS[, idx], sparse = TRUE),
-                                   rhs = Matrix(RHS[, idx], sparse = TRUE))
-
-        return(imp)
-
-      }
-
-      warning("No LHS with that attribute, sorry.")
-      return(invisible(NULL))
 
     },
 
