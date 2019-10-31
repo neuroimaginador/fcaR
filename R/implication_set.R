@@ -377,6 +377,9 @@ implication_set <- R6::R6Class(
 
       }
 
+      dimnames(LHS) <- list(private$attributes,
+                            paste0(seq(ncol(LHS))))
+
       return(LHS)
 
     },
@@ -401,6 +404,10 @@ implication_set <- R6::R6Class(
         RHS <- private$rhs_matrix
 
       }
+
+      dimnames(RHS) <- list(private$attributes,
+                            paste0(seq(ncol(RHS))))
+
 
       return(RHS)
 
