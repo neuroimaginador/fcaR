@@ -54,6 +54,7 @@ formal_context <- R6::R6Class(
     #'
     #' @import Matrix
     #' @import arules
+    #' @importFrom stringr str_wrap
     #' @importFrom methods as is slotNames
     initialize = function(I,
                           grades_set = sort(unique(as.vector(I)))) {
@@ -78,7 +79,11 @@ formal_context <- R6::R6Class(
 
         if (length(constant_cols) > 0) {
 
-          message(paste0("Removed constant columns: ", str_flatten(attributes[constant_cols], collapse = ", ")))
+          str <- paste0("Removed constant columns: ", str_flatten(attributes[constant_cols], collapse = ", "))
+
+          message(str_wrap(str,
+                           exdent = 2,
+                           width = 75))
 
           I <- I[, -constant_cols]
           attributes <- attributes[-constant_cols]
