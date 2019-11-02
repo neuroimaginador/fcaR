@@ -12,9 +12,20 @@
                    y@p, y@i, y@Dim, y@x,
                    as.logical(proper), p)
 
-  M <- build_sparse_matrix(i = i, p = p, dims = c(y@Dim[2], x@Dim[2]))
+  M <- build_sparse_matrix(i = i, p = p,
+                           dims = c(y@Dim[2], x@Dim[2]))
 
-  t(M)
+  M <- t(M)
+
+  empty <- which(colSums(x) == 0)
+
+  if (length(empty) > 0) {
+
+    M[empty, ] <- Matrix(TRUE, ncol = y@Dim[2], nrow = length(empty))
+
+  }
+
+  return(M)
 
 }
 
