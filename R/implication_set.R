@@ -550,7 +550,7 @@ implication_set <- R6::R6Class(
     #' @export
     remove_rules = function(idx) {
 
-      idx <- idx[idx < ncol(private$lhs_matrix)]
+      idx <- idx[idx <= ncol(private$lhs_matrix)]
 
       if (length(idx) > 0) {
 
