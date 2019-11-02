@@ -42,7 +42,11 @@ This class implements the data structure and methods for formal contexts.
 \subsection{Method \code{new()}}{
 Creator for the Fomal Context class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{formal_context$new(I, grades_set = sort(unique(as.vector(I))))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{formal_context$new(
+  I,
+  grades_set = sort(unique(as.vector(I))),
+  remove_const = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -51,6 +55,8 @@ Creator for the Fomal Context class
 \item{\code{I}}{(numeric matrix) The table of the formal context.}
 
 \item{\code{grades_set}}{(numeric vector, optional) the anumeration of the grades of the attributes.}
+
+\item{\code{remove_const}}{(logical) If \code{TRUE}, remove constant columns. The default is \code{FALSE}.}
 }
 \if{html}{\out{</div>}}
 }

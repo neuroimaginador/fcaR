@@ -45,6 +45,7 @@ formal_context <- R6::R6Class(
     #'
     #' @param I           (numeric matrix) The table of the formal context.
     #' @param grades_set  (numeric vector, optional) the anumeration of the grades of the attributes.
+    #' @param remove_const (logical) If \code{TRUE}, remove constant columns. The default is \code{FALSE}.
     #'
     #' @details
     #' Columns of \code{I} must be named, and are the names of the attributes of the formal context.
@@ -57,7 +58,8 @@ formal_context <- R6::R6Class(
     #' @importFrom stringr str_wrap
     #' @importFrom methods as is slotNames
     initialize = function(I,
-                          grades_set = sort(unique(as.vector(I)))) {
+                          grades_set = sort(unique(as.vector(I))),
+                          remove_const = FALSE) {
 
       # Transform the formal context to sparse
       if (inherits(I, "transactions")) {
@@ -75,18 +77,22 @@ formal_context <- R6::R6Class(
         objects <- rownames(I)
 
         # Remove the constant columns
-        constant_cols <- which(apply(I, 2, max) == apply(I, 2, min))
+        if (remove_const) {
 
-        if (length(constant_cols) > 0) {
+          constant_cols <- which(apply(I, 2, max) == apply(I, 2, min))
 
-          str <- paste0("Removed constant columns: ", str_flatten(attributes[constant_cols], collapse = ", "))
+          if (length(constant_cols) > 0) {
 
-          message(str_wrap(str,
-                           exdent = 2,
-                           width = 75))
+            str <- paste0("Removed constant columns: ", str_flatten(attributes[constant_cols], collapse = ", "))
 
-          I <- I[, -constant_cols]
-          attributes <- attributes[-constant_cols]
+            message(str_wrap(str,
+                             exdent = 2,
+                             width = 75))
+
+            I <- I[, -constant_cols]
+            attributes <- attributes[-constant_cols]
+
+          }
 
         }
 
