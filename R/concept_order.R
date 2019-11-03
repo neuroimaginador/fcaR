@@ -4,7 +4,7 @@
 
   extents <- Reduce(cbind, extents)
 
-  M <- fcaR:::.subset(extents)
+  M <- .subset(extents)
 
   return(as.matrix(t(M)))
 
