@@ -1,27 +1,11 @@
-.subconcept <- function(A1, A2) {
+.concept_order <- function(L) {
 
-  all(A1 <= A2)
+  extents <- lapply(L, function(l) l$get_extent()$get_vector())
 
-}
+  extents <- Reduce(cbind, extents)
 
-.ordering_matrix <- function(L, I) {
+  M <- fcaR:::.subset(extents)
 
-  n_concepts <- length(L)
-
-  M <- matrix(FALSE,
-              nrow = n_concepts,
-              ncol = n_concepts)
-
-  for (idx_A1 in seq(n_concepts)) {
-
-    for (idx_A2 in seq(n_concepts)) {
-
-      M[idx_A1, idx_A2] <- .subconcept(A1 = L[[idx_A1]]$get_extent()$get_vector(),
-                                       A2 = L[[idx_A2]]$get_extent()$get_vector())
-    }
-
-  }
-
-  return(M)
+  return(as.matrix(t(M)))
 
 }

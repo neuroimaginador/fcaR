@@ -346,7 +346,7 @@ formal_context <- R6::R6Class(
 
       if (length(self$concepts) > 0) {
 
-        .draw_lattice(self$concepts, as.matrix(self$I))
+        .draw_lattice(self$concepts)
 
       }
 
