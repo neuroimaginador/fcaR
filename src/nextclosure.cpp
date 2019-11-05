@@ -28,7 +28,7 @@ double cardinal(SparseVector A) {
 }
 
 SparseVector setdifference(SparseVector x,
-                                  SparseVector y) {
+                           SparseVector y) {
 
   SparseVector res;
   initVector(&res, x.length);
@@ -70,7 +70,7 @@ SparseVector setdifference(SparseVector x,
 }
 
 SparseVector compute_intent (SparseVector V,
-                                    NumericMatrix I) {
+                             NumericMatrix I) {
 
   SparseVector R;
 
@@ -106,7 +106,7 @@ SparseVector compute_intent (SparseVector V,
 }
 
 SparseVector compute_extent (SparseVector V,
-                                    NumericMatrix I) {
+                             NumericMatrix I) {
 
   SparseVector R;
 
@@ -142,7 +142,7 @@ SparseVector compute_extent (SparseVector V,
 }
 
 SparseVector compute_closure (SparseVector V,
-                                     NumericMatrix I) {
+                              NumericMatrix I) {
 
   SparseVector A = compute_extent(V, I);
   SparseVector B = compute_intent(A, I);
@@ -185,9 +185,9 @@ void compute_direct_sum(SparseVector A,
 }
 
 void is_subset(SparseVector A,
-                            const struct ImplicationTree t,
-                            IntArray *res,
-                            bool* black_list) {
+               const struct ImplicationTree t,
+               IntArray *res,
+               bool* black_list) {
 
   reinitArray(res);
 
@@ -226,8 +226,8 @@ void is_subset(SparseVector A,
 }
 
 void setunion(SparseVector RHS,
-                            IntArray subsets,
-                            SparseVector *res2) {
+              IntArray subsets,
+              SparseVector *res2) {
 
   int n = subsets.used;
 
@@ -275,8 +275,8 @@ void setunion(SparseVector RHS,
 }
 
 void setunion2(SparseVector x,
-                      SparseVector y,
-                      SparseVector *res) {
+               SparseVector y,
+               SparseVector *res) {
 
 
   int j = 0;
@@ -327,10 +327,10 @@ void setunion2(SparseVector x,
 }
 
 void semantic_closure(SparseVector A,
-                            ImplicationTree t,
-                            SparseVector LHS,
-                            SparseVector RHS,
-                            SparseVector *res) {
+                      ImplicationTree t,
+                      SparseVector LHS,
+                      SparseVector RHS,
+                      SparseVector *res) {
 
 
   int n_attributes = A.length;
@@ -394,9 +394,9 @@ void semantic_closure(SparseVector A,
 }
 
 bool is_set_preceding(SparseVector B,
-                             SparseVector C,
-                             int a_i,
-                             double grade_i) {
+                      SparseVector C,
+                      int a_i,
+                      double grade_i) {
 
   // Rprintf("Comparing:\n");
 
@@ -511,12 +511,12 @@ bool is_set_preceding(SparseVector B,
 }
 
 SparseVector compute_next_closure(SparseVector A, int i,
-                                             int imax,
-                                             ListOf<NumericVector> grades_set,
-                                             ImplicationTree t,
-                                             SparseVector LHS,
-                                             SparseVector RHS,
-                                             StringVector attrs) {
+                                  int imax,
+                                  ListOf<NumericVector> grades_set,
+                                  ImplicationTree t,
+                                  SparseVector LHS,
+                                  SparseVector RHS,
+                                  StringVector attrs) {
 
 
   SparseVector candB;
@@ -557,15 +557,17 @@ SparseVector compute_next_closure(SparseVector A, int i,
 
 // [[Rcpp::export]]
 List next_closure_implications(NumericMatrix I,
-                                               List grades_set,
-                                               StringVector attrs,
-                                               bool verbose = false) {
+                               List grades_set,
+                               StringVector attrs,
+                               bool verbose = false) {
 
   int n_attributes = attrs.size();
 
   SparseVector concepts;
+  SparseVector extents;
   SparseVector LHS, RHS;
   initVector(&concepts, n_attributes);
+  initVector(&extents, I.nrow());
   initVector(&LHS, n_attributes);
   initVector(&RHS, n_attributes);
 
@@ -588,6 +590,7 @@ List next_closure_implications(NumericMatrix I,
   } else {
 
     add_column(&concepts, A);
+    add_column(&extents, compute_extent(A, I));
 
   }
 
@@ -598,11 +601,11 @@ List next_closure_implications(NumericMatrix I,
   while ((cardinal(A) < n_attributes)){
 
     A = compute_next_closure(A,
-                                        n_attributes,
-                                        n_attributes,
-                                        grades_set,
-                                        tree, LHS, RHS,
-                                        attrs);
+                             n_attributes,
+                             n_attributes,
+                             grades_set,
+                             tree, LHS, RHS,
+                             attrs);
 
     if (verbose) {
 
@@ -625,6 +628,7 @@ List next_closure_implications(NumericMatrix I,
 
       // Concept
       add_column(&concepts, A);
+      add_column(&extents, compute_extent(A, I));
 
       if (verbose) {
 
@@ -661,6 +665,7 @@ List next_closure_implications(NumericMatrix I,
     if (checkInterrupt()) { // user interrupted ...
 
       List res = List::create(_["concepts"] = SparseToS4(concepts),
+                              _["extents"] = SparseToS4(extents),
                               _["LHS"] = SparseToS4(LHS),
                               _["RHS"] = SparseToS4(RHS));
 
@@ -672,6 +677,7 @@ List next_closure_implications(NumericMatrix I,
   }
 
   List res = List::create(_["concepts"] = SparseToS4(concepts),
+                          _["extents"] = SparseToS4(extents),
                           _["LHS"] = SparseToS4(LHS),
                           _["RHS"] = SparseToS4(RHS));
 

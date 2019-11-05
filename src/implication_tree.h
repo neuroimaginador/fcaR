@@ -8,8 +8,8 @@ struct ImplicationTree {
 
   IntArray COUNT;
   DoubleArray CARD;
-  DoubleArray DEGREE[500];
-  IntArray LIST[500];
+  DoubleArray DEGREE[5000];
+  IntArray LIST[5000];
   int n_implications;
   int n_attributes;
 

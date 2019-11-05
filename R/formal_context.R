@@ -232,25 +232,33 @@ formal_context <- R6::R6Class(
       # the computed concepts, now we will compute the corresponding
       # extents.
       my_intents <- L$concepts[, -1]
+      my_extents <- L$extents[, -1]
 
-      my_concepts <- list()
-
-      for (n in seq(ncol(my_intents))) {
-
-        intent <- .extract_column(my_intents, n)
-        extent <- .extent(intent, my_I)
-
-        my_concepts <- c(my_concepts, list(list(extent, intent)))
-
-      }
+      # my_concepts <- list()
+      #
+      # for (n in seq(ncol(my_intents))) {
+      #
+      #   intent <- .extract_column(my_intents, n)
+      #   extent <- .extent(intent, my_I)
+      #
+      #   my_concepts <- c(my_concepts, list(list(extent, intent)))
+      #
+      # }
 
       # Now, add the computed implications
       my_LHS <- L$LHS[, -1]
       my_RHS <- L$RHS[, -1]
 
-      self$concepts <- lapply(my_concepts,
-                              function(x) {
-                                .concept_to_sparse_set(x,
+      # self$concepts <- lapply(my_concepts,
+      #                         function(x) {
+      #                           .concept_to_sparse_set(x,
+      #                                                  objects = self$objects,
+      #                                                  attributes = self$attributes)
+      #                         })
+
+      self$concepts <- lapply(seq(ncol(my_intents)),
+                              function(i) {
+                                .concept_to_sparse_set(list(my_extents[, i], my_intents[, i]),
                                                        objects = self$objects,
                                                        attributes = self$attributes)
                               })
