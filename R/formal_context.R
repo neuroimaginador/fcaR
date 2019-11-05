@@ -367,11 +367,12 @@ formal_context <- R6::R6Class(
     #'
     #' @return Nothing, just plots the graph of the concept lattice.
     #' @export
-    plot_lattice = function() {
+    plot_lattice = function(object_names = TRUE) {
 
       if (length(self$concepts) > 0) {
 
-        .draw_lattice(self$concepts)
+        .draw_lattice(self$concepts,
+                      object_names = object_names)
 
       }
 
