@@ -48,3 +48,21 @@
 #' Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., ... & Liu, J. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. Neuroinformatics, 15(4), 343-364.
 #' \url{http://schizconnect.org/}
 "cobre61"
+
+#' Data for Tourist Destination in Las Vegas
+#'
+#' The dataset \code{vegas} is the binary translation of the Las Vegas Strip dataset (@moro2017stripping), which records more than 500 TripAdvisor reviews of hotels in Las Vegas Strip. The uninformative attributes (uch as the user continent or the weekday of the review) are removed.
+#'
+#' @format
+#' A matrix with 504 rows and 25 binary columns. Column names are related to different features of the hotels:
+#' \describe{
+#'   \item{Period of Stay}{4 categories are present in the original data, which produces as many binary variables: \code{Period of stay=Dec-Feb}, \code{Period of stay=Mar-May}, \code{Period of stay=Jun-Aug} and \code{Period of stay=Sep-Nov}.}
+#'   \item{Traveler type}{Five binary categories are created from the original data: \code{Traveler type=Business}, \code{Traveler type=Couples}, \code{Traveler type=Families}, \code{Traveler type=Friends} and \code{Traveler type=Solo}.}
+#'   \item{Pool, Gym, Tennis court, Spa, Casino}, \code{Free internet}{Binary variables for the services offered by each destination hotel}
+#'   \item{Stars}{Five binary variables are created, according to the number of stars of the hotel, \code{Stars=3}, \code{Stars=3.5}, \code{Stars=4}, \code{Stars=4.5} and \code{Stars=5}.}
+#'   \item{Score}{The score assigned in the review, from \code{Score=1} to \code{Score=5}.}
+#' }
+#'
+#' @source
+#' Moro, S., Rita, P., & Coelho, J. (2017). Stripping customers' feedback on hotels through data mining: The case of Las Vegas Strip. Tourism Management Perspectives, 23, 41-52.
+"vegas"
