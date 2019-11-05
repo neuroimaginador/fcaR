@@ -326,15 +326,21 @@ implication_set <- R6::R6Class(
     print = function() {
 
       n_implications <- ncol(private$lhs_matrix)
-      attributes <- private$attributes
-      LHS <- private$lhs_matrix
-      RHS <- private$rhs_matrix
+      cat("Implication set with", n_implications, "implications.\n")
 
-      implications <- sapply(seq(n_implications),
-                             function(i) paste0("Rule ", i, ": ",
-                                                .implication_to_string(LHS[, i], RHS[, i], attributes)))
+      if (n_implications > 0) {
 
-      cat(implications, sep = "\n")
+        attributes <- private$attributes
+        LHS <- private$lhs_matrix
+        RHS <- private$rhs_matrix
+
+        implications <- sapply(seq(n_implications),
+                               function(i) paste0("Rule ", i, ": ",
+                                                  .implication_to_string(LHS[, i], RHS[, i], attributes)))
+
+        cat(implications, sep = "\n")
+
+      }
 
     },
 
