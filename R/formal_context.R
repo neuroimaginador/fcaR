@@ -73,8 +73,25 @@ formal_context <- R6::R6Class(
       } else {
 
         # Or if it comes from a numeric table
-        attributes <- colnames(I)
-        objects <- rownames(I)
+        if (length(colnames(I)) > 0) {
+
+          attributes <- colnames(I)
+
+        } else {
+
+          attributes <- paste0("A", seq(ncol(I)))
+
+        }
+
+        if (length(rownames(I)) > 0) {
+
+          objects <- rownames(I)
+
+        } else {
+
+          objects <- paste0("A", seq(nrow(I)))
+
+        }
 
         # Remove the constant columns
         if (remove_const) {
