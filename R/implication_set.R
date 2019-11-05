@@ -338,6 +338,8 @@ implication_set <- R6::R6Class(
                                function(i) paste0("Rule ", i, ": ",
                                                   .implication_to_string(LHS[, i], RHS[, i], attributes)))
 
+        implications <- sapply(implications, function(s) str_wrap(s, width = 70, exdent = 2))
+
         cat(implications, sep = "\n")
 
       }
