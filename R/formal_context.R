@@ -380,7 +380,7 @@ formal_context <- R6::R6Class(
       my_I@x <- as.numeric(my_I@x)
 
       intents <- lapply(self$concepts, function(s) s$get_intent()$get_vector())
-      intents <- do.call(cbind, args = intents)
+      intents <- Reduce(cbind, intents)
 
       subsets <- .subset(intents, my_I)
 
