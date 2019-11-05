@@ -365,13 +365,30 @@ formal_context <- R6::R6Class(
     #' @description
     #' Plot the concept lattice
     #'
+    #' @param minsupp  (numeric) Only plot the sublattice generated with those concepts whose support is greater than or equal to \code{minsupp}.
+    #' @param object_names  (logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.
+    #'
     #' @return Nothing, just plots the graph of the concept lattice.
     #' @export
-    plot_lattice = function(object_names = TRUE) {
+    plot_lattice = function(minsupp = 0,
+                            object_names = TRUE) {
 
       if (length(self$concepts) > 0) {
 
-        .draw_lattice(self$concepts,
+        if (minsupp > 0) {
+
+          idx <- which(self$get_concept_support() >= minsupp)
+
+          concepts <- .get_sublattice(self$concepts,
+                                      starting_idx = idx)
+
+        } else {
+
+          concepts <- self$concepts
+
+        }
+
+        .draw_lattice(concepts,
                       object_names = object_names)
 
       }

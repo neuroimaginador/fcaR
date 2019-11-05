@@ -185,9 +185,18 @@ Prints information regarding the formal context.
 \subsection{Method \code{plot_lattice()}}{
 Plot the concept lattice
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{formal_context$plot_lattice()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{formal_context$plot_lattice(minsupp = 0, object_names = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{minsupp}}{(numeric) Only plot the sublattice generated with those concepts whose support is greater than or equal to \code{minsupp}.}
+
+\item{\code{object_names}}{(logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Nothing, just plots the graph of the concept lattice.
 }
