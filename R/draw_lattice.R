@@ -22,10 +22,6 @@
 
   }
 
-  labels <- sapply(labels, function(str) str_wrap(str, width = 20))
-
-  labels <- lapply(labels, function(str) unlist(str_split(str, pattern = "\\n")))
-
   hasse(data = M,
         labels = labels,
         parameters = list(arrows = "backward"))
