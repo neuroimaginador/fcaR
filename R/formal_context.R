@@ -393,6 +393,12 @@ formal_context <- R6::R6Class(
     #' @export
     get_concept_support = function() {
 
+      if (length(self$concepts) == 0) {
+
+        return(invisible(NULL))
+
+      }
+
       my_I <- self$I
       my_I@x <- as.numeric(my_I@x)
 
@@ -413,6 +419,13 @@ formal_context <- R6::R6Class(
     #' @return A vector with the support of each implication
     #' @export
     get_implication_support = function() {
+
+      if (is.null(self$implications) ||
+          (self$implications$cardinality() == 0)) {
+
+        return(invisible(NULL))
+
+      }
 
       LHS <- self$implications$get_LHS_matrix()
       my_I <- self$I
