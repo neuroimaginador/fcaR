@@ -51,20 +51,18 @@
 
     S <- .multiunion(add_col(A, S))
 
-    if (verbose) {
+    if (reduce) {
 
-      # cat("Reducing", length(idx_subsets), " rules\n")
-      cat("Using rules:\n")
-      imp <- implication_set$new(attributes = attributes,
-                                 lhs = Matrix(LHS[, idx_subsets],
-                                              sparse = TRUE),
-                                 rhs = A)
-      cat(imp$print())
+      L <- .simplification_logic(S = S,
+                                 LHS = LHS,
+                                 RHS = RHS)
+
+      LHS <- L$lhs
+      RHS <- L$rhs
 
     }
 
     do_not_use[idx_subsets] <- TRUE
-
 
     if (is.null(LHS) || (ncol(LHS) == 0)) {
 
@@ -81,54 +79,6 @@
 
     }
 
-    if (reduce) {
-
-      if (verbose) {
-
-        # cat("Simplification stage\n")
-
-      }
-
-      C <- LHS
-      D <- RHS
-
-      CD <- .union(LHS, RHS)
-
-      intersections <- .intersection(x = S, y = CD)
-      idx_not_empty <- which(colSums(intersections) > 0)
-
-
-      if (length(idx_not_empty) > 0) {
-
-        C_B <- .difference(C[, idx_not_empty], S)
-
-        D_B <- .difference(D[, idx_not_empty], S)
-
-        idx_zeros <- which(colSums(D_B) == 0)
-
-        if (verbose) {
-
-          # cat("Reducing", length(idx_zeros), " rules:\n")
-          # cat(" ** ", idx_not_empty, "\n")
-
-        }
-
-        if (length(idx_zeros) > 0) {
-
-          C_B <- Matrix(C_B[, -idx_zeros], sparse = TRUE)
-          D_B <- Matrix(D_B[, -idx_zeros], sparse = TRUE)
-
-        }
-
-        LHS <- cbind(C_B,
-                     Matrix(C[, -idx_not_empty], sparse = TRUE))
-        RHS <- cbind(D_B,
-                     Matrix(D[, -idx_not_empty], sparse = TRUE))
-
-      }
-
-    }
-
     S_subsets <- .subset(LHS, S)
 
     idx_subsets <- S_subsets@i + 1
@@ -137,8 +87,57 @@
   }
 
   if (reduce) return(list(closure = S,
-                          implications = list(lhs = LHS,
-                                              rhs = RHS)))
+                          implications = .simplification_logic(S,
+                                                               LHS,
+                                                               RHS)))
   return(S)
+
+}
+
+.simplification_logic <- function(S, LHS, RHS) {
+
+  # Equivalence II
+  subsets <- .subset(RHS, S)
+  idx_subsets <- subsets@i + 1
+
+  if (length(idx_subsets) > 0) {
+
+    LHS <- LHS[, -idx_subsets]
+    RHS <- RHS[, -idx_subsets]
+
+  }
+
+  # Equivalence III
+  C <- LHS
+  D <- RHS
+
+  CD <- .union(LHS, RHS)
+
+  intersections <- .intersection(x = S, y = CD)
+  idx_not_empty <- which(colSums(intersections) > 0)
+
+  if (length(idx_not_empty) > 0) {
+
+    C_B <- .difference(C[, idx_not_empty], S)
+
+    D_B <- .difference(D[, idx_not_empty], S)
+
+    idx_zeros <- which(colSums(D_B) == 0)
+
+    if (length(idx_zeros) > 0) {
+
+      C_B <- Matrix(C_B[, -idx_zeros], sparse = TRUE)
+      D_B <- Matrix(D_B[, -idx_zeros], sparse = TRUE)
+
+    }
+
+    LHS <- cbind(C_B,
+                 Matrix(C[, -idx_not_empty], sparse = TRUE))
+    RHS <- cbind(D_B,
+                 Matrix(D[, -idx_not_empty], sparse = TRUE))
+
+  }
+
+  return(list(lhs = LHS, rhs = RHS))
 
 }
