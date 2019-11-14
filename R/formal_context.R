@@ -425,6 +425,12 @@ formal_context <- R6::R6Class(
 
       }
 
+      if (!is.null(self$concept_support)) {
+
+        return(self$concept_support)
+
+      }
+
       my_I <- self$I
       my_I@x <- as.numeric(my_I@x)
 
