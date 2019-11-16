@@ -15,21 +15,60 @@ implication_set <- R6::R6Class(
     #' @description
     #' Initialize with an optional name
     #'
+    #' @usage
+    #' formal_context$new(name = "", attributes = C(),
+    #'         lhs = NULL, rhs = NULL)
+    #' formal_context$new(rules)
+    #'
     #' @param name (character string) Optional name of the implication set.
     #' @param attributes (character vector) Vector of names of the attributes on which we define the implications.
     #' @param lhs (a \code{dgCMatrix}) Optional initial LHS of the implications stored.
     #' @param rhs (a \code{dgCMatrix}) Optional initial RHS of the implications stored.
+    #' @param rules (a \code{rules} object) Initialize the implication set from rules extracted in the \code{arules} package.
     #'
     #' @return A new \code{implication_set} object.
-    initialize = function(name = "",
-                          attributes = c(),
-                          lhs = NULL,
-                          rhs = NULL) {
+    initialize = function(...) {
 
-      private$name <- name
-      private$attributes <- attributes
-      private$lhs_matrix <- lhs
-      private$rhs_matrix <- rhs
+      dots <- list(...)
+
+      classes <- lapply(dots, function(d) class(d)[1])
+
+      any_rules <- which(classes == "rules")
+
+      if (length(any_rules) > 0) {
+
+        arules_imp <- dots[[any_rules[1]]]
+
+        attributes <- arules_imp@lhs@itemInfo$labels
+        private$attributes <- attributes
+
+        name <- as.character(arules_imp@info$data)
+        private$name <- name
+
+        private$lhs_matrix <- as(arules_imp@lhs@data, "dgCMatrix")
+        private$rhs_matrix <- as(arules_imp@rhs@data, "dgCMatrix")
+
+        rownames(private$lhs_matrix) <- private$attributes
+        rownames(private$rhs_matrix) <- private$attributes
+
+      } else {
+
+        args <- list(name = "",
+                     attributes = c(),
+                     lhs = NULL,
+                     rhs = NULL)
+        args[names(dots)] <- dots
+        private$name <- args$name
+        private$attributes <- args$attributes
+        private$lhs_matrix <- args$lhs
+        private$rhs_matrix <- args$rhs
+
+      }
+
+      # private$name <- name
+      # private$attributes <- attributes
+      # private$lhs_matrix <- lhs
+      # private$rhs_matrix <- rhs
 
     },
 
@@ -42,32 +81,6 @@ implication_set <- R6::R6Class(
     get_attributes = function() {
 
       return(private$attributes)
-
-    },
-
-    #' @description
-    #' Import from arules object
-    #'
-    #' @param arules_imp (\code{rules} object) The implications obtained with \code{arules} to be imported.
-    #'
-    #' @return Nothing, just updates the internal matrices for LHS and RHS.
-    #'
-    #' @import arules
-    #' @importFrom methods as is
-    #' @export
-    from_arules = function(arules_imp) {
-
-      attributes <- arules_imp@lhs@itemInfo$labels
-      private$attributes <- attributes
-
-      name <- as.character(arules_imp@info$data)
-      private$name <- name
-
-      private$lhs_matrix <- as(arules_imp@lhs@data, "dgCMatrix")
-      private$rhs_matrix <- as(arules_imp@rhs@data, "dgCMatrix")
-
-      rownames(private$lhs_matrix) <- private$attributes
-      rownames(private$rhs_matrix) <- private$attributes
 
     },
 

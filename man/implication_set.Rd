@@ -3,6 +3,11 @@
 \name{implication_set}
 \alias{implication_set}
 \title{R6 Class for Set of implications}
+\usage{
+formal_context$new(name = "", attributes = C(),
+        lhs = NULL, rhs = NULL)
+formal_context$new(rules)
+}
 \description{
 This class implements the structure needed to store implications and the methods associated.
 }
@@ -11,7 +16,6 @@ This class implements the structure needed to store implications and the methods
 \itemize{
 \item \href{#method-new}{\code{implication_set$new()}}
 \item \href{#method-get_attributes}{\code{implication_set$get_attributes()}}
-\item \href{#method-from_arules}{\code{implication_set$from_arules()}}
 \item \href{#method-to_arules}{\code{implication_set$to_arules()}}
 \item \href{#method-add_implication}{\code{implication_set$add_implication()}}
 \item \href{#method-append_implications}{\code{implication_set$append_implications()}}
@@ -35,7 +39,7 @@ This class implements the structure needed to store implications and the methods
 \subsection{Method \code{new()}}{
 Initialize with an optional name
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{implication_set$new(name = "", attributes = c(), lhs = NULL, rhs = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{implication_set$new(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -48,6 +52,8 @@ Initialize with an optional name
 \item{\code{lhs}}{(a \code{dgCMatrix}) Optional initial LHS of the implications stored.}
 
 \item{\code{rhs}}{(a \code{dgCMatrix}) Optional initial RHS of the implications stored.}
+
+\item{\code{rules}}{(a \code{rules} object) Initialize the implication set from rules extracted in the \code{arules} package.}
 }
 \if{html}{\out{</div>}}
 }
@@ -65,25 +71,6 @@ Get the names of the attributes
 
 \subsection{Returns}{
 A character vector with the names of the attributes used in the implications.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-from_arules"></a>}}
-\subsection{Method \code{from_arules()}}{
-Import from arules object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{implication_set$from_arules(arules_imp)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{arules_imp}}{(\code{rules} object) The implications obtained with \code{arules} to be imported.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Nothing, just updates the internal matrices for LHS and RHS.
 }
 }
 \if{html}{\out{<hr>}}

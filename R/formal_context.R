@@ -144,8 +144,7 @@ formal_context <- R6::R6Class(
 
         # If it comes from arules
         # convert to our format
-        implications <- implication_set$new()
-        implications$from_arules(impl_set)
+        implications <- implication_set$new(impl_set)
 
       } else {
 
