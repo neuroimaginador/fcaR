@@ -338,6 +338,14 @@ implication_set <- R6::R6Class(
     #' @export
     print = function() {
 
+      if (is.null(private$lhs_matrix)) {
+
+        cat("Implication set with 0 implications.\n")
+
+        return(invisible(self))
+
+      }
+
       n_implications <- ncol(private$lhs_matrix)
       cat("Implication set with", n_implications, "implications.\n")
 
