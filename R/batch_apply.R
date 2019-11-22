@@ -7,6 +7,12 @@
                          parallelize = TRUE,
                          reorder = FALSE) {
 
+  if (is.null(LHS)) {
+
+    return(list(lhs = NULL, rhs = NULL))
+
+  }
+
   n_implications <- ncol(LHS)
 
   if (reorder) {

@@ -102,8 +102,14 @@
 
   if (length(idx_subsets) > 0) {
 
-    LHS <- LHS[, -idx_subsets]
-    RHS <- RHS[, -idx_subsets]
+    LHS <- Matrix(LHS[, -idx_subsets], sparse = TRUE)
+    RHS <- Matrix(RHS[, -idx_subsets], sparse = TRUE)
+
+  }
+
+  if (ncol(LHS) == 0) {
+
+    return(list(lhs = NULL, rhs = NULL))
 
   }
 
