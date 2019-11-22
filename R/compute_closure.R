@@ -118,9 +118,21 @@
 
   if (length(idx_not_empty) > 0) {
 
-    C_B <- .difference(C[, idx_not_empty], S)
+    if (length(idx_not_empty) == 1) {
 
-    D_B <- .difference(D[, idx_not_empty], S)
+      Cidx <- .extract_column(C, idx_not_empty)
+      Didx <- .extract_column(D, idx_not_empty)
+
+    } else {
+
+      Cidx <- C[, idx_not_empty]
+      Didx <- D[, idx_not_empty]
+
+    }
+
+    C_B <- .difference(Cidx, S)
+
+    D_B <- .difference(Didx, S)
 
     idx_zeros <- which(colSums(D_B) == 0)
 
