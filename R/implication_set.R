@@ -317,16 +317,36 @@ implication_set <- R6::R6Class(
                            parallelize = TRUE,
                            reorder= FALSE) {
 
-      L <- .batch_apply(LHS = private$lhs_matrix,
-                        RHS = private$rhs_matrix,
-                        attributes = private$attributes,
-                        rules = rules,
-                        parallelize = parallelize,
-                        batch_size = batch_size,
-                        reorder = reorder)
+      # If no implications, do nothing
+      if (is.null(private$lhs_matrix) || (ncol(private$lhs_matrix) == 0)) {
 
-      private$lhs_matrix <- L$lhs
-      private$rhs_matrix <- L$rhs
+        return(invisible(self))
+
+      }
+
+      # If one implication,
+      # just "reduction" can be done
+      if (ncol(private$lhs_matrix) == 1) {
+
+        rules <- intersect(rules, "reduction")
+
+      }
+
+
+      if (length(rules) > 0) {
+
+        L <- .batch_apply(LHS = private$lhs_matrix,
+                          RHS = private$rhs_matrix,
+                          attributes = private$attributes,
+                          rules = rules,
+                          parallelize = parallelize,
+                          batch_size = batch_size,
+                          reorder = reorder)
+
+        private$lhs_matrix <- L$lhs
+        private$rhs_matrix <- L$rhs
+
+      }
 
     },
 

@@ -7,7 +7,7 @@
                          parallelize = TRUE,
                          reorder = FALSE) {
 
-  if (is.null(LHS)) {
+  if (is.null(LHS) || (ncol(LHS) == 0)) {
 
     return(list(lhs = NULL, rhs = NULL))
 
