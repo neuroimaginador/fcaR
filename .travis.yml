@@ -27,11 +27,11 @@ env:
   - R_BUILD_ARGS="--no-manual"
   - R_CHECK_ARGS="--as-cran --install-args=--build"
 
-before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
-deploy:
-  provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github()'
-  skip_cleanup: true
+#before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+#deploy:
+#  provider: script
+#  script: Rscript -e 'pkgdown::deploy_site_github()'
+#  skip_cleanup: true
 
 r_github_packages:
   - r-lib/covr
