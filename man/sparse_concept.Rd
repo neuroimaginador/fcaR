@@ -14,6 +14,7 @@ This class implements the data structure and methods for fuzzy concepts.
 \item \href{#method-get_intent}{\code{sparse_concept$get_intent()}}
 \item \href{#method-print}{\code{sparse_concept$print()}}
 \item \href{#method-to_latex}{\code{sparse_concept$to_latex()}}
+\item \href{#method-clone}{\code{sparse_concept$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -83,6 +84,22 @@ Write the concept in LaTeX format
 
 \subsection{Returns}{
 The fuzzy concept in LaTeX.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{sparse_concept$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
 }
 }
 }

@@ -16,6 +16,7 @@ This class implements the data structure and methods for fuzzy sets.
 \item \href{#method-length}{\code{sparse_set$length()}}
 \item \href{#method-print}{\code{sparse_set$print()}}
 \item \href{#method-to_latex}{\code{sparse_set$to_latex()}}
+\item \href{#method-clone}{\code{sparse_set$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -122,6 +123,22 @@ Write the set in LaTeX format
 
 \subsection{Returns}{
 The fuzzy set in LaTeX.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{sparse_set$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
 }
 }
 }

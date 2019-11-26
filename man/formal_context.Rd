@@ -35,6 +35,7 @@ This class implements the data structure and methods for formal contexts.
 \item \href{#method-plot_context}{\code{formal_context$plot_context()}}
 \item \href{#method-get_concept_support}{\code{formal_context$get_concept_support()}}
 \item \href{#method-get_implication_support}{\code{formal_context$get_implication_support()}}
+\item \href{#method-clone}{\code{formal_context$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -235,6 +236,22 @@ Compute support of each implication
 
 \subsection{Returns}{
 A vector with the support of each implication
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{formal_context$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
 }
 }
 }
