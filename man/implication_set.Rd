@@ -32,6 +32,7 @@ This class implements the structure needed to store implications and the methods
 \item \href{#method-filter}{\code{implication_set$filter()}}
 \item \href{#method-get_rules}{\code{implication_set$get_rules()}}
 \item \href{#method-remove_rules}{\code{implication_set$remove_rules()}}
+\item \href{#method-clone}{\code{implication_set$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -227,7 +228,7 @@ Apply rules to remove redundancies
 
 \item{\code{parallelize}}{(logical) If possible, should we parallelize the computation among different batches?}
 
-\item{\code{reorder}}{(logical) Should the rules be randonly reordered previous to the computation?}
+\item{\code{reorder}}{(logical) Should the rules be randomly reordered previous to the computation?}
 }
 \if{html}{\out{</div>}}
 }
@@ -256,13 +257,21 @@ A string with all the implications in the set.
 \subsection{Method \code{to_latex()}}{
 Export to LaTeX
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{implication_set$to_latex(ncols = 1)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{implication_set$to_latex(
+  ncols = 1,
+  numbered = TRUE,
+  numbers = self$cardinality()
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{ncols}}{(integer) Number of columns for the output.}
+
+\item{\code{numbered}}{(logical) If \code{TRUE} (default), implications will be numbered in the output.}
+
+\item{\code{numbers}}{(vector) If \code{numbered}, use these elements to enumerate the implications. The default is to enumerate 1, 2, ..., but can be changed.}
 }
 \if{html}{\out{</div>}}
 }
@@ -353,6 +362,22 @@ Remove implications from the set
 }
 \subsection{Returns}{
 An \code{ImplicationSet} with the implications at given indices removed with respect to the original set.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clone"></a>}}
+\subsection{Method \code{clone()}}{
+The objects of this class are cloneable with this method.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{implication_set$clone(deep = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deep}}{Whether to make a deep clone.}
+}
+\if{html}{\out{</div>}}
 }
 }
 }

@@ -304,7 +304,7 @@ implication_set <- R6::R6Class(
     #' @param rules       (character vector) Names of the rules to use. See \code{details}.
     #' @param batch_size  (integer) If the number of rules is large, apply the rules by batches of this size.
     #' @param parallelize (logical) If possible, should we parallelize the computation among different batches?
-    #' @param reorder     (logical) Should the rules be randonly reordered previous to the computation?
+    #' @param reorder     (logical) Should the rules be randomly reordered previous to the computation?
     #'
     #' @details
     #' Currently, the implemented rules are \code{"generalization"}, \code{"simplification"}, \code{"reduction"} and \code{"composition"}.
@@ -391,14 +391,18 @@ implication_set <- R6::R6Class(
     #' Export to LaTeX
     #'
     #' @param ncols  (integer) Number of columns for the output.
+    #' @param numbered (logical) If \code{TRUE} (default), implications will be numbered in the output.
+    #' @param numbers (vector) If \code{numbered}, use these elements to enumerate the implications. The default is to enumerate 1, 2, ..., but can be changed.
     #'
     #' @return A string in LaTeX format that prints nicely all the implications.
     #'
     #' @export
-    to_latex = function(ncols = 1) {
+    to_latex = function(ncols = 1, numbered = TRUE, numbers = self$cardinality()) {
 
-      imp_to_latex(self, ncols = ncols)
-
+      imp_to_latex(self,
+                   ncols = ncols,
+                   numbered = numbered,
+                   numbers = numbers)
 
     },
 

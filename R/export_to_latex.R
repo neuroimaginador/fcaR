@@ -27,7 +27,9 @@ set_to_latex <- function(S, attributes) {
 }
 
 #' @import stringr
-imp_to_latex <- function(imp_set, ncols = 1) {
+imp_to_latex <- function(imp_set, ncols = 1,
+                         numbered = TRUE,
+                         numbers = seq(imp_set$cardinality())) {
 
   LHS <- imp_set$get_LHS_matrix()
   RHS <- imp_set$get_RHS_matrix()
@@ -40,8 +42,10 @@ imp_to_latex <- function(imp_set, ncols = 1) {
     lhs <- Matrix(LHS[, i], sparse = TRUE)
     rhs <- Matrix(RHS[, i], sparse = TRUE)
 
+    prefix <- ifelse(numbered, paste0(numbers[i], ": &"), "")
     output <- c(output,
-                paste0(set_to_latex(lhs, attributes), "&\\ensuremath{\\Rightarrow}&",
+                paste0(prefix,
+                       set_to_latex(lhs, attributes), "&\\ensuremath{\\Rightarrow}&",
                        set_to_latex(rhs, attributes)))
 
   }
@@ -54,7 +58,9 @@ imp_to_latex <- function(imp_set, ncols = 1) {
 
   })
 
-  output <- c(paste0("\\begin{array}{", str_flatten(rep("rcl", ncols)), "}"), output, "\\end{array}")
+  format_cols <- ifelse(numbered, "rrcl", "rcl")
+
+  output <- c(paste0("\\begin{array}{", str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{array}")
 
   output <- paste0("$$\n",
                    paste(output, collapse = "\n"),
