@@ -186,6 +186,8 @@ test_that("fcaR adds implications from scratch", {
   fc$implications <- implication_set$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
+  expect_output(print(fc$implications))
+
   lhs1 <- sparse_set$new(attributes = fc$attributes)
   lhs1$assign(attributes = fc$attributes[1],
               values = 1)

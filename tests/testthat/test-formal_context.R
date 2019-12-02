@@ -36,6 +36,20 @@ test_that("fcaR creates a formal context", {
   expect_equal(fc$dim(), c(n_objects, n_attributes))
   expect_output(fc$print())
 
+  # Now, without names
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 0, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  fc <- formal_context$new(I = I)
+
+  expect_is(fc, "FormalContext")
+
 })
 
 test_that("fcaR imports a formal context with constant columns", {
@@ -51,14 +65,14 @@ test_that("fcaR imports a formal context with constant columns", {
                        0.5, 1, 0, 0, 1, 0,
                        0.5, 0, 0, 1, 0.5, 0,
                        1, 0, 0, 0.5, 0, 0,
-                       0, 0, 1, 0, 0, 0),
+                       0, 0, 0, 0, 0, 0),
               nrow = n_objects,
               byrow = FALSE)
 
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- formal_context$new(I = I, remove_const = TRUE)
 
   expect_is(fc, "FormalContext")
 
@@ -92,6 +106,9 @@ test_that("fcaR extracts concepts", {
 
   concepts <- fc$compute_concepts(verbose = TRUE)
   expect_is(concepts, "list")
+
+  expect_output(print(fc$concepts))
+  expect_is(fc$concepts[[2]]$to_latex(), "character")
 
 })
 
@@ -149,6 +166,9 @@ test_that("fcaR generate plots", {
 
   expect_error(fc$plot_context(), NA)
   expect_error(fc$plot_lattice(), NA)
+  expect_error(fc$plot_lattice(minsupp = 0.2,
+                               object_names = FALSE),
+               NA)
 
 })
 
@@ -218,10 +238,13 @@ test_that("fcaR computes concept support", {
 
   fc <- formal_context$new(I = I)
 
+  expect_error(fc$get_concept_support(), NA)
+  expect_equal(fc$get_concept_support(), NULL)
+
   fc$extract_implications_concepts(verbose = TRUE)
 
   expect_error(fc$get_concept_support(), NA)
-
+  expect_error(fc$get_concept_support(), NA)
 
 })
 
@@ -246,9 +269,22 @@ test_that("fcaR computes implication support", {
   rownames(I) <- objects
 
   fc <- formal_context$new(I = I)
+  expect_error(fc$get_implication_support(), NA)
 
   fc$extract_implications_concepts()
 
   expect_error(fc$get_implication_support(), NA)
+
+})
+
+test_that("fcaR prints large formal contexts", {
+
+  I <- matrix(data = sample(c(0, 1),
+                            size = 100,
+                            replace = TRUE),
+              nrow = 10)
+
+  fc <- formal_context$new(I)
+  expect_warning(fc$print())
 
 })
