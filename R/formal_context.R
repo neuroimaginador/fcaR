@@ -50,6 +50,8 @@ formal_context <- R6::R6Class(
     #' @details
     #' Columns of \code{I} must be named, and are the names of the attributes of the formal context.
     #'
+    #' If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one.
+    #'
     #' @return An object of the \code{FormalContext} class.
     #' @export
     #'
@@ -60,6 +62,12 @@ formal_context <- R6::R6Class(
     initialize = function(I,
                           grades_set = sort(unique(as.vector(I))),
                           remove_const = FALSE) {
+
+      if (missing(I)) {
+
+        return(invisible(self))
+
+      }
 
       # Transform the formal context to sparse
       if (inherits(I, "transactions")) {
@@ -130,6 +138,18 @@ formal_context <- R6::R6Class(
     },
 
     #' @description
+    #' Check if FormalContext is empty
+    #'
+    #' @return \code{TRUE} if the \code{FormalContext} is empty, that is, has not been provided with a matrix, and \code{FALSE} otherwise.
+    #'
+    #' @export
+    is_empty = function() {
+
+      return(is.null(self$I))
+
+    },
+
+    #' @description
     #' Add a precomputed implication set
     #'
     #' @param impl_set   (\code{ImplicationSet} object) The implications to add to this formal context.
@@ -139,6 +159,8 @@ formal_context <- R6::R6Class(
     #' @import arules
     #' @export
     add_implications = function(impl_set) {
+
+      private$check_empty()
 
       if (inherits(impl_set, "rules")) {
 
@@ -189,6 +211,8 @@ formal_context <- R6::R6Class(
     #' @export
     compute_concepts = function(verbose = FALSE) {
 
+      private$check_empty()
+
       # If already computed, no need to compute them again
       if (!is.null(self$concepts)) return(self$concepts)
 
@@ -217,6 +241,8 @@ formal_context <- R6::R6Class(
     #'
     #' @export
     extract_implications_concepts = function(verbose = FALSE) {
+
+      private$check_empty()
 
       my_I <- as.matrix(t(self$I))
       grades_set <- rep(list(self$grades_set), length(self$attributes))
@@ -280,6 +306,8 @@ formal_context <- R6::R6Class(
     #' @export
     convert_to_transactions = function() {
 
+      private$check_empty()
+
       return(as(as(self$I, "ngCMatrix"), "transactions"))
 
     },
@@ -297,6 +325,8 @@ formal_context <- R6::R6Class(
     #' @export
     export_implications_to_arules = function(quality = TRUE) {
 
+      private$check_empty()
+
       R <- self$implications$to_arules()
 
       if (quality) {
@@ -307,6 +337,82 @@ formal_context <- R6::R6Class(
       }
 
       return(R)
+
+    },
+
+    #' @description
+    #' Save a \code{FormalContext} to RDS format
+    #'
+    #' @param filename   (character) Path of the RDS file where to store the \code{FormalContext}.
+    #'
+    #' @return Invisibly the current \code{FormalContext}.
+    #'
+    #' @export
+    save = function(filename = tempfile(fileext = ".rds")) {
+
+      private$check_empty()
+
+      if (length(self$concepts) > 0) {
+
+        M <- .concepts_to_matrix(self$concepts)
+        extents <- M$extents
+        intents <- M$intents
+
+      } else {
+
+        extents <- NULL
+        intents <- NULL
+
+      }
+
+      L <- list(I = self$I,
+                extents = extents,
+                intents = intents,
+                attributes = self$attributes,
+                objects = self$objects,
+                expanded_grades_set = self$expanded_grades_set,
+                grades_set = self$grades_set,
+                implications = self$implications,
+                concept_support = self$concept_support,
+                implications_support = self$implications_support)
+
+      saveRDS(L, file = filename)
+
+      return(invisible(self))
+
+    },
+
+    #' @description
+    #' Load a \code{FormalContext} from a RDS file
+    #'
+    #' @param filename   (character) Path of the RDS file to load the \code{FormalContext} from.
+    #'
+    #' @return The loaded \code{FormalContext}.
+    #'
+    #' @export
+    load = function(filename) {
+
+      L <- readRDS(filename)
+
+      self$I <- L$I
+      self$attributes <- L$attributes
+      self$objects <- L$objects
+      self$expanded_grades_set <- L$expanded_grades_set
+      self$grades_set <- L$grades_set
+      self$implications <- L$implications
+      self$concept_support <- L$concept_support
+      self$implications_support <- L$implications_support
+
+      if (!is.null(L$extents)) {
+
+        self$concepts <- .matrix_to_concepts(L$extents,
+                                            L$intents,
+                                            self$objects,
+                                            self$attributes)
+
+      }
+
+      return(invisible(self))
 
     },
 
@@ -329,6 +435,14 @@ formal_context <- R6::R6Class(
     #' @importFrom stringr str_flatten str_wrap
     #' @export
     print = function() {
+
+      if (self$is_empty()) {
+
+        cat("Empty FormalContext.\n")
+
+        return(invisible(self))
+
+      }
 
       dims <- self$dim()
 
@@ -372,6 +486,8 @@ formal_context <- R6::R6Class(
     plot_lattice = function(minsupp = 0,
                             object_names = TRUE) {
 
+      private$check_empty()
+
       if (length(self$concepts) > 0) {
 
         if (minsupp > 0) {
@@ -404,6 +520,8 @@ formal_context <- R6::R6Class(
     #' @export
     plot_context = function() {
 
+      private$check_empty()
+
       color_function <- colour_ramp(brewer.pal(9, "Greys"))
       heatmap(t(as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
@@ -417,6 +535,8 @@ formal_context <- R6::R6Class(
     #' @return A vector with the support of each concept.
     #' @export
     get_concept_support = function() {
+
+      private$check_empty()
 
       if (length(self$concepts) == 0) {
 
@@ -451,6 +571,8 @@ formal_context <- R6::R6Class(
     #' @export
     get_implication_support = function() {
 
+      private$check_empty()
+
       if (is.null(self$implications) ||
           (self$implications$cardinality() == 0)) {
 
@@ -469,6 +591,24 @@ formal_context <- R6::R6Class(
 
     }
 
+  ),
+
+  private = list(
+
+    check_empty = function() {
+
+      if (self$is_empty()) {
+
+        stop("The formal context is empty. The only allowed method is 'load' to import from a previously saved RDS file.", call. = FALSE)
+
+      }
+
+      return(invisible(NULL))
+
+    }
+
   )
+
+
 
 )
