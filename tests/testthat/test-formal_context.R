@@ -288,3 +288,37 @@ test_that("fcaR prints large formal contexts", {
   expect_warning(fc$print())
 
 })
+
+test_that("fcaR saves and loads formal contexts", {
+
+  filename <- tempfile(fileext = ".RDS")
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- formal_context$new(I = I)
+
+  fc$extract_implications_concepts()
+
+  fc$save(filename = filename)
+
+  expect_error(fc2 <- formal_context$new(), NA)
+  expect_error(fc2$load(filename), NA)
+
+
+})
