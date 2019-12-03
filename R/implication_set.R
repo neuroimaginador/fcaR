@@ -392,7 +392,7 @@ implication_set <- R6::R6Class(
     #' @return A string in LaTeX format that prints nicely all the implications.
     #'
     #' @export
-    to_latex = function(ncols = 1, numbered = TRUE, numbers = self$cardinality()) {
+    to_latex = function(ncols = 1, numbered = TRUE, numbers = seq(self$cardinality())) {
 
       imp_to_latex(self,
                    ncols = ncols,
