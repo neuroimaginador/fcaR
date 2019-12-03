@@ -13,3 +13,4 @@
 ^\.covrignore$
 ^doc$
 ^Meta$
+^appveyor\.yml$

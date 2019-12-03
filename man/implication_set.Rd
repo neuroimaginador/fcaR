@@ -3,11 +3,6 @@
 \name{implication_set}
 \alias{implication_set}
 \title{R6 Class for Set of implications}
-\usage{
-formal_context$new(name = "", attributes = C(),
-        lhs = NULL, rhs = NULL)
-formal_context$new(rules)
-}
 \description{
 This class implements the structure needed to store implications and the methods associated.
 }
@@ -46,18 +41,20 @@ Initialize with an optional name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{(character string) Optional name of the implication set.}
-
-\item{\code{attributes}}{(character vector) Vector of names of the attributes on which we define the implications.}
-
-\item{\code{lhs}}{(a \code{dgCMatrix}) Optional initial LHS of the implications stored.}
-
-\item{\code{rhs}}{(a \code{dgCMatrix}) Optional initial RHS of the implications stored.}
-
-\item{\code{rules}}{(a \code{rules} object) Initialize the implication set from rules extracted in the \code{arules} package.}
+\item{\code{...}}{See Details.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Details}{
+Creates and initialize a new \code{FormalContext} object. It can be done in two ways:
+\code{initialize(name, attributes, lhs, rhs)}
+or \code{initialize(rules)}
+
+In the first way, the only mandatory argument is \code{attributes}, (character vector) which is a vector of names of the attributes on which we define the implications. Optional arguments are: \code{name} (character string), name of the implication set, \code{lhs} (a \code{dgCMatrix}), initial LHS of the implications storedand the analogous \code{rhs}.
+
+The other way is used to initialize the \code{FormalContext} object from a \code{rules} object from package \code{arules}.
+}
+
 \subsection{Returns}{
 A new \code{implication_set} object.
 }

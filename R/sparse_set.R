@@ -50,7 +50,6 @@ sparse_set <- R6::R6Class(
     #' @param attributes  (character vector) Names of the attributes to assign a grade to.
     #' @param values      (numeric vector) Grades to be assigned to the previous \code{attributes}.
     #'
-    #' @return
     #' @export
     assign = function(attributes, values) {
 

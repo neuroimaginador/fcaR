@@ -61,9 +61,6 @@ Assign grades to attributes in the set
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Returns}{
-
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_vector"></a>}}

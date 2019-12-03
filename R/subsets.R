@@ -29,6 +29,7 @@
 
 }
 
+#' @importFrom methods new
 .equal_sets <- function(x, y = NULL, proper = FALSE) {
 
   if (is.null(y)) y <- x

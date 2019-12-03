@@ -1,3 +1,4 @@
+#' @importFrom methods new
 .intersection <- function(x, y, proper = FALSE) {
 
   p <- as.integer(rep(0, x@Dim[2] + 1))

@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
 [![Build Status](https://travis-ci.com/neuroimaginador/fcaR.svg?token=MLhMMg8zTrQjhhSXhmgz&branch=master)](https://travis-ci.com/neuroimaginador/fcaR)
 [![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://codecov.io/gh/neuroimaginador/fcaR)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/neuroimaginador/fcaR?branch=master&svg=true)](https://ci.appveyor.com/project/neuroimaginador/fcaR)
 <!-- badges: end -->
 
 The goal of fcaR is to provide FCA tools inside the R environment.
@@ -97,14 +98,6 @@ fc$get_implication_support()
 fc$get_concept_support()
 ```
 
-Even we can export the implications to LaTeX :
-
-```{r}
-fc$implications$to_latex()
-```
-
-And the output in a LaTeX document will be as follows:
-![Implications in a LaTeX document](images/impl_latex.png){width=60%}
 
 ## Example in Crisp Formal Context
 

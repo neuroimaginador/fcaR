@@ -1,15 +1,3 @@
-#' Compute Closure of a (Fuzzy) Set
-#'
-#' This function is used to compute the closure...
-#'
-#' @param S      (a fuzzy set "dgCMatrix") Set to compute the closure.
-#' @param LHS    (dGCMatrix) Matrix of lhs of implications
-#' @param RHS
-#' @param attributes   (character vector) Names of the attributes.
-#' @param reduce
-#' @param verbose
-#'
-#' @return
 .compute_closure <- function(S, LHS, RHS, attributes, reduce = FALSE, verbose = FALSE) {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) {

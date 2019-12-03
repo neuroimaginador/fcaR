@@ -12,7 +12,7 @@ This class implements the data structure and methods for formal contexts.
 \item \code{I}: the table for the formal context.
 \item \code{attributes}: name of the attributes in the formal context.
 \item \code{objects}: name of the objects in the context.
-\item \code{grades_set}: set of grades (in \link{0, 1}) of the attributes.
+\item \code{grades_set}: set of grades (in [0, 1]) of the attributes.
 \item \code{concepts}: list of concepts (extent, intent).
 \item \code{implications}: extracted implications as an \code{ImplicationSet}.
 \item \code{concept_support}: vector with the support of the concepts.
@@ -24,11 +24,14 @@ This class implements the data structure and methods for formal contexts.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{formal_context$new()}}
+\item \href{#method-is_empty}{\code{formal_context$is_empty()}}
 \item \href{#method-add_implications}{\code{formal_context$add_implications()}}
 \item \href{#method-compute_concepts}{\code{formal_context$compute_concepts()}}
 \item \href{#method-extract_implications_concepts}{\code{formal_context$extract_implications_concepts()}}
 \item \href{#method-convert_to_transactions}{\code{formal_context$convert_to_transactions()}}
 \item \href{#method-export_implications_to_arules}{\code{formal_context$export_implications_to_arules()}}
+\item \href{#method-save}{\code{formal_context$save()}}
+\item \href{#method-load}{\code{formal_context$load()}}
 \item \href{#method-dim}{\code{formal_context$dim()}}
 \item \href{#method-print}{\code{formal_context$print()}}
 \item \href{#method-plot_lattice}{\code{formal_context$plot_lattice()}}
@@ -63,10 +66,24 @@ Creator for the Fomal Context class
 }
 \subsection{Details}{
 Columns of \code{I} must be named, and are the names of the attributes of the formal context.
+
+If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one.
 }
 
 \subsection{Returns}{
 An object of the \code{FormalContext} class.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_empty"></a>}}
+\subsection{Method \code{is_empty()}}{
+Check if FormalContext is empty
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{formal_context$is_empty()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+\code{TRUE} if the \code{FormalContext} is empty, that is, has not been provided with a matrix, and \code{FALSE} otherwise.
 }
 }
 \if{html}{\out{<hr>}}
@@ -155,6 +172,44 @@ Export implications to \code{arules} format
 }
 \subsection{Returns}{
 A \code{rules} object from \code{arules} package. If \code{quality == TRUE}, the function \code{interestMeasure} from \code{arules} is used.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-save"></a>}}
+\subsection{Method \code{save()}}{
+Save a \code{FormalContext} to RDS format
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{formal_context$save(filename = tempfile(fileext = ".rds"))}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{filename}}{(character) Path of the RDS file where to store the \code{FormalContext}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Invisibly the current \code{FormalContext}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-load"></a>}}
+\subsection{Method \code{load()}}{
+Load a \code{FormalContext} from a RDS file
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{formal_context$load(filename)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{filename}}{(character) Path of the RDS file to load the \code{FormalContext} from.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The loaded \code{FormalContext}.
 }
 }
 \if{html}{\out{<hr>}}

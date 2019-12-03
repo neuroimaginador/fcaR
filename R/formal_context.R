@@ -8,7 +8,7 @@
 #' * `I`: the table for the formal context.
 #' * `attributes`: name of the attributes in the formal context.
 #' * `objects`: name of the objects in the context.
-#' * `grades_set`: set of grades (in [0, 1]) of the attributes.
+#' * `grades_set`: set of grades (in \[0, 1\]) of the attributes.
 #' * `concepts`: list of concepts (extent, intent).
 #' * `implications`: extracted implications as an \code{ImplicationSet}.
 #' * `concept_support`: vector with the support of the concepts.
@@ -259,27 +259,9 @@ formal_context <- R6::R6Class(
       my_intents <- L$concepts[, -1]
       my_extents <- L$extents[, -1]
 
-      # my_concepts <- list()
-      #
-      # for (n in seq(ncol(my_intents))) {
-      #
-      #   intent <- .extract_column(my_intents, n)
-      #   extent <- .extent(intent, my_I)
-      #
-      #   my_concepts <- c(my_concepts, list(list(extent, intent)))
-      #
-      # }
-
       # Now, add the computed implications
       my_LHS <- L$LHS[, -1]
       my_RHS <- L$RHS[, -1]
-
-      # self$concepts <- lapply(my_concepts,
-      #                         function(x) {
-      #                           .concept_to_sparse_set(x,
-      #                                                  objects = self$objects,
-      #                                                  attributes = self$attributes)
-      #                         })
 
       self$concepts <- lapply(seq(ncol(my_intents)),
                               function(i) {

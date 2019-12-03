@@ -91,14 +91,16 @@ We can apply them one by one, just to see their effect, or we could use them seq
 
 ```{r}
 # Use composition to reduce the number of implications
-fc$implications$apply_rules(rules = c("composition"))
+fc$implications$apply_rules(rules = c("composition"),
+                            parallelize = FALSE)
 
 fc$implications$cardinality()
 sizes <- fc$implications$size()
 colMeans(sizes)
 
 # Simplification
-fc$implications$apply_rules(rules = c("simplification"))
+fc$implications$apply_rules(rules = c("simplification"),
+                            parallelize = FALSE)
 
 fc$implications$cardinality()
 sizes <- fc$implications$size()
@@ -108,7 +110,8 @@ colMeans(sizes)
 # some more rules if needed:
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization",
-                                      "simplification"))
+                                      "simplification"),
+                            parallelize = FALSE)
 ```
 
 Also, we can compute the support of each implication:

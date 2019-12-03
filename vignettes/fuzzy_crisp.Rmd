@@ -92,7 +92,8 @@ Let us apply some simplifcation rules:
 ```{r}
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization",
-                                      "simplification"))
+                                      "simplification"),
+                            parallelize = FALSE)
 
 # Compute cardinality and size in the transformed ruleset:
 fc$implications$cardinality()
@@ -166,19 +167,22 @@ Let us apply some functions to remove redudancies in the set of implications:
 
 ```{r}
 fc$implications$apply_rules(rules = c("composition"), 
-                            reorder = FALSE)
+                            reorder = FALSE,
+                            parallelize = FALSE)
 fc$implications$cardinality()
 sizes <- fc$implications$size()
 colMeans(sizes)
 
 fc$implications$apply_rules(rules = c("simplification"), 
-                            reorder = FALSE)
+                            reorder = FALSE,
+                            parallelize = FALSE)
 fc$implications$cardinality()
 sizes <- fc$implications$size()
 colMeans(sizes)
 
 fc$implications$apply_rules(rules = c("generalization"), 
-                            reorder = FALSE)
+                            reorder = FALSE,
+                            parallelize = FALSE)
 
 fc$implications$cardinality()
 sizes <- fc$implications$size()

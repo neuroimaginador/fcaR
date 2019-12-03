@@ -22,11 +22,13 @@ test_that("fcaR operates on implications", {
   expect_is(fc$implications$size(), "matrix")
 
   # Use composition to reduce the number of implications
-  expect_error(fc$implications$apply_rules(rules = c("composition")), NA)
+  expect_error(fc$implications$apply_rules(rules = c("composition"),
+                                           parallelize = FALSE), NA)
   expect_is(fc$implications, "ImplicationSet")
 
   # Simplification
-  expect_error(fc$implications$apply_rules(rules = c("simplification")), NA)
+  expect_error(fc$implications$apply_rules(rules = c("simplification"),
+                                           parallelize = FALSE), NA)
   expect_is(fc$implications, "ImplicationSet")
 
   # At this moment, we're at a fixed point, but we could apply
@@ -35,7 +37,8 @@ test_that("fcaR operates on implications", {
                                                      "composition",
                                                      "simplification",
                                                      "reduction"),
-                                           reorder = TRUE), NA)
+                                           reorder = TRUE,
+                                           parallelize = FALSE), NA)
   expect_is(fc$implications, "ImplicationSet")
 
 })

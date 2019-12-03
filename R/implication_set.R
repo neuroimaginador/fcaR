@@ -15,16 +15,16 @@ implication_set <- R6::R6Class(
     #' @description
     #' Initialize with an optional name
     #'
-    #' @usage
-    #' formal_context$new(name = "", attributes = C(),
-    #'         lhs = NULL, rhs = NULL)
-    #' formal_context$new(rules)
+    #' @param ... See Details.
     #'
-    #' @param name (character string) Optional name of the implication set.
-    #' @param attributes (character vector) Vector of names of the attributes on which we define the implications.
-    #' @param lhs (a \code{dgCMatrix}) Optional initial LHS of the implications stored.
-    #' @param rhs (a \code{dgCMatrix}) Optional initial RHS of the implications stored.
-    #' @param rules (a \code{rules} object) Initialize the implication set from rules extracted in the \code{arules} package.
+    #' @details
+    #' Creates and initialize a new \code{FormalContext} object. It can be done in two ways:
+    #' \code{initialize(name, attributes, lhs, rhs)}
+    #' or \code{initialize(rules)}
+    #'
+    #' In the first way, the only mandatory argument is \code{attributes}, (character vector) which is a vector of names of the attributes on which we define the implications. Optional arguments are: \code{name} (character string), name of the implication set, \code{lhs} (a \code{dgCMatrix}), initial LHS of the implications storedand the analogous \code{rhs}.
+    #'
+    #' The other way is used to initialize the \code{FormalContext} object from a \code{rules} object from package \code{arules}.
     #'
     #' @return A new \code{implication_set} object.
     initialize = function(...) {
@@ -64,11 +64,6 @@ implication_set <- R6::R6Class(
         private$rhs_matrix <- args$rhs
 
       }
-
-      # private$name <- name
-      # private$attributes <- attributes
-      # private$lhs_matrix <- lhs
-      # private$rhs_matrix <- rhs
 
     },
 

@@ -208,7 +208,7 @@ test_that("fcaR exports implications to arules", {
 
   fc$add_implications(mush_clean)
 
-  fc$implications$apply_rules("composition")
+  fc$implications$apply_rules("composition", parallelize = FALSE)
 
   my_rules <- fc$export_implications_to_arules(quality = TRUE)
 
