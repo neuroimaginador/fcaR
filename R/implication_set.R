@@ -249,8 +249,8 @@ ImplicationSet <- R6::R6Class(
 
       if (!reduce) {
 
-        cl <- SparseSet$new(attributes = private$attributes,
-                             M = cl)
+        cl <- list(closure = SparseSet$new(attributes = private$attributes,
+                             M = cl$closure))
 
       } else {
 

@@ -1,18 +1,11 @@
-.compute_closure <- function(S, LHS, RHS, attributes, reduce = FALSE, verbose = FALSE) {
+.compute_closure <- function(S, LHS, RHS, attributes,
+                             reduce = FALSE, verbose = FALSE) {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) {
 
-    if (!reduce) {
-
-      return(S)
-
-    } else {
-
-      return(list(closure = S,
-                  implications = list(lhs = LHS,
-                                      rhs = RHS)))
-
-    }
+    return(list(closure = S,
+                implications = list(lhs = LHS,
+                                    rhs = RHS)))
 
   }
 
@@ -54,17 +47,9 @@
 
     if (is.null(LHS) || (ncol(LHS) == 0)) {
 
-      if (!reduce) {
-
-        return(S)
-
-      } else {
-
-        return(list(closure = S,
-                    implications = list(lhs = LHS,
-                                        rhs = RHS)))
-      }
-
+      return(list(closure = S,
+                  implications = list(lhs = LHS,
+                                      rhs = RHS)))
     }
 
     S_subsets <- .subset(LHS, S)
@@ -74,11 +59,10 @@
 
   }
 
-  if (reduce) return(list(closure = S,
-                          implications = .simplification_logic(S,
-                                                               LHS,
-                                                               RHS)))
-  return(S)
+  return(list(closure = S,
+              implications = .simplification_logic(S,
+                                                   LHS,
+                                                   RHS)))
 
 }
 
