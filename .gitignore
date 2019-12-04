@@ -6,6 +6,10 @@ Lattice.gv
 Lattice.gv.pdf
 inst/doc
 Meta
+<<<<<<< HEAD
 doc
 .DS_Store
 foo.txt
+=======
+.DS_Store
+>>>>>>> 1
