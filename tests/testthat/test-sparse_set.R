@@ -34,7 +34,7 @@ test_that("fcaR uses class SparseSet", {
 
   attributes <- paste0("P", 1:6)
 
-  expect_error(A <- sparse_set$new(attributes = attributes), NA)
+  expect_error(A <- SparseSet$new(attributes = attributes), NA)
   expect_error(A$assign(attributes = "P1", values = 0.3), NA)
 
   expect_is(A$get_vector(), "Matrix")

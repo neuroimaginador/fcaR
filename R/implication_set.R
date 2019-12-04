@@ -6,7 +6,7 @@
 #'
 #' @import Matrix
 #' @export
-implication_set <- R6::R6Class(
+ImplicationSet <- R6::R6Class(
 
   classname = "ImplicationSet",
 
@@ -26,7 +26,7 @@ implication_set <- R6::R6Class(
     #'
     #' The other way is used to initialize the \code{FormalContext} object from a \code{rules} object from package \code{arules}.
     #'
-    #' @return A new \code{implication_set} object.
+    #' @return A new \code{ImplicationSet} object.
     initialize = function(...) {
 
       dots <- list(...)
@@ -249,15 +249,15 @@ implication_set <- R6::R6Class(
 
       if (!reduce) {
 
-        cl <- sparse_set$new(attributes = private$attributes,
+        cl <- SparseSet$new(attributes = private$attributes,
                              M = cl)
 
       } else {
 
-        cl$closure <- sparse_set$new(attributes = private$attributes,
+        cl$closure <- SparseSet$new(attributes = private$attributes,
                                      M = cl$closure)
 
-        cl$implications <- implication_set$new(attributes = private$attributes,
+        cl$implications <- ImplicationSet$new(attributes = private$attributes,
                                                name = "reduced",
                                                lhs = cl$implications$lhs,
                                                rhs = cl$implications$rhs)
@@ -546,14 +546,14 @@ implication_set <- R6::R6Class(
           other_idx <- setdiff(seq(nrow(RHS)), idx_attr)
           newRHS[other_idx, ] <- 0
 
-          imp <- implication_set$new(name = paste0(private$name, "_filtered"),
+          imp <- ImplicationSet$new(name = paste0(private$name, "_filtered"),
                                      attributes = private$attributes,
                                      lhs = Matrix(newLHS, sparse = TRUE),
                                      rhs = Matrix(newRHS, sparse = TRUE))
 
         } else {
 
-          imp <- implication_set$new(name = paste0(private$name, "_filtered"),
+          imp <- ImplicationSet$new(name = paste0(private$name, "_filtered"),
                                      attributes = private$attributes,
                                      lhs = Matrix(LHS[, idx], sparse = TRUE),
                                      rhs = Matrix(RHS[, idx], sparse = TRUE))
@@ -579,7 +579,7 @@ implication_set <- R6::R6Class(
       RHS <- private$rhs_matrix
       LHS <- private$lhs_matrix
 
-      imp <- implication_set$new(name = paste0(private$name, "_", paste0(idx)),
+      imp <- ImplicationSet$new(name = paste0(private$name, "_", paste0(idx)),
                                  attributes = private$attributes,
                                  lhs = Matrix(LHS[, idx], sparse = TRUE),
                                  rhs = Matrix(RHS[, idx], sparse = TRUE))

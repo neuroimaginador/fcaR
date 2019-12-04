@@ -27,12 +27,12 @@
 
     if (trace) {
 
-      original_rule <- implication_set$new(name = "original",
+      original_rule <- ImplicationSet$new(name = "original",
                                            attributes = attributes,
                                            lhs = Matrix(LHS[, this_row], sparse = TRUE),
                                            rhs = Matrix(RHS[, this_row], sparse = TRUE))
 
-      original_set <- implication_set$new(name = "set",
+      original_set <- ImplicationSet$new(name = "set",
                                           attributes = attributes,
                                           lhs = Matrix(LHS[, my_idx], sparse = TRUE),
                                           rhs = Matrix(RHS[, my_idx], sparse = TRUE))
@@ -46,7 +46,7 @@
 
     if (trace) {
 
-      transformed_set <- implication_set$new(name = "set",
+      transformed_set <- ImplicationSet$new(name = "set",
                                              attributes = attributes,
                                              lhs = Matrix(newLHS, sparse = TRUE),
                                              rhs = Matrix(newRHS, sparse = TRUE))
@@ -72,7 +72,7 @@
 
     if (trace) {
 
-      final_set <- implication_set$new(name = "set",
+      final_set <- ImplicationSet$new(name = "set",
                                        attributes = attributes,
                                        lhs = Matrix(LHS, sparse = TRUE),
                                        rhs = Matrix(RHS, sparse = TRUE))

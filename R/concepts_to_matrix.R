@@ -22,12 +22,12 @@
 
     s <- .extract_column(M_int, i)
 
-    extent <- sparse_set$new(attributes = objects,
+    extent <- SparseSet$new(attributes = objects,
                              M = x)
-    intent <- sparse_set$new(attributes = attributes,
+    intent <- SparseSet$new(attributes = attributes,
                              M = s)
 
-    L[[i]] <- sparse_concept$new(extent = extent,
+    L[[i]] <- SparseConcept$new(extent = extent,
                                  intent = intent)
 
   }

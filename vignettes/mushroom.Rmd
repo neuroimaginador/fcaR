@@ -61,7 +61,7 @@ To use the functionalities in this package, one must import all objects (the for
 
 This is accomplished by just typing:
 ```{r}
-fc <- formal_context$new(I = Mushroom)
+fc <- FormalContext$new(I = Mushroom)
 
 fc$add_implications(mush_clean)
 ```
@@ -128,7 +128,7 @@ Given a fuzzy set represented by a sparse matrix, we can compute its closure wit
 
 ```{r}
 # A fuzzy set
-A <- sparse_set$new(attributes = fc$attributes)
+A <- SparseSet$new(attributes = fc$attributes)
 A$assign(attributes = "CapColor=white", values = 1)
 
 # Compute the closure

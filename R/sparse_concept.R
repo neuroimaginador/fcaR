@@ -8,7 +8,7 @@
 #' @import Matrix
 #'
 #' @export
-sparse_concept <- R6::R6Class(
+SparseConcept <- R6::R6Class(
 
   classname = "SparseConcept",
 

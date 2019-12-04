@@ -11,7 +11,7 @@ mush_clean <- mush[!idx_redundant]
 
 test_that("fcaR operates on implications", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
@@ -45,7 +45,7 @@ test_that("fcaR operates on implications", {
 
 test_that("fcaR prints implications", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
@@ -55,7 +55,7 @@ test_that("fcaR prints implications", {
 
 test_that("fcaR adds and appends implications", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
@@ -69,7 +69,7 @@ test_that("fcaR adds and appends implications", {
 
 test_that("fcaR exports implications to latex", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
@@ -79,9 +79,9 @@ test_that("fcaR exports implications to latex", {
 
 test_that("fcaR gets LHS and RHS of implications", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
-  fc$implications <- implication_set$new(attributes = fc$attributes)
+  fc$implications <- ImplicationSet$new(attributes = fc$attributes)
 
   expect_is(fc$implications$get_LHS_matrix(), "lgCMatrix")
   expect_is(fc$implications$get_RHS_matrix(), "lgCMatrix")
@@ -95,12 +95,12 @@ test_that("fcaR gets LHS and RHS of implications", {
 
 test_that("fcaR computes closure wrt implications", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
   # A fuzzy set
-  A <- sparse_set$new(attributes = fc$attributes)
+  A <- SparseSet$new(attributes = fc$attributes)
   A$assign(attributes = "CapColor=white", values = 1)
 
   # Compute the closure
@@ -114,7 +114,7 @@ test_that("fcaR computes closure wrt implications", {
 
 test_that("fcaR simplifies implications", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
@@ -129,12 +129,12 @@ test_that("fcaR simplifies implications", {
 
 test_that("fcaR makes a recommendation", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
   # A fuzzy set
-  S <- sparse_set$new(attributes = fc$attributes)
+  S <- SparseSet$new(attributes = fc$attributes)
   S$assign(attributes = "CapColor=white", values = 1)
 
   expect_error(fc$implications$recommend(S = S, attribute_filter = fc$attributes[1]), NA)
@@ -143,7 +143,7 @@ test_that("fcaR makes a recommendation", {
 
 test_that("fcaR filters and removes implications", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
@@ -184,18 +184,18 @@ test_that("fcaR adds implications from scratch", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
-  fc$implications <- implication_set$new(attributes = fc$attributes)
+  fc$implications <- ImplicationSet$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
   expect_output(print(fc$implications))
 
-  lhs1 <- sparse_set$new(attributes = fc$attributes)
+  lhs1 <- SparseSet$new(attributes = fc$attributes)
   lhs1$assign(attributes = fc$attributes[1],
               values = 1)
 
-  rhs1 <- sparse_set$new(attributes = fc$attributes)
+  rhs1 <- SparseSet$new(attributes = fc$attributes)
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 
@@ -223,26 +223,26 @@ test_that("fcaR can use generalization", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
-  fc$implications <- implication_set$new(attributes = fc$attributes)
+  fc$implications <- ImplicationSet$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
-  lhs1 <- sparse_set$new(attributes = fc$attributes)
+  lhs1 <- SparseSet$new(attributes = fc$attributes)
   lhs1$assign(attributes = fc$attributes[1],
               values = 1)
 
-  rhs1 <- sparse_set$new(attributes = fc$attributes)
+  rhs1 <- SparseSet$new(attributes = fc$attributes)
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 
   fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
 
-  lhs2 <- sparse_set$new(attributes = fc$attributes)
+  lhs2 <- SparseSet$new(attributes = fc$attributes)
   lhs2$assign(attributes = fc$attributes[c(1, 3)],
               values = c(1, 1))
 
-  rhs2 <- sparse_set$new(attributes = fc$attributes)
+  rhs2 <- SparseSet$new(attributes = fc$attributes)
   rhs2$assign(fc$attributes[4],
               values = 1)
 
@@ -272,16 +272,16 @@ test_that("fcaR filters implications", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
-  fc$implications <- implication_set$new(attributes = fc$attributes)
+  fc$implications <- ImplicationSet$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
-  lhs1 <- sparse_set$new(attributes = fc$attributes)
+  lhs1 <- SparseSet$new(attributes = fc$attributes)
   lhs1$assign(attributes = fc$attributes[1],
               values = 1)
 
-  rhs1 <- sparse_set$new(attributes = fc$attributes)
+  rhs1 <- SparseSet$new(attributes = fc$attributes)
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 

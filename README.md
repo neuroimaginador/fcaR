@@ -66,8 +66,8 @@ print(I)
 ``` r
 # By default, the set of grades are the unique
 # values in the (fuzzy) formal context
-# Let us build the formal_context object
-fc <- formal_context$new(I)
+# Let us build the FormalContext object
+fc <- FormalContext$new(I)
 
 # Compute all concepts
 concept_list <- fc$compute_concepts()
@@ -176,8 +176,8 @@ print(I)
 ``` r
 # By default, the set of grades are the unique
 # values in the (fuzzy) formal context
-# Let us build the formal_context object
-fc <- formal_context$new(I)
+# Let us build the FormalContext object
+fc <- FormalContext$new(I)
 
 # Compute all concepts
 concept_list <- fc$compute_concepts()

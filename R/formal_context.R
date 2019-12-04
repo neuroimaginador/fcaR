@@ -16,7 +16,7 @@
 #'
 #' @importFrom methods as is slotNames
 #' @export
-formal_context <- R6::R6Class(
+FormalContext <- R6::R6Class(
 
   classname = "FormalContext",
 
@@ -166,7 +166,7 @@ formal_context <- R6::R6Class(
 
         # If it comes from arules
         # convert to our format
-        implications <- implication_set$new(impl_set)
+        implications <- ImplicationSet$new(impl_set)
 
       } else {
 
@@ -192,7 +192,7 @@ formal_context <- R6::R6Class(
         LHS <- cbind(old_LHS, new_LHS)
         RHS <- cbind(old_RHS, new_RHS)
 
-        impl <- implication_set$new(attributes = self$attributes,
+        impl <- ImplicationSet$new(attributes = self$attributes,
                                     lhs = LHS,
                                     rhs = RHS)
 
@@ -223,7 +223,7 @@ formal_context <- R6::R6Class(
 
       self$concepts <- lapply(self$concepts,
                               function(x) {
-                                .concept_to_sparse_set(x,
+                                .concept_to_SparseSet(x,
                                                        objects = self$objects,
                                                        attributes = self$attributes)
                               })
@@ -265,12 +265,12 @@ formal_context <- R6::R6Class(
 
       self$concepts <- lapply(seq(ncol(my_intents)),
                               function(i) {
-                                .concept_to_sparse_set(list(my_extents[, i], my_intents[, i]),
+                                .concept_to_SparseSet(list(my_extents[, i], my_intents[, i]),
                                                        objects = self$objects,
                                                        attributes = self$attributes)
                               })
 
-      extracted_implications <- implication_set$new(attributes = self$attributes,
+      extracted_implications <- ImplicationSet$new(attributes = self$attributes,
                                                     lhs = my_LHS,
                                                     rhs = my_RHS)
 

@@ -8,7 +8,7 @@
 #' @import Matrix
 #'
 #' @export
-sparse_set <- R6::R6Class(
+SparseSet <- R6::R6Class(
 
   classname = "SparseSet",
 

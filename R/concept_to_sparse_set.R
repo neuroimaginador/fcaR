@@ -1,13 +1,13 @@
-.concept_to_sparse_set <- function(concept,
+.concept_to_SparseSet <- function(concept,
                                    objects,
                                    attributes) {
 
-  extent <- sparse_set$new(attributes = objects,
+  extent <- SparseSet$new(attributes = objects,
                            M = concept[[1]])
 
-  intent <- sparse_set$new(attributes = attributes,
+  intent <- SparseSet$new(attributes = attributes,
                            M = concept[[2]])
 
-  return(sparse_concept$new(extent, intent))
+  return(SparseConcept$new(extent, intent))
 
 }

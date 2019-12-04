@@ -29,7 +29,7 @@ test_that("fcaR creates a formal context", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
   expect_is(fc, "FormalContext")
 
@@ -46,7 +46,7 @@ test_that("fcaR creates a formal context", {
               nrow = n_objects,
               byrow = FALSE)
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
   expect_is(fc, "FormalContext")
 
@@ -72,7 +72,7 @@ test_that("fcaR imports a formal context with constant columns", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I, remove_const = TRUE)
+  fc <- FormalContext$new(I = I, remove_const = TRUE)
 
   expect_is(fc, "FormalContext")
 
@@ -98,7 +98,7 @@ test_that("fcaR extracts concepts", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
   concepts <- fc$compute_concepts(verbose = TRUE)
 
@@ -132,7 +132,7 @@ test_that("fcaR extracts implications", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
   fc$extract_implications_concepts(verbose = TRUE)
 
@@ -160,7 +160,7 @@ test_that("fcaR generate plots", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
   fc$extract_implications_concepts()
 
@@ -174,7 +174,7 @@ test_that("fcaR generate plots", {
 
 test_that("fcaR imports formal contexts from arules", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   expect_is(fc, "FormalContext")
 
@@ -182,7 +182,7 @@ test_that("fcaR imports formal contexts from arules", {
 
 test_that("fcaR imports implications from arules", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
   fc$add_implications(mush_clean)
   expect_is(fc$implications, "ImplicationSet")
 
@@ -195,7 +195,7 @@ test_that("fcaR imports implications from arules", {
 
 test_that("fcaR exports formal contexts to arules transactions", {
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   expect_is(fc$convert_to_transactions(), "transactions")
 
@@ -204,7 +204,7 @@ test_that("fcaR exports formal contexts to arules transactions", {
 test_that("fcaR exports implications to arules", {
 
 
-  fc <- formal_context$new(I = Mushroom)
+  fc <- FormalContext$new(I = Mushroom)
 
   fc$add_implications(mush_clean)
 
@@ -236,7 +236,7 @@ test_that("fcaR computes concept support", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
   expect_error(fc$get_concept_support(), NA)
   expect_equal(fc$get_concept_support(), NULL)
@@ -268,7 +268,7 @@ test_that("fcaR computes implication support", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
   expect_error(fc$get_implication_support(), NA)
 
   fc$extract_implications_concepts()
@@ -284,7 +284,7 @@ test_that("fcaR prints large formal contexts", {
                             replace = TRUE),
               nrow = 10)
 
-  fc <- formal_context$new(I)
+  fc <- FormalContext$new(I)
   expect_warning(fc$print())
 
 })
@@ -311,13 +311,13 @@ test_that("fcaR saves and loads formal contexts", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
-  fc <- formal_context$new(I = I)
+  fc <- FormalContext$new(I = I)
 
   fc$extract_implications_concepts()
 
   fc$save(filename = filename)
 
-  expect_error(fc2 <- formal_context$new(), NA)
+  expect_error(fc2 <- FormalContext$new(), NA)
   expect_error(fc2$load(filename), NA)
 
 

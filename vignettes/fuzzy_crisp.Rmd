@@ -59,7 +59,7 @@ rownames(I) <- objects
 
 Once we create the formal context object, with the previous data matrix I, we can compute all concepts and implications using Ganter's algorithm:
 ```{r}
-fc <- formal_context$new(I)
+fc <- FormalContext$new(I)
 
 # Compute implications
 fc$extract_implications_concepts(verbose = FALSE)
@@ -135,7 +135,7 @@ rownames(I) <- objects
 As before, we build the formal context object and compute all implications:
 
 ```{r}
-fc <- formal_context$new(I)
+fc <- FormalContext$new(I)
 
 # Compute
 fc$extract_implications_concepts(verbose = FALSE)
@@ -198,7 +198,7 @@ fc$implications
 
 Let us show how to compute the closure of a set S with respect to the implication set.
 ```{r}
-S <- sparse_set$new(attributes = fc$attributes)
+S <- SparseSet$new(attributes = fc$attributes)
 S$assign(attributes = c("P2", "P3"),
          values = c(0.5, 0.5))
 S

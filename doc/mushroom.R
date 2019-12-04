@@ -1,32 +1,32 @@
-## ---- include = FALSE----------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----setup---------------------------------------------------------------
+## ----setup--------------------------------------------------------------------
 library(fcaR)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(arules)
 
 data("Mushroom", package = "arules")
 
 mush <- apriori(Mushroom, parameter = list(conf = 1))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 system.time(
   idx_redundant <- is.redundant(mush)
 )
 
 mush_clean <- mush[!idx_redundant]
 
-## ------------------------------------------------------------------------
-fc <- formal_context$new(I = Mushroom)
+## -----------------------------------------------------------------------------
+fc <- FormalContext$new(I = Mushroom)
 
 fc$add_implications(mush_clean)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # Cadinality
 fc$implications$cardinality()
 
@@ -36,16 +36,18 @@ sizes <- fc$implications$size()
 # Mean size for LHS and RHS
 colMeans(sizes)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # Use composition to reduce the number of implications
-fc$implications$apply_rules(rules = c("composition"))
+fc$implications$apply_rules(rules = c("composition"),
+                            parallelize = FALSE)
 
 fc$implications$cardinality()
 sizes <- fc$implications$size()
 colMeans(sizes)
 
 # Simplification
-fc$implications$apply_rules(rules = c("simplification"))
+fc$implications$apply_rules(rules = c("simplification"),
+                            parallelize = FALSE)
 
 fc$implications$cardinality()
 sizes <- fc$implications$size()
@@ -55,23 +57,24 @@ colMeans(sizes)
 # some more rules if needed:
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization",
-                                      "simplification"))
+                                      "simplification"),
+                            parallelize = FALSE)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 supp <- fc$get_implication_support()
 
 head(supp)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # A fuzzy set
-A <- sparse_set$new(attributes = fc$attributes)
+A <- SparseSet$new(attributes = fc$attributes)
 A$assign(attributes = "CapColor=white", values = 1)
 
 # Compute the closure
 fc$implications$compute_closure(A)
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 R <- fc$export_implications_to_arules()
 
 R
