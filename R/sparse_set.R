@@ -126,7 +126,7 @@ sparse_set <- R6::R6Class(
     #' @export
     to_latex = function() {
 
-      str <- "\\ensuremath{\\emptyset}"
+      str <- "\\ensuremath{\\varnothing}"
       if (sum(private$v) > 0) {
 
         str <- set_to_latex(S = private$v,

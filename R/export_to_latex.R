@@ -14,7 +14,7 @@ set_to_latex <- function(S, attributes) {
 
   } else {
 
-    tmp <- "\\{\\}"
+    tmp <- "\\ensuremath{\\varnothing}"
 
   }
 
