@@ -32,22 +32,22 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{formal_context$new()}}
-\item \href{#method-is_empty}{\code{formal_context$is_empty()}}
-\item \href{#method-add_implications}{\code{formal_context$add_implications()}}
-\item \href{#method-compute_concepts}{\code{formal_context$compute_concepts()}}
-\item \href{#method-extract_implications_concepts}{\code{formal_context$extract_implications_concepts()}}
-\item \href{#method-convert_to_transactions}{\code{formal_context$convert_to_transactions()}}
-\item \href{#method-export_implications_to_arules}{\code{formal_context$export_implications_to_arules()}}
-\item \href{#method-save}{\code{formal_context$save()}}
-\item \href{#method-load}{\code{formal_context$load()}}
-\item \href{#method-dim}{\code{formal_context$dim()}}
-\item \href{#method-print}{\code{formal_context$print()}}
-\item \href{#method-plot_lattice}{\code{formal_context$plot_lattice()}}
-\item \href{#method-plot_context}{\code{formal_context$plot_context()}}
-\item \href{#method-get_concept_support}{\code{formal_context$get_concept_support()}}
-\item \href{#method-get_implication_support}{\code{formal_context$get_implication_support()}}
-\item \href{#method-clone}{\code{formal_context$clone()}}
+\item \href{#method-new}{\code{FormalContext$new()}}
+\item \href{#method-is_empty}{\code{FormalContext$is_empty()}}
+\item \href{#method-add_implications}{\code{FormalContext$add_implications()}}
+\item \href{#method-compute_concepts}{\code{FormalContext$compute_concepts()}}
+\item \href{#method-extract_implications_concepts}{\code{FormalContext$extract_implications_concepts()}}
+\item \href{#method-convert_to_transactions}{\code{FormalContext$convert_to_transactions()}}
+\item \href{#method-export_implications_to_arules}{\code{FormalContext$export_implications_to_arules()}}
+\item \href{#method-save}{\code{FormalContext$save()}}
+\item \href{#method-load}{\code{FormalContext$load()}}
+\item \href{#method-dim}{\code{FormalContext$dim()}}
+\item \href{#method-print}{\code{FormalContext$print()}}
+\item \href{#method-plot_lattice}{\code{FormalContext$plot_lattice()}}
+\item \href{#method-plot_context}{\code{FormalContext$plot_context()}}
+\item \href{#method-get_concept_support}{\code{FormalContext$get_concept_support()}}
+\item \href{#method-get_implication_support}{\code{FormalContext$get_implication_support()}}
+\item \href{#method-clone}{\code{FormalContext$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -68,7 +68,7 @@ Creator for the Fomal Context class
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-Columns of \code{I} must be named, and are the names of the attributes of the formal context.
+Columns of \code{I} should be named, since they are the names of the attributes of the formal context.
 
 If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one.
 }
@@ -80,9 +80,9 @@ An object of the \code{FormalContext} class.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-is_empty"></a>}}
 \subsection{Method \code{is_empty()}}{
-Check if FormalContext is empty
+Check if the \code{FormalContext} is empty
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{formal_context$is_empty()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_empty()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
@@ -182,7 +182,7 @@ A \code{rules} object from \code{arules} package. If \code{quality == TRUE}, the
 \subsection{Method \code{save()}}{
 Save a \code{FormalContext} to RDS format
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{formal_context$save(filename = tempfile(fileext = ".rds"))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$save(filename = tempfile(fileext = ".rds"))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -201,7 +201,7 @@ Invisibly the current \code{FormalContext}.
 \subsection{Method \code{load()}}{
 Load a \code{FormalContext} from a RDS file
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{formal_context$load(filename)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$load(filename)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
