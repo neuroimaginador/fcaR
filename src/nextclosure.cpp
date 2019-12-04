@@ -610,7 +610,17 @@ List next_closure_implications(NumericMatrix I,
   if (verbose) {
 
     Rprintf("Added concept:\n");
-    printVector(A, attrs);
+
+    if (cardinal(A) > 0) {
+
+      printVector(A, attrs);
+
+    } else {
+
+      Rprintf("{}");
+
+    }
+
     Rprintf("\n");
 
   }
