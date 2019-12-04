@@ -257,7 +257,7 @@ Export to LaTeX
 \if{html}{\out{<div class="r">}}\preformatted{implication_set$to_latex(
   ncols = 1,
   numbered = TRUE,
-  numbers = self$cardinality()
+  numbers = seq(self$cardinality())
 )}\if{html}{\out{</div>}}
 }
 
