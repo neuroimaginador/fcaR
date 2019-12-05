@@ -4,6 +4,14 @@
 #' @description
 #' This class implements the structure needed to store implications and the methods associated.
 #'
+#' @references
+#'
+#' Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” _J Stat Softw_, *14*, 1-25.
+#'
+#' Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” _International Journal of Approximate Reasoning_, *70*, 51-67.
+#'
+#' Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” _International Journal of Computer Mathematics_, *89*(4), 510-526.
+#'
 #' @import Matrix
 #' @export
 ImplicationSet <- R6::R6Class(

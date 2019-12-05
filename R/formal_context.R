@@ -14,6 +14,16 @@
 #' * `concept_support`: vector with the support of the concepts.
 #' * `implications_support`: vector with support of the extracted implications.
 #'
+#' @references
+#'
+#' Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” _Mathématiques et Sciences humaines_, *95*, 5-18.
+#'
+#' Ganter B, Wille R (1999). _Formal concept analysis : mathematical foundations_. Springer. ISBN 3540627715.
+#'
+#' Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In _Proc. Fourth Int. Conf. on Recent Advances in Soft Computing_. Nottingham, United Kingdom, 200-205.
+#'
+#' Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” _J Stat Softw_, *14*, 1-25.
+#'
 #' @importFrom methods as is slotNames
 #' @export
 FormalContext <- R6::R6Class(
@@ -207,6 +217,7 @@ FormalContext <- R6::R6Class(
     #' @param verbose   (logical) TRUE will provide a verbose output.
     #'
     #' @return A list with all the concepts in the formal context.
+    #'
     #' @export
     compute_concepts = function(verbose = FALSE) {
 
@@ -235,23 +246,6 @@ FormalContext <- R6::R6Class(
                                                       attributes = self$attributes)
                               })
 
-      # private$check_empty()
-      #
-      # # If already computed, no need to compute them again
-      # if (!is.null(self$concepts)) return(self$concepts)
-      #
-      # self$concepts <- .concepts(as.matrix(t(self$I)),
-      #                            self$grades_set,
-      #                            verbose = verbose,
-      #                            attributes = self$attributes)
-      #
-      # self$concepts <- lapply(self$concepts,
-      #                         function(x) {
-      #                           .concept_to_SparseSet(x,
-      #                                                  objects = self$objects,
-      #                                                  attributes = self$attributes)
-      #                         })
-
       return(invisible(self$concepts))
 
     },
@@ -262,6 +256,7 @@ FormalContext <- R6::R6Class(
     #' @param verbose   (logical) TRUE will provide a verbose output.
     #'
     #' @return Nothing, just updates the internal fields \code{concepts} and \code{implications}.
+    #'
     #'
     #' @export
     extract_implications_concepts = function(verbose = FALSE) {
@@ -310,6 +305,7 @@ FormalContext <- R6::R6Class(
     #'
     #' @importFrom methods as
     #' @import arules
+    #'
     #' @export
     convert_to_transactions = function() {
 

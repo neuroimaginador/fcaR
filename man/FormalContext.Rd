@@ -20,6 +20,15 @@ This class implements the data structure and methods for formal contexts.
 }
 }
 
+\references{
+Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” \emph{Mathématiques et Sciences humaines}, \emph{95}, 5-18.
+
+Ganter B, Wille R (1999). \emph{Formal concept analysis : mathematical foundations}. Springer. ISBN 3540627715.
+
+Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In \emph{Proc. Fourth Int. Conf. on Recent Advances in Soft Computing}. Nottingham, United Kingdom, 200-205.
+
+Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” \emph{J Stat Softw}, \emph{14}, 1-25.
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -46,11 +55,7 @@ This class implements the data structure and methods for formal contexts.
 \subsection{Method \code{new()}}{
 Creator for the Fomal Context class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$new(
-  I,
-  grades_set = sort(unique(as.vector(I))),
-  remove_const = FALSE
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$new(I, remove_const = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -58,14 +63,12 @@ Creator for the Fomal Context class
 \describe{
 \item{\code{I}}{(numeric matrix) The table of the formal context.}
 
-\item{\code{grades_set}}{(numeric vector, optional) the anumeration of the grades of the attributes.}
-
 \item{\code{remove_const}}{(logical) If \code{TRUE}, remove constant columns. The default is \code{FALSE}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-Columns of \code{I} must be named, and are the names of the attributes of the formal context.
+Columns of \code{I} should be named, since they are the names of the attributes of the formal context.
 
 If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one.
 }
@@ -77,7 +80,7 @@ An object of the \code{FormalContext} class.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-is_empty"></a>}}
 \subsection{Method \code{is_empty()}}{
-Check if FormalContext is empty
+Check if the \code{FormalContext} is empty
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_empty()}\if{html}{\out{</div>}}
 }
