@@ -5,6 +5,10 @@ next_closure_implications <- function(I, grades_set, attrs, verbose = FALSE) {
     .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, verbose)
 }
 
+next_closure_concepts <- function(I, grades_set, attrs, verbose = FALSE) {
+    .Call(`_fcaR_next_closure_concepts`, I, grades_set, attrs, verbose)
+}
+
 self_intersection_C <- function(x_i, x_p, y_i, y_p) {
     .Call(`_fcaR_self_intersection_C`, x_i, x_p, y_i, y_p)
 }

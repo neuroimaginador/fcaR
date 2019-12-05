@@ -19,6 +19,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// next_closure_concepts
+List next_closure_concepts(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
+RcppExport SEXP _fcaR_next_closure_concepts(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_concepts(I, grades_set, attrs, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // self_intersection_C
 IntegerVector self_intersection_C(IntegerVector x_i, IntegerVector x_p, IntegerVector y_i, IntegerVector y_p);
 RcppExport SEXP _fcaR_self_intersection_C(SEXP x_iSEXP, SEXP x_pSEXP, SEXP y_iSEXP, SEXP y_pSEXP) {
@@ -120,6 +134,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 4},
+    {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 4},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},

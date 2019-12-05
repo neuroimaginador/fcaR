@@ -530,7 +530,7 @@ SparseVector compute_next_closure(SparseVector A, int i,
 
     n_grades = grades_set[a_i].size();
 
-    for (int grade_idx = 0; grade_idx < n_grades; grade_idx++) {
+    for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
 
       compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
 
@@ -711,6 +711,167 @@ List next_closure_implications(NumericMatrix I,
                           _["extents"] = SparseToS4(extents),
                           _["LHS"] = SparseToS4(LHS),
                           _["RHS"] = SparseToS4(RHS));
+
+  if (verbose)
+    Rprintf("Finished.\n");
+
+  return res;
+
+}
+
+SparseVector compute_next_intent(SparseVector A,
+                                 NumericMatrix I,
+                                 int i,
+                                 int imax,
+                                 ListOf<NumericVector> grades_set) {
+
+
+  SparseVector candB;
+  initVector(&candB, A.length);
+
+  int n_grades = grades_set.size();
+  SparseVector candB2;
+  initVector(&candB2, A.length);
+
+  for (int a_i = i - 1; i >= 0; a_i--) {
+
+    n_grades = grades_set[a_i].size();
+
+    for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
+
+      compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
+
+      candB2 = compute_closure(candB, I);
+      cloneVector(&candB, candB2);
+
+      if (is_set_preceding(A, candB, a_i, grades_set[a_i][grade_idx])) {
+
+        freeVector(&candB2);
+        return candB;
+
+      }
+
+    }
+
+  }
+
+  Rprintf("Something went wrong...\n");
+
+  return candB;
+
+}
+
+// [[Rcpp::export]]
+List next_closure_concepts(NumericMatrix I,
+                           List grades_set,
+                           StringVector attrs,
+                           bool verbose = false) {
+
+  int n_attributes = attrs.size();
+
+  int n_imp = 0;
+
+  SparseVector concepts;
+  SparseVector extents;
+  initVector(&concepts, n_attributes);
+  initVector(&extents, I.nrow());
+
+  SparseVector empty, B;
+
+  initVector(&empty, n_attributes);
+  initVector(&B, n_attributes);
+
+
+  SparseVector A = compute_closure(empty, I);
+
+  add_column(&concepts, A);
+  add_column(&extents, compute_extent(A, I));
+
+  if (verbose) {
+
+    Rprintf("Added concept:\n");
+
+    if (cardinal(A) > 0) {
+
+      printVector(A, attrs);
+
+    } else {
+
+      Rprintf("{}");
+
+    }
+
+    Rprintf("\n");
+
+  }
+
+  int count = 0;
+
+  double pctg, old_pctg = 0;
+
+  while ((cardinal(A) < n_attributes)){
+
+    // A = compute_next_closure(A,
+    //                          n_attributes,
+    //                          n_attributes,
+    //                          grades_set,
+    //                          tree, LHS, RHS,
+    //                          attrs);
+
+    A = compute_next_intent(A, I,
+                            n_attributes,
+                            n_attributes,
+                            grades_set);
+
+    if (verbose) {
+
+      pctg = (100 * (n_attributes - A.i.array[0])) / n_attributes;
+
+      if (pctg != old_pctg) {
+
+        Rprintf("Completed = %.2f\n %", pctg);
+        old_pctg = pctg;
+
+      }
+
+    }
+
+    // B = compute_closure(A, I);
+    //
+    // rhs = setdifference(B, A);
+    //
+    // if (cardinal(rhs) == 0) {
+
+    // Concept
+    add_column(&concepts, A);
+    add_column(&extents, compute_extent(A, I));
+
+    if (verbose) {
+
+      Rprintf("Added concept:\n");
+      printVector(A, attrs);
+      Rprintf("\n");
+
+    }
+
+
+
+    // }
+
+    if (checkInterrupt()) { // user interrupted ...
+
+      List res = List::create(_["concepts"] = SparseToS4(concepts),
+                              _["extents"] = SparseToS4(extents));
+
+      Rprintf("User interrupted.\n");
+      return res;
+
+    }
+
+  }
+
+  List res = List::create(_["concepts"] = SparseToS4(concepts),
+                          _["extents"] = SparseToS4(extents));
 
   if (verbose)
     Rprintf("Finished.\n");

@@ -44,11 +44,10 @@ FormalContext <- R6::R6Class(
     #' Creator for the Fomal Context class
     #'
     #' @param I           (numeric matrix) The table of the formal context.
-    #' @param grades_set  (numeric vector, optional) the anumeration of the grades of the attributes.
     #' @param remove_const (logical) If \code{TRUE}, remove constant columns. The default is \code{FALSE}.
     #'
     #' @details
-    #' Columns of \code{I} must be named, and are the names of the attributes of the formal context.
+    #' Columns of \code{I} should be named, since they are the names of the attributes of the formal context.
     #'
     #' If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one.
     #'
@@ -60,7 +59,6 @@ FormalContext <- R6::R6Class(
     #' @importFrom stringr str_wrap
     #' @importFrom methods as is slotNames
     initialize = function(I,
-                          grades_set = sort(unique(as.vector(I))),
                           remove_const = FALSE) {
 
       if (missing(I)) {
@@ -128,6 +126,7 @@ FormalContext <- R6::R6Class(
 
       # Assign everything to its corresponding field
       expanded_grades_set <- compute_grades(t(I))
+      grades_set <- sort(unique(unlist(expanded_grades_set)))
 
       self$I <- I
       self$grades_set <- unique(c(0, grades_set, 1))
@@ -138,7 +137,7 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
-    #' Check if FormalContext is empty
+    #' Check if the \code{FormalContext} is empty
     #'
     #' @return \code{TRUE} if the \code{FormalContext} is empty, that is, has not been provided with a matrix, and \code{FALSE} otherwise.
     #'
@@ -213,20 +212,45 @@ FormalContext <- R6::R6Class(
 
       private$check_empty()
 
-      # If already computed, no need to compute them again
-      if (!is.null(self$concepts)) return(self$concepts)
+      my_I <- as.matrix(t(self$I))
+      grades_set <- rep(list(self$grades_set), length(self$attributes))
+      # grades_set <- self$expanded_grades_set
+      attrs <- self$attributes
 
-      self$concepts <- .concepts(as.matrix(t(self$I)),
-                                 self$grades_set,
-                                 verbose = verbose,
-                                 attributes = self$attributes)
+      L <- next_closure_concepts(I = my_I,
+                                     grades_set = grades_set,
+                                     attrs = attrs,
+                                     verbose = verbose)
 
-      self$concepts <- lapply(self$concepts,
-                              function(x) {
-                                .concept_to_SparseSet(x,
-                                                       objects = self$objects,
-                                                       attributes = self$attributes)
+      # Since the previous function gives the list of intents of
+      # the computed concepts, now we will compute the corresponding
+      # extents.
+      my_intents <- L$concepts[, -1]
+      my_extents <- L$extents[, -1]
+
+      self$concepts <- lapply(seq(ncol(my_intents)),
+                              function(i) {
+                                .concept_to_SparseSet(list(my_extents[, i], my_intents[, i]),
+                                                      objects = self$objects,
+                                                      attributes = self$attributes)
                               })
+
+      # private$check_empty()
+      #
+      # # If already computed, no need to compute them again
+      # if (!is.null(self$concepts)) return(self$concepts)
+      #
+      # self$concepts <- .concepts(as.matrix(t(self$I)),
+      #                            self$grades_set,
+      #                            verbose = verbose,
+      #                            attributes = self$attributes)
+      #
+      # self$concepts <- lapply(self$concepts,
+      #                         function(x) {
+      #                           .concept_to_SparseSet(x,
+      #                                                  objects = self$objects,
+      #                                                  attributes = self$attributes)
+      #                         })
 
       return(invisible(self$concepts))
 
@@ -246,6 +270,7 @@ FormalContext <- R6::R6Class(
 
       my_I <- as.matrix(t(self$I))
       grades_set <- rep(list(self$grades_set), length(self$attributes))
+      # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
 
       L <- next_closure_implications(I = my_I,
