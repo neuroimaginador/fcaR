@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# fcaR
+# fcaR: Tools for Formal Concept Analysis
 
 <!-- badges: start -->
 
@@ -15,7 +15,33 @@ Status](https://travis-ci.com/neuroimaginador/fcaR.svg?token=MLhMMg8zTrQjhhSXhmg
 status](https://ci.appveyor.com/api/projects/status/github/neuroimaginador/fcaR?branch=master&svg=true)](https://ci.appveyor.com/project/neuroimaginador/fcaR)
 <!-- badges: end -->
 
-The goal of fcaR is to provide FCA tools inside the R environment.
+The aim of this package is to provide tools to perform fuzzy formal
+concept analysis (FCA) from within R. It provides functions to load and
+save a Formal Context, extract its concept lattice and implications. In
+addition, one can use the implications to compute semantic closures of
+fuzzy sets and, thus, build recommendation systems.
+
+## Details
+
+The fcaR package provides data structures which allow the user to work
+seamlessly with formal contexts and sets of implications. More
+explicitly, four main classes are implemented, using the 
+object-oriented-programming paradigm in R:
+
+  - FormalContext encapsulates the definition of a formal context (G, M,
+    I), being G the set of objects, M the set of attributes and I the
+    (fuzzy) relationship matrix, and provides methods to operate on the
+    context using FCA tools.
+  - ImplicationSet represents a set of implications over a specific
+    formal context.
+  - SparseSet is a class solely used for visualization purposes, since
+    it encapsulates in sparse format a (fuzzy) set.
+  - SparseConcept encapsulates internally both extent and intent of a
+    formal concept as SparseSet.
+
+Since fcaR is an extension of the data model in the arules package, most
+of the methods and classes implemented interoperates with the main S4
+classes in arules (transactions and rules).
 
 ## Installation
 
@@ -26,34 +52,356 @@ The development version of this package can be installed
 
 ## Example in Fuzzy Formal Context
 
-Example from
-[here](https://www.sciencedirect.com/science/article/pii/S1877705812021418)
+<!-- Example from [here](https://www.sciencedirect.com/science/article/pii/S1877705812021418) -->
+
+Let us start with a fuzzy dataset (stored in a matrix I) as follows:
+
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+</th>
+
+<th style="text-align:right;">
+
+P1
+
+</th>
+
+<th style="text-align:right;">
+
+P2
+
+</th>
+
+<th style="text-align:right;">
+
+P3
+
+</th>
+
+<th style="text-align:right;">
+
+P4
+
+</th>
+
+<th style="text-align:right;">
+
+P5
+
+</th>
+
+<th style="text-align:right;">
+
+P6
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+O1
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+1.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.5
+
+</td>
+
+<td style="text-align:right;">
+
+0.5
+
+</td>
+
+<td style="text-align:right;">
+
+1.0
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+O2
+
+</td>
+
+<td style="text-align:right;">
+
+1.0
+
+</td>
+
+<td style="text-align:right;">
+
+1.0
+
+</td>
+
+<td style="text-align:right;">
+
+1.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+O3
+
+</td>
+
+<td style="text-align:right;">
+
+0.5
+
+</td>
+
+<td style="text-align:right;">
+
+0.5
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+1
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+O4
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+1.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.5
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+O5
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+1.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.5
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+O6
+
+</td>
+
+<td style="text-align:right;">
+
+0.5
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0.0
+
+</td>
+
+<td style="text-align:right;">
+
+0
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+Here, a value of x in the intersection of a row and a column indicates
+that the object of the corresponding row possesses the attribute in the
+column in a degree of at least x (if x = 0, the attribute is absent in
+the object, and if x = 1, the attribute is fully present in the object).
+
+We can build a FormalContext object:
 
 ``` r
+fc <- FormalContext$new(I)
 
-library(fcaR)
-
-# Table 2 in the paper
-
-objects <- paste0("O", 1:6)
-n_objects <- length(objects)
-
-attributes <- paste0("P", 1:6)
-n_attributes <- length(attributes)
-
-I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
-                     1, 1, 0.5, 0, 0, 0,
-                     0.5, 1, 0, 0, 1, 0,
-                     0.5, 0, 0, 1, 0.5, 0,
-                     1, 0, 0, 0.5, 0, 0,
-                     0, 0, 1, 0, 0, 0),
-            nrow = n_objects,
-            byrow = FALSE)
-
-colnames(I) <- attributes
-rownames(I) <- objects
-
-print(I)
+print(fc)
+#> FormalContext with 6 objects and 6 attributes.
+#> Attributes' names are: P1, P2, P3, P4, P5, P6
+#> Matrix:
 #>     P1  P2  P3  P4  P5 P6
 #> O1 0.0 1.0 0.5 0.5 1.0  0
 #> O2 1.0 1.0 1.0 0.0 0.0  0
@@ -63,20 +411,21 @@ print(I)
 #> O6 0.5 0.0 0.0 0.0 0.0  0
 ```
 
-``` r
-# By default, the set of grades are the unique
-# values in the (fuzzy) formal context
-# Let us build the FormalContext object
-fc <- FormalContext$new(I)
+With a single function, we can compute the set of concepts:
 
+``` r
 # Compute all concepts
 concept_list <- fc$compute_concepts()
+
+# The first concept
+concept_list[[1]]
+#> ({O1, O2, O3, O4, O5, O6}, {})
 
 # And plot the concept lattice
 fc$plot_lattice()
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 We can also extract implications from the formal context:
 
@@ -99,7 +448,13 @@ fc$implications
 #> Rule 10: {P1 [0.5], P2} -> {P1}
 #> Rule 11: {P1, P2 [0.5]} -> {P2}
 #> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
+```
 
+In this package, we have implemented a logic to manage implications.
+This so-called Simplification Logic allows us to simplify the extracted
+rules by removing redundancies.
+
+``` r
 # Reduce the number of implications using two simple
 # rules. The algorithm applies the specified rules
 # in batches, if the number of rules is high.
@@ -107,9 +462,9 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 12 to 12 in 0.009 secs. 
+#> --> composition : from 12 to 12 in 0.005 secs. 
 #> --> generalization : from 12 to 12 in 0.01 secs. 
-#> Batch took 0.02 secs.
+#> Batch took 0.019 secs.
 
 # Reduced set of implications
 fc$implications
@@ -138,94 +493,35 @@ fc$get_concept_support()
 #> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000
 ```
 
-## Example in Crisp Formal Context
+All these functions work natively with fuzzy and with binary datasets.
 
-``` r
+## References
 
-library(fcaR)
+Guigues J, Duquenne V (1986). “Familles minimales d’implications
+informatives résultant d’un tableau de données binaires.” *Mathématiques
+et Sciences humaines*, *95*, 5-18.
 
-# Define objects and attributes
-objects <- paste0(1:5)
-n_objects <- length(objects)
+Ganter B, Wille R (1999). *Formal concept analysis : mathematical
+foundations*. Springer. ISBN 3540627715.
 
-attributes <- letters[1:6]
-n_attributes <- length(attributes)
+Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic:
+Elimination of Data Redundancy in Knowledge Representation.” *Advances
+in Artificial Intelligence - IBERAMIA 2002*, *2527*, 141-150. doi:
+10.1007/3-540-36131-6\_15 (URL:
+<http://doi.org/10.1007/3-540-36131-6_15>).
 
-# The formal context is just a simple matrix
-I <- matrix(data = c(1, 1, 1, 0, 1,
-                     1, 0, 1, 1, 0,
-                     0, 0, 1, 0, 0,
-                     0, 0, 1, 1, 0,
-                     0, 0, 0, 1, 0,
-                     0, 0, 1, 1, 0),
-            nrow = n_objects,
-            byrow = FALSE)
+Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In *Proc.
+Fourth Int. Conf. on Recent Advances in Soft Computing*. Nottingham,
+United Kingdom, 200-205.
 
-colnames(I) <- attributes
-rownames(I) <- objects
+Hahsler M, Grun B, Hornik K (2005). “arules - a computational
+environment for mining association rules and frequent item sets.” *J
+Stat Softw*, *14*, 1-25.
 
-print(I)
-#>   a b c d e f
-#> 1 1 1 0 0 0 0
-#> 2 1 0 0 0 0 0
-#> 3 1 1 1 1 0 1
-#> 4 0 1 0 1 1 1
-#> 5 1 0 0 0 0 0
-```
+Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via
+functional dependence simplification.” *International Journal of
+Computer Mathematics*, *89*(4), 510-526.
 
-``` r
-# By default, the set of grades are the unique
-# values in the (fuzzy) formal context
-# Let us build the FormalContext object
-fc <- FormalContext$new(I)
-
-# Compute all concepts
-concept_list <- fc$compute_concepts()
-
-# And plot the concept lattice
-fc$plot_lattice()
-```
-
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
-
-We can also extract implications from the formal context:
-
-``` r
-# Extract implications
-fc$extract_implications_concepts()
-
-# Which implications have been extracted
-fc$implications
-#> Implication set with 5 implications.
-#> Rule 1: {f} -> {b, d}
-#> Rule 2: {e} -> {b, d, f}
-#> Rule 3: {d} -> {b, f}
-#> Rule 4: {c} -> {a, b, d, f}
-#> Rule 5: {a, b, d, f} -> {c}
-
-# Reduce the number of implications using two simple
-# rules. The algorithm applies the specified rules
-# in batches, if the number of rules is high.
-fc$implications$apply_rules(rules = c("composition",
-                                      "generalization"))
-#> Using parallel execution
-#> Processing batch
-#> --> composition : from 5 to 5 in 0.004 secs. 
-#> --> generalization : from 5 to 5 in 0.007 secs. 
-#> Batch took 0.019 secs.
-
-# Reduced set of implications
-fc$implications
-#> Implication set with 5 implications.
-#> Rule 1: {f} -> {b, d}
-#> Rule 2: {e} -> {b, d, f}
-#> Rule 3: {d} -> {b, f}
-#> Rule 4: {c} -> {a, b, d, f}
-#> Rule 5: {a, b, d, f} -> {c}
-
-# We can obtain the support of both implications and concepts
-fc$get_implication_support()
-#> [1] 0.4 0.2 0.4 0.2 0.2
-fc$get_concept_support()
-#> [1] 1.0 0.6 0.4 0.2 0.8 0.4 0.2 0.0
-```
+Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated
+prover for attribute dependencies in data with grades.” *International
+Journal of Approximate Reasoning*, *70*, 51-67.
