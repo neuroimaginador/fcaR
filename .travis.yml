@@ -18,7 +18,7 @@ os:
 osx_image: xcode9
 r:
 - release
-#- devel
+- devel
 matrix:
   allow_failures:
   - r: devel
