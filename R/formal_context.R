@@ -144,6 +144,9 @@ FormalContext <- R6::R6Class(
       self$objects <- objects
       self$attributes <- attributes
 
+      # Is the FormalContext binary?
+      private$is_binary <- length(self$grades_set) == 2
+
       # Create a new empty implication set inside
       self$implications <- ImplicationSet$new(attributes = attributes)
 
@@ -780,6 +783,8 @@ FormalContext <- R6::R6Class(
   ),
 
   private = list(
+
+    is_binary = FALSE,
 
     check_empty = function() {
 
