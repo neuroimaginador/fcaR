@@ -334,8 +334,79 @@ FormalContext <- R6::R6Class(
 
     },
 
-    reduce = function() {
+    reduce = function(copy = FALSE) {
 
+      if (!private$is_binary) {
+
+        stop("This FormalContext is not binary. Reduction is not implemented for fuzzy contexts.", call. = FALSE)
+
+      }
+
+      # Make a copy with the clarified context
+      fc2 <- self$clarify(TRUE)
+
+      my_I <- as.matrix(t(fc2$I))
+
+      att <- fc2$attributes
+
+      Z <- SparseSet$new(attributes = att)
+
+      for (y in att) {
+
+        R <- SparseSet$new(attributes = fc2$objects)
+        R$assign(attributes = fc2$objects,
+                 values = rep(1, length(fc2$objects)))
+
+        R <- R$get_vector()
+
+        yv <- SparseSet$new(attributes = att)
+        yv$assign(attributes = y, value = 1)
+        y_down <- .extent(yv$get_vector(), my_I)
+
+        for (yp in setdiff(att, y)) {
+
+          ypv <- SparseSet$new(attributes = att)
+          ypv$assign(attributes = yp, value = 1)
+          yp_down <- .extent(ypv$get_vector(), my_I)
+
+          S <- .subset(y_down, yp_down)
+
+          if (S[1]) {
+
+            R[Matrix::which(yp_down < R)] <- yp_down[Matrix::which(yp_down < R)]
+
+          }
+
+        }
+
+        if (!.equal_sets(R, y_down)[1]) {
+
+          Z$assign(attributes = y, value = 1)
+
+        }
+
+      }
+
+      new_att <- Z$get_attributes()[Matrix::which(Z$get_vector() > 0)]
+
+      idx <- match(new_att, att)
+      my_I <- my_I[, idx]
+      colnames(my_I) <- new_att
+      rownames(my_I) <- fc2$objects
+
+      if (copy) {
+
+        fc3 <- FormalContext$new(my_I)
+
+        return(fc3)
+
+      } else {
+
+        self$initialize(my_I)
+
+        return(invisible(self))
+
+      }
 
     },
 
