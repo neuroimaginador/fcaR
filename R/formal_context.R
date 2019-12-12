@@ -361,25 +361,26 @@ FormalContext <- R6::R6Class(
 
         yv <- SparseSet$new(attributes = att)
         yv$assign(attributes = y, value = 1)
-        y_down <- .extent(yv$get_vector(), my_I)
+        y_down <- fc2$get_extent(yv)
 
         for (yp in setdiff(att, y)) {
 
           ypv <- SparseSet$new(attributes = att)
           ypv$assign(attributes = yp, value = 1)
-          yp_down <- .extent(ypv$get_vector(), my_I)
+          yp_down <- fc2$get_extent(ypv)
 
-          S <- .subset(y_down, yp_down)
+          S <- .subset(y_down$get_vector(),
+                       yp_down$get_vector())
 
           if (S[1]) {
 
-            R[Matrix::which(yp_down < R)] <- yp_down[Matrix::which(yp_down < R)]
+            R[Matrix::which(yp_down$get_vector() < R)] <- yp_down$get_vector()[Matrix::which(yp_down$get_vector() < R)]
 
           }
 
         }
 
-        if (!.equal_sets(R, y_down)[1]) {
+        if (!.equal_sets(R, y_down$get_vector())[1]) {
 
           Z$assign(attributes = y, value = 1)
 
@@ -407,11 +408,6 @@ FormalContext <- R6::R6Class(
         return(invisible(self))
 
       }
-
-    },
-
-    standardize = function() {
-
 
     },
 
