@@ -39,6 +39,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-get_closure}{\code{FormalContext$get_closure()}}
 \item \href{#method-clarify}{\code{FormalContext$clarify()}}
 \item \href{#method-reduce}{\code{FormalContext$reduce()}}
+\item \href{#method-standardize}{\code{FormalContext$standardize()}}
 \item \href{#method-compute_concepts}{\code{FormalContext$compute_concepts()}}
 \item \href{#method-add_implications}{\code{FormalContext$add_implications()}}
 \item \href{#method-extract_implications_concepts}{\code{FormalContext$extract_implications_concepts()}}
@@ -48,9 +49,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-load}{\code{FormalContext$load()}}
 \item \href{#method-dim}{\code{FormalContext$dim()}}
 \item \href{#method-print}{\code{FormalContext$print()}}
-\item \href{#method-plot_lattice}{\code{FormalContext$plot_lattice()}}
-\item \href{#method-plot_context}{\code{FormalContext$plot_context()}}
-\item \href{#method-get_concept_support}{\code{FormalContext$get_concept_support()}}
+\item \href{#method-plot}{\code{FormalContext$plot()}}
 \item \href{#method-get_implication_support}{\code{FormalContext$get_implication_support()}}
 \item \href{#method-clone}{\code{FormalContext$clone()}}
 }
@@ -188,6 +187,14 @@ Reduce a formal context
 \subsection{Returns}{
 The clarified and reduced \code{FormalContext}.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-standardize"></a>}}
+\subsection{Method \code{standardize()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$standardize()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-compute_concepts"></a>}}
@@ -340,48 +347,15 @@ Prints information regarding the formal context.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot_lattice"></a>}}
-\subsection{Method \code{plot_lattice()}}{
-Plot the concept lattice
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$plot_lattice(minsupp = 0, object_names = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{minsupp}}{(numeric) Only plot the sublattice generated with those concepts whose support is greater than or equal to \code{minsupp}.}
-
-\item{\code{object_names}}{(logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Nothing, just plots the graph of the concept lattice.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot_context"></a>}}
-\subsection{Method \code{plot_context()}}{
+\if{html}{\out{<a id="method-plot"></a>}}
+\subsection{Method \code{plot()}}{
 Plot the formal context table
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$plot_context()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$plot()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
 Nothing, just plots the formal context.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_concept_support"></a>}}
-\subsection{Method \code{get_concept_support()}}{
-Get support of each concept
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_concept_support()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A vector with the support of each concept.
 }
 }
 \if{html}{\out{<hr>}}

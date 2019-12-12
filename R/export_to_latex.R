@@ -72,3 +72,50 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
 }
 
+#' @import stringr
+concepts_to_latex <- function(concept_list,
+                              ncols = 1,
+                              align = TRUE,
+                              numbered = TRUE,
+                              numbers = seq_along(concept_list)) {
+
+  output <- c()
+
+  for (i in seq_along(concept_list)) {
+
+    prefix <- ifelse(numbered, paste0(numbers[i], ": &"), "")
+    output <- c(output,
+                paste0(prefix,
+                       "\\left(\\,",
+                       concept_list[[i]]$get_extent()$to_latex(),
+                       ",\\right.",
+                       ifelse(align, "&", "\\,"),
+                       "\\left.",
+                       concept_list[[i]]$get_intent()$to_latex(),
+                       "\\,\\right)"))
+
+  }
+
+  output <- matrix(output, ncol = ncols)
+
+  output <- sapply(seq(nrow(output)), function(r) {
+
+    paste0(str_flatten(output[r, ], collapse = " & "), "\\\\")
+
+  })
+
+  format_cols <- c(ifelse(numbered, "l", ""),
+                   ifelse(align, "ll", "l"))
+
+  output <- c(paste0("\\begin{array}{",
+                     str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{array}")
+
+  output <- paste0("$$\n",
+                   paste(output, collapse = "\n"),
+                   "\n$$")
+
+  cat(output)
+
+  return(invisible(output))
+
+}

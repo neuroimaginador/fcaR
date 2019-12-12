@@ -46,8 +46,6 @@ FormalContext <- R6::R6Class(
 
     implications = NULL,
 
-    concept_support = NULL,
-
     implications_support = NULL,
 
     #' @description
@@ -457,6 +455,39 @@ FormalContext <- R6::R6Class(
 
     },
 
+    standardize = function() {
+
+      if (self$concepts$is_empty()) {
+
+        stop("Concepts must be computed beforehand.\n")
+
+      }
+
+      join_irr <- self$concepts$join_irreducibles()
+      meet_irr <- self$concepts$meet_irreducibles()
+
+      nj <- length(join_irr)
+      nm <- length(meet_irr)
+
+      I <- matrix(0, nrow = nj, ncol = nm)
+
+      for (i in seq(nj)) {
+
+        for (j in seq(nm)) {
+
+          I[i, j] <- ifelse(join_irr[[i]] %<=% meet_irr[[j]], 1, 0)
+
+        }
+
+      }
+
+      colnames(I) <- paste0("M", seq(nm))
+      rownames(I) <- paste0("J", seq(nj))
+
+      return(FormalContext$new(I))
+
+    },
+
     #' @description
     #' Use Ganter Algorithm to compute concepts
     #'
@@ -485,12 +516,11 @@ FormalContext <- R6::R6Class(
       my_intents <- L$concepts[, -1]
       my_extents <- L$extents[, -1]
 
-      self$concepts <- lapply(seq(ncol(my_intents)),
-                              function(i) {
-                                .concept_to_SparseSet(list(my_extents[, i], my_intents[, i]),
-                                                      objects = self$objects,
-                                                      attributes = self$attributes)
-                              })
+      self$concepts <- ConceptLattice$new(extents = my_extents,
+                                          intents = my_intents,
+                                          objects = self$objects,
+                                          attributes = self$attributes,
+                                          I = self$I)
 
       return(invisible(self$concepts))
 
@@ -582,12 +612,11 @@ FormalContext <- R6::R6Class(
       my_LHS <- L$LHS[, -1]
       my_RHS <- L$RHS[, -1]
 
-      self$concepts <- lapply(seq(ncol(my_intents)),
-                              function(i) {
-                                .concept_to_SparseSet(list(my_extents[, i], my_intents[, i]),
-                                                       objects = self$objects,
-                                                       attributes = self$attributes)
-                              })
+      self$concepts <- ConceptLattice$new(extents = my_extents,
+                                          intents = my_intents,
+                                          objects = self$objects,
+                                          attributes = self$attributes,
+                                          I = self$I)
 
       extracted_implications <- ImplicationSet$new(attributes = self$attributes,
                                                     lhs = my_LHS,
@@ -654,11 +683,10 @@ FormalContext <- R6::R6Class(
 
       private$check_empty()
 
-      if (length(self$concepts) > 0) {
+      if (!self$concepts$is_empty()) {
 
-        M <- .concepts_to_matrix(self$concepts)
-        extents <- M$extents
-        intents <- M$intents
+        extents <- self$concepts$get_extents()
+        intents <- self$concepts$get_intents()
 
       } else {
 
@@ -707,10 +735,11 @@ FormalContext <- R6::R6Class(
 
       if (!is.null(L$extents)) {
 
-        self$concepts <- .matrix_to_concepts(L$extents,
-                                            L$intents,
-                                            self$objects,
-                                            self$attributes)
+        self$concepts <- ConceptLattice$new(extents = L$extents,
+                                            intents = L$intents,
+                                            objects = L$objects,
+                                            attributes = L$attributes,
+                                            I = L$I)
 
       }
 
@@ -778,41 +807,6 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
-    #' Plot the concept lattice
-    #'
-    #' @param minsupp  (numeric) Only plot the sublattice generated with those concepts whose support is greater than or equal to \code{minsupp}.
-    #' @param object_names  (logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.
-    #'
-    #' @return Nothing, just plots the graph of the concept lattice.
-    #' @export
-    plot_lattice = function(minsupp = 0,
-                            object_names = TRUE) {
-
-      private$check_empty()
-
-      if (length(self$concepts) > 0) {
-
-        if (minsupp > 0) {
-
-          idx <- which(self$get_concept_support() >= minsupp)
-
-          concepts <- .get_sublattice(self$concepts,
-                                      starting_idx = idx)
-
-        } else {
-
-          concepts <- self$concepts
-
-        }
-
-        .draw_lattice(concepts,
-                      object_names = object_names)
-
-      }
-
-    },
-
-    #' @description
     #' Plot the formal context table
     #'
     #' @return Nothing, just plots the formal context.
@@ -820,7 +814,7 @@ FormalContext <- R6::R6Class(
     #' @import scales RColorBrewer
     #'
     #' @export
-    plot_context = function() {
+    plot = function() {
 
       private$check_empty()
 
@@ -828,41 +822,6 @@ FormalContext <- R6::R6Class(
       heatmap(t(as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")
-
-    },
-
-    #' @description
-    #' Get support of each concept
-    #'
-    #' @return A vector with the support of each concept.
-    #' @export
-    get_concept_support = function() {
-
-      private$check_empty()
-
-      if (length(self$concepts) == 0) {
-
-        return(invisible(NULL))
-
-      }
-
-      if (!is.null(self$concept_support)) {
-
-        return(self$concept_support)
-
-      }
-
-      my_I <- self$I
-      my_I@x <- as.numeric(my_I@x)
-
-      intents <- lapply(self$concepts, function(s) s$get_intent()$get_vector())
-      intents <- Reduce(cbind, intents)
-
-      subsets <- .subset(intents, my_I)
-
-      self$concept_support <- rowMeans(subsets)
-
-      return(self$concept_support)
 
     },
 
