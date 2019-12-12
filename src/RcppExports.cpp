@@ -5,6 +5,42 @@
 
 using namespace Rcpp;
 
+// compute_intent
+S4 compute_intent(S4 V, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_intent(SEXP VSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_intent(V, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_extent
+S4 compute_extent(S4 V, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_extent(SEXP VSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_extent(V, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_closure
+S4 compute_closure(S4 V, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_closure(SEXP VSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_closure(V, I));
+    return rcpp_result_gen;
+END_RCPP
+}
 // next_closure_implications
 List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
 RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
@@ -133,6 +169,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
+    {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 2},
+    {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 2},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 4},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 4},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},

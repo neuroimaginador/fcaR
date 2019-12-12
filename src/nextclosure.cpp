@@ -105,6 +105,17 @@ SparseVector compute_intent (SparseVector V,
 
 }
 
+// [[Rcpp::export]]
+S4 compute_intent(S4 V, NumericMatrix I) {
+
+  SparseVector R = S4toSparse(V);
+
+  SparseVector R2 = compute_intent(R, I);
+
+  return(SparseToS4(R2));
+
+}
+
 SparseVector compute_extent (SparseVector V,
                              NumericMatrix I) {
 
@@ -141,6 +152,17 @@ SparseVector compute_extent (SparseVector V,
 
 }
 
+// [[Rcpp::export]]
+S4 compute_extent(S4 V, NumericMatrix I) {
+
+  SparseVector R = S4toSparse(V);
+
+  SparseVector R2 = compute_extent(R, I);
+
+  return(SparseToS4(R2));
+
+}
+
 SparseVector compute_closure (SparseVector V,
                               NumericMatrix I) {
 
@@ -148,6 +170,17 @@ SparseVector compute_closure (SparseVector V,
   SparseVector B = compute_intent(A, I);
 
   return B;
+
+}
+
+// [[Rcpp::export]]
+S4 compute_closure(S4 V, NumericMatrix I) {
+
+  SparseVector R = S4toSparse(V);
+
+  SparseVector R2 = compute_closure(R, I);
+
+  return(SparseToS4(R2));
 
 }
 

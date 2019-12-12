@@ -161,6 +161,225 @@ FormalContext <- R6::R6Class(
 
     },
 
+    get_intent = function(S) {
+
+      if (inherits(S, "SparseSet")) {
+
+        if (all(S$get_attributes() == self$objects)) {
+
+          S <- S$get_vector()
+
+        } else {
+
+          stop("It is not a set of the required type (set of objects).", call. = FALSE)
+
+        }
+
+      }
+
+      if (length(S) == length(self$objects)) {
+
+        R <- compute_intent(S, as.matrix(t(self$I)))
+
+        if (length(R@i) > 0) {
+
+          # Non-empty set:
+          R <- sparseMatrix(i = R@i + 1,
+                            j = rep(1, length(R@i)),
+                            x = R@x,
+                            dims = c(length(self$attributes), 1))
+
+          R <- SparseSet$new(attributes = self$attributes,
+                             M = R)
+        } else {
+
+          # Empty intent
+          R <- SparseSet$new(attributes = self$attributes)
+
+        }
+
+        return(R)
+
+      } else {
+
+        stop("It is not a set of the required type (set of objects).", call. = FALSE)
+
+      }
+
+    },
+
+    get_extent = function(S) {
+
+      if (inherits(S, "SparseSet")) {
+
+        if (all(S$get_attributes() == self$attributes)) {
+
+          S <- S$get_vector()
+
+        } else {
+
+          stop("It is not a set of the required type (set of attributes).", call. = FALSE)
+
+        }
+
+      }
+
+      if (length(S) == length(self$attributes)) {
+
+        R <- compute_extent(S, as.matrix(t(self$I)))
+
+        if (length(R@i) > 0) {
+
+          # Non-empty set:
+          R <- sparseMatrix(i = R@i + 1,
+                            j = rep(1, length(R@i)),
+                            x = R@x,
+                            dims = c(length(self$objects), 1))
+
+          R <- SparseSet$new(attributes = self$objects,
+                             M = R)
+        } else {
+
+          # Empty extent
+          R <- SparseSet$new(attributes = self$objects)
+
+        }
+
+        return(R)
+
+      } else {
+
+        stop("It is not a set of the required type (set of objects).", call. = FALSE)
+
+      }
+
+    },
+
+    get_closure = function(S) {
+
+      if (inherits(S, "SparseSet")) {
+
+        if (all(S$get_attributes() == self$attributes)) {
+
+          S <- S$get_vector()
+
+        } else {
+
+          stop("It is not a set of the required type (set of attributes).", call. = FALSE)
+
+        }
+
+      }
+
+      if (length(S) == length(self$attributes)) {
+
+        R <- compute_closure(S, as.matrix(t(self$I)))
+
+        if (length(R@i) > 0) {
+
+          # Non-empty set:
+          R <- sparseMatrix(i = R@i + 1,
+                            j = rep(1, length(R@i)),
+                            x = R@x,
+                            dims = c(length(self$attributes), 1))
+
+          R <- SparseSet$new(attributes = self$attributes,
+                             M = R)
+        } else {
+
+          # Empty closure
+          R <- SparseSet$new(attributes = self$attributes)
+
+        }
+
+        return(R)
+
+      } else {
+
+        stop("It is not a set of the required type (set of objects).", call. = FALSE)
+
+      }
+
+    },
+
+    clarify = function(copy = FALSE) {
+
+      # Redundant attributes
+      my_I <- .clarify_matrix(t(self$I),
+                              rows = self$objects,
+                              cols = self$attributes)
+
+      # And redundant objects
+      my_I <- .clarify_matrix(t(my_I),
+                              rows = colnames(my_I),
+                              cols = self$objects)
+      my_I <- as.matrix(t(my_I))
+
+      if (copy) {
+
+        fc2 <- FormalContext$new(my_I)
+
+        return(fc2)
+
+      } else {
+
+        self$initialize(my_I)
+
+        return(invisible(self))
+
+      }
+
+    },
+
+    reduce = function() {
+
+
+    },
+
+    standardize = function() {
+
+
+    },
+
+    #' @description
+    #' Use Ganter Algorithm to compute concepts
+    #'
+    #' @param verbose   (logical) TRUE will provide a verbose output.
+    #'
+    #' @return A list with all the concepts in the formal context.
+    #'
+    #' @export
+    compute_concepts = function(verbose = FALSE) {
+
+      private$check_empty()
+
+      my_I <- as.matrix(t(self$I))
+      grades_set <- rep(list(self$grades_set), length(self$attributes))
+      # grades_set <- self$expanded_grades_set
+      attrs <- self$attributes
+
+      L <- next_closure_concepts(I = my_I,
+                                     grades_set = grades_set,
+                                     attrs = attrs,
+                                     verbose = verbose)
+
+      # Since the previous function gives the list of intents of
+      # the computed concepts, now we will compute the corresponding
+      # extents.
+      my_intents <- L$concepts[, -1]
+      my_extents <- L$extents[, -1]
+
+      self$concepts <- lapply(seq(ncol(my_intents)),
+                              function(i) {
+                                .concept_to_SparseSet(list(my_extents[, i], my_intents[, i]),
+                                                      objects = self$objects,
+                                                      attributes = self$attributes)
+                              })
+
+      return(invisible(self$concepts))
+
+    },
+
     #' @description
     #' Add a precomputed implication set
     #'
@@ -205,51 +424,12 @@ FormalContext <- R6::R6Class(
         RHS <- cbind(old_RHS, new_RHS)
 
         impl <- ImplicationSet$new(attributes = self$attributes,
-                                    lhs = LHS,
-                                    rhs = RHS)
+                                   lhs = LHS,
+                                   rhs = RHS)
 
         self$implications <- impl
 
       }
-
-    },
-
-    #' @description
-    #' Use Ganter Algorithm to compute concepts
-    #'
-    #' @param verbose   (logical) TRUE will provide a verbose output.
-    #'
-    #' @return A list with all the concepts in the formal context.
-    #'
-    #' @export
-    compute_concepts = function(verbose = FALSE) {
-
-      private$check_empty()
-
-      my_I <- as.matrix(t(self$I))
-      grades_set <- rep(list(self$grades_set), length(self$attributes))
-      # grades_set <- self$expanded_grades_set
-      attrs <- self$attributes
-
-      L <- next_closure_concepts(I = my_I,
-                                     grades_set = grades_set,
-                                     attrs = attrs,
-                                     verbose = verbose)
-
-      # Since the previous function gives the list of intents of
-      # the computed concepts, now we will compute the corresponding
-      # extents.
-      my_intents <- L$concepts[, -1]
-      my_extents <- L$extents[, -1]
-
-      self$concepts <- lapply(seq(ncol(my_intents)),
-                              function(i) {
-                                .concept_to_SparseSet(list(my_extents[, i], my_intents[, i]),
-                                                      objects = self$objects,
-                                                      attributes = self$attributes)
-                              })
-
-      return(invisible(self$concepts))
 
     },
 
