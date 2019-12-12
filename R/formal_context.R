@@ -144,6 +144,9 @@ FormalContext <- R6::R6Class(
       self$objects <- objects
       self$attributes <- attributes
 
+      # Create a new empty implication set inside
+      self$implications <- ImplicationSet$new(attributes = attributes)
+
     },
 
     #' @description
