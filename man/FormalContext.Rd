@@ -34,8 +34,13 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \itemize{
 \item \href{#method-new}{\code{FormalContext$new()}}
 \item \href{#method-is_empty}{\code{FormalContext$is_empty()}}
-\item \href{#method-add_implications}{\code{FormalContext$add_implications()}}
+\item \href{#method-get_intent}{\code{FormalContext$get_intent()}}
+\item \href{#method-get_extent}{\code{FormalContext$get_extent()}}
+\item \href{#method-get_closure}{\code{FormalContext$get_closure()}}
+\item \href{#method-clarify}{\code{FormalContext$clarify()}}
+\item \href{#method-reduce}{\code{FormalContext$reduce()}}
 \item \href{#method-compute_concepts}{\code{FormalContext$compute_concepts()}}
+\item \href{#method-add_implications}{\code{FormalContext$add_implications()}}
 \item \href{#method-extract_implications_concepts}{\code{FormalContext$extract_implications_concepts()}}
 \item \href{#method-convert_to_transactions}{\code{FormalContext$convert_to_transactions()}}
 \item \href{#method-export_implications_to_arules}{\code{FormalContext$export_implications_to_arules()}}
@@ -90,22 +95,98 @@ Check if the \code{FormalContext} is empty
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_implications"></a>}}
-\subsection{Method \code{add_implications()}}{
-Add a precomputed implication set
+\if{html}{\out{<a id="method-get_intent"></a>}}
+\subsection{Method \code{get_intent()}}{
+Get the intent of a fuzzy set of objects
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$add_implications(impl_set)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_intent(S)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{impl_set}}{(\code{ImplicationSet} object) The implications to add to this formal context.}
+\item{\code{S}}{(\code{SparseSet}) The set of objects to compute the intent for.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Nothing, just updates the internal \code{implications} field.
+A \code{SparseSet} with the intent.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_extent"></a>}}
+\subsection{Method \code{get_extent()}}{
+Get the extent of a fuzzy set of attributes
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_extent(S)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{S}}{(\code{SparseSet}) The set of attributes to compute the extent for.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{SparseSet} with the intent.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_closure"></a>}}
+\subsection{Method \code{get_closure()}}{
+Get the closure of a fuzzy set of attributes
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_closure(S)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{S}}{(\code{SparseSet}) The set of attributes to compute the closire for.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{SparseSet} with the closure.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-clarify"></a>}}
+\subsection{Method \code{clarify()}}{
+Clarify a formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$clarify(copy = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{copy}}{(logical) If \code{TRUE}, a new \code{FormalContext} object is created with the clarified context, otherwise the current one is overwritten.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The clarified \code{FormalContext}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-reduce"></a>}}
+\subsection{Method \code{reduce()}}{
+Reduce a formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$reduce(copy = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{copy}}{(logical) If \code{TRUE}, a new \code{FormalContext} object is created with the clarified and reduced context, otherwise the current one is overwritten.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The clarified and reduced \code{FormalContext}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -125,6 +206,25 @@ Use Ganter Algorithm to compute concepts
 }
 \subsection{Returns}{
 A list with all the concepts in the formal context.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-add_implications"></a>}}
+\subsection{Method \code{add_implications()}}{
+Add a precomputed implication set
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$add_implications(impl_set)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{impl_set}}{(\code{ImplicationSet} object) The implications to add to this formal context.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Nothing, just updates the internal \code{implications} field.
 }
 }
 \if{html}{\out{<hr>}}

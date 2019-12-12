@@ -322,3 +322,71 @@ test_that("fcaR saves and loads formal contexts", {
 
 
 })
+
+test_that("fcaR computes intents, extents and closures of SparseSets", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I = I)
+  fc$extract_implications_concepts()
+
+  c1 <- fc$concepts[[2]]
+  expect_error(fc$get_extent(c1$get_intent()), NA)
+  expect_error(fc$get_intent(c1$get_extent()), NA)
+  expect_error(fc$get_closure(c1$get_intent()), NA)
+
+})
+
+test_that("fcaR clarifies and reduces contexts", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       0, 1, 0.5, 0, 0, 0.5,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 1),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I)
+
+  expect_error(fc2 <- fc$clarify(TRUE), NA)
+  expect_error(fc$clarify(), NA)
+
+  I2 <- I
+  I2[I2 > 0] <- 1
+
+  colnames(I2) <- attributes
+  rownames(I2) <- objects
+
+  fc <- FormalContext$new(I2)
+
+  expect_error(fc2 <- fc$reduce(TRUE), NA)
+  expect_error(fc$reduce(), NA)
+
+})

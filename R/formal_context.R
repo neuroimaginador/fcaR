@@ -164,6 +164,16 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Get the intent of a fuzzy set of objects
+    #'
+    #' @param S   (\code{SparseSet}) The set of objects to compute the intent for.
+    #'
+    #' @return A \code{SparseSet} with the intent.
+    #'
+    #' @importFrom Matrix sparseMatrix
+    #'
+    #' @export
     get_intent = function(S) {
 
       if (inherits(S, "SparseSet")) {
@@ -211,6 +221,16 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Get the extent of a fuzzy set of attributes
+    #'
+    #' @param S   (\code{SparseSet}) The set of attributes to compute the extent for.
+    #'
+    #' @return A \code{SparseSet} with the intent.
+    #'
+    #' @importFrom Matrix sparseMatrix
+    #'
+    #' @export
     get_extent = function(S) {
 
       if (inherits(S, "SparseSet")) {
@@ -258,6 +278,16 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Get the closure of a fuzzy set of attributes
+    #'
+    #' @param S   (\code{SparseSet}) The set of attributes to compute the closire for.
+    #'
+    #' @return A \code{SparseSet} with the closure.
+    #'
+    #' @importFrom Matrix sparseMatrix
+    #'
+    #' @export
     get_closure = function(S) {
 
       if (inherits(S, "SparseSet")) {
@@ -305,6 +335,14 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Clarify a formal context
+    #'
+    #' @param copy   (logical) If \code{TRUE}, a new \code{FormalContext} object is created with the clarified context, otherwise the current one is overwritten.
+    #'
+    #' @return The clarified \code{FormalContext}.
+    #'
+    #' @export
     clarify = function(copy = FALSE) {
 
       # Redundant attributes
@@ -334,6 +372,14 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Reduce a formal context
+    #'
+    #' @param copy   (logical) If \code{TRUE}, a new \code{FormalContext} object is created with the clarified and reduced context, otherwise the current one is overwritten.
+    #'
+    #' @return The clarified and reduced \code{FormalContext}.
+    #'
+    #' @export
     reduce = function(copy = FALSE) {
 
       if (!private$is_binary) {
@@ -360,13 +406,13 @@ FormalContext <- R6::R6Class(
         R <- R$get_vector()
 
         yv <- SparseSet$new(attributes = att)
-        yv$assign(attributes = y, value = 1)
+        yv$assign(attributes = y, values = 1)
         y_down <- fc2$get_extent(yv)
 
         for (yp in setdiff(att, y)) {
 
           ypv <- SparseSet$new(attributes = att)
-          ypv$assign(attributes = yp, value = 1)
+          ypv$assign(attributes = yp, values = 1)
           yp_down <- fc2$get_extent(ypv)
 
           S <- .subset(y_down$get_vector(),
@@ -382,7 +428,7 @@ FormalContext <- R6::R6Class(
 
         if (!.equal_sets(R, y_down$get_vector())[1]) {
 
-          Z$assign(attributes = y, value = 1)
+          Z$assign(attributes = y, values = 1)
 
         }
 
