@@ -14,15 +14,31 @@ ConceptLattice <- R6::R6Class(
       private$extents <- extents
       private$intents <- intents
 
-      private$concepts <- lapply(seq(ncol(intents)),
-             function(i) {
-               .concept_to_SparseSet(list(extents[, i], intents[, i]),
-                                     objects = objects,
-                                     attributes = attributes)
-             })
+      if (!is.null(extents)) {
 
-      private$I <- I
-      private$subconcept_matrix <- .subset(extents)
+        private$concepts <- lapply(seq(ncol(intents)),
+                                   function(i) {
+                                     .concept_to_SparseSet(list(extents[, i], intents[, i]),
+                                                           objects = objects,
+                                                           attributes = attributes)
+                                   })
+
+        private$I <- I
+        private$subconcept_matrix <- .subset(extents)
+
+      }
+
+    },
+
+    size = function() {
+
+      if (self$is_empty()) {
+
+        return(0)
+
+      }
+
+      return(length(private$concepts))
 
     },
 
@@ -243,6 +259,8 @@ ConceptLattice <- R6::R6Class(
     },
 
     get_superconcepts = function(C) {
+
+      idx <- private$to_indices(C)
 
       # Get the index of all superconcepts
       M <- private$subconcept_matrix[idx, ]

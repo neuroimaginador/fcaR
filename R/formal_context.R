@@ -148,6 +148,13 @@ FormalContext <- R6::R6Class(
       # Create a new empty implication set inside
       self$implications <- ImplicationSet$new(attributes = attributes)
 
+      # Create a new empty ConceptLattice inside
+      self$concepts <- ConceptLattice$new(extents = NULL,
+                                          intents = NULL,
+                                          objects = self$objects,
+                                          attributes = self$attributes,
+                                          I = self$I)
+
     },
 
     #' @description
@@ -459,7 +466,7 @@ FormalContext <- R6::R6Class(
 
       if (self$concepts$is_empty()) {
 
-        stop("Concepts must be computed beforehand.\n")
+        stop("Concepts must be computed beforehand.\n", call. = FALSE)
 
       }
 
@@ -703,7 +710,6 @@ FormalContext <- R6::R6Class(
                 expanded_grades_set = self$expanded_grades_set,
                 grades_set = self$grades_set,
                 implications = self$implications,
-                concept_support = self$concept_support,
                 implications_support = self$implications_support)
 
       saveRDS(L, file = filename)
@@ -730,7 +736,6 @@ FormalContext <- R6::R6Class(
       self$expanded_grades_set <- L$expanded_grades_set
       self$grades_set <- L$grades_set
       self$implications <- L$implications
-      self$concept_support <- L$concept_support
       self$implications_support <- L$implications_support
 
       if (!is.null(L$extents)) {
