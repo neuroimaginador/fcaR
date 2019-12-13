@@ -10,7 +10,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
 )
 ```
 
@@ -106,15 +108,16 @@ print(fc_planets)
 print(fc_I)
 ```
 
-```{r}
+```{r fig.dim=c(4,4)}
 fc_planets$plot()
 fc_I$plot()
 ```
 
 Also, we can export the formal context as a LaTeX table:
-```{r echo=TRUE, results="markup", comment = ""}
+```{r}
 fc_planets$to_latex()
 ```
+
 
 ## Closures
 
@@ -191,25 +194,123 @@ fc_planets$concepts
 fc_planets$implications
 ```
 
-
-
 ## Standard Context
 
+Once we have computed the concepts, we can build the _standard context_ (J, M, $\le$), where J is the set of join-irreducible concepts and M are the meet-irreducible ones. Join and meet are another name for supremum and infimum operations in the concept lattice.
+
+The function `standardize()` works for all FormalContext where the concept lattice has been found, and it produces a new `FormalContext` object:
+```{r}
+fc_planets$standardize()
+fc_I$standardize()
+```
+
+Note that now objects are named J1, J2... and attributes are M1, M2..., from join and meet.
 
 ## Saving and loading
 
+A `FormalContext` is saved and loaded (in RDS format) using its own methods `save()` and `load()`, which are more efficient than the base `saveRDS()` and `readRDS()`.
+
+```{r eval = FALSE}
+fc$save(filename = "./fc.rds")
+
+# Create an empty FormalContext where to
+# import the previously saved
+fc2 <- FormalContext$new()
+fc2$load("./fc.rds")
+```
+
 # Concept Lattice
 
-Use the previously extracted
+We are going to use the previously computed concept lattices for the two `FormalContext` objects.
 
 ## Plot, print and LaTeX
 
-## Getting all extents, intents and subsetting concepts
+The concept lattice can be plotted using a Hasse diagram and the function `plot()` inside the `ConceptLattice` component:
+```{r}
+fc_planets$concepts$plot()
+fc_I$concepts$plot()
+```
+
+If one desires to get the list of concepts printed, or in $\LaTeX$ format, just:
+```{r}
+# Printing
+fc_planets$concepts
+
+# LaTeX
+fc_planets$concepts$to_latex()
+```
+
+
+## Getting all extents, intents and retrieving concepts
+
+For a `ConceptLattice`, one may want to retrieve particular concepts (function `get_concepts_by_id()`):
+```{r}
+fc_planets$concepts$get_concepts_by_id(2:3)
+```
+
+Or get all the extents and all the intents of all concepts, as sparse matrices:
+```{r eval = FALSE}
+fc_planets$concepts$get_extents()
+fc_planets$concepts$get_intents()
+```
+
+## Concept support
+The support of concepts can be computed using the function `compute_support()`:
+```{r}
+fc_planets$concepts$compute_support()
+```
 
 ## Sublattices
 
-## Infima and suprema, subconcepts and superconcepts
+When the concept lattice is too large, it can be useful in certain occasions to just work with a sublattice of the complete lattice. To this end, we use the `get_sublattice()` function.
+
+For instance, to build the sublattice of those concepts with support greater than 0.5, we can do:
+```{r}
+# Get the index of those concepts with support 
+# greater than the threshold
+idx <- which(fc_I$concepts$compute_support() > 0.2)
+# Build the sublattice
+sublattice <- fc_I$concepts$get_sublattice(idx)
+sublattice
+
+```
+
+And we can plot just the suublattice:
+```{r}
+sublattice$plot()
+```
+
+## Subconcepts, superconcepts, infimum and supremum
+
+It may be interesting to use the notions of subconcept and superconcept. Given a concept, we can compute all its subconcepts and all its superconcepts:
+```{r}
+# The fifth concept
+C <- fc_planets$concepts$get_concepts_by_id(5)[[1]]
+C
+# Its subconcepts:
+fc_planets$concepts$get_subconcepts(C)
+# And its superconcepts:
+fc_planets$concepts$get_superconcepts(C)
+```
+
+Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:
+```{r}
+# A list of concepts
+C <- fc_planets$concepts$get_concepts_by_id(5:7)
+C
+# Supremum of the concepts in C
+fc_planets$concepts$supremum(C)
+# Infimum of the concepts in C
+fc_planets$concepts$infimum(C)
+```
 
 ## Join- and meet- irreducible elements
 
-## Concept support
+Also irreducible elements with respect to join (supremum) and meet (infimum) can be computed for a given concept lattice:
+```{r}
+fc_planets$concepts$join_irreducibles()
+fc_planets$concepts$meet_irreducibles()
+```
+
+This are the concepts used to build the _standard context_, mentioned above.
+

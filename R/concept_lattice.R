@@ -185,6 +185,7 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @importFrom Matrix colSums
     join_irreducibles = function() {
 
       M <- .reduce_transitivity(private$subconcept_matrix)
@@ -194,6 +195,7 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @importFrom Matrix colSums
     meet_irreducibles = function() {
 
       M <- .reduce_transitivity(t(private$subconcept_matrix))
