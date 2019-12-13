@@ -811,6 +811,19 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @importFrom knitr kable
+    to_latex = function() {
+
+      I <- as.matrix(t(self$I))
+      str <- as.character(kable(I, format = "latex",
+                   booktabs = TRUE, linesep = ""))
+
+      cat(str)
+
+      return(invisible(str))
+
+    },
+
     #' @description
     #' Plot the formal context table
     #'
