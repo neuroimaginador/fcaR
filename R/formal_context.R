@@ -340,6 +340,23 @@ FormalContext <- R6::R6Class(
 
     },
 
+    is_concept = function(C) {
+
+      O <- C$get_extent()
+      A <- C$get_intent()
+
+      # O should be the extent of A, and A should be intent of O
+      return((self$get_extent(A) %==% O) && (self$get_intent(O) %==% A))
+
+    },
+
+    is_closed = function(S) {
+
+      Sc <- self$get_closure(S)
+      return(S %==% Sc)
+
+    },
+
     #' @description
     #' Clarify a formal context
     #'

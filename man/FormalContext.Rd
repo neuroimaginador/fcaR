@@ -37,6 +37,8 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-get_intent}{\code{FormalContext$get_intent()}}
 \item \href{#method-get_extent}{\code{FormalContext$get_extent()}}
 \item \href{#method-get_closure}{\code{FormalContext$get_closure()}}
+\item \href{#method-is_concept}{\code{FormalContext$is_concept()}}
+\item \href{#method-is_closed}{\code{FormalContext$is_closed()}}
 \item \href{#method-clarify}{\code{FormalContext$clarify()}}
 \item \href{#method-reduce}{\code{FormalContext$reduce()}}
 \item \href{#method-standardize}{\code{FormalContext$standardize()}}
@@ -49,6 +51,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-load}{\code{FormalContext$load()}}
 \item \href{#method-dim}{\code{FormalContext$dim()}}
 \item \href{#method-print}{\code{FormalContext$print()}}
+\item \href{#method-to_latex}{\code{FormalContext$to_latex()}}
 \item \href{#method-plot}{\code{FormalContext$plot()}}
 \item \href{#method-get_implication_support}{\code{FormalContext$get_implication_support()}}
 \item \href{#method-clone}{\code{FormalContext$clone()}}
@@ -149,6 +152,22 @@ Get the closure of a fuzzy set of attributes
 \subsection{Returns}{
 A \code{SparseSet} with the closure.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_concept"></a>}}
+\subsection{Method \code{is_concept()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_concept(C)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_closed"></a>}}
+\subsection{Method \code{is_closed()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_closed(S)}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clarify"></a>}}
@@ -345,6 +364,14 @@ Prints the formal context
 \subsection{Returns}{
 Prints information regarding the formal context.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-to_latex"></a>}}
+\subsection{Method \code{to_latex()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-plot"></a>}}
