@@ -571,7 +571,7 @@ FormalContext <- R6::R6Class(
         old_RHS <- self$implications$get_RHS_matrix()
 
         new_LHS <- implications$get_LHS_matrix()
-        new_RHS <- implications$get_LHS_matrix()
+        new_RHS <- implications$get_RHS_matrix()
 
         LHS <- cbind(old_LHS, new_LHS)
         RHS <- cbind(old_RHS, new_RHS)
