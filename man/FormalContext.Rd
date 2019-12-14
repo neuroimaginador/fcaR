@@ -15,8 +15,6 @@ This class implements the data structure and methods for formal contexts.
 \item \code{grades_set}: set of grades (in [0, 1]) of the attributes.
 \item \code{concepts}: list of concepts (extent, intent).
 \item \code{implications}: extracted implications as an \code{ImplicationSet}.
-\item \code{concept_support}: vector with the support of the concepts.
-\item \code{implications_support}: vector with support of the extracted implications.
 }
 }
 
@@ -53,7 +51,6 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-print}{\code{FormalContext$print()}}
 \item \href{#method-to_latex}{\code{FormalContext$to_latex()}}
 \item \href{#method-plot}{\code{FormalContext$plot()}}
-\item \href{#method-get_implication_support}{\code{FormalContext$get_implication_support()}}
 \item \href{#method-clone}{\code{FormalContext$clone()}}
 }
 }
@@ -417,18 +414,6 @@ Plot the formal context table
 
 \subsection{Returns}{
 Nothing, just plots the formal context.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_implication_support"></a>}}
-\subsection{Method \code{get_implication_support()}}{
-Compute support of each implication
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_implication_support()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A vector with the support of each implication
 }
 }
 \if{html}{\out{<hr>}}

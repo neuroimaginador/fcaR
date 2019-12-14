@@ -11,8 +11,6 @@
 #' * `grades_set`: set of grades (in \[0, 1\]) of the attributes.
 #' * `concepts`: list of concepts (extent, intent).
 #' * `implications`: extracted implications as an \code{ImplicationSet}.
-#' * `concept_support`: vector with the support of the concepts.
-#' * `implications_support`: vector with support of the extracted implications.
 #'
 #' @references
 #'
@@ -45,8 +43,6 @@ FormalContext <- R6::R6Class(
     concepts = NULL,
 
     implications = NULL,
-
-    implications_support = NULL,
 
     #' @description
     #' Creator for the Fomal Context class
@@ -892,33 +888,6 @@ FormalContext <- R6::R6Class(
       heatmap(t(as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")
-
-    },
-
-    #' @description
-    #' Compute support of each implication
-    #'
-    #' @return A vector with the support of each implication
-    #' @export
-    get_implication_support = function() {
-
-      private$check_empty()
-
-      if (is.null(self$implications) ||
-          (self$implications$cardinality() == 0)) {
-
-        return(invisible(NULL))
-
-      }
-
-      LHS <- self$implications$get_LHS_matrix()
-      my_I <- self$I
-
-      subsets <- .subset(LHS, my_I)
-
-      self$implications_support <- rowMeans(subsets)
-
-      return(self$implications_support)
 
     }
 

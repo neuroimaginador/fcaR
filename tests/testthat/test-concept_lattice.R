@@ -50,7 +50,7 @@ test_that("fcaR writes a ConceptLattice to LaTeX", {
 
 test_that("fcaR extracts concepts from a ConceptLattice", {
 
-  expect_error(L <- fc$concepts$get_concepts_by_id(10:12), NA)
+  expect_error(L <- fc$concepts[10:12], NA)
   expect_is(L, "list")
   expect_is(L[[1]], "SparseConcept")
 
@@ -58,12 +58,12 @@ test_that("fcaR extracts concepts from a ConceptLattice", {
 
 test_that("fcaR computes the sublattice of a ConceptLattice", {
 
-  L <- fc$concepts$get_concepts_by_id(10:12)
+  L <- fc$concepts[10:12]
 
-  expect_error(cl <- fc$concepts$get_sublattice(10:13), NA)
+  expect_error(cl <- fc$concepts$sublattice(10:13), NA)
   expect_is(cl, "ConceptLattice")
 
-  expect_error(cl <- fc$concepts$get_sublattice(L), NA)
+  expect_error(cl <- fc$concepts$sublattice(L), NA)
   expect_is(cl, "ConceptLattice")
 
 })
@@ -77,7 +77,7 @@ test_that("fcaR computes the join- and meet- irreducibles of a ConceptLattice", 
 
 test_that("fcaR computes the suprema and infima of sets of concepts", {
 
-  L <- fc$concepts$get_concepts_by_id(10:12)
+  L <- fc$concepts[10:12]
 
   expect_error(fc$concepts$supremum(L), NA)
   expect_error(fc$concepts$supremum(10:13), NA)
@@ -88,17 +88,17 @@ test_that("fcaR computes the suprema and infima of sets of concepts", {
 
 test_that("fcaR computes the subconcepts and superconcepts of a given concept", {
 
-  L <- fc$concepts$get_concepts_by_id(10:12)
+  L <- fc$concepts[10:12]
 
-  expect_error(fc$concepts$get_subconcepts(L[[3]]), NA)
-  expect_error(fc$concepts$get_superconcepts(L[[3]]), NA)
+  expect_error(fc$concepts$subconcepts(L[[3]]), NA)
+  expect_error(fc$concepts$superconcepts(L[[3]]), NA)
 
 })
 
 test_that("fcaR computes the support of concepts", {
 
-  expect_error(fc$concepts$compute_support(), NA)
-  expect_error(fc$concepts$compute_support(), NA)
+  expect_error(fc$concepts$support(), NA)
+  expect_error(fc$concepts$support(), NA)
 
 })
 

@@ -12,20 +12,20 @@ This class implements the data structure and methods for concept lattices.
 \item \href{#method-new}{\code{ConceptLattice$new()}}
 \item \href{#method-size}{\code{ConceptLattice$size()}}
 \item \href{#method-is_empty}{\code{ConceptLattice$is_empty()}}
-\item \href{#method-get_extents}{\code{ConceptLattice$get_extents()}}
-\item \href{#method-get_intents}{\code{ConceptLattice$get_intents()}}
+\item \href{#method-extents}{\code{ConceptLattice$extents()}}
+\item \href{#method-intents}{\code{ConceptLattice$intents()}}
 \item \href{#method-plot}{\code{ConceptLattice$plot()}}
 \item \href{#method-print}{\code{ConceptLattice$print()}}
 \item \href{#method-to_latex}{\code{ConceptLattice$to_latex()}}
-\item \href{#method-get_concepts_by_id}{\code{ConceptLattice$get_concepts_by_id()}}
-\item \href{#method-get_sublattice}{\code{ConceptLattice$get_sublattice()}}
+\item \href{#method-[}{\code{ConceptLattice$[()}}
+\item \href{#method-sublattice}{\code{ConceptLattice$sublattice()}}
 \item \href{#method-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
 \item \href{#method-meet_irreducibles}{\code{ConceptLattice$meet_irreducibles()}}
 \item \href{#method-supremum}{\code{ConceptLattice$supremum()}}
 \item \href{#method-infimum}{\code{ConceptLattice$infimum()}}
-\item \href{#method-get_subconcepts}{\code{ConceptLattice$get_subconcepts()}}
-\item \href{#method-get_superconcepts}{\code{ConceptLattice$get_superconcepts()}}
-\item \href{#method-compute_support}{\code{ConceptLattice$compute_support()}}
+\item \href{#method-subconcepts}{\code{ConceptLattice$subconcepts()}}
+\item \href{#method-superconcepts}{\code{ConceptLattice$superconcepts()}}
+\item \href{#method-support}{\code{ConceptLattice$support()}}
 \item \href{#method-clone}{\code{ConceptLattice$clone()}}
 }
 }
@@ -81,11 +81,11 @@ Is the lattice empty?
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_extents"></a>}}
-\subsection{Method \code{get_extents()}}{
+\if{html}{\out{<a id="method-extents"></a>}}
+\subsection{Method \code{extents()}}{
 Concept Extents
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$get_extents()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$extents()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
@@ -93,11 +93,11 @@ The extents of all concepts, as a \code{dgCMatrix}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_intents"></a>}}
-\subsection{Method \code{get_intents()}}{
+\if{html}{\out{<a id="method-intents"></a>}}
+\subsection{Method \code{intents()}}{
 Concept Intents
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$get_intents()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$intents()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
@@ -159,11 +159,11 @@ The \code{LaTeX} code to list all concepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_concepts_by_id"></a>}}
-\subsection{Method \code{get_concepts_by_id()}}{
+\if{html}{\out{<a id="method-["></a>}}
+\subsection{Method \code{[()}}{
 Get Concepts by Index
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$get_concepts_by_id(indices)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$[(indices)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -178,11 +178,11 @@ A list of SparseConcepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_sublattice"></a>}}
-\subsection{Method \code{get_sublattice()}}{
+\if{html}{\out{<a id="method-sublattice"></a>}}
+\subsection{Method \code{sublattice()}}{
 Sublattice
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$get_sublattice(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$sublattice(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -271,11 +271,11 @@ The infimum of the list of concepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_subconcepts"></a>}}
-\subsection{Method \code{get_subconcepts()}}{
+\if{html}{\out{<a id="method-subconcepts"></a>}}
+\subsection{Method \code{subconcepts()}}{
 Subconcepts of a Concept
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$get_subconcepts(C)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$subconcepts(C)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -290,11 +290,11 @@ A list with the subconcepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_superconcepts"></a>}}
-\subsection{Method \code{get_superconcepts()}}{
+\if{html}{\out{<a id="method-superconcepts"></a>}}
+\subsection{Method \code{superconcepts()}}{
 Superconcepts of a Concept
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$get_superconcepts(C)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$superconcepts(C)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -309,11 +309,11 @@ A list with the superconcepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-compute_support"></a>}}
-\subsection{Method \code{compute_support()}}{
+\if{html}{\out{<a id="method-support"></a>}}
+\subsection{Method \code{support()}}{
 Get support of each concept
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$compute_support()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$support()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{

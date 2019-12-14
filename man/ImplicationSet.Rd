@@ -34,6 +34,7 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \item \href{#method-filter}{\code{ImplicationSet$filter()}}
 \item \href{#method-get_rules}{\code{ImplicationSet$get_rules()}}
 \item \href{#method-remove_rules}{\code{ImplicationSet$remove_rules()}}
+\item \href{#method-compute_support}{\code{ImplicationSet$compute_support()}}
 \item \href{#method-clone}{\code{ImplicationSet$clone()}}
 }
 }
@@ -366,6 +367,18 @@ Remove implications from the set
 }
 \subsection{Returns}{
 An \code{ImplicationSet} with the implications at given indices removed with respect to the original set.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-compute_support"></a>}}
+\subsection{Method \code{compute_support()}}{
+Compute support of each implication
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$compute_support()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A vector with the support of each implication
 }
 }
 \if{html}{\out{<hr>}}

@@ -243,34 +243,34 @@ fc_planets$concepts$to_latex()
 
 ## Getting all extents, intents and retrieving concepts
 
-For a `ConceptLattice`, one may want to retrieve particular concepts (function `get_concepts_by_id()`):
+For a `ConceptLattice`, one may want to retrieve particular concepts, using a subsetting as in `R`:
 ```{r}
-fc_planets$concepts$get_concepts_by_id(2:3)
+fc_planets$concepts[2:3]
 ```
 
 Or get all the extents and all the intents of all concepts, as sparse matrices:
 ```{r eval = FALSE}
-fc_planets$concepts$get_extents()
-fc_planets$concepts$get_intents()
+fc_planets$concepts$extents()
+fc_planets$concepts$intents()
 ```
 
 ## Concept support
-The support of concepts can be computed using the function `compute_support()`:
+The support of concepts can be computed using the function `support()`:
 ```{r}
-fc_planets$concepts$compute_support()
+fc_planets$concepts$support()
 ```
 
 ## Sublattices
 
-When the concept lattice is too large, it can be useful in certain occasions to just work with a sublattice of the complete lattice. To this end, we use the `get_sublattice()` function.
+When the concept lattice is too large, it can be useful in certain occasions to just work with a sublattice of the complete lattice. To this end, we use the `sublattice()` function.
 
 For instance, to build the sublattice of those concepts with support greater than 0.5, we can do:
 ```{r}
 # Get the index of those concepts with support 
 # greater than the threshold
-idx <- which(fc_I$concepts$compute_support() > 0.2)
+idx <- which(fc_I$concepts$support() > 0.2)
 # Build the sublattice
-sublattice <- fc_I$concepts$get_sublattice(idx)
+sublattice <- fc_I$concepts$sublattice(idx)
 sublattice
 
 ```
@@ -285,19 +285,20 @@ sublattice$plot()
 It may be interesting to use the notions of subconcept and superconcept. Given a concept, we can compute all its subconcepts and all its superconcepts:
 ```{r}
 # The fifth concept
-C <- fc_planets$concepts$get_concepts_by_id(5)[[1]]
+C <- fc_planets$concepts[5][[1]]
 C
 # Its subconcepts:
-fc_planets$concepts$get_subconcepts(C)
+fc_planets$concepts$subconcepts(C)
 # And its superconcepts:
-fc_planets$concepts$get_superconcepts(C)
+fc_planets$concepts$superconcepts(C)
 ```
 
 Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:
 ```{r}
 # A list of concepts
-C <- fc_planets$concepts$get_concepts_by_id(5:7)
+C <- fc_planets$concepts[5:7]
 C
+
 # Supremum of the concepts in C
 fc_planets$concepts$supremum(C)
 # Infimum of the concepts in C

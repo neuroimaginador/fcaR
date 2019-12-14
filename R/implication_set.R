@@ -64,12 +64,15 @@ ImplicationSet <- R6::R6Class(
         args <- list(name = "",
                      attributes = c(),
                      lhs = NULL,
-                     rhs = NULL)
+                     rhs = NULL,
+                     I = NULL)
         args[names(dots)] <- dots
         private$name <- args$name
         private$attributes <- args$attributes
         private$lhs_matrix <- args$lhs
         private$rhs_matrix <- args$rhs
+        private$I <- args$I
+        private$support <- numeric(0)
 
       }
 
@@ -614,6 +617,34 @@ ImplicationSet <- R6::R6Class(
         private$rhs_matrix <- private$rhs_matrix[, -idx]
       }
 
+    },
+
+    #' @description
+    #' Compute support of each implication
+    #'
+    #' @return A vector with the support of each implication
+    #' @export
+    compute_support = function() {
+
+      if (self$is_empty()) {
+
+        return(numeric(0))
+
+      }
+
+      if (length(private$support) > 0) {
+
+        return(private$support)
+
+      }
+
+      subsets <- .subset(private$lhs_matrix,
+                         private$I)
+
+      private$support <- rowMeans(subsets)
+
+      return(private$support)
+
     }
 
   ),
@@ -625,7 +656,10 @@ ImplicationSet <- R6::R6Class(
     attributes = NULL,
 
     lhs_matrix = NULL,
-    rhs_matrix = NULL
+    rhs_matrix = NULL,
+
+    I = NULL,
+    support = NULL
 
   )
 

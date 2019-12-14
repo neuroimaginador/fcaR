@@ -30,8 +30,8 @@ ConceptLattice <- R6::R6Class(
 
       private$objects <- objects
       private$attributes <- attributes
-      private$extents <- extents
-      private$intents <- intents
+      private$pr_extents <- extents
+      private$pr_intents <- intents
 
       # Create the SparseConcepts
       if (!is.null(extents)) {
@@ -88,9 +88,9 @@ ConceptLattice <- R6::R6Class(
     #' The extents of all concepts, as a \code{dgCMatrix}.
     #'
     #' @export
-    get_extents = function() {
+    extents = function() {
 
-      return(private$extents)
+      return(private$pr_extents)
 
     },
 
@@ -101,9 +101,9 @@ ConceptLattice <- R6::R6Class(
     #' The intents of all concepts, as a \code{dgCMatrix}.
     #'
     #' @export
-    get_intents = function() {
+    intents = function() {
 
-      return(private$intents)
+      return(private$pr_intents)
 
     },
 
@@ -212,7 +212,7 @@ ConceptLattice <- R6::R6Class(
     #' @return A list of SparseConcepts.
     #'
     #' @export
-    get_concepts_by_id = function(indices) {
+    `[` = function(indices) {
 
       if (!self$is_empty()) {
 
@@ -237,7 +237,7 @@ ConceptLattice <- R6::R6Class(
     #' The generated sublattice as a new \code{ConceptLattice} object.
     #'
     #' @export
-    get_sublattice = function(...) {
+    sublattice = function(...) {
 
       idx <- private$to_indices(...)
 
@@ -248,13 +248,13 @@ ConceptLattice <- R6::R6Class(
 
         if (length(idx) > 1) {
 
-          my_intents <- private$intents[, idx]
-          my_extents <- private$extents[, idx]
+          my_intents <- private$pr_intents[, idx]
+          my_extents <- private$pr_extents[, idx]
 
         } else {
 
-          my_intents <- .extract_column(private$intents, idx)
-          my_extents <- .extract_column(private$extents, idx)
+          my_intents <- .extract_column(private$pr_intents, idx)
+          my_extents <- .extract_column(private$pr_extents, idx)
 
         }
 
@@ -285,7 +285,7 @@ ConceptLattice <- R6::R6Class(
       M <- .reduce_transitivity(private$subconcept_matrix)
 
       idx <- which(colSums(M) == 1)
-      self$get_concepts_by_id(idx)
+      self[idx]
 
     },
 
@@ -303,7 +303,7 @@ ConceptLattice <- R6::R6Class(
       M <- .reduce_transitivity(t(private$subconcept_matrix))
 
       idx <- which(colSums(M) == 1)
-      self$get_concepts_by_id(idx)
+      self[idx]
 
     },
 
@@ -337,7 +337,7 @@ ConceptLattice <- R6::R6Class(
 
       }
 
-      return(self$get_concepts_by_id(candidates))
+      return(self[candidates])
 
     },
 
@@ -370,7 +370,7 @@ ConceptLattice <- R6::R6Class(
 
       }
 
-      return(self$get_concepts_by_id(candidates))
+      return(self[candidates])
 
     },
 
@@ -382,7 +382,7 @@ ConceptLattice <- R6::R6Class(
     #' @return
     #' A list with the subconcepts.
     #' @export
-    get_subconcepts = function(C) {
+    subconcepts = function(C) {
 
       idx <- private$to_indices(C)
 
@@ -390,7 +390,7 @@ ConceptLattice <- R6::R6Class(
       M <- t(private$subconcept_matrix)[idx, ]
       candidates <- which(M > 0)
 
-      self$get_concepts_by_id(candidates)
+      self[candidates]
 
     },
 
@@ -402,7 +402,7 @@ ConceptLattice <- R6::R6Class(
     #' @return
     #' A list with the superconcepts.
     #' @export
-    get_superconcepts = function(C) {
+    superconcepts = function(C) {
 
       idx <- private$to_indices(C)
 
@@ -410,7 +410,7 @@ ConceptLattice <- R6::R6Class(
       M <- private$subconcept_matrix[idx, ]
       candidates <- which(M > 0)
 
-      self$get_concepts_by_id(candidates)
+      self[candidates]
 
     },
 
@@ -419,7 +419,7 @@ ConceptLattice <- R6::R6Class(
     #'
     #' @return A vector with the support of each concept.
     #' @export
-    compute_support = function() {
+    support = function() {
 
       if (!is.null(private$concept_support)) {
 
@@ -430,7 +430,7 @@ ConceptLattice <- R6::R6Class(
       my_I <- private$I
       my_I@x <- as.numeric(my_I@x)
 
-      subsets <- .subset(private$intents, my_I)
+      subsets <- .subset(private$pr_intents, my_I)
 
       private$concept_support <- rowMeans(subsets)
 
@@ -443,8 +443,8 @@ ConceptLattice <- R6::R6Class(
   private = list(
 
     concepts = NULL,
-    extents = NULL,
-    intents = NULL,
+    pr_extents = NULL,
+    pr_intents = NULL,
     objects = NULL,
     attributes = NULL,
     subconcept_matrix = NULL,
@@ -459,7 +459,7 @@ ConceptLattice <- R6::R6Class(
       extents <- Reduce(cbind, extents)
 
       indices <- .equal_sets(x = extents,
-                             y = private$extents)
+                             y = private$pr_extents)
 
       indices <- arrayInd(which(indices),
                           .dim = dim(indices))[, 2]
