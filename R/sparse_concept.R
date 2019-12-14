@@ -56,6 +56,12 @@ SparseConcept <- R6::R6Class(
 
     },
 
+    # is_subconcept = function(S) {
+    #
+    #   all(private$extent$get_vector() <= S$extent$get_vector())
+    #
+    # },
+
     #' @description
     #' Prints the concept to console
     #'

@@ -415,14 +415,14 @@ With a single function, we can compute the set of concepts:
 
 ``` r
 # Compute all concepts
-concept_list <- fc$compute_concepts()
+fc$compute_concepts()
 
 # The first concept
-concept_list[[1]]
+fc$concepts$get_concepts_by_id(1)[[1]]
 #> ({O1, O2, O3, O4, O5, O6}, {})
 
 # And plot the concept lattice
-fc$plot_lattice()
+fc$concepts$plot()
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
@@ -462,9 +462,9 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 12 to 12 in 0.005 secs. 
-#> --> generalization : from 12 to 12 in 0.01 secs. 
-#> Batch took 0.019 secs.
+#> --> composition : from 12 to 12 in 0.004 secs. 
+#> --> generalization : from 12 to 12 in 0.007 secs. 
+#> Batch took 0.015 secs.
 
 # Reduced set of implications
 fc$implications
@@ -486,7 +486,7 @@ fc$implications
 fc$get_implication_support()
 #>  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000
 #>  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000
-fc$get_concept_support()
+fc$concepts$compute_support()
 #>  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000
 #>  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333
 #> [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667
