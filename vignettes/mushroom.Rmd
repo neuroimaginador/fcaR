@@ -116,7 +116,7 @@ fc$implications$apply_rules(rules = c("composition",
 
 Also, we can compute the support of each implication:
 ```{r}
-supp <- fc$get_implication_support()
+supp <- fc$implications$compute_support()
 
 head(supp)
 ```

@@ -748,8 +748,7 @@ FormalContext <- R6::R6Class(
                 objects = self$objects,
                 expanded_grades_set = self$expanded_grades_set,
                 grades_set = self$grades_set,
-                implications = self$implications,
-                implications_support = self$implications_support)
+                implications = self$implications)
 
       saveRDS(L, file = filename)
 
@@ -775,7 +774,6 @@ FormalContext <- R6::R6Class(
       self$expanded_grades_set <- L$expanded_grades_set
       self$grades_set <- L$grades_set
       self$implications <- L$implications
-      self$implications_support <- L$implications_support
 
       if (!is.null(L$extents)) {
 

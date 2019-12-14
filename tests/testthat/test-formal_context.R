@@ -233,11 +233,11 @@ test_that("fcaR computes implication support", {
   rownames(I) <- objects
 
   fc <- FormalContext$new(I = I)
-  expect_error(fc$get_implication_support(), NA)
+  expect_error(fc$implications$compute_support(), NA)
 
   fc$extract_implications_concepts()
 
-  expect_error(fc$get_implication_support(), NA)
+  expect_error(fc$implications$compute_support(), NA)
 
 })
 
@@ -310,7 +310,7 @@ test_that("fcaR computes intents, extents and closures of SparseSets", {
   fc <- FormalContext$new(I = I)
   fc$extract_implications_concepts()
 
-  c1 <- fc$concepts$get_concepts_by_id(2)[[1]]
+  c1 <- fc$concepts[2][[1]]
   expect_error(fc$get_extent(c1$get_intent()), NA)
   expect_error(fc$get_intent(c1$get_extent()), NA)
   expect_error(fc$get_closure(c1$get_intent()), NA)
