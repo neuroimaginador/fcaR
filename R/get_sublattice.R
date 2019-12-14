@@ -1,15 +1,15 @@
-.get_sublattice <- function(L, starting_idx) {
+.get_sublattice <- function(M, starting_idx) {
 
   idx <- starting_idx
   idx_final <- starting_idx
 
-  M <- .concept_order(L)
+  N <- ncol(M)
 
   # joins
   added <- TRUE
   while (added) {
 
-    if (length(idx_final) == length(L)) break;
+    if (length(idx_final) == N) break;
 
     added <- FALSE
     to_add <- c()
@@ -57,7 +57,7 @@
   idx <- idx_final
   while (added) {
 
-    if (length(idx_final) == length(L)) break;
+    if (length(idx_final) == N) break;
 
     added <- FALSE
     to_add <- c()
@@ -100,6 +100,6 @@
 
   }
 
-  return(L[idx_final])
+  return(idx_final)
 
 }

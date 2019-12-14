@@ -37,8 +37,11 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-get_intent}{\code{FormalContext$get_intent()}}
 \item \href{#method-get_extent}{\code{FormalContext$get_extent()}}
 \item \href{#method-get_closure}{\code{FormalContext$get_closure()}}
+\item \href{#method-is_concept}{\code{FormalContext$is_concept()}}
+\item \href{#method-is_closed}{\code{FormalContext$is_closed()}}
 \item \href{#method-clarify}{\code{FormalContext$clarify()}}
 \item \href{#method-reduce}{\code{FormalContext$reduce()}}
+\item \href{#method-standardize}{\code{FormalContext$standardize()}}
 \item \href{#method-compute_concepts}{\code{FormalContext$compute_concepts()}}
 \item \href{#method-add_implications}{\code{FormalContext$add_implications()}}
 \item \href{#method-extract_implications_concepts}{\code{FormalContext$extract_implications_concepts()}}
@@ -48,9 +51,8 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-load}{\code{FormalContext$load()}}
 \item \href{#method-dim}{\code{FormalContext$dim()}}
 \item \href{#method-print}{\code{FormalContext$print()}}
-\item \href{#method-plot_lattice}{\code{FormalContext$plot_lattice()}}
-\item \href{#method-plot_context}{\code{FormalContext$plot_context()}}
-\item \href{#method-get_concept_support}{\code{FormalContext$get_concept_support()}}
+\item \href{#method-to_latex}{\code{FormalContext$to_latex()}}
+\item \href{#method-plot}{\code{FormalContext$plot()}}
 \item \href{#method-get_implication_support}{\code{FormalContext$get_implication_support()}}
 \item \href{#method-clone}{\code{FormalContext$clone()}}
 }
@@ -152,6 +154,44 @@ A \code{SparseSet} with the closure.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_concept"></a>}}
+\subsection{Method \code{is_concept()}}{
+Is a Concept?
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_concept(C)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{C}}{A \code{SparseConcept} object}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if \code{C} is a concept.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-is_closed"></a>}}
+\subsection{Method \code{is_closed()}}{
+Testing closure of attribute sets
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_closed(S)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{S}}{A \code{SparseSet} of attributes}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if the set \code{S} is closed in this formal context.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clarify"></a>}}
 \subsection{Method \code{clarify()}}{
 Clarify a formal context
@@ -187,6 +227,22 @@ Reduce a formal context
 }
 \subsection{Returns}{
 The clarified and reduced \code{FormalContext}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-standardize"></a>}}
+\subsection{Method \code{standardize()}}{
+Build the Standard Context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$standardize()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+All concepts must be previously computed.
+}
+
+\subsection{Returns}{
+The standard context using the join- and meet- ireeducble elements.
 }
 }
 \if{html}{\out{<hr>}}
@@ -340,48 +396,27 @@ Prints information regarding the formal context.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot_lattice"></a>}}
-\subsection{Method \code{plot_lattice()}}{
-Plot the concept lattice
+\if{html}{\out{<a id="method-to_latex"></a>}}
+\subsection{Method \code{to_latex()}}{
+Write the context in LaTeX format
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$plot_lattice(minsupp = 0, object_names = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{minsupp}}{(numeric) Only plot the sublattice generated with those concepts whose support is greater than or equal to \code{minsupp}.}
-
-\item{\code{object_names}}{(logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
-Nothing, just plots the graph of the concept lattice.
+A tabular environment in LaTeX.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot_context"></a>}}
-\subsection{Method \code{plot_context()}}{
+\if{html}{\out{<a id="method-plot"></a>}}
+\subsection{Method \code{plot()}}{
 Plot the formal context table
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$plot_context()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$plot()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
 Nothing, just plots the formal context.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_concept_support"></a>}}
-\subsection{Method \code{get_concept_support()}}{
-Get support of each concept
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_concept_support()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A vector with the support of each concept.
 }
 }
 \if{html}{\out{<hr>}}

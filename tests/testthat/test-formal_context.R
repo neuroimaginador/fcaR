@@ -102,13 +102,12 @@ test_that("fcaR extracts concepts", {
 
   concepts <- fc$compute_concepts(verbose = TRUE)
 
-  expect_is(concepts, "list")
+  expect_is(concepts, "ConceptLattice")
 
   concepts <- fc$compute_concepts(verbose = TRUE)
-  expect_is(concepts, "list")
+  expect_is(concepts, "ConceptLattice")
 
-  expect_output(print(fc$concepts))
-  expect_is(fc$concepts[[2]]$to_latex(), "character")
+  # expect_output(print(fc$concepts))
 
 })
 
@@ -164,11 +163,7 @@ test_that("fcaR generate plots", {
 
   fc$extract_implications_concepts()
 
-  expect_error(fc$plot_context(), NA)
-  expect_error(fc$plot_lattice(), NA)
-  expect_error(fc$plot_lattice(minsupp = 0.2,
-                               object_names = FALSE),
-               NA)
+  expect_error(fc$plot, NA)
 
 })
 
@@ -216,37 +211,6 @@ test_that("fcaR exports implications to arules", {
 
 })
 
-test_that("fcaR computes concept support", {
-
-  objects <- paste0("O", 1:6)
-  n_objects <- length(objects)
-
-  attributes <- paste0("P", 1:6)
-  n_attributes <- length(attributes)
-
-  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
-                       1, 1, 0.5, 0, 0, 0,
-                       0.5, 1, 0, 0, 1, 0,
-                       0.5, 0, 0, 1, 0.5, 0,
-                       1, 0, 0, 0.5, 0, 0,
-                       0, 0, 1, 0, 0, 0),
-              nrow = n_objects,
-              byrow = FALSE)
-
-  colnames(I) <- attributes
-  rownames(I) <- objects
-
-  fc <- FormalContext$new(I = I)
-
-  expect_error(fc$get_concept_support(), NA)
-  expect_equal(fc$get_concept_support(), NULL)
-
-  fc$extract_implications_concepts(verbose = TRUE)
-
-  expect_error(fc$get_concept_support(), NA)
-  expect_error(fc$get_concept_support(), NA)
-
-})
 
 test_that("fcaR computes implication support", {
 
@@ -346,7 +310,7 @@ test_that("fcaR computes intents, extents and closures of SparseSets", {
   fc <- FormalContext$new(I = I)
   fc$extract_implications_concepts()
 
-  c1 <- fc$concepts[[2]]
+  c1 <- fc$concepts$get_concepts_by_id(2)[[1]]
   expect_error(fc$get_extent(c1$get_intent()), NA)
   expect_error(fc$get_intent(c1$get_extent()), NA)
   expect_error(fc$get_closure(c1$get_intent()), NA)
@@ -388,5 +352,42 @@ test_that("fcaR clarifies and reduces contexts", {
 
   expect_error(fc2 <- fc$reduce(TRUE), NA)
   expect_error(fc$reduce(), NA)
+
+})
+
+test_that("fcaR computes the standard context", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       0, 1, 0.5, 0, 0, 0.5,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 1),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I)
+
+  expect_error(fc2 <- fc$standardize())
+
+  expect_error(fc$extract_implications_concepts(), NA)
+  expect_error(fc2 <- fc$standardize(), NA)
+
+  expect_is(fc2, "FormalContext")
+  expect_error(fc2$extract_implications_concepts(), NA)
+
+  expect_equal(fc$concepts$size(), fc2$concepts$size())
+  # expect_error(fc$clarify(), NA)
+
+
 
 })
