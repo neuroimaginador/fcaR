@@ -9,3 +9,5 @@ Meta
 doc
 .DS_Store
 foo.txt
+
+tests/testthat/Rplots\.pdf
