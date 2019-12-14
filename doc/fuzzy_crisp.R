@@ -42,9 +42,9 @@ fc$implications
 
 ## ----fig.width=7.5------------------------------------------------------------
 # Visualize the concept lattice
-fc$plot_lattice()
+fc$concepts$plot()
 # And the formal context
-fc$plot_context()
+fc$plot()
 
 ## -----------------------------------------------------------------------------
 fc$implications$apply_rules(rules = c("composition",
@@ -95,9 +95,9 @@ fc$implications
 
 ## ----fig.width=7.5------------------------------------------------------------
 # Visualize the concept lattice
-fc$plot_lattice()
+fc$concepts$plot()
 # And the formal context
-fc$plot_context()
+fc$plot()
 
 ## -----------------------------------------------------------------------------
 fc$implications$apply_rules(rules = c("composition"), 

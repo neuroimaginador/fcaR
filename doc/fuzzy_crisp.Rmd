@@ -81,9 +81,9 @@ We provide functions to plot both the concept lattice and the formal context:
 
 ```{r fig.width=7.5}
 # Visualize the concept lattice
-fc$plot_lattice()
+fc$concepts$plot()
 # And the formal context
-fc$plot_context()
+fc$plot()
 ```
 
 ## Redudancy Removal
@@ -156,9 +156,9 @@ fc$implications
 Let us plot the concept lattice and the formal context.
 ```{r fig.width=7.5}
 # Visualize the concept lattice
-fc$plot_lattice()
+fc$concepts$plot()
 # And the formal context
-fc$plot_context()
+fc$plot()
 ```
 
 ## Redudancy Removal

@@ -92,6 +92,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
+    </li>
+    <li>
       <a href="../articles/fuzzy_crisp.html">Simplification Logic for Fuzzy and Crisp Datasets</a>
     </li>
     <li>
@@ -160,8 +163,16 @@
 <ul>
 <li><p><a href='#method-new'><code>FormalContext$new()</code></a></p></li>
 <li><p><a href='#method-is_empty'><code>FormalContext$is_empty()</code></a></p></li>
-<li><p><a href='#method-add_implications'><code>FormalContext$add_implications()</code></a></p></li>
+<li><p><a href='#method-get_intent'><code>FormalContext$get_intent()</code></a></p></li>
+<li><p><a href='#method-get_extent'><code>FormalContext$get_extent()</code></a></p></li>
+<li><p><a href='#method-get_closure'><code>FormalContext$get_closure()</code></a></p></li>
+<li><p><a href='#method-is_concept'><code>FormalContext$is_concept()</code></a></p></li>
+<li><p><a href='#method-is_closed'><code>FormalContext$is_closed()</code></a></p></li>
+<li><p><a href='#method-clarify'><code>FormalContext$clarify()</code></a></p></li>
+<li><p><a href='#method-reduce'><code>FormalContext$reduce()</code></a></p></li>
+<li><p><a href='#method-standardize'><code>FormalContext$standardize()</code></a></p></li>
 <li><p><a href='#method-compute_concepts'><code>FormalContext$compute_concepts()</code></a></p></li>
+<li><p><a href='#method-add_implications'><code>FormalContext$add_implications()</code></a></p></li>
 <li><p><a href='#method-extract_implications_concepts'><code>FormalContext$extract_implications_concepts()</code></a></p></li>
 <li><p><a href='#method-convert_to_transactions'><code>FormalContext$convert_to_transactions()</code></a></p></li>
 <li><p><a href='#method-export_implications_to_arules'><code>FormalContext$export_implications_to_arules()</code></a></p></li>
@@ -169,9 +180,8 @@
 <li><p><a href='#method-load'><code>FormalContext$load()</code></a></p></li>
 <li><p><a href='#method-dim'><code>FormalContext$dim()</code></a></p></li>
 <li><p><a href='#method-print'><code>FormalContext$print()</code></a></p></li>
-<li><p><a href='#method-plot_lattice'><code>FormalContext$plot_lattice()</code></a></p></li>
-<li><p><a href='#method-plot_context'><code>FormalContext$plot_context()</code></a></p></li>
-<li><p><a href='#method-get_concept_support'><code>FormalContext$get_concept_support()</code></a></p></li>
+<li><p><a href='#method-to_latex'><code>FormalContext$to_latex()</code></a></p></li>
+<li><p><a href='#method-plot'><code>FormalContext$plot()</code></a></p></li>
 <li><p><a href='#method-get_implication_support'><code>FormalContext$get_implication_support()</code></a></p></li>
 <li><p><a href='#method-clone'><code>FormalContext$clone()</code></a></p></li>
 </ul>
@@ -201,17 +211,99 @@
 <h3>Returns</h3>
 <p><code>TRUE</code> if the <code>FormalContext</code> is empty, that is, has not been provided with a matrix, and <code>FALSE</code> otherwise.</p>
 <p><hr>
-<a id="method-add_implications"></a></p><h3>Method <code>add_implications()</code></h3>
-<p>Add a precomputed implication set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$add_implications(impl_set)</pre><p></div></p>
+<a id="method-get_intent"></a></p><h3>Method <code>get_intent()</code></h3>
+<p>Get the intent of a fuzzy set of objects</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$get_intent(S)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>impl_set</code></dt><dd><p>(<code>ImplicationSet</code> object) The implications to add to this formal context.</p></dd>
+<dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of objects to compute the intent for.</p></dd>
 
 </dl><p></div></p>
 <h3>Returns</h3>
-<p>Nothing, just updates the internal <code>implications</code> field.</p>
+<p>A <code>SparseSet</code> with the intent.</p>
+<p><hr>
+<a id="method-get_extent"></a></p><h3>Method <code>get_extent()</code></h3>
+<p>Get the extent of a fuzzy set of attributes</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$get_extent(S)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of attributes to compute the extent for.</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>A <code>SparseSet</code> with the intent.</p>
+<p><hr>
+<a id="method-get_closure"></a></p><h3>Method <code>get_closure()</code></h3>
+<p>Get the closure of a fuzzy set of attributes</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$get_closure(S)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of attributes to compute the closire for.</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>A <code>SparseSet</code> with the closure.</p>
+<p><hr>
+<a id="method-is_concept"></a></p><h3>Method <code>is_concept()</code></h3>
+<p>Is a Concept?</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$is_concept(C)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>C</code></dt><dd><p>A <code>SparseConcept</code> object</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p><code>TRUE</code> if <code>C</code> is a concept.</p>
+<p><hr>
+<a id="method-is_closed"></a></p><h3>Method <code>is_closed()</code></h3>
+<p>Testing closure of attribute sets</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$is_closed(S)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>S</code></dt><dd><p>A <code>SparseSet</code> of attributes</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p><code>TRUE</code> if the set <code>S</code> is closed in this formal context.</p>
+<p><hr>
+<a id="method-clarify"></a></p><h3>Method <code>clarify()</code></h3>
+<p>Clarify a formal context</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$clarify(copy = FALSE)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>copy</code></dt><dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified context, otherwise the current one is overwritten.</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>The clarified <code>FormalContext</code>.</p>
+<p><hr>
+<a id="method-reduce"></a></p><h3>Method <code>reduce()</code></h3>
+<p>Reduce a formal context</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$reduce(copy = FALSE)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>copy</code></dt><dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified and reduced context, otherwise the current one is overwritten.</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>The clarified and reduced <code>FormalContext</code>.</p>
+<p><hr>
+<a id="method-standardize"></a></p><h3>Method <code>standardize()</code></h3>
+<p>Build the Standard Context</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$standardize()</pre><p></div></p>
+
+<h3>Details</h3>
+<p>All concepts must be previously computed.</p>
+
+<h3>Returns</h3>
+<p>The standard context using the join- and meet- ireeducble elements.</p>
 <p><hr>
 <a id="method-compute_concepts"></a></p><h3>Method <code>compute_concepts()</code></h3>
 <p>Use Ganter Algorithm to compute concepts</p><h3>Usage</h3>
@@ -224,6 +316,18 @@
 </dl><p></div></p>
 <h3>Returns</h3>
 <p>A list with all the concepts in the formal context.</p>
+<p><hr>
+<a id="method-add_implications"></a></p><h3>Method <code>add_implications()</code></h3>
+<p>Add a precomputed implication set</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$add_implications(impl_set)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>impl_set</code></dt><dd><p>(<code>ImplicationSet</code> object) The implications to add to this formal context.</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>Nothing, just updates the internal <code>implications</code> field.</p>
 <p><hr>
 <a id="method-extract_implications_concepts"></a></p><h3>Method <code>extract_implications_concepts()</code></h3>
 <p>Use modified Ganter algorithm to compute both concepts and implications</p><h3>Usage</h3>
@@ -294,33 +398,19 @@
 <h3>Returns</h3>
 <p>Prints information regarding the formal context.</p>
 <p><hr>
-<a id="method-plot_lattice"></a></p><h3>Method <code>plot_lattice()</code></h3>
-<p>Plot the concept lattice</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$plot_lattice(minsupp = 0, object_names = TRUE)</pre><p></div></p>
+<a id="method-to_latex"></a></p><h3>Method <code>to_latex()</code></h3>
+<p>Write the context in LaTeX format</p><h3>Usage</h3>
+<p><div class="r"></p><pre>FormalContext$to_latex()</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>minsupp</code></dt><dd><p>(numeric) Only plot the sublattice generated with those concepts whose support is greater than or equal to <code>minsupp</code>.</p></dd>
-
-<dt><code>object_names</code></dt><dd><p>(logical) If <code>TRUE</code>, plot object names, otherwise omit them from the diagram.</p></dd>
-
-</dl><p></div></p>
 <h3>Returns</h3>
-<p>Nothing, just plots the graph of the concept lattice.</p>
+<p>A tabular environment in LaTeX.</p>
 <p><hr>
-<a id="method-plot_context"></a></p><h3>Method <code>plot_context()</code></h3>
+<a id="method-plot"></a></p><h3>Method <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code></h3>
 <p>Plot the formal context table</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$plot_context()</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$plot()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>Nothing, just plots the formal context.</p>
-<p><hr>
-<a id="method-get_concept_support"></a></p><h3>Method <code>get_concept_support()</code></h3>
-<p>Get support of each concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$get_concept_support()</pre><p></div></p>
-
-<h3>Returns</h3>
-<p>A vector with the support of each concept.</p>
 <p><hr>
 <a id="method-get_implication_support"></a></p><h3>Method <code>get_implication_support()</code></h3>
 <p>Compute support of each implication</p><h3>Usage</h3>

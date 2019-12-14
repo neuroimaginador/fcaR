@@ -156,18 +156,40 @@ A \code{SparseSet} with the closure.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-is_concept"></a>}}
 \subsection{Method \code{is_concept()}}{
+Is a Concept?
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_concept(C)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{C}}{A \code{SparseConcept} object}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if \code{C} is a concept.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-is_closed"></a>}}
 \subsection{Method \code{is_closed()}}{
+Testing closure of attribute sets
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_closed(S)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{S}}{A \code{SparseSet} of attributes}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if the set \code{S} is closed in this formal context.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clarify"></a>}}
@@ -210,10 +232,18 @@ The clarified and reduced \code{FormalContext}.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-standardize"></a>}}
 \subsection{Method \code{standardize()}}{
+Build the Standard Context
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$standardize()}\if{html}{\out{</div>}}
 }
 
+\subsection{Details}{
+All concepts must be previously computed.
+}
+
+\subsection{Returns}{
+The standard context using the join- and meet- ireeducble elements.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-compute_concepts"></a>}}
@@ -368,10 +398,14 @@ Prints information regarding the formal context.
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_latex"></a>}}
 \subsection{Method \code{to_latex()}}{
+Write the context in LaTeX format
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A tabular environment in LaTeX.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-plot"></a>}}

@@ -275,7 +275,7 @@ sublattice
 
 ```
 
-And we can plot just the suublattice:
+And we can plot just the sublattice:
 ```{r}
 sublattice$plot()
 ```

@@ -1,3 +1,9 @@
+#' @title
+#' R6 class for a context lattice
+#'
+#' @description
+#' This class implements the data structure and methods for concept lattices.
+#'
 #' @export
 ConceptLattice <- R6::R6Class(
 
@@ -5,6 +11,19 @@ ConceptLattice <- R6::R6Class(
 
   public = list(
 
+    #' @description
+    #' Create a new \code{ConceptLattice} object.
+    #'
+    #' @param extents (\code{dgCMatrix}) The extents of all concepts
+    #' @param intents (\code{dgCMatrix}) The intents of all concepts
+    #' @param objects (character vector) Names of the objects in the formal context
+    #' @param attributes (character vector) Names of the attributes in the formal context
+    #' @param I (\code{dgCMatrix}) The matrix of the formal context
+    #'
+    #' @return
+    #' A new \code{ConceptLattice} object.
+    #'
+    #' @export
     initialize = function(extents, intents,
                           objects, attributes,
                           I = NULL) {
@@ -14,6 +33,7 @@ ConceptLattice <- R6::R6Class(
       private$extents <- extents
       private$intents <- intents
 
+      # Create the SparseConcepts
       if (!is.null(extents)) {
 
         private$concepts <- lapply(seq(ncol(intents)),
@@ -30,6 +50,13 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Size of the Lattice
+    #'
+    #' @return
+    #' The number of concepts in the lattice.
+    #'
+    #' @export
     size = function() {
 
       if (self$is_empty()) {
@@ -42,18 +69,38 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Is the lattice empty?
+    #'
+    #' @return
+    #' \code{TRUE} if the lattice has no concepts.
+    #' @export
     is_empty = function() {
 
       return(is.null(private$concepts))
 
     },
 
+    #' @description
+    #' Concept Extents
+    #'
+    #' @return
+    #' The extents of all concepts, as a \code{dgCMatrix}.
+    #'
+    #' @export
     get_extents = function() {
 
       return(private$extents)
 
     },
 
+    #' @description
+    #' Concept Intents
+    #'
+    #' @return
+    #' The intents of all concepts, as a \code{dgCMatrix}.
+    #'
+    #' @export
     get_intents = function() {
 
       return(private$intents)
@@ -95,6 +142,13 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Print the Concept Lattice
+    #'
+    #' @return
+    #' Nothing, just prints the lattice.
+    #'
+    #' @export
     print = function() {
 
       if (self$is_empty()) {
@@ -124,6 +178,17 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Write in LaTeX
+    #'
+    #' @param ncols (integer) Number of columns of the output.
+    #' @param numbered (logical) Number the concepts?
+    #' @param align  (logical) Align objects and attributes independently?
+    #'
+    #' @return
+    #' The \code{LaTeX} code to list all concepts.
+    #'
+    #' @export
     to_latex = function(ncols = 1,
                         numbered = TRUE,
                         align = TRUE) {
@@ -139,6 +204,14 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Get Concepts by Index
+    #'
+    #' @param indices (numeric vector) The indices of the concepts to return as a list of SparseConcepts.
+    #'
+    #' @return A list of SparseConcepts.
+    #'
+    #' @export
     get_concepts_by_id = function(indices) {
 
       if (!self$is_empty()) {
@@ -152,6 +225,18 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Sublattice
+    #'
+    #' @param ... See Details.
+    #'
+    #' @details
+    #' As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to generate a sublattice.
+    #'
+    #' @return
+    #' The generated sublattice as a new \code{ConceptLattice} object.
+    #'
+    #' @export
     get_sublattice = function(...) {
 
       idx <- private$to_indices(...)
@@ -185,6 +270,15 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+
+    #' @description
+    #' Join-irreducible Elements
+    #'
+    #' @return
+    #' The join-irreducible elements in the concept lattice.
+    #'
+    #' @export
+    #'
     #' @importFrom Matrix colSums
     join_irreducibles = function() {
 
@@ -195,6 +289,14 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Meet-irreducible Elements
+    #'
+    #' @return
+    #' The meet-irreducible elements in the concept lattice.
+    #'
+    #' @export
+    #'
     #' @importFrom Matrix colSums
     meet_irreducibles = function() {
 
@@ -205,6 +307,18 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Supremum of Concepts
+    #'
+    #' @param ... See Details.
+    #'
+    #' @details
+    #' As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to compute their supremum in the lattice.
+    #'
+    #' @return
+    #' The supremum of the list of concepts.
+    #'
+    #' @export
     supremum = function(...) {
 
       idx <- private$to_indices(...)
@@ -227,6 +341,18 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Infimum of Concepts
+    #'
+    #' @param ... See Details.
+    #'
+    #' @details
+    #' As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to compute their infimum in the lattice.
+    #'
+    #' @return
+    #' The infimum of the list of concepts.
+    #'
+    #' @export
     infimum = function(...) {
 
       idx <- private$to_indices(...)
@@ -248,6 +374,14 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Subconcepts of a Concept
+    #'
+    #' @param C (numeric or \code{SparseConcept}) The concept to which determine all its subconcepts.
+    #'
+    #' @return
+    #' A list with the subconcepts.
+    #' @export
     get_subconcepts = function(C) {
 
       idx <- private$to_indices(C)
@@ -260,6 +394,14 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Superconcepts of a Concept
+    #'
+    #' @param C (numeric or \code{SparseConcept}) The concept to which determine all its superconcepts.
+    #'
+    #' @return
+    #' A list with the superconcepts.
+    #' @export
     get_superconcepts = function(C) {
 
       idx <- private$to_indices(C)

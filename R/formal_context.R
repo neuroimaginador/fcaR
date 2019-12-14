@@ -340,6 +340,15 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Is a Concept?
+    #'
+    #' @param C A \code{SparseConcept} object
+    #'
+    #' @return
+    #' \code{TRUE} if \code{C} is a concept.
+    #'
+    #' @export
     is_concept = function(C) {
 
       O <- C$get_extent()
@@ -350,6 +359,14 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Testing closure of attribute sets
+    #'
+    #' @param S A \code{SparseSet} of attributes
+    #'
+    #' @return
+    #' \code{TRUE} if the set \code{S} is closed in this formal context.
+    #' @export
     is_closed = function(S) {
 
       Sc <- self$get_closure(S)
@@ -479,6 +496,15 @@ FormalContext <- R6::R6Class(
 
     },
 
+    #' @description
+    #' Build the Standard Context
+    #'
+    #' @details
+    #' All concepts must be previously computed.
+    #'
+    #' @return
+    #' The standard context using the join- and meet- ireeducble elements.
+    #' @export
     standardize = function() {
 
       if (self$concepts$is_empty()) {
@@ -530,9 +556,9 @@ FormalContext <- R6::R6Class(
       attrs <- self$attributes
 
       L <- next_closure_concepts(I = my_I,
-                                     grades_set = grades_set,
-                                     attrs = attrs,
-                                     verbose = verbose)
+                                 grades_set = grades_set,
+                                 attrs = attrs,
+                                 verbose = verbose)
 
       # Since the previous function gives the list of intents of
       # the computed concepts, now we will compute the corresponding
@@ -643,8 +669,8 @@ FormalContext <- R6::R6Class(
                                           I = self$I)
 
       extracted_implications <- ImplicationSet$new(attributes = self$attributes,
-                                                    lhs = my_LHS,
-                                                    rhs = my_RHS)
+                                                   lhs = my_LHS,
+                                                   rhs = my_RHS)
 
       self$implications <- extracted_implications
 
@@ -828,12 +854,21 @@ FormalContext <- R6::R6Class(
 
     },
 
+
+    #' @description
+    #' Write the context in LaTeX format
+    #'
+    #' @return
+    #' A tabular environment in LaTeX.
+    #'
+    #' @export
+    #'
     #' @importFrom knitr kable
     to_latex = function() {
 
       I <- as.matrix(t(self$I))
       str <- as.character(kable(I, format = "latex",
-                   booktabs = TRUE, linesep = ""))
+                                booktabs = TRUE, linesep = ""))
 
       cat(str)
 
@@ -906,7 +941,5 @@ FormalContext <- R6::R6Class(
     }
 
   )
-
-
 
 )
