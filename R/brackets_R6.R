@@ -4,4 +4,4 @@
 
 #' @export
 #' @noRd
-`[<-.R6` <- function(x, ...) x$`[<-`(...)
+`[<-.R6` <- function(x, value) x$`[<-`(value)
