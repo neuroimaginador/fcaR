@@ -32,19 +32,17 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \itemize{
 \item \href{#method-new}{\code{FormalContext$new()}}
 \item \href{#method-is_empty}{\code{FormalContext$is_empty()}}
-\item \href{#method-get_intent}{\code{FormalContext$get_intent()}}
-\item \href{#method-get_extent}{\code{FormalContext$get_extent()}}
-\item \href{#method-get_closure}{\code{FormalContext$get_closure()}}
+\item \href{#method-intent}{\code{FormalContext$intent()}}
+\item \href{#method-extent}{\code{FormalContext$extent()}}
+\item \href{#method-closure}{\code{FormalContext$closure()}}
 \item \href{#method-is_concept}{\code{FormalContext$is_concept()}}
 \item \href{#method-is_closed}{\code{FormalContext$is_closed()}}
 \item \href{#method-clarify}{\code{FormalContext$clarify()}}
 \item \href{#method-reduce}{\code{FormalContext$reduce()}}
 \item \href{#method-standardize}{\code{FormalContext$standardize()}}
-\item \href{#method-compute_concepts}{\code{FormalContext$compute_concepts()}}
-\item \href{#method-add_implications}{\code{FormalContext$add_implications()}}
-\item \href{#method-extract_implications_concepts}{\code{FormalContext$extract_implications_concepts()}}
-\item \href{#method-convert_to_transactions}{\code{FormalContext$convert_to_transactions()}}
-\item \href{#method-export_implications_to_arules}{\code{FormalContext$export_implications_to_arules()}}
+\item \href{#method-find_concepts}{\code{FormalContext$find_concepts()}}
+\item \href{#method-find_implications}{\code{FormalContext$find_implications()}}
+\item \href{#method-to_transactions}{\code{FormalContext$to_transactions()}}
 \item \href{#method-save}{\code{FormalContext$save()}}
 \item \href{#method-load}{\code{FormalContext$load()}}
 \item \href{#method-dim}{\code{FormalContext$dim()}}
@@ -94,11 +92,11 @@ Check if the \code{FormalContext} is empty
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_intent"></a>}}
-\subsection{Method \code{get_intent()}}{
+\if{html}{\out{<a id="method-intent"></a>}}
+\subsection{Method \code{intent()}}{
 Get the intent of a fuzzy set of objects
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_intent(S)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$intent(S)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -113,11 +111,11 @@ A \code{SparseSet} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_extent"></a>}}
-\subsection{Method \code{get_extent()}}{
+\if{html}{\out{<a id="method-extent"></a>}}
+\subsection{Method \code{extent()}}{
 Get the extent of a fuzzy set of attributes
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_extent(S)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$extent(S)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -132,11 +130,11 @@ A \code{SparseSet} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_closure"></a>}}
-\subsection{Method \code{get_closure()}}{
+\if{html}{\out{<a id="method-closure"></a>}}
+\subsection{Method \code{closure()}}{
 Get the closure of a fuzzy set of attributes
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_closure(S)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$closure(S)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -243,11 +241,11 @@ The standard context using the join- and meet- ireeducble elements.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-compute_concepts"></a>}}
-\subsection{Method \code{compute_concepts()}}{
+\if{html}{\out{<a id="method-find_concepts"></a>}}
+\subsection{Method \code{find_concepts()}}{
 Use Ganter Algorithm to compute concepts
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$compute_concepts(verbose = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$find_concepts(verbose = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -262,30 +260,11 @@ A list with all the concepts in the formal context.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_implications"></a>}}
-\subsection{Method \code{add_implications()}}{
-Add a precomputed implication set
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$add_implications(impl_set)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{impl_set}}{(\code{ImplicationSet} object) The implications to add to this formal context.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Nothing, just updates the internal \code{implications} field.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extract_implications_concepts"></a>}}
-\subsection{Method \code{extract_implications_concepts()}}{
+\if{html}{\out{<a id="method-find_implications"></a>}}
+\subsection{Method \code{find_implications()}}{
 Use modified Ganter algorithm to compute both concepts and implications
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$extract_implications_concepts(verbose = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$find_implications(verbose = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -300,34 +279,15 @@ Nothing, just updates the internal fields \code{concepts} and \code{implications
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-convert_to_transactions"></a>}}
-\subsection{Method \code{convert_to_transactions()}}{
+\if{html}{\out{<a id="method-to_transactions"></a>}}
+\subsection{Method \code{to_transactions()}}{
 Convert the formal context to object of class \code{transactions} from the \code{arules} package
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$convert_to_transactions()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_transactions()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
 A \code{transactions} object.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-export_implications_to_arules"></a>}}
-\subsection{Method \code{export_implications_to_arules()}}{
-Export implications to \code{arules} format
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$export_implications_to_arules(quality = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{quality}}{(logical) Compute the interest measures for each rule?}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{rules} object from \code{arules} package. If \code{quality == TRUE}, the function \code{interestMeasure} from \code{arules} is used.
 }
 }
 \if{html}{\out{<hr>}}

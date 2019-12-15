@@ -20,7 +20,7 @@ rownames(I) <- objects
 
 fc <- FormalContext$new(I)
 
-expect_error(fc$extract_implications_concepts(), NA)
+expect_error(fc$find_concepts(), NA)
 
 test_that("fcaR creates a ConceptLattice", {
 

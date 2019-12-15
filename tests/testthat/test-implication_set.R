@@ -13,7 +13,7 @@ test_that("fcaR operates on implications", {
 
   fc <- FormalContext$new(I = Mushroom)
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
   # Cadinality
   expect_is(fc$implications$cardinality(), "integer")
@@ -47,7 +47,7 @@ test_that("fcaR prints implications", {
 
   fc <- FormalContext$new(I = Mushroom)
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
   expect_error(fc$implications, NA)
 
@@ -57,13 +57,69 @@ test_that("fcaR adds and appends implications", {
 
   fc <- FormalContext$new(I = Mushroom)
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
-  fc$implications$append_implications(fc$implications)
+  fc$implications$add(fc$implications)
   first_lhs <- .extract_column(fc$implications$get_LHS_matrix(), 1)
   first_rhs <- .extract_column(fc$implications$get_RHS_matrix(), 1)
 
-  expect_error(fc$implications$add_implication(lhs = first_lhs, rhs = first_rhs), NA)
+  expect_error(fc$implications$add(first_lhs, first_rhs), NA)
+
+})
+
+test_that("fcaR imports implications from arules", {
+
+  fc <- FormalContext$new(I = Mushroom)
+  fc$implications$add(mush_clean)
+  expect_is(fc$implications, "ImplicationSet")
+
+  imps <- fc$implications$clone()
+  fc$implications$add(imps)
+  expect_is(fc$implications, "ImplicationSet")
+
+})
+
+test_that("fcaR exports implications to arules", {
+
+  fc <- FormalContext$new(I = Mushroom)
+
+  fc$implications$add(mush_clean)
+
+  fc$implications$apply_rules("composition", parallelize = FALSE)
+
+  my_rules <- fc$implications$to_arules(quality = TRUE)
+
+  expect_is(my_rules, "rules")
+
+})
+
+
+test_that("fcaR computes implication support", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I = I)
+  expect_error(fc$implications$support(), NA)
+
+  fc$find_implications()
+
+  expect_error(fc$implications$support(), NA)
 
 })
 
@@ -71,9 +127,9 @@ test_that("fcaR exports implications to latex", {
 
   fc <- FormalContext$new(I = Mushroom)
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
-  expect_error(fc$implications$get_rules(1:10)$to_latex(), NA)
+  expect_error(fc$implications[1:10]$to_latex(), NA)
 
 })
 
@@ -86,7 +142,7 @@ test_that("fcaR gets LHS and RHS of implications", {
   expect_is(fc$implications$get_LHS_matrix(), "lgCMatrix")
   expect_is(fc$implications$get_RHS_matrix(), "lgCMatrix")
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
   expect_is(fc$implications$get_LHS_matrix(), "dgCMatrix")
   expect_is(fc$implications$get_RHS_matrix(), "dgCMatrix")
@@ -97,14 +153,14 @@ test_that("fcaR computes closure wrt implications", {
 
   fc <- FormalContext$new(I = Mushroom)
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
   # A fuzzy set
   A <- SparseSet$new(attributes = fc$attributes)
   A$assign(attributes = "CapColor=white", values = 1)
 
   # Compute the closure
-  expect_error(cl <- fc$implications$compute_closure(A, reduce = TRUE, verbose = TRUE), NA)
+  expect_error(cl <- fc$implications$closure(A, reduce = TRUE, verbose = TRUE), NA)
   # Associated attributes
   expect_is(cl$closure, "SparseSet")
 
@@ -116,7 +172,7 @@ test_that("fcaR simplifies implications", {
 
   fc <- FormalContext$new(I = Mushroom)
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
   L <- .simplification(LHS = fc$implications$get_LHS_matrix(),
                        RHS = fc$implications$get_RHS_matrix(),
@@ -131,7 +187,7 @@ test_that("fcaR makes a recommendation", {
 
   fc <- FormalContext$new(I = Mushroom)
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
   # A fuzzy set
   S <- SparseSet$new(attributes = fc$attributes)
@@ -145,7 +201,7 @@ test_that("fcaR filters and removes implications", {
 
   fc <- FormalContext$new(I = Mushroom)
 
-  fc$add_implications(mush_clean)
+  fc$implications$add(mush_clean)
 
   expect_warning(fc$implications$filter(lhs = fc$attributes[1], rhs = fc$attributes[1:2]))
 
@@ -156,9 +212,9 @@ test_that("fcaR filters and removes implications", {
 
   n <- fc$implications$cardinality()
 
-  expect_error(fc$implications$remove_rules(1:2), NA)
+  expect_error(imp2 <- fc$implications[-c(1:2)], NA)
 
-  n2 <- fc$implications$cardinality()
+  n2 <- imp2$cardinality()
 
   expect_equal(n2, n - 2)
 
@@ -199,7 +255,7 @@ test_that("fcaR adds implications from scratch", {
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 
-  expect_error(fc$implications$add_implication(lhs = lhs1, rhs = rhs1), NA)
+  expect_error(fc$implications$add(lhs = lhs1, rhs = rhs1), NA)
 
 })
 
@@ -236,7 +292,7 @@ test_that("fcaR can use generalization", {
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 
-  fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
+  fc$implications$add(lhs1, rhs1)
 
   lhs2 <- SparseSet$new(attributes = fc$attributes)
   lhs2$assign(attributes = fc$attributes[c(1, 3)],
@@ -246,7 +302,7 @@ test_that("fcaR can use generalization", {
   rhs2$assign(fc$attributes[4],
               values = 1)
 
-  fc$implications$add_implication(lhs = lhs2, rhs = rhs2)
+  fc$implications$add(lhs2, rhs2)
 
   expect_error(fc$implications$apply_rules(rules = "generalization", parallelize = FALSE), NA)
 
@@ -285,7 +341,7 @@ test_that("fcaR filters implications", {
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 
-  fc$implications$add_implication(lhs = lhs1, rhs = rhs1)
+  fc$implications$add(lhs1, rhs1)
 
   expect_warning(fc$implications$filter(lhs = fc$attributes[5]))
 

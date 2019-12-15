@@ -142,7 +142,7 @@ FormalContext <- R6::R6Class(
       private$is_binary <- length(self$grades_set) == 2
 
       # Create a new empty implication set inside
-      self$implications <- ImplicationSet$new(attributes = attributes)
+      self$implications <- ImplicationSet$new(attributes = attributes, I = self$I)
 
       # Create a new empty ConceptLattice inside
       self$concepts <- ConceptLattice$new(extents = NULL,
@@ -175,7 +175,7 @@ FormalContext <- R6::R6Class(
     #' @importFrom Matrix sparseMatrix
     #'
     #' @export
-    get_intent = function(S) {
+    intent = function(S) {
 
       if (inherits(S, "SparseSet")) {
 
@@ -232,7 +232,7 @@ FormalContext <- R6::R6Class(
     #' @importFrom Matrix sparseMatrix
     #'
     #' @export
-    get_extent = function(S) {
+    extent = function(S) {
 
       if (inherits(S, "SparseSet")) {
 
@@ -289,7 +289,7 @@ FormalContext <- R6::R6Class(
     #' @importFrom Matrix sparseMatrix
     #'
     #' @export
-    get_closure = function(S) {
+    closure = function(S) {
 
       if (inherits(S, "SparseSet")) {
 
@@ -351,7 +351,7 @@ FormalContext <- R6::R6Class(
       A <- C$get_intent()
 
       # O should be the extent of A, and A should be intent of O
-      return((self$get_extent(A) %==% O) && (self$get_intent(O) %==% A))
+      return((self$extent(A) %==% O) && (self$intent(O) %==% A))
 
     },
 
@@ -365,7 +365,7 @@ FormalContext <- R6::R6Class(
     #' @export
     is_closed = function(S) {
 
-      Sc <- self$get_closure(S)
+      Sc <- self$closure(S)
       return(S %==% Sc)
 
     },
@@ -442,13 +442,13 @@ FormalContext <- R6::R6Class(
 
         yv <- SparseSet$new(attributes = att)
         yv$assign(attributes = y, values = 1)
-        y_down <- fc2$get_extent(yv)
+        y_down <- fc2$extent(yv)
 
         for (yp in setdiff(att, y)) {
 
           ypv <- SparseSet$new(attributes = att)
           ypv$assign(attributes = yp, values = 1)
-          yp_down <- fc2$get_extent(ypv)
+          yp_down <- fc2$extent(ypv)
 
           S <- .subset(y_down$get_vector(),
                        yp_down$get_vector())
@@ -542,7 +542,7 @@ FormalContext <- R6::R6Class(
     #' @return A list with all the concepts in the formal context.
     #'
     #' @export
-    compute_concepts = function(verbose = FALSE) {
+    find_concepts = function(verbose = FALSE) {
 
       private$check_empty()
 
@@ -573,59 +573,6 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
-    #' Add a precomputed implication set
-    #'
-    #' @param impl_set   (\code{ImplicationSet} object) The implications to add to this formal context.
-    #'
-    #' @return Nothing, just updates the internal \code{implications} field.
-    #'
-    #' @import arules
-    #' @export
-    add_implications = function(impl_set) {
-
-      private$check_empty()
-
-      if (inherits(impl_set, "rules")) {
-
-        # If it comes from arules
-        # convert to our format
-        implications <- ImplicationSet$new(impl_set)
-
-      } else {
-
-        # If it's already an implication set
-        # just clone it
-        implications <- impl_set$clone()
-
-      }
-
-      # Initialize or add the implications field
-      if (self$implications$is_empty()) {
-
-        self$implications <- implications
-
-      } else {
-
-        old_LHS <- self$implications$get_LHS_matrix()
-        old_RHS <- self$implications$get_RHS_matrix()
-
-        new_LHS <- implications$get_LHS_matrix()
-        new_RHS <- implications$get_RHS_matrix()
-
-        LHS <- cbind(old_LHS, new_LHS)
-        RHS <- cbind(old_RHS, new_RHS)
-
-        impl <- ImplicationSet$new(attributes = self$attributes,
-                                   lhs = LHS,
-                                   rhs = RHS)
-
-        self$implications <- impl
-
-      }
-
-    },
-
-    #' @description
     #' Use modified Ganter algorithm to compute both concepts and implications
     #'
     #' @param verbose   (logical) TRUE will provide a verbose output.
@@ -634,7 +581,7 @@ FormalContext <- R6::R6Class(
     #'
     #'
     #' @export
-    extract_implications_concepts = function(verbose = FALSE) {
+    find_implications = function(verbose = FALSE) {
 
       private$check_empty()
 
@@ -666,7 +613,8 @@ FormalContext <- R6::R6Class(
 
       extracted_implications <- ImplicationSet$new(attributes = self$attributes,
                                                    lhs = my_LHS,
-                                                   rhs = my_RHS)
+                                                   rhs = my_RHS,
+                                                   I = self$I)
 
       self$implications <- extracted_implications
 
@@ -681,39 +629,11 @@ FormalContext <- R6::R6Class(
     #' @import arules
     #'
     #' @export
-    convert_to_transactions = function() {
+    to_transactions = function() {
 
       private$check_empty()
 
       return(as(as(self$I, "ngCMatrix"), "transactions"))
-
-    },
-
-    #' @description
-    #' Export implications to \code{arules} format
-    #'
-    #' @param quality   (logical) Compute the interest measures for each rule?
-    #'
-    #' @return A \code{rules} object from \code{arules} package. If \code{quality == TRUE}, the function \code{interestMeasure} from \code{arules} is used.
-    #'
-    #' @import arules
-    #' @importFrom methods as
-    #'
-    #' @export
-    export_implications_to_arules = function(quality = TRUE) {
-
-      private$check_empty()
-
-      R <- self$implications$to_arules()
-
-      if (quality) {
-
-        quality(R) <- interestMeasure(R,
-                                      transactions = as(as(self$I, "ngCMatrix"), "transactions"))
-
-      }
-
-      return(R)
 
     },
 

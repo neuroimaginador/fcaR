@@ -72,7 +72,7 @@ ImplicationSet <- R6::R6Class(
         private$lhs_matrix <- args$lhs
         private$rhs_matrix <- args$rhs
         private$I <- args$I
-        private$support <- numeric(0)
+        private$implication_support <- numeric(0)
 
       }
 
@@ -91,14 +91,72 @@ ImplicationSet <- R6::R6Class(
     },
 
     #' @description
+    #' Get a subset of the implication set
+    #'
+    #' @param idx   (integer vector) Indices of the implications to extract or remove.
+    #'
+    #' @return A new \code{ImplicationSet} with only the rules given by the \code{idx} indices (if all \code{idx > 0} and all but \code{idx} if all \code{idx < 0}.
+    #' @export
+    `[` = function(idx) {
+
+      idx <- idx[abs(idx) <= self$cardinality()]
+      idx <- idx[abs(idx) > 0]
+
+      if (length(idx) > 0) {
+
+        if (all(idx < 0) | all(idx > 0)) {
+
+          imp <- ImplicationSet$new(
+            name = paste0(private$name, "_", paste0(idx)),
+            attributes = private$attributes,
+            lhs = Matrix(private$lhs_matrix[, idx],
+                         sparse = TRUE),
+            rhs = Matrix(private$rhs_matrix[, idx],
+                         sparse = TRUE))
+
+          return(imp)
+
+        } else {
+
+          stop("Cannot use mixed positive and negative indices.\n",
+               call. = FALSE)
+
+        }
+
+      } else {
+
+        return(ImplicationSet$new(attributes = private$attributes,
+                                  I = private$I))
+
+      }
+
+    },
+
+    #' @description
     #' Convert to arules format
+    #'
+    #' @param quality   (logical) Compute the interest measures for each rule?
     #'
     #' @return A \code{rules} object as used by package \code{arules}.
     #'
     #' @import arules
     #' @importFrom methods as is
     #' @export
-    to_arules = function() {
+    to_arules = function(quality = TRUE) {
+
+      if (self$is_empty()) {
+
+        stop("No implications to export.\n",
+             call. = FALSE)
+
+      }
+
+      if (!private$is_binary()) {
+
+        stop("Export to arules format is only allowed when using binary implications.\n",
+             call. = FALSE)
+
+      }
 
       # Needed to export to arules
       L <- .reduction(LHS = private$lhs_matrix,
@@ -115,76 +173,78 @@ ImplicationSet <- R6::R6Class(
 
       rules <- new("rules", lhs = LHS, rhs = RHS)
 
+      if (quality) {
+
+        quality(rules) <- interestMeasure(rules,
+                                          transactions = as(as(private$I, "ngCMatrix"), "transactions"))
+
+      }
+
       return(rules)
 
     },
 
     #' @description
-    #' Add new implication to the set
+    #' Add a precomputed implication set
     #'
-    #' @param lhs  (a sparse matrix) The LHS of the rule to add.
-    #' @param rhs  (a sparse matrix) The RHS of the rule to add.
+    #' @param ...   An \code{ImplicationSet} object, a \code{rules} object, or a pair \code{lhs}, \code{rhs} of \code{SparseSet} objects or \code{dgCMatrix}. The implications to add to this formal context.
     #'
-    #' @return Nothing, just updates the internal matrices for LHS and RHS.
+    #' @return Nothing, just updates the internal \code{implications} field.
     #'
+    #' @import arules
     #' @export
-    add_implication = function(lhs, rhs) {
+    add = function(...) {
 
-      if (inherits(lhs, "SparseSet")) {
+      dots <- list(...)
 
-        lhs <- lhs$get_vector()
+      # Just a single ImplicationSet
+      if (length(dots) == 1) {
 
-      }
+        if (inherits(dots[[1]], "ImplicationSet")) {
 
-      if (inherits(rhs, "SparseSet")) {
+          private$append_implications(dots[[1]])
 
-        rhs <- rhs$get_vector()
+        } else {
 
-      }
+          # It is a rules object
+          implications <- ImplicationSet$new(dots[[1]])
+          private$append_implications(implications)
 
-      if (is.null(private$lhs_matrix)) {
+        }
 
-        private$lhs_matrix <- lhs
-
-      } else {
-
-        private$lhs_matrix <- add_col(private$lhs_matrix, lhs)
-
-      }
-
-      if (is.null(private$rhs_matrix)) {
-
-        private$rhs_matrix <- rhs
 
       } else {
 
-        private$rhs_matrix <- add_col(private$rhs_matrix, rhs)
+        # It must come in the form LHS, RHS
+        if (length(dots) == 2) {
 
-      }
+          lhs <- dots[[1]]
+          rhs <- dots[[2]]
 
-    },
+          if (inherits(lhs, "SparseSet")) {
 
-    #' @description
-    #' Append implications to the current ones.
-    #'
-    #' @param implications (\code{ImplicationSet}) The set of implications to append at the end of the current set.
-    #'
-    #' @return Nothing, just updates the internal matrices for LHS and RHS.
-    #'
-    #' @export
-    append_implications = function(implications) {
+            lhs <- lhs$get_vector()
 
-      LHS <- implications$get_LHS_matrix()
-      RHS <- implications$get_RHS_matrix()
+          }
 
-      if (length(private$attributes) == nrow(LHS)) {
+          if (inherits(rhs, "SparseSet")) {
 
-        private$lhs_matrix <- cbind(private$lhs_matrix, LHS)
-        private$rhs_matrix <- cbind(private$rhs_matrix, RHS)
+            rhs <- rhs$get_vector()
 
-      } else {
+          }
 
-        stop("Dimensions mismatch.")
+          imp <- ImplicationSet$new(attributes = private$attributes,
+                                    lhs = lhs,
+                                    rhs = rhs)
+
+          private$append_implications(imp)
+
+        } else {
+
+          stop("Invalid number of arguments.\n",
+               call. = FALSE)
+
+        }
 
       }
 
@@ -241,9 +301,9 @@ ImplicationSet <- R6::R6Class(
     #' @return If \code{reduce == FALSE}, the output is a fuzzy set corresponding to the closure of \code{S}. If \code{reduce == TRUE}, a list with two components: \code{closure}, with the closure as above, and \code{implications}, the reduced set of implications.
     #'
     #' @export
-    compute_closure = function(S,
-                               reduce = FALSE,
-                               verbose = FALSE) {
+    closure = function(S,
+                       reduce = FALSE,
+                       verbose = FALSE) {
 
       if (inherits(S, "SparseSet")) {
 
@@ -261,17 +321,17 @@ ImplicationSet <- R6::R6Class(
       if (!reduce) {
 
         cl <- list(closure = SparseSet$new(attributes = private$attributes,
-                             M = cl$closure))
+                                           M = cl$closure))
 
       } else {
 
         cl$closure <- SparseSet$new(attributes = private$attributes,
-                                     M = cl$closure)
+                                    M = cl$closure)
 
         cl$implications <- ImplicationSet$new(attributes = private$attributes,
-                                               name = "reduced",
-                                               lhs = cl$implications$lhs,
-                                               rhs = cl$implications$rhs)
+                                              name = "reduced",
+                                              lhs = cl$implications$lhs,
+                                              rhs = cl$implications$rhs)
 
       }
 
@@ -558,16 +618,16 @@ ImplicationSet <- R6::R6Class(
           newRHS[other_idx, ] <- 0
 
           imp <- ImplicationSet$new(name = paste0(private$name, "_filtered"),
-                                     attributes = private$attributes,
-                                     lhs = Matrix(newLHS, sparse = TRUE),
-                                     rhs = Matrix(newRHS, sparse = TRUE))
+                                    attributes = private$attributes,
+                                    lhs = Matrix(newLHS, sparse = TRUE),
+                                    rhs = Matrix(newRHS, sparse = TRUE))
 
         } else {
 
           imp <- ImplicationSet$new(name = paste0(private$name, "_filtered"),
-                                     attributes = private$attributes,
-                                     lhs = Matrix(LHS[, idx], sparse = TRUE),
-                                     rhs = Matrix(RHS[, idx], sparse = TRUE))
+                                    attributes = private$attributes,
+                                    lhs = Matrix(LHS[, idx], sparse = TRUE),
+                                    rhs = Matrix(RHS[, idx], sparse = TRUE))
 
         }
 
@@ -577,54 +637,14 @@ ImplicationSet <- R6::R6Class(
 
     },
 
-    #' @description
-    #' Get a subset of the implication set
-    #'
-    #' @param idx   (integer vector) Indices of the implications to extract.
-    #'
-    #' @return A new \code{ImplicationSet} with only the rules given by the \code{idx} indices.
-    #'
-    #' @export
-    get_rules = function(idx) {
 
-      RHS <- private$rhs_matrix
-      LHS <- private$lhs_matrix
-
-      imp <- ImplicationSet$new(name = paste0(private$name, "_", paste0(idx)),
-                                 attributes = private$attributes,
-                                 lhs = Matrix(LHS[, idx], sparse = TRUE),
-                                 rhs = Matrix(RHS[, idx], sparse = TRUE))
-
-      return(imp)
-
-    },
-
-    #' @description
-    #' Remove implications from the set
-    #'
-    #' @param idx  (integer vector) Indices of implications to remove.
-    #'
-    #' @return An \code{ImplicationSet} with the implications at given indices removed with respect to the original set.
-    #'
-    #' @export
-    remove_rules = function(idx) {
-
-      idx <- idx[idx <= ncol(private$lhs_matrix)]
-
-      if (length(idx) > 0) {
-
-        private$lhs_matrix <- private$lhs_matrix[, -idx]
-        private$rhs_matrix <- private$rhs_matrix[, -idx]
-      }
-
-    },
 
     #' @description
     #' Compute support of each implication
     #'
     #' @return A vector with the support of each implication
     #' @export
-    compute_support = function() {
+    support = function() {
 
       if (self$is_empty()) {
 
@@ -632,18 +652,18 @@ ImplicationSet <- R6::R6Class(
 
       }
 
-      if (length(private$support) > 0) {
+      if (length(private$implication_support) > 0) {
 
-        return(private$support)
+        return(private$implication_support)
 
       }
 
       subsets <- .subset(private$lhs_matrix,
                          private$I)
 
-      private$support <- rowMeans(subsets)
+      private$implication_support <- rowMeans(subsets)
 
-      return(private$support)
+      return(private$implication_support)
 
     }
 
@@ -659,7 +679,59 @@ ImplicationSet <- R6::R6Class(
     rhs_matrix = NULL,
 
     I = NULL,
-    support = NULL
+    implication_support = NULL,
+    binary = NULL,
+
+    is_binary = function() {
+
+      if (!is.null(private$binary)) {
+
+        return(private$binary)
+
+      }
+
+      if (!is.null(private$I)) {
+
+        v <- unique(c(0, private$I@x, 1))
+
+      } else {
+
+        if (!is.null(private$lhs_matrix)) {
+
+          v <- unique(c(0, private$lhs_matrix@x,
+                        private$rhs_matrix@x, 1))
+
+        } else {
+
+          return(FALSE)
+
+        }
+
+      }
+
+      private$binary <- (length(v) == 2) && all(v == c(0, 1))
+      return(private$binary)
+
+
+    },
+
+    append_implications = function(implications) {
+
+      LHS <- implications$get_LHS_matrix()
+      RHS <- implications$get_RHS_matrix()
+
+      if (length(private$attributes) == nrow(LHS)) {
+
+        private$lhs_matrix <- cbind(private$lhs_matrix, LHS)
+        private$rhs_matrix <- cbind(private$rhs_matrix, RHS)
+
+      } else {
+
+        stop("Dimensions mismatch.")
+
+      }
+
+    }
 
   )
 

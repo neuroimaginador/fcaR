@@ -18,13 +18,13 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \itemize{
 \item \href{#method-new}{\code{ImplicationSet$new()}}
 \item \href{#method-get_attributes}{\code{ImplicationSet$get_attributes()}}
+\item \href{#method-[}{\code{ImplicationSet$[()}}
 \item \href{#method-to_arules}{\code{ImplicationSet$to_arules()}}
-\item \href{#method-add_implication}{\code{ImplicationSet$add_implication()}}
-\item \href{#method-append_implications}{\code{ImplicationSet$append_implications()}}
+\item \href{#method-add}{\code{ImplicationSet$add()}}
 \item \href{#method-cardinality}{\code{ImplicationSet$cardinality()}}
 \item \href{#method-is_empty}{\code{ImplicationSet$is_empty()}}
 \item \href{#method-size}{\code{ImplicationSet$size()}}
-\item \href{#method-compute_closure}{\code{ImplicationSet$compute_closure()}}
+\item \href{#method-closure}{\code{ImplicationSet$closure()}}
 \item \href{#method-recommend}{\code{ImplicationSet$recommend()}}
 \item \href{#method-apply_rules}{\code{ImplicationSet$apply_rules()}}
 \item \href{#method-print}{\code{ImplicationSet$print()}}
@@ -32,9 +32,7 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \item \href{#method-get_LHS_matrix}{\code{ImplicationSet$get_LHS_matrix()}}
 \item \href{#method-get_RHS_matrix}{\code{ImplicationSet$get_RHS_matrix()}}
 \item \href{#method-filter}{\code{ImplicationSet$filter()}}
-\item \href{#method-get_rules}{\code{ImplicationSet$get_rules()}}
-\item \href{#method-remove_rules}{\code{ImplicationSet$remove_rules()}}
-\item \href{#method-compute_support}{\code{ImplicationSet$compute_support()}}
+\item \href{#method-support}{\code{ImplicationSet$support()}}
 \item \href{#method-clone}{\code{ImplicationSet$clone()}}
 }
 }
@@ -80,55 +78,60 @@ A character vector with the names of the attributes used in the implications.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-["></a>}}
+\subsection{Method \code{[()}}{
+Get a subset of the implication set
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$[(idx)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{idx}}{(integer vector) Indices of the implications to extract or remove.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{ImplicationSet} with only the rules given by the \code{idx} indices (if all \code{idx > 0} and all but \code{idx} if all \code{idx < 0}.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_arules"></a>}}
 \subsection{Method \code{to_arules()}}{
 Convert to arules format
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_arules()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_arules(quality = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quality}}{(logical) Compute the interest measures for each rule?}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 A \code{rules} object as used by package \code{arules}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_implication"></a>}}
-\subsection{Method \code{add_implication()}}{
-Add new implication to the set
+\if{html}{\out{<a id="method-add"></a>}}
+\subsection{Method \code{add()}}{
+Add a precomputed implication set
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$add_implication(lhs, rhs)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$add(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{lhs}}{(a sparse matrix) The LHS of the rule to add.}
-
-\item{\code{rhs}}{(a sparse matrix) The RHS of the rule to add.}
+\item{\code{...}}{An \code{ImplicationSet} object, a \code{rules} object, or a pair \code{lhs}, \code{rhs} of \code{SparseSet} objects or \code{dgCMatrix}. The implications to add to this formal context.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Nothing, just updates the internal matrices for LHS and RHS.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-append_implications"></a>}}
-\subsection{Method \code{append_implications()}}{
-Append implications to the current ones.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$append_implications(implications)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{implications}}{(\code{ImplicationSet}) The set of implications to append at the end of the current set.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Nothing, just updates the internal matrices for LHS and RHS.
+Nothing, just updates the internal \code{implications} field.
 }
 }
 \if{html}{\out{<hr>}}
@@ -168,11 +171,11 @@ A vector with two components: the number of attributes present in each of the LH
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-compute_closure"></a>}}
-\subsection{Method \code{compute_closure()}}{
+\if{html}{\out{<a id="method-closure"></a>}}
+\subsection{Method \code{closure()}}{
 Compute the semantic closure of a fuzzy set with respect to the implication set
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$compute_closure(S, reduce = FALSE, verbose = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$closure(S, reduce = FALSE, verbose = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -332,49 +335,11 @@ An \code{ImplicationSet} that is a subset of the current set, only with those ru
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_rules"></a>}}
-\subsection{Method \code{get_rules()}}{
-Get a subset of the implication set
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$get_rules(idx)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{idx}}{(integer vector) Indices of the implications to extract.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{ImplicationSet} with only the rules given by the \code{idx} indices.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-remove_rules"></a>}}
-\subsection{Method \code{remove_rules()}}{
-Remove implications from the set
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$remove_rules(idx)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{idx}}{(integer vector) Indices of implications to remove.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-An \code{ImplicationSet} with the implications at given indices removed with respect to the original set.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-compute_support"></a>}}
-\subsection{Method \code{compute_support()}}{
+\if{html}{\out{<a id="method-support"></a>}}
+\subsection{Method \code{support()}}{
 Compute support of each implication
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$compute_support()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$support()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{

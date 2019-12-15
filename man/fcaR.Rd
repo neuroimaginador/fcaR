@@ -10,10 +10,15 @@ It provides functions to load and save a Formal Context, extract its concept lat
 In addition, one can use the implications to compute semantic closures of fuzzy sets and, thus, build recommendation systems.
 }
 \details{
-The fcaR package provides data structures which allow the user to work seamlessly with formal contexts and sets of implications. More explicitly, four main classes are implemented, using the \code{R6} object-oriented-programming paradigm in R:
+The fcaR package provides data structures which allow the user to work seamlessly with formal contexts and sets of implications. More explicitly, three main classes are implemented, using the \code{R6} object-oriented-programming paradigm in R:
 \itemize{
 \item \code{FormalContext} encapsulates the definition of a formal context \eqn{(G, M, I)}, being \eqn{G} the set of objects, \eqn{M} the set of attributes and \eqn{I} the (fuzzy) relationship matrix, and provides methods to operate on the context using FCA tools.
 \item \code{ImplicationSet} represents a set of implications over a specific formal context.
+\item \code{ConceptLattice} represents the set of concepts and their relationships, including methods to operate on the lattice.
+}
+
+Two additional helper classes are implemented:
+\itemize{
 \item \code{SparseSet} is a class solely used for visualization purposes, since it encapsulates in sparse format a (fuzzy) set.
 \item \code{SparseConcept} encapsulates internally both extent and intent of a formal concept as \code{SparseSet}.
 Since fcaR is an extension of the data model in the arules package, most of the methods and classes implemented interoperates with the main \code{S4} classes in arules (\code{transactions} and \code{rules}).
