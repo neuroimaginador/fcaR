@@ -651,8 +651,8 @@ FormalContext <- R6::R6Class(
 
       if (!self$concepts$is_empty()) {
 
-        extents <- self$concepts$get_extents()
-        intents <- self$concepts$get_intents()
+        extents <- self$concepts$extents()
+        intents <- self$concepts$intents()
 
       } else {
 
