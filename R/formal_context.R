@@ -772,17 +772,30 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Write the context in LaTeX format
     #'
+    #' @param label (character) The label for the table environment.
+    #' @param caption (character) The caption of the table.
+    #'
     #' @return
-    #' A tabular environment in LaTeX.
+    #' A table environment in LaTeX.
     #'
     #' @export
     #'
     #' @importFrom knitr kable
-    to_latex = function() {
+    to_latex = function(label = "", caption = "") {
 
       I <- as.matrix(t(self$I))
       str <- as.character(kable(I, format = "latex",
                                 booktabs = TRUE, linesep = ""))
+
+      str <- c("\\begin{table}",
+               "\\centering",
+               str)
+
+      my_caption <- paste0("\\caption{\\label{",
+                           label, "}",
+                           caption, "}")
+
+      str <- c(str, my_caption, "\\end{table}")
 
       cat(str)
 

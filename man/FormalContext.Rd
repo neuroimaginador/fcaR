@@ -357,11 +357,20 @@ Prints information regarding the formal context.
 \subsection{Method \code{to_latex()}}{
 Write the context in LaTeX format
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex(label = "", caption = "")}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{label}}{(character) The label for the table environment.}
+
+\item{\code{caption}}{(character) The caption of the table.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
-A tabular environment in LaTeX.
+A table environment in LaTeX.
 }
 }
 \if{html}{\out{<hr>}}
