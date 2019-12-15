@@ -25,7 +25,7 @@ fuzzy sets and, thus, build recommendation systems.
 
 The fcaR package provides data structures which allow the user to work
 seamlessly with formal contexts and sets of implications. More
-explicitly, four main classes are implemented, using the 
+explicitly, three main classes are implemented, using the 
 object-oriented-programming paradigm in R:
 
   - FormalContext encapsulates the definition of a formal context (G, M,
@@ -34,6 +34,11 @@ object-oriented-programming paradigm in R:
     context using FCA tools.
   - ImplicationSet represents a set of implications over a specific
     formal context.
+  - ConceptLattice represents the set of concepts and their
+    relationships, including methods to operate on the lattice.
+
+Two additional helper classes are implemented:
+
   - SparseSet is a class solely used for visualization purposes, since
     it encapsulates in sparse format a (fuzzy) set.
   - SparseConcept encapsulates internally both extent and intent of a
@@ -50,7 +55,7 @@ The development version of this package can be installed
 
     remotes::install_github("neuroimaginador/fcaR", build_vignettes = TRUE)
 
-## Example in Fuzzy Formal Context
+## Example of Use
 
 <!-- Example from [here](https://www.sciencedirect.com/science/article/pii/S1877705812021418) -->
 
@@ -415,10 +420,10 @@ With a single function, we can compute the set of concepts:
 
 ``` r
 # Compute all concepts
-fc$compute_concepts()
+fc$find_concepts()
 
 # The first concept
-fc$concepts$get_concepts_by_id(1)[[1]]
+fc$concepts[1][[1]]
 #> ({O1, O2, O3, O4, O5, O6}, {})
 
 # And plot the concept lattice
@@ -431,7 +436,7 @@ We can also extract implications from the formal context:
 
 ``` r
 # Extract implications
-fc$extract_implications_concepts()
+fc$find_implications()
 
 # Which implications have been extracted
 fc$implications
@@ -450,9 +455,31 @@ fc$implications
 #> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
 ```
 
+Some fundamental functionalities on the concept lattice associated to
+the formal context have been implemented:
+
+  - Computing a sublattice.
+  - Calculating the subconcepts and superconcepts of a given concept.
+  - Finding the join- and meet- irreducible elements, which allows to
+    reduce the context and find the *standard context*.
+
+Also, one can compute the support of both implications and concepts:
+
+``` r
+fc$implications$support()
+#>  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000
+#>  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000
+fc$concepts$support()
+#>  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000
+#>  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333
+#> [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667
+#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000
+```
+
 In this package, we have implemented a logic to manage implications.
 This so-called Simplification Logic allows us to simplify the extracted
-rules by removing redundancies.
+rules by removing redundancies,as well as computing the closure of a
+given fuzzy attribute set.
 
 ``` r
 # Reduce the number of implications using two simple
@@ -463,8 +490,8 @@ fc$implications$apply_rules(rules = c("composition",
 #> Using parallel execution
 #> Processing batch
 #> --> composition : from 12 to 12 in 0.004 secs. 
-#> --> generalization : from 12 to 12 in 0.007 secs. 
-#> Batch took 0.015 secs.
+#> --> generalization : from 12 to 12 in 0.008 secs. 
+#> Batch took 0.016 secs.
 
 # Reduced set of implications
 fc$implications
@@ -481,19 +508,12 @@ fc$implications
 #> Rule 10: {P1 [0.5], P2} -> {P1}
 #> Rule 11: {P1, P2 [0.5]} -> {P2}
 #> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
-
-# We can obtain the support of both implications and concepts
-fc$get_implication_support()
-#>  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000
-#>  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000
-fc$concepts$compute_support()
-#>  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000
-#>  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333
-#> [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667
-#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000
 ```
 
 All these functions work natively with fuzzy and with binary datasets.
+
+For more details on the methods implemented and further examples, see
+the vignettes in this package.
 
 ## References
 

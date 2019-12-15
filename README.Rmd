@@ -28,10 +28,14 @@ In addition, one can use the implications to compute semantic closures of fuzzy 
 
 ## Details
 
-The fcaR package provides data structures which allow the user to work seamlessly with formal contexts and sets of implications. More explicitly, four main classes are implemented, using the \code{R6} object-oriented-programming paradigm in R:
+The fcaR package provides data structures which allow the user to work seamlessly with formal contexts and sets of implications. More explicitly, three main classes are implemented, using the \code{R6} object-oriented-programming paradigm in R:
 
 - FormalContext encapsulates the definition of a formal context (G, M, I), being G the set of objects, M the set of attributes and I the (fuzzy) relationship matrix, and provides methods to operate on the context using FCA tools.
 - ImplicationSet represents a set of implications over a specific formal context.
+- ConceptLattice represents the set of concepts and their relationships, including methods to operate on the lattice.
+
+Two additional helper classes are implemented:
+
 - SparseSet is a class solely used for visualization purposes, since it encapsulates in sparse format a (fuzzy) set.
 - SparseConcept encapsulates internally both extent and intent of a formal concept as SparseSet.
 
@@ -45,7 +49,7 @@ The development version of this package can be installed with
 remotes::install_github("neuroimaginador/fcaR", build_vignettes = TRUE)
 ```
 
-## Example in Fuzzy Formal Context
+## Example of Use
 
 <!-- Example from [here](https://www.sciencedirect.com/science/article/pii/S1877705812021418) -->
 
@@ -91,10 +95,10 @@ print(fc)
 With a single function, we can compute the set of concepts:
 ```{r}
 # Compute all concepts
-fc$compute_concepts()
+fc$find_concepts()
 
 # The first concept
-fc$concepts$get_concepts_by_id(1)[[1]]
+fc$concepts[1][[1]]
 
 # And plot the concept lattice
 fc$concepts$plot()
@@ -103,13 +107,25 @@ fc$concepts$plot()
 We can also extract implications from the formal context:
 ```{r}
 # Extract implications
-fc$extract_implications_concepts()
+fc$find_implications()
 
 # Which implications have been extracted
 fc$implications
 ```
 
-In this package, we have implemented a logic to manage implications. This so-called Simplification Logic allows us to simplify the extracted rules by removing redundancies.
+Some fundamental functionalities on the concept lattice associated to the formal context have been implemented:
+
+- Computing a sublattice.
+- Calculating the subconcepts and superconcepts of a given concept.
+- Finding the join- and meet- irreducible elements, which allows to reduce the context and find the _standard context_.
+
+Also, one can compute the support of both implications and concepts:
+```{r}
+fc$implications$support()
+fc$concepts$support()
+```
+
+In this package, we have implemented a logic to manage implications. This so-called Simplification Logic allows us to simplify the extracted rules by removing redundancies,as well as computing the closure of a given fuzzy attribute set.
 
 ```{r}
 # Reduce the number of implications using two simple
@@ -120,13 +136,11 @@ fc$implications$apply_rules(rules = c("composition",
 
 # Reduced set of implications
 fc$implications
-
-# We can obtain the support of both implications and concepts
-fc$get_implication_support()
-fc$concepts$compute_support()
 ```
 
 All these functions work natively with fuzzy and with binary datasets.
+
+For more details on the methods implemented and further examples, see the vignettes in this package.
 
 ## References
 Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” _Mathématiques et Sciences humaines_, *95*, 5-18.
