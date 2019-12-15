@@ -19,20 +19,9 @@
 
         if (i != j) {
 
-          v <- M[i, ] & M[j, ]
+          id_join <- join(M, c(i, j))
 
-          id_join <- which(v)
-
-          if (length(id_join) == 1) {
-
-            id_add <- setdiff(id_join, c(idx_final, to_add))
-
-          } else {
-
-            id_add <- which(rowSums(M[id_join, ]) == length(id_join))
-            id_add <- setdiff(id_join[id_add], c(idx_final, to_add))
-
-          }
+          id_add <- setdiff(id_join, c(idx_final, to_add))
 
           if (length(id_add) > 0) {
 
@@ -52,9 +41,10 @@
 
   }
 
+  idx1 <- idx
   # meet
   added <- TRUE
-  idx <- idx_final
+  idx <- starting_idx
   while (added) {
 
     if (length(idx_final) == N) break;
@@ -67,20 +57,9 @@
 
         if (i != j) {
 
-          v <- M[, i] & M[, j]
+          id_join <- meet(M, c(i, j))
 
-          id_join <- which(v)
-
-          if (length(id_join) == 1) {
-
-            id_add <- setdiff(id_join, c(idx_final, to_add))
-
-          } else {
-
-            id_add <- which(colSums(M[, id_join]) == 1)
-            id_add <- setdiff(id_join[id_add], c(idx_final, to_add))
-
-          }
+          id_add <- setdiff(id_join, c(idx_final, to_add))
 
           if (length(id_add) > 0) {
 
@@ -100,6 +79,7 @@
 
   }
 
+  idx_final <- sort(c(idx1, idx_final))
   return(idx_final)
 
 }

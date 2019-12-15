@@ -328,21 +328,7 @@ ConceptLattice <- R6::R6Class(
 
       idx <- private$to_indices(...)
 
-      # Get the index of all superconcepts
-      M <- private$subconcept_matrix[idx, ]
-      candidates <- which(colSums(M) == length(idx))
-
-      if (length(candidates) > 1) {
-
-        # If more than one, obtain the minimum of
-        # them:
-        M2 <- t(private$subconcept_matrix)[candidates, candidates]
-
-        candidates <- candidates[which(colSums(M2) == length(candidates))]
-
-      }
-
-      return(self[candidates])
+      return(self[join(private$subconcept_matrix, idx)])
 
     },
 
@@ -362,20 +348,7 @@ ConceptLattice <- R6::R6Class(
 
       idx <- private$to_indices(...)
 
-      # Obtain the index of all subconcepts
-      M <- t(private$subconcept_matrix)[idx, ]
-      candidates <- which(colSums(M) == length(idx))
-
-      if (length(candidates) > 1) {
-
-        # If more than one, get their maximum
-        M2 <- private$subconcept_matrix[candidates, candidates]
-
-        candidates <- candidates[which(colSums(M2) == length(candidates))]
-
-      }
-
-      return(self[candidates])
+      return(self[meet(private$subconcept_matrix, idx)])
 
     },
 
