@@ -20,6 +20,13 @@ rownames(I) <- objects
 
 fc <- FormalContext$new(I)
 
+test_that("fcaR uses empty concept lattices", {
+
+  expect_error(fc$concepts$print(), NA)
+  expect_error(fc$concepts[1], NA)
+
+})
+
 expect_error(fc$find_concepts(), NA)
 
 test_that("fcaR creates a ConceptLattice", {
@@ -31,6 +38,7 @@ test_that("fcaR creates a ConceptLattice", {
 test_that("fcaR plots a ConceptLattice", {
 
   expect_error(fc$concepts$plot(), NA)
+  expect_error(fc$concepts$plot(object_names = FALSE), NA)
 
 })
 
@@ -45,6 +53,8 @@ test_that("fcaR writes a ConceptLattice to LaTeX", {
   expect_error(fc$concepts$to_latex(), NA)
   expect_error(fc$concepts$to_latex(numbered = FALSE, align = FALSE), NA)
   expect_error(fc$concepts$to_latex(ncols = 2), NA)
+
+  expect_error(fc$concepts[2][[1]]$to_latex(), NA)
 
 })
 
@@ -61,6 +71,14 @@ test_that("fcaR computes the sublattice of a ConceptLattice", {
   L <- fc$concepts[10:12]
 
   expect_error(cl <- fc$concepts$sublattice(10:13), NA)
+  expect_is(cl, "ConceptLattice")
+
+  expect_error(cl <- fc$concepts$sublattice(L), NA)
+  expect_is(cl, "ConceptLattice")
+
+  L <- fc$concepts[10]
+
+  expect_error(cl <- fc$concepts$sublattice(10), NA)
   expect_is(cl, "ConceptLattice")
 
   expect_error(cl <- fc$concepts$sublattice(L), NA)

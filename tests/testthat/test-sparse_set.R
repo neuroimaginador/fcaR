@@ -47,4 +47,6 @@ test_that("fcaR uses class SparseSet", {
 
   expect_is(A$to_latex(), "character")
 
+  expect_true(A %<=% A)
+
 })

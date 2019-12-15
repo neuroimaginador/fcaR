@@ -1,15 +1,3 @@
-.concepts_to_matrix <- function(L) {
-
-  intents <- lapply(L, function(l) l$get_intent()$get_vector())
-  intents <- Reduce(add_col, intents)
-
-  extents <- lapply(L, function(l) l$get_extent()$get_vector())
-  extents <- Reduce(add_col, extents)
-
-  return(list(extents = extents, intents = intents))
-
-}
-
 .matrix_to_concepts <- function(M_ext, M_int,
                                objects, attributes) {
 

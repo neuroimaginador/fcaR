@@ -36,12 +36,11 @@ ConceptLattice <- R6::R6Class(
       # Create the SparseConcepts
       if (!is.null(extents)) {
 
-        private$concepts <- lapply(seq(ncol(intents)),
-                                   function(i) {
-                                     .concept_to_SparseSet(list(extents[, i], intents[, i]),
-                                                           objects = objects,
-                                                           attributes = attributes)
-                                   })
+        private$concepts <- .matrix_to_concepts(
+          M_ext = extents,
+          M_int = intents,
+          objects = objects,
+          attributes = attributes)
 
         private$I <- I
         private$subconcept_matrix <- .subset(extents)
