@@ -24,7 +24,7 @@ mush_clean <- mush[!idx_redundant]
 ## -----------------------------------------------------------------------------
 fc <- FormalContext$new(I = Mushroom)
 
-fc$add_implications(mush_clean)
+fc$implications$add(mush_clean)
 
 ## -----------------------------------------------------------------------------
 # Cadinality
@@ -61,7 +61,7 @@ fc$implications$apply_rules(rules = c("composition",
                             parallelize = FALSE)
 
 ## -----------------------------------------------------------------------------
-supp <- fc$get_implication_support()
+supp <- fc$implications$support()
 
 head(supp)
 
@@ -71,11 +71,11 @@ A <- SparseSet$new(attributes = fc$attributes)
 A$assign(attributes = "CapColor=white", values = 1)
 
 # Compute the closure
-fc$implications$compute_closure(A)
+fc$implications$closure(A)
 
 
 ## -----------------------------------------------------------------------------
-R <- fc$export_implications_to_arules()
+R <- fc$implications$to_arules()
 
 R
 

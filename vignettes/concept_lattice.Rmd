@@ -131,7 +131,7 @@ S$assign(attributes = c("Earth", "Mars"), values = c(1, 1))
 S
 
 # Compute the intent of S
-fc_planets$get_intent(S)
+fc_planets$intent(S)
 ```
 
 Analogously, the extent of a set of attributes is the set of objects which possess all the attributes in the given set:
@@ -142,13 +142,13 @@ S$assign(attributes = c("moon", "large"), values = c(1, 1))
 S
 
 # Compute the extent of S
-fc_planets$get_extent(S)
+fc_planets$extent(S)
 ```
 
-the composition of intent and extent is the closure of a set of attributes:
+The composition of intent and extent is the closure of a set of attributes:
 ```{r}
 # Compute the closure of S
-Sc <- fc_planets$get_closure(S)
+Sc <- fc_planets$closure(S)
 Sc
 ```
 
@@ -176,13 +176,13 @@ Note that merged attributes or objects are stored in the new formal context by u
 
 ## Extracting Implications and Concepts
 
-The function to extract the canonical basis of implications and the concept lattice is `extract_implications_concepts()`. Its use is to store a `ConceptLattice` and an `ImplicationSet` objects internally in the `FormalContext` object after running the NextClosure algorithm.
+The function to extract the canonical basis of implications and the concept lattice is `find_implications()`. Its use is to store a `ConceptLattice` and an `ImplicationSet` objects internally in the `FormalContext` object after running the NextClosure algorithm.
 
 It can be used both for binary and fuzzy formal contexts, resulting in binary or fuzzy concepts and implications:
 ```{r}
-fc_planets$extract_implications_concepts()
+fc_planets$find_implications()
 
-fc_I$extract_implications_concepts()
+fc_I$find_implications()
 ```
 
 We can inspect the results as:

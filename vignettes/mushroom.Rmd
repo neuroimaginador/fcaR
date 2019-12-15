@@ -63,7 +63,7 @@ This is accomplished by just typing:
 ```{r}
 fc <- FormalContext$new(I = Mushroom)
 
-fc$add_implications(mush_clean)
+fc$implications$add(mush_clean)
 ```
 
 We can check some of the properties of the ruleset:
@@ -116,7 +116,7 @@ fc$implications$apply_rules(rules = c("composition",
 
 Also, we can compute the support of each implication:
 ```{r}
-supp <- fc$implications$compute_support()
+supp <- fc$implications$support()
 
 head(supp)
 ```
@@ -132,17 +132,17 @@ A <- SparseSet$new(attributes = fc$attributes)
 A$assign(attributes = "CapColor=white", values = 1)
 
 # Compute the closure
-fc$implications$compute_closure(A)
+fc$implications$closure(A)
 
 ```
 
 
 # Re-Exporting to `arules`
 
-After this phase of redudancy removal, we can export the obtained ruleset to `arules format`.
+After this phase of redudancy removal, we can export the obtained ruleset to `arules` format.
 
 ```{r}
-R <- fc$export_implications_to_arules()
+R <- fc$implications$to_arules()
 
 R
 

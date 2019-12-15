@@ -30,7 +30,7 @@ rownames(I) <- objects
 fc <- FormalContext$new(I)
 
 # Compute implications
-fc$extract_implications_concepts(verbose = FALSE)
+fc$find_implications(verbose = FALSE)
 
 # Cardinality and mean size in the ruleset
 fc$implications$cardinality()
@@ -83,7 +83,7 @@ rownames(I) <- objects
 fc <- FormalContext$new(I)
 
 # Compute
-fc$extract_implications_concepts(verbose = FALSE)
+fc$find_implications(verbose = FALSE)
 
 # Some properties of the ruleset
 fc$implications$cardinality()
@@ -131,5 +131,5 @@ S$assign(attributes = c("P2", "P3"),
          values = c(0.5, 0.5))
 S
 
-fc$implications$compute_closure(S)
+fc$implications$closure(S)
 
