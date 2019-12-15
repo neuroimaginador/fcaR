@@ -85,6 +85,9 @@ test_that("fcaR computes the sublattice of a ConceptLattice", {
   expect_error(cl <- fc$concepts$sublattice(L), NA)
   expect_is(cl, "ConceptLattice")
 
+  expect_error(cl <- fc$concepts$sublattice(fc$concepts$support() > 0.1), NA)
+  expect_is(cl, "ConceptLattice")
+
 })
 
 test_that("fcaR computes the join- and meet- irreducibles of a ConceptLattice", {

@@ -371,6 +371,6 @@ test_that("fcaR subsets implications", {
   fc$find_implications()
 
   expect_error(fc$implications[fc$implications$support() > 0.1], NA)
-  expect_error(fc$implications[-c(1:2)])
+  expect_error(fc$implications[-c(1:2)], NA)
 
 })
