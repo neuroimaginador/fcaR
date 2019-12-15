@@ -482,6 +482,12 @@ ConceptLattice <- R6::R6Class(
 
       }
 
+      if (is.logical(dots[[1]])) {
+
+        return(which(dots[[1]]))
+
+      }
+
       sets <- sapply(dots,
                      function(l)
                        inherits(l, "SparseConcept"))
