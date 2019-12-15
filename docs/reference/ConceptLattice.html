@@ -143,20 +143,20 @@
 <li><p><a href='#method-new'><code>ConceptLattice$new()</code></a></p></li>
 <li><p><a href='#method-size'><code>ConceptLattice$size()</code></a></p></li>
 <li><p><a href='#method-is_empty'><code>ConceptLattice$is_empty()</code></a></p></li>
-<li><p><a href='#method-get_extents'><code>ConceptLattice$get_extents()</code></a></p></li>
-<li><p><a href='#method-get_intents'><code>ConceptLattice$get_intents()</code></a></p></li>
+<li><p><a href='#method-extents'><code>ConceptLattice$extents()</code></a></p></li>
+<li><p><a href='#method-intents'><code>ConceptLattice$intents()</code></a></p></li>
 <li><p><a href='#method-plot'><code>ConceptLattice$plot()</code></a></p></li>
 <li><p><a href='#method-print'><code>ConceptLattice$print()</code></a></p></li>
 <li><p><a href='#method-to_latex'><code>ConceptLattice$to_latex()</code></a></p></li>
-<li><p><a href='#method-get_concepts_by_id'><code>ConceptLattice$get_concepts_by_id()</code></a></p></li>
-<li><p><a href='#method-get_sublattice'><code>ConceptLattice$get_sublattice()</code></a></p></li>
+<li><p><a href='#method-['><code>ConceptLattice$[()</code></a></p></li>
+<li><p><a href='#method-sublattice'><code>ConceptLattice$sublattice()</code></a></p></li>
 <li><p><a href='#method-join_irreducibles'><code>ConceptLattice$join_irreducibles()</code></a></p></li>
 <li><p><a href='#method-meet_irreducibles'><code>ConceptLattice$meet_irreducibles()</code></a></p></li>
 <li><p><a href='#method-supremum'><code>ConceptLattice$supremum()</code></a></p></li>
 <li><p><a href='#method-infimum'><code>ConceptLattice$infimum()</code></a></p></li>
-<li><p><a href='#method-get_subconcepts'><code>ConceptLattice$get_subconcepts()</code></a></p></li>
-<li><p><a href='#method-get_superconcepts'><code>ConceptLattice$get_superconcepts()</code></a></p></li>
-<li><p><a href='#method-compute_support'><code>ConceptLattice$compute_support()</code></a></p></li>
+<li><p><a href='#method-subconcepts'><code>ConceptLattice$subconcepts()</code></a></p></li>
+<li><p><a href='#method-superconcepts'><code>ConceptLattice$superconcepts()</code></a></p></li>
+<li><p><a href='#method-support'><code>ConceptLattice$support()</code></a></p></li>
 <li><p><a href='#method-clone'><code>ConceptLattice$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -194,16 +194,16 @@
 <h3>Returns</h3>
 <p><code>TRUE</code> if the lattice has no concepts.</p>
 <p><hr>
-<a id="method-get_extents"></a></p><h3>Method <code>get_extents()</code></h3>
+<a id="method-extents"></a></p><h3>Method <code>extents()</code></h3>
 <p>Concept Extents</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$get_extents()</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$extents()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The extents of all concepts, as a <code>dgCMatrix</code>.</p>
 <p><hr>
-<a id="method-get_intents"></a></p><h3>Method <code>get_intents()</code></h3>
+<a id="method-intents"></a></p><h3>Method <code>intents()</code></h3>
 <p>Concept Intents</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$get_intents()</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$intents()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The intents of all concepts, as a <code>dgCMatrix</code>.</p>
@@ -243,9 +243,9 @@
 <h3>Returns</h3>
 <p>The <code>LaTeX</code> code to list all concepts.</p>
 <p><hr>
-<a id="method-get_concepts_by_id"></a></p><h3>Method <code>get_concepts_by_id()</code></h3>
+<a id="method-["></a></p><h3>Method <code>[()</code></h3>
 <p>Get Concepts by Index</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$get_concepts_by_id(indices)</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$[(indices)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -255,9 +255,9 @@
 <h3>Returns</h3>
 <p>A list of SparseConcepts.</p>
 <p><hr>
-<a id="method-get_sublattice"></a></p><h3>Method <code>get_sublattice()</code></h3>
+<a id="method-sublattice"></a></p><h3>Method <code>sublattice()</code></h3>
 <p>Sublattice</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$get_sublattice(...)</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$sublattice(...)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -314,9 +314,9 @@
 <h3>Returns</h3>
 <p>The infimum of the list of concepts.</p>
 <p><hr>
-<a id="method-get_subconcepts"></a></p><h3>Method <code>get_subconcepts()</code></h3>
+<a id="method-subconcepts"></a></p><h3>Method <code>subconcepts()</code></h3>
 <p>Subconcepts of a Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$get_subconcepts(C)</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$subconcepts(C)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -326,9 +326,9 @@
 <h3>Returns</h3>
 <p>A list with the subconcepts.</p>
 <p><hr>
-<a id="method-get_superconcepts"></a></p><h3>Method <code>get_superconcepts()</code></h3>
+<a id="method-superconcepts"></a></p><h3>Method <code>superconcepts()</code></h3>
 <p>Superconcepts of a Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$get_superconcepts(C)</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$superconcepts(C)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -338,9 +338,9 @@
 <h3>Returns</h3>
 <p>A list with the superconcepts.</p>
 <p><hr>
-<a id="method-compute_support"></a></p><h3>Method <code>compute_support()</code></h3>
+<a id="method-support"></a></p><h3>Method <code>support()</code></h3>
 <p>Get support of each concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$compute_support()</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$support()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A vector with the support of each concept.</p>

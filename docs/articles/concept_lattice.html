@@ -611,7 +611,7 @@ O6
 <a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; {Earth, Mars}</span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co"># Compute the intent of S</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">fc_planets<span class="op">$</span><span class="kw">get_intent</span>(S)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">fc_planets<span class="op">$</span><span class="kw">intent</span>(S)</a>
 <a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; {small, near, moon}</span></a></code></pre></div>
 <p>Analogously, the extent of a set of attributes is the set of objects which possess all the attributes in the given set:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Define a set of objects</span></a>
@@ -621,11 +621,11 @@ O6
 <a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; {large, moon}</span></a>
 <a class="sourceLine" id="cb10-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co"># Compute the extent of S</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">fc_planets<span class="op">$</span><span class="kw">get_extent</span>(S)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">fc_planets<span class="op">$</span><span class="kw">extent</span>(S)</a>
 <a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; {Jupiter, Saturn}</span></a></code></pre></div>
-<p>the composition of intent and extent is the closure of a set of attributes:</p>
+<p>The composition of intent and extent is the closure of a set of attributes:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Compute the closure of S</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">Sc &lt;-<span class="st"> </span>fc_planets<span class="op">$</span><span class="kw">get_closure</span>(S)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">Sc &lt;-<span class="st"> </span>fc_planets<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/function.html">closure</a></span>(S)</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">Sc</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; {large, far, moon}</span></a></code></pre></div>
 <p>This means that all planets which have the attributes <code>moon</code> and <code>large</code> also have <code>far</code> in common.</p>
@@ -666,11 +666,11 @@ O6
 <div id="extracting-implications-and-concepts" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extracting-implications-and-concepts" class="anchor"></a>Extracting Implications and Concepts</h2>
-<p>The function to extract the canonical basis of implications and the concept lattice is <code>extract_implications_concepts()</code>. Its use is to store a <code>ConceptLattice</code> and an <code>ImplicationSet</code> objects internally in the <code>FormalContext</code> object after running the NextClosure algorithm.</p>
+<p>The function to extract the canonical basis of implications and the concept lattice is <code>find_implications()</code>. Its use is to store a <code>ConceptLattice</code> and an <code>ImplicationSet</code> objects internally in the <code>FormalContext</code> object after running the NextClosure algorithm.</p>
 <p>It can be used both for binary and fuzzy formal contexts, resulting in binary or fuzzy concepts and implications:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">fc_planets<span class="op">$</span><span class="kw">extract_implications_concepts</span>()</a>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">fc_planets<span class="op">$</span><span class="kw">find_implications</span>()</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">fc_I<span class="op">$</span><span class="kw">extract_implications_concepts</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb14-3" data-line-number="3">fc_I<span class="op">$</span><span class="kw">find_implications</span>()</a></code></pre></div>
 <p>We can inspect the results as:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># Concepts</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">fc_planets<span class="op">$</span>concepts</a>
@@ -795,35 +795,35 @@ O6
 <div id="getting-all-extents-intents-and-retrieving-concepts" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-all-extents-intents-and-retrieving-concepts" class="anchor"></a>Getting all extents, intents and retrieving concepts</h2>
-<p>For a <code>ConceptLattice</code>, one may want to retrieve particular concepts (function <code>get_concepts_by_id()</code>):</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">get_concepts_by_id</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>)</a>
+<p>For a <code>ConceptLattice</code>, one may want to retrieve particular concepts, using a subsetting as in <code>R</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">fc_planets<span class="op">$</span>concepts[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a>
 <a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></a>
 <a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#&gt; [[2]]</span></a>
 <a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></a></code></pre></div>
 <p>Or get all the extents and all the intents of all concepts, as sparse matrices:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">get_extents</span>()</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">get_intents</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">extents</span>()</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">intents</span>()</a></code></pre></div>
 </div>
 <div id="concept-support" class="section level2">
 <h2 class="hasAnchor">
 <a href="#concept-support" class="anchor"></a>Concept support</h2>
-<p>The support of concepts can be computed using the function <code>compute_support()</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">compute_support</span>()</a>
+<p>The support of concepts can be computed using the function <code>support()</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">support</span>()</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333</span></a>
 <a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt;  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</span></a></code></pre></div>
 </div>
 <div id="sublattices" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sublattices" class="anchor"></a>Sublattices</h2>
-<p>When the concept lattice is too large, it can be useful in certain occasions to just work with a sublattice of the complete lattice. To this end, we use the <code>get_sublattice()</code> function.</p>
+<p>When the concept lattice is too large, it can be useful in certain occasions to just work with a sublattice of the complete lattice. To this end, we use the <code>sublattice()</code> function.</p>
 <p>For instance, to build the sublattice of those concepts with support greater than 0.5, we can do:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># Get the index of those concepts with support </span></a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co"># greater than the threshold</span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3">idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(fc_I<span class="op">$</span>concepts<span class="op">$</span><span class="kw">compute_support</span>() <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(fc_I<span class="op">$</span>concepts<span class="op">$</span><span class="kw">support</span>() <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>)</a>
 <a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co"># Build the sublattice</span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5">sublattice &lt;-<span class="st"> </span>fc_I<span class="op">$</span>concepts<span class="op">$</span><span class="kw">get_sublattice</span>(idx)</a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">sublattice &lt;-<span class="st"> </span>fc_I<span class="op">$</span>concepts<span class="op">$</span><span class="kw">sublattice</span>(idx)</a>
 <a class="sourceLine" id="cb24-6" data-line-number="6">sublattice</a>
 <a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt; A set of 9 concepts:</span></a>
 <a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">#&gt; 1: ({O1, O2, O3, O4, O5, O6}, {})</span></a>
@@ -844,18 +844,18 @@ O6
 <a href="#subconcepts-superconcepts-infimum-and-supremum" class="anchor"></a>Subconcepts, superconcepts, infimum and supremum</h2>
 <p>It may be interesting to use the notions of subconcept and superconcept. Given a concept, we can compute all its subconcepts and all its superconcepts:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># The fifth concept</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">C &lt;-<span class="st"> </span>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">get_concepts_by_id</span>(<span class="dv">5</span>)[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">C &lt;-<span class="st"> </span>fc_planets<span class="op">$</span>concepts[<span class="dv">5</span>][[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb26-3" data-line-number="3">C</a>
 <a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
 <a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co"># Its subconcepts:</span></a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">get_subconcepts</span>(C)</a>
+<a class="sourceLine" id="cb26-6" data-line-number="6">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">subconcepts</span>(C)</a>
 <a class="sourceLine" id="cb26-7" data-line-number="7"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb26-8" data-line-number="8"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
 <a class="sourceLine" id="cb26-9" data-line-number="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt; [[2]]</span></a>
 <a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></a>
 <a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co"># And its superconcepts:</span></a>
-<a class="sourceLine" id="cb26-13" data-line-number="13">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">get_superconcepts</span>(C)</a>
+<a class="sourceLine" id="cb26-13" data-line-number="13">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">superconcepts</span>(C)</a>
 <a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb26-15" data-line-number="15"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></a>
 <a class="sourceLine" id="cb26-16" data-line-number="16"><span class="co">#&gt; </span></a>
@@ -869,7 +869,7 @@ O6
 <a class="sourceLine" id="cb26-24" data-line-number="24"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a></code></pre></div>
 <p>Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># A list of concepts</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">C &lt;-<span class="st"> </span>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">get_concepts_by_id</span>(<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">C &lt;-<span class="st"> </span>fc_planets<span class="op">$</span>concepts[<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>]</a>
 <a class="sourceLine" id="cb27-3" data-line-number="3">C</a>
 <a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
@@ -879,14 +879,15 @@ O6
 <a class="sourceLine" id="cb27-9" data-line-number="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt; [[3]]</span></a>
 <a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co">#&gt; ({Earth, Mars, Pluto}, {small, moon})</span></a>
-<a class="sourceLine" id="cb27-12" data-line-number="12"><span class="co"># Supremum of the concepts in C</span></a>
-<a class="sourceLine" id="cb27-13" data-line-number="13">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">supremum</span>(C)</a>
-<a class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></a>
-<a class="sourceLine" id="cb27-16" data-line-number="16"><span class="co"># Infimum of the concepts in C</span></a>
-<a class="sourceLine" id="cb27-17" data-line-number="17">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">infimum</span>(C)</a>
-<a class="sourceLine" id="cb27-18" data-line-number="18"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></a></code></pre></div>
+<a class="sourceLine" id="cb27-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co"># Supremum of the concepts in C</span></a>
+<a class="sourceLine" id="cb27-14" data-line-number="14">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">supremum</span>(C)</a>
+<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb27-16" data-line-number="16"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></a>
+<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="co"># Infimum of the concepts in C</span></a>
+<a class="sourceLine" id="cb27-18" data-line-number="18">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">infimum</span>(C)</a>
+<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></a></code></pre></div>
 </div>
 <div id="join--and-meet--irreducible-elements" class="section level2">
 <h2 class="hasAnchor">

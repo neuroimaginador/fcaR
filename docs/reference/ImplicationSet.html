@@ -147,13 +147,13 @@
 <ul>
 <li><p><a href='#method-new'><code>ImplicationSet$new()</code></a></p></li>
 <li><p><a href='#method-get_attributes'><code>ImplicationSet$get_attributes()</code></a></p></li>
+<li><p><a href='#method-['><code>ImplicationSet$[()</code></a></p></li>
 <li><p><a href='#method-to_arules'><code>ImplicationSet$to_arules()</code></a></p></li>
-<li><p><a href='#method-add_implication'><code>ImplicationSet$add_implication()</code></a></p></li>
-<li><p><a href='#method-append_implications'><code>ImplicationSet$append_implications()</code></a></p></li>
+<li><p><a href='#method-add'><code>ImplicationSet$add()</code></a></p></li>
 <li><p><a href='#method-cardinality'><code>ImplicationSet$cardinality()</code></a></p></li>
 <li><p><a href='#method-is_empty'><code>ImplicationSet$is_empty()</code></a></p></li>
 <li><p><a href='#method-size'><code>ImplicationSet$size()</code></a></p></li>
-<li><p><a href='#method-compute_closure'><code>ImplicationSet$compute_closure()</code></a></p></li>
+<li><p><a href='#method-closure'><code>ImplicationSet$closure()</code></a></p></li>
 <li><p><a href='#method-recommend'><code>ImplicationSet$recommend()</code></a></p></li>
 <li><p><a href='#method-apply_rules'><code>ImplicationSet$apply_rules()</code></a></p></li>
 <li><p><a href='#method-print'><code>ImplicationSet$print()</code></a></p></li>
@@ -161,8 +161,7 @@
 <li><p><a href='#method-get_LHS_matrix'><code>ImplicationSet$get_LHS_matrix()</code></a></p></li>
 <li><p><a href='#method-get_RHS_matrix'><code>ImplicationSet$get_RHS_matrix()</code></a></p></li>
 <li><p><a href='#method-filter'><code>ImplicationSet$filter()</code></a></p></li>
-<li><p><a href='#method-get_rules'><code>ImplicationSet$get_rules()</code></a></p></li>
-<li><p><a href='#method-remove_rules'><code>ImplicationSet$remove_rules()</code></a></p></li>
+<li><p><a href='#method-support'><code>ImplicationSet$support()</code></a></p></li>
 <li><p><a href='#method-clone'><code>ImplicationSet$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -192,38 +191,41 @@ or <code>initialize(rules)</code></p>
 <h3>Returns</h3>
 <p>A character vector with the names of the attributes used in the implications.</p>
 <p><hr>
+<a id="method-["></a></p><h3>Method <code>[()</code></h3>
+<p>Get a subset of the implication set</p><h3>Usage</h3>
+<p><div class="r"></p><pre>ImplicationSet$[(idx)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>idx</code></dt><dd><p>(integer vector) Indices of the implications to extract or remove.</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>A new <code>ImplicationSet</code> with only the rules given by the <code>idx</code> indices (if all <code>idx &gt; 0</code> and all but <code>idx</code> if all <code>idx &lt; 0</code>.</p>
+<p><hr>
 <a id="method-to_arules"></a></p><h3>Method <code>to_arules()</code></h3>
 <p>Convert to arules format</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$to_arules()</pre><p></div></p>
+<p><div class="r"></p><pre>ImplicationSet$to_arules(quality = TRUE)</pre><p></div></p>
 
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>quality</code></dt><dd><p>(logical) Compute the interest measures for each rule?</p></dd>
+
+</dl><p></div></p>
 <h3>Returns</h3>
 <p>A <code>rules</code> object as used by package <code>arules</code>.</p>
 <p><hr>
-<a id="method-add_implication"></a></p><h3>Method <code>add_implication()</code></h3>
-<p>Add new implication to the set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$add_implication(lhs, rhs)</pre><p></div></p>
+<a id="method-add"></a></p><h3>Method <code>add()</code></h3>
+<p>Add a precomputed implication set</p><h3>Usage</h3>
+<p><div class="r"></p><pre>ImplicationSet$add(...)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>lhs</code></dt><dd><p>(a sparse matrix) The LHS of the rule to add.</p></dd>
-
-<dt><code>rhs</code></dt><dd><p>(a sparse matrix) The RHS of the rule to add.</p></dd>
+<dt><code>...</code></dt><dd><p>An <code>ImplicationSet</code> object, a <code>rules</code> object, or a pair <code>lhs</code>, <code>rhs</code> of <code>SparseSet</code> objects or <code>dgCMatrix</code>. The implications to add to this formal context.</p></dd>
 
 </dl><p></div></p>
 <h3>Returns</h3>
-<p>Nothing, just updates the internal matrices for LHS and RHS.</p>
-<p><hr>
-<a id="method-append_implications"></a></p><h3>Method <code>append_implications()</code></h3>
-<p>Append implications to the current ones.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$append_implications(implications)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>implications</code></dt><dd><p>(<code>ImplicationSet</code>) The set of implications to append at the end of the current set.</p></dd>
-
-</dl><p></div></p>
-<h3>Returns</h3>
-<p>Nothing, just updates the internal matrices for LHS and RHS.</p>
+<p>Nothing, just updates the internal <code>implications</code> field.</p>
 <p><hr>
 <a id="method-cardinality"></a></p><h3>Method <code>cardinality()</code></h3>
 <p>Cardinality: Number of implications in the set</p><h3>Usage</h3>
@@ -246,9 +248,9 @@ or <code>initialize(rules)</code></p>
 <h3>Returns</h3>
 <p>A vector with two components: the number of attributes present in each of the LHS and RHS of each implication in the set.</p>
 <p><hr>
-<a id="method-compute_closure"></a></p><h3>Method <code>compute_closure()</code></h3>
+<a id="method-closure"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
 <p>Compute the semantic closure of a fuzzy set with respect to the implication set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$compute_closure(S, reduce = FALSE, verbose = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre>ImplicationSet$closure(S, reduce = FALSE, verbose = FALSE)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -359,29 +361,12 @@ or <code>initialize(rules)</code></p>
 <h3>Returns</h3>
 <p>An <code>ImplicationSet</code> that is a subset of the current set, only with those rules which has the attributes in <code>lhs</code> and <code>rhs</code> in their LHS and RHS, respectively.</p>
 <p><hr>
-<a id="method-get_rules"></a></p><h3>Method <code>get_rules()</code></h3>
-<p>Get a subset of the implication set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$get_rules(idx)</pre><p></div></p>
+<a id="method-support"></a></p><h3>Method <code>support()</code></h3>
+<p>Compute support of each implication</p><h3>Usage</h3>
+<p><div class="r"></p><pre>ImplicationSet$support()</pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>idx</code></dt><dd><p>(integer vector) Indices of the implications to extract.</p></dd>
-
-</dl><p></div></p>
 <h3>Returns</h3>
-<p>A new <code>ImplicationSet</code> with only the rules given by the <code>idx</code> indices.</p>
-<p><hr>
-<a id="method-remove_rules"></a></p><h3>Method <code>remove_rules()</code></h3>
-<p>Remove implications from the set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$remove_rules(idx)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>idx</code></dt><dd><p>(integer vector) Indices of implications to remove.</p></dd>
-
-</dl><p></div></p>
-<h3>Returns</h3>
-<p>An <code>ImplicationSet</code> with the implications at given indices removed with respect to the original set.</p>
+<p>A vector with the support of each implication</p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>

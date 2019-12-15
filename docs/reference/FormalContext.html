@@ -145,8 +145,6 @@
 <li><p><code>grades_set</code>: set of grades (in [0, 1]) of the attributes.</p></li>
 <li><p><code>concepts</code>: list of concepts (extent, intent).</p></li>
 <li><p><code>implications</code>: extracted implications as an <code>ImplicationSet</code>.</p></li>
-<li><p><code>concept_support</code>: vector with the support of the concepts.</p></li>
-<li><p><code>implications_support</code>: vector with support of the extracted implications.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -163,26 +161,23 @@
 <ul>
 <li><p><a href='#method-new'><code>FormalContext$new()</code></a></p></li>
 <li><p><a href='#method-is_empty'><code>FormalContext$is_empty()</code></a></p></li>
-<li><p><a href='#method-get_intent'><code>FormalContext$get_intent()</code></a></p></li>
-<li><p><a href='#method-get_extent'><code>FormalContext$get_extent()</code></a></p></li>
-<li><p><a href='#method-get_closure'><code>FormalContext$get_closure()</code></a></p></li>
+<li><p><a href='#method-intent'><code>FormalContext$intent()</code></a></p></li>
+<li><p><a href='#method-extent'><code>FormalContext$extent()</code></a></p></li>
+<li><p><a href='#method-closure'><code>FormalContext$closure()</code></a></p></li>
 <li><p><a href='#method-is_concept'><code>FormalContext$is_concept()</code></a></p></li>
 <li><p><a href='#method-is_closed'><code>FormalContext$is_closed()</code></a></p></li>
 <li><p><a href='#method-clarify'><code>FormalContext$clarify()</code></a></p></li>
 <li><p><a href='#method-reduce'><code>FormalContext$reduce()</code></a></p></li>
 <li><p><a href='#method-standardize'><code>FormalContext$standardize()</code></a></p></li>
-<li><p><a href='#method-compute_concepts'><code>FormalContext$compute_concepts()</code></a></p></li>
-<li><p><a href='#method-add_implications'><code>FormalContext$add_implications()</code></a></p></li>
-<li><p><a href='#method-extract_implications_concepts'><code>FormalContext$extract_implications_concepts()</code></a></p></li>
-<li><p><a href='#method-convert_to_transactions'><code>FormalContext$convert_to_transactions()</code></a></p></li>
-<li><p><a href='#method-export_implications_to_arules'><code>FormalContext$export_implications_to_arules()</code></a></p></li>
+<li><p><a href='#method-find_concepts'><code>FormalContext$find_concepts()</code></a></p></li>
+<li><p><a href='#method-find_implications'><code>FormalContext$find_implications()</code></a></p></li>
+<li><p><a href='#method-to_transactions'><code>FormalContext$to_transactions()</code></a></p></li>
 <li><p><a href='#method-save'><code>FormalContext$save()</code></a></p></li>
 <li><p><a href='#method-load'><code>FormalContext$load()</code></a></p></li>
 <li><p><a href='#method-dim'><code>FormalContext$dim()</code></a></p></li>
 <li><p><a href='#method-print'><code>FormalContext$print()</code></a></p></li>
 <li><p><a href='#method-to_latex'><code>FormalContext$to_latex()</code></a></p></li>
 <li><p><a href='#method-plot'><code>FormalContext$plot()</code></a></p></li>
-<li><p><a href='#method-get_implication_support'><code>FormalContext$get_implication_support()</code></a></p></li>
 <li><p><a href='#method-clone'><code>FormalContext$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -211,9 +206,9 @@
 <h3>Returns</h3>
 <p><code>TRUE</code> if the <code>FormalContext</code> is empty, that is, has not been provided with a matrix, and <code>FALSE</code> otherwise.</p>
 <p><hr>
-<a id="method-get_intent"></a></p><h3>Method <code>get_intent()</code></h3>
+<a id="method-intent"></a></p><h3>Method <code>intent()</code></h3>
 <p>Get the intent of a fuzzy set of objects</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$get_intent(S)</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$intent(S)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -223,9 +218,9 @@
 <h3>Returns</h3>
 <p>A <code>SparseSet</code> with the intent.</p>
 <p><hr>
-<a id="method-get_extent"></a></p><h3>Method <code>get_extent()</code></h3>
+<a id="method-extent"></a></p><h3>Method <code>extent()</code></h3>
 <p>Get the extent of a fuzzy set of attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$get_extent(S)</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$extent(S)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -235,9 +230,9 @@
 <h3>Returns</h3>
 <p>A <code>SparseSet</code> with the intent.</p>
 <p><hr>
-<a id="method-get_closure"></a></p><h3>Method <code>get_closure()</code></h3>
+<a id="method-closure"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
 <p>Get the closure of a fuzzy set of attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$get_closure(S)</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$closure(S)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -305,9 +300,9 @@
 <h3>Returns</h3>
 <p>The standard context using the join- and meet- ireeducble elements.</p>
 <p><hr>
-<a id="method-compute_concepts"></a></p><h3>Method <code>compute_concepts()</code></h3>
+<a id="method-find_concepts"></a></p><h3>Method <code>find_concepts()</code></h3>
 <p>Use Ganter Algorithm to compute concepts</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$compute_concepts(verbose = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$find_concepts(verbose = FALSE)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -317,21 +312,9 @@
 <h3>Returns</h3>
 <p>A list with all the concepts in the formal context.</p>
 <p><hr>
-<a id="method-add_implications"></a></p><h3>Method <code>add_implications()</code></h3>
-<p>Add a precomputed implication set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$add_implications(impl_set)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>impl_set</code></dt><dd><p>(<code>ImplicationSet</code> object) The implications to add to this formal context.</p></dd>
-
-</dl><p></div></p>
-<h3>Returns</h3>
-<p>Nothing, just updates the internal <code>implications</code> field.</p>
-<p><hr>
-<a id="method-extract_implications_concepts"></a></p><h3>Method <code>extract_implications_concepts()</code></h3>
+<a id="method-find_implications"></a></p><h3>Method <code>find_implications()</code></h3>
 <p>Use modified Ganter algorithm to compute both concepts and implications</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$extract_implications_concepts(verbose = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$find_implications(verbose = FALSE)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -341,24 +324,12 @@
 <h3>Returns</h3>
 <p>Nothing, just updates the internal fields <code>concepts</code> and <code>implications</code>.</p>
 <p><hr>
-<a id="method-convert_to_transactions"></a></p><h3>Method <code>convert_to_transactions()</code></h3>
+<a id="method-to_transactions"></a></p><h3>Method <code>to_transactions()</code></h3>
 <p>Convert the formal context to object of class <code>transactions</code> from the <code>arules</code> package</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$convert_to_transactions()</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$to_transactions()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A <code>transactions</code> object.</p>
-<p><hr>
-<a id="method-export_implications_to_arules"></a></p><h3>Method <code>export_implications_to_arules()</code></h3>
-<p>Export implications to <code>arules</code> format</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$export_implications_to_arules(quality = TRUE)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>quality</code></dt><dd><p>(logical) Compute the interest measures for each rule?</p></dd>
-
-</dl><p></div></p>
-<h3>Returns</h3>
-<p>A <code>rules</code> object from <code>arules</code> package. If <code>quality == TRUE</code>, the function <code>interestMeasure</code> from <code>arules</code> is used.</p>
 <p><hr>
 <a id="method-save"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code></h3>
 <p>Save a <code>FormalContext</code> to RDS format</p><h3>Usage</h3>
@@ -411,13 +382,6 @@
 
 <h3>Returns</h3>
 <p>Nothing, just plots the formal context.</p>
-<p><hr>
-<a id="method-get_implication_support"></a></p><h3>Method <code>get_implication_support()</code></h3>
-<p>Compute support of each implication</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$get_implication_support()</pre><p></div></p>
-
-<h3>Returns</h3>
-<p>A vector with the support of each implication</p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
