@@ -93,11 +93,17 @@ ImplicationSet <- R6::R6Class(
     #' @description
     #' Get a subset of the implication set
     #'
-    #' @param idx   (integer vector) Indices of the implications to extract or remove.
+    #' @param idx   (integer or logical vector) Indices of the implications to extract or remove. If logical vector, only \code{TRUE} elements are retained and the rest discarded.
     #'
     #' @return A new \code{ImplicationSet} with only the rules given by the \code{idx} indices (if all \code{idx > 0} and all but \code{idx} if all \code{idx < 0}.
     #' @export
     `[` = function(idx) {
+
+      if (is.logical(idx)) {
+
+        idx <- which(idx)
+
+      }
 
       idx <- idx[abs(idx) <= self$cardinality()]
       idx <- idx[abs(idx) > 0]

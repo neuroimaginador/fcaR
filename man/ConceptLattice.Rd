@@ -169,7 +169,7 @@ Get Concepts by Index
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{indices}}{(numeric vector) The indices of the concepts to return as a list of SparseConcepts.}
+\item{\code{indices}}{(numeric or logical vector) The indices of the concepts to return as a list of SparseConcepts. It can be a vector of logicals where \code{TRUE} elements are to be retained.}
 }
 \if{html}{\out{</div>}}
 }

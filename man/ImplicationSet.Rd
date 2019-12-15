@@ -88,7 +88,7 @@ Get a subset of the implication set
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{idx}}{(integer vector) Indices of the implications to extract or remove.}
+\item{\code{idx}}{(integer or logical vector) Indices of the implications to extract or remove. If logical vector, only \code{TRUE} elements are retained and the rest discarded.}
 }
 \if{html}{\out{</div>}}
 }

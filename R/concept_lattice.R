@@ -206,7 +206,7 @@ ConceptLattice <- R6::R6Class(
     #' @description
     #' Get Concepts by Index
     #'
-    #' @param indices (numeric vector) The indices of the concepts to return as a list of SparseConcepts.
+    #' @param indices (numeric or logical vector) The indices of the concepts to return as a list of SparseConcepts. It can be a vector of logicals where \code{TRUE} elements are to be retained.
     #'
     #' @return A list of SparseConcepts.
     #'
@@ -214,6 +214,12 @@ ConceptLattice <- R6::R6Class(
     `[` = function(indices) {
 
       if (!self$is_empty()) {
+
+        if (is.logical(indices)) {
+
+          indices <- which(indices)
+
+        }
 
         indices <- indices[indices <= length(private$concepts)]
         return(private$concepts[indices])

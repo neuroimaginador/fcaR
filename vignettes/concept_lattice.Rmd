@@ -272,7 +272,6 @@ idx <- which(fc_I$concepts$support() > 0.2)
 # Build the sublattice
 sublattice <- fc_I$concepts$sublattice(idx)
 sublattice
-
 ```
 
 And we can plot just the sublattice:

@@ -346,3 +346,31 @@ test_that("fcaR filters implications", {
   expect_warning(fc$implications$filter(lhs = fc$attributes[5]))
 
 })
+
+test_that("fcaR subsets implications", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I = I)
+  fc$find_implications()
+
+  expect_error(fc$implications[fc$implications$support() > 0.1], NA)
+  expect_error(fc$implications[-c(1:2)])
+
+})
