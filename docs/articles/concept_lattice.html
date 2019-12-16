@@ -582,7 +582,7 @@ O6
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-8-2.png" width="384"></p>
 <p>Also, we can export the formal context as a LaTeX table:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">fc_planets<span class="op">$</span><span class="kw">to_latex</span>()</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; \begin{table} \centering </span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; \begin{tabular}{lrrrrrrr}</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; \toprule</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;   &amp; small &amp; medium &amp; large &amp; near &amp; far &amp; moon &amp; no\_moon\\</span></a>
@@ -597,7 +597,7 @@ O6
 <a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; Neptune &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span></a>
 <a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; Pluto &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span></a>
 <a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; \bottomrule</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; \end{tabular}</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; \end{tabular} \caption{\label{}} \end{table}</span></a></code></pre></div>
 </div>
 <div id="closures" class="section level2">
 <h2 class="hasAnchor">
@@ -606,7 +606,7 @@ O6
 <p>The intent of a (probably fuzzy) set of objects is the set of their common attributes:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Define a set of objects</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">S &lt;-<span class="st"> </span>SparseSet<span class="op">$</span><span class="kw">new</span>(<span class="dt">attributes =</span> fc_planets<span class="op">$</span>objects)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">S<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Earth"</span>, <span class="st">"Mars"</span>), <span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">S<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="dt">Earth =</span> <span class="dv">1</span>, <span class="dt">Mars =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">S</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; {Earth, Mars}</span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"></a>
@@ -616,7 +616,7 @@ O6
 <p>Analogously, the extent of a set of attributes is the set of objects which possess all the attributes in the given set:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Define a set of objects</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">S &lt;-<span class="st"> </span>SparseSet<span class="op">$</span><span class="kw">new</span>(<span class="dt">attributes =</span> fc_planets<span class="op">$</span>attributes)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">S<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="dt">attributes =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"moon"</span>, <span class="st">"large"</span>), <span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">S<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="dt">moon =</span> <span class="dv">1</span>, <span class="dt">large =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb10-4" data-line-number="4">S</a>
 <a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; {large, moon}</span></a>
 <a class="sourceLine" id="cb10-6" data-line-number="6"></a>
@@ -775,7 +775,7 @@ O6
 <a class="sourceLine" id="cb20-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb20-17" data-line-number="17"><span class="co"># LaTeX</span></a>
 <a class="sourceLine" id="cb20-18" data-line-number="18">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">to_latex</span>()</a>
-<a class="sourceLine" id="cb20-19" data-line-number="19"><span class="co">#&gt; $$</span></a>
+<a class="sourceLine" id="cb20-19" data-line-number="19"><span class="co">#&gt; \ensuremath{\{Mercury,\, Venus,\, Earth,\, Mars,\, Jupiter,\, Saturn,\, Uranus,\, Neptune,\, Pluto\}}\ensuremath{\varnothing}\ensuremath{\{Earth,\, Mars,\, Jupiter,\, Saturn,\, Uranus,\, Neptune,\, Pluto\}}\ensuremath{\{moon\}}\ensuremath{\{Jupiter,\, Saturn,\, Uranus,\, Neptune,\, Pluto\}}\ensuremath{\{far,\, moon\}}\ensuremath{\{Jupiter,\, Saturn\}}\ensuremath{\{large,\, far,\, moon\}}\ensuremath{\{Uranus,\, Neptune\}}\ensuremath{\{medium,\, far,\, moon\}}\ensuremath{\{Mercury,\, Venus,\, Earth,\, Mars,\, Pluto\}}\ensuremath{\{small\}}\ensuremath{\{Earth,\, Mars,\, Pluto\}}\ensuremath{\{small,\, moon\}}\ensuremath{\{Pluto\}}\ensuremath{\{small,\, far,\, moon\}}\ensuremath{\{Mercury,\, Venus,\, Earth,\, Mars\}}\ensuremath{\{small,\, near\}}\ensuremath{\{Mercury,\, Venus\}}\ensuremath{\{small,\, near,\, no_moon\}}\ensuremath{\{Earth,\, Mars\}}\ensuremath{\{small,\, near,\, moon\}}\ensuremath{\varnothing}\ensuremath{\{small,\, medium,\, large,\, near,\, far,\, moon,\, no_moon\}}$$</span></a>
 <a class="sourceLine" id="cb20-20" data-line-number="20"><span class="co">#&gt; \begin{array}{lll}</span></a>
 <a class="sourceLine" id="cb20-21" data-line-number="21"><span class="co">#&gt; 1: &amp;\left(\,\ensuremath{\{Mercury,\, Venus,\, Earth,\, Mars,\, Jupiter,\, Saturn,\, Uranus,\, Neptune,\, Pluto\}},\right.&amp;\left.\ensuremath{\varnothing}\,\right)\\</span></a>
 <a class="sourceLine" id="cb20-22" data-line-number="22"><span class="co">#&gt; 2: &amp;\left(\,\ensuremath{\{Earth,\, Mars,\, Jupiter,\, Saturn,\, Uranus,\, Neptune,\, Pluto\}},\right.&amp;\left.\ensuremath{\{moon\}}\,\right)\\</span></a>
@@ -825,16 +825,20 @@ O6
 <a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co"># Build the sublattice</span></a>
 <a class="sourceLine" id="cb24-5" data-line-number="5">sublattice &lt;-<span class="st"> </span>fc_I<span class="op">$</span>concepts<span class="op">$</span><span class="kw">sublattice</span>(idx)</a>
 <a class="sourceLine" id="cb24-6" data-line-number="6">sublattice</a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt; A set of 9 concepts:</span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt; A set of 13 concepts:</span></a>
 <a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">#&gt; 1: ({O1, O2, O3, O4, O5, O6}, {})</span></a>
 <a class="sourceLine" id="cb24-9" data-line-number="9"><span class="co">#&gt; 2: ({O1, O4, O5}, {P4 [0.5]})</span></a>
 <a class="sourceLine" id="cb24-10" data-line-number="10"><span class="co">#&gt; 3: ({O1, O4}, {P4 [0.5], P5 [0.5]})</span></a>
 <a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">#&gt; 4: ({O1, O2, O5}, {P3 [0.5]})</span></a>
 <a class="sourceLine" id="cb24-12" data-line-number="12"><span class="co">#&gt; 5: ({O1, O5}, {P3 [0.5], P4 [0.5]})</span></a>
-<a class="sourceLine" id="cb24-13" data-line-number="13"><span class="co">#&gt; 6: ({O1 [0.5], O2, O5}, {P3})</span></a>
-<a class="sourceLine" id="cb24-14" data-line-number="14"><span class="co">#&gt; 7: ({O2, O3, O6}, {P1 [0.5], P2 [0.5]})</span></a>
-<a class="sourceLine" id="cb24-15" data-line-number="15"><span class="co">#&gt; 8: ({O3, O6}, {P1 [0.5], P2 [0.5], P6})</span></a>
-<a class="sourceLine" id="cb24-16" data-line-number="16"><span class="co">#&gt; 9: ({}, {P1, P2, P3, P4, P5, P6})</span></a></code></pre></div>
+<a class="sourceLine" id="cb24-13" data-line-number="13"><span class="co">#&gt; 6: ({O1}, {P3 [0.5], P4 [0.5], P5})</span></a>
+<a class="sourceLine" id="cb24-14" data-line-number="14"><span class="co">#&gt; 7: ({O1 [0.5], O2, O5}, {P3})</span></a>
+<a class="sourceLine" id="cb24-15" data-line-number="15"><span class="co">#&gt; 8: ({O1 [0.5], O5}, {P3, P4 [0.5]})</span></a>
+<a class="sourceLine" id="cb24-16" data-line-number="16"><span class="co">#&gt; 9: ({O1 [0.5]}, {P3, P4, P5})</span></a>
+<a class="sourceLine" id="cb24-17" data-line-number="17"><span class="co">#&gt; 10: ({O2, O3, O6}, {P1 [0.5], P2 [0.5]})</span></a>
+<a class="sourceLine" id="cb24-18" data-line-number="18"><span class="co">#&gt; 11: ({O3, O6}, {P1 [0.5], P2 [0.5], P6})</span></a>
+<a class="sourceLine" id="cb24-19" data-line-number="19"><span class="co">#&gt; 12: ({O2}, {P1, P2, P3})</span></a>
+<a class="sourceLine" id="cb24-20" data-line-number="20"><span class="co">#&gt; 13: ({}, {P1, P2, P3, P4, P5, P6})</span></a></code></pre></div>
 <p>And we can plot just the sublattice:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">sublattice<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>()</a></code></pre></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>

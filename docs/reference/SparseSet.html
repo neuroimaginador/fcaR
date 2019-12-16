@@ -169,7 +169,7 @@
 <p><hr>
 <a id="method-assign"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/assign.html'>assign()</a></code></h3>
 <p>Assign grades to attributes in the set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>SparseSet$assign(attributes, values)</pre><p></div></p>
+<p><div class="r"></p><pre>SparseSet$assign(attributes = c(), values = c(), ...)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -177,7 +177,14 @@
 
 <dt><code>values</code></dt><dd><p>(numeric vector) Grades to be assigned to the previous <code>attributes</code>.</p></dd>
 
+<dt><code>...</code></dt><dd><p><code>key</code> = <code>value</code> pairs, where the value <code>value</code> is assigned to the <code>key</code> attribute name.</p></dd>
+
 </dl><p></div></p>
+<h3>Details</h3>
+<p>One can use both syntaxes:
+<code>S$assign(A = 1, B = 0.3)</code>
+<code>S$assign(attributes = c(A, B), values = c(1, 0.3))</code>.</p>
+
 <p><hr>
 <a id="method-get_vector"></a></p><h3>Method <code>get_vector()</code></h3>
 <p>Internal <code>Matrix</code></p><h3>Usage</h3>
