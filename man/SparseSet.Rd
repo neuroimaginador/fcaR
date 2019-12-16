@@ -49,7 +49,7 @@ An object of class \code{SparseSet}.
 \subsection{Method \code{assign()}}{
 Assign grades to attributes in the set
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SparseSet$assign(attributes, values)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SparseSet$assign(attributes = c(), values = c(), ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -58,9 +58,17 @@ Assign grades to attributes in the set
 \item{\code{attributes}}{(character vector) Names of the attributes to assign a grade to.}
 
 \item{\code{values}}{(numeric vector) Grades to be assigned to the previous \code{attributes}.}
+
+\item{\code{...}}{\code{key} = \code{value} pairs, where the value \code{value} is assigned to the \code{key} attribute name.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Details}{
+One can use both syntaxes:
+\code{S$assign(A = 1, B = 0.3)}
+\code{S$assign(attributes = c(A, B), values = c(1, 0.3))}.
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_vector"></a>}}

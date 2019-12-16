@@ -85,12 +85,16 @@ SparseConcept <- R6::R6Class(
     #' @export
     to_latex = function() {
 
-      extent <- private$extent$to_latex()
-      intent <- private$intent$to_latex()
+      extent <- set_to_latex(private$extent$get_vector(),
+                             private$extent$get_attributes())
+      intent <- set_to_latex(private$intent$get_vector(),
+                             private$intent$get_attributes())
 
       str <- paste0("(", extent, ", ", intent, ")\n")
 
-      return(str)
+      cat(str)
+
+      return(invisible(str))
 
     }
 
