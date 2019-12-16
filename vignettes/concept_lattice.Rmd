@@ -127,7 +127,7 @@ The intent of a (probably fuzzy) set of objects is the set of their common attri
 ```{r}
 # Define a set of objects
 S <- SparseSet$new(attributes = fc_planets$objects)
-S$assign(attributes = c("Earth", "Mars"), values = c(1, 1))
+S$assign(Earth = 1, Mars = 1)
 S
 
 # Compute the intent of S
@@ -138,7 +138,7 @@ Analogously, the extent of a set of attributes is the set of objects which posse
 ```{r}
 # Define a set of objects
 S <- SparseSet$new(attributes = fc_planets$attributes)
-S$assign(attributes = c("moon", "large"), values = c(1, 1))
+S$assign(moon = 1, large = 1)
 S
 
 # Compute the extent of S

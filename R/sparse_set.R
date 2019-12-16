@@ -47,11 +47,27 @@ SparseSet <- R6::R6Class(
     #' @description
     #' Assign grades to attributes in the set
     #'
+    #' @param ... \code{key} = \code{value} pairs, where the value \code{value} is assigned to the \code{key} attribute name.
     #' @param attributes  (character vector) Names of the attributes to assign a grade to.
     #' @param values      (numeric vector) Grades to be assigned to the previous \code{attributes}.
     #'
+    #' @details
+    #' One can use both syntaxes:
+    #' \code{S$assign(A = 1, B = 0.3)}
+    #' \code{S$assign(attributes = c(A, B), values = c(1, 0.3))}.
+    #'
     #' @export
-    assign = function(attributes, values) {
+    assign = function(attributes = c(),
+                      values = c(),
+                      ...) {
+
+      dots <- unlist(list(...))
+
+      attrs <- names(dots)
+      vals <- unname(dots)
+
+      attributes <- c(attributes, attrs)
+      values <- c(values, vals)
 
       idx <- match(attributes, private$attributes)
 
@@ -134,7 +150,9 @@ SparseSet <- R6::R6Class(
 
       }
 
-      return(str)
+      cat(str)
+
+      return(invisible(str))
 
     }
 

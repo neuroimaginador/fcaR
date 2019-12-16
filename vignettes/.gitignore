@@ -1,2 +1,4 @@
 *.html
 *.R
+concept_lattice_files
+.build.timestamp

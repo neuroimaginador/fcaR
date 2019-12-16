@@ -68,7 +68,7 @@ head(supp)
 ## -----------------------------------------------------------------------------
 # A fuzzy set
 A <- SparseSet$new(attributes = fc$attributes)
-A$assign(attributes = "CapColor=white", values = 1)
+A$assign("CapColor=white" = 1)
 
 # Compute the closure
 fc$implications$closure(A)

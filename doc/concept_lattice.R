@@ -77,7 +77,7 @@ fc_planets$to_latex()
 ## -----------------------------------------------------------------------------
 # Define a set of objects
 S <- SparseSet$new(attributes = fc_planets$objects)
-S$assign(attributes = c("Earth", "Mars"), values = c(1, 1))
+S$assign(Earth = 1, Mars = 1)
 S
 
 # Compute the intent of S
@@ -86,7 +86,7 @@ fc_planets$intent(S)
 ## -----------------------------------------------------------------------------
 # Define a set of objects
 S <- SparseSet$new(attributes = fc_planets$attributes)
-S$assign(attributes = c("moon", "large"), values = c(1, 1))
+S$assign(moon = 1, large = 1)
 S
 
 # Compute the extent of S
@@ -158,7 +158,6 @@ idx <- which(fc_I$concepts$support() > 0.2)
 # Build the sublattice
 sublattice <- fc_I$concepts$sublattice(idx)
 sublattice
-
 
 ## -----------------------------------------------------------------------------
 sublattice$plot()

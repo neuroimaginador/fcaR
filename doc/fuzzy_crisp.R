@@ -127,8 +127,7 @@ fc$implications
 
 ## -----------------------------------------------------------------------------
 S <- SparseSet$new(attributes = fc$attributes)
-S$assign(attributes = c("P2", "P3"),
-         values = c(0.5, 0.5))
+S$assign(P2 = 0.5, P3 = 0.5)
 S
 
 fc$implications$closure(S)
