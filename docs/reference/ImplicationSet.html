@@ -314,6 +314,7 @@ or <code>initialize(rules)</code></p>
 <a id="method-to_latex"></a></p><h3>Method <code>to_latex()</code></h3>
 <p>Export to LaTeX</p><h3>Usage</h3>
 <p><div class="r"></p><pre>ImplicationSet$to_latex(
+  print = TRUE,
   ncols = 1,
   numbered = TRUE,
   numbers = seq(self$cardinality())
@@ -321,6 +322,8 @@ or <code>initialize(rules)</code></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
+
 <dt><code>ncols</code></dt><dd><p>(integer) Number of columns for the output.</p></dd>
 
 <dt><code>numbered</code></dt><dd><p>(logical) If <code>TRUE</code> (default), implications will be numbered in the output.</p></dd>

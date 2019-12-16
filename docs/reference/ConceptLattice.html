@@ -156,6 +156,8 @@
 <li><p><a href='#method-infimum'><code>ConceptLattice$infimum()</code></a></p></li>
 <li><p><a href='#method-subconcepts'><code>ConceptLattice$subconcepts()</code></a></p></li>
 <li><p><a href='#method-superconcepts'><code>ConceptLattice$superconcepts()</code></a></p></li>
+<li><p><a href='#method-lower_neighbours'><code>ConceptLattice$lower_neighbours()</code></a></p></li>
+<li><p><a href='#method-upper_neighbours'><code>ConceptLattice$upper_neighbours()</code></a></p></li>
 <li><p><a href='#method-support'><code>ConceptLattice$support()</code></a></p></li>
 <li><p><a href='#method-clone'><code>ConceptLattice$clone()</code></a></p></li>
 </ul>
@@ -229,10 +231,12 @@
 <p><hr>
 <a id="method-to_latex"></a></p><h3>Method <code>to_latex()</code></h3>
 <p>Write in LaTeX</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$to_latex(ncols = 1, numbered = TRUE, align = TRUE)</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$to_latex(print = TRUE, ncols = 1, numbered = TRUE, align = TRUE)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
+
 <dt><code>ncols</code></dt><dd><p>(integer) Number of columns of the output.</p></dd>
 
 <dt><code>numbered</code></dt><dd><p>(logical) Number the concepts?</p></dd>
@@ -337,6 +341,30 @@
 </dl><p></div></p>
 <h3>Returns</h3>
 <p>A list with the superconcepts.</p>
+<p><hr>
+<a id="method-lower_neighbours"></a></p><h3>Method <code>lower_neighbours()</code></h3>
+<p>Lower Neighbours of a Concept</p><h3>Usage</h3>
+<p><div class="r"></p><pre>ConceptLattice$lower_neighbours(C)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>C</code></dt><dd><p>(<code>SparseConcept</code>) The concept to which find its lower neighbours</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>A list with the lower neighbours of <code>C</code>.</p>
+<p><hr>
+<a id="method-upper_neighbours"></a></p><h3>Method <code>upper_neighbours()</code></h3>
+<p>Upper Neighbours of a Concept</p><h3>Usage</h3>
+<p><div class="r"></p><pre>ConceptLattice$upper_neighbours(C)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>C</code></dt><dd><p>(<code>SparseConcept</code>) The concept to which find its upper neighbours</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>A list with the upper neighbours of <code>C</code>.</p>
 <p><hr>
 <a id="method-support"></a></p><h3>Method <code>support()</code></h3>
 <p>Get support of each concept</p><h3>Usage</h3>
