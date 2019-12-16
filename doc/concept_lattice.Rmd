@@ -1,0 +1,317 @@
+---
+title: "Using FormalContexts and ConceptLattices"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using FormalContexts and ConceptLattices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+# Introduction
+
+In this vignette, we present the main functionalities and data structures of the `fcaR` package when working with formal contexts and concepts, in FCA.
+
+We load the `fcaR` package by:
+```{r setup}
+library(fcaR)
+```
+
+# Datasets
+
+We are going to work with two datasets, a crisp one and a fuzzy one.
+
+The classical (binary) dataset is the well-known `planets` formal context, presented in 
+
+> Wille R (1982). “Restructuring Lattice Theory: An Approach Based on Hierarchies of Concepts.” In Ordered Sets, pp. 445–470. Springer.
+
+```{r echo = FALSE}
+objects <- c("Mercury", "Venus", "Earth", "Mars",
+             "Jupiter", "Saturn", "Uranus", "Neptune",
+             "Pluto")
+
+attributes <- c("small", "medium", "large",
+                "near", "far",
+                "moon", "no_moon")
+
+planets <- matrix(0, nrow = length(objects),
+                  ncol = length(attributes))
+
+rownames(planets) <- objects
+colnames(planets) <- attributes
+
+planets["Mercury", c("small", "near", "no_moon")] <- 1
+planets["Venus", c("small", "near", "no_moon")] <- 1
+planets["Earth", c("small", "near", "moon")] <- 1
+planets["Mars", c("small", "near", "moon")] <- 1
+planets["Jupiter", c("large", "far", "moon")] <- 1
+planets["Saturn", c("large", "far", "moon")] <- 1
+planets["Uranus", c("medium", "far", "moon")] <- 1
+planets["Neptune", c("medium", "far", "moon")] <- 1
+planets["Pluto", c("small", "far", "moon")] <- 1
+```
+
+```{r}
+knitr::kable(planets, format = "html", booktabs = TRUE)
+```
+
+The other formal context is fuzzy and is defined by the following matrix I:
+```{r echo = FALSE}
+objects <- paste0("O", 1:6)
+n_objects <- length(objects)
+
+attributes <- paste0("P", 1:6)
+n_attributes <- length(attributes)
+
+I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                     0, 1, 0.5, 0, 0, 0.5,
+                     0.5, 1, 0, 0, 1, 0,
+                     0.5, 0, 0, 1, 0.5, 0,
+                     1, 0, 0, 0.5, 0, 0,
+                     0, 0, 1, 0, 0, 1),
+            nrow = n_objects,
+            byrow = FALSE)
+
+colnames(I) <- attributes
+rownames(I) <- objects
+```
+
+```{r}
+knitr::kable(I, format = "html", booktabs = TRUE)
+```
+
+# Working with Formal Contexts
+
+The first step when using the `fcaR` package to analyse a formal context is to create an object of class `FormalContext` which will store all the information related to the context.
+
+In our examples, we create two objects:
+```{r}
+fc_planets <- FormalContext$new(planets)
+fc_I <- FormalContext$new(I)
+```
+
+Internally, the object stores information about whether the context is binary or the names of objects and attributes, which are taken from the rownames and colnames of the provided matrix.
+
+## Plotting, printing and latex-ing the FormalContext
+
+Once created the `FormalContext` objects, we can print them or plot them as heatmaps (with functions `print()` and `plot()`):
+```{r}
+print(fc_planets)
+print(fc_I)
+```
+
+```{r fig.dim=c(4,4)}
+fc_planets$plot()
+fc_I$plot()
+```
+
+Also, we can export the formal context as a LaTeX table:
+```{r}
+fc_planets$to_latex()
+```
+
+
+## Closures
+
+The basic operation in FCA is the computation of closures given an attribute set, by using the two derivation operators, extent and intent.
+
+The intent of a (probably fuzzy) set of objects is the set of their common attributes:
+```{r}
+# Define a set of objects
+S <- SparseSet$new(attributes = fc_planets$objects)
+S$assign(attributes = c("Earth", "Mars"), values = c(1, 1))
+S
+
+# Compute the intent of S
+fc_planets$intent(S)
+```
+
+Analogously, the extent of a set of attributes is the set of objects which possess all the attributes in the given set:
+```{r}
+# Define a set of objects
+S <- SparseSet$new(attributes = fc_planets$attributes)
+S$assign(attributes = c("moon", "large"), values = c(1, 1))
+S
+
+# Compute the extent of S
+fc_planets$extent(S)
+```
+
+The composition of intent and extent is the closure of a set of attributes:
+```{r}
+# Compute the closure of S
+Sc <- fc_planets$closure(S)
+Sc
+```
+
+This means that all planets which have the attributes `moon` and `large` also have `far` in common.
+
+We can check whether a set is closed (that is, it is equal to its closure), using `is_closed()`:
+```{r}
+fc_planets$is_closed(S)
+fc_planets$is_closed(Sc)
+```
+
+
+
+## Clarification and Reduction
+
+An interesting point when managing formal contexts is the ability to reduce the context, removing redundancies, while retaining all the knowledge. This is accomplished by two functions: `clarify()`, which removes duplicated attributes and objects (columns and rows in the original matrix); and `reduce()`, which uses closures to remove dependent attributes, but only on binary formal contexts. The resulting `FormalContext` is equivalent to the original one in both cases.
+
+```{r}
+fc_planets$reduce(TRUE)
+
+fc_I$clarify(TRUE)
+```
+
+Note that merged attributes or objects are stored in the new formal context by using squared brackets to unify them, e.g. `[Mercury, Venus]`.
+
+## Extracting Implications and Concepts
+
+The function to extract the canonical basis of implications and the concept lattice is `find_implications()`. Its use is to store a `ConceptLattice` and an `ImplicationSet` objects internally in the `FormalContext` object after running the NextClosure algorithm.
+
+It can be used both for binary and fuzzy formal contexts, resulting in binary or fuzzy concepts and implications:
+```{r}
+fc_planets$find_implications()
+
+fc_I$find_implications()
+```
+
+We can inspect the results as:
+```{r}
+# Concepts
+fc_planets$concepts
+
+# Implications
+fc_planets$implications
+```
+
+## Standard Context
+
+Once we have computed the concepts, we can build the _standard context_ (J, M, $\le$), where J is the set of join-irreducible concepts and M are the meet-irreducible ones. Join and meet are another name for supremum and infimum operations in the concept lattice.
+
+The function `standardize()` works for all FormalContext where the concept lattice has been found, and it produces a new `FormalContext` object:
+```{r}
+fc_planets$standardize()
+fc_I$standardize()
+```
+
+Note that now objects are named J1, J2... and attributes are M1, M2..., from join and meet.
+
+## Saving and loading
+
+A `FormalContext` is saved and loaded (in RDS format) using its own methods `save()` and `load()`, which are more efficient than the base `saveRDS()` and `readRDS()`.
+
+```{r eval = FALSE}
+fc$save(filename = "./fc.rds")
+
+# Create an empty FormalContext where to
+# import the previously saved
+fc2 <- FormalContext$new()
+fc2$load("./fc.rds")
+```
+
+# Concept Lattice
+
+We are going to use the previously computed concept lattices for the two `FormalContext` objects.
+
+## Plot, print and LaTeX
+
+The concept lattice can be plotted using a Hasse diagram and the function `plot()` inside the `ConceptLattice` component:
+```{r}
+fc_planets$concepts$plot()
+fc_I$concepts$plot()
+```
+
+If one desires to get the list of concepts printed, or in $\LaTeX$ format, just:
+```{r}
+# Printing
+fc_planets$concepts
+
+# LaTeX
+fc_planets$concepts$to_latex()
+```
+
+
+## Getting all extents, intents and retrieving concepts
+
+For a `ConceptLattice`, one may want to retrieve particular concepts, using a subsetting as in `R`:
+```{r}
+fc_planets$concepts[2:3]
+```
+
+Or get all the extents and all the intents of all concepts, as sparse matrices:
+```{r eval = FALSE}
+fc_planets$concepts$extents()
+fc_planets$concepts$intents()
+```
+
+## Concept support
+The support of concepts can be computed using the function `support()`:
+```{r}
+fc_planets$concepts$support()
+```
+
+## Sublattices
+
+When the concept lattice is too large, it can be useful in certain occasions to just work with a sublattice of the complete lattice. To this end, we use the `sublattice()` function.
+
+For instance, to build the sublattice of those concepts with support greater than 0.5, we can do:
+```{r}
+# Get the index of those concepts with support 
+# greater than the threshold
+idx <- which(fc_I$concepts$support() > 0.2)
+# Build the sublattice
+sublattice <- fc_I$concepts$sublattice(idx)
+sublattice
+
+```
+
+And we can plot just the sublattice:
+```{r}
+sublattice$plot()
+```
+
+## Subconcepts, superconcepts, infimum and supremum
+
+It may be interesting to use the notions of subconcept and superconcept. Given a concept, we can compute all its subconcepts and all its superconcepts:
+```{r}
+# The fifth concept
+C <- fc_planets$concepts[5][[1]]
+C
+# Its subconcepts:
+fc_planets$concepts$subconcepts(C)
+# And its superconcepts:
+fc_planets$concepts$superconcepts(C)
+```
+
+Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:
+```{r}
+# A list of concepts
+C <- fc_planets$concepts[5:7]
+C
+
+# Supremum of the concepts in C
+fc_planets$concepts$supremum(C)
+# Infimum of the concepts in C
+fc_planets$concepts$infimum(C)
+```
+
+## Join- and meet- irreducible elements
+
+Also irreducible elements with respect to join (supremum) and meet (infimum) can be computed for a given concept lattice:
+```{r}
+fc_planets$concepts$join_irreducibles()
+fc_planets$concepts$meet_irreducibles()
+```
+
+This are the concepts used to build the _standard context_, mentioned above.
+
