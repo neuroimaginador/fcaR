@@ -60,11 +60,9 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   format_cols <- ifelse(numbered, "rrcl", "rcl")
 
-  output <- c(paste0("\\begin{array}{", str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{array}")
+  output <- c(paste0("\\begin{lontable}{", str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
 
-  output <- paste0("$$\n",
-                   paste(output, collapse = "\n"),
-                   "\n$$")
+  output <- paste(output, collapse = "\n")
 
   # cat(output)
 
