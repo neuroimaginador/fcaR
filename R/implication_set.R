@@ -462,6 +462,7 @@ ImplicationSet <- R6::R6Class(
     #' @description
     #' Export to LaTeX
     #'
+    #' @param print (logical) Print to output?
     #' @param ncols  (integer) Number of columns for the output.
     #' @param numbered (logical) If \code{TRUE} (default), implications will be numbered in the output.
     #' @param numbers (vector) If \code{numbered}, use these elements to enumerate the implications. The default is to enumerate 1, 2, ..., but can be changed.
@@ -469,12 +470,23 @@ ImplicationSet <- R6::R6Class(
     #' @return A string in LaTeX format that prints nicely all the implications.
     #'
     #' @export
-    to_latex = function(ncols = 1, numbered = TRUE, numbers = seq(self$cardinality())) {
+    to_latex = function(print = TRUE,
+                        ncols = 1,
+                        numbered = TRUE,
+                        numbers = seq(self$cardinality())) {
 
-      imp_to_latex(self,
+      output <- imp_to_latex(self,
                    ncols = ncols,
                    numbered = numbered,
                    numbers = numbers)
+
+      if (print) {
+
+        cat(output)
+
+      }
+
+      return(invisible(output))
 
     },
 

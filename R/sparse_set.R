@@ -138,9 +138,11 @@ SparseSet <- R6::R6Class(
     #' @description
     #' Write the set in LaTeX format
     #'
+    #' @param print (logical) Print to output?
+    #'
     #' @return The fuzzy set in LaTeX.
     #' @export
-    to_latex = function() {
+    to_latex = function(print = TRUE) {
 
       str <- "\\ensuremath{\\varnothing}"
       if (sum(private$v) > 0) {
@@ -150,7 +152,11 @@ SparseSet <- R6::R6Class(
 
       }
 
-      cat(str)
+      if (print) {
+
+        cat(str)
+
+      }
 
       return(invisible(str))
 

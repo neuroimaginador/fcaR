@@ -180,6 +180,7 @@ ConceptLattice <- R6::R6Class(
     #' @description
     #' Write in LaTeX
     #'
+    #' @param print (logical) Print to output?
     #' @param ncols (integer) Number of columns of the output.
     #' @param numbered (logical) Number the concepts?
     #' @param align  (logical) Align objects and attributes independently?
@@ -188,16 +189,25 @@ ConceptLattice <- R6::R6Class(
     #' The \code{LaTeX} code to list all concepts.
     #'
     #' @export
-    to_latex = function(ncols = 1,
+    to_latex = function(print = TRUE,
+                        ncols = 1,
                         numbered = TRUE,
                         align = TRUE) {
 
       if (!self$is_empty()) {
 
-        concepts_to_latex(private$concepts,
+        output <- concepts_to_latex(private$concepts,
                           ncols = ncols,
                           align = align,
                           numbered = numbered)
+
+        if (print) {
+
+          cat(output)
+
+        }
+
+        return(invisible(output))
 
       }
 

@@ -66,7 +66,7 @@ imp_to_latex <- function(imp_set, ncols = 1,
                    paste(output, collapse = "\n"),
                    "\n$$")
 
-  cat(output)
+  # cat(output)
 
   return(invisible(output))
 
@@ -86,13 +86,13 @@ concepts_to_latex <- function(concept_list,
     prefix <- ifelse(numbered, paste0(numbers[i], ": &"), "")
     output <- c(output,
                 paste0(prefix,
-                       "\\left(\\,",
-                       concept_list[[i]]$get_extent()$to_latex(),
-                       ",\\right.",
+                       "$\\left(\\,",
+                       concept_list[[i]]$get_extent()$to_latex(print = FALSE),
+                       ",\\right.$",
                        ifelse(align, "&", "\\,"),
-                       "\\left.",
-                       concept_list[[i]]$get_intent()$to_latex(),
-                       "\\,\\right)"))
+                       "$\\left.",
+                       concept_list[[i]]$get_intent()$to_latex(print = FALSE),
+                       "\\,\\right)$"))
 
   }
 
@@ -107,14 +107,12 @@ concepts_to_latex <- function(concept_list,
   format_cols <- c(ifelse(numbered, "l", ""),
                    ifelse(align, "ll", "l"))
 
-  output <- c(paste0("\\begin{array}{",
-                     str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{array}")
+  output <- c(paste0("\\begin{longtable}{",
+                     str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
 
-  output <- paste0("$$\n",
-                   paste(output, collapse = "\n"),
-                   "\n$$")
+  output <- paste(output, collapse = "\n")
 
-  cat(output)
+  # cat(output)
 
   return(invisible(output))
 
