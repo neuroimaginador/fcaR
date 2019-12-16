@@ -13,6 +13,8 @@ test_that("fcaR operates on implications", {
 
   fc <- FormalContext$new(I = Mushroom)
 
+  expect_error(fc$implications$apply_rules("composition"), NA)
+
   fc$implications$add(mush_clean)
 
   # Cadinality
@@ -77,9 +79,14 @@ test_that("fcaR imports implications from arules", {
   fc$implications$add(imps)
   expect_is(fc$implications, "ImplicationSet")
 
+  expect_error(fc$implications$add(1, 2, 3))
+
 })
 
 test_that("fcaR exports implications to arules", {
+
+  fc <- FormalContext$new()
+  expect_error(fc$implications$to_arules())
 
   fc <- FormalContext$new(I = Mushroom)
 
@@ -87,9 +94,33 @@ test_that("fcaR exports implications to arules", {
 
   fc$implications$apply_rules("composition", parallelize = FALSE)
 
-  my_rules <- fc$implications$to_arules(quality = TRUE)
+  expect_error(my_rules <- fc$implications$to_arules(quality = TRUE), NA)
 
   expect_is(my_rules, "rules")
+
+  # With fuzzy context:
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I = I)
+  fc$find_implications()
+
+  expect_error(fc$implications$to_arules())
 
 })
 
@@ -119,6 +150,7 @@ test_that("fcaR computes implication support", {
 
   fc$find_implications()
 
+  expect_error(fc$implications$support(), NA)
   expect_error(fc$implications$support(), NA)
 
 })
@@ -294,6 +326,8 @@ test_that("fcaR can use generalization", {
 
   fc$implications$add(lhs1, rhs1)
 
+  expect_error(fc$implications$apply_rules("composition"), NA)
+
   lhs2 <- SparseSet$new(attributes = fc$attributes)
   lhs2$assign(attributes = fc$attributes[c(1, 3)],
               values = c(1, 1))
@@ -372,5 +406,7 @@ test_that("fcaR subsets implications", {
 
   expect_error(fc$implications[fc$implications$support() > 0.1], NA)
   expect_error(fc$implications[-c(1:2)], NA)
+  expect_error(fc$implications[c(-1, 2)])
+  expect_error(fc$implications[0], NA)
 
 })

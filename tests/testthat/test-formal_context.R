@@ -29,6 +29,10 @@ test_that("fcaR creates a formal context", {
   colnames(I) <- attributes
   rownames(I) <- objects
 
+  fc <- FormalContext$new()
+  expect_is(fc, "FormalContext")
+  expect_output(fc$print())
+
   fc <- FormalContext$new(I = I)
 
   expect_is(fc, "FormalContext")
@@ -163,7 +167,12 @@ test_that("fcaR generate plots", {
 
   fc$find_implications()
 
-  expect_error(fc$plot, NA)
+  expect_error(fc$plot(), NA)
+
+  fc <- FormalContext$new()
+
+  expect_error(fc$plot())
+
 
 })
 
@@ -224,9 +233,10 @@ test_that("fcaR saves and loads formal contexts", {
 
   fc <- FormalContext$new(I = I)
 
+  expect_error(fc$save(filename = filename), NA)
   fc$find_implications()
 
-  fc$save(filename = filename)
+  expect_error(fc$save(filename = filename), NA)
 
   expect_error(fc2 <- FormalContext$new(), NA)
   expect_error(fc2$load(filename), NA)
@@ -262,6 +272,48 @@ test_that("fcaR computes intents, extents and closures of SparseSets", {
   expect_error(fc$intent(c1$get_extent()), NA)
   expect_error(fc$closure(c1$get_intent()), NA)
 
+  expect_error(fc$intent(c1$get_intent()))
+  expect_error(fc$extent(c1$get_extent()))
+  expect_error(fc$closure(c1$get_extent()))
+
+})
+
+test_that("fcaR checks for concepts", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I = I)
+  fc$find_concepts()
+
+  for (i in seq(fc$concepts$size())) {
+
+    C <- fc$concepts[i][[1]]
+
+    expect_error(fc$is_closed(C$get_intent()), NA)
+    expect_error(fc$is_concept(C), NA)
+    expect_error(fc$extent(C$get_intent()), NA)
+    expect_error(fc$intent(C$get_extent()), NA)
+    expect_error(fc$closure(C$get_intent()), NA)
+
+  }
+
+
 })
 
 test_that("fcaR clarifies and reduces contexts", {
@@ -288,6 +340,7 @@ test_that("fcaR clarifies and reduces contexts", {
 
   expect_error(fc2 <- fc$clarify(TRUE), NA)
   expect_error(fc$clarify(), NA)
+  expect_error(fc$reduce())
 
   I2 <- I
   I2[I2 > 0] <- 1
