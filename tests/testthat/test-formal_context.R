@@ -389,3 +389,29 @@ test_that("fcaR computes the standard context", {
   # expect_error(fc$clarify(), NA)
 
 })
+
+test_that("fcaR computes object and attribute concepts", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       0, 1, 0.5, 0, 0, 0.5,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 1),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I)
+
+  expect_error(fc$att_concept("P1"), NA)
+  expect_error(fc$obj_concept("O3"), NA)
+})

@@ -35,6 +35,8 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-intent}{\code{FormalContext$intent()}}
 \item \href{#method-extent}{\code{FormalContext$extent()}}
 \item \href{#method-closure}{\code{FormalContext$closure()}}
+\item \href{#method-obj_concept}{\code{FormalContext$obj_concept()}}
+\item \href{#method-att_concept}{\code{FormalContext$att_concept()}}
 \item \href{#method-is_concept}{\code{FormalContext$is_concept()}}
 \item \href{#method-is_closed}{\code{FormalContext$is_closed()}}
 \item \href{#method-clarify}{\code{FormalContext$clarify()}}
@@ -146,6 +148,44 @@ Get the closure of a fuzzy set of attributes
 }
 \subsection{Returns}{
 A \code{SparseSet} with the closure.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-obj_concept"></a>}}
+\subsection{Method \code{obj_concept()}}{
+Object Concept
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$obj_concept(object)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{object}}{(character) Name of the object to compute its associated concept}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+If the object is \code{g}, the attribute object is \code{(g'', g')}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-att_concept"></a>}}
+\subsection{Method \code{att_concept()}}{
+Attribute Concept
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$att_concept(attribute)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{attribute}}{(character) Name of the attribute to compute its associated concept}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+If the attribute is \code{m}, the attribute object is \code{(m', m'')}.
 }
 }
 \if{html}{\out{<hr>}}

@@ -337,6 +337,52 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
+    #' Object Concept
+    #'
+    #' @param object (character) Name of the object to compute its associated concept
+    #'
+    #' @return
+    #' If the object is \code{g}, the attribute object is \code{(g'', g')}.
+    #'
+    #' @export
+    obj_concept = function(object) {
+
+      S <- SparseSet$new(attributes = self$objects)
+      S$assign(attributes = object, values = 1)
+
+      B <- self$intent(S)
+      A <- self$extent(B)
+
+      C <- SparseConcept$new(extent = A, intent = B)
+
+      return(C)
+
+    },
+
+    #' @description
+    #' Attribute Concept
+    #'
+    #' @param attribute (character) Name of the attribute to compute its associated concept
+    #'
+    #' @return
+    #' If the attribute is \code{m}, the attribute object is \code{(m', m'')}.
+    #'
+    #' @export
+    att_concept = function(attribute) {
+
+      S <- SparseSet$new(attributes = self$attributes)
+      S$assign(attributes = attribute, values = 1)
+
+      A <- self$extent(S)
+      B <- self$intent(A)
+
+      C <- SparseConcept$new(extent = A, intent = B)
+
+      return(C)
+
+    },
+
+    #' @description
     #' Is a Concept?
     #'
     #' @param C A \code{SparseConcept} object
