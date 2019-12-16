@@ -123,9 +123,16 @@ A string with the elements of the set and their grades between brackets {}.
 \subsection{Method \code{to_latex()}}{
 Write the set in LaTeX format
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SparseSet$to_latex()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SparseSet$to_latex(print = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{print}}{(logical) Print to output?}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 The fuzzy set in LaTeX.
 }

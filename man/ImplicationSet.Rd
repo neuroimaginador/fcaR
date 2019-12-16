@@ -266,6 +266,7 @@ A string with all the implications in the set.
 Export to LaTeX
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_latex(
+  print = TRUE,
   ncols = 1,
   numbered = TRUE,
   numbers = seq(self$cardinality())
@@ -275,6 +276,8 @@ Export to LaTeX
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{print}}{(logical) Print to output?}
+
 \item{\code{ncols}}{(integer) Number of columns for the output.}
 
 \item{\code{numbered}}{(logical) If \code{TRUE} (default), implications will be numbered in the output.}

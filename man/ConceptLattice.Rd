@@ -140,12 +140,14 @@ Nothing, just prints the lattice.
 \subsection{Method \code{to_latex()}}{
 Write in LaTeX
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$to_latex(ncols = 1, numbered = TRUE, align = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$to_latex(print = TRUE, ncols = 1, numbered = TRUE, align = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{print}}{(logical) Print to output?}
+
 \item{\code{ncols}}{(integer) Number of columns of the output.}
 
 \item{\code{numbered}}{(logical) Number the concepts?}
