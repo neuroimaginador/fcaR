@@ -197,9 +197,9 @@ ConceptLattice <- R6::R6Class(
       if (!self$is_empty()) {
 
         output <- concepts_to_latex(private$concepts,
-                          ncols = ncols,
-                          align = align,
-                          numbered = numbered)
+                                    ncols = ncols,
+                                    align = align,
+                                    numbered = numbered)
 
         if (print) {
 
@@ -297,9 +297,13 @@ ConceptLattice <- R6::R6Class(
     #' @importFrom Matrix colSums
     join_irreducibles = function() {
 
-      M <- .reduce_transitivity(private$subconcept_matrix)
+      if (is.null(private$reduced_matrix)) {
 
-      idx <- which(colSums(M) == 1)
+        private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
+
+      }
+
+      idx <- which(colSums(private$reduced_matrix) == 1)
       self[idx]
 
     },
@@ -403,6 +407,52 @@ ConceptLattice <- R6::R6Class(
     },
 
     #' @description
+    #' Lower Neighbours of a Concept
+    #'
+    #' @param C (\code{SparseConcept}) The concept to which find its lower neighbours
+    #'
+    #' @return
+    #' A list with the lower neighbours of \code{C}.
+    #'
+    #' @export
+    lower_neighbours = function(C) {
+
+      idx <- private$to_indices(C)
+
+      if (is.null(private$reduced_matrix)) {
+
+        private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
+
+      }
+
+      self[which(private$reduced_matrix[, idx] > 0)]
+
+    },
+
+    #' @description
+    #' Upper Neighbours of a Concept
+    #'
+    #' @param C (\code{SparseConcept}) The concept to which find its upper neighbours
+    #'
+    #' @return
+    #' A list with the upper neighbours of \code{C}.
+    #'
+    #' @export
+    upper_neighbours = function(C) {
+
+      idx <- private$to_indices(C)
+
+      if (is.null(private$reduced_matrix)) {
+
+        private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
+
+      }
+
+      self[which(private$reduced_matrix[idx, ] > 0)]
+
+    },
+
+    #' @description
     #' Get support of each concept
     #'
     #' @return A vector with the support of each concept.
@@ -436,6 +486,7 @@ ConceptLattice <- R6::R6Class(
     objects = NULL,
     attributes = NULL,
     subconcept_matrix = NULL,
+    reduced_matrix = NULL,
     I = NULL,
     concept_support = NULL,
 

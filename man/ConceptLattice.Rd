@@ -25,6 +25,8 @@ This class implements the data structure and methods for concept lattices.
 \item \href{#method-infimum}{\code{ConceptLattice$infimum()}}
 \item \href{#method-subconcepts}{\code{ConceptLattice$subconcepts()}}
 \item \href{#method-superconcepts}{\code{ConceptLattice$superconcepts()}}
+\item \href{#method-lower_neighbours}{\code{ConceptLattice$lower_neighbours()}}
+\item \href{#method-upper_neighbours}{\code{ConceptLattice$upper_neighbours()}}
 \item \href{#method-support}{\code{ConceptLattice$support()}}
 \item \href{#method-clone}{\code{ConceptLattice$clone()}}
 }
@@ -308,6 +310,44 @@ Superconcepts of a Concept
 }
 \subsection{Returns}{
 A list with the superconcepts.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-lower_neighbours"></a>}}
+\subsection{Method \code{lower_neighbours()}}{
+Lower Neighbours of a Concept
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$lower_neighbours(C)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{C}}{(\code{SparseConcept}) The concept to which find its lower neighbours}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A list with the lower neighbours of \code{C}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-upper_neighbours"></a>}}
+\subsection{Method \code{upper_neighbours()}}{
+Upper Neighbours of a Concept
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$upper_neighbours(C)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{C}}{(\code{SparseConcept}) The concept to which find its upper neighbours}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A list with the upper neighbours of \code{C}.
 }
 }
 \if{html}{\out{<hr>}}

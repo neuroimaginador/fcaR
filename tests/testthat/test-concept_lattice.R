@@ -132,3 +132,12 @@ test_that("fcaR computes the size of a ConceptLattice", {
   expect_equal(sz, 0)
 
 })
+
+test_that("fcaR finds the lower and upper neighbours of a concept",
+          {
+
+            C <- fc$concepts[2][[1]]
+            expect_error(fc$concepts$lower_neighbours(C), NA)
+            expect_error(fc$concepts$upper_neighbours(C), NA)
+
+          })
