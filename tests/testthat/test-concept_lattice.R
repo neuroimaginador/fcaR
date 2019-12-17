@@ -56,6 +56,8 @@ test_that("fcaR writes a ConceptLattice to LaTeX", {
 
   expect_error(fc$concepts[2][[1]]$to_latex(), NA)
 
+  expect_error(to_latex(fc$concepts[1:3]), NA)
+
 })
 
 test_that("fcaR extracts concepts from a ConceptLattice", {
