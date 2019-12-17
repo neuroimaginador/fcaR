@@ -166,7 +166,7 @@ Object Concept
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-If the object is \code{g}, the attribute object is \code{(g'', g')}.
+The object concept associated to the object given.
 }
 }
 \if{html}{\out{<hr>}}
@@ -185,7 +185,7 @@ Attribute Concept
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-If the attribute is \code{m}, the attribute object is \code{(m', m'')}.
+The attribute concept associated to the attribute given.
 }
 }
 \if{html}{\out{<hr>}}

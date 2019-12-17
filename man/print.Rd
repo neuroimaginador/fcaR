@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{A list of concepts as a result of subsetting a \code{ConceptLattice}}
+
+\item{...}{Another (unused) arguments.}
 }
 \value{
 Nothing, just prints a list of concepts nicely.

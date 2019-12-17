@@ -342,7 +342,7 @@ FormalContext <- R6::R6Class(
     #' @param object (character) Name of the object to compute its associated concept
     #'
     #' @return
-    #' If the object is \code{g}, the attribute object is \code{(g'', g')}.
+    #' The object concept associated to the object given.
     #'
     #' @export
     obj_concept = function(object) {
@@ -365,7 +365,7 @@ FormalContext <- R6::R6Class(
     #' @param attribute (character) Name of the attribute to compute its associated concept
     #'
     #' @return
-    #' If the attribute is \code{m}, the attribute object is \code{(m', m'')}.
+    #' The attribute concept associated to the attribute given.
     #'
     #' @export
     att_concept = function(attribute) {

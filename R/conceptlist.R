@@ -1,6 +1,8 @@
 #' Print a list of concepts
 #'
 #' @param x A list of concepts as a result of subsetting a \code{ConceptLattice}
+#' @param ... Another (unused) arguments.
+#'
 #' @return Nothing, just prints a list of concepts nicely.
 #'
 #' @rdname print
