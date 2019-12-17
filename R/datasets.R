@@ -51,7 +51,7 @@
 
 #' Data for Tourist Destination in Las Vegas
 #'
-#' The dataset \code{vegas} is the binary translation of the Las Vegas Strip dataset (@moro2017stripping), which records more than 500 TripAdvisor reviews of hotels in Las Vegas Strip. The uninformative attributes (uch as the user continent or the weekday of the review) are removed.
+#' The dataset \code{vegas} is the binary translation of the Las Vegas Strip dataset (@moro2017stripping), which records more than 500 TripAdvisor reviews of hotels in Las Vegas Strip. The uninformative attributes (such as the user continent or the weekday of the review) are removed.
 #'
 #' @format
 #' A matrix with 504 rows and 25 binary columns. Column names are related to different features of the hotels:

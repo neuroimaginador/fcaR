@@ -282,7 +282,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Get the closure of a fuzzy set of attributes
     #'
-    #' @param S   (\code{SparseSet}) The set of attributes to compute the closire for.
+    #' @param S   (\code{SparseSet}) The set of attributes to compute the closure for.
     #'
     #' @return A \code{SparseSet} with the closure.
     #'
@@ -545,7 +545,7 @@ FormalContext <- R6::R6Class(
     #' All concepts must be previously computed.
     #'
     #' @return
-    #' The standard context using the join- and meet- ireeducble elements.
+    #' The standard context using the join- and meet- irreducible elements.
     #' @export
     standardize = function() {
 
