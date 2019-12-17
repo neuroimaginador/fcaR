@@ -795,11 +795,8 @@ O6
 <a href="#getting-all-extents-intents-and-retrieving-concepts" class="anchor"></a>Getting all extents, intents and retrieving concepts</h2>
 <p>For a <code>ConceptLattice</code>, one may want to retrieve particular concepts, using a subsetting as in <code>R</code>:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">fc_planets<span class="op">$</span>concepts[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></a></code></pre></div>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></a></code></pre></div>
 <p>Or get all the extents and all the intents of all concepts, as sparse matrices:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">extents</span>()</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">intents</span>()</a></code></pre></div>
@@ -851,86 +848,47 @@ O6
 <a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
 <a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co"># Its subconcepts:</span></a>
 <a class="sourceLine" id="cb26-6" data-line-number="6">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">subconcepts</span>(C)</a>
-<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
-<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></a>
-<a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co"># And its superconcepts:</span></a>
-<a class="sourceLine" id="cb26-13" data-line-number="13">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">superconcepts</span>(C)</a>
-<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></a>
-<a class="sourceLine" id="cb26-16" data-line-number="16"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb26-17" data-line-number="17"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb26-18" data-line-number="18"><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></a>
-<a class="sourceLine" id="cb26-19" data-line-number="19"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb26-20" data-line-number="20"><span class="co">#&gt; [[3]]</span></a>
-<a class="sourceLine" id="cb26-21" data-line-number="21"><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></a>
-<a class="sourceLine" id="cb26-22" data-line-number="22"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb26-23" data-line-number="23"><span class="co">#&gt; [[4]]</span></a>
-<a class="sourceLine" id="cb26-24" data-line-number="24"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a></code></pre></div>
+<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
+<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></a>
+<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="co"># And its superconcepts:</span></a>
+<a class="sourceLine" id="cb26-10" data-line-number="10">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">superconcepts</span>(C)</a>
+<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></a>
+<a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></a>
+<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></a>
+<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a></code></pre></div>
 <p>Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># A list of concepts</span></a>
 <a class="sourceLine" id="cb27-2" data-line-number="2">C &lt;-<span class="st"> </span>fc_planets<span class="op">$</span>concepts[<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>]</a>
 <a class="sourceLine" id="cb27-3" data-line-number="3">C</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
-<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></a>
-<a class="sourceLine" id="cb27-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt; [[3]]</span></a>
-<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co">#&gt; ({Earth, Mars, Pluto}, {small, moon})</span></a>
-<a class="sourceLine" id="cb27-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co"># Supremum of the concepts in C</span></a>
-<a class="sourceLine" id="cb27-14" data-line-number="14">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">supremum</span>(C)</a>
-<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb27-16" data-line-number="16"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></a>
-<a class="sourceLine" id="cb27-17" data-line-number="17"><span class="co"># Infimum of the concepts in C</span></a>
-<a class="sourceLine" id="cb27-18" data-line-number="18">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">infimum</span>(C)</a>
-<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb27-20" data-line-number="20"><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></a></code></pre></div>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></a>
+<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt; ({Earth, Mars, Pluto}, {small, moon})</span></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="co"># Supremum of the concepts in C</span></a>
+<a class="sourceLine" id="cb27-9" data-line-number="9">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">supremum</span>(C)</a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></a>
+<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co"># Infimum of the concepts in C</span></a>
+<a class="sourceLine" id="cb27-12" data-line-number="12">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">infimum</span>(C)</a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></a></code></pre></div>
 </div>
 <div id="join--and-meet--irreducible-elements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#join--and-meet--irreducible-elements" class="anchor"></a>Join- and meet- irreducible elements</h2>
 <p>Also irreducible elements with respect to join (supremum) and meet (infimum) can be computed for a given concept lattice:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">join_irreducibles</span>()</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
-<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt; [[3]]</span></a>
-<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt; ({Pluto}, {small, far, moon})</span></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; [[4]]</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></a>
-<a class="sourceLine" id="cb28-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-14" data-line-number="14"><span class="co">#&gt; [[5]]</span></a>
-<a class="sourceLine" id="cb28-15" data-line-number="15"><span class="co">#&gt; ({Earth, Mars}, {small, near, moon})</span></a>
-<a class="sourceLine" id="cb28-16" data-line-number="16">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">meet_irreducibles</span>()</a>
-<a class="sourceLine" id="cb28-17" data-line-number="17"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb28-18" data-line-number="18"><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></a>
-<a class="sourceLine" id="cb28-19" data-line-number="19"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-20" data-line-number="20"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb28-21" data-line-number="21"><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></a>
-<a class="sourceLine" id="cb28-22" data-line-number="22"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-23" data-line-number="23"><span class="co">#&gt; [[3]]</span></a>
-<a class="sourceLine" id="cb28-24" data-line-number="24"><span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span></a>
-<a class="sourceLine" id="cb28-25" data-line-number="25"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-26" data-line-number="26"><span class="co">#&gt; [[4]]</span></a>
-<a class="sourceLine" id="cb28-27" data-line-number="27"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
-<a class="sourceLine" id="cb28-28" data-line-number="28"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-29" data-line-number="29"><span class="co">#&gt; [[5]]</span></a>
-<a class="sourceLine" id="cb28-30" data-line-number="30"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></a>
-<a class="sourceLine" id="cb28-31" data-line-number="31"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-32" data-line-number="32"><span class="co">#&gt; [[6]]</span></a>
-<a class="sourceLine" id="cb28-33" data-line-number="33"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})</span></a>
-<a class="sourceLine" id="cb28-34" data-line-number="34"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb28-35" data-line-number="35"><span class="co">#&gt; [[7]]</span></a>
-<a class="sourceLine" id="cb28-36" data-line-number="36"><span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></a></code></pre></div>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">#&gt; ({Pluto}, {small, far, moon})</span></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></a>
+<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="co">#&gt; ({Earth, Mars}, {small, near, moon})</span></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">meet_irreducibles</span>()</a>
+<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></a>
+<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></a>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></a>
+<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></a>
+<a class="sourceLine" id="cb28-13" data-line-number="13"><span class="co">#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})</span></a>
+<a class="sourceLine" id="cb28-14" data-line-number="14"><span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></a></code></pre></div>
 <p>This are the concepts used to build the <em>standard context</em>, mentioned above.</p>
 </div>
 </div>
