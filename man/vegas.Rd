@@ -19,6 +19,6 @@ Moro, S., Rita, P., & Coelho, J. (2017). Stripping customers' feedback on hotels
 vegas
 }
 \description{
-The dataset \code{vegas} is the binary translation of the Las Vegas Strip dataset (@moro2017stripping), which records more than 500 TripAdvisor reviews of hotels in Las Vegas Strip. The uninformative attributes (uch as the user continent or the weekday of the review) are removed.
+The dataset \code{vegas} is the binary translation of the Las Vegas Strip dataset (@moro2017stripping), which records more than 500 TripAdvisor reviews of hotels in Las Vegas Strip. The uninformative attributes (such as the user continent or the weekday of the review) are removed.
 }
 \keyword{datasets}

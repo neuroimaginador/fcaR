@@ -64,7 +64,7 @@ Assign grades to attributes in the set
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-One can use both syntaxes:
+One can use both of:
 \code{S$assign(A = 1, B = 0.3)}
 \code{S$assign(attributes = c(A, B), values = c(1, 0.3))}.
 }

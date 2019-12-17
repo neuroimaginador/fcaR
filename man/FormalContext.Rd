@@ -142,7 +142,7 @@ Get the closure of a fuzzy set of attributes
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(\code{SparseSet}) The set of attributes to compute the closire for.}
+\item{\code{S}}{(\code{SparseSet}) The set of attributes to compute the closure for.}
 }
 \if{html}{\out{</div>}}
 }
@@ -277,7 +277,7 @@ All concepts must be previously computed.
 }
 
 \subsection{Returns}{
-The standard context using the join- and meet- ireeducble elements.
+The standard context using the join- and meet- irreducible elements.
 }
 }
 \if{html}{\out{<hr>}}
