@@ -423,7 +423,7 @@ With a single function, we can compute the set of concepts:
 fc$find_concepts()
 
 # The first concept
-fc$concepts[1][[1]]
+fc$concepts[1]
 #> ({O1, O2, O3, O4, O5, O6}, {})
 
 # And plot the concept lattice
@@ -489,9 +489,9 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Using parallel execution
 #> Processing batch
-#> --> composition : from 12 to 12 in 0.004 secs. 
-#> --> generalization : from 12 to 12 in 0.008 secs. 
-#> Batch took 0.016 secs.
+#> --> composition : from 12 to 12 in 0.006 secs. 
+#> --> generalization : from 12 to 12 in 0.01 secs. 
+#> Batch took 0.021 secs.
 
 # Reduced set of implications
 fc$implications

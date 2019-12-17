@@ -4,10 +4,10 @@
 \alias{print.conceptlist}
 \title{Print a list of concepts}
 \usage{
-print.conceptlist(x)
+\method{print}{conceptlist}(x, ...)
 }
 \arguments{
-\item{x}{A \code{conceptlist} as result of subsetting a \code{ConceptLattice}}
+\item{x}{A list of concepts as a result of subsetting a \code{ConceptLattice}}
 }
 \value{
 Nothing, just prints a list of concepts nicely.

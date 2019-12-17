@@ -25,11 +25,9 @@ Description: The aim of this package is to provide tools to perform fuzzy formal
 License: GPL-3
 Imports: 
     stringr,
-    pryr,
     hasseDiagram,
     RColorBrewer,
     scales,
-    sets,
     arules,
     tictoc,
     knitr,

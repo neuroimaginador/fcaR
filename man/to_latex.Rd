@@ -2,9 +2,12 @@
 % Please edit documentation in R/conceptlist.R
 \name{to_latex}
 \alias{to_latex}
+\alias{to_latex.conceptlist}
 \title{Print a list of concepts to LaTeX}
 \usage{
 to_latex(x)
+
+\method{to_latex}{conceptlist}(x)
 }
 \arguments{
 \item{x}{A \code{conceptlist} as result of subsetting a \code{ConceptLattice}}

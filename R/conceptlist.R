@@ -1,12 +1,12 @@
 #' Print a list of concepts
 #'
-#' @param x A \code{conceptlist} as result of subsetting a \code{ConceptLattice}
+#' @param x A list of concepts as a result of subsetting a \code{ConceptLattice}
+#' @return Nothing, just prints a list of concepts nicely.
 #'
-#' @return
-#' Nothing, just prints a list of concepts nicely.
-#'
+#' @rdname print
+#' @method print conceptlist
 #' @export
-print.conceptlist <- function(x) {
+print.conceptlist <- function(x, ...) {
 
   for (i in seq_along(x)) {
 
@@ -29,6 +29,10 @@ print.conceptlist <- function(x) {
 #' @export
 to_latex <- function(x) UseMethod("to_latex")
 
+#'
+#' @rdname to_latex
+#' @method to_latex conceptlist
+#' @export
 to_latex.conceptlist <- function(x) {
 
   str <- concepts_to_latex(x, numbered = FALSE)

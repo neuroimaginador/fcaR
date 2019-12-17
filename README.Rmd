@@ -98,7 +98,7 @@ With a single function, we can compute the set of concepts:
 fc$find_concepts()
 
 # The first concept
-fc$concepts[1][[1]]
+fc$concepts[1]
 
 # And plot the concept lattice
 fc$concepts$plot()
