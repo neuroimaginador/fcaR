@@ -232,7 +232,10 @@ ConceptLattice <- R6::R6Class(
         }
 
         indices <- indices[indices <= length(private$concepts)]
-        return(private$concepts[indices])
+
+        elements <- private$concepts[indices]
+        class(elements) <- "conceptlist"
+        return(elements)
 
       }
 
