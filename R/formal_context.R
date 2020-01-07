@@ -68,7 +68,7 @@ FormalContext <- R6::R6Class(
     implications = NULL,
 
     #' @description
-    #' Creator for the Fomal Context class
+    #' Creator for the Formal Context class
     #'
     #' @param I           (numeric matrix) The table of the formal context.
     #' @param remove_const (logical) If \code{TRUE}, remove constant columns. The default is \code{FALSE}.

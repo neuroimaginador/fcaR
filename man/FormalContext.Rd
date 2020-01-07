@@ -81,7 +81,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
-Creator for the Fomal Context class
+Creator for the Formal Context class
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$new(I, remove_const = FALSE)}\if{html}{\out{</div>}}
 }

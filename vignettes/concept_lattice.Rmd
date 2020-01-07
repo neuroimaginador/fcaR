@@ -64,7 +64,7 @@ knitr::kable(I, format = "html", booktabs = TRUE)
 
 # Working with Formal Contexts
 
-The first step when using the `fcaR` package to analyse a formal context is to create an object of class `FormalContext` which will store all the information related to the context.
+The first step when using the `fcaR` package to analyze a formal context is to create an object of class `FormalContext` which will store all the information related to the context.
 
 In our examples, we create two objects:
 ```{r}
