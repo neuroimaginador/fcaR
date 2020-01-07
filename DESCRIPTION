@@ -1,6 +1,6 @@
 Package: fcaR
-Title: Tools for Formal Concept Analysis
-Version: 1.0.0
+Title: Formal Concept Analysis
+Version: 1.0.1
 Authors@R: c(
     person(given = "Domingo",
            family = "Lopez Rodriguez",
@@ -16,11 +16,14 @@ Authors@R: c(
            role = "aut"),
     person(given = "Ana",
            family = "Villalon",
-           role = "aut")
+           role = "aut"),
+    person(given = "Ian",
+           family = "Johnson",
+           role = "ctb")
     )
 Maintainer: Domingo Lopez Rodriguez <dominlopez@uma.es>
-Description: The aim of this package is to provide tools to perform fuzzy formal concept analysis from within R.
-    It provides functions to load and save a Formal Context, extract its concept lattice and implications. 
+Description: Provides tools to perform fuzzy formal concept analysis, presented in Wille (1982) <doi:10.1007/978-3-642-01815-2_23> and in Ganter and Obiedkov (2016) <doi:10.1007/978-3-662-49291-8>, from within R.
+    It provides functions to load and save a formal context, extract its concept lattice and implications. 
     In addition, one can use the implications to compute semantic closures of fuzzy sets and, thus, build recommendation systems.
 License: GPL-3
 Imports: 
