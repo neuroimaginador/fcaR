@@ -14,3 +14,4 @@
 ^doc$
 ^Meta$
 ^appveyor\.yml$
+^CRAN-RELEASE$
