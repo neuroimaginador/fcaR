@@ -26,7 +26,7 @@
 
   if (verbose) {
 
-    cat("Processing batch\n")#, i, "out of", length(idx) - 1, "\n")
+    message("Processing batch\n")#, i, "out of", length(idx) - 1, "\n")
 
   }
 
@@ -52,7 +52,7 @@
 
     if (verbose) {
 
-      cat("-->", rule_names[j], ": from", current_cols, "to",
+      message("-->", rule_names[j], ": from", current_cols, "to",
           new_cols, "in", rule_time$toc - rule_time$tic, "secs. \n")
 
     }
@@ -69,7 +69,7 @@
 
   if (verbose) {
 
-    cat("Batch took", batch_toc$toc - batch_toc$tic, "secs. \n")
+    message("Batch took", batch_toc$toc - batch_toc$tic, "secs. \n")
 
   }
 

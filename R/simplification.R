@@ -51,18 +51,18 @@
                                              lhs = Matrix(newLHS, sparse = TRUE),
                                              rhs = Matrix(newRHS, sparse = TRUE))
 
-      cat("Iteration", count, "\n")
-      cat("=================\n")
+      message("Iteration", count, "\n")
+      message("=================\n")
 
       count <- count + 1
 
-      cat("** A -> B\n")
+      message("** A -> B\n")
       # print(original_rule)
 
-      cat("** C -> D\n")
+      message("** C -> D\n")
       # print(original_set)
 
-      cat("** C-B -> D-B\n")
+      message("** C-B -> D-B\n")
       # print(transformed_set)
 
     }
@@ -77,7 +77,7 @@
                                        lhs = Matrix(LHS, sparse = TRUE),
                                        rhs = Matrix(RHS, sparse = TRUE))
 
-      cat("** Resulting set\n")
+      message("** Resulting set\n")
       # print(final_set)
 
     }
