@@ -4,6 +4,7 @@
   - Added examples in the documentation.
   - Changed cat() to message() in functions not related to printing.
   - Added proper contributors.
+* Updated vignettes
 
 # fcaR 1.0.0
 
