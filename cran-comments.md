@@ -9,4 +9,5 @@
 
 0 errors | 0 warnings | 1 note
 
+* Revised and corrected comments on previous submission.
 * This is a new release.
