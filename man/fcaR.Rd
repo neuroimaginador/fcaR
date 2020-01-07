@@ -24,6 +24,22 @@ Two additional helper classes are implemented:
 Since fcaR is an extension of the data model in the arules package, most of the methods and classes implemented interoperates with the main \code{S4} classes in arules (\code{transactions} and \code{rules}).
 }
 }
+\examples{
+\dontrun{
+# Build a formal context
+fc_planets <- FormalContext$new(planets)
+
+# Find its concepts and implications
+fc_planets$find_implications()
+
+# Plot the concept lattice
+fc_planets$concepts$plot()
+
+# Print the extracted implications
+fc_planets$implications
+}
+
+}
 \references{
 Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” \emph{Mathématiques et Sciences humaines}, \emph{95}, 5-18.
 

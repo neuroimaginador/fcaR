@@ -5,6 +5,18 @@
 #'
 #' @return Nothing, just prints a list of concepts nicely.
 #'
+#' @examples
+#' \dontrun{
+#' # Build a formal context
+#' fc_planets <- FormalContext$new(planets)
+#'
+#' # Find its concepts
+#' fc_planets$find_concepts()
+#'
+#' # Print the first 3 concepts
+#' fc_planets$concepts[1:3]
+#' }
+#'
 #' @rdname print
 #' @method print conceptlist
 #' @export
@@ -34,6 +46,19 @@ to_latex <- function(x) UseMethod("to_latex")
 #'
 #' @rdname to_latex
 #' @method to_latex conceptlist
+#'
+#' @examples
+#' \dontrun{
+#' # Build a formal context
+#' fc_planets <- FormalContext$new(planets)
+#'
+#' # Find its concepts
+#' fc_planets$find_concepts()
+#'
+#' # Print the first 3 concepts to latex
+#' to_latex(fc_planets$concepts[1:3])
+#' }
+#'
 #' @export
 to_latex.conceptlist <- function(x) {
 

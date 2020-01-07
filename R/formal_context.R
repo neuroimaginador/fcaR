@@ -12,6 +12,31 @@
 #' * `concepts`: list of concepts (extent, intent).
 #' * `implications`: extracted implications as an \code{ImplicationSet}.
 #'
+#' @examples
+#' \dontrun{
+#' # Build and print the formal context
+#' fc_planets <- FormalContext$new(planets)
+#' print(fc_planets)
+#'
+#' # Plot the formal context
+#' fc_planets$plot()
+#'
+#' # Define a set of attributes
+#' S <- SparseSet$new(attributes = fc_planets$attributes)
+#' S$assign(moon = 1, large = 1)
+#'
+#' # Compute the closure of S
+#' Sc <- fc_planets$closure(S)
+#' # Is Sc a closed set?
+#' fc_planets$is_closed(Sc)
+#'
+#' # Clarify and reduce the formal context
+#' fc2 <- fc_planets$reduce(TRUE)
+#'
+#' # Find implications
+#' fc_planets$find_implications()
+#' }
+#'
 #' @references
 #'
 #' Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” _Mathématiques et Sciences humaines_, *95*, 5-18.

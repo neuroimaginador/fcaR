@@ -18,3 +18,16 @@ Nothing, just prints a list of concepts in LaTeX nicely.
 \description{
 Print a list of concepts to LaTeX
 }
+\examples{
+\dontrun{
+# Build a formal context
+fc_planets <- FormalContext$new(planets)
+
+# Find its concepts
+fc_planets$find_concepts()
+
+# Print the first 3 concepts to latex
+to_latex(fc_planets$concepts[1:3])
+}
+
+}

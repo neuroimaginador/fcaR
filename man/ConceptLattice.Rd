@@ -6,6 +6,26 @@
 \description{
 This class implements the data structure and methods for concept lattices.
 }
+\examples{
+\dontrun{
+# Build a formal context
+fc_planets <- FormalContext$new(planets)
+
+# Find the concepts
+fc_planets$find_concepts()
+
+# Plot the concept lattice
+fc_planets$concepts$plot()
+
+# Find join- and meet- irreducible elements
+fc_planets$concepts$join-irreducibles()
+fc_planets$concepts$meet-irreducibles()
+
+# Get concept support
+fc_planets$concepts$support()
+}
+
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

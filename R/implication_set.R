@@ -4,6 +4,26 @@
 #' @description
 #' This class implements the structure needed to store implications and the methods associated.
 #'
+#' @examples
+#' \dontrun{
+#' # Build a formal context
+#' fc_planets <- FormalContext$new(planets)
+#'
+#' # Find its implication basis
+#' fc_planets$find_implications()
+#'
+#' # Print implications
+#' fc_planets$implications
+#'
+#' # Cardinality and mean size in the ruleset
+#' fc_planets$implications$cardinality()
+#' sizes <- fc_planets$implications$size()
+#' colMeans(sizes)
+#'
+#' # Simplify the implication set
+#' fc$implications$apply_rules("simplification")
+#' }
+#'
 #' @references
 #'
 #' Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” _J Stat Softw_, *14*, 1-25.
