@@ -9,31 +9,6 @@ knitr::opts_chunk$set(
 ## ----setup--------------------------------------------------------------------
 library(fcaR)
 
-## ----echo = FALSE-------------------------------------------------------------
-objects <- c("Mercury", "Venus", "Earth", "Mars",
-             "Jupiter", "Saturn", "Uranus", "Neptune",
-             "Pluto")
-
-attributes <- c("small", "medium", "large",
-                "near", "far",
-                "moon", "no_moon")
-
-planets <- matrix(0, nrow = length(objects),
-                  ncol = length(attributes))
-
-rownames(planets) <- objects
-colnames(planets) <- attributes
-
-planets["Mercury", c("small", "near", "no_moon")] <- 1
-planets["Venus", c("small", "near", "no_moon")] <- 1
-planets["Earth", c("small", "near", "moon")] <- 1
-planets["Mars", c("small", "near", "moon")] <- 1
-planets["Jupiter", c("large", "far", "moon")] <- 1
-planets["Saturn", c("large", "far", "moon")] <- 1
-planets["Uranus", c("medium", "far", "moon")] <- 1
-planets["Neptune", c("medium", "far", "moon")] <- 1
-planets["Pluto", c("small", "far", "moon")] <- 1
-
 ## -----------------------------------------------------------------------------
 knitr::kable(planets, format = "html", booktabs = TRUE)
 
