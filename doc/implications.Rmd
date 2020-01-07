@@ -1,0 +1,172 @@
+---
+title: "Working with ImplicationSets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with ImplicationSets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+# Introduction
+
+In this vignette, we present the main functionalities and data structures of the `fcaR` package when working with formal contexts and concepts, in FCA.
+
+We load the `fcaR` package by:
+```{r setup}
+library(fcaR)
+```
+
+# Datasets
+
+We are going to work with two datasets, a crisp one and a fuzzy one.
+
+The classical (binary) dataset is the well-known `planets` formal context, presented in 
+
+> Wille R (1982). “Restructuring Lattice Theory: An Approach Based on Hierarchies of Concepts.” In Ordered Sets, pp. 445–470. Springer.
+
+```{r}
+knitr::kable(planets, format = "html", booktabs = TRUE)
+```
+
+The other formal context is fuzzy and is defined by the following matrix I:
+```{r echo = FALSE}
+objects <- paste0("O", 1:6)
+n_objects <- length(objects)
+
+attributes <- paste0("P", 1:6)
+n_attributes <- length(attributes)
+
+I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                     0, 1, 0.5, 0, 0, 0.5,
+                     0.5, 1, 0, 0, 1, 0,
+                     0.5, 0, 0, 1, 0.5, 0,
+                     1, 0, 0, 0.5, 0, 0,
+                     0, 0, 1, 0, 0, 1),
+            nrow = n_objects,
+            byrow = FALSE)
+
+colnames(I) <- attributes
+rownames(I) <- objects
+```
+
+```{r}
+knitr::kable(I, format = "html", booktabs = TRUE)
+```
+
+# Working with ImplicationSets
+
+Although `ImplicationSet` objects can be created _ad hoc_, the usual way to get implications is by the application of the NextClosure algorithm to a `FormalContext` object.
+
+Thus, let us create different formal contexts with the previous datasets:
+```{r}
+fc_planets <- FormalContext$new(planets)
+fc_I <- FormalContext$new(I)
+```
+
+
+## Extraction of the canonical basis of implications
+
+The function `find_implications()` use the NextClosure algorithm in a formal context to extract the canonical basis of implications:
+```{r}
+fc_planets$find_implications()
+fc_I$find_implications()
+```
+
+We can inspect the implications by doing:
+```{r}
+fc_planets$implications
+fc_I$implications
+```
+
+Internally, an `ImplicationSet` consists of two matrices (one for the left-hand sides and the other for the right-hand sides of the rules). We can get these (sparse) matrices as:
+```{r}
+fc_planets$implications$get_LHS_matrix()
+fc_planets$implications$get_RHS_matrix()
+```
+
+The main practical use of an `ImplicationSet` is to compute the closure of a set of attributes, by using the `closure()` function:
+```{r}
+# Let us build a set of attributes
+S <- SparseSet$new(attributes = fc_planets$attributes)
+S$assign(large = 1, far = 1)
+S
+
+fc_planets$implications$closure(S)$closure
+```
+
+## Cardinality, size and support of the implication set
+
+Some quantities can be computed for an `ImplicationSet`:
+
+* Cardinality: the number of implications in the set
+```{r}
+fc_planets$implications$cardinality()
+```
+* Size: The number of attributes in the LHS and the RHS of each implication
+```{r}
+sizes <- fc_planets$implications$size()
+# Total number of attributes in the LHS and the RHS
+colSums(sizes)
+```
+* Support: The proportion of objects in the formal context whose attributes contain the LHS of a particular rule
+```{r}
+fc_planets$implications$support()
+```
+
+## Export to LaTeX
+
+A nice feature is the ability to export an `ImplicationSet` to LaTeX format:
+```{r}
+fc_planets$implications$to_latex()
+```
+
+## Filtering of implications
+
+Sometimes it is needed to work with a subset of the implications, using only the implications that fulfill certain conditions:
+```{r}
+# Implications with P1 and P2 in the LHS and P5 in the RHS
+fc_I$implications$filter(lhs = c("P1", "P2"), 
+                         rhs = "P5")
+```
+
+## Simplification Logic
+
+In this package, we have implemented logic tools to operate on the implications.
+
+First, some simplification rules have been developed, named _reduction_, _composition_, _generalization_ and _simplification_, that can be applied using the `apply_rules()` function:
+```{r}
+fc_I$implications$apply_rules(rules = c("composition",
+                                        "simplification"))
+```
+This enables the reduction of the cardinality and/or the size of the `ImplicationSet`.
+
+In addition, the "simplification" rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:
+```{r}
+# Let us build a set of attributes
+S <- SparseSet$new(attributes = fc_planets$attributes)
+S$assign(large = 1, far = 1)
+S
+
+fc_planets$implications$closure(S, reduce = TRUE)
+```
+
+## Recommendations
+
+One of the final applications of an `ImplicationSet` is the easy development of a recommendation system where, from an attribute set, the system would infer the value to other attribute. This is done by the `recommend()` function, which internally computes the closure of the attribute set:
+```{r}
+S <- SparseSet$new(attributes = fc_I$attributes)
+S$assign(P1 = 1, P4 = 0.5)
+
+fc_I$implications$recommend(S, attribute_filter = c("P3", "P5"))
+```
+
+

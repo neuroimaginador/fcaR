@@ -9,3 +9,4 @@ Meta
 .DS_Store
 foo.txt
 tests/testthat/Rplots\.pdf
+CRAN-RELEASE

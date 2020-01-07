@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Integration with the arules package</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Integration with the arules package</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>One of the goals in the design of this package is to be able to integrate with the <code>arules</code> package. This means that any one using the <code>arules</code> functionalities can export to and import from <code>fcaR</code> objects, more precisely, <code>FormalContext</code> and <code>ImplicationSet</code> objects.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(arules)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#&gt; Loading required package: Matrix</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#&gt; </span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt; Attaching package: &#39;arules&#39;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#&gt;     abbreviate, write</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">library</span>(fcaR)</span></code></pre></div>
+</div>
+<div id="datasets" class="section level1">
+<h1>Datasets</h1>
+<p>For these examples, we are using two binary datasets, <code>Mushroom</code> (from the <code>arules</code> package) and <code>planets</code> (from <code>fcaR</code>).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">data</span>(<span class="st">&quot;Mushroom&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;arules&quot;</span>)</span></code></pre></div>
+<p>At the moment, in <code>arules</code> there is no support for fuzzy sets, so we must restrict ourselves to the binary case.</p>
+<p>Let us create a <code>FormalContext</code> object for the <code>planets</code> dataset:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fc_planets &lt;-<span class="st"> </span>FormalContext<span class="op">$</span><span class="kw">new</span>(planets)</span></code></pre></div>
+</div>
+<div id="converting-between-formal-contexts-and-transactions-objects" class="section level1">
+<h1>Converting between formal contexts and transactions objects</h1>
+<p>We begin by converting between the objects which store the datasets.</p>
+<div id="importing-a-transactions-object" class="section level2">
+<h2>Importing a transactions object</h2>
+<p>It suffices to initialize a <code>FormalContext</code> object with the transactions dataset:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>fc &lt;-<span class="st"> </span>FormalContext<span class="op">$</span><span class="kw">new</span>(Mushroom)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>fc</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt; FormalContext with 8124 objects and 114 attributes.</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; Attributes&#39; names are: Class=edible, Class=poisonous, CapShape=bell,</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt;   CapShape=conical, CapShape=flat, CapShape=knobbed, ...</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; Matrix:</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;   Class=edible Class=poisonous CapShape=bell CapShape=conical CapShape=flat</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; 1            0               1             0                0             0</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; 2            1               0             0                0             0</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; 3            1               0             1                0             0</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; 4            0               1             0                0             0</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; 5            1               0             0                0             0</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 6            1               0             0                0             0</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;   CapShape=knobbed CapShape=sunken</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; 1                0               0</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt; 2                0               0</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; 3                0               0</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; 4                0               0</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; 5                0               0</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#&gt; 6                0               0</span></span></code></pre></div>
+<p>From this point, we can use all the functionalities in the <code>fcaR</code> package regarding formal contexts, concept lattices and implication sets.</p>
+</div>
+<div id="exporting-a-formalcontext" class="section level2">
+<h2>Exporting a FormalContext</h2>
+<p>The <code>to_transactions()</code> function enables us to export a formal context to a format compatible with the <code>arules</code> package:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fc_planets<span class="op">$</span><span class="kw">to_transactions</span>()</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; transactions in sparse format with</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;  9 transactions (rows) and</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt;  7 items (columns)</span></span></code></pre></div>
+<p>and use the functionality in that package.</p>
+</div>
+</div>
+<div id="converting-between-implication-sets-and-rules-objects" class="section level1">
+<h1>Converting between implication sets and rules objects</h1>
+<p>Other point of integration between the two packages is the ability to import rules from the <code>arules</code> package, operate on them to compute closures, recommendations or to remove redundancies, or to export an implication set as a <code>rules</code> object.</p>
+<div id="importing-rules-as-an-implication-set" class="section level2">
+<h2>Importing rules as an implication set</h2>
+<p>Let us suppose that we have extracted implications from the <code>Mushroom</code> dataset using the <code>apriori()</code> function:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>mushroom_rules &lt;-<span class="st"> </span><span class="kw">apriori</span>(Mushroom, <span class="dt">parameter =</span> <span class="kw">list</span>(<span class="dt">conf =</span> <span class="dv">1</span>))</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; Apriori</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; </span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; Parameter specification:</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;           1    0.1    1 none FALSE            TRUE       5     0.1      1</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  maxlen target   ext</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;      10  rules FALSE</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; </span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt; Algorithmic control:</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  filter tree heap memopt load sort verbose</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;     0.1 TRUE TRUE  FALSE TRUE    2    TRUE</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; </span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; Absolute minimum support count: 812 </span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; </span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; set item appearances ...[0 item(s)] done [0.00s].</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; set transactions ...[114 item(s), 8124 transaction(s)] done [0.01s].</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt; sorting and recoding items ... [53 item(s)] done [0.00s].</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; creating transaction tree ... done [0.01s].</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  done [3.60s].</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.33s].</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; creating S4 object  ... done [1.14s].</span></span></code></pre></div>
+<p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>fc<span class="op">$</span>implications<span class="op">$</span><span class="kw">add</span>(mushroom_rules)</span></code></pre></div>
+<p>And we can use all the functionalities for the <code>ImplicationSet</code> class.</p>
+</div>
+<div id="exporting-implicationsets-to-rules-format" class="section level2">
+<h2>Exporting ImplicationSets to rules format</h2>
+<p>If we want to export the implications extracted for a binary formal context, we can use:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>fc_planets<span class="op">$</span><span class="kw">find_implications</span>()</span>
+<span id="cb8-2"><a href="#cb8-2"></a>fc_planets<span class="op">$</span>implications<span class="op">$</span><span class="kw">to_arules</span>(<span class="dt">quality =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; set of 10 rules</span></span></code></pre></div>
+</div>
+</div>
+<div id="final-considerations" class="section level1">
+<h1>Final considerations</h1>
+<p>An example of use may be to extract rules in the <code>arules</code> package by using <code>apriori()</code> or <code>eclat()</code>, then importing everything into <code>fcaR</code> as described above, and use the functionalities to simplify, remove redundancies, compute closures, etc., as needed, and then re-export back to <code>arules</code>.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
