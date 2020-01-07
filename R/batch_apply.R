@@ -4,7 +4,7 @@
                          rules = c("generalization",
                                    "composition"),
                          batch_size = ncol(LHS),
-                         parallelize = TRUE,
+                         parallelize = FALSE,
                          reorder = FALSE) {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) {
@@ -33,7 +33,7 @@
   # Parallel execution?
   if (parallelize && requireNamespace("parallel")) {
 
-    cat("Using parallel execution\n")
+    message("Using parallel execution\n")
 
     my_apply <- function(x, FUN) parallel::mclapply(x, FUN, mc.cores = parallel::detectCores())
 
