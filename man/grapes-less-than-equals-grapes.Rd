@@ -21,7 +21,6 @@ Partial Order in Sets and Concepts
 Both \code{C1} and \code{C2} must be of the same class.
 }
 \examples{
-\dontrun{
 # Build two sparse sets
 S <- SparseSet$new(attributes = c("A", "B", "C"))
 S$assign(A = 1)
@@ -30,6 +29,5 @@ T$assign(A = 1, B = 1)
 
 # Test whether S is subset of T
 S \%<=\% T
-}
 
 }

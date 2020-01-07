@@ -5,7 +5,6 @@
 #' This class implements the structure needed to store implications and the methods associated.
 #'
 #' @examples
-#' \dontrun{
 #' # Build a formal context
 #' fc_planets <- FormalContext$new(planets)
 #'
@@ -21,8 +20,7 @@
 #' colMeans(sizes)
 #'
 #' # Simplify the implication set
-#' fc$implications$apply_rules("simplification")
-#' }
+#' fc_planets$implications$apply_rules("simplification")
 #'
 #' @references
 #'
@@ -406,7 +404,7 @@ ImplicationSet <- R6::R6Class(
     #' @export
     apply_rules = function(rules = c("composition", "generalization"),
                            batch_size = 25000L,
-                           parallelize = TRUE,
+                           parallelize = FALSE,
                            reorder= FALSE) {
 
       # If no implications, do nothing

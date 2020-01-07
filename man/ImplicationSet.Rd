@@ -7,7 +7,6 @@
 This class implements the structure needed to store implications and the methods associated.
 }
 \examples{
-\dontrun{
 # Build a formal context
 fc_planets <- FormalContext$new(planets)
 
@@ -23,8 +22,7 @@ sizes <- fc_planets$implications$size()
 colMeans(sizes)
 
 # Simplify the implication set
-fc$implications$apply_rules("simplification")
-}
+fc_planets$implications$apply_rules("simplification")
 
 }
 \references{
@@ -243,7 +241,7 @@ Apply rules to remove redundancies
 \if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$apply_rules(
   rules = c("composition", "generalization"),
   batch_size = 25000L,
-  parallelize = TRUE,
+  parallelize = FALSE,
   reorder = FALSE
 )}\if{html}{\out{</div>}}
 }

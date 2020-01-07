@@ -19,7 +19,6 @@ This class implements the data structure and methods for formal contexts.
 }
 
 \examples{
-\dontrun{
 # Build and print the formal context
 fc_planets <- FormalContext$new(planets)
 print(fc_planets)
@@ -41,7 +40,6 @@ fc2 <- fc_planets$reduce(TRUE)
 
 # Find implications
 fc_planets$find_implications()
-}
 
 }
 \references{

@@ -13,7 +13,6 @@
 #' * `implications`: extracted implications as an \code{ImplicationSet}.
 #'
 #' @examples
-#' \dontrun{
 #' # Build and print the formal context
 #' fc_planets <- FormalContext$new(planets)
 #' print(fc_planets)
@@ -35,7 +34,6 @@
 #'
 #' # Find implications
 #' fc_planets$find_implications()
-#' }
 #'
 #' @references
 #'

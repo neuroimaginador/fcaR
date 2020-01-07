@@ -10,7 +10,6 @@
 #' Returns \code{TRUE} if concept \code{C1} is subconcept of \code{C2} or if set \code{C1} is subset of \code{C2}.
 #'
 #' @examples
-#' \dontrun{
 #' # Build two sparse sets
 #' S <- SparseSet$new(attributes = c("A", "B", "C"))
 #' S$assign(A = 1)
@@ -19,7 +18,6 @@
 #'
 #' # Test whether S is subset of T
 #' S %<=% T
-#' }
 #'
 #' @export
 `%<=%` <- function(C1, C2) {
@@ -55,7 +53,6 @@
 #' Returns \code{TRUE} if \code{C1} is equal to \code{C2}.
 #'
 #' @examples
-#' \dontrun{
 #' # Build two sparse sets
 #' S <- SparseSet$new(attributes = c("A", "B", "C"))
 #' S$assign(A = 1)
@@ -64,7 +61,7 @@
 #'
 #' # Test whether S and T are equal
 #' S %==% T
-#' }
+#'
 #' @export
 `%==%` <- function(C1, C2) {
 

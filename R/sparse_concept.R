@@ -5,7 +5,6 @@
 #' This class implements the data structure and methods for fuzzy concepts.
 #'
 #' @examples
-#' \dontrun{
 #' # Build a formal context and find its concepts
 #' fc_planets <- FormalContext$new(planets)
 #' fc_planets$find_concepts()
@@ -13,13 +12,12 @@
 #' # Print the first three concepts
 #' fc_planets$concepts[1:3]
 #'
-#' Select the first concept:
+#' # Select the first concept:
 #' C <- fc_planets$concepts[1][[1]]
 #'
 #' # Get its extent and intent
 #' C$get_extent()
 #' C$get_intent()
-#' }
 #'
 #' @importFrom methods as is slotNames
 #' @import Matrix

@@ -25,7 +25,6 @@ Since fcaR is an extension of the data model in the arules package, most of the 
 }
 }
 \examples{
-\dontrun{
 # Build a formal context
 fc_planets <- FormalContext$new(planets)
 
@@ -37,7 +36,6 @@ fc_planets$concepts$plot()
 
 # Print the extracted implications
 fc_planets$implications
-}
 
 }
 \references{

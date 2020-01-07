@@ -6,6 +6,13 @@
 \description{
 This class implements the data structure and methods for fuzzy sets.
 }
+\examples{
+S <- SparseSet$new(attributes = c("A", "B", "C"))
+S$assign(A = 1)
+print(S)
+S$to_latex()
+
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

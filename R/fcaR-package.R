@@ -26,7 +26,6 @@ NULL
 #' Since fcaR is an extension of the data model in the arules package, most of the methods and classes implemented interoperates with the main \code{S4} classes in arules (\code{transactions} and \code{rules}).
 #'
 #' @examples
-#' \dontrun{
 #' # Build a formal context
 #' fc_planets <- FormalContext$new(planets)
 #'
@@ -38,7 +37,6 @@ NULL
 #'
 #' # Print the extracted implications
 #' fc_planets$implications
-#' }
 #'
 #' @references
 #'

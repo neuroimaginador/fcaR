@@ -52,8 +52,9 @@
 
     if (verbose) {
 
-      message("-->", rule_names[j], ": from", current_cols, "to",
-          new_cols, "in", rule_time$toc - rule_time$tic, "secs. \n")
+      message("--> ", rule_names[j], ": from ", current_cols, " to ",
+          new_cols, " in ", round(rule_time$toc - rule_time$tic, 3),
+          " secs. \n")
 
     }
 
@@ -69,7 +70,8 @@
 
   if (verbose) {
 
-    message("Batch took", batch_toc$toc - batch_toc$tic, "secs. \n")
+    message("Batch took ", round(batch_toc$toc - batch_toc$tic, 3),
+            " secs. \n")
 
   }
 

@@ -18,7 +18,6 @@ Nothing, just prints a list of concepts nicely.
 Print a list of concepts
 }
 \examples{
-\dontrun{
 # Build a formal context
 fc_planets <- FormalContext$new(planets)
 
@@ -27,6 +26,5 @@ fc_planets$find_concepts()
 
 # Print the first 3 concepts
 fc_planets$concepts[1:3]
-}
 
 }
