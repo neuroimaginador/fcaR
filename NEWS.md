@@ -1,3 +1,7 @@
+# fcaR 1.0.2
+
+* Made minor changes in the DESCRIPTION.
+
 # fcaR 1.0.1
 
 * Made changes suggested by CRAN:
