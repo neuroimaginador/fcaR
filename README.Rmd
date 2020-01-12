@@ -43,6 +43,11 @@ Since fcaR is an extension of the data model in the arules package, most of the 
 
 ## Installation
 
+This package is available at CRAN, so its stable version can be easily installed using:
+```
+install.packages("fcaR")
+```
+
 The development version of this package can be installed with
 
 ```

@@ -50,8 +50,12 @@ classes in arules (transactions and rules).
 
 ## Installation
 
-The development version of this package can be installed
-    with
+This package is available at CRAN, so its stable version can be easily
+installed using:
+
+    install.packages("fcaR")
+
+The development version of this package can be installed with
 
     remotes::install_github("neuroimaginador/fcaR", build_vignettes = TRUE)
 
@@ -487,11 +491,10 @@ given fuzzy attribute set.
 # in batches, if the number of rules is high.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
-#> Using parallel execution
 #> Processing batch
-#> --> composition : from 12 to 12 in 0.006 secs. 
-#> --> generalization : from 12 to 12 in 0.01 secs. 
-#> Batch took 0.021 secs.
+#> --> composition: from 12 to 12 in 0.008 secs.
+#> --> generalization: from 12 to 12 in 0.01 secs.
+#> Batch took 0.025 secs.
 
 # Reduced set of implications
 fc$implications
