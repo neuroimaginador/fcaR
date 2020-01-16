@@ -1,3 +1,7 @@
+# fcaR 1.0.3
+
+* Changes to some C functions since they could potentially give a segfault. 
+
 # fcaR 1.0.2
 
 * Made minor changes in the DESCRIPTION.
