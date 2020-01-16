@@ -75,7 +75,7 @@ void addImplicationToTree(struct ImplicationTree *t, SparseVector A) {
   t->n_implications = t->n_implications + 1;
 
   // Rprintf("Before for**********************\n");
-  for (int i = 0; i < A.i.used; i++) {
+  for (size_t i = 0; i < A.i.used; i++) {
 
     // Rprintf("A[%u] = %u, used = %u, size = %u\n", i, A.i.array[i], t->LIST[A.i.array[i]].used, t->LIST[A.i.array[i]].size);
     // printArray(t->LIST[A.i.array[i]]);

@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 
 void initArray(IntArray *a, size_t initialSize) {
-  a->array = (int *)malloc(initialSize * sizeof(int));
+  a->array = (int *)calloc(initialSize, sizeof(int));
   a->used = 0;
   a->size = initialSize;
 }
@@ -32,7 +32,19 @@ void insertArray(IntArray *a, int element) {
   // Therefore a->used can go up to a->size
   if (a->used == a->size) {
     a->size *= 2;
-    a->array = (int *)realloc(a->array, a->size * sizeof(int));
+    int* tmp = (int *)realloc(a->array, a->size * sizeof(int));
+
+    if (tmp != NULL) {
+
+      a->array = tmp;
+    }
+
+    for (size_t i = a->used; i < a->size; i++) {
+
+      a->array[i] = 0;
+
+    }
+
   }
   a->array[a->used++] = element;
 }
@@ -45,7 +57,8 @@ void freeArray(IntArray *a) {
 
 
 void initArray(DoubleArray *a, size_t initialSize) {
-  a->array = (double *)malloc(initialSize * sizeof(double));
+  a->array = (double *)calloc(initialSize, sizeof(double));
+
   a->used = 0;
   a->size = initialSize;
 }
@@ -80,7 +93,20 @@ void insertArray(DoubleArray *a, double element) {
   // Therefore a->used can go up to a->size
   if (a->used == a->size) {
     a->size *= 2;
-    a->array = (double *)realloc(a->array, a->size * sizeof(double));
+    double* tmp = (double *)realloc(a->array, a->size * sizeof(double));
+
+    if (tmp != NULL) {
+
+      a->array = tmp;
+
+    }
+
+    for (size_t i = a->used; i < a->size; i++) {
+
+      a->array[i] = 0;
+
+    }
+
   }
   a->array[a->used++] = element;
 }
@@ -122,7 +148,7 @@ void printVector(SparseVector A, Rcpp::StringVector attrs) {
 
   Rprintf("{");
 
-  for (int i = 0; i < A.i.used - 1; i++) {
+  for (size_t i = 0; i < A.i.used - 1; i++) {
 
     if (A.x.array[i] < 1) {
 
@@ -183,21 +209,20 @@ void assignUsed(DoubleArray *a, const size_t n) {
 void cloneVector(SparseVector *a, SparseVector b) {
 
   freeVector(a);
-  initVector(a, b.length);
+  initVector(a, b.x.size);
 
   if (b.i.used > 0) {
 
-    std::copy(&b.i.array[0], &b.i.array[b.i.used], a->i.array);
-    std::copy(&b.x.array[0], &b.x.array[b.i.used], a->x.array);
+    // std::copy(&b.i.array[0], &b.i.array[b.i.used], a->i.array);
+    // std::copy(&b.x.array[0], &b.x.array[b.i.used], a->x.array);
 
-    //    memcpy(a->i.array, b.i.array, b.i.used * sizeof(int));
-    //    memcpy(a->x.array, b.x.array, b.i.used * sizeof(double));
+       memcpy(a->i.array, b.i.array, b.i.used * sizeof(int));
+       memcpy(a->x.array, b.x.array, b.i.used * sizeof(double));
 
   }
 
   assignUsed(&(a->i), b.i.used);
   assignUsed(&(a->x), b.x.used);
-
 
 }
 
@@ -207,7 +232,7 @@ void add_column(SparseVector *a, SparseVector b) {
 
     int last_p = a->p.array[a->p.used - 1];
 
-    for (int i = 0; i < b.i.used; i++) {
+    for (size_t i = 0; i < b.i.used; i++) {
 
       insertArray(&(a->i), b.i.array[i]);
       insertArray(&(a->x), b.x.array[i]);
@@ -218,7 +243,7 @@ void add_column(SparseVector *a, SparseVector b) {
 
   } else {
 
-    for (int i = 0; i < b.i.used; i++) {
+    for (size_t i = 0; i < b.i.used; i++) {
 
       insertArray(&(a->i), b.i.array[i]);
       insertArray(&(a->x), b.x.array[i]);
@@ -243,7 +268,7 @@ SparseVector S4toSparse(S4 A) {
   SparseVector V;
   initVector(&V, adims[0]);
 
-  for (int i = 0; i < ai.size(); i++) {
+  for (size_t i = 0; i < ai.size(); i++) {
 
     insertArray(&(V.i), ai[i]);
     insertArray(&(V.x), ax[i]);
@@ -274,7 +299,7 @@ S4 SparseToS4(SparseVector V) {
   IntegerVector dims(2);
   std::vector<int> p;
 
-  for (int j = 0; j < V.i.used; j++) {
+  for (size_t j = 0; j < V.i.used; j++) {
 
     i.push_back(V.i.array[j]);
     x.push_back(V.x.array[j]);
@@ -285,7 +310,7 @@ S4 SparseToS4(SparseVector V) {
 
   if (V.p.used > 0) {
 
-    for (int j = 0; j < V.p.used; j++) {
+    for (size_t j = 0; j < V.p.used; j++) {
 
       p.push_back(V.p.array[j]);
 

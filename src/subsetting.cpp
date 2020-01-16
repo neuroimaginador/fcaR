@@ -19,9 +19,9 @@ void populateMatches(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p
 
     int loc = y_p[x_index], end_loc = y_p[x_index+1], curr_col;
 
-    // if(proper && (end_loc - loc == y_end_index - y_start_index)) continue;
-
     curr_col = y_start_index;
+
+    if (curr_col >= y_end_index) continue;
 
     while(loc < end_loc){
 
@@ -34,7 +34,7 @@ void populateMatches(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p
         } else break;
 
       }
-      if(curr_col == y_end_index) break;
+      if(curr_col >= y_end_index) break;
 
       loc++;
 
@@ -106,9 +106,9 @@ IntegerVector self_intersection_C(IntegerVector x_i,
   for (int i = 0; i < num_rows; i++) {
 
     int y_start_index = x_p[i], y_end_index = x_p[i + 1];
-    int loc = y_p[i], end_loc = y_p[i + 1], curr_col;
+    int loc = y_p[i], end_loc = y_p[i + 1];
 
-    curr_col = y_start_index;
+    // int curr_col = y_start_index;
 
     bool has_intersection = false;
     bool out = false;
@@ -147,9 +147,9 @@ void populateMatchesIntersect(int* matches_for_y, int* x_i, int* x_p, int* y_p, 
 
   for(int x_index = 0; x_index < num_rows; x_index++){
 
-    int loc = y_p[x_index], end_loc = y_p[x_index+1], curr_col;
+    int loc = y_p[x_index], end_loc = y_p[x_index+1];
 
-    curr_col = y_start_index;
+    // int curr_col = y_start_index;
 
     bool has_intersection = false;
     bool out = false;

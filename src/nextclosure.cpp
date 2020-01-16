@@ -17,7 +17,7 @@ bool checkInterrupt() {
 double cardinal(SparseVector A) {
 
   double res = 0;
-  for (int i = 0; i < A.i.used; i++) {
+  for (size_t i = 0; i < A.i.used; i++) {
 
     res = res + A.x.array[i];
 
@@ -34,11 +34,11 @@ SparseVector setdifference(SparseVector x,
   initVector(&res, x.length);
 
 
-  for (int i = 0; i < x.i.used; i++) {
+  for (size_t i = 0; i < x.i.used; i++) {
 
     bool add = true;
 
-    for (int j = 0; j < y.i.used; j++) {
+    for (size_t j = 0; j < y.i.used; j++) {
 
       if (x.i.array[i] == y.i.array[j]) {
 
@@ -82,7 +82,7 @@ SparseVector compute_intent (SparseVector V,
 
     double ms = 1;
 
-    for (int r = 0; r < V.i.used; r++) {
+    for (size_t r = 0; r < V.i.used; r++) {
 
       i = V.i.array[r];
 
@@ -129,7 +129,7 @@ SparseVector compute_extent (SparseVector V,
 
     double ms = 1;
 
-    for (int c = 0; c < V.i.used; c++) {
+    for (size_t c = 0; c < V.i.used; c++) {
 
       i = V.i.array[c];
 
@@ -198,7 +198,7 @@ void compute_direct_sum(SparseVector A,
 
   int resp = res->i.used;
 
-  for (int i = 0; i < A.i.used; i++) {
+  for (size_t i = 0; i < A.i.used; i++) {
 
     if (A.i.array[i] >= a_i) {
 
@@ -230,12 +230,12 @@ void is_subset(SparseVector A,
 
     std::copy(&t.COUNT.array[0], &t.COUNT.array[t.COUNT.used], counts);
 
-    for (int i = 0; i < A.i.used; i++) {
+    for (size_t i = 0; i < A.i.used; i++) {
 
       int y = A.i.array[i];
       double a = A.x.array[i];
 
-      for (int j = 0; j < t.DEGREE[y].used; j++) {
+      for (size_t j = 0; j < t.DEGREE[y].used; j++) {
 
         if (t.DEGREE[y].array[j] <= a) {
 
@@ -312,9 +312,9 @@ void setunion2(SparseVector x,
                SparseVector *res) {
 
 
-  int j = 0;
+  size_t j = 0;
 
-  for (int i = 0; i < x.i.used; i++) {
+  for (size_t i = 0; i < x.i.used; i++) {
 
     while ((j < y.i.used) & (y.i.array[j] < x.i.array[i])) {
 
@@ -405,7 +405,7 @@ void semantic_closure(SparseVector A,
       reinitVector(&res2);
       reinitVector(&res3);
 
-      for (int i = 0; i < subsets.used; i++) {
+      for (size_t i = 0; i < subsets.used; i++) {
 
         black_list[subsets.array[i]] = false;
 
@@ -442,7 +442,7 @@ bool is_set_preceding(SparseVector B,
   initArray(&cx_lt_a_i, C.length);
 
   double bx_at_a_i = 0.0, cx_at_a_i = 0.0;
-  for (int i = 0; i < B.i.used; i++) {
+  for (size_t i = 0; i < B.i.used; i++) {
 
     if (B.i.array[i] < a_i) {
 
@@ -459,7 +459,7 @@ bool is_set_preceding(SparseVector B,
 
   }
 
-  for (int i = 0; i < C.i.used; i++) {
+  for (size_t i = 0; i < C.i.used; i++) {
 
     if (C.i.array[i] < a_i) {
 
@@ -509,7 +509,7 @@ bool is_set_preceding(SparseVector B,
 
   }
 
-  for (int i = 0; i < ci_lt_a_i.used; i++) {
+  for (size_t i = 0; i < ci_lt_a_i.used; i++) {
 
     if (ci_lt_a_i.array[i] != bi_lt_a_i.array[i]) {
 
@@ -568,10 +568,10 @@ SparseVector compute_next_closure(SparseVector A, int i,
       compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
 
       semantic_closure(candB, t, LHS, RHS, &candB2);
-      cloneVector(&candB, candB2);
 
-      if (is_set_preceding(A, candB, a_i, grades_set[a_i][grade_idx])) {
+      if (is_set_preceding(A, candB2, a_i, grades_set[a_i][grade_idx])) {
 
+        cloneVector(&candB, candB2);
         freeVector(&candB2);
         return candB;
 
@@ -802,8 +802,6 @@ List next_closure_concepts(NumericMatrix I,
 
   int n_attributes = attrs.size();
 
-  int n_imp = 0;
-
   SparseVector concepts;
   SparseVector extents;
   initVector(&concepts, n_attributes);
@@ -837,8 +835,6 @@ List next_closure_concepts(NumericMatrix I,
     Rprintf("\n");
 
   }
-
-  int count = 0;
 
   double pctg, old_pctg = 0;
 
