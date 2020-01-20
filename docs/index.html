@@ -94,6 +94,7 @@
 <a href="#fcar-tools-for-formal-concept-analysis" class="anchor"></a>fcaR: Tools for Formal Concept Analysis</h1></div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>The aim of this package is to provide tools to perform fuzzy formal concept analysis (FCA) from within R. It provides functions to load and save a Formal Context, extract its concept lattice and implications. In addition, one can use the implications to compute semantic closures of fuzzy sets and, thus, build recommendation systems.</p>
 <div id="details" class="section level2">
 <h2 class="hasAnchor">
@@ -501,9 +502,9 @@ O6
 <span id="cb7-4"><a href="#cb7-4"></a>fc<span class="op">$</span>implications<span class="op">$</span><span class="kw">apply_rules</span>(<span class="dt">rules =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"composition"</span>,</span>
 <span id="cb7-5"><a href="#cb7-5"></a>                                      <span class="st">"generalization"</span>))</span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt; Processing batch</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; --&gt; composition: from 12 to 12 in 0.008 secs.</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; --&gt; generalization: from 12 to 12 in 0.01 secs.</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; Batch took 0.025 secs.</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; --&gt; composition: from 12 to 12 in 0.006 secs.</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; --&gt; generalization: from 12 to 12 in 0.009 secs.</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; Batch took 0.021 secs.</span></span>
 <span id="cb7-10"><a href="#cb7-10"></a></span>
 <span id="cb7-11"><a href="#cb7-11"></a><span class="co"># Reduced set of implications</span></span>
 <span id="cb7-12"><a href="#cb7-12"></a>fc<span class="op">$</span>implications</span>
@@ -577,11 +578,12 @@ O6
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://cran.r-project.org/package=fcaR"><img src="https://www.r-pkg.org/badges/version/fcaR" alt="CRAN status"></a></li>
 <li><a href="https://travis-ci.com/neuroimaginador/fcaR"><img src="https://travis-ci.com/neuroimaginador/fcaR.svg?token=MLhMMg8zTrQjhhSXhmgz&amp;branch=master" alt="Build Status"></a></li>
 <li><a href="https://codecov.io/gh/neuroimaginador/fcaR"><img src="https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI" alt="codecov"></a></li>
 <li><a href="https://ci.appveyor.com/project/neuroimaginador/fcaR"><img src="https://ci.appveyor.com/api/projects/status/github/neuroimaginador/fcaR?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
+<li><a href="https://cran.r-project.org/package=fcaR"><img src="https://cranlogs.r-pkg.org/badges/grand-total/fcaR" alt="Downloads"></a></li>
 </ul>
 </div>
 </div>

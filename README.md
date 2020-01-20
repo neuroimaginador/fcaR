@@ -5,7 +5,8 @@
 
 <!-- badges: start -->
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
 [![Build
@@ -13,6 +14,8 @@ Status](https://travis-ci.com/neuroimaginador/fcaR.svg?token=MLhMMg8zTrQjhhSXhmg
 [![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://codecov.io/gh/neuroimaginador/fcaR)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/neuroimaginador/fcaR?branch=master&svg=true)](https://ci.appveyor.com/project/neuroimaginador/fcaR)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcaR)](https://cran.r-project.org/package=fcaR)
+
 <!-- badges: end -->
 
 The aim of this package is to provide tools to perform fuzzy formal
@@ -492,9 +495,9 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> composition: from 12 to 12 in 0.008 secs.
-#> --> generalization: from 12 to 12 in 0.01 secs.
-#> Batch took 0.025 secs.
+#> --> composition: from 12 to 12 in 0.006 secs.
+#> --> generalization: from 12 to 12 in 0.009 secs.
+#> Batch took 0.021 secs.
 
 # Reduced set of implications
 fc$implications
