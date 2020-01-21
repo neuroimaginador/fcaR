@@ -60,7 +60,7 @@ ConceptLattice <- R6::R6Class(
           attributes = attributes)
 
         private$I <- I
-        private$subconcept_matrix <- .subset(extents)
+        # private$subconcept_matrix <- .subset(extents)
 
       }
 
@@ -149,6 +149,12 @@ ConceptLattice <- R6::R6Class(
                            .set_to_string(S = v$get_vector(),
                                           attributes = v$get_attributes())
                          })
+
+      }
+
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
 
@@ -278,6 +284,12 @@ ConceptLattice <- R6::R6Class(
 
       if (length(idx) > 0) {
 
+        if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+          private$subconcept_matrix <- .subset(private$pr_extents)
+
+        }
+
         idx <- .get_sublattice(private$subconcept_matrix,
                                starting_idx = idx)
 
@@ -317,6 +329,12 @@ ConceptLattice <- R6::R6Class(
     #' @importFrom Matrix colSums
     join_irreducibles = function() {
 
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
+
       if (is.null(private$reduced_matrix)) {
 
         private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
@@ -338,6 +356,12 @@ ConceptLattice <- R6::R6Class(
     #'
     #' @importFrom Matrix colSums
     meet_irreducibles = function() {
+
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
 
       M <- .reduce_transitivity(t(private$subconcept_matrix))
 
@@ -362,6 +386,12 @@ ConceptLattice <- R6::R6Class(
 
       idx <- private$to_indices(...)
 
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
+
       return(self[join(private$subconcept_matrix, idx)])
 
     },
@@ -382,6 +412,12 @@ ConceptLattice <- R6::R6Class(
 
       idx <- private$to_indices(...)
 
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
+
       return(self[meet(private$subconcept_matrix, idx)])
 
     },
@@ -397,6 +433,12 @@ ConceptLattice <- R6::R6Class(
     subconcepts = function(C) {
 
       idx <- private$to_indices(C)
+
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
 
       # Get the index of all subconcepts
       M <- t(private$subconcept_matrix)[idx, ]
@@ -418,6 +460,12 @@ ConceptLattice <- R6::R6Class(
 
       idx <- private$to_indices(C)
 
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
+
       # Get the index of all superconcepts
       M <- private$subconcept_matrix[idx, ]
       candidates <- which(M > 0)
@@ -438,6 +486,12 @@ ConceptLattice <- R6::R6Class(
     lower_neighbours = function(C) {
 
       idx <- private$to_indices(C)
+
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
 
       if (is.null(private$reduced_matrix)) {
 
@@ -461,6 +515,12 @@ ConceptLattice <- R6::R6Class(
     upper_neighbours = function(C) {
 
       idx <- private$to_indices(C)
+
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
 
       if (is.null(private$reduced_matrix)) {
 
