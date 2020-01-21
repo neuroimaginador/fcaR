@@ -18,6 +18,8 @@ S$to_latex()
 \itemize{
 \item \href{#method-new}{\code{SparseSet$new()}}
 \item \href{#method-assign}{\code{SparseSet$assign()}}
+\item \href{#method-[}{\code{SparseSet$[()}}
+\item \href{#method-cardinal}{\code{SparseSet$cardinal()}}
 \item \href{#method-get_vector}{\code{SparseSet$get_vector()}}
 \item \href{#method-get_attributes}{\code{SparseSet$get_attributes()}}
 \item \href{#method-length}{\code{SparseSet$length()}}
@@ -76,6 +78,38 @@ One can use both of:
 \code{S$assign(attributes = c(A, B), values = c(1, 0.3))}.
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-["></a>}}
+\subsection{Method \code{[()}}{
+Get elements by index
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SparseSet$[(indices)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{indices}}{(numeric, logical or character vector) The indices of the elements to return. It can be a vector of logicals where \code{TRUE} elements are to be retained.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{SparseSet} but with only the required elements.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-cardinal"></a>}}
+\subsection{Method \code{cardinal()}}{
+Cardinal of the SparseSet
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SparseSet$cardinal()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+the cardinal of the \code{SparseSet}, counted
+as the sum of the degrees of each element.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_vector"></a>}}
