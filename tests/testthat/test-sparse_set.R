@@ -53,4 +53,9 @@ test_that("fcaR uses class SparseSet", {
 
   expect_true(A %<=% A)
 
+  expect_error(v <- as_vector(A), NA)
+  expect_error(A2 <- as_SparseSet(v), NA)
+
+  expect_equal(A, A2)
+
 })
