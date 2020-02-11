@@ -728,10 +728,10 @@ List next_closure_implications(NumericMatrix I,
 
     if (checkInterrupt()) { // user interrupted ...
 
-      List res = List::create(_["concepts"] = SparseToS4(concepts),
-                              _["extents"] = SparseToS4(extents),
-                              _["LHS"] = SparseToS4(LHS),
-                              _["RHS"] = SparseToS4(RHS));
+      List res = List::create(_["concepts"] = SparseToS4_fast(concepts),
+                              _["extents"] = SparseToS4_fast(extents),
+                              _["LHS"] = SparseToS4_fast(LHS),
+                              _["RHS"] = SparseToS4_fast(RHS));
 
       Rprintf("User interrupted.\n");
       return res;
@@ -740,10 +740,10 @@ List next_closure_implications(NumericMatrix I,
 
   }
 
-  List res = List::create(_["concepts"] = SparseToS4(concepts),
-                          _["extents"] = SparseToS4(extents),
-                          _["LHS"] = SparseToS4(LHS),
-                          _["RHS"] = SparseToS4(RHS));
+  List res = List::create(_["concepts"] = SparseToS4_fast  (concepts),
+                          _["extents"] = SparseToS4_fast(extents),
+                          _["LHS"] = SparseToS4_fast(LHS),
+                          _["RHS"] = SparseToS4_fast(RHS));
 
   if (verbose)
     Rprintf("Finished.\n");
@@ -889,8 +889,8 @@ List next_closure_concepts(NumericMatrix I,
 
     if (checkInterrupt()) { // user interrupted ...
 
-      List res = List::create(_["concepts"] = SparseToS4(concepts),
-                              _["extents"] = SparseToS4(extents));
+      List res = List::create(_["concepts"] = SparseToS4_fast(concepts),
+                              _["extents"] = SparseToS4_fast(extents));
 
       Rprintf("User interrupted.\n");
       return res;
@@ -899,8 +899,8 @@ List next_closure_concepts(NumericMatrix I,
 
   }
 
-  List res = List::create(_["concepts"] = SparseToS4(concepts),
-                          _["extents"] = SparseToS4(extents));
+  List res = List::create(_["concepts"] = SparseToS4_fast(concepts),
+                          _["extents"] = SparseToS4_fast(extents));
 
   if (verbose)
     Rprintf("Finished.\n");

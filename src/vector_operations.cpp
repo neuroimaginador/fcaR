@@ -329,3 +329,37 @@ S4 SparseToS4(SparseVector V) {
   return(res);
 
 }
+
+S4 SparseToS4_fast(SparseVector V) {
+
+  S4 res("dgCMatrix");
+
+  IntegerVector i(V.i.used);
+  NumericVector x(V.x.used);
+  IntegerVector dims(2);
+  IntegerVector p(V.p.used + 1);
+
+  if (V.i.used > 0) {
+
+    memcpy(i.begin(), V.i.array, V.i.used * sizeof(int));
+    memcpy(x.begin(), V.x.array, V.x.used * sizeof(double));
+
+  }
+
+  if (V.p.used > 0) {
+
+    memcpy(&(p[1]), V.p.array, V.p.used * sizeof(int));
+
+  }
+
+  dims[0] = V.length;
+  dims[1] = V.p.used;
+
+  res.slot("x") = x;
+  res.slot("i") = i;
+  res.slot("Dim") = dims;
+  res.slot("p") = p;
+
+  return(res);
+
+}
