@@ -17,9 +17,9 @@ as_SparseSet <- function(A) {
 
 }
 
-#' Convert SparseSet to SparseSet
+#' Convert SparseSet to vector
 #'
-#' @param A A \code{SparseSet} to convert to vector.
+#' @param v A \code{SparseSet} to convert to vector.
 #'
 #' @return A vector.
 #' @export
