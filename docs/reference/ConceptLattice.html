@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -390,28 +390,15 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build a formal context</span>
-<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)
-
+<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'FormalContext' no encontrado</span></div><div class='input'>
 <span class='co'># Find the concepts</span>
-<span class='no'>fc_planets</span>$<span class='fu'>find_concepts</span>()
-
+<span class='no'>fc_planets</span>$<span class='fu'>find_concepts</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
 <span class='co'># Plot the concept lattice</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='img'><img src='ConceptLattice-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
 <span class='co'># Find join- and meet- irreducible elements</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>join_irreducibles</span>()</div><div class='output co'>#&gt; ({Jupiter, Saturn}, {large, far, moon})
-#&gt; ({Uranus, Neptune}, {medium, far, moon})
-#&gt; ({Pluto}, {small, far, moon})
-#&gt; ({Mercury, Venus}, {small, near, no_moon})
-#&gt; ({Earth, Mars}, {small, near, moon})</div><div class='input'><span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>meet_irreducibles</span>()</div><div class='output co'>#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})
-#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})
-#&gt; ({Jupiter, Saturn}, {large, far, moon})
-#&gt; ({Uranus, Neptune}, {medium, far, moon})
-#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})
-#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})
-#&gt; ({Mercury, Venus}, {small, near, no_moon})</div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>join_irreducibles</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'><span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>meet_irreducibles</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
 <span class='co'># Get concept support</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>support</span>()</div><div class='output co'>#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333
-#&gt;  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>support</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

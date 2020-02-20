@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -145,6 +145,8 @@
 <ul>
 <li><p><a href='#method-new'><code>SparseSet$new()</code></a></p></li>
 <li><p><a href='#method-assign'><code>SparseSet$assign()</code></a></p></li>
+<li><p><a href='#method-['><code>SparseSet$[()</code></a></p></li>
+<li><p><a href='#method-cardinal'><code>SparseSet$cardinal()</code></a></p></li>
 <li><p><a href='#method-get_vector'><code>SparseSet$get_vector()</code></a></p></li>
 <li><p><a href='#method-get_attributes'><code>SparseSet$get_attributes()</code></a></p></li>
 <li><p><a href='#method-length'><code>SparseSet$length()</code></a></p></li>
@@ -188,6 +190,26 @@
 <code>S$assign(A = 1, B = 0.3)</code>
 <code>S$assign(attributes = c(A, B), values = c(1, 0.3))</code>.</p>
 
+<p><hr>
+<a id="method-["></a></p><h3>Method <code>[()</code></h3>
+<p>Get elements by index</p><h3>Usage</h3>
+<p><div class="r"></p><pre>SparseSet$[(indices)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>indices</code></dt><dd><p>(numeric, logical or character vector) The indices of the elements to return. It can be a vector of logicals where <code>TRUE</code> elements are to be retained.</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>A <code>SparseSet</code> but with only the required elements.</p>
+<p><hr>
+<a id="method-cardinal"></a></p><h3>Method <code>cardinal()</code></h3>
+<p>Cardinal of the SparseSet</p><h3>Usage</h3>
+<p><div class="r"></p><pre>SparseSet$cardinal()</pre><p></div></p>
+
+<h3>Returns</h3>
+<p>the cardinal of the <code>SparseSet</code>, counted
+as the sum of the degrees of each element.</p>
 <p><hr>
 <a id="method-get_vector"></a></p><h3>Method <code>get_vector()</code></h3>
 <p>Internal <code>Matrix</code></p><h3>Usage</h3>
@@ -242,9 +264,7 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='no'>SparseSet</span>$<span class='fu'>new</span>(<span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>))
-<span class='no'>S</span>$<span class='fu'><a href='https://rdrr.io/r/base/assign.html'>assign</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>S</span>)</div><div class='output co'>#&gt; {A}</div><div class='input'><span class='no'>S</span>$<span class='fu'><a href='to_latex.html'>to_latex</a></span>()</div><div class='output co'>#&gt; \ensuremath{\{A\}}</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='no'>SparseSet</span>$<span class='fu'>new</span>(<span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'SparseSet' no encontrado</span></div><div class='input'><span class='no'>S</span>$<span class='fu'><a href='https://rdrr.io/r/base/assign.html'>assign</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'S' no encontrado</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>S</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(S): objeto 'S' no encontrado</span></div><div class='input'><span class='no'>S</span>$<span class='fu'><a href='to_latex.html'>to_latex</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'S' no encontrado</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
