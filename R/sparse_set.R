@@ -77,7 +77,19 @@ SparseSet <- R6::R6Class(
 
       idx <- match(attributes, private$attributes)
 
-      private$v[idx] <- values
+      nas <- which(is.na(idx))
+      if (length(nas) > 0) {
+
+        idx <- idx[-nas]
+        values <- values[-nas]
+
+      }
+
+      if (length(idx) > 0) {
+
+        private$v[idx] <- values
+
+      }
 
     },
 
