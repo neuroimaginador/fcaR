@@ -50,6 +50,15 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   }
 
+  remaining <- ncol(LHS) %% ncols
+
+  if (remaining > 0) {
+
+    remaining <- ncols - remaining
+    output <- c(output, rep("", remaining))
+
+  }
+
   output <- matrix(output, ncol = ncols)
 
   output <- sapply(seq(nrow(output)), function(r) {
