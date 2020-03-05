@@ -543,21 +543,24 @@ bool is_set_preceding(SparseVector B,
 
 }
 
-SparseVector compute_next_closure(SparseVector A, int i,
+void compute_next_closure(SparseVector A, int i,
                                   int imax,
                                   ListOf<NumericVector> grades_set,
                                   ImplicationTree t,
                                   SparseVector LHS,
                                   SparseVector RHS,
-                                  StringVector attrs) {
+                                  StringVector attrs,
+                                  SparseVector *candB) {
 
 
-  SparseVector candB;
-  initVector(&candB, A.length);
+  // SparseVector candB;
+  // initVector(&candB, A.length);
 
   int n_grades = grades_set.size();
   SparseVector candB2;
   initVector(&candB2, A.length);
+
+  bool exit = false;
 
   for (int a_i = i - 1; i >= 0; a_i--) {
 
@@ -565,25 +568,32 @@ SparseVector compute_next_closure(SparseVector A, int i,
 
     for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
 
-      compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
+      compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
 
-      semantic_closure(candB, t, LHS, RHS, &candB2);
+      semantic_closure(*candB, t, LHS, RHS, &candB2);
 
       if (is_set_preceding(A, candB2, a_i, grades_set[a_i][grade_idx])) {
 
-        cloneVector(&candB, candB2);
+        cloneVector(candB, candB2);
         freeVector(&candB2);
-        return candB;
+
+        exit = true;
+
+        // return candB;
 
       }
 
+      if (exit) break;
+
     }
+
+    if (exit) break;
 
   }
 
-  Rprintf("Something went wrong...\n");
-
-  return candB;
+  // Rprintf("Something went wrong...\n");
+  //
+  // return candB;
 
 }
 
@@ -592,6 +602,7 @@ SparseVector compute_next_closure(SparseVector A, int i,
 List next_closure_implications(NumericMatrix I,
                                List grades_set,
                                StringVector attrs,
+                               bool save_concepts = true,
                                bool verbose = false) {
 
   int n_attributes = attrs.size();
@@ -600,9 +611,10 @@ List next_closure_implications(NumericMatrix I,
 
   SparseVector concepts;
   SparseVector extents;
-  SparseVector LHS, RHS;
   initVector(&concepts, n_attributes);
   initVector(&extents, I.nrow());
+
+  SparseVector LHS, RHS;
   initVector(&LHS, n_attributes);
   initVector(&RHS, n_attributes);
 
@@ -637,10 +649,15 @@ List next_closure_implications(NumericMatrix I,
 
   }
 
-  add_column(&concepts, A);
-  add_column(&extents, compute_extent(A, I));
+  if (save_concepts) {
 
-  if (verbose) {
+    add_column(&concepts, A);
+    add_column(&extents, compute_extent(A, I));
+
+  }
+
+
+  if (verbose & save_concepts) {
 
     Rprintf("Added concept:\n");
 
@@ -664,12 +681,15 @@ List next_closure_implications(NumericMatrix I,
 
   while ((cardinal(A) < n_attributes)){
 
-    A = compute_next_closure(A,
+    compute_next_closure(A,
                              n_attributes,
                              n_attributes,
                              grades_set,
                              tree, LHS, RHS,
-                             attrs);
+                             attrs, &B);
+
+    // cloneVector(&A, B);
+    A = B;
 
     if (verbose) {
 
@@ -691,14 +711,18 @@ List next_closure_implications(NumericMatrix I,
     if (cardinal(rhs) == 0) {
 
       // Concept
-      add_column(&concepts, A);
-      add_column(&extents, compute_extent(A, I));
+      if (save_concepts) {
 
-      if (verbose) {
+        add_column(&concepts, A);
+        add_column(&extents, compute_extent(A, I));
 
-        Rprintf("Added concept:\n");
-        printVector(A, attrs);
-        Rprintf("\n");
+        if (verbose) {
+
+          Rprintf("Added concept:\n");
+          printVector(A, attrs);
+          Rprintf("\n");
+
+        }
 
       }
 
@@ -709,7 +733,7 @@ List next_closure_implications(NumericMatrix I,
 
       if (verbose) {
 
-        Rcout << "Added implication " << n_imp++ << " to basis" << std::endl << std::endl << std::endl;
+        Rcout << "Added implication " << n_imp++ << " to basis" << std::endl;
         printImpl(A, rhs, attrs);
 
       }

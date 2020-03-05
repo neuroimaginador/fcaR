@@ -42,16 +42,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // next_closure_implications
-List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
-RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool save_concepts, bool verbose);
+RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
     Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
     Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< bool >::type save_concepts(save_conceptsSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(next_closure_implications(I, grades_set, attrs, verbose));
+    rcpp_result_gen = Rcpp::wrap(next_closure_implications(I, grades_set, attrs, save_concepts, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -172,7 +173,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
     {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 2},
     {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 2},
-    {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 4},
+    {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 5},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 4},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},

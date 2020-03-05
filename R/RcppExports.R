@@ -13,8 +13,8 @@ compute_closure <- function(V, I) {
     .Call(`_fcaR_compute_closure`, V, I)
 }
 
-next_closure_implications <- function(I, grades_set, attrs, verbose = FALSE) {
-    .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, verbose)
+next_closure_implications <- function(I, grades_set, attrs, save_concepts = TRUE, verbose = FALSE) {
+    .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, save_concepts, verbose)
 }
 
 next_closure_concepts <- function(I, grades_set, attrs, verbose = FALSE) {

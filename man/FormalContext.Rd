@@ -328,13 +328,15 @@ A list with all the concepts in the formal context.
 \subsection{Method \code{find_implications()}}{
 Use modified Ganter algorithm to compute both concepts and implications
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$find_implications(verbose = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$find_implications(save_concepts = TRUE, verbose = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{verbose}}{(logical) TRUE will provide a verbose output.}
+\item{\code{save_concepts}}{(logical) \code{TRUE} will also compute and save the concept lattice. \code{FALSE} is usually faster, since it only computes implications.}
+
+\item{\code{verbose}}{(logical) \code{TRUE} will provide a verbose output.}
 }
 \if{html}{\out{</div>}}
 }

@@ -644,13 +644,15 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Use modified Ganter algorithm to compute both concepts and implications
     #'
-    #' @param verbose   (logical) TRUE will provide a verbose output.
+    #' @param save_concepts (logical) \code{TRUE} will also compute and save the concept lattice. \code{FALSE} is usually faster, since it only computes implications.
+    #' @param verbose   (logical) \code{TRUE} will provide a verbose output.
     #'
     #' @return Nothing, just updates the internal fields \code{concepts} and \code{implications}.
     #'
     #'
     #' @export
-    find_implications = function(verbose = FALSE) {
+    find_implications = function(save_concepts = TRUE,
+                                 verbose = FALSE) {
 
       private$check_empty()
 
@@ -662,23 +664,32 @@ FormalContext <- R6::R6Class(
       L <- next_closure_implications(I = my_I,
                                      grades_set = grades_set,
                                      attrs = attrs,
+                                     save_concepts = save_concepts,
                                      verbose = verbose)
 
       # Since the previous function gives the list of intents of
       # the computed concepts, now we will compute the corresponding
       # extents.
-      my_intents <- L$concepts[, -1]
-      my_extents <- L$extents[, -1]
+      if (save_concepts) {
+
+        my_intents <- L$concepts[, -1]
+        my_extents <- L$extents[, -1]
+
+      }
 
       # Now, add the computed implications
       my_LHS <- L$LHS[, -1]
       my_RHS <- L$RHS[, -1]
 
-      self$concepts <- ConceptLattice$new(extents = my_extents,
-                                          intents = my_intents,
-                                          objects = self$objects,
-                                          attributes = self$attributes,
-                                          I = self$I)
+      if (save_concepts) {
+
+        self$concepts <- ConceptLattice$new(extents = my_extents,
+                                            intents = my_intents,
+                                            objects = self$objects,
+                                            attributes = self$attributes,
+                                            I = self$I)
+
+      }
 
       extracted_implications <- ImplicationSet$new(attributes = self$attributes,
                                                    lhs = my_LHS,
