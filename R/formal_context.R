@@ -161,6 +161,9 @@ FormalContext <- R6::R6Class(
       self$objects <- objects
       self$attributes <- attributes
 
+      colnames(self$I) <- self$objects
+      rownames(self$I) <- self$attributes
+
       # Is the FormalContext binary?
       private$is_binary <- length(self$grades_set) == 2
 
@@ -628,8 +631,22 @@ FormalContext <- R6::R6Class(
       # Since the previous function gives the list of intents of
       # the computed concepts, now we will compute the corresponding
       # extents.
-      my_intents <- L$concepts[, -1]
-      my_extents <- L$extents[, -1]
+
+      if (length(self$attributes) == 1) {
+
+
+        my_intents <- Matrix(t(as.vector(L$concepts[, -1])), sparse = TRUE)
+
+        my_extents <- Matrix(t(as.vector(L$extents[, -1])), sparse = TRUE)
+
+      } else {
+
+        my_intents <- L$concepts[, -1]
+
+        my_extents <- L$extents[, -1]
+
+      }
+
 
       self$concepts <- ConceptLattice$new(extents = my_extents,
                                           intents = my_intents,
@@ -844,7 +861,17 @@ FormalContext <- R6::R6Class(
       cat(str_wrap(str, exdent = 2))
       cat("\nMatrix:\n")
 
-      print(head(I[, seq_along(my_attributes)]))
+      if (length(my_attributes) > 1) {
+
+        print(head(I[, seq_along(my_attributes)]))
+
+      } else {
+
+        print(head(I))
+
+      }
+
+
 
     },
 
