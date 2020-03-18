@@ -156,7 +156,9 @@ ConceptLattice <- R6::R6Class(
         if (object_names) {
 
           labels <- sapply(private$concepts,
-                           function(l) l$to_latex(print = FALSE))
+                           function(l) l$to_latex(print = FALSE)) %>%
+            str_replace_all(pattern = "\n",
+                            replacement = "")
 
         } else {
 
