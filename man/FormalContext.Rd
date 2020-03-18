@@ -457,7 +457,7 @@ Plot the formal context table
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-Particular parameters that control the size of the \code{tikz} output are: \code{width}, \code{height} (both in inches), and \code{pointsize} (in points), that should be set to the font size used in the \code{\documentclass} header in the \code{LaTeX} file where the code is to be inserted.
+Particular parameters that control the size of the \code{tikz} output are: \code{width}, \code{height} (both in inches), and \code{pointsize} (in points), that should be set to the font size used in the \code{documentclass} header in the \code{LaTeX} file where the code is to be inserted.
 
 If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
 }

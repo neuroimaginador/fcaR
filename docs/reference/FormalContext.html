@@ -343,11 +343,13 @@
 <p><hr>
 <a id="method-find_implications"></a></p><h3>Method <code>find_implications()</code></h3>
 <p>Use modified Ganter algorithm to compute both concepts and implications</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$find_implications(verbose = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$find_implications(save_concepts = TRUE, verbose = FALSE)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>verbose</code></dt><dd><p>(logical) TRUE will provide a verbose output.</p></dd>
+<dt><code>save_concepts</code></dt><dd><p>(logical) <code>TRUE</code> will also compute and save the concept lattice. <code>FALSE</code> is usually faster, since it only computes implications.</p></dd>
+
+<dt><code>verbose</code></dt><dd><p>(logical) <code>TRUE</code> will provide a verbose output.</p></dd>
 
 </dl><p></div></p>
 <h3>Returns</h3>
@@ -414,7 +416,18 @@
 <p><hr>
 <a id="method-plot"></a></p><h3>Method <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code></h3>
 <p>Plot the formal context table</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$plot()</pre><p></div></p>
+<p><div class="r"></p><pre>FormalContext$plot(to_latex = FALSE, ...)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>to_latex</code></dt><dd><p>(logical) If <code>TRUE</code>, export the plot as a <code>tikzpicture</code> environment that can be included in a <code>LaTeX</code> file.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Other parameters to be passed to the <code>tikzDevice</code> that renders the lattice in <code>LaTeX</code>, or for the figure caption. See <code>Details</code>.</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Particular parameters that control the size of the <code>tikz</code> output are: <code>width</code>, <code>height</code> (both in inches), and <code>pointsize</code> (in points), that should be set to the font size used in the <code>documentclass</code> header in the <code>LaTeX</code> file where the code is to be inserted.</p>
+<p>If a <code>caption</code> is provided, the whole <code>tikz</code> picture will be wrapped by a <code>figure</code> environment and the caption set.</p>
 
 <h3>Returns</h3>
 <p>Nothing, just plots the formal context.</p>
@@ -433,19 +446,32 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build and print the formal context</span>
-<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'FormalContext' no encontrado</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>fc_planets</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(fc_planets): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>fc_planets</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Too many attributes, output will be truncated.</span></div><div class='output co'>#&gt; FormalContext with 9 objects and 7 attributes.
+#&gt; Attributes' names are: small, medium, large, near, far, moon, ...
+#&gt; Matrix:
+#&gt;         small medium large near far moon no_moon
+#&gt; Mercury     1      0     0    1   0    0       1
+#&gt; Venus       1      0     0    1   0    0       1
+#&gt; Earth       1      0     0    1   0    1       0
+#&gt; Mars        1      0     0    1   0    1       0
+#&gt; Jupiter     0      0     1    0   1    1       0
+#&gt; Saturn      0      0     1    0   1    1       0</div><div class='input'>
 <span class='co'># Plot the formal context</span>
-<span class='no'>fc_planets</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='img'><img src='FormalContext-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Define a set of attributes</span>
-<span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='no'>SparseSet</span>$<span class='fu'>new</span>(<span class='kw'>attributes</span> <span class='kw'>=</span> <span class='no'>fc_planets</span>$<span class='no'>attributes</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'SparseSet' no encontrado</span></div><div class='input'><span class='no'>S</span>$<span class='fu'><a href='https://rdrr.io/r/base/assign.html'>assign</a></span>(<span class='kw'>moon</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>large</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'S' no encontrado</span></div><div class='input'>
+<span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='no'>SparseSet</span>$<span class='fu'>new</span>(<span class='kw'>attributes</span> <span class='kw'>=</span> <span class='no'>fc_planets</span>$<span class='no'>attributes</span>)
+<span class='no'>S</span>$<span class='fu'><a href='https://rdrr.io/r/base/assign.html'>assign</a></span>(<span class='kw'>moon</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>large</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
 <span class='co'># Compute the closure of S</span>
-<span class='no'>Sc</span> <span class='kw'>&lt;-</span> <span class='no'>fc_planets</span>$<span class='fu'><a href='https://rdrr.io/r/base/function.html'>closure</a></span>(<span class='no'>S</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'><span class='co'># Is Sc a closed set?</span>
-<span class='no'>fc_planets</span>$<span class='fu'>is_closed</span>(<span class='no'>Sc</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>Sc</span> <span class='kw'>&lt;-</span> <span class='no'>fc_planets</span>$<span class='fu'><a href='https://rdrr.io/r/base/function.html'>closure</a></span>(<span class='no'>S</span>)
+<span class='co'># Is Sc a closed set?</span>
+<span class='no'>fc_planets</span>$<span class='fu'>is_closed</span>(<span class='no'>Sc</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Clarify and reduce the formal context</span>
-<span class='no'>fc2</span> <span class='kw'>&lt;-</span> <span class='no'>fc_planets</span>$<span class='fu'>reduce</span>(<span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc2</span> <span class='kw'>&lt;-</span> <span class='no'>fc_planets</span>$<span class='fu'>reduce</span>(<span class='fl'>TRUE</span>)
+
 <span class='co'># Find implications</span>
-<span class='no'>fc_planets</span>$<span class='fu'>find_implications</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
-</div></pre>
+<span class='no'>fc_planets</span>$<span class='fu'>find_implications</span>()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

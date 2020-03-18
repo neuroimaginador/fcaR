@@ -167,13 +167,25 @@ Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prov
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build a formal context</span>
-<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'FormalContext' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)
+
 <span class='co'># Find its concepts and implications</span>
-<span class='no'>fc_planets</span>$<span class='fu'>find_implications</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='fu'>find_implications</span>()
+
 <span class='co'># Plot the concept lattice</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='img'><img src='fcaR-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Print the extracted implications</span>
-<span class='no'>fc_planets</span>$<span class='no'>implications</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>implications</span></div><div class='output co'>#&gt; Implication set with 10 implications.
+#&gt; Rule 1: {no_moon} -&gt; {small, near}
+#&gt; Rule 2: {far} -&gt; {moon}
+#&gt; Rule 3: {near} -&gt; {small}
+#&gt; Rule 4: {large} -&gt; {far, moon}
+#&gt; Rule 5: {medium} -&gt; {far, moon}
+#&gt; Rule 6: {medium, large, far, moon} -&gt; {small, near, no_moon}
+#&gt; Rule 7: {small, near, moon, no_moon} -&gt; {medium, large, far}
+#&gt; Rule 8: {small, near, far, moon} -&gt; {medium, large, no_moon}
+#&gt; Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}
+#&gt; Rule 10: {small, medium, far, moon} -&gt; {large, near, no_moon}</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

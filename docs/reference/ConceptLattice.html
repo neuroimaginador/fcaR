@@ -215,15 +215,23 @@
 <p><hr>
 <a id="method-plot"></a></p><h3>Method <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code></h3>
 <p>Plot the concept lattice</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$plot(object_names = TRUE)</pre><p></div></p>
+<p><div class="r"></p><pre>ConceptLattice$plot(object_names = TRUE, to_latex = FALSE, ...)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
 <dt><code>object_names</code></dt><dd><p>(logical) If <code>TRUE</code>, plot object names, otherwise omit them from the diagram.</p></dd>
 
+<dt><code>to_latex</code></dt><dd><p>(logical) If <code>TRUE</code>, export the plot as a <code>tikzpicture</code> environment that can be included in a <code>LaTeX</code> file.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Other parameters to be passed to the <code>tikzDevice</code> that renders the lattice in <code>LaTeX</code>, or for the figure caption. See <code>Details</code>.</p></dd>
+
 </dl><p></div></p>
+<h3>Details</h3>
+<p>Particular parameters that control the size of the <code>tikz</code> output are: <code>width</code>, <code>height</code> (both in inches), and <code>pointsize</code> (in points), that should be set to the font size used in the <code>documentclass</code> header in the <code>LaTeX</code> file where the code is to be inserted.</p>
+<p>If a <code>caption</code> is provided, the whole <code>tikz</code> picture will be wrapped by a <code>figure</code> environment and the caption set.</p>
+
 <h3>Returns</h3>
-<p>Nothing, just plots the graph of the concept lattice.</p>
+<p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns</p>
 <p><hr>
 <a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Print the Concept Lattice</p><h3>Usage</h3>
@@ -390,15 +398,28 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build a formal context</span>
-<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'FormalContext' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)
+
 <span class='co'># Find the concepts</span>
-<span class='no'>fc_planets</span>$<span class='fu'>find_concepts</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='fu'>find_concepts</span>()
+
 <span class='co'># Plot the concept lattice</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='img'><img src='ConceptLattice-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Find join- and meet- irreducible elements</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>join_irreducibles</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'><span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>meet_irreducibles</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>join_irreducibles</span>()</div><div class='output co'>#&gt; ({Jupiter, Saturn}, {large, far, moon})
+#&gt; ({Uranus, Neptune}, {medium, far, moon})
+#&gt; ({Pluto}, {small, far, moon})
+#&gt; ({Mercury, Venus}, {small, near, no_moon})
+#&gt; ({Earth, Mars}, {small, near, moon})</div><div class='input'><span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>meet_irreducibles</span>()</div><div class='output co'>#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})
+#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})
+#&gt; ({Jupiter, Saturn}, {large, far, moon})
+#&gt; ({Uranus, Neptune}, {medium, far, moon})
+#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})
+#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})
+#&gt; ({Mercury, Venus}, {small, near, no_moon})</div><div class='input'>
 <span class='co'># Get concept support</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>support</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): objeto 'fc_planets' no encontrado</span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>support</span>()</div><div class='output co'>#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333
+#&gt;  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
