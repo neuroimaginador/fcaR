@@ -96,9 +96,11 @@ SparseConcept <- R6::R6Class(
     #' @description
     #' Write the concept in LaTeX format
     #'
+    #' @param print (logical) Print to output?
+    #'
     #' @return The fuzzy concept in LaTeX.
     #' @export
-    to_latex = function() {
+    to_latex = function(print = TRUE) {
 
       extent <- set_to_latex(private$extent$get_vector(),
                              private$extent$get_attributes())
@@ -107,7 +109,11 @@ SparseConcept <- R6::R6Class(
 
       str <- paste0("(", extent, ", ", intent, ")\n")
 
-      cat(str)
+      if (print) {
+
+        cat(str)
+
+      }
 
       return(invisible(str))
 

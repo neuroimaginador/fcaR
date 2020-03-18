@@ -444,7 +444,22 @@ A table environment in LaTeX.
 \subsection{Method \code{plot()}}{
 Plot the formal context table
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$plot()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$plot(to_latex = FALSE, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{to_latex}}{(logical) If \code{TRUE}, export the plot as a \code{tikzpicture} environment that can be included in a \code{LaTeX} file.}
+
+\item{\code{...}}{Other parameters to be passed to the \code{tikzDevice} that renders the lattice in \code{LaTeX}, or for the figure caption. See \code{Details}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Particular parameters that control the size of the \code{tikz} output are: \code{width}, \code{height} (both in inches), and \code{pointsize} (in points), that should be set to the font size used in the \code{\documentclass} header in the \code{LaTeX} file where the code is to be inserted.
+
+If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
 }
 
 \subsection{Returns}{

@@ -913,19 +913,92 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Plot the formal context table
     #'
+    #' @param to_latex      (logical) If \code{TRUE}, export the plot as a \code{tikzpicture} environment that can be included in a \code{LaTeX} file.
+    #' @param ...          Other parameters to be passed to the \code{tikzDevice} that renders the lattice in \code{LaTeX}, or for the figure caption. See \code{Details}.
+    #'
+    #' @details
+    #' Particular parameters that control the size of the \code{tikz} output are: \code{width}, \code{height} (both in inches), and \code{pointsize} (in points), that should be set to the font size used in the \code{\documentclass} header in the \code{LaTeX} file where the code is to be inserted.
+    #'
+    #' If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
+    #'
     #' @return Nothing, just plots the formal context.
     #'
     #' @import scales RColorBrewer
+    #' @importFrom tikzDevice tikz
+
     #'
     #' @export
-    plot = function() {
+    plot = function(to_latex = FALSE,
+                    ...) {
 
       private$check_empty()
+
+      if (to_latex) {
+
+        tmp_file <- tempfile(fileext = ".tex")
+        dots <- list(...)
+        args <- list(file = tmp_file,
+                     standAlone = FALSE,
+                     sanitize = TRUE,
+                     width = 4,
+                     height = 4)
+
+        if ("caption" %in% names(dots)) {
+
+          caption <- dots$caption
+          dots["caption"] <- NULL
+
+          tex_prefix <- c("\\begin{figure}",
+                          "\\centering",
+                          "")
+
+          tex_suffix <- c("",
+                          paste0("\\caption{", caption, "}"),
+                          "",
+                          "\\end{figure}")
+
+        } else {
+
+          tex_prefix <- c()
+          tex_suffix <- c()
+
+        }
+
+        old_opt <- getOption("tikzDocumentDeclaration")
+
+        if ("pointsize" %in% names(dots)) {
+
+          options("tikzDocumentDeclaration" = paste0("\\documentclass[", dots$pointsize,
+                                                     "pt]{article}\n"))
+
+        }
+
+        args[names(dots)] <- dots[names(dots)]
+
+        do.call(tikz, args = args)
+
+      }
 
       color_function <- colour_ramp(brewer.pal(9, "Greys"))
       heatmap(t(as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")
+
+      if (to_latex) {
+
+        dev.off()
+
+        tex <- readLines(tmp_file)
+        unlink(tmp_file)
+
+        tex <- c(tex_prefix,
+                 tex,
+                 tex_suffix)
+
+        options("tikzDocumentDeclaration" = old_opt)
+        return(paste0(tex, collapse = "\n"))
+
+      }
 
     }
 

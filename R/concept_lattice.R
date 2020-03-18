@@ -151,23 +151,45 @@ ConceptLattice <- R6::R6Class(
 
       }
 
-      if (object_names) {
+      if (to_latex) {
 
-        labels <- sapply(private$concepts,
-                         function(l) .concept_to_string(l,
-                                                        private$objects,
-                                                        private$attributes))
+        if (object_names) {
+
+          labels <- sapply(private$concepts,
+                           function(l) l$to_latex(print = FALSE))
+
+        } else {
+
+          labels <- sapply(private$concepts,
+                           function(l) {
+                             v <- l$get_intent()
+                             v$to_latex(print = FALSE)
+                           })
+
+        }
 
       } else {
 
-        labels <- sapply(private$concepts,
-                         function(l) {
-                           v <- l$get_intent()
-                           .set_to_string(S = v$get_vector(),
-                                          attributes = v$get_attributes())
-                         })
+        if (object_names) {
+
+          labels <- sapply(private$concepts,
+                           function(l) .concept_to_string(l,
+                                                          private$objects,
+                                                          private$attributes))
+
+        } else {
+
+          labels <- sapply(private$concepts,
+                           function(l) {
+                             v <- l$get_intent()
+                             .set_to_string(S = v$get_vector(),
+                                            attributes = v$get_attributes())
+                           })
+
+        }
 
       }
+
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
@@ -181,7 +203,7 @@ ConceptLattice <- R6::R6Class(
         dots <- list(...)
         args <- list(file = tmp_file,
                      standAlone = FALSE,
-                     sanitize = TRUE,
+                     sanitize = FALSE,
                      width = 6,
                      height = 4)
 
@@ -206,16 +228,19 @@ ConceptLattice <- R6::R6Class(
 
         }
 
-        if ("pointsize" %in% names(dots)) {
+        old_opt <- getOption("tikzDocumentDeclaration")
 
-          old_opt <- getOption("tikzDocumentDeclaration")
+        if ("pointsize" %in% names(dots)) {
 
           options("tikzDocumentDeclaration" = paste0("\\documentclass[", dots$pointsize,
                                                     "pt]{article}\n"))
 
-          print(getOption("tikzDocumentDeclaration"))
-
         }
+
+        options( tikzLatexPackages = c(
+          getOption( "tikzLatexPackages" ),
+          "\\usepackage{amssymb}"
+        ))
 
         args[names(dots)] <- dots[names(dots)]
 
