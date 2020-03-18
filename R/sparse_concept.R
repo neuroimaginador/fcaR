@@ -107,7 +107,7 @@ SparseConcept <- R6::R6Class(
       intent <- set_to_latex(private$intent$get_vector(),
                              private$intent$get_attributes())
 
-      str <- paste0("(", extent, ", ", intent, ")\n")
+      str <- paste0("\\ensuremath{\\left(", extent, ", ", intent, "\\right)}\n")
 
       if (print) {
 
