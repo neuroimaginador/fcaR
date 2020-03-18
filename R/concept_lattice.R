@@ -127,12 +127,29 @@ ConceptLattice <- R6::R6Class(
     #' Plot the concept lattice
     #'
     #' @param object_names  (logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.
+    #' @param to_latex      (logical) If \code{TRUE}, export the plot as a \code{tikzpicture} environment that can be included in a \code{LaTeX} file.
+    #' @param ...          Other parameters to be passed to the \code{tikzDevice} that renders the lattice in \code{LaTeX}, or for the figure caption. See \code{Details}.
     #'
-    #' @return Nothing, just plots the graph of the concept lattice.
+    #' @details
+    #' Particular parameters that control the size of the \code{tikz} output are: \code{width}, \code{height} (both in inches), and \code{pointsize} (in points), that should be set to the font size used in the \code{\documentclass} header in the \code{LaTeX} file where the code is to be inserted.
+    #'
+    #' If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
+    #'
+    #' @return If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns
     #' @export
     #'
     #' @importFrom hasseDiagram hasse
-    plot = function(object_names = TRUE) {
+    #' @importFrom stringr str_replace_all fixed
+    #' @importFrom tikzDevice tikz
+    plot = function(object_names = TRUE,
+                    to_latex = FALSE,
+                    ...) {
+
+      if (self$size() == 0) {
+
+        warning("No concepts.", call. = FALSE)
+
+      }
 
       if (object_names) {
 
@@ -158,9 +175,73 @@ ConceptLattice <- R6::R6Class(
 
       }
 
+      if (to_latex) {
+
+        tmp_file <- tempfile(fileext = ".tex")
+        dots <- list(...)
+        args <- list(file = tmp_file,
+                     standAlone = FALSE,
+                     sanitize = TRUE,
+                     width = 6,
+                     height = 4)
+
+        if ("caption" %in% names(dots)) {
+
+          caption <- dots$caption
+          dots["caption"] <- NULL
+
+          tex_prefix <- c("\\begin{figure}",
+                          "\\centering",
+                          "")
+
+          tex_suffix <- c("",
+                          paste0("\\caption{", caption, "}"),
+                          "",
+                          "\\end{figure}")
+
+        } else {
+
+          tex_prefix <- c()
+          tex_suffix <- c()
+
+        }
+
+        if ("pointsize" %in% names(dots)) {
+
+          old_opt <- getOption("tikzDocumentDeclaration")
+
+          options("tikzDocumentDeclaration" = paste0("\\documentclass[", dots$pointsize,
+                                                    "pt]{article}\n"))
+
+          print(getOption("tikzDocumentDeclaration"))
+
+        }
+
+        args[names(dots)] <- dots[names(dots)]
+
+        do.call(tikz, args = args)
+
+      }
+
       hasse(data = as.matrix(t(private$subconcept_matrix)),
             labels = labels,
             parameters = list(arrows = "backward"))
+
+      if (to_latex) {
+
+        dev.off()
+
+        tex <- readLines(tmp_file)
+        unlink(tmp_file)
+
+        tex <- c(tex_prefix,
+                 tex,
+                 tex_suffix)
+
+        options("tikzDocumentDeclaration" = old_opt)
+        return(paste0(tex, collapse = "\n"))
+
+      }
 
     },
 

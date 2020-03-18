@@ -36,7 +36,8 @@ Imports:
     knitr,
     Matrix,
     Rcpp,
-    methods
+    methods,
+    tikzDevice
 Suggests: 
     testthat (>= 2.1.0),
     covr,

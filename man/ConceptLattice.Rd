@@ -129,18 +129,28 @@ The intents of all concepts, as a \code{dgCMatrix}.
 \subsection{Method \code{plot()}}{
 Plot the concept lattice
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$plot(object_names = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$plot(object_names = TRUE, to_latex = FALSE, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{object_names}}{(logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.}
+
+\item{\code{to_latex}}{(logical) If \code{TRUE}, export the plot as a \code{tikzpicture} environment that can be included in a \code{LaTeX} file.}
+
+\item{\code{...}}{Other parameters to be passed to the \code{tikzDevice} that renders the lattice in \code{LaTeX}, or for the figure caption. See \code{Details}.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Details}{
+Particular parameters that control the size of the \code{tikz} output are: \code{width}, \code{height} (both in inches), and \code{pointsize} (in points), that should be set to the font size used in the \code{\documentclass} header in the \code{LaTeX} file where the code is to be inserted.
+
+If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
+}
+
 \subsection{Returns}{
-Nothing, just plots the graph of the concept lattice.
+If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns
 }
 }
 \if{html}{\out{<hr>}}
