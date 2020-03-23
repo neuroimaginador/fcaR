@@ -135,7 +135,7 @@ ConceptLattice <- R6::R6Class(
     #'
     #' If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
     #'
-    #' @return If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns
+    #' @return If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the \code{LaTeX} code to reproduce the concept lattice.
     #' @export
     #'
     #' @importFrom hasseDiagram hasse
@@ -209,10 +209,36 @@ ConceptLattice <- R6::R6Class(
                      width = 6,
                      height = 4)
 
+        if ("filename" %in% names(dots)) {
+
+          filename <- dots$filename
+          dots$filename <- NULL
+
+        } else {
+
+          filename <- tempfile(fileext = ".tex")
+
+        }
+
         if ("caption" %in% names(dots)) {
 
           caption <- dots$caption
           dots["caption"] <- NULL
+          label <- dots$label
+          if (is.null(label)) {
+
+            label <- "fig:"
+
+          } else {
+
+            dots["label"] <- NULL
+
+          }
+
+          caption <- paste0("\\label{",
+                            label,
+                            "}",
+                            caption)
 
           tex_prefix <- c("\\begin{figure}",
                           "\\centering",
@@ -266,7 +292,10 @@ ConceptLattice <- R6::R6Class(
                  tex_suffix)
 
         options("tikzDocumentDeclaration" = old_opt)
-        return(paste0(tex, collapse = "\n"))
+        my_tex <- paste0(tex, collapse = "\n")
+        cat(my_tex, file = filename)
+
+        return(filename)
 
       }
 

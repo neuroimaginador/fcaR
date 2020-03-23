@@ -921,7 +921,7 @@ FormalContext <- R6::R6Class(
     #'
     #' If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
     #'
-    #' @return Nothing, just plots the formal context.
+    #' @return If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the \code{LaTeX} code to reproduce the formal context plot.
     #'
     #' @import scales RColorBrewer
     #' @importFrom tikzDevice tikz
@@ -935,6 +935,7 @@ FormalContext <- R6::R6Class(
 
       if (to_latex) {
 
+
         tmp_file <- tempfile(fileext = ".tex")
         dots <- list(...)
         args <- list(file = tmp_file,
@@ -943,10 +944,36 @@ FormalContext <- R6::R6Class(
                      width = 4,
                      height = 4)
 
+        if ("filename" %in% names(dots)) {
+
+          filename <- dots$filename
+          dots$filename <- NULL
+
+        } else {
+
+          filename <- tempfile(fileext = ".tex")
+
+        }
+
         if ("caption" %in% names(dots)) {
 
           caption <- dots$caption
           dots["caption"] <- NULL
+          label <- dots$label
+          if (is.null(label)) {
+
+            label <- "fig:"
+
+          } else {
+
+            dots["label"] <- NULL
+
+          }
+
+          caption <- paste0("\\label{",
+                            label,
+                            "}",
+                            caption)
 
           tex_prefix <- c("\\begin{figure}",
                           "\\centering",
@@ -996,7 +1023,11 @@ FormalContext <- R6::R6Class(
                  tex_suffix)
 
         options("tikzDocumentDeclaration" = old_opt)
-        return(paste0(tex, collapse = "\n"))
+
+        my_tex <- paste0(tex, collapse = "\n")
+        cat(my_tex, file = filename)
+
+        return(filename)
 
       }
 
