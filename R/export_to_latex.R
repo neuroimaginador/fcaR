@@ -8,9 +8,9 @@ set_to_latex <- function(S, attributes) {
     A <- S[idx]
     att <- attributes[idx]
 
-    tmp <- paste0("\\ensuremath{\\{",
+    tmp <- paste0("\\ensuremath{\\left\\{",
                   str_flatten(paste0("{^{", A, "}}\\!/", att),
-                              collapse = ",\\, "), "\\}}")
+                              collapse = ",\\, "), "\\right\\}}")
 
   } else {
 

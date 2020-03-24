@@ -1,6 +1,6 @@
 context("Formal Context")
 
-library(arules)
+library(arules, quietly = TRUE)
 
 data("Mushroom", package = "arules")
 expect_warning(mush <- apriori(Mushroom, parameter = list(conf = 1, maxlen = 4)))

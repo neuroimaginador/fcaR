@@ -225,10 +225,13 @@ SparseSet <- R6::R6Class(
       if (print) {
 
         cat(str)
+        return(invisible(str))
+
+      } else {
+
+        return(str)
 
       }
-
-      return(invisible(str))
 
     }
 

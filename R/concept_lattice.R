@@ -170,6 +170,10 @@ ConceptLattice <- R6::R6Class(
 
         }
 
+        labels <- labels %>%
+          str_replace_all(pattern = fixed(" "),
+                          replacement = "\\,")
+
       } else {
 
         if (object_names) {
