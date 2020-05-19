@@ -694,10 +694,6 @@ FormalContext <- R6::R6Class(
 
       }
 
-      # Now, add the computed implications
-      my_LHS <- L$LHS[, -1]
-      my_RHS <- L$RHS[, -1]
-
       if (save_concepts) {
 
         self$concepts <- ConceptLattice$new(extents = my_extents,
@@ -708,10 +704,25 @@ FormalContext <- R6::R6Class(
 
       }
 
-      extracted_implications <- ImplicationSet$new(attributes = self$attributes,
-                                                   lhs = my_LHS,
-                                                   rhs = my_RHS,
-                                                   I = self$I)
+      # Now, add the computed implications
+      if (ncol(L$LHS) > 1) {
+
+        # There are implications (the first one is dummy
+        # emptyset -> emptyset )
+        my_LHS <- L$LHS[, -1]
+        my_RHS <- L$RHS[, -1]
+
+        extracted_implications <- ImplicationSet$new(attributes = self$attributes,
+                                                     lhs = my_LHS,
+                                                     rhs = my_RHS,
+                                                     I = self$I)
+
+      } else {
+
+        extracted_implications <- ImplicationSet$new(attributes = self$attributes,
+                                                     I = self$I)
+
+      }
 
       self$implications <- extracted_implications
 
