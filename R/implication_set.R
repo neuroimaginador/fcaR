@@ -197,6 +197,13 @@ ImplicationSet <- R6::R6Class(
 
       rules <- new("rules", lhs = LHS, rhs = RHS)
 
+      # This is needed in arules from version 1.6-6
+      # Solves issue #15 by Michael Hahsler
+      info(rules) <- list(data = private$name,
+                          support = 0,
+                          confidence = 1,
+                          ntransactions = ncol(private$I))
+
       if (quality) {
 
         quality(rules) <- interestMeasure(rules,
