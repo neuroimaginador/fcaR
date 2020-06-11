@@ -231,7 +231,7 @@
 <p>If a <code>caption</code> is provided, the whole <code>tikz</code> picture will be wrapped by a <code>figure</code> environment and the caption set.</p>
 
 <h3>Returns</h3>
-<p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns</p>
+<p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the concept lattice.</p>
 <p><hr>
 <a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Print the Concept Lattice</p><h3>Usage</h3>
@@ -411,12 +411,7 @@
 #&gt; ({Pluto}, {small, far, moon})
 #&gt; ({Mercury, Venus}, {small, near, no_moon})
 #&gt; ({Earth, Mars}, {small, near, moon})</div><div class='input'><span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>meet_irreducibles</span>()</div><div class='output co'>#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})
-#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})
-#&gt; ({Jupiter, Saturn}, {large, far, moon})
-#&gt; ({Uranus, Neptune}, {medium, far, moon})
-#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})
-#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})
-#&gt; ({Mercury, Venus}, {small, near, no_moon})</div><div class='input'>
+#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</div><div class='input'>
 <span class='co'># Get concept support</span>
 <span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>support</span>()</div><div class='output co'>#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333
 #&gt;  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</div><div class='input'>

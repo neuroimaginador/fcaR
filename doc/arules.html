@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
 
 <title>Integration with the arules package</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -117,9 +129,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -288,7 +297,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
 
@@ -376,8 +386,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; Parameter specification:</span></span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen</span></span>
 <span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;           1    0.1    1 none FALSE            TRUE       5     0.1      1</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  maxlen target   ext</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;      10  rules FALSE</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  maxlen target  ext</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;      10  rules TRUE</span></span>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; </span></span>
 <span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt; Algorithmic control:</span></span>
 <span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  filter tree heap memopt load sort verbose</span></span>
@@ -392,9 +402,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span></span>
 <span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span></span>
 <span id="cb6-22"><a href="#cb6-22"></a><span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  done [3.60s].</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.33s].</span></span>
-<span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; creating S4 object  ... done [1.14s].</span></span></code></pre></div>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  done [4.09s].</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.36s].</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; creating S4 object  ... done [1.47s].</span></span></code></pre></div>
 <p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>fc<span class="op">$</span>implications<span class="op">$</span><span class="kw">add</span>(mushroom_rules)</span></code></pre></div>
 <p>And we can use all the functionalities for the <code>ImplicationSet</code> class.</p>

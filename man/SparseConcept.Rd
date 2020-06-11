@@ -35,6 +35,7 @@ C$get_intent()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creator for objects of class \code{SparseConcept}
 \subsection{Usage}{
@@ -56,6 +57,7 @@ An object of class \code{SparseConcept}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_extent"></a>}}
+\if{latex}{\out{\hypertarget{method-get_extent}{}}}
 \subsection{Method \code{get_extent()}}{
 Internal \code{SparseSet} for the extent
 \subsection{Usage}{
@@ -68,6 +70,7 @@ The \code{SparseSet} representation of the extent.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_intent"></a>}}
+\if{latex}{\out{\hypertarget{method-get_intent}{}}}
 \subsection{Method \code{get_intent()}}{
 Internal \code{SparseSet} for the intent
 \subsection{Usage}{
@@ -80,6 +83,7 @@ The \code{SparseSet} representation of the intent.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the concept to console
 \subsection{Usage}{
@@ -92,6 +96,7 @@ A string with the elements of the set and their grades between brackets {}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_latex"></a>}}
+\if{latex}{\out{\hypertarget{method-to_latex}{}}}
 \subsection{Method \code{to_latex()}}{
 Write the concept in LaTeX format
 \subsection{Usage}{
@@ -111,6 +116,7 @@ The fuzzy concept in LaTeX.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -80,6 +80,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creator for the Formal Context class
 \subsection{Usage}{
@@ -107,6 +108,7 @@ An object of the \code{FormalContext} class.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-is_empty"></a>}}
+\if{latex}{\out{\hypertarget{method-is_empty}{}}}
 \subsection{Method \code{is_empty()}}{
 Check if the \code{FormalContext} is empty
 \subsection{Usage}{
@@ -119,6 +121,7 @@ Check if the \code{FormalContext} is empty
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-intent"></a>}}
+\if{latex}{\out{\hypertarget{method-intent}{}}}
 \subsection{Method \code{intent()}}{
 Get the intent of a fuzzy set of objects
 \subsection{Usage}{
@@ -138,6 +141,7 @@ A \code{SparseSet} with the intent.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-extent"></a>}}
+\if{latex}{\out{\hypertarget{method-extent}{}}}
 \subsection{Method \code{extent()}}{
 Get the extent of a fuzzy set of attributes
 \subsection{Usage}{
@@ -157,6 +161,7 @@ A \code{SparseSet} with the intent.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-closure"></a>}}
+\if{latex}{\out{\hypertarget{method-closure}{}}}
 \subsection{Method \code{closure()}}{
 Get the closure of a fuzzy set of attributes
 \subsection{Usage}{
@@ -176,6 +181,7 @@ A \code{SparseSet} with the closure.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-obj_concept"></a>}}
+\if{latex}{\out{\hypertarget{method-obj_concept}{}}}
 \subsection{Method \code{obj_concept()}}{
 Object Concept
 \subsection{Usage}{
@@ -195,6 +201,7 @@ The object concept associated to the object given.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-att_concept"></a>}}
+\if{latex}{\out{\hypertarget{method-att_concept}{}}}
 \subsection{Method \code{att_concept()}}{
 Attribute Concept
 \subsection{Usage}{
@@ -214,6 +221,7 @@ The attribute concept associated to the attribute given.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-is_concept"></a>}}
+\if{latex}{\out{\hypertarget{method-is_concept}{}}}
 \subsection{Method \code{is_concept()}}{
 Is a Concept?
 \subsection{Usage}{
@@ -233,6 +241,7 @@ Is a Concept?
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-is_closed"></a>}}
+\if{latex}{\out{\hypertarget{method-is_closed}{}}}
 \subsection{Method \code{is_closed()}}{
 Testing closure of attribute sets
 \subsection{Usage}{
@@ -252,6 +261,7 @@ Testing closure of attribute sets
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clarify"></a>}}
+\if{latex}{\out{\hypertarget{method-clarify}{}}}
 \subsection{Method \code{clarify()}}{
 Clarify a formal context
 \subsection{Usage}{
@@ -271,6 +281,7 @@ The clarified \code{FormalContext}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-reduce"></a>}}
+\if{latex}{\out{\hypertarget{method-reduce}{}}}
 \subsection{Method \code{reduce()}}{
 Reduce a formal context
 \subsection{Usage}{
@@ -290,6 +301,7 @@ The clarified and reduced \code{FormalContext}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-standardize"></a>}}
+\if{latex}{\out{\hypertarget{method-standardize}{}}}
 \subsection{Method \code{standardize()}}{
 Build the Standard Context
 \subsection{Usage}{
@@ -306,6 +318,7 @@ The standard context using the join- and meet- irreducible elements.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-find_concepts"></a>}}
+\if{latex}{\out{\hypertarget{method-find_concepts}{}}}
 \subsection{Method \code{find_concepts()}}{
 Use Ganter Algorithm to compute concepts
 \subsection{Usage}{
@@ -325,6 +338,7 @@ A list with all the concepts in the formal context.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-find_implications"></a>}}
+\if{latex}{\out{\hypertarget{method-find_implications}{}}}
 \subsection{Method \code{find_implications()}}{
 Use modified Ganter algorithm to compute both concepts and implications
 \subsection{Usage}{
@@ -346,6 +360,7 @@ Nothing, just updates the internal fields \code{concepts} and \code{implications
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_transactions"></a>}}
+\if{latex}{\out{\hypertarget{method-to_transactions}{}}}
 \subsection{Method \code{to_transactions()}}{
 Convert the formal context to object of class \code{transactions} from the \code{arules} package
 \subsection{Usage}{
@@ -358,6 +373,7 @@ A \code{transactions} object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-save"></a>}}
+\if{latex}{\out{\hypertarget{method-save}{}}}
 \subsection{Method \code{save()}}{
 Save a \code{FormalContext} to RDS format
 \subsection{Usage}{
@@ -377,6 +393,7 @@ Invisibly the current \code{FormalContext}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-load"></a>}}
+\if{latex}{\out{\hypertarget{method-load}{}}}
 \subsection{Method \code{load()}}{
 Load a \code{FormalContext} from a RDS file
 \subsection{Usage}{
@@ -396,6 +413,7 @@ The loaded \code{FormalContext}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-dim"></a>}}
+\if{latex}{\out{\hypertarget{method-dim}{}}}
 \subsection{Method \code{dim()}}{
 Dimensions of the formal context
 \subsection{Usage}{
@@ -408,6 +426,7 @@ A vector with (number of objects, number of attributes).
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the formal context
 \subsection{Usage}{
@@ -420,6 +439,7 @@ Prints information regarding the formal context.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_latex"></a>}}
+\if{latex}{\out{\hypertarget{method-to_latex}{}}}
 \subsection{Method \code{to_latex()}}{
 Write the context in LaTeX format
 \subsection{Usage}{
@@ -441,6 +461,7 @@ A table environment in LaTeX.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-plot"></a>}}
+\if{latex}{\out{\hypertarget{method-plot}{}}}
 \subsection{Method \code{plot()}}{
 Plot the formal context table
 \subsection{Usage}{
@@ -463,11 +484,12 @@ If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped b
 }
 
 \subsection{Returns}{
-Nothing, just plots the formal context.
+If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the \code{LaTeX} code to reproduce the formal context plot.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

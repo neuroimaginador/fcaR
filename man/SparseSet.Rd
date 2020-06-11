@@ -30,6 +30,7 @@ S$to_latex()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 Creator for objects of class \code{SparseSet}
 \subsection{Usage}{
@@ -55,6 +56,7 @@ An object of class \code{SparseSet}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-assign"></a>}}
+\if{latex}{\out{\hypertarget{method-assign}{}}}
 \subsection{Method \code{assign()}}{
 Assign grades to attributes in the set
 \subsection{Usage}{
@@ -81,6 +83,7 @@ One can use both of:
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-["></a>}}
+\if{latex}{\out{\hypertarget{method-[}{}}}
 \subsection{Method \code{[()}}{
 Get elements by index
 \subsection{Usage}{
@@ -100,6 +103,7 @@ A \code{SparseSet} but with only the required elements.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cardinal"></a>}}
+\if{latex}{\out{\hypertarget{method-cardinal}{}}}
 \subsection{Method \code{cardinal()}}{
 Cardinal of the SparseSet
 \subsection{Usage}{
@@ -113,6 +117,7 @@ as the sum of the degrees of each element.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_vector"></a>}}
+\if{latex}{\out{\hypertarget{method-get_vector}{}}}
 \subsection{Method \code{get_vector()}}{
 Internal \code{Matrix}
 \subsection{Usage}{
@@ -125,6 +130,7 @@ The internal sparse \code{Matrix} representation of the set.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_attributes"></a>}}
+\if{latex}{\out{\hypertarget{method-get_attributes}{}}}
 \subsection{Method \code{get_attributes()}}{
 Attributes defined for the set
 \subsection{Usage}{
@@ -137,6 +143,7 @@ A character vector with the names of the attributes.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-length"></a>}}
+\if{latex}{\out{\hypertarget{method-length}{}}}
 \subsection{Method \code{length()}}{
 Number of attributes
 \subsection{Usage}{
@@ -149,6 +156,7 @@ The number of attributes that are defined for this fuzzy set.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the set to console
 \subsection{Usage}{
@@ -161,6 +169,7 @@ A string with the elements of the set and their grades between brackets {}.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_latex"></a>}}
+\if{latex}{\out{\hypertarget{method-to_latex}{}}}
 \subsection{Method \code{to_latex()}}{
 Write the set in LaTeX format
 \subsection{Usage}{
@@ -180,6 +189,7 @@ The fuzzy set in LaTeX.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

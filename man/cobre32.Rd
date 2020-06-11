@@ -4,7 +4,8 @@
 \name{cobre32}
 \alias{cobre32}
 \title{Data for Differential Diagnosis for Schizophrenia}
-\format{A matrix with 105 rows and 32 columns. Column names are related to different scales for depression and Schizophrenia:
+\format{
+A matrix with 105 rows and 32 columns. Column names are related to different scales for depression and Schizophrenia:
 \describe{
 \item{COSAS_n}{The \emph{Simpson-Angus Scale}, 7 items to evaluate Parkinsonism-like alterations, related to schizophrenia, in an individual.}
 \item{FICAL_n}{The \emph{Calgary Depression Scale for Schizophrenia}, 9 items (attributes) assessing the level of depression in schizophrenia, differentiating between positive and negative aspects of the disease.}
@@ -17,7 +18,8 @@ In summary, the dataset consists in the previous 30 attributes related to signs 
 
 Thus, according to the specific scales used, all attributes are fuzzy and graded. For a given attribute (symptom), the available grades range from \emph{absent} to \emph{extreme}, with \emph{minimal}, \emph{mild}, \emph{moderate}, \emph{moderate severe} and \emph{severe} in between.
 
-These fuzzy attributes are mapped to values in the interval [0, 1].}
+These fuzzy attributes are mapped to values in the interval [0, 1].
+}
 \source{
 Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., ... & Liu, J. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. Neuroinformatics, 15(4), 343-364.
 \url{http://schizconnect.org/}

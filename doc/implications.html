@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
 
 <title>Working with ImplicationSets</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -117,9 +129,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -288,7 +297,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 
 
@@ -852,16 +862,16 @@ O6
 <p>A nice feature is the ability to export an <code>ImplicationSet</code> to LaTeX format:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>fc_planets<span class="op">$</span>implications<span class="op">$</span><span class="kw">to_latex</span>()</span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; \begin{longtable}{rrcl}</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; 1: &amp;\ensuremath{\{no_moon\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{small,\, near\}}\\</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; 2: &amp;\ensuremath{\{far\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{moon\}}\\</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt; 3: &amp;\ensuremath{\{near\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{small\}}\\</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt; 4: &amp;\ensuremath{\{large\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{far,\, moon\}}\\</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; 5: &amp;\ensuremath{\{medium\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{far,\, moon\}}\\</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt; 6: &amp;\ensuremath{\{medium,\, large,\, far,\, moon\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{small,\, near,\, no_moon\}}\\</span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; 7: &amp;\ensuremath{\{small,\, near,\, moon,\, no_moon\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{medium,\, large,\, far\}}\\</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; 8: &amp;\ensuremath{\{small,\, near,\, far,\, moon\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{medium,\, large,\, no_moon\}}\\</span></span>
-<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt; 9: &amp;\ensuremath{\{small,\, large,\, far,\, moon\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{medium,\, near,\, no_moon\}}\\</span></span>
-<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt; 10: &amp;\ensuremath{\{small,\, medium,\, far,\, moon\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\{large,\, near,\, no_moon\}}\\</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; 1: &amp;\ensuremath{\left\{no_moon\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{small,\, near\right\}}\\</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; 2: &amp;\ensuremath{\left\{far\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{moon\right\}}\\</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co">#&gt; 3: &amp;\ensuremath{\left\{near\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{small\right\}}\\</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt; 4: &amp;\ensuremath{\left\{large\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{far,\, moon\right\}}\\</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; 5: &amp;\ensuremath{\left\{medium\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{far,\, moon\right\}}\\</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt; 6: &amp;\ensuremath{\left\{medium,\, large,\, far,\, moon\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{small,\, near,\, no_moon\right\}}\\</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; 7: &amp;\ensuremath{\left\{small,\, near,\, moon,\, no_moon\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{medium,\, large,\, far\right\}}\\</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; 8: &amp;\ensuremath{\left\{small,\, near,\, far,\, moon\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{medium,\, large,\, no_moon\right\}}\\</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt; 9: &amp;\ensuremath{\left\{small,\, large,\, far,\, moon\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{medium,\, near,\, no_moon\right\}}\\</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt; 10: &amp;\ensuremath{\left\{small,\, medium,\, far,\, moon\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{large,\, near,\, no_moon\right\}}\\</span></span>
 <span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt; \end{longtable}</span></span></code></pre></div>
 </div>
 <div id="filtering-of-implications" class="section level2">
@@ -882,8 +892,8 @@ O6
 <span id="cb14-2"><a href="#cb14-2"></a>                                        <span class="st">&quot;simplification&quot;</span>))</span>
 <span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; Processing batch</span></span>
 <span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; --&gt; composition: from 12 to 12 in 0.001 secs.</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; --&gt; simplification: from 12 to 12 in 0.034 secs.</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; Batch took 0.038 secs.</span></span></code></pre></div>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; --&gt; simplification: from 12 to 12 in 0.041 secs.</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; Batch took 0.046 secs.</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Let us build a set of attributes</span></span>
