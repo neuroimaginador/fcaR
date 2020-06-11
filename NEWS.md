@@ -4,7 +4,6 @@ Bugfixes:
 * Fixes #15. A problem with version 1.6-6 of arules.
 * Bugfix when using the trivial context (S, S, !=)
 * Several bugfixes in LaTeX output.
-* Bugfix when computing meet-irreducible elements.
 
 Enhancements:
 * Added export of plots to TiKZ to be included in LaTeX documents.

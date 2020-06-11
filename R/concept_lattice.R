@@ -506,9 +506,7 @@ ConceptLattice <- R6::R6Class(
 
       M <- .reduce_transitivity(t(private$subconcept_matrix))
 
-      id_empty <- which.max(colSums(private$subconcept_matrix))
-
-      idx <- which(M[id_empty, ] == 1)
+      idx <- which(colSums(M) == 1)
       self[idx]
 
     },

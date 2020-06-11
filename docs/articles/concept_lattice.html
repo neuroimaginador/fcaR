@@ -711,26 +711,28 @@ O6
 <p>Once we have computed the concepts, we can build the <em>standard context</em> (J, M, <span class="math inline">\(\le\)</span>), where J is the set of join-irreducible concepts and M are the meet-irreducible ones. Join and meet are another name for supremum and infimum operations in the concept lattice.</p>
 <p>The function <code>standardize()</code> works for all FormalContext where the concept lattice has been found, and it produces a new <code>FormalContext</code> object:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>fc_planets<span class="op">$</span><span class="kw">standardize</span>()</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="co">#&gt; FormalContext with 5 objects and 2 attributes.</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="co">#&gt; Attributes' names are: M1, M2</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="co">#&gt;    M1 M2</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="co">#&gt; J1  1  0</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="co">#&gt; J2  1  0</span></span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="co">#&gt; J3  1  1</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a><span class="co">#&gt; J4  0  1</span></span>
-<span id="cb16-10"><a href="#cb16-10"></a><span class="co">#&gt; J5  1  1</span></span>
-<span id="cb16-11"><a href="#cb16-11"></a>fc_I<span class="op">$</span><span class="kw">standardize</span>()</span>
-<span id="cb16-12"><a href="#cb16-12"></a><span class="co">#&gt; FormalContext with 9 objects and 3 attributes.</span></span>
-<span id="cb16-13"><a href="#cb16-13"></a><span class="co">#&gt; Attributes' names are: M1, M2, M3</span></span>
-<span id="cb16-14"><a href="#cb16-14"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb16-15"><a href="#cb16-15"></a><span class="co">#&gt;    M1 M2 M3</span></span>
-<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt; J1  1  0  0</span></span>
-<span id="cb16-17"><a href="#cb16-17"></a><span class="co">#&gt; J2  1  0  0</span></span>
-<span id="cb16-18"><a href="#cb16-18"></a><span class="co">#&gt; J3  1  1  0</span></span>
-<span id="cb16-19"><a href="#cb16-19"></a><span class="co">#&gt; J4  1  1  0</span></span>
-<span id="cb16-20"><a href="#cb16-20"></a><span class="co">#&gt; J5  1  1  0</span></span>
-<span id="cb16-21"><a href="#cb16-21"></a><span class="co">#&gt; J6  1  1  0</span></span></code></pre></div>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="co">#&gt; Attributes' names are: M1, M2, M3, M4, M5, M6, ...</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="co">#&gt; Matrix:</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="co">#&gt;    M1 M2 M3 M4 M5 M6 M7</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co">#&gt; J1  1  1  1  0  0  0  0</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="co">#&gt; J2  1  1  0  1  0  0  0</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="co">#&gt; J3  1  1  0  0  1  0  0</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="co">#&gt; J4  0  0  0  0  1  1  1</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="co">#&gt; J5  1  0  0  0  1  1  0</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a>fc_I<span class="op">$</span><span class="kw">standardize</span>()</span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a><span class="co">#&gt; FormalContext with 9 objects and 9 attributes.</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a><span class="co">#&gt; Attributes' names are: M1, M2, M3, M4, M5, M6, ...</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt; Matrix:</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="co">#&gt;    M1 M2 M3 M4 M5 M6 M7</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a><span class="co">#&gt; J1  1  1  0  1  0  0  0</span></span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="co">#&gt; J2  1  1  1  1  0  0  0</span></span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="co">#&gt; J3  1  1  1  0  1  0  0</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a><span class="co">#&gt; J4  1  0  0  0  1  1  0</span></span>
+<span id="cb16-22"><a href="#cb16-22"></a><span class="co">#&gt; J5  1  0  0  1  1  1  0</span></span>
+<span id="cb16-23"><a href="#cb16-23"></a><span class="co">#&gt; J6  1  1  1  1  1  1  0</span></span></code></pre></div>
 <p>Note that now objects are named J1, J2… and attributes are M1, M2…, from join and meet.</p>
 </div>
 <div id="saving-and-loading" class="section level2">
@@ -884,7 +886,12 @@ O6
 <span id="cb28-6"><a href="#cb28-6"></a><span class="co">#&gt; ({Earth, Mars}, {small, near, moon})</span></span>
 <span id="cb28-7"><a href="#cb28-7"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">meet_irreducibles</span>()</span>
 <span id="cb28-8"><a href="#cb28-8"></a><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></span>
-<span id="cb28-9"><a href="#cb28-9"></a><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></span></code></pre></div>
+<span id="cb28-9"><a href="#cb28-9"></a><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></span>
+<span id="cb28-12"><a href="#cb28-12"></a><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></span>
+<span id="cb28-13"><a href="#cb28-13"></a><span class="co">#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a><span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></span></code></pre></div>
 <p>This are the concepts used to build the <em>standard context</em>, mentioned above.</p>
 </div>
 </div>

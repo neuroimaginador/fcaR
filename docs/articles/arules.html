@@ -192,9 +192,9 @@
 <span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span></span>
 <span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span></span>
 <span id="cb6-22"><a href="#cb6-22"></a><span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  done [4.57s].</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.53s].</span></span>
-<span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; creating S4 object  ... done [1.32s].</span></span></code></pre></div>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  done [4.29s].</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.37s].</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; creating S4 object  ... done [1.30s].</span></span></code></pre></div>
 <p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>fc<span class="op">$</span>implications<span class="op">$</span><span class="kw">add</span>(mushroom_rules)</span></code></pre></div>
 <p>And we can use all the functionalities for the <code>ImplicationSet</code> class.</p>
