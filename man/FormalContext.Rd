@@ -443,7 +443,11 @@ Prints information regarding the formal context.
 \subsection{Method \code{to_latex()}}{
 Write the context in LaTeX format
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex(label = "", caption = "")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex(
+  label = "",
+  caption = "",
+  fraction = c("none", "frac", "dfrac", "sfrac")
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -452,6 +456,8 @@ Write the context in LaTeX format
 \item{\code{label}}{(character) The label for the table environment.}
 
 \item{\code{caption}}{(character) The caption of the table.}
+
+\item{\code{fraction}}{(character) If \code{none}, no fractions are produced. Otherwise, if it is \code{frac}, \code{dfrac} or \code{sfrac}, decimal numbers are represented as fractions with the corresponding LaTeX typesetting.}
 }
 \if{html}{\out{</div>}}
 }

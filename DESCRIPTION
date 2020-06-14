@@ -36,6 +36,7 @@ Imports:
     knitr,
     Matrix,
     Rcpp,
+    fractional,
     methods,
     tikzDevice
 Suggests: 

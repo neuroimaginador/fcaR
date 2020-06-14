@@ -892,6 +892,7 @@ FormalContext <- R6::R6Class(
     #'
     #' @param label (character) The label for the table environment.
     #' @param caption (character) The caption of the table.
+    #' @param fraction (character) If \code{none}, no fractions are produced. Otherwise, if it is \code{frac}, \code{dfrac} or \code{sfrac}, decimal numbers are represented as fractions with the corresponding LaTeX typesetting.
     #'
     #' @return
     #' A table environment in LaTeX.
@@ -899,11 +900,26 @@ FormalContext <- R6::R6Class(
     #' @export
     #'
     #' @importFrom knitr kable
-    to_latex = function(label = "", caption = "") {
+    to_latex = function(label = "", caption = "", fraction = c("none", "frac", "dfrac", "sfrac")) {
+
+      fraction <- match.arg(fraction)
 
       I <- as.matrix(t(self$I))
-      str <- as.character(kable(I, format = "latex",
-                                booktabs = TRUE, linesep = ""))
+
+      if (fraction != "none") {
+
+        I <- .to_fraction(I,
+                          latex = TRUE,
+                          type = fraction)
+
+      }
+
+      str <- as.character(kable(I,
+                                format = "latex",
+                                booktabs = TRUE,
+                                align = "c",
+                                escape = FALSE,
+                                linesep = ""))
 
       str <- c("\\begin{table}",
                "\\centering",
