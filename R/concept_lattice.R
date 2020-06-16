@@ -66,6 +66,12 @@ ConceptLattice <- R6::R6Class(
 
     },
 
+    with_dictionary = function(dictionary) {
+
+      private$dictionary <- sort(dictionary)
+
+    },
+
     #' @description
     #' Size of the Lattice
     #'
@@ -709,6 +715,7 @@ ConceptLattice <- R6::R6Class(
     subconcept_matrix = NULL,
     reduced_matrix = NULL,
     I = NULL,
+    dictionary = NULL,
     concept_support = NULL,
 
     concept_list_to_indices = function(concept_list) {

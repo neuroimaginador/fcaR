@@ -108,6 +108,18 @@ ImplicationSet <- R6::R6Class(
 
     },
 
+    with_dictionary = function(dictionary) {
+
+      private$dictionary <- sort(dictionary)
+
+    },
+
+    get_dictionary = function() {
+
+      return(private$dictionary)
+
+    },
+
     #' @description
     #' Get a subset of the implication set
     #'
@@ -138,6 +150,8 @@ ImplicationSet <- R6::R6Class(
             rhs = Matrix(private$rhs_matrix[, idx],
                          sparse = TRUE))
 
+          imp$with_dictionary(private$dictionary)
+
           return(imp)
 
         } else {
@@ -149,8 +163,12 @@ ImplicationSet <- R6::R6Class(
 
       } else {
 
-        return(ImplicationSet$new(attributes = private$attributes,
-                                  I = private$I))
+        imp <- ImplicationSet$new(attributes = private$attributes,
+                                  I = private$I)
+
+        imp$with_dictionary(private$dictionary)
+
+        return(imp)
 
       }
 
@@ -366,6 +384,8 @@ ImplicationSet <- R6::R6Class(
 
       }
 
+      cl$closure$with_dictionary(pivate$dictionary)
+
       return(cl)
 
     },
@@ -474,7 +494,7 @@ ImplicationSet <- R6::R6Class(
 
         implications <- sapply(seq(n_implications),
                                function(i) paste0("Rule ", i, ": ",
-                                                  .implication_to_string(LHS[, i], RHS[, i], attributes)))
+                                                  .implication_to_string(LHS[, i], RHS[, i], attributes, private$dictionary)))
 
         implications <- sapply(implications, function(s) str_wrap(s, width = 70, exdent = 2))
 
@@ -720,6 +740,8 @@ ImplicationSet <- R6::R6Class(
 
     lhs_matrix = NULL,
     rhs_matrix = NULL,
+
+    dictionary = NULL,
 
     I = NULL,
     implication_support = NULL,

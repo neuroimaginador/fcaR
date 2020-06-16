@@ -57,6 +57,8 @@ FormalContext <- R6::R6Class(
 
     attributes = NULL,
 
+    dictionary = NULL,
+
     objects = NULL,
 
     grades_set = NULL,
@@ -179,6 +181,12 @@ FormalContext <- R6::R6Class(
 
     },
 
+    with_dictionary = function(dictionary) {
+
+      self$dictionary <- sort(dictionary)
+
+    },
+
     #' @description
     #' Check if the \code{FormalContext} is empty
     #'
@@ -237,6 +245,8 @@ FormalContext <- R6::R6Class(
           R <- SparseSet$new(attributes = self$attributes)
 
         }
+
+        R$with_dictionary(self$dictionary)
 
         return(R)
 
@@ -351,6 +361,8 @@ FormalContext <- R6::R6Class(
           R <- SparseSet$new(attributes = self$attributes)
 
         }
+
+        R$with_dictionary(self$dictionary)
 
         return(R)
 
@@ -654,6 +666,8 @@ FormalContext <- R6::R6Class(
                                           attributes = self$attributes,
                                           I = self$I)
 
+      self$concepts$with_dictionary(self$dictionary)
+
       return(invisible(self$concepts))
 
     },
@@ -702,6 +716,8 @@ FormalContext <- R6::R6Class(
                                             attributes = self$attributes,
                                             I = self$I)
 
+        self$concepts$with_dictionary(self$dictionary)
+
       }
 
       # Now, add the computed implications
@@ -723,6 +739,8 @@ FormalContext <- R6::R6Class(
                                                      I = self$I)
 
       }
+
+      extracted_implications$with_dictionary(self$dictionary)
 
       self$implications <- extracted_implications
 
@@ -849,6 +867,9 @@ FormalContext <- R6::R6Class(
 
       I <- as.matrix(t(self$I))
 
+      my_I <- .values_to_terms(I, self$dictionary)
+      dim(my_I) <- dim(I)
+
       if (dims[2] > 6) {
 
         my_attributes <- c(self$attributes[1:6], "...")
@@ -874,11 +895,11 @@ FormalContext <- R6::R6Class(
 
       if (length(my_attributes) > 1) {
 
-        print(head(I[, seq_along(my_attributes)]))
+        print(head(my_I[, seq_along(my_attributes)]))
 
       } else {
 
-        print(head(I))
+        print(head(my_I))
 
       }
 
@@ -911,6 +932,10 @@ FormalContext <- R6::R6Class(
         I <- .to_fraction(I,
                           latex = TRUE,
                           type = fraction)
+
+      } else {
+
+        I[] <- .values_to_terms(I, self$dictionary)
 
       }
 

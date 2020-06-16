@@ -31,9 +31,11 @@ SparseSet <- R6::R6Class(
     #'
     #' @return An object of class \code{SparseSet}.
     #' @export
-    initialize = function(attributes, M = NULL) {
+    initialize = function(attributes, M = NULL,
+                          dictionary = NULL) {
 
       private$attributes <- attributes
+      private$dictionary <- dictionary
 
       if (!is.null(M)) {
 
@@ -90,6 +92,12 @@ SparseSet <- R6::R6Class(
         private$v[idx] <- values
 
       }
+
+    },
+
+    with_dictionary = function(dictionary) {
+
+      private$dictionary <- sort(dictionary)
 
     },
 
@@ -193,7 +201,8 @@ SparseSet <- R6::R6Class(
       if (sum(private$v) > 0) {
 
         cat(str_wrap(.set_to_string(S = private$v,
-                                    attributes = private$attributes),
+                                    attributes = private$attributes,
+                                    dictionary = private$dictionary),
                      width = 75,
                      exdent = 2))
 
@@ -218,7 +227,8 @@ SparseSet <- R6::R6Class(
       if (sum(private$v) > 0) {
 
         str <- set_to_latex(S = private$v,
-                            attributes = private$attributes)
+                            attributes = private$attributes,
+                            dictionary = private$dictionary)
 
       }
 
@@ -241,7 +251,9 @@ SparseSet <- R6::R6Class(
 
     v = NULL,
 
-    attributes = NULL
+    attributes = NULL,
+
+    dictionary = NULL
 
   )
 

@@ -1,15 +1,15 @@
 #' @import stringr
-set_to_latex <- function(S, attributes) {
+set_to_latex <- function(S, attributes, dictionary) {
 
   idx <- which(S > 0)
 
   if (length(idx) > 0) {
 
-    A <- S[idx]
+    A <- .values_to_terms(S[idx], dictionary = dictionary)
     att <- attributes[idx]
 
     tmp <- paste0("\\ensuremath{\\left\\{",
-                  str_flatten(paste0("{^{", A, "}}\\!/\\mathrm{", att, "}"),
+                  str_flatten(paste0("{^{\\mathrm{", A, "}}}\\!/\\mathrm{", att, "}"),
                               collapse = ",\\, "), "\\right\\}}")
 
   } else {
@@ -34,6 +34,7 @@ imp_to_latex <- function(imp_set, ncols = 1,
   LHS <- imp_set$get_LHS_matrix()
   RHS <- imp_set$get_RHS_matrix()
   attributes <- imp_set$get_attributes()
+  dictionary <- imp_set$get_dictionary()
 
   output <- c()
 
@@ -45,8 +46,8 @@ imp_to_latex <- function(imp_set, ncols = 1,
     prefix <- ifelse(numbered, paste0(numbers[i], ": &"), "")
     output <- c(output,
                 paste0(prefix,
-                       set_to_latex(lhs, attributes), "&\\ensuremath{\\Rightarrow}&",
-                       set_to_latex(rhs, attributes)))
+                       set_to_latex(lhs, attributes, dictionary), "&\\ensuremath{\\Rightarrow}&",
+                       set_to_latex(rhs, attributes, dictionary)))
 
   }
 
