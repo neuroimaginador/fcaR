@@ -1,5 +1,6 @@
 .compute_closure <- function(S, LHS, RHS, attributes,
-                             reduce = FALSE, verbose = FALSE) {
+                             reduce = FALSE, verbose = FALSE,
+                             is_direct = FALSE) {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) {
 
@@ -17,8 +18,13 @@
 
   do_not_use <- rep(FALSE, ncol(LHS))
 
+  passes <- 0
+
   # While there are applicable rules, apply!!
   while (length(idx_subsets) > 0) {
+
+    passes <- passes + 1
+    if (verbose) cat("Pass #", passes, "\n")
 
     if (length(idx_subsets) == 1) {
 
@@ -52,10 +58,28 @@
                                       rhs = RHS)))
     }
 
-    S_subsets <- .subset(LHS, S)
+    if (!is_direct) {
 
-    idx_subsets <- S_subsets@i + 1
-    idx_subsets <- setdiff(idx_subsets, which(do_not_use))
+      S_subsets <- .subset(LHS, S)
+
+      idx_subsets <- S_subsets@i + 1
+      idx_subsets <- setdiff(idx_subsets, which(do_not_use))
+
+      if (verbose) {
+
+        print(idx_subsets)
+        print(SparseSet$new(attributes = attributes,
+                            M = S))
+        cat("\n")
+
+      }
+
+
+    } else {
+
+      idx_subsets <- c()
+
+    }
 
   }
 

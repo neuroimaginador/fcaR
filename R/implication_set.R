@@ -347,7 +347,8 @@ ImplicationSet <- R6::R6Class(
                              RHS = private$rhs_matrix,
                              attributes = private$attributes,
                              reduce = reduce,
-                             verbose = verbose)
+                             verbose = verbose,
+                             is_direct = private$directness)
 
       if (!reduce) {
 
@@ -572,6 +573,7 @@ ImplicationSet <- R6::R6Class(
 
     },
 
+
     #' @description
     #' Filter implications by attributes in LHS and RHS
     #'
@@ -724,6 +726,7 @@ ImplicationSet <- R6::R6Class(
     I = NULL,
     implication_support = NULL,
     binary = NULL,
+    directness = FALSE,
 
     is_binary = function() {
 
