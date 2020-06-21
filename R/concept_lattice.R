@@ -187,7 +187,8 @@ ConceptLattice <- R6::R6Class(
           labels <- sapply(private$concepts,
                            function(l) .concept_to_string(l,
                                                           private$objects,
-                                                          private$attributes))
+                                                          private$attributes,
+                                                          private$dictionary))
 
         } else {
 
@@ -195,7 +196,8 @@ ConceptLattice <- R6::R6Class(
                            function(l) {
                              v <- l$get_intent()
                              .set_to_string(S = v$get_vector(),
-                                            attributes = v$get_attributes())
+                                            attributes = v$get_attributes(),
+                                            dictionary = private$dictionary)
                            })
 
         }
@@ -337,7 +339,8 @@ ConceptLattice <- R6::R6Class(
           paste0(i, ": ",
                  .concept_to_string(conc,
                                     objects = private$objects,
-                                    attributes = private$attributes))
+                                    attributes = private$attributes,
+                                    dictionary = private$dictionary))
 
         })
 

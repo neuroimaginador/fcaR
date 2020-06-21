@@ -384,7 +384,7 @@ ImplicationSet <- R6::R6Class(
 
       }
 
-      cl$closure$with_dictionary(pivate$dictionary)
+      cl$closure$with_dictionary(private$dictionary)
 
       return(cl)
 

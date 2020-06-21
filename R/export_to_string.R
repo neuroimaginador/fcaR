@@ -25,7 +25,7 @@
 .concept_to_string <- function(C, objects, attributes,
                                dictionary) {
 
-  A <- .set_to_string(C$get_extent()$get_vector(), objects)
+  A <- .set_to_string(C$get_extent()$get_vector(), objects, NULL)
   B <- .set_to_string(C$get_intent()$get_vector(), attributes, dictionary)
 
   return(paste0("(", A, ", ", B, ")"))
