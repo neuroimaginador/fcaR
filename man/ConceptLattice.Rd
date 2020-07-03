@@ -39,6 +39,7 @@ fc_planets$concepts$support()
 \item \href{#method-sublattice}{\code{ConceptLattice$sublattice()}}
 \item \href{#method-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
 \item \href{#method-meet_irreducibles}{\code{ConceptLattice$meet_irreducibles()}}
+\item \href{#method-decompose}{\code{ConceptLattice$decompose()}}
 \item \href{#method-supremum}{\code{ConceptLattice$supremum()}}
 \item \href{#method-infimum}{\code{ConceptLattice$infimum()}}
 \item \href{#method-subconcepts}{\code{ConceptLattice$subconcepts()}}
@@ -266,6 +267,26 @@ Meet-irreducible Elements
 
 \subsection{Returns}{
 The meet-irreducible elements in the concept lattice.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-decompose"></a>}}
+\if{latex}{\out{\hypertarget{method-decompose}{}}}
+\subsection{Method \code{decompose()}}{
+Decompose a concept as the supremum of meet-irreducible concepts
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$decompose(C)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{C}}{A list of \code{SparseConcept}s}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A list, each field is the set of meet-irreducible elements whose supremum is the corresponding element in \code{C}.
 }
 }
 \if{html}{\out{<hr>}}

@@ -512,6 +512,50 @@ ConceptLattice <- R6::R6Class(
     },
 
     #' @description
+    #' Decompose a concept as the supremum of meet-irreducible concepts
+    #'
+    #' @param C A list of \code{SparseConcept}s
+    #' @return
+    #' A list, each field is the set of meet-irreducible elements whose supremum is the corresponding element in \code{C}.
+    #'
+    #' @export
+    #'
+    #' @importFrom Matrix rowSums
+    decompose = function(C) {
+
+      irreducible <- self$meet_irreducibles()
+      irr_intents <- do.call(cbind,
+                             sapply(irreducible,
+                                    function(r) r$get_intent()$get_vector()))
+
+      ss <- lapply(C,
+                   function(r) {
+
+                     if (r$get_intent()$cardinal() == 0) return(r)
+
+                     id <- which(.subset(irr_intents,
+                                         r$get_intent()$get_vector()))
+
+                     if (length(id) > 1) {
+
+                       MM <- .subset(irr_intents[, id])
+                       id <- id[rowSums(MM) == 1]
+
+                     }
+                     foo <- irreducible[id]
+
+                     class(foo) <- "conceptlist"
+
+                     return(foo)
+
+                   })
+
+
+      return(ss)
+
+    },
+
+    #' @description
     #' Supremum of Concepts
     #'
     #' @param ... See Details.
