@@ -575,23 +575,32 @@ FormalContext <- R6::R6Class(
     #' @export
     standardize = function() {
 
-      join_irr <- do.call(cbind,
-                          lapply(self$objects,
-                                 function(o) self$obj_concept(o)$get_extent()$get_vector()))
+      if (self$concepts$is_empty()) {
 
-      meet_irr <- do.call(cbind,
-                          lapply(self$attributes,
-                                 function(a) self$att_concept(a)$get_extent()$get_vector()))
+        stop("Concepts must be computed beforehand.\n", call. = FALSE)
 
-      join_irr <- Matrix(t(unique(as.matrix(t(join_irr)))),
-                         sparse = TRUE)
-      meet_irr <- Matrix(t(unique(as.matrix(t(meet_irr)))),
-                         sparse = TRUE)
+      }
 
-      I <- as.matrix(.subset(join_irr, meet_irr))
+      join_irr <- self$concepts$join_irreducibles()
+      meet_irr <- self$concepts$meet_irreducibles()
 
-      colnames(I) <- paste0("M", seq(ncol(I)))
-      rownames(I) <- paste0("J", seq(nrow(I)))
+      nj <- length(join_irr)
+      nm <- length(meet_irr)
+
+      I <- matrix(0, nrow = nj, ncol = nm)
+
+      for (i in seq(nj)) {
+
+        for (j in seq(nm)) {
+
+          I[i, j] <- ifelse(join_irr[[i]] %<=% meet_irr[[j]], 1, 0)
+
+        }
+
+      }
+
+      colnames(I) <- paste0("M", seq(nm))
+      rownames(I) <- paste0("J", seq(nj))
 
       return(FormalContext$new(I))
 
