@@ -1,4 +1,4 @@
-#' @import stringr
+#' @importFrom stringr str_flatten
 set_to_latex <- function(S, attributes) {
 
   idx <- which(S > 0)
@@ -26,7 +26,8 @@ set_to_latex <- function(S, attributes) {
 
 }
 
-#' @import stringr
+#' @importFrom stringr str_flatten
+#' @importFrom Matrix Matrix
 imp_to_latex <- function(imp_set, ncols = 1,
                          numbered = TRUE,
                          numbers = seq(imp_set$cardinality())) {
@@ -79,7 +80,7 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
 }
 
-#' @import stringr
+#' @importFrom stringr str_flatten
 concepts_to_latex <- function(concept_list,
                               ncols = 1,
                               align = TRUE,

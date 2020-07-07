@@ -410,3 +410,15 @@ test_that("fcaR subsets implications", {
   expect_error(fc$implications[0], NA)
 
 })
+
+test_that("fcaR computes the canonical basis from an ImplicationSet", {
+
+  fc <- FormalContext$new(I = Mushroom)
+
+  fc$implications$add(mush_clean)
+
+  expect_error(imps <- fc$implications$to_basis(), NA)
+
+  expect_is(imps, "ImplicationSet")
+
+})

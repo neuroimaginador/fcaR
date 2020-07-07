@@ -1,3 +1,4 @@
+#' @importFrom tictoc tic toc
 .process_batch <- function(LHS, RHS, attributes, rules, verbose = TRUE) {
 
   # Initialize results

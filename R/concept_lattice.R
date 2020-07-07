@@ -721,6 +721,7 @@ ConceptLattice <- R6::R6Class(
     #' Get support of each concept
     #'
     #' @return A vector with the support of each concept.
+    #' @importFrom Matrix rowMeans
     #' @export
     support = function() {
 

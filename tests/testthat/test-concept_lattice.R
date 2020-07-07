@@ -143,3 +143,14 @@ test_that("fcaR finds the lower and upper neighbours of a concept",
             expect_error(fc$concepts$upper_neighbours(C), NA)
 
           })
+
+
+test_that("fcaR decomposes concepts in its meet-irreducible elements", {
+
+  L <- fc$concepts[10:12]
+
+  expect_error(cl <- fc$concepts$decompose(L), NA)
+  expect_is(cl, "list")
+  expect_is(cl[[1]], "conceptlist")
+
+})

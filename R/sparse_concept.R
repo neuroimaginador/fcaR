@@ -20,7 +20,6 @@
 #' C$get_intent()
 #'
 #' @importFrom methods as is slotNames
-#' @import Matrix
 #'
 #' @export
 SparseConcept <- R6::R6Class(

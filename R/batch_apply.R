@@ -1,5 +1,4 @@
-#' @import tictoc
-#' @import parallel
+#' @importFrom parallel mclapply
 .batch_apply <- function(LHS, RHS, attributes,
                          rules = c("generalization",
                                    "composition"),

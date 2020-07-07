@@ -81,8 +81,7 @@ FormalContext <- R6::R6Class(
     #' @return An object of the \code{FormalContext} class.
     #' @export
     #'
-    #' @import Matrix
-    #' @import arules
+    #' @importFrom Matrix Matrix t
     #' @importFrom stringr str_wrap
     #' @importFrom methods as is slotNames
     initialize = function(I,
@@ -734,7 +733,6 @@ FormalContext <- R6::R6Class(
     #' @return A \code{transactions} object.
     #'
     #' @importFrom methods as
-    #' @import arules
     #'
     #' @export
     to_transactions = function() {
@@ -950,9 +948,9 @@ FormalContext <- R6::R6Class(
     #'
     #' @return If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the \code{LaTeX} code to reproduce the formal context plot.
     #'
-    #' @import scales RColorBrewer
+    #' @importFrom scales colour_ramp
+    #' @importFrom RColorBrewer brewer.pal
     #' @importFrom tikzDevice tikz
-
     #'
     #' @export
     plot = function(to_latex = FALSE,

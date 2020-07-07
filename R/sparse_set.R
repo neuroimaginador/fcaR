@@ -11,7 +11,7 @@
 #' S$to_latex()
 #'
 #' @importFrom methods as is slotNames
-#' @import Matrix
+#' @importFrom Matrix Matrix
 #'
 #' @export
 SparseSet <- R6::R6Class(

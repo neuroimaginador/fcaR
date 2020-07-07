@@ -30,7 +30,7 @@
 #'
 #' Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” _International Journal of Computer Mathematics_, *89*(4), 510-526.
 #'
-#' @import Matrix
+#' @importFrom Matrix Matrix
 #' @export
 ImplicationSet <- R6::R6Class(
 
@@ -163,7 +163,7 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @return A \code{rules} object as used by package \code{arules}.
     #'
-    #' @import arules
+    #' @importFrom arules itemLabels info quality interestMeasure
     #' @importFrom methods as is
     #' @export
     to_arules = function(quality = TRUE) {
@@ -222,7 +222,6 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @return Nothing, just updates the internal \code{implications} field.
     #'
-    #' @import arules
     #' @export
     add = function(...) {
 

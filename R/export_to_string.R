@@ -1,4 +1,5 @@
-#' @import stringr
+#' @importFrom stringr str_flatten
+#' @importFrom Matrix which
 .set_to_string <- function(S, attributes) {
 
   idx <- which(S > 0)
