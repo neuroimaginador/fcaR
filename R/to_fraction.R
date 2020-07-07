@@ -1,11 +1,11 @@
-#' Write a matrix as rational numbers
-#'
-#' @param A       (matrix) The matrix to be written
-#' @param latex   (boolean) Should the output be in LaTeX?
-#' @param type    (string) Latex command to produce fractions. Default is \code{frac}. Other possibilities are \code{dfrac} and \code{sfrac} (this requires the LaTeX package \code{xfrac.sty}).
-#'
-#' @return A character string representing the matrix. It can be \code{cat}ed.
-#'
+# Write a matrix as rational numbers
+#
+# @param A       (matrix) The matrix to be written
+# @param latex   (boolean) Should the output be in LaTeX?
+# @param type    (string) Latex command to produce fractions. Default is \code{frac}. Other possibilities are \code{dfrac} and \code{sfrac} (this one requires the LaTeX package \code{xfrac.sty}).
+#
+# @return A character string representing the matrix. It can be \code{cat}ed.
+#
 #' @importFrom fractional vfractional numerators denominators
 .to_fraction <- function(A, latex = FALSE, type = "frac") {
 

@@ -186,14 +186,14 @@
 <span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; Absolute minimum support count: 812 </span></span>
 <span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; </span></span>
 <span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; set item appearances ...[0 item(s)] done [0.00s].</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; set transactions ...[114 item(s), 8124 transaction(s)] done [0.01s].</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; set transactions ...[114 item(s), 8124 transaction(s)] done [0.02s].</span></span>
 <span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt; sorting and recoding items ... [53 item(s)] done [0.00s].</span></span>
 <span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; creating transaction tree ... done [0.01s].</span></span>
 <span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span></span>
 <span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span></span>
 <span id="cb6-22"><a href="#cb6-22"></a><span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  done [3.94s].</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.38s].</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  done [4.67s].</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.37s].</span></span>
 <span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; creating S4 object  ... done [1.28s].</span></span></code></pre></div>
 <p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>fc<span class="op">$</span>implications<span class="op">$</span><span class="kw">add</span>(mushroom_rules)</span></code></pre></div>
