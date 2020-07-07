@@ -449,6 +449,33 @@ ImplicationSet <- R6::R6Class(
     },
 
     #' @description
+    #' Convert Implications to Canonical Basis
+    #'
+    #' @return The canonical basis of implications obtained from the current \code{ImplicationSet}
+    #' @export
+    #'
+    to_basis = function() {
+
+      LHS <- private$lhs_matrix
+      RHS <- private$rhs_matrix
+      attributes <- private$attributes
+      L <- .composition(LHS, RHS, attributes)
+      LHS <- L$lhs
+      RHS <- L$rhs
+      L <- .generalization(LHS, RHS, attributes)
+      LHS <- L$lhs
+      RHS <- L$rhs
+
+      L <- .imp_to_basis(LHS, RHS, attributes)
+      imps <- ImplicationSet$new(attributes = attributes,
+                                 lhs = LHS,
+                                 rhs = RHS)
+
+      return(imps)
+
+    },
+
+    #' @description
     #' Print all implications to text
     #'
     #' @return A string with all the implications in the set.

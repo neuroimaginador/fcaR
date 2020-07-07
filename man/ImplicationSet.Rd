@@ -46,6 +46,7 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \item \href{#method-closure}{\code{ImplicationSet$closure()}}
 \item \href{#method-recommend}{\code{ImplicationSet$recommend()}}
 \item \href{#method-apply_rules}{\code{ImplicationSet$apply_rules()}}
+\item \href{#method-to_basis}{\code{ImplicationSet$to_basis()}}
 \item \href{#method-print}{\code{ImplicationSet$print()}}
 \item \href{#method-to_latex}{\code{ImplicationSet$to_latex()}}
 \item \href{#method-get_LHS_matrix}{\code{ImplicationSet$get_LHS_matrix()}}
@@ -276,6 +277,19 @@ Currently, the implemented rules are \code{"generalization"}, \code{"simplificat
 
 \subsection{Returns}{
 Nothing, just updates the internal matrices for LHS and RHS.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-to_basis"></a>}}
+\if{latex}{\out{\hypertarget{method-to_basis}{}}}
+\subsection{Method \code{to_basis()}}{
+Convert Implications to Canonical Basis
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_basis()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The canonical basis of implications obtained from the current \code{ImplicationSet}
 }
 }
 \if{html}{\out{<hr>}}
