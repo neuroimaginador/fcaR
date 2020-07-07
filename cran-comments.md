@@ -9,6 +9,3 @@
 
 0 errors | 0 warnings | 1 note
 
-* Revised some parts of C code that could give segfaults.
-* The NOTE is relative to "Days since last update: 4".
-* Revised and corrected comments on previous submission.
