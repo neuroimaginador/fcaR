@@ -8,6 +8,7 @@ Bugfixes:
 Enhancements:
 * Added export of plots to TiKZ to be included in LaTeX documents.
 * Faster computation of concepts and implications.
+* Added new function to decompose a concept in its irreducible components.
 * Added function to compute the canonical basis from an ImplicationSet.
 
 # fcaR 1.0.3
