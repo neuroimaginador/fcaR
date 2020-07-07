@@ -155,6 +155,7 @@
 <li><p><a href='#method-sublattice'><code>ConceptLattice$sublattice()</code></a></p></li>
 <li><p><a href='#method-join_irreducibles'><code>ConceptLattice$join_irreducibles()</code></a></p></li>
 <li><p><a href='#method-meet_irreducibles'><code>ConceptLattice$meet_irreducibles()</code></a></p></li>
+<li><p><a href='#method-decompose'><code>ConceptLattice$decompose()</code></a></p></li>
 <li><p><a href='#method-supremum'><code>ConceptLattice$supremum()</code></a></p></li>
 <li><p><a href='#method-infimum'><code>ConceptLattice$infimum()</code></a></p></li>
 <li><p><a href='#method-subconcepts'><code>ConceptLattice$subconcepts()</code></a></p></li>
@@ -298,6 +299,18 @@
 
 <h3>Returns</h3>
 <p>The meet-irreducible elements in the concept lattice.</p>
+<p><hr>
+<a id="method-decompose"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose()</a></code></h3>
+<p>Decompose a concept as the supremum of meet-irreducible concepts</p><h3>Usage</h3>
+<p><div class="r"></p><pre>ConceptLattice$decompose(C)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>C</code></dt><dd><p>A list of <code>SparseConcept</code>s</p></dd>
+
+</dl><p></div></p>
+<h3>Returns</h3>
+<p>A list, each field is the set of meet-irreducible elements whose supremum is the corresponding element in <code>C</code>.</p>
 <p><hr>
 <a id="method-supremum"></a></p><h3>Method <code>supremum()</code></h3>
 <p>Supremum of Concepts</p><h3>Usage</h3>

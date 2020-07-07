@@ -159,6 +159,7 @@
 <li><p><a href='#method-closure'><code>ImplicationSet$closure()</code></a></p></li>
 <li><p><a href='#method-recommend'><code>ImplicationSet$recommend()</code></a></p></li>
 <li><p><a href='#method-apply_rules'><code>ImplicationSet$apply_rules()</code></a></p></li>
+<li><p><a href='#method-to_basis'><code>ImplicationSet$to_basis()</code></a></p></li>
 <li><p><a href='#method-print'><code>ImplicationSet$print()</code></a></p></li>
 <li><p><a href='#method-to_latex'><code>ImplicationSet$to_latex()</code></a></p></li>
 <li><p><a href='#method-get_LHS_matrix'><code>ImplicationSet$get_LHS_matrix()</code></a></p></li>
@@ -307,6 +308,13 @@ or <code>initialize(rules)</code></p>
 <h3>Returns</h3>
 <p>Nothing, just updates the internal matrices for LHS and RHS.</p>
 <p><hr>
+<a id="method-to_basis"></a></p><h3>Method <code>to_basis()</code></h3>
+<p>Convert Implications to Canonical Basis</p><h3>Usage</h3>
+<p><div class="r"></p><pre>ImplicationSet$to_basis()</pre><p></div></p>
+
+<h3>Returns</h3>
+<p>The canonical basis of implications obtained from the current <code>ImplicationSet</code></p>
+<p><hr>
 <a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Print all implications to text</p><h3>Usage</h3>
 <p><div class="r"></p><pre>ImplicationSet$print()</pre><p></div></p>
@@ -410,7 +418,7 @@ or <code>initialize(rules)</code></p>
 <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span>(<span class='no'>sizes</span>)</div><div class='output co'>#&gt; LHS RHS 
 #&gt; 2.5 2.3 </div><div class='input'>
 <span class='co'># Simplify the implication set</span>
-<span class='no'>fc_planets</span>$<span class='no'>implications</span>$<span class='fu'>apply_rules</span>(<span class='st'>"simplification"</span>)</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; simplification: from 10 to 10 in 0.051 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.053 secs. </span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>implications</span>$<span class='fu'>apply_rules</span>(<span class='st'>"simplification"</span>)</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; simplification: from 10 to 10 in 0.098 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.1 secs. </span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
