@@ -362,7 +362,8 @@ ImplicationSet <- R6::R6Class(
         cl$implications <- ImplicationSet$new(attributes = private$attributes,
                                               name = "reduced",
                                               lhs = cl$implications$lhs,
-                                              rhs = cl$implications$rhs)
+                                              rhs = cl$implications$rhs,
+                                              I = private$I)
 
       }
 
