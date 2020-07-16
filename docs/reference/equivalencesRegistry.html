@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • fcaR</title>
+<title>Equivalence Rules Registry — equivalencesRegistry • fcaR</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Equivalence Rules Registry — equivalencesRegistry" />
+<meta property="og:description" content="Equivalence Rules Registry" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +56,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -125,138 +127,39 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Equivalence Rules Registry</h1>
+    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/equivalences_registry.R'><code>R/equivalences_registry.R</code></a></small>
+    <div class="hidden name"><code>equivalencesRegistry.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Equivalence Rules Registry</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='no'>equivalencesRegistry</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="ConceptLattice.html">ConceptLattice</a></code> </p>
-        </td>
-        <td><p>R6 class for a context lattice</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="FormalContext.html">FormalContext</a></code> </p>
-        </td>
-        <td><p>R6 class for a formal context</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ImplicationSet.html">ImplicationSet</a></code> </p>
-        </td>
-        <td><p>R6 Class for Set of implications</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SparseConcept.html">SparseConcept</a></code> </p>
-        </td>
-        <td><p>R6 class for a fuzzy concept with sparse internal representation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SparseSet.html">SparseSet</a></code> </p>
-        </td>
-        <td><p>R6 class for a fuzzy set with sparse internal representation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_SparseSet.html">as_SparseSet()</a></code> </p>
-        </td>
-        <td><p>Convert Named Vector to SparseSet</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_vector.html">as_vector()</a></code> </p>
-        </td>
-        <td><p>Convert SparseSet to vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cobre32.html">cobre32</a></code> </p>
-        </td>
-        <td><p>Data for Differential Diagnosis for Schizophrenia</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cobre61.html">cobre61</a></code> </p>
-        </td>
-        <td><p>Data for Differential Diagnosis for Schizophrenia</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="equivalencesRegistry.html">equivalencesRegistry</a></code> </p>
-        </td>
-        <td><p>Equivalence Rules Registry</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fcaR.html">fcaR</a></code> </p>
-        </td>
-        <td><p>fcaR: Tools for Formal Concept Analysis</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="grapes-equals-grapes.html">`%==%`</a></code> </p>
-        </td>
-        <td><p>Equality in Sets and Concepts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="grapes-less-than-equals-grapes.html">`%<=%`</a></code> </p>
-        </td>
-        <td><p>Partial Order in Sets and Concepts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="planets.html">planets</a></code> </p>
-        </td>
-        <td><p>Planets data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.html">print(<i>&lt;conceptlist&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print a list of concepts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="to_latex.html">to_latex()</a></code> </p>
-        </td>
-        <td><p>Print a list of concepts to LaTeX</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="vegas.html">vegas</a></code> </p>
-        </td>
-        <td><p>Data for Tourist Destination in Las Vegas</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>equivalence_registry</code> (inherits from <code>registry</code>) of length 4.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This is a registry that stores the equivalence rules that can be
+applied using the <code>apply_rules()</code> method in an
+<code>ImplicationSet</code>.</p>
+<p>One can obtain the listo of available equivalence operators by:
+<code>equivalencesRegistry$get_entry_names()</code></p>
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#details">Details</a></li>
     </ul>
+
   </div>
 </div>
 
