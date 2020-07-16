@@ -38,6 +38,7 @@ Imports:
     Rcpp,
     fractional,
     methods,
+    registry,
     tikzDevice
 Suggests: 
     testthat (>= 2.1.0),

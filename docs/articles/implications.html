@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5</span>
       </span>
     </div>
 
@@ -58,6 +58,9 @@
     </li>
     <li>
       <a href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
+    </li>
+    <li>
+      <a href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a>
     </li>
     <li>
       <a href="../articles/implications.html">Working with ImplicationSets</a>
@@ -678,9 +681,9 @@ O6
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>fc_I<span class="op">$</span>implications<span class="op">$</span><span class="kw">apply_rules</span>(<span class="dt">rules =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"composition"</span>,</span>
 <span id="cb14-2"><a href="#cb14-2"></a>                                        <span class="st">"simplification"</span>))</span>
 <span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; Processing batch</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; --&gt; composition: from 12 to 12 in 0.001 secs.</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; --&gt; simplification: from 12 to 12 in 0.055 secs.</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; Batch took 0.06 secs.</span></span></code></pre></div>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.006 secs.</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.095 secs.</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; Batch took 0.106 secs.</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Let us build a set of attributes</span></span>
