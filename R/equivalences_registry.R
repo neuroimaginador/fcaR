@@ -1,5 +1,15 @@
 library("registry")
 ## setup registry for equivalences rules
+#' Equivalence Rules Registry
+#'
+#' @details
+#' This is a registry that stores the equivalence rules that can be
+#' applied using the \code{apply_rules()} method in an
+#' \code{ImplicationSet}.
+#'
+#' One can obtain the listo of available equivalence operators by:
+#' \code{equivalencesRegistry$get_entry_names()}
+#'
 #' @importFrom registry registry match_partial_ignorecase
 #' @export
 equivalencesRegistry <- registry(registry_class = "equivalence_registry",
