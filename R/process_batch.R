@@ -12,15 +12,10 @@
                     ncol = 1,
                     sparse = TRUE)
 
-  my_functions <- c("generalization" = .generalization,
-                    "composition"    = .composition,
-                    "reduction"      = .reduction,
-                    "simplification" = .simplification)
-
-  idx_rules <- match(rules, names(my_functions))
-  idx_rules <- idx_rules[!is.na(idx_rules)]
-  rules_to_apply <- my_functions[idx_rules]
-  rule_names <- names(my_functions)[idx_rules]
+  # Look up the equivalence rules in the registry
+  methods <- lapply(rules,
+                    equivalencesRegistry$get_entry)
+  methods[sapply(methods, is.null)] <- NULL
 
   # Begin the timing
   tic("batch")
@@ -36,11 +31,11 @@
   new_cols <- ncol(LHS)
 
   # Loop over all functions
-  for (j in seq_along(idx_rules)) {
+  for (j in seq_along(methods)) {
 
     current_cols <- new_cols
 
-    current_rule <- rules_to_apply[[j]]
+    current_rule <- methods[[j]]$fun
 
     tic("rule")
     L <- current_rule(old_LHS, old_RHS, attributes)
@@ -53,7 +48,7 @@
 
     if (verbose) {
 
-      message("--> ", rule_names[j], ": from ", current_cols, " to ",
+      message("--> ", methods[[j]]$method, ": from ", current_cols, " to ",
           new_cols, " in ", round(rule_time$toc - rule_time$tic, 3),
           " secs.")
 

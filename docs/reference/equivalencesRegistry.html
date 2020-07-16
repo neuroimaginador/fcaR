@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Equality in Sets and Concepts — %==% • fcaR</title>
+<title>Equivalence Rules Registry — equivalencesRegistry • fcaR</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Equality in Sets and Concepts — %==%" />
-<meta property="og:description" content="Equality in Sets and Concepts" />
+<meta property="og:title" content="Equivalence Rules Registry — equivalencesRegistry" />
+<meta property="og:description" content="Equivalence Rules Registry" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,55 +129,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Equality in Sets and Concepts</h1>
-    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/compare_concepts.R'><code>R/compare_concepts.R</code></a></small>
-    <div class="hidden name"><code>grapes-equals-grapes.Rd</code></div>
+    <h1>Equivalence Rules Registry</h1>
+    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/equivalences_registry.R'><code>R/equivalences_registry.R</code></a></small>
+    <div class="hidden name"><code>equivalencesRegistry.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Equality in Sets and Concepts</p>
+    <p>Equivalence Rules Registry</p>
     </div>
 
-    <pre class="usage"><span class='no'>C1</span> <span class='kw'>%==%</span> <span class='no'>C2</span></pre>
+    <pre class="usage"><span class='no'>equivalencesRegistry</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>C1</th>
-      <td><p>A <code>SparseSet</code> or <code>SparseConcept</code></p></td>
-    </tr>
-    <tr>
-      <th>C2</th>
-      <td><p>A <code>SparseSet</code> or <code>SparseConcept</code></p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>Returns <code>TRUE</code> if <code>C1</code> is equal to <code>C2</code>.</p>
+    <p>An object of class <code>equivalence_registry</code> (inherits from <code>registry</code>) of length 4.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Both <code>C1</code> and <code>C2</code> must be of the same class.</p>
+    <p>This is a registry that stores the equivalence rules that can be
+applied using the <code>apply_rules()</code> method in an
+<code>ImplicationSet</code>.</p>
+<p>One can obtain the listo of available equivalence operators by:
+<code>equivalencesRegistry$get_entry_names()</code></p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Build two sparse sets</span>
-<span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='no'>SparseSet</span>$<span class='fu'>new</span>(<span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>))
-<span class='no'>S</span>$<span class='fu'><a href='https://rdrr.io/r/base/assign.html'>assign</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>T</span> <span class='kw'>&lt;-</span> <span class='no'>SparseSet</span>$<span class='fu'>new</span>(<span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>))
-<span class='no'>T</span>$<span class='fu'><a href='https://rdrr.io/r/base/assign.html'>assign</a></span>(<span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-
-<span class='co'># Test whether S and T are equal</span>
-<span class='no'>S</span> <span class='kw'>%==%</span> <span class='no'>T</span></div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
       <li><a href="#details">Details</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
