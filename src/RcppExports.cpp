@@ -168,6 +168,40 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// set_difference
+S4 set_difference(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
+RcppExport SEXP _fcaR_set_difference(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type xi(xiSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type xp(xpSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xx(xxSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type yi(yiSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type yp(ypSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type yx(yxSEXP);
+    Rcpp::traits::input_parameter< int >::type number(numberSEXP);
+    rcpp_result_gen = Rcpp::wrap(set_difference(xi, xp, xx, yi, yp, yx, number));
+    return rcpp_result_gen;
+END_RCPP
+}
+// set_difference_single
+S4 set_difference_single(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
+RcppExport SEXP _fcaR_set_difference_single(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type xi(xiSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type xp(xpSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xx(xxSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type yi(yiSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type yp(ypSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type yx(yxSEXP);
+    Rcpp::traits::input_parameter< int >::type number(numberSEXP);
+    rcpp_result_gen = Rcpp::wrap(set_difference_single(xi, xp, xx, yi, yp, yx, number));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
@@ -181,6 +215,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_is_equal_set_C", (DL_FUNC) &_fcaR_is_equal_set_C, 10},
     {"_fcaR_which_at_col", (DL_FUNC) &_fcaR_which_at_col, 3},
     {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
+    {"_fcaR_set_difference", (DL_FUNC) &_fcaR_set_difference, 7},
+    {"_fcaR_set_difference_single", (DL_FUNC) &_fcaR_set_difference_single, 7},
     {NULL, NULL, 0}
 };
 

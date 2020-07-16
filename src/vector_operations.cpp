@@ -363,3 +363,171 @@ S4 SparseToS4_fast(SparseVector V) {
   return(res);
 
 }
+
+SparseVector set_difference_sparse(IntegerVector xi,
+                            IntegerVector xp,
+                            NumericVector xx,
+                            IntegerVector yi,
+                            IntegerVector yp,
+                            NumericVector yx,
+                            int number) {
+
+  SparseVector res;
+  initVector(&res, number);
+
+  int my_p = 0;
+
+  // Rcout << "x.p.used = " << xp.size() << std::endl;
+
+  // insertArray(&(res.p), my_p);
+
+  for (size_t p = 0; p < xp.size() - 1; p++) {
+
+    // Rcout << "Added column with " << my_p << std::endl;
+
+
+    int init_x = xp[p], end_x = xp[p + 1];
+    int init_y = yp[p], end_y = yp[p + 1];
+
+    for (size_t i = init_x; i < end_x; i++) {
+
+      bool add = true;
+
+      for (size_t j = init_y; j < end_y; j++) {
+
+        if (xi[i] == yi[j]) {
+
+          if (yx[j] >= xx[i]) {
+
+            add = false;
+            break;
+
+          }
+
+          if (yi[j] > xi[i]) break;
+
+        }
+
+      }
+
+      if (add) {
+
+        my_p++;
+
+        // Rcout << "Added element " << my_p << std::endl;
+
+        insertArray(&(res.i), xi[i]);
+        insertArray(&(res.x), xx[i]);
+
+      }
+
+    }
+
+    insertArray(&(res.p), my_p);
+
+  }
+
+  return res;
+
+}
+
+// [[Rcpp::export]]
+S4 set_difference(IntegerVector xi,
+                  IntegerVector xp,
+                  NumericVector xx,
+                  IntegerVector yi,
+                  IntegerVector yp,
+                  NumericVector yx,
+                  int number) {
+
+  SparseVector res = set_difference_sparse(xi, xp, xx,
+                                    yi, yp, yx,
+                                    number);
+
+  return SparseToS4_fast(res);
+
+}
+
+SparseVector set_difference_sparse1(IntegerVector xi,
+                                   IntegerVector xp,
+                                   NumericVector xx,
+                                   IntegerVector yi,
+                                   IntegerVector yp,
+                                   NumericVector yx,
+                                   int number) {
+
+  SparseVector res;
+  initVector(&res, number);
+
+  int my_p = 0;
+
+  // Rcout << "x.p.used = " << xp.size() << std::endl;
+
+  // insertArray(&(res.p), my_p);
+
+  for (size_t p = 0; p < xp.size() - 1; p++) {
+
+    // Rcout << "Added column with " << my_p << std::endl;
+
+
+    int init_x = xp[p], end_x = xp[p + 1];
+    int init_y = yp[0], end_y = yp[1];
+
+    for (size_t i = init_x; i < end_x; i++) {
+
+      bool add = true;
+
+      for (size_t j = init_y; j < end_y; j++) {
+
+        if (xi[i] == yi[j]) {
+
+          if (yx[j] >= xx[i]) {
+
+            add = false;
+            break;
+
+          }
+
+          if (yi[j] > xi[i]) break;
+
+        }
+
+      }
+
+      if (add) {
+
+        my_p++;
+
+        // Rcout << "Added element " << my_p << std::endl;
+
+        insertArray(&(res.i), xi[i]);
+        insertArray(&(res.x), xx[i]);
+
+      }
+
+    }
+
+    insertArray(&(res.p), my_p);
+
+  }
+
+  return res;
+
+}
+
+// [[Rcpp::export]]
+S4 set_difference_single(IntegerVector xi,
+                  IntegerVector xp,
+                  NumericVector xx,
+                  IntegerVector yi,
+                  IntegerVector yp,
+                  NumericVector yx,
+                  int number) {
+
+  SparseVector res = set_difference_sparse1(xi, xp, xx,
+                                           yi, yp, yx,
+                                           number);
+
+  return SparseToS4_fast(res);
+
+}

@@ -45,3 +45,11 @@ flatten_sparse_C <- function(p, i, x, dims) {
     .Call(`_fcaR_flatten_sparse_C`, p, i, x, dims)
 }
 
+set_difference <- function(xi, xp, xx, yi, yp, yx, number) {
+    .Call(`_fcaR_set_difference`, xi, xp, xx, yi, yp, yx, number)
+}
+
+set_difference_single <- function(xi, xp, xx, yi, yp, yx, number) {
+    .Call(`_fcaR_set_difference_single`, xi, xp, xx, yi, yp, yx, number)
+}
+
