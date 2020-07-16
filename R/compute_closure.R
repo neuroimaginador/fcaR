@@ -83,10 +83,20 @@
 
   }
 
-  return(list(closure = S,
-              implications = .simplification_logic(S,
-                                                   LHS,
-                                                   RHS)))
+  if (reduce) {
+
+    return(list(closure = S,
+                implications = .simplification_logic(S,
+                                                     LHS,
+                                                     RHS)))
+
+  } else {
+
+    return(list(closure = S,
+                implications = list(LHS,
+                                    RHS)))
+
+  }
 
 }
 
@@ -132,9 +142,13 @@
 
     }
 
-    C_B <- .difference(Cidx, S)
+    C_B <- set_difference_single(Cidx@i, Cidx@p, Cidx@x,
+                                 S@i, S@p, S@x,
+                                 nrow(Cidx))
 
-    D_B <- .difference(Didx, S)
+    D_B <- set_difference_single(Didx@i, Didx@p, Didx@x,
+                                 S@i, S@p, S@x,
+                                 nrow(Didx))
 
     idx_zeros <- which(colSums(D_B) == 0)
 
