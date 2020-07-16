@@ -1,3 +1,11 @@
+# fcaR 1.0.5
+ 
+Bugfixes:
+* Fixes #17. The reduced set of implications after performing closure with reduce == TRUE now stores the matrix I, so it can be re-exported to the arules format.
+
+Enhancements:
+* More efficient version of the simplification rule. Now it performs linearly on the number of implications.
+
 # fcaR 1.0.4
 
 Bugfixes:
