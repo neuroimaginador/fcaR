@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="R6 class for a formal context — FormalContext" />
 <meta property="og:description" content="This class implements the data structure and methods for formal contexts." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +114,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/neuroimaginador/fcaR">
+  <a href="https://github.com/neuroimaginador/fcaR/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -191,10 +194,10 @@
 <p><hr>
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
 <p>Creator for the Formal Context class</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$new(I, remove_const = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>I</span>, <span class='kw'>remove_const</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>I</code></dt><dd><p>(numeric matrix) The table of the formal context.</p></dd>
 
 <dt><code>remove_const</code></dt><dd><p>(logical) If <code>TRUE</code>, remove constant columns. The default is <code>FALSE</code>.</p></dd>
@@ -209,17 +212,17 @@
 <p><hr>
 <a id="method-is_empty"></a></p><h3>Method <code>is_empty()</code></h3>
 <p>Check if the <code>FormalContext</code> is empty</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$is_empty()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>is_empty</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p><code>TRUE</code> if the <code>FormalContext</code> is empty, that is, has not been provided with a matrix, and <code>FALSE</code> otherwise.</p>
 <p><hr>
 <a id="method-intent"></a></p><h3>Method <code>intent()</code></h3>
 <p>Get the intent of a fuzzy set of objects</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$intent(S)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>intent</span>(<span class='no'>S</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of objects to compute the intent for.</p></dd>
 
 </dl><p></div></p>
@@ -228,10 +231,10 @@
 <p><hr>
 <a id="method-extent"></a></p><h3>Method <code>extent()</code></h3>
 <p>Get the extent of a fuzzy set of attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$extent(S)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>extent</span>(<span class='no'>S</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of attributes to compute the extent for.</p></dd>
 
 </dl><p></div></p>
@@ -240,10 +243,10 @@
 <p><hr>
 <a id="method-closure"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
 <p>Get the closure of a fuzzy set of attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$closure(S)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/function.html'>closure</a></span>(<span class='no'>S</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of attributes to compute the closure for.</p></dd>
 
 </dl><p></div></p>
@@ -252,10 +255,10 @@
 <p><hr>
 <a id="method-obj_concept"></a></p><h3>Method <code>obj_concept()</code></h3>
 <p>Object Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$obj_concept(object)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>obj_concept</span>(<span class='no'>object</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>object</code></dt><dd><p>(character) Name of the object to compute its associated concept</p></dd>
 
 </dl><p></div></p>
@@ -264,10 +267,10 @@
 <p><hr>
 <a id="method-att_concept"></a></p><h3>Method <code>att_concept()</code></h3>
 <p>Attribute Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$att_concept(attribute)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>att_concept</span>(<span class='no'>attribute</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>attribute</code></dt><dd><p>(character) Name of the attribute to compute its associated concept</p></dd>
 
 </dl><p></div></p>
@@ -276,10 +279,10 @@
 <p><hr>
 <a id="method-is_concept"></a></p><h3>Method <code>is_concept()</code></h3>
 <p>Is a Concept?</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$is_concept(C)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>is_concept</span>(<span class='no'>C</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>C</code></dt><dd><p>A <code>SparseConcept</code> object</p></dd>
 
 </dl><p></div></p>
@@ -288,10 +291,10 @@
 <p><hr>
 <a id="method-is_closed"></a></p><h3>Method <code>is_closed()</code></h3>
 <p>Testing closure of attribute sets</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$is_closed(S)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>is_closed</span>(<span class='no'>S</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>S</code></dt><dd><p>A <code>SparseSet</code> of attributes</p></dd>
 
 </dl><p></div></p>
@@ -300,10 +303,10 @@
 <p><hr>
 <a id="method-clarify"></a></p><h3>Method <code>clarify()</code></h3>
 <p>Clarify a formal context</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$clarify(copy = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>clarify</span>(<span class='kw'>copy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>copy</code></dt><dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified context, otherwise the current one is overwritten.</p></dd>
 
 </dl><p></div></p>
@@ -312,10 +315,10 @@
 <p><hr>
 <a id="method-reduce"></a></p><h3>Method <code>reduce()</code></h3>
 <p>Reduce a formal context</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$reduce(copy = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>reduce</span>(<span class='kw'>copy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>copy</code></dt><dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified and reduced context, otherwise the current one is overwritten.</p></dd>
 
 </dl><p></div></p>
@@ -324,7 +327,7 @@
 <p><hr>
 <a id="method-standardize"></a></p><h3>Method <code>standardize()</code></h3>
 <p>Build the Standard Context</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$standardize()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>standardize</span>()</pre><p></div></p>
 
 <h3>Details</h3>
 <p>All concepts must be previously computed.</p>
@@ -334,10 +337,10 @@
 <p><hr>
 <a id="method-find_concepts"></a></p><h3>Method <code>find_concepts()</code></h3>
 <p>Use Ganter Algorithm to compute concepts</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$find_concepts(verbose = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>find_concepts</span>(<span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>verbose</code></dt><dd><p>(logical) TRUE will provide a verbose output.</p></dd>
 
 </dl><p></div></p>
@@ -346,10 +349,10 @@
 <p><hr>
 <a id="method-find_implications"></a></p><h3>Method <code>find_implications()</code></h3>
 <p>Use modified Ganter algorithm to compute both concepts and implications</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$find_implications(save_concepts = TRUE, verbose = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>find_implications</span>(<span class='kw'>save_concepts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>save_concepts</code></dt><dd><p>(logical) <code>TRUE</code> will also compute and save the concept lattice. <code>FALSE</code> is usually faster, since it only computes implications.</p></dd>
 
 <dt><code>verbose</code></dt><dd><p>(logical) <code>TRUE</code> will provide a verbose output.</p></dd>
@@ -360,17 +363,17 @@
 <p><hr>
 <a id="method-to_transactions"></a></p><h3>Method <code>to_transactions()</code></h3>
 <p>Convert the formal context to object of class <code>transactions</code> from the <code>arules</code> package</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$to_transactions()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>to_transactions</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A <code>transactions</code> object.</p>
 <p><hr>
 <a id="method-save"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code></h3>
 <p>Save a <code>FormalContext</code> to RDS format</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$save(filename = tempfile(fileext = ".rds"))</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/save.html'>save</a></span>(<span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".rds"</span>))</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>filename</code></dt><dd><p>(character) Path of the RDS file where to store the <code>FormalContext</code>.</p></dd>
 
 </dl><p></div></p>
@@ -379,10 +382,10 @@
 <p><hr>
 <a id="method-load"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/load.html'>load()</a></code></h3>
 <p>Load a <code>FormalContext</code> from a RDS file</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$load(filename)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/load.html'>load</a></span>(<span class='no'>filename</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>filename</code></dt><dd><p>(character) Path of the RDS file to load the <code>FormalContext</code> from.</p></dd>
 
 </dl><p></div></p>
@@ -391,28 +394,28 @@
 <p><hr>
 <a id="method-dim"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/dim.html'>dim()</a></code></h3>
 <p>Dimensions of the formal context</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$dim()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A vector with (number of objects, number of attributes).</p>
 <p><hr>
 <a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Prints the formal context</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$print()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>Prints information regarding the formal context.</p>
 <p><hr>
 <a id="method-to_latex"></a></p><h3>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
 <p>Write the context in LaTeX format</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$to_latex(
-  label = "",
-  caption = "",
-  fraction = c("none", "frac", "dfrac", "sfrac")
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='to_latex.html'>to_latex</a></span>(
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>fraction</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"frac"</span>, <span class='st'>"dfrac"</span>, <span class='st'>"sfrac"</span>)
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>label</code></dt><dd><p>(character) The label for the table environment.</p></dd>
 
 <dt><code>caption</code></dt><dd><p>(character) The caption of the table.</p></dd>
@@ -423,12 +426,12 @@
 <h3>Returns</h3>
 <p>A table environment in LaTeX.</p>
 <p><hr>
-<a id="method-plot"></a></p><h3>Method <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code></h3>
+<a id="method-plot"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code></h3>
 <p>Plot the formal context table</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$plot(to_latex = FALSE, ...)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>to_latex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>to_latex</code></dt><dd><p>(logical) If <code>TRUE</code>, export the plot as a <code>tikzpicture</code> environment that can be included in a <code>LaTeX</code> file.</p></dd>
 
 <dt><code>...</code></dt><dd><p>Other parameters to be passed to the <code>tikzDevice</code> that renders the lattice in <code>LaTeX</code>, or for the figure caption. See <code>Details</code>.</p></dd>
@@ -443,10 +446,10 @@
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>FormalContext$clone(deep = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -467,7 +470,7 @@
 #&gt; Jupiter     0      0     1    0   1    1       0
 #&gt; Saturn      0      0     1    0   1    1       0</div><div class='input'>
 <span class='co'># Plot the formal context</span>
-<span class='no'>fc_planets</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='img'><img src='FormalContext-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>()</div><div class='img'><img src='FormalContext-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Define a set of attributes</span>
 <span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='no'>SparseSet</span>$<span class='fu'>new</span>(<span class='kw'>attributes</span> <span class='kw'>=</span> <span class='no'>fc_planets</span>$<span class='no'>attributes</span>)
 <span class='no'>S</span>$<span class='fu'><a href='https://rdrr.io/r/base/assign.html'>assign</a></span>(<span class='kw'>moon</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>large</span> <span class='kw'>=</span> <span class='fl'>1</span>)
@@ -482,15 +485,10 @@
 <span class='co'># Find implications</span>
 <span class='no'>fc_planets</span>$<span class='fu'>find_implications</span>()</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#public-fields">Public fields</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -501,7 +499,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -2,7 +2,7 @@
 title: "Extending fcaR: Equivalence Rules for Implications"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Equivalence Rules for Implications}
+  %\VignetteIndexEntry{Extending fcaR: Equivalence Rules for Implications}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -90,19 +90,16 @@ method_function <- function(LHS, RHS, attributes) {
 The `method_function()` function must be defined before adding the method to the registry. Once the method is added, it can be executed by using the corresponding call to `apply_rules()`.
 
 # An Example
-Let us define an operator which reorders the implications according to the size of their LHS and RHS, such that implications with smaller LHS and RHS are first. Evidently, this operation provides an equivalent `ImplicationSet`
+Let us define an operator which randomly reorders the implications. Evidently, this operation provides an equivalent `ImplicationSet`.
 
 In this case, we begin by defining the method function:
 ```{r}
-reorder <- function(LHS, RHS, attributes) {
+random_reorder <- function(LHS, RHS, attributes) {
   
-  # Sizes of the LHS + size of the RHS
   # Remember: attributes are in rows, implications are
   # in columns.
-  sizes <- Matrix::colSums(LHS) + Matrix::colSums(RHS)
-  
-  # Reorder the sizes:
-  o <- order(sizes)
+  # Random order for columns:
+  o <- sample(ncol(LHS), ncol(LHS))
   
   # Return the reordered implications
   return(list(lhs = LHS[, o],
@@ -113,9 +110,9 @@ reorder <- function(LHS, RHS, attributes) {
 
 Once we have defined the function, we add the method to the registry:
 ```{r}
-equivalencesRegistry$set_entry(method = "Reorder",
-                               fun = reorder,
-                               description = "Reorder the implications according to the size of their left-hand side.")
+equivalencesRegistry$set_entry(method = "Randomize",
+                               fun = random_reorder,
+                               description = "Randomize the order of the implications.")
 ```
 
 If we inspect the registry, we obtain the list of the methods, including the one we have just inserted:
@@ -123,14 +120,14 @@ If we inspect the registry, we obtain the list of the methods, including the one
 equivalencesRegistry$get_entry_names()
 ```
 
-We can apply the reorder method:
+We can apply the new method:
 ```{r}
 # Original implications
 fc$implications
 ```
 ```{r}
-# Apply the reorder method
-fc$implications$apply_rules("reorder")
+# Apply the randomize method
+fc$implications$apply_rules("randomize")
 ```
 ```{r}
 # Reordered implications

@@ -1,9 +1,10 @@
 pandoc: '2.9'
-pkgdown: 1.4.1
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   arules: arules.html
   concept_lattice: concept_lattice.html
   extending_equivalence: extending_equivalence.html
   implications: implications.html
+last_built: 2020-07-19T15:56Z
 

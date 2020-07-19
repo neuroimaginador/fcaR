@@ -48,7 +48,7 @@
 
     if (verbose) {
 
-      message("--> ", methods[[j]]$method, ": from ", current_cols, " to ",
+      message("--> ", methods[[j]]$method[1], ": from ", current_cols, " to ",
           new_cols, " in ", round(rule_time$toc - rule_time$tic, 3),
           " secs.")
 

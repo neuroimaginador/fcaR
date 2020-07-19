@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="R6 Class for Set of implications — ImplicationSet" />
 <meta property="og:description" content="This class implements the structure needed to store implications and the methods associated." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +114,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/neuroimaginador/fcaR">
+  <a href="https://github.com/neuroimaginador/fcaR/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -142,7 +145,8 @@
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” <em>J Stat Softw</em>, <em>14</em>, 1-25.</p>
+    <p>Ganter B, Obiedkov S (2016). Conceptual Exploration. Springer. https://doi.org/10.1007/978-3-662-49291-8</p>
+<p>Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” <em>J Stat Softw</em>, <em>14</em>, 1-25.</p>
 <p>Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” <em>International Journal of Approximate Reasoning</em>, <em>70</em>, 51-67.</p>
 <p>Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” <em>International Journal of Computer Mathematics</em>, <em>89</em>(4), 510-526.</p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -174,10 +178,10 @@
 <p><hr>
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
 <p>Initialize with an optional name</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$new(...)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>new</span>(<span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>...</code></dt><dd><p>See Details.</p></dd>
 
 </dl><p></div></p>
@@ -193,7 +197,7 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-get_attributes"></a></p><h3>Method <code>get_attributes()</code></h3>
 <p>Get the names of the attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$get_attributes()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>get_attributes</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A character vector with the names of the attributes used in the implications.</p>
@@ -203,7 +207,7 @@ or <code>initialize(rules)</code></p>
 <p><div class="r"></p><pre>ImplicationSet$[(idx)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>idx</code></dt><dd><p>(integer or logical vector) Indices of the implications to extract or remove. If logical vector, only <code>TRUE</code> elements are retained and the rest discarded.</p></dd>
 
 </dl><p></div></p>
@@ -212,10 +216,10 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-to_arules"></a></p><h3>Method <code>to_arules()</code></h3>
 <p>Convert to arules format</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$to_arules(quality = TRUE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>to_arules</span>(<span class='kw'>quality</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>quality</code></dt><dd><p>(logical) Compute the interest measures for each rule?</p></dd>
 
 </dl><p></div></p>
@@ -224,10 +228,10 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-add"></a></p><h3>Method <code>add()</code></h3>
 <p>Add a precomputed implication set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$add(...)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>add</span>(<span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>...</code></dt><dd><p>An <code>ImplicationSet</code> object, a <code>rules</code> object, or a pair <code>lhs</code>, <code>rhs</code> of <code>SparseSet</code> objects or <code>dgCMatrix</code>. The implications to add to this formal context.</p></dd>
 
 </dl><p></div></p>
@@ -236,31 +240,31 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-cardinality"></a></p><h3>Method <code>cardinality()</code></h3>
 <p>Cardinality: Number of implications in the set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$cardinality()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>cardinality</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The cardinality of the implication set.</p>
 <p><hr>
 <a id="method-is_empty"></a></p><h3>Method <code>is_empty()</code></h3>
 <p>Empty set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$is_empty()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>is_empty</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p><code>TRUE</code> if the set of implications is empty, <code>FALSE</code> otherwise.</p>
 <p><hr>
 <a id="method-size"></a></p><h3>Method <code>size()</code></h3>
 <p>Size: number of attributes in each of LHS and RHS</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$size()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>size</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A vector with two components: the number of attributes present in each of the LHS and RHS of each implication in the set.</p>
 <p><hr>
 <a id="method-closure"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
 <p>Compute the semantic closure of a fuzzy set with respect to the implication set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$closure(S, reduce = FALSE, verbose = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'><a href='https://rdrr.io/r/base/function.html'>closure</a></span>(<span class='no'>S</span>, <span class='kw'>reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>S</code></dt><dd><p>(a <code>SparseSet</code> object)  Fuzzy set to compute its closure. Use class <code>SparseSet</code> to build it.</p></dd>
 
 <dt><code>reduce</code></dt><dd><p>(logical) Reduce the implications using simplification logic?</p></dd>
@@ -273,10 +277,10 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-recommend"></a></p><h3>Method <code>recommend()</code></h3>
 <p>Generate a recommendation for a subset of the attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$recommend(S, attribute_filter)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>recommend</span>(<span class='no'>S</span>, <span class='no'>attribute_filter</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>S</code></dt><dd><p>(a vector) Vector with the grades of each attribute (a fuzzy set).</p></dd>
 
 <dt><code>attribute_filter</code></dt><dd><p>(character vector) Names of the attributes to get recommendation for.</p></dd>
@@ -287,15 +291,15 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-apply_rules"></a></p><h3>Method <code>apply_rules()</code></h3>
 <p>Apply rules to remove redundancies</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$apply_rules(
-  rules = c("composition", "generalization"),
-  batch_size = 25000L,
-  parallelize = FALSE,
-  reorder = FALSE
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>apply_rules</span>(
+  <span class='kw'>rules</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"composition"</span>, <span class='st'>"generalization"</span>),
+  <span class='kw'>batch_size</span> <span class='kw'>=</span> <span class='fl'>25000L</span>,
+  <span class='kw'>parallelize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>reorder</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>rules</code></dt><dd><p>(character vector) Names of the rules to use. See <code>details</code>.</p></dd>
 
 <dt><code>batch_size</code></dt><dd><p>(integer) If the number of rules is large, apply the rules by batches of this size.</p></dd>
@@ -313,29 +317,29 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-to_basis"></a></p><h3>Method <code>to_basis()</code></h3>
 <p>Convert Implications to Canonical Basis</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$to_basis()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>to_basis</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The canonical basis of implications obtained from the current <code>ImplicationSet</code></p>
 <p><hr>
 <a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Print all implications to text</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$print()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A string with all the implications in the set.</p>
 <p><hr>
 <a id="method-to_latex"></a></p><h3>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
 <p>Export to LaTeX</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$to_latex(
-  print = TRUE,
-  ncols = 1,
-  numbered = TRUE,
-  numbers = seq(self$cardinality())
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'><a href='to_latex.html'>to_latex</a></span>(
+  <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ncols</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>numbered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>numbers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='no'>self</span>$<span class='fu'>cardinality</span>())
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
 
 <dt><code>ncols</code></dt><dd><p>(integer) Number of columns for the output.</p></dd>
@@ -350,24 +354,24 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-get_LHS_matrix"></a></p><h3>Method <code>get_LHS_matrix()</code></h3>
 <p>Get internal LHS matrix</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$get_LHS_matrix()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>get_LHS_matrix</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A sparse matrix representing the LHS of the implications in the set.</p>
 <p><hr>
 <a id="method-get_RHS_matrix"></a></p><h3>Method <code>get_RHS_matrix()</code></h3>
 <p>Get internal RHS matrix</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$get_RHS_matrix()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>get_RHS_matrix</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A sparse matrix representing the RHS of the implications in the set.</p>
 <p><hr>
 <a id="method-filter"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/filter.html'>filter()</a></code></h3>
 <p>Filter implications by attributes in LHS and RHS</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$filter(lhs = NULL, rhs = NULL, drop = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(<span class='kw'>lhs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rhs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>lhs</code></dt><dd><p>(character vector) Names of the attributes to filter the LHS by. If <code>NULL</code>, no filtering is done on the LHS.</p></dd>
 
 <dt><code>rhs</code></dt><dd><p>(character vector) Names of the attributes to filter the RHS by. If <code>NULL</code>, no filtering is done on the RHS.</p></dd>
@@ -380,17 +384,17 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-support"></a></p><h3>Method <code>support()</code></h3>
 <p>Compute support of each implication</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$support()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>support</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A vector with the support of each implication</p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ImplicationSet$clone(deep = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ImplicationSet</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -421,17 +425,13 @@ or <code>initialize(rules)</code></p>
 <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span>(<span class='no'>sizes</span>)</div><div class='output co'>#&gt; LHS RHS 
 #&gt; 2.5 2.3 </div><div class='input'>
 <span class='co'># Simplify the implication set</span>
-<span class='no'>fc_planets</span>$<span class='no'>implications</span>$<span class='fu'>apply_rules</span>(<span class='st'>"simplification"</span>)</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.095 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.099 secs. </span></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>implications</span>$<span class='fu'>apply_rules</span>(<span class='st'>"simplification"</span>)</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.143 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.146 secs. </span></div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#references">References</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -442,7 +442,7 @@ or <code>initialize(rules)</code></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

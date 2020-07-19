@@ -27,6 +27,22 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -317,7 +333,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>In this vignette, we present the main functionalities and data structures of the <code>fcaR</code> package when working with formal contexts and concepts, in FCA.</p>
+<p>In this vignette, we present the main functionalities and data structures of the <code>fcaR</code> package when working with implications in FCA.</p>
 <p>We load the <code>fcaR</code> package by:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(fcaR)</span></code></pre></div>
 </div>
@@ -892,8 +908,8 @@ O6
 <span id="cb14-2"><a href="#cb14-2"></a>                                        <span class="st">&quot;simplification&quot;</span>))</span>
 <span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; Processing batch</span></span>
 <span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.073 secs.</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; Batch took 0.076 secs.</span></span></code></pre></div>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.09 secs.</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; Batch took 0.094 secs.</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Let us build a set of attributes</span></span>

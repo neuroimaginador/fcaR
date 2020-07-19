@@ -5,7 +5,7 @@
 \alias{equivalencesRegistry}
 \title{Equivalence Rules Registry}
 \format{
-An object of class \code{equivalence_registry} (inherits from \code{registry}) of length 4.
+An object of class \code{equivalence_registry} (inherits from \code{registry}) of length 6.
 }
 \usage{
 equivalencesRegistry

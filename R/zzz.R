@@ -14,9 +14,9 @@ equivalencesRegistry$set_entry(method = "Simplification",
                                fun = .simplification,
                                description = "A -> B and C -> D with A, B disjoint, and A subset of C, equivalent to A -> B, C-B -> D-B")
 
-equivalencesRegistry$set_entry(method = "RSimplification",
+equivalencesRegistry$set_entry(method = c("Right Simplification", "RSimplification"),
                                fun = Rsimplification,
-                               description = "")
+                               description = "A -> B and C -> D  with A, B disjoint, and A subset of CD, equivalent to A -> B, C -> D-B")
 
 equivalencesRegistry$set_entry(method = "Reorder",
                                fun = reorder,

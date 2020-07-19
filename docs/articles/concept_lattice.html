@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Using FormalContexts and ConceptLattices • fcaR</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Using FormalContexts and ConceptLattices">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="fcaR">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -73,7 +73,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/neuroimaginador/fcaR">
+  <a href="https://github.com/neuroimaginador/fcaR/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -88,10 +88,10 @@
 
       
 
-      </header><script src="concept_lattice_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="concept_lattice_files/header-attrs-2.3/header-attrs.js"></script><script src="concept_lattice_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Using FormalContexts and ConceptLattices</h1>
+      <h1 data-toc-skip>Using FormalContexts and ConceptLattices</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/neuroimaginador/fcaR/blob/master/vignettes/concept_lattice.Rmd"><code>vignettes/concept_lattice.Rmd</code></a></small>
@@ -106,7 +106,7 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>In this vignette, we present the main functionalities and data structures of the <code>fcaR</code> package when working with formal contexts and concepts, in FCA.</p>
 <p>We load the <code>fcaR</code> package by:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(fcaR)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">fcaR</span>)</pre></body></html></div>
 </div>
 <div id="datasets" class="section level1">
 <h1 class="hasAnchor">
@@ -116,7 +116,7 @@
 <blockquote>
 <p>Wille R (1982). “Restructuring Lattice Theory: An Approach Based on Hierarchies of Concepts.” In Ordered Sets, pp. 445–470. Springer.</p>
 </blockquote>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(planets, <span class="dt">format =</span> <span class="st">"html"</span>, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">planets</span>, <span class="kw">format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">booktabs</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -381,7 +381,7 @@ Pluto
 </tbody>
 </table>
 <p>The other formal context is fuzzy and is defined by the following matrix I:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(I, <span class="dt">format =</span> <span class="st">"html"</span>, <span class="dt">booktabs =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">I</span>, <span class="kw">format</span> <span class="kw">=</span> <span class="st">"html"</span>, <span class="kw">booktabs</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -552,121 +552,121 @@ O6
 <a href="#working-with-formal-contexts" class="anchor"></a>Working with Formal Contexts</h1>
 <p>The first step when using the <code>fcaR</code> package to analyze a formal context is to create an object of class <code>FormalContext</code> which will store all the information related to the context.</p>
 <p>In our examples, we create two objects:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>fc_planets &lt;-<span class="st"> </span>FormalContext<span class="op">$</span><span class="kw">new</span>(planets)</span>
-<span id="cb4-2"><a href="#cb4-2"></a>fc_I &lt;-<span class="st"> </span>FormalContext<span class="op">$</span><span class="kw">new</span>(I)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">fc_planets</span> <span class="kw">&lt;-</span> <span class="no">FormalContext</span>$<span class="fu">new</span>(<span class="no">planets</span>)
+<span class="no">fc_I</span> <span class="kw">&lt;-</span> <span class="no">FormalContext</span>$<span class="fu">new</span>(<span class="no">I</span>)</pre></body></html></div>
 <p>Internally, the object stores information about whether the context is binary or the names of objects and attributes, which are taken from the rownames and colnames of the provided matrix.</p>
 <div id="plotting-printing-and-latex-ing-the-formalcontext" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plotting-printing-and-latex-ing-the-formalcontext" class="anchor"></a>Plotting, printing and latex-ing the FormalContext</h2>
-<p>Once created the <code>FormalContext</code> objects, we can print them or plot them as heatmaps (with functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code>):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(fc_planets)</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt; FormalContext with 9 objects and 7 attributes.</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; Attributes' names are: small, medium, large, near, far, moon, ...</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt;         small medium large near far moon no_moon</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; Mercury     1      0     0    1   0    0       1</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; Venus       1      0     0    1   0    0       1</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; Earth       1      0     0    1   0    1       0</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; Mars        1      0     0    1   0    1       0</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; Jupiter     0      0     1    0   1    1       0</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; Saturn      0      0     1    0   1    1       0</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(fc_I)</span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; Attributes' names are: P1, P2, P3, P4, P5, P6</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;     P1  P2  P3  P4  P5 P6</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; O1 0.0 0.0 0.5 0.5 1.0  0</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; O2 1.0 1.0 1.0 0.0 0.0  0</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; O3 0.5 0.5 0.0 0.0 0.0  1</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt; O4 0.0 0.0 0.0 1.0 0.5  0</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt; O5 0.0 0.0 1.0 0.5 0.0  0</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; O6 0.5 0.5 0.0 0.0 0.0  1</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>fc_planets<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>()</span></code></pre></div>
+<p>Once created the <code>FormalContext</code> objects, we can print them or plot them as heatmaps (with functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code>):</p>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">fc_planets</span>)
+<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
+<span class="co">#&gt; FormalContext with 9 objects and 7 attributes.</span>
+<span class="co">#&gt; Attributes' names are: small, medium, large, near, far, moon, ...</span>
+<span class="co">#&gt; Matrix:</span>
+<span class="co">#&gt;         small medium large near far moon no_moon</span>
+<span class="co">#&gt; Mercury     1      0     0    1   0    0       1</span>
+<span class="co">#&gt; Venus       1      0     0    1   0    0       1</span>
+<span class="co">#&gt; Earth       1      0     0    1   0    1       0</span>
+<span class="co">#&gt; Mars        1      0     0    1   0    1       0</span>
+<span class="co">#&gt; Jupiter     0      0     1    0   1    1       0</span>
+<span class="co">#&gt; Saturn      0      0     1    0   1    1       0</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">fc_I</span>)
+<span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span>
+<span class="co">#&gt; Attributes' names are: P1, P2, P3, P4, P5, P6</span>
+<span class="co">#&gt; Matrix:</span>
+<span class="co">#&gt;     P1  P2  P3  P4  P5 P6</span>
+<span class="co">#&gt; O1 0.0 0.0 0.5 0.5 1.0  0</span>
+<span class="co">#&gt; O2 1.0 1.0 1.0 0.0 0.0  0</span>
+<span class="co">#&gt; O3 0.5 0.5 0.0 0.0 0.0  1</span>
+<span class="co">#&gt; O4 0.0 0.0 0.0 1.0 0.5  0</span>
+<span class="co">#&gt; O5 0.0 0.0 1.0 0.5 0.0  0</span>
+<span class="co">#&gt; O6 0.5 0.5 0.0 0.0 0.0  1</span></pre></body></html></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>()</pre></body></html></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-7-1.png" width="384"></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>fc_I<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>()</span></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">fc_I</span>$<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>()</pre></body></html></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-7-2.png" width="384"></p>
 <p>Also, we can export the formal context as a LaTeX table:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>fc_planets<span class="op">$</span><span class="kw"><a href="../reference/to_latex.html">to_latex</a></span>()</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; \begin{table} \centering </span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; \begin{tabular}{lccccccc}</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt; \toprule</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt;   &amp; small &amp; medium &amp; large &amp; near &amp; far &amp; moon &amp; no_moon\\</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; \midrule</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; Mercury &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\\</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; Venus &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\\</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; Earth &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; Mars &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; Jupiter &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; Saturn &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; Uranus &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; Neptune &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; Pluto &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; \bottomrule</span></span>
-<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; \end{tabular} \caption{\label{}} \end{table}</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="fu"><a href="../reference/to_latex.html">to_latex</a></span>()
+<span class="co">#&gt; \begin{table} \centering </span>
+<span class="co">#&gt; \begin{tabular}{lccccccc}</span>
+<span class="co">#&gt; \toprule</span>
+<span class="co">#&gt;   &amp; small &amp; medium &amp; large &amp; near &amp; far &amp; moon &amp; no_moon\\</span>
+<span class="co">#&gt; \midrule</span>
+<span class="co">#&gt; Mercury &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\\</span>
+<span class="co">#&gt; Venus &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\\</span>
+<span class="co">#&gt; Earth &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\</span>
+<span class="co">#&gt; Mars &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\</span>
+<span class="co">#&gt; Jupiter &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
+<span class="co">#&gt; Saturn &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
+<span class="co">#&gt; Uranus &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
+<span class="co">#&gt; Neptune &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
+<span class="co">#&gt; Pluto &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
+<span class="co">#&gt; \bottomrule</span>
+<span class="co">#&gt; \end{tabular} \caption{\label{}} \end{table}</span></pre></body></html></div>
 </div>
 <div id="closures" class="section level2">
 <h2 class="hasAnchor">
 <a href="#closures" class="anchor"></a>Closures</h2>
 <p>The basic operation in FCA is the computation of closures given an attribute set, by using the two derivation operators, extent and intent.</p>
 <p>The intent of a (probably fuzzy) set of objects is the set of their common attributes:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Define a set of objects</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>S &lt;-<span class="st"> </span>SparseSet<span class="op">$</span><span class="kw">new</span>(<span class="dt">attributes =</span> fc_planets<span class="op">$</span>objects)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>S<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="dt">Earth =</span> <span class="dv">1</span>, <span class="dt">Mars =</span> <span class="dv">1</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a>S</span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; {Earth, Mars}</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co"># Compute the intent of S</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a>fc_planets<span class="op">$</span><span class="kw">intent</span>(S)</span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; {small, near, moon}</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># Define a set of objects</span>
+<span class="no">S</span> <span class="kw">&lt;-</span> <span class="no">SparseSet</span>$<span class="fu">new</span>(<span class="kw">attributes</span> <span class="kw">=</span> <span class="no">fc_planets</span>$<span class="no">objects</span>)
+<span class="no">S</span>$<span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="kw">Earth</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">Mars</span> <span class="kw">=</span> <span class="fl">1</span>)
+<span class="no">S</span>
+<span class="co">#&gt; {Earth, Mars}</span>
+
+<span class="co"># Compute the intent of S</span>
+<span class="no">fc_planets</span>$<span class="fu">intent</span>(<span class="no">S</span>)
+<span class="co">#&gt; {small, near, moon}</span></pre></body></html></div>
 <p>Analogously, the extent of a set of attributes is the set of objects which possess all the attributes in the given set:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Define a set of objects</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>S &lt;-<span class="st"> </span>SparseSet<span class="op">$</span><span class="kw">new</span>(<span class="dt">attributes =</span> fc_planets<span class="op">$</span>attributes)</span>
-<span id="cb10-3"><a href="#cb10-3"></a>S<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="dt">moon =</span> <span class="dv">1</span>, <span class="dt">large =</span> <span class="dv">1</span>)</span>
-<span id="cb10-4"><a href="#cb10-4"></a>S</span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; {large, moon}</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co"># Compute the extent of S</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a>fc_planets<span class="op">$</span><span class="kw">extent</span>(S)</span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="co">#&gt; {Jupiter, Saturn}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># Define a set of objects</span>
+<span class="no">S</span> <span class="kw">&lt;-</span> <span class="no">SparseSet</span>$<span class="fu">new</span>(<span class="kw">attributes</span> <span class="kw">=</span> <span class="no">fc_planets</span>$<span class="no">attributes</span>)
+<span class="no">S</span>$<span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="kw">moon</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">large</span> <span class="kw">=</span> <span class="fl">1</span>)
+<span class="no">S</span>
+<span class="co">#&gt; {large, moon}</span>
+
+<span class="co"># Compute the extent of S</span>
+<span class="no">fc_planets</span>$<span class="fu">extent</span>(<span class="no">S</span>)
+<span class="co">#&gt; {Jupiter, Saturn}</span></pre></body></html></div>
 <p>The composition of intent and extent is the closure of a set of attributes:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Compute the closure of S</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>Sc &lt;-<span class="st"> </span>fc_planets<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/function.html">closure</a></span>(S)</span>
-<span id="cb11-3"><a href="#cb11-3"></a>Sc</span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#&gt; {large, far, moon}</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Compute the closure of S</span>
+<span class="no">Sc</span> <span class="kw">&lt;-</span> <span class="no">fc_planets</span>$<span class="fu"><a href="https://rdrr.io/r/base/function.html">closure</a></span>(<span class="no">S</span>)
+<span class="no">Sc</span>
+<span class="co">#&gt; {large, far, moon}</span></pre></body></html></div>
 <p>This means that all planets which have the attributes <code>moon</code> and <code>large</code> also have <code>far</code> in common.</p>
 <p>We can check whether a set is closed (that is, it is equal to its closure), using <code>is_closed()</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>fc_planets<span class="op">$</span><span class="kw">is_closed</span>(S)</span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; [1] FALSE</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>fc_planets<span class="op">$</span><span class="kw">is_closed</span>(Sc)</span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="fu">is_closed</span>(<span class="no">S</span>)
+<span class="co">#&gt; [1] FALSE</span>
+<span class="no">fc_planets</span>$<span class="fu">is_closed</span>(<span class="no">Sc</span>)
+<span class="co">#&gt; [1] TRUE</span></pre></body></html></div>
 </div>
 <div id="clarification-and-reduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#clarification-and-reduction" class="anchor"></a>Clarification and Reduction</h2>
 <p>An interesting point when managing formal contexts is the ability to reduce the context, removing redundancies, while retaining all the knowledge. This is accomplished by two functions: <code>clarify()</code>, which removes duplicated attributes and objects (columns and rows in the original matrix); and <code>reduce()</code>, which uses closures to remove dependent attributes, but only on binary formal contexts. The resulting <code>FormalContext</code> is equivalent to the original one in both cases.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>fc_planets<span class="op">$</span><span class="kw">reduce</span>(<span class="ot">TRUE</span>)</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="co">#&gt; Attributes' names are: small, medium, large, near, far, moon, ...</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt;                   small medium large near far moon no_moon</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#&gt; Pluto                 1      0     0    0   1    1       0</span></span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="co">#&gt; [Mercury, Venus]      1      0     0    1   0    0       1</span></span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="co">#&gt; [Earth, Mars]         1      0     0    1   0    1       0</span></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co">#&gt; [Jupiter, Saturn]     0      0     1    0   1    1       0</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a><span class="co">#&gt; [Uranus, Neptune]     0      1     0    0   1    1       0</span></span>
-<span id="cb13-12"><a href="#cb13-12"></a></span>
-<span id="cb13-13"><a href="#cb13-13"></a>fc_I<span class="op">$</span><span class="kw">clarify</span>(<span class="ot">TRUE</span>)</span>
-<span id="cb13-14"><a href="#cb13-14"></a><span class="co">#&gt; FormalContext with 5 objects and 5 attributes.</span></span>
-<span id="cb13-15"><a href="#cb13-15"></a><span class="co">#&gt; Attributes' names are: P3, P4, P5, P6, [P1, P2]</span></span>
-<span id="cb13-16"><a href="#cb13-16"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb13-17"><a href="#cb13-17"></a><span class="co">#&gt;           P3  P4  P5 P6 [P1, P2]</span></span>
-<span id="cb13-18"><a href="#cb13-18"></a><span class="co">#&gt; O1       0.5 0.5 1.0  0      0.0</span></span>
-<span id="cb13-19"><a href="#cb13-19"></a><span class="co">#&gt; O2       1.0 0.0 0.0  0      1.0</span></span>
-<span id="cb13-20"><a href="#cb13-20"></a><span class="co">#&gt; O4       0.0 1.0 0.5  0      0.0</span></span>
-<span id="cb13-21"><a href="#cb13-21"></a><span class="co">#&gt; O5       1.0 0.5 0.0  0      0.0</span></span>
-<span id="cb13-22"><a href="#cb13-22"></a><span class="co">#&gt; [O3, O6] 0.0 0.0 0.0  1      0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="fu">reduce</span>(<span class="fl">TRUE</span>)
+<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
+<span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span>
+<span class="co">#&gt; Attributes' names are: small, medium, large, near, far, moon, ...</span>
+<span class="co">#&gt; Matrix:</span>
+<span class="co">#&gt;                   small medium large near far moon no_moon</span>
+<span class="co">#&gt; Pluto                 1      0     0    0   1    1       0</span>
+<span class="co">#&gt; [Mercury, Venus]      1      0     0    1   0    0       1</span>
+<span class="co">#&gt; [Earth, Mars]         1      0     0    1   0    1       0</span>
+<span class="co">#&gt; [Jupiter, Saturn]     0      0     1    0   1    1       0</span>
+<span class="co">#&gt; [Uranus, Neptune]     0      1     0    0   1    1       0</span>
+
+<span class="no">fc_I</span>$<span class="fu">clarify</span>(<span class="fl">TRUE</span>)
+<span class="co">#&gt; FormalContext with 5 objects and 5 attributes.</span>
+<span class="co">#&gt; Attributes' names are: P3, P4, P5, P6, [P1, P2]</span>
+<span class="co">#&gt; Matrix:</span>
+<span class="co">#&gt;           P3  P4  P5 P6 [P1, P2]</span>
+<span class="co">#&gt; O1       0.5 0.5 1.0  0      0.0</span>
+<span class="co">#&gt; O2       1.0 0.0 0.0  0      1.0</span>
+<span class="co">#&gt; O4       0.0 1.0 0.5  0      0.0</span>
+<span class="co">#&gt; O5       1.0 0.5 0.0  0      0.0</span>
+<span class="co">#&gt; [O3, O6] 0.0 0.0 0.0  1      0.5</span></pre></body></html></div>
 <p>Note that merged attributes or objects are stored in the new formal context by using squared brackets to unify them, e.g. <code>[Mercury, Venus]</code>.</p>
 </div>
 <div id="extracting-implications-and-concepts" class="section level2">
@@ -674,80 +674,80 @@ O6
 <a href="#extracting-implications-and-concepts" class="anchor"></a>Extracting Implications and Concepts</h2>
 <p>The function to extract the canonical basis of implications and the concept lattice is <code>find_implications()</code>. Its use is to store a <code>ConceptLattice</code> and an <code>ImplicationSet</code> objects internally in the <code>FormalContext</code> object after running the NextClosure algorithm.</p>
 <p>It can be used both for binary and fuzzy formal contexts, resulting in binary or fuzzy concepts and implications:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>fc_planets<span class="op">$</span><span class="kw">find_implications</span>()</span>
-<span id="cb14-2"><a href="#cb14-2"></a></span>
-<span id="cb14-3"><a href="#cb14-3"></a>fc_I<span class="op">$</span><span class="kw">find_implications</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="fu">find_implications</span>()
+
+<span class="no">fc_I</span>$<span class="fu">find_implications</span>()</pre></body></html></div>
 <p>We can inspect the results as:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Concepts</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>fc_planets<span class="op">$</span>concepts</span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="co">#&gt; A set of 12 concepts:</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#&gt; 1: ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#&gt; 2: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="co">#&gt; 3: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="co">#&gt; 4: ({Jupiter, Saturn}, {large, far, moon})</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="co">#&gt; 5: ({Uranus, Neptune}, {medium, far, moon})</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a><span class="co">#&gt; 6: ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt; 7: ({Earth, Mars, Pluto}, {small, moon})</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt; 8: ({Pluto}, {small, far, moon})</span></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; 9: ({Mercury, Venus, Earth, Mars}, {small, near})</span></span>
-<span id="cb15-13"><a href="#cb15-13"></a><span class="co">#&gt; 10: ({Mercury, Venus}, {small, near, no_moon})</span></span>
-<span id="cb15-14"><a href="#cb15-14"></a><span class="co">#&gt; 11: ({Earth, Mars}, {small, near, moon})</span></span>
-<span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt; 12: ({}, {small, medium, large, near, far, moon, no_moon})</span></span>
-<span id="cb15-16"><a href="#cb15-16"></a></span>
-<span id="cb15-17"><a href="#cb15-17"></a><span class="co"># Implications</span></span>
-<span id="cb15-18"><a href="#cb15-18"></a>fc_planets<span class="op">$</span>implications</span>
-<span id="cb15-19"><a href="#cb15-19"></a><span class="co">#&gt; Implication set with 10 implications.</span></span>
-<span id="cb15-20"><a href="#cb15-20"></a><span class="co">#&gt; Rule 1: {no_moon} -&gt; {small, near}</span></span>
-<span id="cb15-21"><a href="#cb15-21"></a><span class="co">#&gt; Rule 2: {far} -&gt; {moon}</span></span>
-<span id="cb15-22"><a href="#cb15-22"></a><span class="co">#&gt; Rule 3: {near} -&gt; {small}</span></span>
-<span id="cb15-23"><a href="#cb15-23"></a><span class="co">#&gt; Rule 4: {large} -&gt; {far, moon}</span></span>
-<span id="cb15-24"><a href="#cb15-24"></a><span class="co">#&gt; Rule 5: {medium} -&gt; {far, moon}</span></span>
-<span id="cb15-25"><a href="#cb15-25"></a><span class="co">#&gt; Rule 6: {medium, large, far, moon} -&gt; {small, near, no_moon}</span></span>
-<span id="cb15-26"><a href="#cb15-26"></a><span class="co">#&gt; Rule 7: {small, near, moon, no_moon} -&gt; {medium, large, far}</span></span>
-<span id="cb15-27"><a href="#cb15-27"></a><span class="co">#&gt; Rule 8: {small, near, far, moon} -&gt; {medium, large, no_moon}</span></span>
-<span id="cb15-28"><a href="#cb15-28"></a><span class="co">#&gt; Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}</span></span>
-<span id="cb15-29"><a href="#cb15-29"></a><span class="co">#&gt; Rule 10: {small, medium, far, moon} -&gt; {large, near, no_moon}</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># Concepts</span>
+<span class="no">fc_planets</span>$<span class="no">concepts</span>
+<span class="co">#&gt; A set of 12 concepts:</span>
+<span class="co">#&gt; 1: ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
+<span class="co">#&gt; 2: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; 3: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="co">#&gt; 4: ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="co">#&gt; 5: ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; 6: ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="co">#&gt; 7: ({Earth, Mars, Pluto}, {small, moon})</span>
+<span class="co">#&gt; 8: ({Pluto}, {small, far, moon})</span>
+<span class="co">#&gt; 9: ({Mercury, Venus, Earth, Mars}, {small, near})</span>
+<span class="co">#&gt; 10: ({Mercury, Venus}, {small, near, no_moon})</span>
+<span class="co">#&gt; 11: ({Earth, Mars}, {small, near, moon})</span>
+<span class="co">#&gt; 12: ({}, {small, medium, large, near, far, moon, no_moon})</span>
+
+<span class="co"># Implications</span>
+<span class="no">fc_planets</span>$<span class="no">implications</span>
+<span class="co">#&gt; Implication set with 10 implications.</span>
+<span class="co">#&gt; Rule 1: {no_moon} -&gt; {small, near}</span>
+<span class="co">#&gt; Rule 2: {far} -&gt; {moon}</span>
+<span class="co">#&gt; Rule 3: {near} -&gt; {small}</span>
+<span class="co">#&gt; Rule 4: {large} -&gt; {far, moon}</span>
+<span class="co">#&gt; Rule 5: {medium} -&gt; {far, moon}</span>
+<span class="co">#&gt; Rule 6: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
+<span class="co">#&gt; Rule 7: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
+<span class="co">#&gt; Rule 8: {small, near, far, moon} -&gt; {medium, large, no_moon}</span>
+<span class="co">#&gt; Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}</span>
+<span class="co">#&gt; Rule 10: {small, medium, far, moon} -&gt; {large, near, no_moon}</span></pre></body></html></div>
 </div>
 <div id="standard-context" class="section level2">
 <h2 class="hasAnchor">
 <a href="#standard-context" class="anchor"></a>Standard Context</h2>
 <p>Once we have computed the concepts, we can build the <em>standard context</em> (J, M, <span class="math inline">\(\le\)</span>), where J is the set of join-irreducible concepts and M are the meet-irreducible ones. Join and meet are another name for supremum and infimum operations in the concept lattice.</p>
 <p>The function <code>standardize()</code> works for all FormalContext where the concept lattice has been found, and it produces a new <code>FormalContext</code> object:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>fc_planets<span class="op">$</span><span class="kw">standardize</span>()</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co">#&gt; Attributes' names are: M1, M2, M3, M4, M5, M6, ...</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="co">#&gt;    M1 M2 M3 M4 M5 M6 M7</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="co">#&gt; J1  1  1  1  0  0  0  0</span></span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="co">#&gt; J2  1  1  0  1  0  0  0</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a><span class="co">#&gt; J3  1  1  0  0  1  0  0</span></span>
-<span id="cb16-10"><a href="#cb16-10"></a><span class="co">#&gt; J4  0  0  0  0  1  1  1</span></span>
-<span id="cb16-11"><a href="#cb16-11"></a><span class="co">#&gt; J5  1  0  0  0  1  1  0</span></span>
-<span id="cb16-12"><a href="#cb16-12"></a>fc_I<span class="op">$</span><span class="kw">standardize</span>()</span>
-<span id="cb16-13"><a href="#cb16-13"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
-<span id="cb16-14"><a href="#cb16-14"></a><span class="co">#&gt; FormalContext with 9 objects and 9 attributes.</span></span>
-<span id="cb16-15"><a href="#cb16-15"></a><span class="co">#&gt; Attributes' names are: M1, M2, M3, M4, M5, M6, ...</span></span>
-<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb16-17"><a href="#cb16-17"></a><span class="co">#&gt;    M1 M2 M3 M4 M5 M6 M7</span></span>
-<span id="cb16-18"><a href="#cb16-18"></a><span class="co">#&gt; J1  1  1  0  1  0  0  0</span></span>
-<span id="cb16-19"><a href="#cb16-19"></a><span class="co">#&gt; J2  1  1  1  1  0  0  0</span></span>
-<span id="cb16-20"><a href="#cb16-20"></a><span class="co">#&gt; J3  1  1  1  0  1  0  0</span></span>
-<span id="cb16-21"><a href="#cb16-21"></a><span class="co">#&gt; J4  1  0  0  0  1  1  0</span></span>
-<span id="cb16-22"><a href="#cb16-22"></a><span class="co">#&gt; J5  1  0  0  1  1  1  0</span></span>
-<span id="cb16-23"><a href="#cb16-23"></a><span class="co">#&gt; J6  1  1  1  1  1  1  0</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="fu">standardize</span>()
+<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
+<span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span>
+<span class="co">#&gt; Attributes' names are: M1, M2, M3, M4, M5, M6, ...</span>
+<span class="co">#&gt; Matrix:</span>
+<span class="co">#&gt;    M1 M2 M3 M4 M5 M6 M7</span>
+<span class="co">#&gt; J1  1  1  1  0  0  0  0</span>
+<span class="co">#&gt; J2  1  1  0  1  0  0  0</span>
+<span class="co">#&gt; J3  1  1  0  0  1  0  0</span>
+<span class="co">#&gt; J4  0  0  0  0  1  1  1</span>
+<span class="co">#&gt; J5  1  0  0  0  1  1  0</span>
+<span class="no">fc_I</span>$<span class="fu">standardize</span>()
+<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
+<span class="co">#&gt; FormalContext with 9 objects and 9 attributes.</span>
+<span class="co">#&gt; Attributes' names are: M1, M2, M3, M4, M5, M6, ...</span>
+<span class="co">#&gt; Matrix:</span>
+<span class="co">#&gt;    M1 M2 M3 M4 M5 M6 M7</span>
+<span class="co">#&gt; J1  1  1  0  1  0  0  0</span>
+<span class="co">#&gt; J2  1  1  1  1  0  0  0</span>
+<span class="co">#&gt; J3  1  1  1  0  1  0  0</span>
+<span class="co">#&gt; J4  1  0  0  0  1  1  0</span>
+<span class="co">#&gt; J5  1  0  0  1  1  1  0</span>
+<span class="co">#&gt; J6  1  1  1  1  1  1  0</span></pre></body></html></div>
 <p>Note that now objects are named J1, J2… and attributes are M1, M2…, from join and meet.</p>
 </div>
 <div id="saving-and-loading" class="section level2">
 <h2 class="hasAnchor">
 <a href="#saving-and-loading" class="anchor"></a>Saving and loading</h2>
 <p>A <code>FormalContext</code> is saved and loaded (in RDS format) using its own methods <code><a href="https://rdrr.io/r/base/save.html">save()</a></code> and <code><a href="https://rdrr.io/r/base/load.html">load()</a></code>, which are more efficient than the base <code><a href="https://rdrr.io/r/base/readRDS.html">saveRDS()</a></code> and <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>fc<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="dt">filename =</span> <span class="st">"./fc.rds"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="co"># Create an empty FormalContext where to</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># import the previously saved</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>fc2 &lt;-<span class="st"> </span>FormalContext<span class="op">$</span><span class="kw">new</span>()</span>
-<span id="cb17-6"><a href="#cb17-6"></a>fc2<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="st">"./fc.rds"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">fc</span>$<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span>(<span class="kw">filename</span> <span class="kw">=</span> <span class="st">"./fc.rds"</span>)
+
+<span class="co"># Create an empty FormalContext where to</span>
+<span class="co"># import the previously saved</span>
+<span class="no">fc2</span> <span class="kw">&lt;-</span> <span class="no">FormalContext</span>$<span class="fu">new</span>()
+<span class="no">fc2</span>$<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="st">"./fc.rds"</span>)</pre></body></html></div>
 </div>
 </div>
 <div id="concept-lattice" class="section level1">
@@ -757,182 +757,154 @@ O6
 <div id="plot-print-and-latex" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot-print-and-latex" class="anchor"></a>Plot, print and LaTeX</h2>
-<p>The concept lattice can be plotted using a Hasse diagram and the function <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code> inside the <code>ConceptLattice</code> component:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>()</span></code></pre></div>
+<p>The concept lattice can be plotted using a Hasse diagram and the function <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> inside the <code>ConceptLattice</code> component:</p>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>()</pre></body></html></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>fc_I<span class="op">$</span>concepts<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>()</span></code></pre></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">fc_I</span>$<span class="no">concepts</span>$<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>()</pre></body></html></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-18-2.png" width="672"></p>
 <p>If one desires to get the list of concepts printed, or in <span class="math inline">\(\LaTeX\)</span> format, just:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Printing</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>fc_planets<span class="op">$</span>concepts</span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="co">#&gt; A set of 12 concepts:</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="co">#&gt; 1: ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="co">#&gt; 2: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co">#&gt; 3: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="co">#&gt; 4: ({Jupiter, Saturn}, {large, far, moon})</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a><span class="co">#&gt; 5: ({Uranus, Neptune}, {medium, far, moon})</span></span>
-<span id="cb20-9"><a href="#cb20-9"></a><span class="co">#&gt; 6: ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a><span class="co">#&gt; 7: ({Earth, Mars, Pluto}, {small, moon})</span></span>
-<span id="cb20-11"><a href="#cb20-11"></a><span class="co">#&gt; 8: ({Pluto}, {small, far, moon})</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a><span class="co">#&gt; 9: ({Mercury, Venus, Earth, Mars}, {small, near})</span></span>
-<span id="cb20-13"><a href="#cb20-13"></a><span class="co">#&gt; 10: ({Mercury, Venus}, {small, near, no_moon})</span></span>
-<span id="cb20-14"><a href="#cb20-14"></a><span class="co">#&gt; 11: ({Earth, Mars}, {small, near, moon})</span></span>
-<span id="cb20-15"><a href="#cb20-15"></a><span class="co">#&gt; 12: ({}, {small, medium, large, near, far, moon, no_moon})</span></span>
-<span id="cb20-16"><a href="#cb20-16"></a></span>
-<span id="cb20-17"><a href="#cb20-17"></a><span class="co"># LaTeX</span></span>
-<span id="cb20-18"><a href="#cb20-18"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw"><a href="../reference/to_latex.html">to_latex</a></span>()</span>
-<span id="cb20-19"><a href="#cb20-19"></a><span class="co">#&gt; \begin{longtable}{lll}</span></span>
-<span id="cb20-20"><a href="#cb20-20"></a><span class="co">#&gt; 1: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\varnothing}\,\right)$\\</span></span>
-<span id="cb20-21"><a href="#cb20-21"></a><span class="co">#&gt; 2: &amp;$\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-22"><a href="#cb20-22"></a><span class="co">#&gt; 3: &amp;$\left(\,\ensuremath{\left\{\mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-23"><a href="#cb20-23"></a><span class="co">#&gt; 4: &amp;$\left(\,\ensuremath{\left\{\mathrm{Jupiter},\, \mathrm{Saturn}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{large},\, \mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-24"><a href="#cb20-24"></a><span class="co">#&gt; 5: &amp;$\left(\,\ensuremath{\left\{\mathrm{Uranus},\, \mathrm{Neptune}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{medium},\, \mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-25"><a href="#cb20-25"></a><span class="co">#&gt; 6: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small}\right\}}\,\right)$\\</span></span>
-<span id="cb20-26"><a href="#cb20-26"></a><span class="co">#&gt; 7: &amp;$\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-27"><a href="#cb20-27"></a><span class="co">#&gt; 8: &amp;$\left(\,\ensuremath{\left\{\mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-28"><a href="#cb20-28"></a><span class="co">#&gt; 9: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near}\right\}}\,\right)$\\</span></span>
-<span id="cb20-29"><a href="#cb20-29"></a><span class="co">#&gt; 10: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near},\, \mathrm{no_moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-30"><a href="#cb20-30"></a><span class="co">#&gt; 11: &amp;$\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near},\, \mathrm{moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-31"><a href="#cb20-31"></a><span class="co">#&gt; 12: &amp;$\left(\,\ensuremath{\varnothing},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{medium},\, \mathrm{large},\, \mathrm{near},\, \mathrm{far},\, \mathrm{moon},\, \mathrm{no_moon}\right\}}\,\right)$\\</span></span>
-<span id="cb20-32"><a href="#cb20-32"></a><span class="co">#&gt; \end{longtable}</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="co"># Printing</span>
+<span class="no">fc_planets</span>$<span class="no">concepts</span>
+<span class="co">#&gt; A set of 12 concepts:</span>
+<span class="co">#&gt; 1: ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
+<span class="co">#&gt; 2: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; 3: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="co">#&gt; 4: ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="co">#&gt; 5: ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; 6: ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="co">#&gt; 7: ({Earth, Mars, Pluto}, {small, moon})</span>
+<span class="co">#&gt; 8: ({Pluto}, {small, far, moon})</span>
+<span class="co">#&gt; 9: ({Mercury, Venus, Earth, Mars}, {small, near})</span>
+<span class="co">#&gt; 10: ({Mercury, Venus}, {small, near, no_moon})</span>
+<span class="co">#&gt; 11: ({Earth, Mars}, {small, near, moon})</span>
+<span class="co">#&gt; 12: ({}, {small, medium, large, near, far, moon, no_moon})</span>
+
+<span class="co"># LaTeX</span>
+<span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu"><a href="../reference/to_latex.html">to_latex</a></span>()
+<span class="co">#&gt; \begin{longtable}{lll}</span>
+<span class="co">#&gt; 1: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\varnothing}\,\right)$\\</span>
+<span class="co">#&gt; 2: &amp;$\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 3: &amp;$\left(\,\ensuremath{\left\{\mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 4: &amp;$\left(\,\ensuremath{\left\{\mathrm{Jupiter},\, \mathrm{Saturn}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{large},\, \mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 5: &amp;$\left(\,\ensuremath{\left\{\mathrm{Uranus},\, \mathrm{Neptune}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{medium},\, \mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 6: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 7: &amp;$\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 8: &amp;$\left(\,\ensuremath{\left\{\mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 9: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 10: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near},\, \mathrm{no_moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 11: &amp;$\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near},\, \mathrm{moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 12: &amp;$\left(\,\ensuremath{\varnothing},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{medium},\, \mathrm{large},\, \mathrm{near},\, \mathrm{far},\, \mathrm{moon},\, \mathrm{no_moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; \end{longtable}</span></pre></body></html></div>
 </div>
 <div id="getting-all-extents-intents-and-retrieving-concepts" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-all-extents-intents-and-retrieving-concepts" class="anchor"></a>Getting all extents, intents and retrieving concepts</h2>
 <p>For a <code>ConceptLattice</code>, one may want to retrieve particular concepts, using a subsetting as in <code>R</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>fc_planets<span class="op">$</span>concepts[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="no">concepts</span>[<span class="fl">2</span>:<span class="fl">3</span>]
+<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></pre></body></html></div>
 <p>Or get all the extents and all the intents of all concepts, as sparse matrices:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">extents</span>()</span>
-<span id="cb22-2"><a href="#cb22-2"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">intents</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">extents</span>()
+<span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">intents</span>()</pre></body></html></div>
 </div>
 <div id="concept-support" class="section level2">
 <h2 class="hasAnchor">
 <a href="#concept-support" class="anchor"></a>Concept support</h2>
 <p>The support of concepts can be computed using the function <code>support()</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">support</span>()</span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="co">#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="co">#&gt;  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">support</span>()
+<span class="co">#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333</span>
+<span class="co">#&gt;  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</span></pre></body></html></div>
 </div>
 <div id="sublattices" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sublattices" class="anchor"></a>Sublattices</h2>
 <p>When the concept lattice is too large, it can be useful in certain occasions to just work with a sublattice of the complete lattice. To this end, we use the <code>sublattice()</code> function.</p>
 <p>For instance, to build the sublattice of those concepts with support greater than 0.5, we can do:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Get the index of those concepts with support </span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="co"># greater than the threshold</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(fc_I<span class="op">$</span>concepts<span class="op">$</span><span class="kw">support</span>() <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.2</span>)</span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="co"># Build the sublattice</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a>sublattice &lt;-<span class="st"> </span>fc_I<span class="op">$</span>concepts<span class="op">$</span><span class="kw">sublattice</span>(idx)</span>
-<span id="cb24-6"><a href="#cb24-6"></a>sublattice</span>
-<span id="cb24-7"><a href="#cb24-7"></a><span class="co">#&gt; A set of 13 concepts:</span></span>
-<span id="cb24-8"><a href="#cb24-8"></a><span class="co">#&gt; 1: ({O1, O2, O3, O4, O5, O6}, {})</span></span>
-<span id="cb24-9"><a href="#cb24-9"></a><span class="co">#&gt; 2: ({O1, O4, O5}, {P4 [0.5]})</span></span>
-<span id="cb24-10"><a href="#cb24-10"></a><span class="co">#&gt; 3: ({O1, O4}, {P4 [0.5], P5 [0.5]})</span></span>
-<span id="cb24-11"><a href="#cb24-11"></a><span class="co">#&gt; 4: ({O1, O2, O5}, {P3 [0.5]})</span></span>
-<span id="cb24-12"><a href="#cb24-12"></a><span class="co">#&gt; 5: ({O1, O5}, {P3 [0.5], P4 [0.5]})</span></span>
-<span id="cb24-13"><a href="#cb24-13"></a><span class="co">#&gt; 6: ({O1}, {P3 [0.5], P4 [0.5], P5})</span></span>
-<span id="cb24-14"><a href="#cb24-14"></a><span class="co">#&gt; 7: ({O1 [0.5], O2, O5}, {P3})</span></span>
-<span id="cb24-15"><a href="#cb24-15"></a><span class="co">#&gt; 8: ({O1 [0.5], O5}, {P3, P4 [0.5]})</span></span>
-<span id="cb24-16"><a href="#cb24-16"></a><span class="co">#&gt; 9: ({O1 [0.5]}, {P3, P4, P5})</span></span>
-<span id="cb24-17"><a href="#cb24-17"></a><span class="co">#&gt; 10: ({O2, O3, O6}, {P1 [0.5], P2 [0.5]})</span></span>
-<span id="cb24-18"><a href="#cb24-18"></a><span class="co">#&gt; 11: ({O3, O6}, {P1 [0.5], P2 [0.5], P6})</span></span>
-<span id="cb24-19"><a href="#cb24-19"></a><span class="co">#&gt; 12: ({O2}, {P1, P2, P3})</span></span>
-<span id="cb24-20"><a href="#cb24-20"></a><span class="co">#&gt; 13: ({}, {P1, P2, P3, P4, P5, P6})</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="co"># Get the index of those concepts with support </span>
+<span class="co"># greater than the threshold</span>
+<span class="no">idx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="no">fc_I</span>$<span class="no">concepts</span>$<span class="fu">support</span>() <span class="kw">&gt;</span> <span class="fl">0.2</span>)
+<span class="co"># Build the sublattice</span>
+<span class="no">sublattice</span> <span class="kw">&lt;-</span> <span class="no">fc_I</span>$<span class="no">concepts</span>$<span class="fu">sublattice</span>(<span class="no">idx</span>)
+<span class="no">sublattice</span>
+<span class="co">#&gt; A set of 13 concepts:</span>
+<span class="co">#&gt; 1: ({O1, O2, O3, O4, O5, O6}, {})</span>
+<span class="co">#&gt; 2: ({O1, O4, O5}, {P4 [0.5]})</span>
+<span class="co">#&gt; 3: ({O1, O4}, {P4 [0.5], P5 [0.5]})</span>
+<span class="co">#&gt; 4: ({O1, O2, O5}, {P3 [0.5]})</span>
+<span class="co">#&gt; 5: ({O1, O5}, {P3 [0.5], P4 [0.5]})</span>
+<span class="co">#&gt; 6: ({O1}, {P3 [0.5], P4 [0.5], P5})</span>
+<span class="co">#&gt; 7: ({O1 [0.5], O2, O5}, {P3})</span>
+<span class="co">#&gt; 8: ({O1 [0.5], O5}, {P3, P4 [0.5]})</span>
+<span class="co">#&gt; 9: ({O1 [0.5]}, {P3, P4, P5})</span>
+<span class="co">#&gt; 10: ({O2, O3, O6}, {P1 [0.5], P2 [0.5]})</span>
+<span class="co">#&gt; 11: ({O3, O6}, {P1 [0.5], P2 [0.5], P6})</span>
+<span class="co">#&gt; 12: ({O2}, {P1, P2, P3})</span>
+<span class="co">#&gt; 13: ({}, {P1, P2, P3, P4, P5, P6})</span></pre></body></html></div>
 <p>And we can plot just the sublattice:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>sublattice<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>()</span></code></pre></div>
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">sublattice</span>$<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>()</pre></body></html></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-24-1.png" width="672"></p>
 </div>
 <div id="subconcepts-superconcepts-infimum-and-supremum" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subconcepts-superconcepts-infimum-and-supremum" class="anchor"></a>Subconcepts, superconcepts, infimum and supremum</h2>
 <p>It may be interesting to use the notions of subconcept and superconcept. Given a concept, we can compute all its subconcepts and all its superconcepts:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># The fifth concept</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>C &lt;-<span class="st"> </span>fc_planets<span class="op">$</span>concepts[<span class="dv">5</span>][[<span class="dv">1</span>]]</span>
-<span id="cb26-3"><a href="#cb26-3"></a>C</span>
-<span id="cb26-4"><a href="#cb26-4"></a><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></span>
-<span id="cb26-5"><a href="#cb26-5"></a><span class="co"># Its subconcepts:</span></span>
-<span id="cb26-6"><a href="#cb26-6"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">subconcepts</span>(C)</span>
-<span id="cb26-7"><a href="#cb26-7"></a><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></span>
-<span id="cb26-8"><a href="#cb26-8"></a><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></span>
-<span id="cb26-9"><a href="#cb26-9"></a><span class="co"># And its superconcepts:</span></span>
-<span id="cb26-10"><a href="#cb26-10"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">superconcepts</span>(C)</span>
-<span id="cb26-11"><a href="#cb26-11"></a><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></span>
-<span id="cb26-12"><a href="#cb26-12"></a><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></span>
-<span id="cb26-13"><a href="#cb26-13"></a><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></span>
-<span id="cb26-14"><a href="#cb26-14"></a><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co"># The fifth concept</span>
+<span class="no">C</span> <span class="kw">&lt;-</span> <span class="no">fc_planets</span>$<span class="no">concepts</span>[<span class="fl">5</span>]<span class="kw">[[</span><span class="fl">1</span>]]
+<span class="no">C</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co"># Its subconcepts:</span>
+<span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">subconcepts</span>(<span class="no">C</span>)
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span>
+<span class="co"># And its superconcepts:</span>
+<span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">superconcepts</span>(<span class="no">C</span>)
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
+<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></pre></body></html></div>
 <p>Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># A list of concepts</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a>C &lt;-<span class="st"> </span>fc_planets<span class="op">$</span>concepts[<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>]</span>
-<span id="cb27-3"><a href="#cb27-3"></a>C</span>
-<span id="cb27-4"><a href="#cb27-4"></a><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a><span class="co">#&gt; ({Earth, Mars, Pluto}, {small, moon})</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a></span>
-<span id="cb27-8"><a href="#cb27-8"></a><span class="co"># Supremum of the concepts in C</span></span>
-<span id="cb27-9"><a href="#cb27-9"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">supremum</span>(C)</span>
-<span id="cb27-10"><a href="#cb27-10"></a><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></span>
-<span id="cb27-11"><a href="#cb27-11"></a><span class="co"># Infimum of the concepts in C</span></span>
-<span id="cb27-12"><a href="#cb27-12"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">infimum</span>(C)</span>
-<span id="cb27-13"><a href="#cb27-13"></a><span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="co"># A list of concepts</span>
+<span class="no">C</span> <span class="kw">&lt;-</span> <span class="no">fc_planets</span>$<span class="no">concepts</span>[<span class="fl">5</span>:<span class="fl">7</span>]
+<span class="no">C</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="co">#&gt; ({Earth, Mars, Pluto}, {small, moon})</span>
+
+<span class="co"># Supremum of the concepts in C</span>
+<span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">supremum</span>(<span class="no">C</span>)
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
+<span class="co"># Infimum of the concepts in C</span>
+<span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">infimum</span>(<span class="no">C</span>)
+<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></pre></body></html></div>
 </div>
 <div id="join--and-meet--irreducible-elements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#join--and-meet--irreducible-elements" class="anchor"></a>Join- and meet- irreducible elements</h2>
 <p>Also irreducible elements with respect to join (supremum) and meet (infimum) can be computed for a given concept lattice:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">join_irreducibles</span>()</span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a><span class="co">#&gt; ({Pluto}, {small, far, moon})</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a><span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></span>
-<span id="cb28-6"><a href="#cb28-6"></a><span class="co">#&gt; ({Earth, Mars}, {small, near, moon})</span></span>
-<span id="cb28-7"><a href="#cb28-7"></a>fc_planets<span class="op">$</span>concepts<span class="op">$</span><span class="kw">meet_irreducibles</span>()</span>
-<span id="cb28-8"><a href="#cb28-8"></a><span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span></span>
-<span id="cb28-9"><a href="#cb28-9"></a><span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></span>
-<span id="cb28-10"><a href="#cb28-10"></a><span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span></span>
-<span id="cb28-11"><a href="#cb28-11"></a><span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></span>
-<span id="cb28-12"><a href="#cb28-12"></a><span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span></span>
-<span id="cb28-13"><a href="#cb28-13"></a><span class="co">#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})</span></span>
-<span id="cb28-14"><a href="#cb28-14"></a><span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">join_irreducibles</span>()
+<span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({Pluto}, {small, far, moon})</span>
+<span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span>
+<span class="co">#&gt; ({Earth, Mars}, {small, near, moon})</span>
+<span class="no">fc_planets</span>$<span class="no">concepts</span>$<span class="fu">meet_irreducibles</span>()
+<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})</span>
+<span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></pre></body></html></div>
 <p>This are the concepts used to build the <em>standard context</em>, mentioned above.</p>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">Introduction</a></li>
-      <li><a href="#datasets">Datasets</a></li>
-      <li>
-<a href="#working-with-formal-contexts">Working with Formal Contexts</a>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#plotting-printing-and-latex-ing-the-formalcontext">Plotting, printing and latex-ing the FormalContext</a></li>
-      <li><a href="#closures">Closures</a></li>
-      <li><a href="#clarification-and-reduction">Clarification and Reduction</a></li>
-      <li><a href="#extracting-implications-and-concepts">Extracting Implications and Concepts</a></li>
-      <li><a href="#standard-context">Standard Context</a></li>
-      <li><a href="#saving-and-loading">Saving and loading</a></li>
-      </ul>
-</li>
-      <li>
-<a href="#concept-lattice">Concept Lattice</a>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#plot-print-and-latex">Plot, print and LaTeX</a></li>
-      <li><a href="#getting-all-extents-intents-and-retrieving-concepts">Getting all extents, intents and retrieving concepts</a></li>
-      <li><a href="#concept-support">Concept support</a></li>
-      <li><a href="#sublattices">Sublattices</a></li>
-      <li><a href="#subconcepts-superconcepts-infimum-and-supremum">Subconcepts, superconcepts, infimum and supremum</a></li>
-      <li><a href="#join--and-meet--irreducible-elements">Join- and meet- irreducible elements</a></li>
-      </ul>
-</li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -943,7 +915,7 @@ O6
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

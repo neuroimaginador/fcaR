@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-In this vignette, we present the main functionalities and data structures of the `fcaR` package when working with formal contexts and concepts, in FCA.
+In this vignette, we present the main functionalities and data structures of the `fcaR` package when working with implications in FCA.
 
 We load the `fcaR` package by:
 ```{r setup}

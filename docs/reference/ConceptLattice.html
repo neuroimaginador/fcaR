@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="R6 class for a context lattice — ConceptLattice" />
 <meta property="og:description" content="This class implements the data structure and methods for concept lattices." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +114,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/neuroimaginador/fcaR">
+  <a href="https://github.com/neuroimaginador/fcaR/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -171,10 +174,10 @@
 <p><hr>
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
 <p>Create a new <code>ConceptLattice</code> object.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$new(extents, intents, objects, attributes, I = NULL)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>new</span>(<span class='no'>extents</span>, <span class='no'>intents</span>, <span class='no'>objects</span>, <span class='no'>attributes</span>, <span class='kw'>I</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>extents</code></dt><dd><p>(<code>dgCMatrix</code>) The extents of all concepts</p></dd>
 
 <dt><code>intents</code></dt><dd><p>(<code>dgCMatrix</code>) The intents of all concepts</p></dd>
@@ -191,38 +194,38 @@
 <p><hr>
 <a id="method-size"></a></p><h3>Method <code>size()</code></h3>
 <p>Size of the Lattice</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$size()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>size</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The number of concepts in the lattice.</p>
 <p><hr>
 <a id="method-is_empty"></a></p><h3>Method <code>is_empty()</code></h3>
 <p>Is the lattice empty?</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$is_empty()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>is_empty</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p><code>TRUE</code> if the lattice has no concepts.</p>
 <p><hr>
 <a id="method-extents"></a></p><h3>Method <code>extents()</code></h3>
 <p>Concept Extents</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$extents()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>extents</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The extents of all concepts, as a <code>dgCMatrix</code>.</p>
 <p><hr>
 <a id="method-intents"></a></p><h3>Method <code>intents()</code></h3>
 <p>Concept Intents</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$intents()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>intents</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The intents of all concepts, as a <code>dgCMatrix</code>.</p>
 <p><hr>
-<a id="method-plot"></a></p><h3>Method <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code></h3>
+<a id="method-plot"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code></h3>
 <p>Plot the concept lattice</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$plot(object_names = TRUE, to_latex = FALSE, ...)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>object_names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>to_latex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>object_names</code></dt><dd><p>(logical) If <code>TRUE</code>, plot object names, otherwise omit them from the diagram.</p></dd>
 
 <dt><code>to_latex</code></dt><dd><p>(logical) If <code>TRUE</code>, export the plot as a <code>tikzpicture</code> environment that can be included in a <code>LaTeX</code> file.</p></dd>
@@ -239,17 +242,17 @@
 <p><hr>
 <a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Print the Concept Lattice</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$print()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>Nothing, just prints the lattice.</p>
 <p><hr>
 <a id="method-to_latex"></a></p><h3>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
 <p>Write in LaTeX</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$to_latex(print = TRUE, ncols = 1, numbered = TRUE, align = TRUE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'><a href='to_latex.html'>to_latex</a></span>(<span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ncols</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>numbered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>align</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
 
 <dt><code>ncols</code></dt><dd><p>(integer) Number of columns of the output.</p></dd>
@@ -267,7 +270,7 @@
 <p><div class="r"></p><pre>ConceptLattice$[(indices)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>indices</code></dt><dd><p>(numeric or logical vector) The indices of the concepts to return as a list of SparseConcepts. It can be a vector of logicals where <code>TRUE</code> elements are to be retained.</p></dd>
 
 </dl><p></div></p>
@@ -276,10 +279,10 @@
 <p><hr>
 <a id="method-sublattice"></a></p><h3>Method <code>sublattice()</code></h3>
 <p>Sublattice</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$sublattice(...)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>sublattice</span>(<span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>...</code></dt><dd><p>See Details.</p></dd>
 
 </dl><p></div></p>
@@ -291,24 +294,24 @@
 <p><hr>
 <a id="method-join_irreducibles"></a></p><h3>Method <code>join_irreducibles()</code></h3>
 <p>Join-irreducible Elements</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$join_irreducibles()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>join_irreducibles</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The join-irreducible elements in the concept lattice.</p>
 <p><hr>
 <a id="method-meet_irreducibles"></a></p><h3>Method <code>meet_irreducibles()</code></h3>
 <p>Meet-irreducible Elements</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$meet_irreducibles()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>meet_irreducibles</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The meet-irreducible elements in the concept lattice.</p>
 <p><hr>
 <a id="method-decompose"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose()</a></code></h3>
 <p>Decompose a concept as the supremum of meet-irreducible concepts</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$decompose(C)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'><a href='https://rdrr.io/r/stats/decompose.html'>decompose</a></span>(<span class='no'>C</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>C</code></dt><dd><p>A list of <code>SparseConcept</code>s</p></dd>
 
 </dl><p></div></p>
@@ -317,10 +320,10 @@
 <p><hr>
 <a id="method-supremum"></a></p><h3>Method <code>supremum()</code></h3>
 <p>Supremum of Concepts</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$supremum(...)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>supremum</span>(<span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>...</code></dt><dd><p>See Details.</p></dd>
 
 </dl><p></div></p>
@@ -332,10 +335,10 @@
 <p><hr>
 <a id="method-infimum"></a></p><h3>Method <code>infimum()</code></h3>
 <p>Infimum of Concepts</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$infimum(...)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>infimum</span>(<span class='no'>...</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>...</code></dt><dd><p>See Details.</p></dd>
 
 </dl><p></div></p>
@@ -347,10 +350,10 @@
 <p><hr>
 <a id="method-subconcepts"></a></p><h3>Method <code>subconcepts()</code></h3>
 <p>Subconcepts of a Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$subconcepts(C)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>subconcepts</span>(<span class='no'>C</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>C</code></dt><dd><p>(numeric or <code>SparseConcept</code>) The concept to which determine all its subconcepts.</p></dd>
 
 </dl><p></div></p>
@@ -359,10 +362,10 @@
 <p><hr>
 <a id="method-superconcepts"></a></p><h3>Method <code>superconcepts()</code></h3>
 <p>Superconcepts of a Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$superconcepts(C)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>superconcepts</span>(<span class='no'>C</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>C</code></dt><dd><p>(numeric or <code>SparseConcept</code>) The concept to which determine all its superconcepts.</p></dd>
 
 </dl><p></div></p>
@@ -371,10 +374,10 @@
 <p><hr>
 <a id="method-lower_neighbours"></a></p><h3>Method <code>lower_neighbours()</code></h3>
 <p>Lower Neighbours of a Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$lower_neighbours(C)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>lower_neighbours</span>(<span class='no'>C</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>C</code></dt><dd><p>(<code>SparseConcept</code>) The concept to which find its lower neighbours</p></dd>
 
 </dl><p></div></p>
@@ -383,10 +386,10 @@
 <p><hr>
 <a id="method-upper_neighbours"></a></p><h3>Method <code>upper_neighbours()</code></h3>
 <p>Upper Neighbours of a Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$upper_neighbours(C)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>upper_neighbours</span>(<span class='no'>C</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>C</code></dt><dd><p>(<code>SparseConcept</code>) The concept to which find its upper neighbours</p></dd>
 
 </dl><p></div></p>
@@ -395,17 +398,17 @@
 <p><hr>
 <a id="method-support"></a></p><h3>Method <code>support()</code></h3>
 <p>Get support of each concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$support()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>support</span>()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A vector with the support of each concept.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>ConceptLattice$clone(deep = FALSE)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='no'>ConceptLattice</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
+<p><div class="arguments"></p><dl'>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -420,7 +423,7 @@
 <span class='no'>fc_planets</span>$<span class='fu'>find_concepts</span>()
 
 <span class='co'># Plot the concept lattice</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>()</div><div class='img'><img src='ConceptLattice-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>()</div><div class='img'><img src='ConceptLattice-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Find join- and meet- irreducible elements</span>
 <span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'>join_irreducibles</span>()</div><div class='output co'>#&gt; ({Jupiter, Saturn}, {large, far, moon})
 #&gt; ({Uranus, Neptune}, {medium, far, moon})
@@ -438,13 +441,10 @@
 #&gt;  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -455,7 +455,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
