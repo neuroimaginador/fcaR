@@ -24,6 +24,8 @@
 #'
 #' @references
 #'
+#' Ganter B, Obiedkov S (2016). Conceptual Exploration. Springer. https://doi.org/10.1007/978-3-662-49291-8
+#'
 #' Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” _J Stat Softw_, *14*, 1-25.
 #'
 #' Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” _International Journal of Approximate Reasoning_, *70*, 51-67.
@@ -452,6 +454,7 @@ ImplicationSet <- R6::R6Class(
     #' Convert Implications to Canonical Basis
     #'
     #' @return The canonical basis of implications obtained from the current \code{ImplicationSet}
+    #'
     #' @export
     #'
     to_basis = function() {

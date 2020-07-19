@@ -26,6 +26,8 @@ fc_planets$implications$apply_rules("simplification")
 
 }
 \references{
+Ganter B, Obiedkov S (2016). Conceptual Exploration. Springer. https://doi.org/10.1007/978-3-662-49291-8
+
 Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” \emph{J Stat Softw}, \emph{14}, 1-25.
 
 Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” \emph{International Journal of Approximate Reasoning}, \emph{70}, 51-67.
