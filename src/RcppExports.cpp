@@ -5,6 +5,97 @@
 
 using namespace Rcpp;
 
+// print_matrix
+void print_matrix(NumericMatrix I);
+RcppExport SEXP _fcaR_print_matrix(SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    print_matrix(I);
+    return R_NilValue;
+END_RCPP
+}
+// get_element_array
+double get_element_array(NumericVector I, int i, int j, int k);
+RcppExport SEXP _fcaR_get_element_array(SEXP ISEXP, SEXP iSEXP, SEXP jSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type I(ISEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type j(jSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_element_array(I, i, j, k));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FuzzyFastCbo_C
+List FuzzyFastCbo_C(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// my_dims
+IntegerVector my_dims(NumericVector I);
+RcppExport SEXP _fcaR_my_dims(SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(my_dims(I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// write_element_array
+void write_element_array(NumericVector I, int i, int j, int k, double x);
+RcppExport SEXP _fcaR_write_element_array(SEXP ISEXP, SEXP iSEXP, SEXP jSEXP, SEXP kSEXP, SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type I(ISEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type j(jSEXP);
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    write_element_array(I, i, j, k, x);
+    return R_NilValue;
+END_RCPP
+}
+// next_closure_implications
+List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool save_concepts, bool verbose);
+RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< bool >::type save_concepts(save_conceptsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_implications(I, grades_set, attrs, save_concepts, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
+// next_closure_concepts
+List next_closure_concepts(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
+RcppExport SEXP _fcaR_next_closure_concepts(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_concepts(I, grades_set, attrs, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compute_intent
 S4 compute_intent(S4 V, NumericMatrix I);
 RcppExport SEXP _fcaR_compute_intent(SEXP VSEXP, SEXP ISEXP) {
@@ -38,35 +129,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
     rcpp_result_gen = Rcpp::wrap(compute_closure(V, I));
-    return rcpp_result_gen;
-END_RCPP
-}
-// next_closure_implications
-List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool save_concepts, bool verbose);
-RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
-    Rcpp::traits::input_parameter< bool >::type save_concepts(save_conceptsSEXP);
-    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(next_closure_implications(I, grades_set, attrs, save_concepts, verbose));
-    return rcpp_result_gen;
-END_RCPP
-}
-// next_closure_concepts
-List next_closure_concepts(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
-RcppExport SEXP _fcaR_next_closure_concepts(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
-    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(next_closure_concepts(I, grades_set, attrs, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -204,11 +266,16 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
+    {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
+    {"_fcaR_FuzzyFastCbo_C", (DL_FUNC) &_fcaR_FuzzyFastCbo_C, 3},
+    {"_fcaR_my_dims", (DL_FUNC) &_fcaR_my_dims, 1},
+    {"_fcaR_write_element_array", (DL_FUNC) &_fcaR_write_element_array, 5},
+    {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 5},
+    {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 4},
     {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
     {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 2},
     {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 2},
-    {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 5},
-    {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 4},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},

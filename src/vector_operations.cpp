@@ -531,3 +531,65 @@ S4 set_difference_single(IntegerVector xi,
   return SparseToS4_fast(res);
 
 }
+
+NumericVector as_vector(SparseVector v) {
+
+  NumericVector x(v.length);
+
+  for (int i = 0; i < v.i.used; i++) {
+
+    x[v.i.array[i]] = v.x.array[i];
+
+  }
+
+  return(x);
+
+}
+
+SparseVector as_sparse(NumericVector v) {
+
+  SparseVector res;
+  initVector(&res, v.size());
+
+  for (int i = 0; i < v.size(); i++) {
+
+    if (v[i] > 0) {
+
+      insertArray(&(res.i), i);
+      insertArray(&(res.x), v[i]);
+
+    }
+
+  }
+
+  return res;
+
+}
+
+double get_element(SparseVector v, int n) {
+
+  if (n > v.length - 1) {
+
+    return 0;
+
+  }
+
+  double res = 0;
+
+  for (int i = 0; i < v.i.used; i++) {
+
+    if (v.i.array[i] > n)
+      break;
+
+    if (v.i.array[i] == n) {
+
+      res = v.x.array[i];
+      break;
+
+    }
+
+  }
+
+  return res;
+
+}

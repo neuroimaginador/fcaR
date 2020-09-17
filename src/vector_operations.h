@@ -54,3 +54,7 @@ void add_column(SparseVector *a, SparseVector b);
 SparseVector S4toSparse(S4 A);
 S4 SparseToS4(SparseVector V);
 S4 SparseToS4_fast(SparseVector V);
+
+NumericVector as_vector(SparseVector v);
+SparseVector as_sparse(NumericVector v);
+double get_element(SparseVector v, int n);
