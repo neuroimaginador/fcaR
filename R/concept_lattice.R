@@ -60,7 +60,6 @@ ConceptLattice <- R6::R6Class(
           attributes = attributes)
 
         private$I <- I
-        # private$subconcept_matrix <- .subset(extents)
 
       }
 
