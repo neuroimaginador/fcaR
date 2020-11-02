@@ -1,4 +1,3 @@
-#' @importFrom parallel mclapply
 .batch_apply <- function(LHS, RHS, attributes,
                          rules = c("generalization",
                                    "composition"),
@@ -30,11 +29,12 @@
            n_implications + 1)
 
   # Parallel execution?
-  if (parallelize && requireNamespace("parallel")) {
+  if (parallelize && requireNamespace("parallel", quietly = TRUE)) {
 
     message("Using parallel execution\n")
 
-    my_apply <- function(x, FUN) parallel::mclapply(x, FUN, mc.cores = parallel::detectCores())
+    my_apply <- function(x, FUN)
+      parallel::mclapply(x, FUN, mc.cores = parallel::detectCores())
 
     verbose <- TRUE
 

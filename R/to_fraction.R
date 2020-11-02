@@ -6,7 +6,6 @@
 #
 # @return A character string representing the matrix. It can be \code{cat}ed.
 #
-#' @importFrom fractional vfractional numerators denominators
 .to_fraction <- function(A, latex = FALSE, type = "frac") {
 
   if (is.character(A)) return(A)

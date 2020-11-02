@@ -1,7 +1,6 @@
-#' @importFrom stringr str_flatten
 set_to_latex <- function(S, attributes) {
 
-  idx <- which(S > 0)
+  idx <- Matrix::which(S > 0)
 
   if (length(idx) > 0) {
 
@@ -9,8 +8,8 @@ set_to_latex <- function(S, attributes) {
     att <- attributes[idx]
 
     tmp <- paste0("\\ensuremath{\\left\\{",
-                  str_flatten(paste0("{^{", A, "}}\\!/\\mathrm{", att, "}"),
-                              collapse = ",\\, "), "\\right\\}}")
+                  stringr::str_flatten(paste0("{^{", A, "}}\\!/\\mathrm{", att, "}"),
+                                       collapse = ",\\, "), "\\right\\}}")
 
   } else {
 
@@ -26,8 +25,6 @@ set_to_latex <- function(S, attributes) {
 
 }
 
-#' @importFrom stringr str_flatten
-#' @importFrom Matrix Matrix
 imp_to_latex <- function(imp_set, ncols = 1,
                          numbered = TRUE,
                          numbers = seq(imp_set$cardinality())) {
@@ -40,8 +37,8 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   for (i in seq(ncol(LHS))) {
 
-    lhs <- Matrix(LHS[, i], sparse = TRUE)
-    rhs <- Matrix(RHS[, i], sparse = TRUE)
+    lhs <- Matrix::Matrix(LHS[, i], sparse = TRUE)
+    rhs <- Matrix::Matrix(RHS[, i], sparse = TRUE)
 
     prefix <- ifelse(numbered, paste0(numbers[i], ": &"), "")
     output <- c(output,
@@ -64,13 +61,13 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   output <- sapply(seq(nrow(output)), function(r) {
 
-    paste0(str_flatten(output[r, ], collapse = " & "), "\\\\")
+    paste0(stringr::str_flatten(output[r, ], collapse = " & "), "\\\\")
 
   })
 
   format_cols <- ifelse(numbered, "rrcl", "rcl")
 
-  output <- c(paste0("\\begin{longtable}{", str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
+  output <- c(paste0("\\begin{longtable}{", stringr::str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
 
   output <- paste(output, collapse = "\n")
 
@@ -80,7 +77,6 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
 }
 
-#' @importFrom stringr str_flatten
 concepts_to_latex <- function(concept_list,
                               ncols = 1,
                               align = TRUE,
@@ -108,7 +104,7 @@ concepts_to_latex <- function(concept_list,
 
   output <- sapply(seq(nrow(output)), function(r) {
 
-    paste0(str_flatten(output[r, ], collapse = " & "), "\\\\")
+    paste0(stringr::str_flatten(output[r, ], collapse = " & "), "\\\\")
 
   })
 
@@ -116,7 +112,7 @@ concepts_to_latex <- function(concept_list,
                    ifelse(align, "ll", "l"))
 
   output <- c(paste0("\\begin{longtable}{",
-                     str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
+                     stringr::str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
 
   output <- paste(output, collapse = "\n")
 

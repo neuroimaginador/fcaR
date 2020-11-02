@@ -28,7 +28,7 @@
 
     if (length(idx_subsets) == 1) {
 
-      A <- Matrix(RHS[, idx_subsets], sparse = TRUE)
+      A <- Matrix::Matrix(RHS[, idx_subsets], sparse = TRUE)
 
     } else {
 
@@ -108,8 +108,8 @@
 
   if (length(idx_subsets) > 0) {
 
-    LHS <- Matrix(LHS[, -idx_subsets], sparse = TRUE)
-    RHS <- Matrix(RHS[, -idx_subsets], sparse = TRUE)
+    LHS <- Matrix::Matrix(LHS[, -idx_subsets], sparse = TRUE)
+    RHS <- Matrix::Matrix(RHS[, -idx_subsets], sparse = TRUE)
 
   }
 
@@ -126,7 +126,7 @@
   CD <- .union(LHS, RHS)
 
   intersections <- .intersection(x = S, y = CD)
-  idx_not_empty <- which(colSums(intersections) > 0)
+  idx_not_empty <- Matrix::which(Matrix::colSums(intersections) > 0)
 
   if (length(idx_not_empty) > 0) {
 
@@ -150,19 +150,19 @@
                                  S@i, S@p, S@x,
                                  nrow(Didx))
 
-    idx_zeros <- which(colSums(D_B) == 0)
+    idx_zeros <- Matrix::which(Matrix::colSums(D_B) == 0)
 
     if (length(idx_zeros) > 0) {
 
-      C_B <- Matrix(C_B[, -idx_zeros], sparse = TRUE)
-      D_B <- Matrix(D_B[, -idx_zeros], sparse = TRUE)
+      C_B <- Matrix::Matrix(C_B[, -idx_zeros], sparse = TRUE)
+      D_B <- Matrix::Matrix(D_B[, -idx_zeros], sparse = TRUE)
 
     }
 
     LHS <- cbind(C_B,
-                 Matrix(C[, -idx_not_empty], sparse = TRUE))
+                 Matrix::Matrix(C[, -idx_not_empty], sparse = TRUE))
     RHS <- cbind(D_B,
-                 Matrix(D[, -idx_not_empty], sparse = TRUE))
+                 Matrix::Matrix(D[, -idx_not_empty], sparse = TRUE))
 
   }
 

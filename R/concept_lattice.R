@@ -137,9 +137,6 @@ ConceptLattice <- R6::R6Class(
     #' @return If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the \code{LaTeX} code to reproduce the concept lattice.
     #' @export
     #'
-    #' @importFrom hasseDiagram hasse
-    #' @importFrom stringr str_replace_all fixed
-    #' @importFrom tikzDevice tikz
     plot = function(object_names = TRUE,
                     to_latex = FALSE,
                     ...) {
@@ -156,8 +153,8 @@ ConceptLattice <- R6::R6Class(
 
           labels <- sapply(private$concepts,
                            function(l) l$to_latex(print = FALSE)) %>%
-            str_replace_all(pattern = "\n",
-                            replacement = "")
+            stringr::str_replace_all(pattern = "\n",
+                                     replacement = "")
 
         } else {
 
@@ -170,8 +167,8 @@ ConceptLattice <- R6::R6Class(
         }
 
         labels <- labels %>%
-          str_replace_all(pattern = fixed(" "),
-                          replacement = "\\,")
+          stringr::str_replace_all(pattern = stringr::fixed(" "),
+                                   replacement = "\\,")
 
       } else {
 
@@ -264,7 +261,7 @@ ConceptLattice <- R6::R6Class(
         if ("pointsize" %in% names(dots)) {
 
           options("tikzDocumentDeclaration" = paste0("\\documentclass[", dots$pointsize,
-                                                    "pt]{article}\n"))
+                                                     "pt]{article}\n"))
 
         }
 
@@ -275,13 +272,13 @@ ConceptLattice <- R6::R6Class(
 
         args[names(dots)] <- dots[names(dots)]
 
-        do.call(tikz, args = args)
+        do.call(tikzDevice::tikz, args = args)
 
       }
 
-      hasse(data = as.matrix(t(private$subconcept_matrix)),
-            labels = labels,
-            parameters = list(arrows = "backward"))
+      hasseDiagram::hasse(data = Matrix::as.matrix(Matrix::t(private$subconcept_matrix)),
+                          labels = labels,
+                          parameters = list(arrows = "backward"))
 
       if (to_latex) {
 
@@ -466,7 +463,6 @@ ConceptLattice <- R6::R6Class(
     #'
     #' @export
     #'
-    #' @importFrom Matrix colSums
     join_irreducibles = function() {
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
@@ -481,7 +477,7 @@ ConceptLattice <- R6::R6Class(
 
       }
 
-      idx <- which(colSums(private$reduced_matrix) == 1)
+      idx <- which(Matrix::colSums(private$reduced_matrix) == 1)
       self[idx]
 
     },
@@ -494,7 +490,6 @@ ConceptLattice <- R6::R6Class(
     #'
     #' @export
     #'
-    #' @importFrom Matrix colSums
     meet_irreducibles = function() {
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
@@ -503,9 +498,9 @@ ConceptLattice <- R6::R6Class(
 
       }
 
-      M <- .reduce_transitivity(t(private$subconcept_matrix))
+      M <- .reduce_transitivity(Matrix::t(private$subconcept_matrix))
 
-      idx <- which(colSums(M) == 1)
+      idx <- which(Matrix::colSums(M) == 1)
       self[idx]
 
     },
@@ -519,7 +514,6 @@ ConceptLattice <- R6::R6Class(
     #'
     #' @export
     #'
-    #' @importFrom Matrix rowSums
     decompose = function(C) {
 
       irreducible <- self$meet_irreducibles()
@@ -532,13 +526,13 @@ ConceptLattice <- R6::R6Class(
 
                      if (r$get_intent()$cardinal() == 0) return(r)
 
-                     id <- which(.subset(irr_intents,
-                                         r$get_intent()$get_vector()))
+                     id <- Matrix::which(.subset(irr_intents,
+                                                 r$get_intent()$get_vector()))
 
                      if (length(id) > 1) {
 
                        MM <- .subset(irr_intents[, id])
-                       id <- id[rowSums(MM) == 1]
+                       id <- id[Matrix::rowSums(MM) == 1]
 
                      }
                      foo <- irreducible[id]
@@ -625,8 +619,8 @@ ConceptLattice <- R6::R6Class(
       }
 
       # Get the index of all subconcepts
-      M <- t(private$subconcept_matrix)[idx, ]
-      candidates <- which(M > 0)
+      M <- Matrix::t(private$subconcept_matrix)[idx, ]
+      candidates <- Matrix::which(M > 0)
 
       self[candidates]
 
@@ -720,7 +714,6 @@ ConceptLattice <- R6::R6Class(
     #' Get support of each concept
     #'
     #' @return A vector with the support of each concept.
-    #' @importFrom Matrix rowMeans
     #' @export
     support = function() {
 
@@ -735,7 +728,7 @@ ConceptLattice <- R6::R6Class(
 
       subsets <- .subset(private$pr_intents, my_I)
 
-      private$concept_support <- rowMeans(subsets)
+      private$concept_support <- Matrix::rowMeans(subsets)
 
       return(private$concept_support)
 
@@ -765,7 +758,7 @@ ConceptLattice <- R6::R6Class(
       indices <- .equal_sets(x = extents,
                              y = private$pr_extents)
 
-      indices <- arrayInd(which(indices),
+      indices <- arrayInd(Matrix::which(indices),
                           .dim = dim(indices))[, 2]
 
       return(indices)

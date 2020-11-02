@@ -13,7 +13,7 @@ as_SparseSet <- function(A) {
 
   attributes <- names(A)
   SparseSet$new(attributes = attributes,
-                M = Matrix(A, sparse = TRUE))
+                M = Matrix::Matrix(A, sparse = TRUE))
 
 }
 

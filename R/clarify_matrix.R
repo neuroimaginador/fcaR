@@ -17,7 +17,7 @@
     i <- which(v > 0)
     new_att <- c(new_att,
                  paste0("[",
-                        str_flatten(cols[i],
+                        stringr::str_flatten(cols[i],
                                     collapse = ", "),
                         "]"))
     equal_attributes <- setdiff(equal_attributes, i)

@@ -10,9 +10,6 @@
 #' print(S)
 #' S$to_latex()
 #'
-#' @importFrom methods as is slotNames
-#' @importFrom Matrix Matrix
-#'
 #' @export
 SparseSet <- R6::R6Class(
 
@@ -37,14 +34,14 @@ SparseSet <- R6::R6Class(
 
       if (!is.null(M)) {
 
-        private$v <- Matrix(M, sparse = TRUE)
+        private$v <- Matrix::Matrix(M, sparse = TRUE)
 
       } else {
 
-        private$v <- Matrix(0,
-                            nrow = length(attributes),
-                            ncol = 1,
-                            sparse = TRUE)
+        private$v <- Matrix::Matrix(0,
+                                    nrow = length(attributes),
+                                    ncol = 1,
+                                    sparse = TRUE)
 
       }
 
@@ -186,16 +183,15 @@ SparseSet <- R6::R6Class(
     #'
     #' @return A string with the elements of the set and their grades between brackets {}.
     #'
-    #' @importFrom stringr str_wrap
     #' @export
     print = function() {
 
       if (sum(private$v) > 0) {
 
-        cat(str_wrap(.set_to_string(S = private$v,
-                                    attributes = private$attributes),
-                     width = 75,
-                     exdent = 2))
+        cat(stringr::str_wrap(.set_to_string(S = private$v,
+                                             attributes = private$attributes),
+                              width = 75,
+                              exdent = 2))
 
       } else {
 

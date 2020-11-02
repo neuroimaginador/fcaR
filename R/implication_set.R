@@ -32,7 +32,6 @@
 #'
 #' Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” _International Journal of Computer Mathematics_, *89*(4), 510-526.
 #'
-#' @importFrom Matrix Matrix
 #' @export
 ImplicationSet <- R6::R6Class(
 
@@ -73,8 +72,8 @@ ImplicationSet <- R6::R6Class(
         name <- as.character(arules_imp@info$data)
         private$name <- name
 
-        private$lhs_matrix <- as(arules_imp@lhs@data, "dgCMatrix")
-        private$rhs_matrix <- as(arules_imp@rhs@data, "dgCMatrix")
+        private$lhs_matrix <- methods::as(arules_imp@lhs@data, "dgCMatrix")
+        private$rhs_matrix <- methods::as(arules_imp@rhs@data, "dgCMatrix")
 
         rownames(private$lhs_matrix) <- private$attributes
         rownames(private$rhs_matrix) <- private$attributes
@@ -135,10 +134,10 @@ ImplicationSet <- R6::R6Class(
           imp <- ImplicationSet$new(
             name = paste0(private$name, "_", paste0(idx)),
             attributes = private$attributes,
-            lhs = Matrix(private$lhs_matrix[, idx],
-                         sparse = TRUE),
-            rhs = Matrix(private$rhs_matrix[, idx],
-                         sparse = TRUE))
+            lhs = Matrix::Matrix(private$lhs_matrix[, idx],
+                                 sparse = TRUE),
+            rhs = Matrix::Matrix(private$rhs_matrix[, idx],
+                                 sparse = TRUE))
 
           return(imp)
 
@@ -165,8 +164,6 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @return A \code{rules} object as used by package \code{arules}.
     #'
-    #' @importFrom arules itemLabels info quality interestMeasure
-    #' @importFrom methods as is
     #' @export
     to_arules = function(quality = TRUE) {
 
@@ -189,27 +186,27 @@ ImplicationSet <- R6::R6Class(
                       RHS = private$rhs_matrix,
                       attributes = private$attributes)
 
-      LHS <- as(L$lhs, "ngCMatrix")
-      LHS <- as(LHS, "itemMatrix")
-      itemLabels(LHS) <- private$attributes
+      LHS <- methods::as(L$lhs, "ngCMatrix")
+      LHS <- methods::as(LHS, "itemMatrix")
+      arules::itemLabels(LHS) <- private$attributes
 
-      RHS <- as(L$rhs, "ngCMatrix")
-      RHS <- as(RHS, "itemMatrix")
-      itemLabels(RHS) <- private$attributes
+      RHS <- methods::as(L$rhs, "ngCMatrix")
+      RHS <- methods::as(RHS, "itemMatrix")
+      arules::itemLabels(RHS) <- private$attributes
 
       rules <- new("rules", lhs = LHS, rhs = RHS)
 
       # This is needed in arules from version 1.6-6
       # Solves issue #15 by Michael Hahsler
-      info(rules) <- list(data = private$name,
-                          support = 0,
-                          confidence = 1,
-                          ntransactions = ncol(private$I))
+      arules::info(rules) <- list(data = private$name,
+                                  support = 0,
+                                  confidence = 1,
+                                  ntransactions = ncol(private$I))
 
       if (quality) {
 
-        quality(rules) <- interestMeasure(rules,
-                                          transactions = as(as(private$I, "ngCMatrix"), "transactions"))
+        arules::quality(rules) <- arules::interestMeasure(rules,
+                                                          transactions = methods::as(methods::as(private$I, "ngCMatrix"), "transactions"))
 
       }
 
@@ -243,7 +240,6 @@ ImplicationSet <- R6::R6Class(
           private$append_implications(implications)
 
         }
-
 
       } else {
 
@@ -316,8 +312,8 @@ ImplicationSet <- R6::R6Class(
     #' @export
     size = function() {
 
-      lhs_size <- colSums(private$lhs_matrix)
-      rhs_size <- colSums(private$rhs_matrix)
+      lhs_size <- Matrix::colSums(private$lhs_matrix)
+      rhs_size <- Matrix::colSums(private$rhs_matrix)
 
       return(cbind(LHS = lhs_size, RHS = rhs_size))
 
@@ -508,10 +504,10 @@ ImplicationSet <- R6::R6Class(
 
         implications <- sapply(seq(n_implications),
                                # function(i) paste0("Rule ", i, ": ",
-                                                 function(i) paste0("Rule: ",
+                               function(i) paste0("Rule: ",
                                                   .implication_to_string(LHS[, i], RHS[, i], attributes)))
 
-        implications <- sapply(implications, function(s) str_wrap(s, width = 70, exdent = 2))
+        implications <- sapply(implications, function(s) stringr::str_wrap(s, width = 70, exdent = 2))
 
         cat(implications, sep = "\n")
 
@@ -536,9 +532,9 @@ ImplicationSet <- R6::R6Class(
                         numbers = seq(self$cardinality())) {
 
       output <- imp_to_latex(self,
-                   ncols = ncols,
-                   numbered = numbered,
-                   numbers = numbers)
+                             ncols = ncols,
+                             numbered = numbered,
+                             numbers = numbers)
 
       if (print) {
 
@@ -560,7 +556,7 @@ ImplicationSet <- R6::R6Class(
 
       if (self$is_empty()) {
 
-        LHS <- Matrix(FALSE,
+        LHS <- Matrix::Matrix(FALSE,
                       nrow = length(private$attributes),
                       ncol = 1,
                       sparse = TRUE)
@@ -588,7 +584,7 @@ ImplicationSet <- R6::R6Class(
 
       if (self$is_empty()) {
 
-        RHS <- Matrix(FALSE,
+        RHS <- Matrix::Matrix(FALSE,
                       nrow = length(private$attributes),
                       ncol = 1,
                       sparse = TRUE)
@@ -634,7 +630,7 @@ ImplicationSet <- R6::R6Class(
 
         if (length(idx_attr) > 1) {
 
-          idx_lhs <- which(colSums(LHS[idx_attr, ]) > 0)
+          idx_lhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
 
         } else {
 
@@ -659,7 +655,7 @@ ImplicationSet <- R6::R6Class(
 
         if (length(idx_attr) > 1) {
 
-          idx_rhs <- which(colSums(RHS[idx_attr, ]) > 0)
+          idx_rhs <- Matrix::which(Matrix::colSums(RHS[idx_attr, ]) > 0)
 
         } else {
 
@@ -698,15 +694,15 @@ ImplicationSet <- R6::R6Class(
 
           imp <- ImplicationSet$new(name = paste0(private$name, "_filtered"),
                                     attributes = private$attributes,
-                                    lhs = Matrix(newLHS, sparse = TRUE),
-                                    rhs = Matrix(newRHS, sparse = TRUE))
+                                    lhs = Matrix::Matrix(newLHS, sparse = TRUE),
+                                    rhs = Matrix::Matrix(newRHS, sparse = TRUE))
 
         } else {
 
           imp <- ImplicationSet$new(name = paste0(private$name, "_filtered"),
                                     attributes = private$attributes,
-                                    lhs = Matrix(LHS[, idx], sparse = TRUE),
-                                    rhs = Matrix(RHS[, idx], sparse = TRUE))
+                                    lhs = Matrix::Matrix(LHS[, idx], sparse = TRUE),
+                                    rhs = Matrix::Matrix(RHS[, idx], sparse = TRUE))
 
         }
 
@@ -715,8 +711,6 @@ ImplicationSet <- R6::R6Class(
       }
 
     },
-
-
 
     #' @description
     #' Compute support of each implication
@@ -740,7 +734,7 @@ ImplicationSet <- R6::R6Class(
       subsets <- .subset(private$lhs_matrix,
                          private$I)
 
-      private$implication_support <- rowMeans(subsets)
+      private$implication_support <- Matrix::rowMeans(subsets)
 
       return(private$implication_support)
 

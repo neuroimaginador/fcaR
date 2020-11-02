@@ -45,7 +45,6 @@
 #'
 #' Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” _J Stat Softw_, *14*, 1-25.
 #'
-#' @importFrom methods as is slotNames
 #' @export
 FormalContext <- R6::R6Class(
 
@@ -81,9 +80,6 @@ FormalContext <- R6::R6Class(
     #' @return An object of the \code{FormalContext} class.
     #' @export
     #'
-    #' @importFrom Matrix Matrix t
-    #' @importFrom stringr str_wrap
-    #' @importFrom methods as is slotNames
     initialize = function(I,
                           remove_const = FALSE) {
 
@@ -98,7 +94,7 @@ FormalContext <- R6::R6Class(
 
         # If it comes from the arules package
         attributes <- I@itemInfo$labels
-        I <- as(I@data, "dgCMatrix")
+        I <- methods::as(I@data, "dgCMatrix")
         objects <- paste0(seq(ncol(I)))
         dimnames(I) <- list(attributes, objects)
 
@@ -132,11 +128,11 @@ FormalContext <- R6::R6Class(
 
           if (length(constant_cols) > 0) {
 
-            str <- paste0("Removed constant columns: ", str_flatten(attributes[constant_cols], collapse = ", "))
+            str <- paste0("Removed constant columns: ", stringr::str_flatten(attributes[constant_cols], collapse = ", "))
 
-            message(str_wrap(str,
-                             exdent = 2,
-                             width = 75))
+            message(stringr::str_wrap(str,
+                                      exdent = 2,
+                                      width = 75))
 
             I <- I[, -constant_cols]
             attributes <- attributes[-constant_cols]
@@ -145,13 +141,13 @@ FormalContext <- R6::R6Class(
 
         }
 
-        I <- as(Matrix(t(I),
-                       sparse = TRUE), "dgCMatrix")
+        I <- methods::as(Matrix::Matrix(t(I),
+                                        sparse = TRUE), "dgCMatrix")
 
       }
 
       # Assign everything to its corresponding field
-      expanded_grades_set <- compute_grades(t(I))
+      expanded_grades_set <- compute_grades(Matrix::t(I))
       grades_set <- sort(unique(unlist(expanded_grades_set)))
 
       self$I <- I
@@ -197,8 +193,6 @@ FormalContext <- R6::R6Class(
     #'
     #' @return A \code{SparseSet} with the intent.
     #'
-    #' @importFrom Matrix sparseMatrix
-    #'
     #' @export
     intent = function(S) {
 
@@ -218,15 +212,16 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$objects)) {
 
-        R <- compute_intent(S, as.matrix(t(self$I)))
+        R <- compute_intent(S,
+                            Matrix::as.matrix(Matrix::t(self$I)))
 
         if (length(R@i) > 0) {
 
           # Non-empty set:
-          R <- sparseMatrix(i = R@i + 1,
-                            j = rep(1, length(R@i)),
-                            x = R@x,
-                            dims = c(length(self$attributes), 1))
+          R <- Matrix::sparseMatrix(i = R@i + 1,
+                                    j = rep(1, length(R@i)),
+                                    x = R@x,
+                                    dims = c(length(self$attributes), 1))
 
           R <- SparseSet$new(attributes = self$attributes,
                              M = R)
@@ -254,8 +249,6 @@ FormalContext <- R6::R6Class(
     #'
     #' @return A \code{SparseSet} with the intent.
     #'
-    #' @importFrom Matrix sparseMatrix
-    #'
     #' @export
     extent = function(S) {
 
@@ -275,15 +268,16 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$attributes)) {
 
-        R <- compute_extent(S, as.matrix(t(self$I)))
+        R <- compute_extent(S,
+                            Matrix::as.matrix(Matrix::t(self$I)))
 
         if (length(R@i) > 0) {
 
           # Non-empty set:
-          R <- sparseMatrix(i = R@i + 1,
-                            j = rep(1, length(R@i)),
-                            x = R@x,
-                            dims = c(length(self$objects), 1))
+          R <- Matrix::sparseMatrix(i = R@i + 1,
+                                    j = rep(1, length(R@i)),
+                                    x = R@x,
+                                    dims = c(length(self$objects), 1))
 
           R <- SparseSet$new(attributes = self$objects,
                              M = R)
@@ -311,8 +305,6 @@ FormalContext <- R6::R6Class(
     #'
     #' @return A \code{SparseSet} with the closure.
     #'
-    #' @importFrom Matrix sparseMatrix
-    #'
     #' @export
     closure = function(S) {
 
@@ -332,15 +324,16 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$attributes)) {
 
-        R <- compute_closure(S, as.matrix(t(self$I)))
+        R <- compute_closure(S,
+                             Matrix::as.matrix(Matrix::t(self$I)))
 
         if (length(R@i) > 0) {
 
           # Non-empty set:
-          R <- sparseMatrix(i = R@i + 1,
-                            j = rep(1, length(R@i)),
-                            x = R@x,
-                            dims = c(length(self$attributes), 1))
+          R <- Matrix::sparseMatrix(i = R@i + 1,
+                                    j = rep(1, length(R@i)),
+                                    x = R@x,
+                                    dims = c(length(self$attributes), 1))
 
           R <- SparseSet$new(attributes = self$attributes,
                              M = R)
@@ -452,15 +445,15 @@ FormalContext <- R6::R6Class(
     clarify = function(copy = FALSE) {
 
       # Redundant attributes
-      my_I <- .clarify_matrix(t(self$I),
+      my_I <- .clarify_matrix(Matrix::t(self$I),
                               rows = self$objects,
                               cols = self$attributes)
 
       # And redundant objects
-      my_I <- .clarify_matrix(t(my_I),
+      my_I <- .clarify_matrix(Matrix::t(my_I),
                               rows = colnames(my_I),
                               cols = self$objects)
-      my_I <- as.matrix(t(my_I))
+      my_I <- Matrix::as.matrix(Matrix::t(my_I))
 
       if (copy) {
 
@@ -497,7 +490,7 @@ FormalContext <- R6::R6Class(
       # Make a copy with the clarified context
       fc2 <- self$clarify(TRUE)
 
-      my_I <- as.matrix(t(fc2$I))
+      my_I <- Matrix::as.matrix(Matrix::t(fc2$I))
 
       att <- fc2$attributes
 
@@ -617,7 +610,7 @@ FormalContext <- R6::R6Class(
 
       private$check_empty()
 
-      my_I <- as.matrix(t(self$I))
+      my_I <- Matrix::as.matrix(Matrix::t(self$I))
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
@@ -634,9 +627,9 @@ FormalContext <- R6::R6Class(
       if (length(self$attributes) == 1) {
 
 
-        my_intents <- Matrix(t(as.vector(L$intents)), sparse = TRUE)
+        my_intents <- Matrix::Matrix(t(as.vector(L$intents)), sparse = TRUE)
 
-        my_extents <- Matrix(t(as.vector(L$extents)), sparse = TRUE)
+        my_extents <- Matrix::Matrix(t(as.vector(L$extents)), sparse = TRUE)
 
       } else {
 
@@ -679,7 +672,7 @@ FormalContext <- R6::R6Class(
 
       private$check_empty()
 
-      my_I <- as.matrix(t(self$I))
+      my_I <- Matrix::as.matrix(Matrix::t(self$I))
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
@@ -739,14 +732,12 @@ FormalContext <- R6::R6Class(
     #'
     #' @return A \code{transactions} object.
     #'
-    #' @importFrom methods as
-    #'
     #' @export
     to_transactions = function() {
 
       private$check_empty()
 
-      return(as(as(self$I, "ngCMatrix"), "transactions"))
+      return(methods::as(methods::as(self$I, "ngCMatrix"), "transactions"))
 
     },
 
@@ -838,7 +829,6 @@ FormalContext <- R6::R6Class(
     #' Prints the formal context
     #'
     #' @return Prints information regarding the formal context.
-    #' @importFrom stringr str_flatten str_wrap
     #' @export
     print = function() {
 
@@ -852,7 +842,7 @@ FormalContext <- R6::R6Class(
 
       dims <- self$dim()
 
-      I <- as.matrix(t(self$I))
+      I <- Matrix::as.matrix(Matrix::t(self$I))
 
       if (dims[2] > 6) {
 
@@ -872,9 +862,9 @@ FormalContext <- R6::R6Class(
           dims[2], "attributes.\n")
 
       str <- paste0("Attributes' names are: ",
-                    str_flatten(my_attributes, collapse = ", "),
+                    stringr::str_flatten(my_attributes, collapse = ", "),
                     "\n")
-      cat(str_wrap(str, exdent = 2))
+      cat(stringr::str_wrap(str, exdent = 2))
       cat("\nMatrix:\n")
 
       if (length(my_attributes) > 1) {
@@ -886,8 +876,6 @@ FormalContext <- R6::R6Class(
         print(head(I))
 
       }
-
-
 
     },
 
@@ -904,12 +892,11 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     #'
-    #' @importFrom knitr kable
     to_latex = function(label = "", caption = "", fraction = c("none", "frac", "dfrac", "sfrac")) {
 
       fraction <- match.arg(fraction)
 
-      I <- as.matrix(t(self$I))
+      I <- Matrix::as.matrix(Matrix::t(self$I))
 
       if (fraction != "none") {
 
@@ -919,12 +906,12 @@ FormalContext <- R6::R6Class(
 
       }
 
-      str <- as.character(kable(I,
-                                format = "latex",
-                                booktabs = TRUE,
-                                align = "c",
-                                escape = FALSE,
-                                linesep = ""))
+      str <- as.character(knitr::kable(I,
+                                       format = "latex",
+                                       booktabs = TRUE,
+                                       align = "c",
+                                       escape = FALSE,
+                                       linesep = ""))
 
       str <- c("\\begin{table}",
                "\\centering",
@@ -955,10 +942,6 @@ FormalContext <- R6::R6Class(
     #'
     #' @return If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the \code{LaTeX} code to reproduce the formal context plot.
     #'
-    #' @importFrom scales colour_ramp
-    #' @importFrom RColorBrewer brewer.pal
-    #' @importFrom tikzDevice tikz
-    #'
     #' @export
     plot = function(to_latex = FALSE,
                     ...) {
@@ -966,7 +949,6 @@ FormalContext <- R6::R6Class(
       private$check_empty()
 
       if (to_latex) {
-
 
         tmp_file <- tempfile(fileext = ".tex")
         dots <- list(...)
@@ -1034,12 +1016,12 @@ FormalContext <- R6::R6Class(
 
         args[names(dots)] <- dots[names(dots)]
 
-        do.call(tikz, args = args)
+        do.call(tikzDevice::tikz, args = args)
 
       }
 
-      color_function <- colour_ramp(brewer.pal(9, "Greys"))
-      heatmap(t(as.matrix(self$I)), Rowv = NA, Colv = NA,
+      color_function <- scales::colour_ramp(RColorBrewer::brewer.pal(9, "Greys"))
+      heatmap(t(Matrix::as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")
 

@@ -1,22 +1,22 @@
 .simplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
-  LHS_subsets <- Matrix(FALSE, sparse = TRUE,
-                        ncol = ncol(LHS),
-                        nrow = ncol(LHS))
+  LHS_subsets <- Matrix::Matrix(FALSE, sparse = TRUE,
+                                ncol = ncol(LHS),
+                                nrow = ncol(LHS))
   intersections <- .self_intersection(LHS, RHS)
 
-  id_inter <- which(intersections == 0)
+  id_inter <- Matrix::which(intersections == 0)
 
-  LHS_subsets[, id_inter] <- t(.subset(LHS[, id_inter], LHS))
+  LHS_subsets[, id_inter] <- Matrix::t(.subset(LHS[, id_inter], LHS))
 
   # This gives the LHS that are subsets of other LHS
-  col_values <- colSums(LHS_subsets)
+  col_values <- Matrix::colSums(LHS_subsets)
   condition1 <- col_values > 1
 
   # This gives those LHS which are disjoint to their RHS
   condition2 <- intersections == 0
 
-  are_subset <- which(condition1 & condition2)
+  are_subset <- Matrix::which(condition1 & condition2)
 
   black_list <- rep(FALSE, ncol(LHS))
 
@@ -46,11 +46,11 @@
 
     } else {
 
-      C <- Matrix(LHS[, my_idx], sparse = TRUE)
-      D <- Matrix(RHS[, my_idx], sparse = TRUE)
+      C <- Matrix::Matrix(LHS[, my_idx], sparse = TRUE)
+      D <- Matrix::Matrix(RHS[, my_idx], sparse = TRUE)
 
     }
-    B <- Matrix(RHS[, this_row], sparse = TRUE)
+    B <- Matrix::Matrix(RHS[, this_row], sparse = TRUE)
     newLHS <- set_difference_single(C@i, C@p, C@x,
                                     B@i, B@p, B@x,
                                     nrow(C))
@@ -64,19 +64,19 @@
     intersections[my_idx] <- .self_intersection(newLHS, newRHS)
     id_inter <- which(intersections == 0)
 
-    LHS_subsets[my_idx, id_inter] <- t(.subset(LHS[, id_inter], newLHS))
-    col_values <- colSums(LHS_subsets)
+    LHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(LHS[, id_inter], newLHS))
+    col_values <- Matrix::colSums(LHS_subsets)
     condition1 <- col_values > 1
 
-    condition2 <- (intersections == 0) & (colSums(RHS) > 0)
+    condition2 <- (intersections == 0) & (Matrix::colSums(RHS) > 0)
 
     black_list[this_row] <- TRUE
-    are_subset <- which(condition1 & condition2 & (!black_list))
+    are_subset <- Matrix::which(condition1 & condition2 & (!black_list))
 
   }
 
   # Cleaning phase
-  idx_to_remove <- which(colSums(RHS) == 0)
+  idx_to_remove <- Matrix::which(Matrix::colSums(RHS) == 0)
 
   if (length(idx_to_remove) > 0) {
 

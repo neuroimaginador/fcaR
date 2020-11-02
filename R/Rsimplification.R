@@ -1,18 +1,18 @@
 Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
-  LRHS_subsets <- Matrix(FALSE, sparse = TRUE,
+  LRHS_subsets <- Matrix::Matrix(FALSE, sparse = TRUE,
                         ncol = ncol(LHS),
                         nrow = ncol(LHS))
   intersections <- .self_intersection(LHS, RHS)
 
-  id_inter <- which(intersections == 0)
+  id_inter <- Matrix::which(intersections == 0)
 
   # This gives the union of LHS and RHS
 
-  LRHS_subsets[, id_inter] <- t(.subset(LHS[, id_inter], .union(LHS,RHS)))
+  LRHS_subsets[, id_inter] <- Matrix::t(.subset(LHS[, id_inter], .union(LHS,RHS)))
 
   # This gives the LRHS that are subsets of other LHS
-  col_values <- colSums(LRHS_subsets)
+  col_values <- Matrix::colSums(LRHS_subsets)
   condition1 <- col_values > 1
 
   # This gives those LHS which are disjoint to their RHS
@@ -62,11 +62,11 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
     } else {
 
-      C <- Matrix(LHS[, my_idx], sparse = TRUE)
-      D <- Matrix(RHS[, my_idx], sparse = TRUE)
+      C <- Matrix::Matrix(LHS[, my_idx], sparse = TRUE)
+      D <- Matrix::Matrix(RHS[, my_idx], sparse = TRUE)
 
     }
-    B <- Matrix(RHS[, this_row], sparse = TRUE)
+    B <- Matrix::Matrix(RHS[, this_row], sparse = TRUE)
     newRHS <- set_difference_single(D@i, D@p, D@x,
                                     B@i, B@p, B@x,
                                     nrow(D))
@@ -75,8 +75,8 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
       transformed_set <- ImplicationSet$new(name = "set",
                                             attributes = attributes,
-                                            lhs = Matrix(C, sparse = TRUE),
-                                            rhs = Matrix(newRHS, sparse = TRUE))
+                                            lhs = Matrix::Matrix(C, sparse = TRUE),
+                                            rhs = Matrix::Matrix(newRHS, sparse = TRUE))
 
       message("Iteration", count, "\n")
       message("=================\n")
@@ -100,29 +100,29 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
       final_set <- ImplicationSet$new(name = "set",
                                       attributes = attributes,
-                                      lhs = Matrix(LHS, sparse = TRUE),
-                                      rhs = Matrix(RHS, sparse = TRUE))
+                                      lhs = Matrix::Matrix(LHS, sparse = TRUE),
+                                      rhs = Matrix::Matrix(RHS, sparse = TRUE))
 
       message("** Resulting set\n")
       print(final_set)
 
     }
     intersections[my_idx] <- .self_intersection(C, newRHS)
-    id_inter <- which(intersections == 0)
+    id_inter <- Matrix::which(intersections == 0)
 
-    LRHS_subsets[my_idx, id_inter] <- t(.subset(LHS[, id_inter], .union(C, newRHS)))
-    col_values <- colSums(LRHS_subsets)
+    LRHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(LHS[, id_inter], .union(C, newRHS)))
+    col_values <- Matrix::colSums(LRHS_subsets)
     condition1 <- col_values > 1
 
-    condition2 <- (intersections == 0) & (colSums(RHS) > 0)
+    condition2 <- (intersections == 0) & (Matrix::colSums(RHS) > 0)
 
     black_list[this_row] <- TRUE
-    are_subset <- which(condition1 & condition2 & (!black_list))
+    are_subset <- Matrix::which(condition1 & condition2 & (!black_list))
 
   }
 
   # Cleaning phase
-  idx_to_remove <- which(colSums(RHS) == 0)
+  idx_to_remove <- Matrix::which(Matrix::colSums(RHS) == 0)
 
   if (length(idx_to_remove) > 0) {
 

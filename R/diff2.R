@@ -1,7 +1,7 @@
 .difference2 <- function(A, B) {
 
-  if (is.numeric(A)) A <- Matrix(A, sparse = TRUE)
-  if (is.numeric(B)) B <- Matrix(B, sparse = TRUE)
+  if (is.numeric(A)) A <- Matrix::Matrix(A, sparse = TRUE)
+  if (is.numeric(B)) B <- Matrix::Matrix(B, sparse = TRUE)
 
   applicable <- (ncol(A) == ncol(B)) || (ncol(B) == 1) || (ncol(A) == 1)
   stopifnot(applicable)

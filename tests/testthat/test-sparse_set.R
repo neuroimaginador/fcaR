@@ -17,7 +17,7 @@ test_that("fcaR operates on sparse sets", {
 
 test_that("fcaR operates on sparse sets II", {
 
-  A <- Matrix(c(FALSE, TRUE, FALSE), nrow = 3, ncol = 1)
+  A <- Matrix::Matrix(c(FALSE, TRUE, FALSE), nrow = 3, ncol = 1)
   B <- matrix(1, nrow = 3, ncol = 5)
 
   expect_error(C <- .difference(A, B), NA)

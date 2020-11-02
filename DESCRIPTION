@@ -50,7 +50,8 @@ Imports:
 Suggests: 
     covr,
     rmarkdown,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    parallel
 LinkingTo: 
     Rcpp
 VignetteBuilder: 

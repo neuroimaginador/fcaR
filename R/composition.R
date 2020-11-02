@@ -4,7 +4,7 @@
 
   equal_LHS <- .equal_sets(LHS)
 
-  replicas <- which(colSums(equal_LHS) > 1)
+  replicas <- Matrix::which(Matrix::colSums(equal_LHS) > 1)
 
   marked_to_remove <- rep(FALSE, ncol(LHS))
 
@@ -37,7 +37,7 @@
 
   }
 
-  return(list(lhs = Matrix(LHS, sparse = TRUE),
-              rhs = Matrix(RHS, sparse = TRUE)))
+  return(list(lhs = Matrix::Matrix(LHS, sparse = TRUE),
+              rhs = Matrix::Matrix(RHS, sparse = TRUE)))
 
 }

@@ -1,7 +1,7 @@
 .difference <- function(A, B) {
 
-  if (is.numeric(A)) A <- Matrix(A, sparse = TRUE)
-  if (is.numeric(B)) B <- Matrix(B, sparse = TRUE)
+  if (is.numeric(A)) A <- Matrix::Matrix(A, sparse = TRUE)
+  if (is.numeric(B)) B <- Matrix::Matrix(B, sparse = TRUE)
 
   applicable <- (ncol(A) == ncol(B)) || (ncol(B) == 1) || (ncol(A) == 1)
   stopifnot(applicable)
@@ -42,15 +42,15 @@
 
 .union <- function(A, B) {
 
-  if (is.numeric(A)) A <- Matrix(A, sparse = TRUE)
-  if (is.numeric(B)) B <- Matrix(B, sparse = TRUE)
+  if (is.numeric(A)) A <- Matrix::Matrix(A, sparse = TRUE)
+  if (is.numeric(B)) B <- Matrix::Matrix(B, sparse = TRUE)
 
   applicable <- (ncol(A) == ncol(B)) || (ncol(B) == 1) || (ncol(A) == 1)
   stopifnot(applicable)
 
   if (ncol(A) == ncol(B)) {
 
-    idx <- which(B > A)
+    idx <- Matrix::which(B > A)
     A[idx] <- B[idx]
 
     return(A)
@@ -63,7 +63,7 @@
 
     newB <- .replicate_col(B, n)
 
-    idx <- which(newB > A)
+    idx <- Matrix::which(newB > A)
     A[idx] <- newB[idx]
 
     return(A)
@@ -76,7 +76,7 @@
 
     newA <- .replicate_col(A, n)
 
-    idx <- which(B > newA)
+    idx <- Matrix::which(B > newA)
     newA[idx] <- B[idx]
 
     return(newA)
@@ -89,7 +89,7 @@
 
   v <- flatten_sparse_C(M@p, M@i, M@x, M@Dim)
 
-  return(Matrix(v, ncol = 1, sparse = TRUE))
+  return(Matrix::Matrix(v, ncol = 1, sparse = TRUE))
 
 }
 
@@ -101,10 +101,10 @@
 
   new_p <- c(0, A@p[2] * seq(n))
 
-  newA <- sparseMatrix(i = new_i + 1,
-                       p = new_p,
-                       x = A@x,
-                       dims = c(nrow(A), n))
+  newA <- Matrix::sparseMatrix(i = new_i + 1,
+                               p = new_p,
+                               x = A@x,
+                               dims = c(nrow(A), n))
 
   return(newA)
 

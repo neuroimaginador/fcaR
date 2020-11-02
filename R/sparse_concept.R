@@ -19,8 +19,6 @@
 #' C$get_extent()
 #' C$get_intent()
 #'
-#' @importFrom methods as is slotNames
-#'
 #' @export
 SparseConcept <- R6::R6Class(
 

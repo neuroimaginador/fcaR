@@ -1,6 +1,6 @@
 add_col <- function(M, sparse_v) {
 
-  sparse_v <- as(sparse_v, "dgCMatrix")
+  sparse_v <- methods::as(sparse_v, "dgCMatrix")
 
   newM <- M
 
@@ -8,7 +8,7 @@ add_col <- function(M, sparse_v) {
   newM@p <- c(newM@p, max(newM@p) + length(sparse_v@i))
   newM@Dim[2] <- as.integer(newM@Dim[2] + 1)
 
-  if (!is(M, "ngCMatrix")) {
+  if (!methods::is(M, "ngCMatrix")) {
 
     newM@x <- c(newM@x, sparse_v@x)
 
