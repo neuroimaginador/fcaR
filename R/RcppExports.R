@@ -5,6 +5,10 @@ print_matrix <- function(I) {
     invisible(.Call(`_fcaR_print_matrix`, I))
 }
 
+print_vector <- function(I, sz) {
+    invisible(.Call(`_fcaR_print_vector`, I, sz))
+}
+
 get_element_array <- function(I, i, j, k) {
     .Call(`_fcaR_get_element_array`, I, i, j, k)
 }
@@ -21,12 +25,56 @@ write_element_array <- function(I, i, j, k, x) {
     invisible(.Call(`_fcaR_write_element_array`, I, i, j, k, x))
 }
 
+FuzzyFastCbo_C2 <- function(I, attrs, grades_set) {
+    .Call(`_fcaR_FuzzyFastCbo_C2`, I, attrs, grades_set)
+}
+
+FuzzyFastCbo_C3 <- function(I, attrs, grades_set) {
+    .Call(`_fcaR_FuzzyFastCbo_C3`, I, attrs, grades_set)
+}
+
+test_SparseVector <- function() {
+    invisible(.Call(`_fcaR_test_SparseVector`))
+}
+
+FuzzyFastCbo_C4 <- function(I, attrs, grades_set) {
+    .Call(`_fcaR_FuzzyFastCbo_C4`, I, attrs, grades_set)
+}
+
+FuzzyFastCbo_C5 <- function(I, attrs, grades_set) {
+    .Call(`_fcaR_FuzzyFastCbo_C5`, I, attrs, grades_set)
+}
+
+FuzzyFastCbo_C4_imps <- function(I, attrs, grades_set) {
+    .Call(`_fcaR_FuzzyFastCbo_C4_imps`, I, attrs, grades_set)
+}
+
+FuzzyFastCbo_C4_imps2 <- function(I, attrs, grades_set) {
+    .Call(`_fcaR_FuzzyFastCbo_C4_imps2`, I, attrs, grades_set)
+}
+
+FuzzyFastCbo_C4_imps_premise <- function(I, attrs, grades_set) {
+    .Call(`_fcaR_FuzzyFastCbo_C4_imps_premise`, I, attrs, grades_set)
+}
+
+FuzzyFastCbo_C4_lectic <- function(I, attrs, grades_set) {
+    .Call(`_fcaR_FuzzyFastCbo_C4_lectic`, I, attrs, grades_set)
+}
+
+inclose_C <- function(I, grades_set) {
+    .Call(`_fcaR_inclose_C`, I, grades_set)
+}
+
+inclose_C2 <- function(I, grades_set) {
+    .Call(`_fcaR_inclose_C2`, I, grades_set)
+}
+
 next_closure_implications <- function(I, grades_set, attrs, save_concepts = TRUE, verbose = FALSE) {
     .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, save_concepts, verbose)
 }
 
-next_closure_concepts <- function(I, grades_set, attrs, verbose = FALSE) {
-    .Call(`_fcaR_next_closure_concepts`, I, grades_set, attrs, verbose)
+next_closure_concepts <- function(I, grades_set, attrs, verbose = FALSE, ret = TRUE) {
+    .Call(`_fcaR_next_closure_concepts`, I, grades_set, attrs, verbose, ret)
 }
 
 compute_intent <- function(V, I) {

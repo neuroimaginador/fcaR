@@ -634,15 +634,15 @@ FormalContext <- R6::R6Class(
       if (length(self$attributes) == 1) {
 
 
-        my_intents <- Matrix(t(as.vector(L$concepts[, -1])), sparse = TRUE)
+        my_intents <- Matrix(t(as.vector(L$intents)), sparse = TRUE)
 
-        my_extents <- Matrix(t(as.vector(L$extents[, -1])), sparse = TRUE)
+        my_extents <- Matrix(t(as.vector(L$extents)), sparse = TRUE)
 
       } else {
 
-        my_intents <- L$concepts[, -1]
+        my_intents <- L$intents
 
-        my_extents <- L$extents[, -1]
+        my_extents <- L$extents
 
       }
 
@@ -653,7 +653,14 @@ FormalContext <- R6::R6Class(
                                           attributes = self$attributes,
                                           I = self$I)
 
-      return(invisible(self$concepts))
+      if (verbose) {
+
+        cat("Number of closures", L$closure_count, "\n")
+
+      }
+
+      # return(invisible(self$concepts))
+      return(invisible(self))
 
     },
 
@@ -688,8 +695,8 @@ FormalContext <- R6::R6Class(
       # extents.
       if (save_concepts) {
 
-        my_intents <- L$concepts[, -1]
-        my_extents <- L$extents[, -1]
+        my_intents <- L$concepts
+        my_extents <- L$extents
 
       }
 
@@ -708,8 +715,8 @@ FormalContext <- R6::R6Class(
 
         # There are implications (the first one is dummy
         # emptyset -> emptyset )
-        my_LHS <- L$LHS[, -1]
-        my_RHS <- L$RHS[, -1]
+        my_LHS <- L$LHS
+        my_RHS <- L$RHS
 
         extracted_implications <- ImplicationSet$new(attributes = self$attributes,
                                                      lhs = my_LHS,
