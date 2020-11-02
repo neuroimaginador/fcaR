@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 
 void initArray(IntArray *a, size_t initialSize) {
-  a->array = (int *)calloc(initialSize, sizeof(int));
+  a->array = (int *)malloc(initialSize * sizeof(int));
   a->used = 0;
   a->size = initialSize;
 }
@@ -55,9 +55,26 @@ void freeArray(IntArray *a) {
   a->used = a->size = 0;
 }
 
+void printArray(IntArray a) {
+
+  Rcout << "(";
+  if (a.used > 0) {
+
+    for (int i = 0; i < a.used; i++) {
+
+      Rcout << a.array[i] << ", ";
+
+    }
+
+  }
+
+  Rcout << ")" << std::endl;
+
+}
+
 
 void initArray(DoubleArray *a, size_t initialSize) {
-  a->array = (double *)calloc(initialSize, sizeof(double));
+  a->array = (double *)malloc(initialSize * sizeof(double));
 
   a->used = 0;
   a->size = initialSize;
@@ -117,6 +134,22 @@ void freeArray(DoubleArray *a) {
   a->used = a->size = 0;
 }
 
+void printArray(DoubleArray a) {
+
+  Rcout << "(";
+  if (a.used > 0) {
+
+    for (int i = 0; i < a.used; i++) {
+
+      Rcout << a.array[i] << ", ";
+
+    }
+
+  }
+
+  Rcout << ")" << std::endl;
+
+}
 
 void initVector(SparseVector *a, size_t initialSize) {
 
@@ -124,6 +157,15 @@ void initVector(SparseVector *a, size_t initialSize) {
   initArray(&(a->i), initialSize);
   initArray(&(a->x), initialSize);
   a->length = initialSize;
+
+}
+
+void initMatrix(SparseVector *a, size_t nrow) {
+
+  initArray(&(a->p), nrow * 100000);
+  initArray(&(a->i), nrow * 100000);
+  initArray(&(a->x), nrow * 100000);
+  a->length = nrow;
 
 }
 
@@ -208,8 +250,9 @@ void assignUsed(DoubleArray *a, const size_t n) {
 
 void cloneVector(SparseVector *a, SparseVector b) {
 
-  freeVector(a);
-  initVector(a, b.x.size);
+  reinitVector(a);
+  // freeVector(a);
+  // initVector(a, b.x.size);
 
   if (b.i.used > 0) {
 
@@ -232,26 +275,39 @@ void add_column(SparseVector *a, SparseVector b) {
 
     int last_p = a->p.array[a->p.used - 1];
 
+    int added = 0;
+
     for (size_t i = 0; i < b.i.used; i++) {
 
-      insertArray(&(a->i), b.i.array[i]);
-      insertArray(&(a->x), b.x.array[i]);
+      if (b.x.array[i] > 0) {
+
+        insertArray(&(a->i), b.i.array[i]);
+        insertArray(&(a->x), b.x.array[i]);
+        added++;
+
+      }
 
     }
 
-    insertArray(&(a->p), last_p + b.i.used);
+    insertArray(&(a->p), last_p + added);
 
   } else {
 
+    int added = 0;
     for (size_t i = 0; i < b.i.used; i++) {
 
-      insertArray(&(a->i), b.i.array[i]);
-      insertArray(&(a->x), b.x.array[i]);
+      if (b.x.array[i] > 0) {
+
+        insertArray(&(a->i), b.i.array[i]);
+        insertArray(&(a->x), b.x.array[i]);
+        added++;
+
+      }
 
     }
 
     insertArray(&(a->p), 0);
-    insertArray(&(a->p), b.i.used);
+    insertArray(&(a->p), added);
 
   }
 
@@ -337,7 +393,7 @@ S4 SparseToS4_fast(SparseVector V) {
   IntegerVector i(V.i.used);
   NumericVector x(V.x.used);
   IntegerVector dims(2);
-  IntegerVector p(V.p.used + 1);
+  IntegerVector p(V.p.used);
 
   if (V.i.used > 0) {
 
@@ -348,12 +404,12 @@ S4 SparseToS4_fast(SparseVector V) {
 
   if (V.p.used > 0) {
 
-    memcpy(&(p[1]), V.p.array, V.p.used * sizeof(int));
+    memcpy(&(p[0]), V.p.array, V.p.used * sizeof(int));
 
   }
 
   dims[0] = V.length;
-  dims[1] = V.p.used;
+  dims[1] = V.p.used - 1;
 
   res.slot("x") = x;
   res.slot("i") = i;
@@ -379,7 +435,7 @@ SparseVector set_difference_sparse(IntegerVector xi,
 
   // Rcout << "x.p.used = " << xp.size() << std::endl;
 
-  // insertArray(&(res.p), my_p);
+  insertArray(&(res.p), 0);
 
   for (size_t p = 0; p < xp.size() - 1; p++) {
 
@@ -463,7 +519,7 @@ SparseVector set_difference_sparse1(IntegerVector xi,
 
   // Rcout << "x.p.used = " << xp.size() << std::endl;
 
-  // insertArray(&(res.p), my_p);
+  insertArray(&(res.p), 0);
 
   for (size_t p = 0; p < xp.size() - 1; p++) {
 
@@ -528,7 +584,11 @@ S4 set_difference_single(IntegerVector xi,
                                            yi, yp, yx,
                                            number);
 
-  return SparseToS4_fast(res);
+  S4 res2 = SparseToS4_fast(res);
+
+  freeVector(&res);
+
+  return res2;
 
 }
 
@@ -563,6 +623,70 @@ SparseVector as_sparse(NumericVector v) {
   }
 
   return res;
+
+}
+
+SparseVector as_sparse(double* v, int length) {
+
+  SparseVector res;
+  initVector(&res, length);
+
+  for (int i = 0; i < length; i++) {
+
+    if (v[i] > 0) {
+
+      insertArray(&(res.i), i);
+      insertArray(&(res.x), v[i]);
+
+    }
+
+  }
+
+  return res;
+
+}
+
+SparseVector as_sparse(double* v,
+                       int nrow, int ncol,
+                       int j) {
+
+  SparseVector res;
+  initVector(&res, nrow);
+
+  for (int i = 0; i < nrow; i++) {
+
+    if (v[j * nrow + i] > 0) {
+
+      insertArray(&(res.i), i);
+      insertArray(&(res.x), v[j * nrow + i]);
+
+    }
+
+  }
+
+  return res;
+
+}
+
+void as_sparse(SparseVector *res,
+               double* v,
+               int nrow, int ncol,
+               int j) {
+
+  // SparseVector res;
+  // initVector(&res, nrow);
+
+  for (int i = 0; i < nrow; i++) {
+
+    if (v[j * nrow + i] > 0) {
+
+      insertArray(&(res->i), i);
+      insertArray(&(res->x), v[j * nrow + i]);
+
+    }
+
+  }
+
 
 }
 

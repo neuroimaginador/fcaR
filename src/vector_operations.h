@@ -13,6 +13,7 @@ void initArray(IntArray *a, size_t initialSize);
 // void printArray(IntArray a);
 void insertArray(IntArray *a, int element);
 void freeArray(IntArray *a);
+void printArray(IntArray a);
 
 // Double vectors
 
@@ -28,6 +29,7 @@ void reinitArray(IntArray *a);
 // void printArray(DoubleArray a);
 void insertArray(DoubleArray *a, double element);
 void freeArray(DoubleArray *a);
+void printArray(DoubleArray a);
 
 typedef struct {
   IntArray p;
@@ -37,6 +39,7 @@ typedef struct {
 } SparseVector;
 
 void initVector(SparseVector *a, size_t initialSize);
+void initMatrix(SparseVector *a, size_t nrow);
 void reinitVector(SparseVector *a);
 void freeVector(SparseVector *a);
 void printVector(SparseVector A, Rcpp::StringVector attrs);
@@ -57,4 +60,13 @@ S4 SparseToS4_fast(SparseVector V);
 
 NumericVector as_vector(SparseVector v);
 SparseVector as_sparse(NumericVector v);
+SparseVector as_sparse(double* v, int length);
+SparseVector as_sparse(double* v,
+                       int nrow, int ncol,
+                       int j);
+void as_sparse(SparseVector *res,
+               double* v,
+               int nrow, int ncol,
+               int j);
+
 double get_element(SparseVector v, int n);

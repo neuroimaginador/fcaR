@@ -68,17 +68,13 @@ void addImplicationToTree(struct ImplicationTree *t, SparseVector A) {
 
   int new_idx = t->n_implications;
 
-  // Rprintf("**************Before inserting\n");
   insertArray(&(t->CARD), 0);
   insertArray(&(t->COUNT), 0);
 
   t->n_implications = t->n_implications + 1;
 
-  // Rprintf("Before for**********************\n");
   for (size_t i = 0; i < A.i.used; i++) {
 
-    // Rprintf("A[%u] = %u, used = %u, size = %u\n", i, A.i.array[i], t->LIST[A.i.array[i]].used, t->LIST[A.i.array[i]].size);
-    // printArray(t->LIST[A.i.array[i]]);
     insertArray(&(t->LIST[A.i.array[i]]), new_idx);
 
     insertArray(&(t->DEGREE[A.i.array[i]]), A.x.array[i]);

@@ -1,104 +1,7 @@
 #include <Rcpp.h>
-#include "set_operations_galois.h"
+#include "aux_functions.h"
 
 using namespace Rcpp;
-
-// [[Rcpp::export]]
-void print_matrix(NumericMatrix I) {
-
-  for (int i = 0; i < I.nrow(); i++) {
-
-    for (int j = 0; j < I.ncol(); j++) {
-
-      Rcout << I(i, j) << " ";
-
-    }
-
-    Rcout << std::endl;
-
-  }
-
-}
-
-void print_vector(NumericVector I, int sz) {
-
-  if (sz > I.size())
-    sz = I.size();
-
-  for (int i = 0; i < sz; i++) {
-
-    Rcout << I[i] << " ";
-
-  }
-
-  Rcout << std::endl;
-
-}
-
-// [[Rcpp::export]]
-double get_element_array(NumericVector I,
-                         int i, int j, int k) {
-
-  IntegerVector res(I.attr("dim"));
-
-  int linear_index = k * res[0] * res[1] + j * res[0] + i;
-
-  return I[linear_index];
-
-}
-
-NumericVector zadeh_I(double x, NumericVector y) {
-
-  int n = y.size();
-  NumericVector res(y);
-
-  for (int i = 0; i < n; i++) {
-
-    if (x <= y[i]) {
-
-      res[i] = 1;
-
-    }
-
-  }
-
-  return res;
-
-}
-
-void zadeh_I(double x, SparseVector *A) {
-
-  for (int i = 0; i < A->i.used; i++) {
-
-    if (A->x.array[i] >= x) {
-
-      A->x.array[i] = 1;
-
-    }
-
-  }
-
-}
-
-void intersect(SparseVector *A, SparseVector B) {
-
-  int i, j = 0;
-
-  for (i = 0; i < A->i.used; i++) {
-
-    int ix = A->i.array[i];
-
-    while ((B.i.array[j] < ix) & (j < B.i.used)) j++;
-
-    if (j >= B.i.used) break;
-
-    if ((B.i.array[j] == ix) & (B.x.array[j] < A->x.array[i]))
-      A->x.array[i] = B.x.array[j];
-
-  }
-
-}
-
 
 void FuzzyFastGenerateFrom(NumericMatrix I,
                            StringVector attrs,
@@ -110,6 +13,7 @@ void FuzzyFastGenerateFrom(NumericMatrix I,
                            int y,
                            int gr,
                            const NumericVector Ny,
+                           int* closure_count,
                            int depth = 0) {
 
   // Rcout << "DEPTH = " << depth << std::endl;
@@ -189,6 +93,14 @@ void FuzzyFastGenerateFrom(NumericMatrix I,
 
         // Obtain next concept
         NumericVector foo = zadeh_I(grades_set[g_idx], I(_, j));
+//
+//         for (int k = 0; k < A.i.used; k++) {
+//
+//           if (foo[A.i.array[k]] > A.x.array[k])
+//             foo[A.i.array[k]] = A.x.array[k];
+//
+//         }
+
 
         NumericVector C = as_vector(A);
 
@@ -203,7 +115,10 @@ void FuzzyFastGenerateFrom(NumericMatrix I,
         }
 
         SparseVector C2 = as_sparse(C);
+        // SparseVector C2 = as_sparse(foo);
         SparseVector D = compute_intent(C2, I);
+
+        (*closure_count)++;
 
         // Rcout << "Added ";
         // printVector(D, attrs);
@@ -235,6 +150,8 @@ void FuzzyFastGenerateFrom(NumericMatrix I,
 
         if (canonical) {
 
+          // Probably we could use this knowledge to
+          // accelerate the algorithm.
           if (get_element(D, j) > grades_set[g_idx])
             continue;
 
@@ -263,6 +180,8 @@ void FuzzyFastGenerateFrom(NumericMatrix I,
 
   }
 
+  // Rcout << "Queue length: " << queue_y.size() << std::endl;
+
   while (queue_A.size() > 0) {
 
     FuzzyFastGenerateFrom(I,
@@ -275,7 +194,11 @@ void FuzzyFastGenerateFrom(NumericMatrix I,
                           queue_y.front(),
                           queue_gr.front(),
                           Mj,
+                          closure_count,
                           depth + 1);
+
+    freeVector(&(queue_A.front()));
+    freeVector(&(queue_B.front()));
 
     queue_A.pop_front();
     queue_B.pop_front();
@@ -296,6 +219,8 @@ List FuzzyFastCbo_C(NumericMatrix I,
   int n_attributes = I.ncol();
   int n_grades = grades_set.size();
 
+  int closure_count = 0;
+
   SparseVector B; // Empty intent
   initVector(&B, n_attributes);
 
@@ -304,6 +229,8 @@ List FuzzyFastCbo_C(NumericMatrix I,
   freeVector(&B);
 
   SparseVector C = compute_intent(A, I);
+
+  closure_count++;
 
   SparseVector intents;
   SparseVector extents;
@@ -322,10 +249,23 @@ List FuzzyFastCbo_C(NumericMatrix I,
                         C,
                         0,
                         n_grades + 1,
-                        Ny);
+                        Ny,
+                        &closure_count,
+                        0);
 
-  List res = List::create(_["intents"] = SparseToS4_fast(intents),
-                          _["extents"] = SparseToS4_fast(extents));
+  Rcout << " Number of closures: " << closure_count << std::endl;
+
+  S4 intents_S4 = SparseToS4_fast(intents);
+  S4 extents_S4 = SparseToS4_fast(extents);
+
+  freeVector(&A);
+  freeVector(&C);
+  freeVector(&intents);
+  freeVector(&extents);
+
+  List res = List::create(_["intents"] = intents_S4,
+                          _["extents"] = extents_S4,
+                          _["closure_count"] = closure_count);
 
   return res;
 

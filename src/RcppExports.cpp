@@ -15,6 +15,17 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// print_vector
+void print_vector(NumericVector I, int sz);
+RcppExport SEXP _fcaR_print_vector(SEXP ISEXP, SEXP szSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type I(ISEXP);
+    Rcpp::traits::input_parameter< int >::type sz(szSEXP);
+    print_vector(I, sz);
+    return R_NilValue;
+END_RCPP
+}
 // get_element_array
 double get_element_array(NumericVector I, int i, int j, int k);
 RcppExport SEXP _fcaR_get_element_array(SEXP ISEXP, SEXP iSEXP, SEXP jSEXP, SEXP kSEXP) {
@@ -67,6 +78,143 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// FuzzyFastCbo_C2
+List FuzzyFastCbo_C2(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C2(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C2(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FuzzyFastCbo_C3
+List FuzzyFastCbo_C3(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C3(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C3(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// test_SparseVector
+void test_SparseVector();
+RcppExport SEXP _fcaR_test_SparseVector() {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    test_SparseVector();
+    return R_NilValue;
+END_RCPP
+}
+// FuzzyFastCbo_C4
+List FuzzyFastCbo_C4(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C4(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C4(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FuzzyFastCbo_C5
+List FuzzyFastCbo_C5(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C5(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C5(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FuzzyFastCbo_C4_imps
+List FuzzyFastCbo_C4_imps(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C4_imps(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C4_imps(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FuzzyFastCbo_C4_imps2
+List FuzzyFastCbo_C4_imps2(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C4_imps2(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C4_imps2(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FuzzyFastCbo_C4_imps_premise
+List FuzzyFastCbo_C4_imps_premise(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C4_imps_premise(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C4_imps_premise(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// FuzzyFastCbo_C4_lectic
+List FuzzyFastCbo_C4_lectic(NumericMatrix I, StringVector attrs, NumericVector grades_set);
+RcppExport SEXP _fcaR_FuzzyFastCbo_C4_lectic(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbo_C4_lectic(I, attrs, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// inclose_C
+int inclose_C(NumericMatrix I, NumericVector grades_set);
+RcppExport SEXP _fcaR_inclose_C(SEXP ISEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(inclose_C(I, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
+// inclose_C2
+List inclose_C2(NumericMatrix I, NumericVector grades_set);
+RcppExport SEXP _fcaR_inclose_C2(SEXP ISEXP, SEXP grades_setSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    rcpp_result_gen = Rcpp::wrap(inclose_C2(I, grades_set));
+    return rcpp_result_gen;
+END_RCPP
+}
 // next_closure_implications
 List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool save_concepts, bool verbose);
 RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
@@ -83,16 +231,17 @@ BEGIN_RCPP
 END_RCPP
 }
 // next_closure_concepts
-List next_closure_concepts(NumericMatrix I, List grades_set, StringVector attrs, bool verbose);
-RcppExport SEXP _fcaR_next_closure_concepts(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+List next_closure_concepts(NumericMatrix I, ListOf<NumericVector> grades_set, StringVector attrs, bool verbose, bool ret);
+RcppExport SEXP _fcaR_next_closure_concepts(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP, SEXP retSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< ListOf<NumericVector> >::type grades_set(grades_setSEXP);
     Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(next_closure_concepts(I, grades_set, attrs, verbose));
+    Rcpp::traits::input_parameter< bool >::type ret(retSEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_concepts(I, grades_set, attrs, verbose, ret));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -267,12 +416,24 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
+    {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
     {"_fcaR_FuzzyFastCbo_C", (DL_FUNC) &_fcaR_FuzzyFastCbo_C, 3},
     {"_fcaR_my_dims", (DL_FUNC) &_fcaR_my_dims, 1},
     {"_fcaR_write_element_array", (DL_FUNC) &_fcaR_write_element_array, 5},
+    {"_fcaR_FuzzyFastCbo_C2", (DL_FUNC) &_fcaR_FuzzyFastCbo_C2, 3},
+    {"_fcaR_FuzzyFastCbo_C3", (DL_FUNC) &_fcaR_FuzzyFastCbo_C3, 3},
+    {"_fcaR_test_SparseVector", (DL_FUNC) &_fcaR_test_SparseVector, 0},
+    {"_fcaR_FuzzyFastCbo_C4", (DL_FUNC) &_fcaR_FuzzyFastCbo_C4, 3},
+    {"_fcaR_FuzzyFastCbo_C5", (DL_FUNC) &_fcaR_FuzzyFastCbo_C5, 3},
+    {"_fcaR_FuzzyFastCbo_C4_imps", (DL_FUNC) &_fcaR_FuzzyFastCbo_C4_imps, 3},
+    {"_fcaR_FuzzyFastCbo_C4_imps2", (DL_FUNC) &_fcaR_FuzzyFastCbo_C4_imps2, 3},
+    {"_fcaR_FuzzyFastCbo_C4_imps_premise", (DL_FUNC) &_fcaR_FuzzyFastCbo_C4_imps_premise, 3},
+    {"_fcaR_FuzzyFastCbo_C4_lectic", (DL_FUNC) &_fcaR_FuzzyFastCbo_C4_lectic, 3},
+    {"_fcaR_inclose_C", (DL_FUNC) &_fcaR_inclose_C, 2},
+    {"_fcaR_inclose_C2", (DL_FUNC) &_fcaR_inclose_C2, 2},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 5},
-    {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 4},
+    {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 5},
     {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
     {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 2},
     {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 2},

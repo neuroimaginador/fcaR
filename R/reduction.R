@@ -1,6 +1,6 @@
 .reduction <- function(LHS, RHS, attributes) {
 
-  RHS <- .difference(RHS, LHS)
+  RHS <- .difference2(RHS, LHS)
 
   return(list(lhs = LHS,
               rhs = RHS))

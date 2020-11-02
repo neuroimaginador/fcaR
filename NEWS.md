@@ -5,8 +5,9 @@ Bugfixes:
 
 Enhancements:
 * More efficient version of the simplification rule. Now it performs linearly on the number of implications.
-* Added a way to extend the equivalence rules by means of the registry package. This has been used to introduce the "Right Simplifcation" and the "Reorder" rules. 
+* Added a way to extend the equivalence rules by means of the registry package. This has been used to introduce the "Right Simplification" and the "Reorder" rules. 
 * New vignette to show how to extend equivalence rules in the package.
+* Added two new algorithms to mine concepts: FastCbO and InClose. These algorithms have been adapted to fuzzy FCA.
 
 # fcaR 1.0.4
 

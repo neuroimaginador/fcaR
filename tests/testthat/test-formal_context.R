@@ -104,14 +104,9 @@ test_that("fcaR extracts concepts", {
 
   fc <- FormalContext$new(I = I)
 
-  concepts <- fc$find_concepts(verbose = TRUE)
+  fc$find_concepts(verbose = TRUE)
 
-  expect_is(concepts, "ConceptLattice")
-
-  concepts <- fc$find_concepts(verbose = TRUE)
-  expect_is(concepts, "ConceptLattice")
-
-  # expect_output(print(fc$concepts))
+  expect_is(fc$concepts, "ConceptLattice")
 
 })
 

@@ -91,7 +91,92 @@ SparseVector compute_intent (SparseVector V,
 
   }
 
+  insertArray(&(R.p), 0);
+  insertArray(&(R.p), R.i.used);
+
   return(R);
+
+}
+
+SparseVector compute_intent (SparseVector V,
+                             double* I,
+                             int n_objects,
+                             int n_attributes) {
+
+  SparseVector R;
+
+  initVector(&R, n_attributes);
+
+  int i;
+
+  for (int c = 0; c < n_attributes; c++) {
+
+    double ms = 1;
+
+    for (size_t r = 0; r < V.i.used; r++) {
+
+      i = V.i.array[r];
+
+      double tmp = (V.x.array[r] <= I[c * n_objects + i]) ? 1.0 : I[c * n_objects + i];
+
+      if (tmp < ms) ms = tmp;
+
+      if (ms == 0) break;
+
+    }
+
+    if (ms > 0) {
+
+      insertArray(&(R.i), c);
+      insertArray(&(R.x), ms);
+
+    }
+
+  }
+
+  insertArray(&(R.p), 0);
+  insertArray(&(R.p), R.i.used);
+
+  return(R);
+
+}
+
+void compute_intent (SparseVector *R,
+                     SparseVector V,
+                     double* I,
+                     int n_objects,
+                     int n_attributes) {
+
+  int i;
+
+  for (int c = 0; c < n_attributes; c++) {
+
+    double ms = 1;
+
+    for (size_t r = 0; r < V.i.used; r++) {
+
+      i = V.i.array[r];
+
+      double tmp = (V.x.array[r] <= I[c * n_objects + i]) ? 1.0 : I[c * n_objects + i];
+
+      if (tmp < ms) ms = tmp;
+
+      if (ms == 0) break;
+
+    }
+
+    if (ms > 0) {
+
+      insertArray(&(R->i), c);
+      insertArray(&(R->x), ms);
+
+    }
+
+  }
+
+  insertArray(&(R->p), 0);
+  insertArray(&(R->p), R->i.used);
+
 
 }
 
@@ -100,11 +185,31 @@ S4 compute_intent(S4 V, NumericMatrix I) {
 
   SparseVector R = S4toSparse(V);
 
-  SparseVector R2 = compute_intent(R, I);
+  SparseVector R2;
+  initVector(&R2, I.ncol());
 
-  return(SparseToS4(R2));
+  compute_intent(&R2, R, I.begin(),
+                 I.nrow(), I.ncol());
+
+  S4 res = SparseToS4_fast(R2);
+
+  freeVector(&R);
+  freeVector(&R2);
+  return res;
 
 }
+
+// // [[Rcpp::export]]
+// S4 compute_intent2(S4 V, NumericMatrix I) {
+//
+//   SparseVector R = S4toSparse(V);
+//
+//   SparseVector R2 = compute_intent(R, I.begin(),
+//                                    I.nrow(), I.ncol());
+//
+//   return(SparseToS4_fast(R2));
+//
+// }
 
 SparseVector compute_extent (SparseVector V,
                              NumericMatrix I) {
@@ -138,7 +243,94 @@ SparseVector compute_extent (SparseVector V,
 
   }
 
+  insertArray(&(R.p), 0);
+  insertArray(&(R.p), R.i.used);
+
+
   return R;
+
+}
+
+SparseVector compute_extent (SparseVector V,
+                             double* I,
+                             int n_objects,
+                             int n_attributes) {
+
+  SparseVector R;
+
+  initVector(&R, n_objects);
+
+  int i;
+
+  for (int r = 0; r < n_objects; r++) {
+
+    double ms = 1;
+
+    for (size_t c = 0; c < V.i.used; c++) {
+
+      i = V.i.array[c];
+
+      double tmp = (V.x.array[c] <= I[i * n_objects + r]) ? 1 : I[i * n_objects + r];
+
+      if (tmp < ms) ms = tmp;
+
+      if (ms == 0) break;
+
+    }
+
+    if (ms > 0) {
+
+      insertArray(&(R.i), r);
+      insertArray(&(R.x), ms);
+
+    }
+
+  }
+
+  insertArray(&(R.p), 0);
+  insertArray(&(R.p), R.i.used);
+
+
+  return R;
+
+}
+
+void compute_extent (SparseVector *R,
+                     SparseVector V,
+                     double* I,
+                     int n_objects,
+                     int n_attributes) {
+
+
+  int i;
+
+  for (int r = 0; r < n_objects; r++) {
+
+    double ms = 1;
+
+    for (size_t c = 0; c < V.i.used; c++) {
+
+      i = V.i.array[c];
+
+      double tmp = (V.x.array[c] <= I[i * n_objects + r]) ? 1 : I[i * n_objects + r];
+
+      if (tmp < ms) ms = tmp;
+
+      if (ms == 0) break;
+
+    }
+
+    if (ms > 0) {
+
+      insertArray(&(R->i), r);
+      insertArray(&(R->x), ms);
+
+    }
+
+  }
+
+  insertArray(&(R->p), 0);
+  insertArray(&(R->p), R->i.used);
 
 }
 
@@ -149,7 +341,12 @@ S4 compute_extent(S4 V, NumericMatrix I) {
 
   SparseVector R2 = compute_extent(R, I);
 
-  return(SparseToS4(R2));
+  S4 res = SparseToS4_fast(R2);
+
+  freeVector(&R);
+  freeVector(&R2);
+
+  return res;
 
 }
 
@@ -159,9 +356,41 @@ SparseVector compute_closure (SparseVector V,
   SparseVector A = compute_extent(V, I);
   SparseVector B = compute_intent(A, I);
 
+  freeVector(&A);
+
   return B;
 
 }
+
+SparseVector compute_closure (SparseVector V,
+                              double* I,
+                              int n_objects,
+                              int n_attributes) {
+
+  SparseVector A = compute_extent(V, I, n_objects, n_attributes);
+  SparseVector B = compute_intent(A, I, n_objects, n_attributes);
+
+  freeVector(&A);
+
+  return B;
+
+}
+
+void compute_closure (SparseVector* B,
+                      SparseVector V,
+                      double* I,
+                      int n_objects,
+                      int n_attributes) {
+
+  SparseVector A;
+  initVector(&A, n_objects);
+  compute_extent(&A, V, I, n_objects, n_attributes);
+  compute_intent(B, A, I, n_objects, n_attributes);
+
+  freeVector(&A);
+
+}
+
 
 // [[Rcpp::export]]
 S4 compute_closure(S4 V, NumericMatrix I) {
@@ -170,7 +399,13 @@ S4 compute_closure(S4 V, NumericMatrix I) {
 
   SparseVector R2 = compute_closure(R, I);
 
-  return(SparseToS4(R2));
+  freeVector(&R);
+
+  S4 res = SparseToS4_fast(R2);
+
+  freeVector(&R2);
+
+  return res;
 
 }
 
@@ -182,6 +417,17 @@ void is_subset(SparseVector A,
   reinitArray(res);
 
   if (t.COUNT.used > 0) {
+
+    for (int i = 0; i < t.COUNT.used; i++) {
+
+      if ((t.COUNT.array[i] == 0) & (black_list[i])) {
+
+        insertArray(res, i);
+        // Rcout << "Subset of: " << i << std::endl;
+
+      }
+
+    }
 
     int* counts = (int*)malloc(t.COUNT.used * sizeof(int));
 

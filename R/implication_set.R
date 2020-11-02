@@ -470,11 +470,14 @@ ImplicationSet <- R6::R6Class(
       RHS <- L$rhs
 
       L <- .imp_to_basis(LHS, RHS, attributes)
-      imps <- ImplicationSet$new(attributes = attributes,
-                                 lhs = LHS,
-                                 rhs = RHS)
 
-      return(imps)
+      private$lhs_matrix <- L$lhs
+      private$rhs_matrix <- L$rhs
+      # imps <- ImplicationSet$new(attributes = attributes,
+      #                            lhs = LHS,
+      #                            rhs = RHS)
+
+      return(invisible(self))
 
     },
 
@@ -504,7 +507,8 @@ ImplicationSet <- R6::R6Class(
         RHS <- private$rhs_matrix
 
         implications <- sapply(seq(n_implications),
-                               function(i) paste0("Rule ", i, ": ",
+                               # function(i) paste0("Rule ", i, ": ",
+                                                 function(i) paste0("Rule: ",
                                                   .implication_to_string(LHS[, i], RHS[, i], attributes)))
 
         implications <- sapply(implications, function(s) str_wrap(s, width = 70, exdent = 2))
