@@ -16,6 +16,8 @@ Status](https://travis-ci.com/neuroimaginador/fcaR.svg?token=MLhMMg8zTrQjhhSXhmg
 status](https://ci.appveyor.com/api/projects/status/github/neuroimaginador/fcaR?branch=master&svg=true)](https://ci.appveyor.com/project/neuroimaginador/fcaR)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcaR)](https://cran.r-project.org/package=fcaR)
 
+[![R build
+status](https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg)](https://github.com/neuroimaginador/fcaR/actions)
 <!-- badges: end -->
 
 The aim of this package is to provide tools to perform fuzzy formal
@@ -28,23 +30,23 @@ fuzzy sets and, thus, build recommendation systems.
 
 The fcaR package provides data structures which allow the user to work
 seamlessly with formal contexts and sets of implications. More
-explicitly, three main classes are implemented, using the 
+explicitly, three main classes are implemented, using the
 object-oriented-programming paradigm in R:
 
-  - FormalContext encapsulates the definition of a formal context (G, M,
+-   FormalContext encapsulates the definition of a formal context (G, M,
     I), being G the set of objects, M the set of attributes and I the
     (fuzzy) relationship matrix, and provides methods to operate on the
     context using FCA tools.
-  - ImplicationSet represents a set of implications over a specific
+-   ImplicationSet represents a set of implications over a specific
     formal context.
-  - ConceptLattice represents the set of concepts and their
+-   ConceptLattice represents the set of concepts and their
     relationships, including methods to operate on the lattice.
 
 Two additional helper classes are implemented:
 
-  - SparseSet is a class solely used for visualization purposes, since
+-   SparseSet is a class solely used for visualization purposes, since
     it encapsulates in sparse format a (fuzzy) set.
-  - SparseConcept encapsulates internally both extent and intent of a
+-   SparseConcept encapsulates internally both extent and intent of a
     formal concept as SparseSet.
 
 Since fcaR is an extension of the data model in the arules package, most
@@ -65,339 +67,172 @@ The development version of this package can be installed with
 ## Example of Use
 
 <!-- Example from [here](https://www.sciencedirect.com/science/article/pii/S1877705812021418) -->
-
 Let us start with a fuzzy dataset (stored in a matrix I) as follows:
-
 <table>
-
 <thead>
-
 <tr>
-
 <th style="text-align:left;">
-
 </th>
-
 <th style="text-align:right;">
-
 P1
-
 </th>
-
 <th style="text-align:right;">
-
 P2
-
 </th>
-
 <th style="text-align:right;">
-
 P3
-
 </th>
-
 <th style="text-align:right;">
-
 P4
-
 </th>
-
 <th style="text-align:right;">
-
 P5
-
 </th>
-
 <th style="text-align:right;">
-
 P6
-
 </th>
-
 </tr>
-
 </thead>
-
 <tbody>
-
 <tr>
-
 <td style="text-align:left;">
-
 O1
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 1.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.5
-
 </td>
-
 <td style="text-align:right;">
-
 0.5
-
 </td>
-
 <td style="text-align:right;">
-
 1.0
-
 </td>
-
 <td style="text-align:right;">
-
 0
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left;">
-
 O2
-
 </td>
-
 <td style="text-align:right;">
-
 1.0
-
 </td>
-
 <td style="text-align:right;">
-
 1.0
-
 </td>
-
 <td style="text-align:right;">
-
 1.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left;">
-
 O3
-
 </td>
-
 <td style="text-align:right;">
-
 0.5
-
 </td>
-
 <td style="text-align:right;">
-
 0.5
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 1
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left;">
-
 O4
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 1.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.5
-
 </td>
-
 <td style="text-align:right;">
-
 0
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left;">
-
 O5
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 1.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.5
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left;">
-
 O6
-
 </td>
-
 <td style="text-align:right;">
-
 0.5
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0.0
-
 </td>
-
 <td style="text-align:right;">
-
 0
-
 </td>
-
 </tr>
-
 </tbody>
-
 </table>
 
 Here, a value of x in the intersection of a row and a column indicates
@@ -448,26 +283,26 @@ fc$find_implications()
 # Which implications have been extracted
 fc$implications
 #> Implication set with 12 implications.
-#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
-#> Rule 2: {P5 [0.5]} -> {P4 [0.5]}
-#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
-#> Rule 4: {P3 [0.5], P4} -> {P3}
-#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
-#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2}
-#> Rule 7: {P2, P3, P4 [0.5], P5} -> {P4}
-#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
-#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
-#> Rule 10: {P1 [0.5], P2} -> {P1}
-#> Rule 11: {P1, P2 [0.5]} -> {P2}
-#> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
+#> Rule: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
+#> Rule: {P5 [0.5]} -> {P4 [0.5]}
+#> Rule: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
+#> Rule: {P3 [0.5], P4} -> {P3}
+#> Rule: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
+#> Rule: {P2 [0.5], P3 [0.5]} -> {P2}
+#> Rule: {P2, P3, P4 [0.5], P5} -> {P4}
+#> Rule: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
+#> Rule: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
+#> Rule: {P1 [0.5], P2} -> {P1}
+#> Rule: {P1, P2 [0.5]} -> {P2}
+#> Rule: {P1, P2, P3, P6} -> {P4, P5}
 ```
 
 Some fundamental functionalities on the concept lattice associated to
 the formal context have been implemented:
 
-  - Computing a sublattice.
-  - Calculating the subconcepts and superconcepts of a given concept.
-  - Finding the join- and meet- irreducible elements, which allows to
+-   Computing a sublattice.
+-   Calculating the subconcepts and superconcepts of a given concept.
+-   Finding the join- and meet- irreducible elements, which allows to
     reduce the context and find the *standard context*.
 
 Also, one can compute the support of both implications and concepts:
@@ -495,25 +330,25 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> composition: from 12 to 12 in 0.006 secs.
-#> --> generalization: from 12 to 12 in 0.009 secs.
-#> Batch took 0.021 secs.
+#> --> Composition: from 12 to 12 in 0.006 secs.
+#> --> Generalization: from 12 to 12 in 0.009 secs.
+#> Batch took 0.02 secs.
 
 # Reduced set of implications
 fc$implications
 #> Implication set with 12 implications.
-#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
-#> Rule 2: {P5 [0.5]} -> {P4 [0.5]}
-#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
-#> Rule 4: {P3 [0.5], P4} -> {P3}
-#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
-#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2}
-#> Rule 7: {P2, P3, P4 [0.5], P5} -> {P4}
-#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
-#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
-#> Rule 10: {P1 [0.5], P2} -> {P1}
-#> Rule 11: {P1, P2 [0.5]} -> {P2}
-#> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
+#> Rule: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
+#> Rule: {P5 [0.5]} -> {P4 [0.5]}
+#> Rule: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
+#> Rule: {P3 [0.5], P4} -> {P3}
+#> Rule: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
+#> Rule: {P2 [0.5], P3 [0.5]} -> {P2}
+#> Rule: {P2, P3, P4 [0.5], P5} -> {P4}
+#> Rule: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
+#> Rule: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
+#> Rule: {P1 [0.5], P2} -> {P1}
+#> Rule: {P1, P2 [0.5]} -> {P2}
+#> Rule: {P1, P2, P3, P6} -> {P4, P5}
 ```
 
 All these functions work natively with fuzzy and with binary datasets.
