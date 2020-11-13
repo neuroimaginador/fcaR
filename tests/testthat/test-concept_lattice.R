@@ -37,6 +37,7 @@ test_that("fcaR creates a ConceptLattice", {
 
 test_that("fcaR plots a ConceptLattice", {
 
+  skip_on_cran()
   expect_error(fc$concepts$plot(), NA)
   expect_error(fc$concepts$plot(object_names = FALSE), NA)
 

@@ -140,6 +140,8 @@ test_that("fcaR extracts implications", {
 
 test_that("fcaR generate plots", {
 
+  skip_on_cran()
+
   objects <- paste0("O", 1:6)
   n_objects <- length(objects)
 
