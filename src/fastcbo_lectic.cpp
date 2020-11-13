@@ -256,9 +256,9 @@ void FuzzyFastGenerateFrom4_lectic(double* I,
 }
 
 // [[Rcpp::export]]
-List FuzzyFastCbo_C4_lectic(NumericMatrix I,
-                            StringVector attrs,
-                            NumericVector grades_set) {
+List FuzzyFastCbO_lectic(NumericMatrix I,
+                         StringVector attrs,
+                         NumericVector grades_set) {
 
   int n_objects = I.nrow();
   int n_attributes = I.ncol();

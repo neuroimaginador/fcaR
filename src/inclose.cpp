@@ -221,8 +221,8 @@ void inclose_core2(double* I,
 }
 
 // [[Rcpp::export]]
-List inclose_C2(NumericMatrix I,
-              NumericVector grades_set) {
+List inclose(NumericMatrix I,
+             NumericVector grades_set) {
 
   int n_objects = I.nrow();
   int n_attributes = I.ncol();

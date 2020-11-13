@@ -268,9 +268,9 @@ void FuzzyFastGenerateFrom4(double* I,
 }
 
 // [[Rcpp::export]]
-List FuzzyFastCbo_C4(NumericMatrix I,
-                     StringVector attrs,
-                     NumericVector grades_set) {
+List FuzzyFastCbO(NumericMatrix I,
+                  StringVector attrs,
+                  NumericVector grades_set) {
 
   int n_objects = I.nrow();
   int n_attributes = I.ncol();
