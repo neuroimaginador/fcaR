@@ -13,18 +13,6 @@ get_element_array <- function(I, i, j, k) {
     .Call(`_fcaR_get_element_array`, I, i, j, k)
 }
 
-FuzzyFastCbO <- function(I, attrs, grades_set) {
-    .Call(`_fcaR_FuzzyFastCbO`, I, attrs, grades_set)
-}
-
-FuzzyFastCbO_lectic <- function(I, attrs, grades_set) {
-    .Call(`_fcaR_FuzzyFastCbO_lectic`, I, attrs, grades_set)
-}
-
-inclose <- function(I, grades_set) {
-    .Call(`_fcaR_inclose`, I, grades_set)
-}
-
 next_closure_implications <- function(I, grades_set, attrs, save_concepts = TRUE, verbose = FALSE) {
     .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, save_concepts, verbose)
 }

@@ -40,44 +40,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// FuzzyFastCbO
-List FuzzyFastCbO(NumericMatrix I, StringVector attrs, NumericVector grades_set);
-RcppExport SEXP _fcaR_FuzzyFastCbO(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
-    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbO(I, attrs, grades_set));
-    return rcpp_result_gen;
-END_RCPP
-}
-// FuzzyFastCbO_lectic
-List FuzzyFastCbO_lectic(NumericMatrix I, StringVector attrs, NumericVector grades_set);
-RcppExport SEXP _fcaR_FuzzyFastCbO_lectic(SEXP ISEXP, SEXP attrsSEXP, SEXP grades_setSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
-    rcpp_result_gen = Rcpp::wrap(FuzzyFastCbO_lectic(I, attrs, grades_set));
-    return rcpp_result_gen;
-END_RCPP
-}
-// inclose
-List inclose(NumericMatrix I, NumericVector grades_set);
-RcppExport SEXP _fcaR_inclose(SEXP ISEXP, SEXP grades_setSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
-    rcpp_result_gen = Rcpp::wrap(inclose(I, grades_set));
-    return rcpp_result_gen;
-END_RCPP
-}
 // next_closure_implications
 List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool save_concepts, bool verbose);
 RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
@@ -281,9 +243,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
-    {"_fcaR_FuzzyFastCbO", (DL_FUNC) &_fcaR_FuzzyFastCbO, 3},
-    {"_fcaR_FuzzyFastCbO_lectic", (DL_FUNC) &_fcaR_FuzzyFastCbO_lectic, 3},
-    {"_fcaR_inclose", (DL_FUNC) &_fcaR_inclose, 2},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 5},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 5},
     {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},

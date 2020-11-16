@@ -97,7 +97,7 @@
 
   new_i <- rep(A@i, n)
 
-  stopifnot("x" %in% slotNames(A))
+  stopifnot("x" %in% methods::slotNames(A))
 
   new_p <- c(0, A@p[2] * seq(n))
 

@@ -18,7 +18,7 @@ This is a registry that stores the equivalence rules that can be
 applied using the \code{apply_rules()} method in an
 \code{ImplicationSet}.
 
-One can obtain the listo of available equivalence operators by:
+One can obtain the list of available equivalence operators by:
 \code{equivalencesRegistry$get_entry_names()}
 }
 \keyword{datasets}

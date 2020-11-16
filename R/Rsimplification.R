@@ -42,13 +42,13 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
       original_rule <- ImplicationSet$new(name = "original",
                                           attributes = attributes,
-                                          lhs = Matrix(LHS[, this_row], sparse = TRUE),
-                                          rhs = Matrix(RHS[, this_row], sparse = TRUE))
+                                          lhs = Matrix::Matrix(LHS[, this_row], sparse = TRUE),
+                                          rhs = Matrix::Matrix(RHS[, this_row], sparse = TRUE))
 
       original_set <- ImplicationSet$new(name = "set",
                                          attributes = attributes,
-                                         lhs = Matrix(LHS[, my_idx], sparse = TRUE),
-                                         rhs = Matrix(RHS[, my_idx], sparse = TRUE))
+                                         lhs = Matrix::Matrix(LHS[, my_idx], sparse = TRUE),
+                                         rhs = Matrix::Matrix(RHS[, my_idx], sparse = TRUE))
 
     }
 
