@@ -173,15 +173,17 @@ Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prov
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build a formal context</span>
-<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)
+<span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
 
 <span class='co'># Find its concepts and implications</span>
-<span class='no'>fc_planets</span>$<span class='fu'>find_implications</span>()
+<span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>find_implications</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Plot the concept lattice</span>
-<span class='no'>fc_planets</span>$<span class='no'>concepts</span>$<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>()</div><div class='img'><img src='fcaR-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='fcaR-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Print the extracted implications</span>
-<span class='no'>fc_planets</span>$<span class='no'>implications</span></div><div class='output co'>#&gt; Implication set with 10 implications.
+<span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span>
+</div><div class='output co'>#&gt; Implication set with 10 implications.
 #&gt; Rule 1: {no_moon} -&gt; {small, near}
 #&gt; Rule 2: {far} -&gt; {moon}
 #&gt; Rule 3: {near} -&gt; {small}
@@ -208,7 +210,7 @@ Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prov
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

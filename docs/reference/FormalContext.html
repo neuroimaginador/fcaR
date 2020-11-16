@@ -165,7 +165,7 @@
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>FormalContext$new()</code></a></p></li>
@@ -192,230 +192,230 @@
 <li><p><a href='#method-clone'><code>FormalContext$clone()</code></a></p></li>
 </ul>
 <p><hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Creator for the Formal Context class</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>I</span>, <span class='kw'>remove_const</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Creator for the Formal Context class</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>I</span>, remove_const <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>I</code></dt><dd><p>(numeric matrix) The table of the formal context.</p></dd>
 
 <dt><code>remove_const</code></dt><dd><p>(logical) If <code>TRUE</code>, remove constant columns. The default is <code>FALSE</code>.</p></dd>
 
 </dl><p></div></p>
-<h3>Details</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>Columns of <code>I</code> should be named, since they are the names of the attributes of the formal context.</p>
 <p>If no <code>I</code> is used, the resulting <code>FormalContext</code> will be empty and not usable unless for loading a previously saved one.</p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>An object of the <code>FormalContext</code> class.</p>
 <p><hr>
-<a id="method-is_empty"></a></p><h3>Method <code>is_empty()</code></h3>
-<p>Check if the <code>FormalContext</code> is empty</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>is_empty</span>()</pre><p></div></p>
+<a id="method-is_empty"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>is_empty()</code></h3>
+<p>Check if the <code>FormalContext</code> is empty</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>is_empty</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p><code>TRUE</code> if the <code>FormalContext</code> is empty, that is, has not been provided with a matrix, and <code>FALSE</code> otherwise.</p>
 <p><hr>
-<a id="method-intent"></a></p><h3>Method <code>intent()</code></h3>
-<p>Get the intent of a fuzzy set of objects</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>intent</span>(<span class='no'>S</span>)</pre><p></div></p>
+<a id="method-intent"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>intent()</code></h3>
+<p>Get the intent of a fuzzy set of objects</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>intent</span><span class='op'>(</span><span class='va'>S</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of objects to compute the intent for.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>SparseSet</code> with the intent.</p>
 <p><hr>
-<a id="method-extent"></a></p><h3>Method <code>extent()</code></h3>
-<p>Get the extent of a fuzzy set of attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>extent</span>(<span class='no'>S</span>)</pre><p></div></p>
+<a id="method-extent"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>extent()</code></h3>
+<p>Get the extent of a fuzzy set of attributes</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>extent</span><span class='op'>(</span><span class='va'>S</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of attributes to compute the extent for.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>SparseSet</code> with the intent.</p>
 <p><hr>
-<a id="method-closure"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
-<p>Get the closure of a fuzzy set of attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/function.html'>closure</a></span>(<span class='no'>S</span>)</pre><p></div></p>
+<a id="method-closure"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
+<p>Get the closure of a fuzzy set of attributes</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>closure</span><span class='op'>(</span><span class='va'>S</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of attributes to compute the closure for.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>SparseSet</code> with the closure.</p>
 <p><hr>
-<a id="method-obj_concept"></a></p><h3>Method <code>obj_concept()</code></h3>
-<p>Object Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>obj_concept</span>(<span class='no'>object</span>)</pre><p></div></p>
+<a id="method-obj_concept"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>obj_concept()</code></h3>
+<p>Object Concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>obj_concept</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>object</code></dt><dd><p>(character) Name of the object to compute its associated concept</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The object concept associated to the object given.</p>
 <p><hr>
-<a id="method-att_concept"></a></p><h3>Method <code>att_concept()</code></h3>
-<p>Attribute Concept</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>att_concept</span>(<span class='no'>attribute</span>)</pre><p></div></p>
+<a id="method-att_concept"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>att_concept()</code></h3>
+<p>Attribute Concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>att_concept</span><span class='op'>(</span><span class='va'>attribute</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>attribute</code></dt><dd><p>(character) Name of the attribute to compute its associated concept</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The attribute concept associated to the attribute given.</p>
 <p><hr>
-<a id="method-is_concept"></a></p><h3>Method <code>is_concept()</code></h3>
-<p>Is a Concept?</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>is_concept</span>(<span class='no'>C</span>)</pre><p></div></p>
+<a id="method-is_concept"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>is_concept()</code></h3>
+<p>Is a Concept?</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>is_concept</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>C</code></dt><dd><p>A <code>SparseConcept</code> object</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p><code>TRUE</code> if <code>C</code> is a concept.</p>
 <p><hr>
-<a id="method-is_closed"></a></p><h3>Method <code>is_closed()</code></h3>
-<p>Testing closure of attribute sets</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>is_closed</span>(<span class='no'>S</span>)</pre><p></div></p>
+<a id="method-is_closed"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>is_closed()</code></h3>
+<p>Testing closure of attribute sets</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>is_closed</span><span class='op'>(</span><span class='va'>S</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>S</code></dt><dd><p>A <code>SparseSet</code> of attributes</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p><code>TRUE</code> if the set <code>S</code> is closed in this formal context.</p>
 <p><hr>
-<a id="method-clarify"></a></p><h3>Method <code>clarify()</code></h3>
-<p>Clarify a formal context</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>clarify</span>(<span class='kw'>copy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clarify"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clarify()</code></h3>
+<p>Clarify a formal context</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>clarify</span><span class='op'>(</span>copy <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>copy</code></dt><dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified context, otherwise the current one is overwritten.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The clarified <code>FormalContext</code>.</p>
 <p><hr>
-<a id="method-reduce"></a></p><h3>Method <code>reduce()</code></h3>
-<p>Reduce a formal context</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>reduce</span>(<span class='kw'>copy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-reduce"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>reduce()</code></h3>
+<p>Reduce a formal context</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>reduce</span><span class='op'>(</span>copy <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>copy</code></dt><dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified and reduced context, otherwise the current one is overwritten.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The clarified and reduced <code>FormalContext</code>.</p>
 <p><hr>
-<a id="method-standardize"></a></p><h3>Method <code>standardize()</code></h3>
-<p>Build the Standard Context</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>standardize</span>()</pre><p></div></p>
+<a id="method-standardize"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>standardize()</code></h3>
+<p>Build the Standard Context</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>standardize</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Details</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>All concepts must be previously computed.</p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The standard context using the join- and meet- irreducible elements.</p>
 <p><hr>
-<a id="method-find_concepts"></a></p><h3>Method <code>find_concepts()</code></h3>
-<p>Use Ganter Algorithm to compute concepts</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>find_concepts</span>(<span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-find_concepts"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>find_concepts()</code></h3>
+<p>Use Ganter Algorithm to compute concepts</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>verbose</code></dt><dd><p>(logical) TRUE will provide a verbose output.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A list with all the concepts in the formal context.</p>
 <p><hr>
-<a id="method-find_implications"></a></p><h3>Method <code>find_implications()</code></h3>
-<p>Use modified Ganter algorithm to compute both concepts and implications</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>find_implications</span>(<span class='kw'>save_concepts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-find_implications"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>find_implications()</code></h3>
+<p>Use modified Ganter algorithm to compute both concepts and implications</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>find_implications</span><span class='op'>(</span>save_concepts <span class='op'>=</span> <span class='cn'>TRUE</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>save_concepts</code></dt><dd><p>(logical) <code>TRUE</code> will also compute and save the concept lattice. <code>FALSE</code> is usually faster, since it only computes implications.</p></dd>
 
 <dt><code>verbose</code></dt><dd><p>(logical) <code>TRUE</code> will provide a verbose output.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Nothing, just updates the internal fields <code>concepts</code> and <code>implications</code>.</p>
 <p><hr>
-<a id="method-to_transactions"></a></p><h3>Method <code>to_transactions()</code></h3>
-<p>Convert the formal context to object of class <code>transactions</code> from the <code>arules</code> package</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>to_transactions</span>()</pre><p></div></p>
+<a id="method-to_transactions"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>to_transactions()</code></h3>
+<p>Convert the formal context to object of class <code>transactions</code> from the <code>arules</code> package</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>to_transactions</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>transactions</code> object.</p>
 <p><hr>
-<a id="method-save"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code></h3>
-<p>Save a <code>FormalContext</code> to RDS format</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/save.html'>save</a></span>(<span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".rds"</span>))</pre><p></div></p>
+<a id="method-save"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code></h3>
+<p>Save a <code>FormalContext</code> to RDS format</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>save</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>".rds"</span><span class='op'>)</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>filename</code></dt><dd><p>(character) Path of the RDS file where to store the <code>FormalContext</code>.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Invisibly the current <code>FormalContext</code>.</p>
 <p><hr>
-<a id="method-load"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/load.html'>load()</a></code></h3>
-<p>Load a <code>FormalContext</code> from a RDS file</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/load.html'>load</a></span>(<span class='no'>filename</span>)</pre><p></div></p>
+<a id="method-load"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/load.html'>load()</a></code></h3>
+<p>Load a <code>FormalContext</code> from a RDS file</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>load</span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>filename</code></dt><dd><p>(character) Path of the RDS file to load the <code>FormalContext</code> from.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The loaded <code>FormalContext</code>.</p>
 <p><hr>
-<a id="method-dim"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/dim.html'>dim()</a></code></h3>
-<p>Dimensions of the formal context</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>()</pre><p></div></p>
+<a id="method-dim"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/dim.html'>dim()</a></code></h3>
+<p>Dimensions of the formal context</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>dim</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A vector with (number of objects, number of attributes).</p>
 <p><hr>
-<a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Prints the formal context</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</pre><p></div></p>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Prints the formal context</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Prints information regarding the formal context.</p>
 <p><hr>
-<a id="method-to_latex"></a></p><h3>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
-<p>Write the context in LaTeX format</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='to_latex.html'>to_latex</a></span>(
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>caption</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>fraction</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"frac"</span>, <span class='st'>"dfrac"</span>, <span class='st'>"sfrac"</span>)
-)</pre><p></div></p>
+<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
+<p>Write the context in LaTeX format</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>
+  label <span class='op'>=</span> <span class='st'>""</span>,
+  caption <span class='op'>=</span> <span class='st'>""</span>,
+  fraction <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"frac"</span>, <span class='st'>"dfrac"</span>, <span class='st'>"sfrac"</span><span class='op'>)</span>
+<span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>label</code></dt><dd><p>(character) The label for the table environment.</p></dd>
 
 <dt><code>caption</code></dt><dd><p>(character) The caption of the table.</p></dd>
@@ -423,33 +423,33 @@
 <dt><code>fraction</code></dt><dd><p>(character) If <code>none</code>, no fractions are produced. Otherwise, if it is <code>frac</code>, <code>dfrac</code> or <code>sfrac</code>, decimal numbers are represented as fractions with the corresponding LaTeX typesetting.</p></dd>
 
 </dl><p></div></p>
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A table environment in LaTeX.</p>
 <p><hr>
-<a id="method-plot"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code></h3>
-<p>Plot the formal context table</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw'>to_latex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre><p></div></p>
+<a id="method-plot"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></h3>
+<p>Plot the formal context table</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span>to_latex <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>to_latex</code></dt><dd><p>(logical) If <code>TRUE</code>, export the plot as a <code>tikzpicture</code> environment that can be included in a <code>LaTeX</code> file.</p></dd>
 
 <dt><code>...</code></dt><dd><p>Other parameters to be passed to the <code>tikzDevice</code> that renders the lattice in <code>LaTeX</code>, or for the figure caption. See <code>Details</code>.</p></dd>
 
 </dl><p></div></p>
-<h3>Details</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>Particular parameters that control the size of the <code>tikz</code> output are: <code>width</code>, <code>height</code> (both in inches), and <code>pointsize</code> (in points), that should be set to the font size used in the <code>documentclass</code> header in the <code>LaTeX</code> file where the code is to be inserted.</p>
 <p>If a <code>caption</code> is provided, the whole <code>tikz</code> picture will be wrapped by a <code>figure</code> environment and the caption set.</p>
 
-<h3>Returns</h3>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the formal context plot.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>FormalContext</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -458,8 +458,9 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build and print the formal context</span>
-<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>fc_planets</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Too many attributes, output will be truncated.</span></div><div class='output co'>#&gt; FormalContext with 9 objects and 7 attributes.
+<span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>fc_planets</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Too many attributes, output will be truncated.</span></div><div class='output co'>#&gt; FormalContext with 9 objects and 7 attributes.
 #&gt; Attributes' names are: small, medium, large, near, far, moon, ...
 #&gt; Matrix:
 #&gt;         small medium large near far moon no_moon
@@ -470,20 +471,24 @@
 #&gt; Jupiter     0      0     1    0   1    1       0
 #&gt; Saturn      0      0     1    0   1    1       0</div><div class='input'>
 <span class='co'># Plot the formal context</span>
-<span class='no'>fc_planets</span>$<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>()</div><div class='img'><img src='FormalContext-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='FormalContext-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Define a set of attributes</span>
-<span class='no'>S</span> <span class='kw'>&lt;-</span> <span class='no'>SparseSet</span>$<span class='fu'>new</span>(<span class='kw'>attributes</span> <span class='kw'>=</span> <span class='no'>fc_planets</span>$<span class='no'>attributes</span>)
-<span class='no'>S</span>$<span class='fu'><a href='https://rdrr.io/r/base/assign.html'>assign</a></span>(<span class='kw'>moon</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>large</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'><a href='SparseSet.html'>SparseSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>attributes</span><span class='op'>)</span>
+<span class='va'>S</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>moon <span class='op'>=</span> <span class='fl'>1</span>, large <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># Compute the closure of S</span>
-<span class='no'>Sc</span> <span class='kw'>&lt;-</span> <span class='no'>fc_planets</span>$<span class='fu'><a href='https://rdrr.io/r/base/function.html'>closure</a></span>(<span class='no'>S</span>)
+<span class='va'>Sc</span> <span class='op'>&lt;-</span> <span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>closure</span><span class='op'>(</span><span class='va'>S</span><span class='op'>)</span>
 <span class='co'># Is Sc a closed set?</span>
-<span class='no'>fc_planets</span>$<span class='fu'>is_closed</span>(<span class='no'>Sc</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>is_closed</span><span class='op'>(</span><span class='va'>Sc</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Clarify and reduce the formal context</span>
-<span class='no'>fc2</span> <span class='kw'>&lt;-</span> <span class='no'>fc_planets</span>$<span class='fu'>reduce</span>(<span class='fl'>TRUE</span>)
+<span class='va'>fc2</span> <span class='op'>&lt;-</span> <span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>reduce</span><span class='op'>(</span><span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Find implications</span>
-<span class='no'>fc_planets</span>$<span class='fu'>find_implications</span>()</div></pre>
+<span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>find_implications</span><span class='op'>(</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -499,7 +504,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

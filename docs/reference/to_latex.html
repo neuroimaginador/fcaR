@@ -141,10 +141,10 @@
     <p>Print a list of concepts to LaTeX</p>
     </div>
 
-    <pre class="usage"><span class='fu'>to_latex</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>to_latex</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S3 method for conceptlist</span>
-<span class='fu'>to_latex</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>to_latex</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,13 +161,14 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build a formal context</span>
-<span class='no'>fc_planets</span> <span class='kw'>&lt;-</span> <span class='no'>FormalContext</span>$<span class='fu'>new</span>(<span class='no'>planets</span>)
+<span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
 
 <span class='co'># Find its concepts</span>
-<span class='no'>fc_planets</span>$<span class='fu'>find_concepts</span>()
+<span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Print the first 3 concepts to latex</span>
-<span class='fu'>to_latex</span>(<span class='no'>fc_planets</span>$<span class='no'>concepts</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; \begin{longtable}{ll}
+<span class='fu'>to_latex</span><span class='op'>(</span><span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; \begin{longtable}{ll}
 #&gt; $\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\varnothing}\,\right)$\\
 #&gt; $\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{moon}\right\}}\,\right)$\\
 #&gt; $\left(\,\ensuremath{\left\{\mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\
@@ -188,7 +189,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
