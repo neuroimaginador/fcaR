@@ -152,7 +152,7 @@ Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives 
 
 Ganter B, Wille R (1999). _Formal concept analysis : mathematical foundations_. Springer. ISBN 3540627715.
 
-Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic: Elimination of Data Redundancy in Knowledge Representation.” _Advances in Artificial Intelligence -   IBERAMIA 2002_, *2527*, 141-150. doi:   10.1007/3-540-36131-6_15 (URL: http://doi.org/10.1007/3-540-36131-6_15).
+Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic: Elimination of Data Redundancy in Knowledge Representation.” _Advances in Artificial Intelligence -   IBERAMIA 2002_, *2527*, 141-150. doi:   10.1007/3-540-36131-6_15 (URL: https://doi.org/10.1007/3-540-36131-6_15).
 
 Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In _Proc. Fourth Int. Conf. on Recent Advances in Soft Computing_. Nottingham, United Kingdom, 200-205.
 

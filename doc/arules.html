@@ -27,22 +27,55 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
-<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
-// v0.0.1
-// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
-
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+ul > li > .anchor-section {display: none;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
 document.addEventListener('DOMContentLoaded', function() {
-  const codeList = document.getElementsByClassName("sourceCode");
-  for (var i = 0; i < codeList.length; i++) {
-    var linkList = codeList[i].getElementsByTagName('a');
-    for (var j = 0; j < linkList.length; j++) {
-      if (linkList[j].innerHTML === "") {
-        linkList[j].setAttribute('aria-hidden', 'true');
-      }
-    }
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
   }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '' || x.matches(':empty')) {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
 });
 </script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -334,22 +367,22 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>One of the goals in the design of this package is to be able to integrate with the <code>arules</code> package. This means that any one using the <code>arules</code> functionalities can export to and import from <code>fcaR</code> objects, more precisely, <code>FormalContext</code> and <code>ImplicationSet</code> objects.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(arules)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#&gt; Loading required package: Matrix</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#&gt; </span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt; Attaching package: &#39;arules&#39;</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#&gt; </span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#&gt;     abbreviate, write</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">library</span>(fcaR)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arules)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: Matrix</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;arules&#39;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     abbreviate, write</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fcaR)</span></code></pre></div>
 </div>
 <div id="datasets" class="section level1">
 <h1>Datasets</h1>
 <p>For these examples, we are using two binary datasets, <code>Mushroom</code> (from the <code>arules</code> package) and <code>planets</code> (from <code>fcaR</code>).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">data</span>(<span class="st">&quot;Mushroom&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;arules&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Mushroom&quot;</span>, <span class="at">package =</span> <span class="st">&quot;arules&quot;</span>)</span></code></pre></div>
 <p>At the moment, in <code>arules</code> there is no support for fuzzy sets, so we must restrict ourselves to the binary case.</p>
 <p>Let us create a <code>FormalContext</code> object for the <code>planets</code> dataset:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fc_planets &lt;-<span class="st"> </span>FormalContext<span class="op">$</span><span class="kw">new</span>(planets)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fc_planets <span class="ot">&lt;-</span> FormalContext<span class="sc">$</span><span class="fu">new</span>(planets)</span></code></pre></div>
 </div>
 <div id="converting-between-formal-contexts-and-transactions-objects" class="section level1">
 <h1>Converting between formal contexts and transactions objects</h1>
@@ -357,36 +390,36 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="importing-a-transactions-object" class="section level2">
 <h2>Importing a transactions object</h2>
 <p>It suffices to initialize a <code>FormalContext</code> object with the transactions dataset:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>fc &lt;-<span class="st"> </span>FormalContext<span class="op">$</span><span class="kw">new</span>(Mushroom)</span>
-<span id="cb4-2"><a href="#cb4-2"></a>fc</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt; FormalContext with 8124 objects and 114 attributes.</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; Attributes&#39; names are: Class=edible, Class=poisonous, CapShape=bell,</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt;   CapShape=conical, CapShape=flat, CapShape=knobbed, ...</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; Matrix:</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;   Class=edible Class=poisonous CapShape=bell CapShape=conical CapShape=flat</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; 1            0               1             0                0             0</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; 2            1               0             0                0             0</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; 3            1               0             1                0             0</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; 4            0               1             0                0             0</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; 5            1               0             0                0             0</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 6            1               0             0                0             0</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;   CapShape=knobbed CapShape=sunken</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; 1                0               0</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt; 2                0               0</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; 3                0               0</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; 4                0               0</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; 5                0               0</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#&gt; 6                0               0</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> FormalContext<span class="sc">$</span><span class="fu">new</span>(Mushroom)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fc</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; FormalContext with 8124 objects and 114 attributes.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attributes&#39; names are: Class=edible, Class=poisonous, CapShape=bell,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   CapShape=conical, CapShape=flat, CapShape=knobbed, ...</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Matrix:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Class=edible Class=poisonous CapShape=bell CapShape=conical CapShape=flat</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1            0               1             0                0             0</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2            1               0             0                0             0</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3            1               0             1                0             0</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4            0               1             0                0             0</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5            1               0             0                0             0</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6            1               0             0                0             0</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   CapShape=knobbed CapShape=sunken</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                0               0</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                0               0</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                0               0</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                0               0</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                0               0</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                0               0</span></span></code></pre></div>
 <p>From this point, we can use all the functionalities in the <code>fcaR</code> package regarding formal contexts, concept lattices and implication sets.</p>
 </div>
 <div id="exporting-a-formalcontext" class="section level2">
 <h2>Exporting a FormalContext</h2>
 <p>The <code>to_transactions()</code> function enables us to export a formal context to a format compatible with the <code>arules</code> package:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fc_planets<span class="op">$</span><span class="kw">to_transactions</span>()</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; transactions in sparse format with</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;  9 transactions (rows) and</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt;  7 items (columns)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fc_planets<span class="sc">$</span><span class="fu">to_transactions</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; transactions in sparse format with</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 transactions (rows) and</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 items (columns)</span></span></code></pre></div>
 <p>and use the functionality in that package.</p>
 </div>
 </div>
@@ -396,41 +429,41 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="importing-rules-as-an-implication-set" class="section level2">
 <h2>Importing rules as an implication set</h2>
 <p>Let us suppose that we have extracted implications from the <code>Mushroom</code> dataset using the <code>apriori()</code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>mushroom_rules &lt;-<span class="st"> </span><span class="kw">apriori</span>(Mushroom, <span class="dt">parameter =</span> <span class="kw">list</span>(<span class="dt">conf =</span> <span class="dv">1</span>))</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; Apriori</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; </span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; Parameter specification:</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt;           1    0.1    1 none FALSE            TRUE       5     0.1      1</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt;  maxlen target  ext</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;      10  rules TRUE</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; </span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt; Algorithmic control:</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt;  filter tree heap memopt load sort verbose</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt;     0.1 TRUE TRUE  FALSE TRUE    2    TRUE</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; </span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#&gt; Absolute minimum support count: 812 </span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="co">#&gt; </span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt; set item appearances ...[0 item(s)] done [0.00s].</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; set transactions ...[114 item(s), 8124 transaction(s)] done [0.01s].</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt; sorting and recoding items ... [53 item(s)] done [0.00s].</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; creating transaction tree ... done [0.01s].</span></span>
-<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span></span>
-<span id="cb6-22"><a href="#cb6-22"></a><span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a><span class="co">#&gt;  done [3.88s].</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.36s].</span></span>
-<span id="cb6-25"><a href="#cb6-25"></a><span class="co">#&gt; creating S4 object  ... done [1.27s].</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mushroom_rules <span class="ot">&lt;-</span> <span class="fu">apriori</span>(Mushroom, <span class="at">parameter =</span> <span class="fu">list</span>(<span class="at">conf =</span> <span class="dv">1</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Apriori</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Parameter specification:</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           1    0.1    1 none FALSE            TRUE       5     0.1      1</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  maxlen target  ext</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      10  rules TRUE</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Algorithmic control:</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  filter tree heap memopt load sort verbose</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.1 TRUE TRUE  FALSE TRUE    2    TRUE</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Absolute minimum support count: 812 </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; set item appearances ...[0 item(s)] done [0.00s].</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; set transactions ...[114 item(s), 8124 transaction(s)] done [0.01s].</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sorting and recoding items ... [53 item(s)] done [0.00s].</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; creating transaction tree ... done [0.01s].</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  done [3.73s].</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; writing ... [1799427 rule(s)] done [0.34s].</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; creating S4 object  ... done [1.30s].</span></span></code></pre></div>
 <p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>fc<span class="op">$</span>implications<span class="op">$</span><span class="kw">add</span>(mushroom_rules)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fc<span class="sc">$</span>implications<span class="sc">$</span><span class="fu">add</span>(mushroom_rules)</span></code></pre></div>
 <p>And we can use all the functionalities for the <code>ImplicationSet</code> class.</p>
 </div>
 <div id="exporting-implicationsets-to-rules-format" class="section level2">
 <h2>Exporting ImplicationSets to rules format</h2>
 <p>If we want to export the implications extracted for a binary formal context, we can use:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>fc_planets<span class="op">$</span><span class="kw">find_implications</span>()</span>
-<span id="cb8-2"><a href="#cb8-2"></a>fc_planets<span class="op">$</span>implications<span class="op">$</span><span class="kw">to_arules</span>(<span class="dt">quality =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; set of 10 rules</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fc_planets<span class="sc">$</span><span class="fu">find_implications</span>()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fc_planets<span class="sc">$</span>implications<span class="sc">$</span><span class="fu">to_arules</span>(<span class="at">quality =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; set of 10 rules</span></span></code></pre></div>
 </div>
 </div>
 <div id="final-considerations" class="section level1">

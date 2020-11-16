@@ -278,18 +278,18 @@ fc$find_implications()
 # Which implications have been extracted
 fc$implications
 #> Implication set with 12 implications.
-#> Rule: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
-#> Rule: {P5 [0.5]} -> {P4 [0.5]}
-#> Rule: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
-#> Rule: {P3 [0.5], P4} -> {P3}
-#> Rule: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
-#> Rule: {P2 [0.5], P3 [0.5]} -> {P2}
-#> Rule: {P2, P3, P4 [0.5], P5} -> {P4}
-#> Rule: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
-#> Rule: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
-#> Rule: {P1 [0.5], P2} -> {P1}
-#> Rule: {P1, P2 [0.5]} -> {P2}
-#> Rule: {P1, P2, P3, P6} -> {P4, P5}
+#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
+#> Rule 2: {P5 [0.5]} -> {P4 [0.5]}
+#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
+#> Rule 4: {P3 [0.5], P4} -> {P3}
+#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
+#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2}
+#> Rule 7: {P2, P3, P4 [0.5], P5} -> {P4}
+#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
+#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
+#> Rule 10: {P1 [0.5], P2} -> {P1}
+#> Rule 11: {P1, P2 [0.5]} -> {P2}
+#> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
 ```
 
 Some fundamental functionalities on the concept lattice associated to
@@ -325,25 +325,25 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.007 secs.
-#> --> Generalization: from 12 to 12 in 0.014 secs.
-#> Batch took 0.029 secs.
+#> --> Composition: from 12 to 12 in 0.005 secs.
+#> --> Generalization: from 12 to 12 in 0.01 secs.
+#> Batch took 0.021 secs.
 
 # Reduced set of implications
 fc$implications
 #> Implication set with 12 implications.
-#> Rule: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
-#> Rule: {P5 [0.5]} -> {P4 [0.5]}
-#> Rule: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
-#> Rule: {P3 [0.5], P4} -> {P3}
-#> Rule: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
-#> Rule: {P2 [0.5], P3 [0.5]} -> {P2}
-#> Rule: {P2, P3, P4 [0.5], P5} -> {P4}
-#> Rule: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
-#> Rule: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
-#> Rule: {P1 [0.5], P2} -> {P1}
-#> Rule: {P1, P2 [0.5]} -> {P2}
-#> Rule: {P1, P2, P3, P6} -> {P4, P5}
+#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
+#> Rule 2: {P5 [0.5]} -> {P4 [0.5]}
+#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
+#> Rule 4: {P3 [0.5], P4} -> {P3}
+#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
+#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2}
+#> Rule 7: {P2, P3, P4 [0.5], P5} -> {P4}
+#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
+#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
+#> Rule 10: {P1 [0.5], P2} -> {P1}
+#> Rule 11: {P1, P2 [0.5]} -> {P2}
+#> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
 ```
 
 All these functions work natively with fuzzy and with binary datasets.
@@ -364,7 +364,7 @@ Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic:
 Elimination of Data Redundancy in Knowledge Representation.” *Advances
 in Artificial Intelligence - IBERAMIA 2002*, *2527*, 141-150. doi:
 10.1007/3-540-36131-6\_15 (URL:
-<http://doi.org/10.1007/3-540-36131-6_15>).
+<https://doi.org/10.1007/3-540-36131-6_15>).
 
 Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In *Proc.
 Fourth Int. Conf. on Recent Advances in Soft Computing*. Nottingham,
