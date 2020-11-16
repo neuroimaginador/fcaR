@@ -1,11 +1,9 @@
 ## Test environments
-
-* local: darwin15.6.0-3.5.1
-* travis: release, devel
-* r-hub: windows-x86_64-devel, ubuntu-gcc-release, fedora-clang-devel
-* win-builder: windows-x86_64-devel
+* local R installation, R 4.0.2
+* ubuntu 16.04 (on travis-ci), R 4.0.2
+* win-builder (devel)
+* macos-latest (release), windows-latest (release), ubuntu-16.04 (release and devel) via GitHub actions.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
+0 errors | 0 warnings | 0 note
