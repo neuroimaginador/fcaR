@@ -411,16 +411,16 @@ or <code>initialize(rules)</code></p>
 <span class='co'># Print implications</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span>
 </div><div class='output co'>#&gt; Implication set with 10 implications.
-#&gt; Rule: {no_moon} -&gt; {small, near}
-#&gt; Rule: {far} -&gt; {moon}
-#&gt; Rule: {near} -&gt; {small}
-#&gt; Rule: {large} -&gt; {far, moon}
-#&gt; Rule: {medium} -&gt; {far, moon}
-#&gt; Rule: {medium, large, far, moon} -&gt; {small, near, no_moon}
-#&gt; Rule: {small, near, moon, no_moon} -&gt; {medium, large, far}
-#&gt; Rule: {small, near, far, moon} -&gt; {medium, large, no_moon}
-#&gt; Rule: {small, large, far, moon} -&gt; {medium, near, no_moon}
-#&gt; Rule: {small, medium, far, moon} -&gt; {large, near, no_moon}</div><div class='input'>
+#&gt; Rule 1: {no_moon} -&gt; {small, near}
+#&gt; Rule 2: {far} -&gt; {moon}
+#&gt; Rule 3: {near} -&gt; {small}
+#&gt; Rule 4: {large} -&gt; {far, moon}
+#&gt; Rule 5: {medium} -&gt; {far, moon}
+#&gt; Rule 6: {medium, large, far, moon} -&gt; {small, near, no_moon}
+#&gt; Rule 7: {small, near, moon, no_moon} -&gt; {medium, large, far}
+#&gt; Rule 8: {small, near, far, moon} -&gt; {medium, large, no_moon}
+#&gt; Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}
+#&gt; Rule 10: {small, medium, far, moon} -&gt; {large, near, no_moon}</div><div class='input'>
 <span class='co'># Cardinality and mean size in the ruleset</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>cardinality</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 10</div><div class='input'><span class='va'>sizes</span> <span class='op'>&lt;-</span> <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>size</span><span class='op'>(</span><span class='op'>)</span>
@@ -429,7 +429,7 @@ or <code>initialize(rules)</code></p>
 #&gt; 2.5 2.3 </div><div class='input'>
 <span class='co'># Simplify the implication set</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>apply_rules</span><span class='op'>(</span><span class='st'>"simplification"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.144 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.148 secs. </span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.138 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.145 secs. </span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
