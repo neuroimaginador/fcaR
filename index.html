@@ -331,18 +331,18 @@ O6
 <span class="co"># Which implications have been extracted</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
 <span class="co">#&gt; Implication set with 12 implications.</span>
-<span class="co">#&gt; Rule: {P6 [0.5]} -&gt; {P1 [0.5], P2 [0.5], P6}</span>
-<span class="co">#&gt; Rule: {P5 [0.5]} -&gt; {P4 [0.5]}</span>
-<span class="co">#&gt; Rule: {P3 [0.5], P4 [0.5], P5 [0.5]} -&gt; {P2, P5}</span>
-<span class="co">#&gt; Rule: {P3 [0.5], P4} -&gt; {P3}</span>
-<span class="co">#&gt; Rule: {P2 [0.5], P4 [0.5]} -&gt; {P2, P3 [0.5], P5}</span>
-<span class="co">#&gt; Rule: {P2 [0.5], P3 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule: {P2, P3, P4 [0.5], P5} -&gt; {P4}</span>
-<span class="co">#&gt; Rule: {P1 [0.5], P4 [0.5]} -&gt; {P1, P2, P3, P4, P5, P6}</span>
-<span class="co">#&gt; Rule: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span>
-<span class="co">#&gt; Rule: {P1 [0.5], P2} -&gt; {P1}</span>
-<span class="co">#&gt; Rule: {P1, P2 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule: {P1, P2, P3, P6} -&gt; {P4, P5}</span></code></pre></div>
+<span class="co">#&gt; Rule 1: {P6 [0.5]} -&gt; {P1 [0.5], P2 [0.5], P6}</span>
+<span class="co">#&gt; Rule 2: {P5 [0.5]} -&gt; {P4 [0.5]}</span>
+<span class="co">#&gt; Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -&gt; {P2, P5}</span>
+<span class="co">#&gt; Rule 4: {P3 [0.5], P4} -&gt; {P3}</span>
+<span class="co">#&gt; Rule 5: {P2 [0.5], P4 [0.5]} -&gt; {P2, P3 [0.5], P5}</span>
+<span class="co">#&gt; Rule 6: {P2 [0.5], P3 [0.5]} -&gt; {P2}</span>
+<span class="co">#&gt; Rule 7: {P2, P3, P4 [0.5], P5} -&gt; {P4}</span>
+<span class="co">#&gt; Rule 8: {P1 [0.5], P4 [0.5]} -&gt; {P1, P2, P3, P4, P5, P6}</span>
+<span class="co">#&gt; Rule 9: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span>
+<span class="co">#&gt; Rule 10: {P1 [0.5], P2} -&gt; {P1}</span>
+<span class="co">#&gt; Rule 11: {P1, P2 [0.5]} -&gt; {P2}</span>
+<span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></code></pre></div>
 <p>Some fundamental functionalities on the concept lattice associated to the formal context have been implemented:</p>
 <ul>
 <li>Computing a sublattice.</li>
@@ -367,25 +367,25 @@ O6
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
                                       <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.007 secs.</span>
-<span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.014 secs.</span>
-<span class="co">#&gt; Batch took 0.029 secs.</span>
+<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.005 secs.</span>
+<span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.01 secs.</span>
+<span class="co">#&gt; Batch took 0.021 secs.</span>
 
 <span class="co"># Reduced set of implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
 <span class="co">#&gt; Implication set with 12 implications.</span>
-<span class="co">#&gt; Rule: {P6 [0.5]} -&gt; {P1 [0.5], P2 [0.5], P6}</span>
-<span class="co">#&gt; Rule: {P5 [0.5]} -&gt; {P4 [0.5]}</span>
-<span class="co">#&gt; Rule: {P3 [0.5], P4 [0.5], P5 [0.5]} -&gt; {P2, P5}</span>
-<span class="co">#&gt; Rule: {P3 [0.5], P4} -&gt; {P3}</span>
-<span class="co">#&gt; Rule: {P2 [0.5], P4 [0.5]} -&gt; {P2, P3 [0.5], P5}</span>
-<span class="co">#&gt; Rule: {P2 [0.5], P3 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule: {P2, P3, P4 [0.5], P5} -&gt; {P4}</span>
-<span class="co">#&gt; Rule: {P1 [0.5], P4 [0.5]} -&gt; {P1, P2, P3, P4, P5, P6}</span>
-<span class="co">#&gt; Rule: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span>
-<span class="co">#&gt; Rule: {P1 [0.5], P2} -&gt; {P1}</span>
-<span class="co">#&gt; Rule: {P1, P2 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule: {P1, P2, P3, P6} -&gt; {P4, P5}</span></code></pre></div>
+<span class="co">#&gt; Rule 1: {P6 [0.5]} -&gt; {P1 [0.5], P2 [0.5], P6}</span>
+<span class="co">#&gt; Rule 2: {P5 [0.5]} -&gt; {P4 [0.5]}</span>
+<span class="co">#&gt; Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -&gt; {P2, P5}</span>
+<span class="co">#&gt; Rule 4: {P3 [0.5], P4} -&gt; {P3}</span>
+<span class="co">#&gt; Rule 5: {P2 [0.5], P4 [0.5]} -&gt; {P2, P3 [0.5], P5}</span>
+<span class="co">#&gt; Rule 6: {P2 [0.5], P3 [0.5]} -&gt; {P2}</span>
+<span class="co">#&gt; Rule 7: {P2, P3, P4 [0.5], P5} -&gt; {P4}</span>
+<span class="co">#&gt; Rule 8: {P1 [0.5], P4 [0.5]} -&gt; {P1, P2, P3, P4, P5, P6}</span>
+<span class="co">#&gt; Rule 9: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span>
+<span class="co">#&gt; Rule 10: {P1 [0.5], P2} -&gt; {P1}</span>
+<span class="co">#&gt; Rule 11: {P1, P2 [0.5]} -&gt; {P2}</span>
+<span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></code></pre></div>
 <p>All these functions work natively with fuzzy and with binary datasets.</p>
 <p>For more details on the methods implemented and further examples, see the vignettes in this package.</p>
 </div>
@@ -394,7 +394,7 @@ O6
 <a href="#references" class="anchor"></a>References</h2>
 <p>Guigues J, Duquenne V (1986). “Familles minimales d’implications informatives résultant d’un tableau de données binaires.” <em>Mathématiques et Sciences humaines</em>, <em>95</em>, 5-18.</p>
 <p>Ganter B, Wille R (1999). <em>Formal concept analysis : mathematical foundations</em>. Springer. ISBN 3540627715.</p>
-<p>Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic: Elimination of Data Redundancy in Knowledge Representation.” <em>Advances in Artificial Intelligence - IBERAMIA 2002</em>, <em>2527</em>, 141-150. doi: 10.1007/3-540-36131-6_15 (URL: <a href="http://doi.org/10.1007/3-540-36131-6_15" class="uri">http://doi.org/10.1007/3-540-36131-6_15</a>).</p>
+<p>Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic: Elimination of Data Redundancy in Knowledge Representation.” <em>Advances in Artificial Intelligence - IBERAMIA 2002</em>, <em>2527</em>, 141-150. doi: 10.1007/3-540-36131-6_15 (URL: <a href="https://doi.org/10.1007/3-540-36131-6_15" class="uri">https://doi.org/10.1007/3-540-36131-6_15</a>).</p>
 <p>Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In <em>Proc. Fourth Int. Conf. on Recent Advances in Soft Computing</em>. Nottingham, United Kingdom, 200-205.</p>
 <p>Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” <em>J Stat Softw</em>, <em>14</em>, 1-25.</p>
 <p>Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” <em>International Journal of Computer Mathematics</em>, <em>89</em>(4), 510-526.</p>
