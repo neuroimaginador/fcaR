@@ -17,7 +17,7 @@ test_that("fcaR operates on implications", {
 
   fc$implications$add(mush_clean)
 
-  # Cadinality
+  # Cardinality
   expect_is(fc$implications$cardinality(), "integer")
 
   # Rule size
@@ -48,7 +48,8 @@ test_that("fcaR prints implications", {
 
   fc$implications$add(mush_clean)
 
-  expect_error(fc$implications, NA)
+  expect_error(fc$implications[1:10]$print(), NA)
+  expect_output(fc$implications[1:10]$print())
 
 })
 

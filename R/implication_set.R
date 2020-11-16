@@ -503,8 +503,8 @@ ImplicationSet <- R6::R6Class(
         RHS <- private$rhs_matrix
 
         implications <- sapply(seq(n_implications),
-                               # function(i) paste0("Rule ", i, ": ",
-                               function(i) paste0("Rule: ",
+                               function(i) paste0("Rule ", i, ": ",
+                               # function(i) paste0("Rule: ",
                                                   .implication_to_string(LHS[, i], RHS[, i], attributes)))
 
         implications <- sapply(implications, function(s) stringr::str_wrap(s, width = 70, exdent = 2))
