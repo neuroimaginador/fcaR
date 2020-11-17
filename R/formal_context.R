@@ -89,6 +89,12 @@ FormalContext <- R6::R6Class(
 
       }
 
+      if (!capabilities()["long.double"]) {
+
+        private$can_plot <- FALSE
+
+      }
+
       # Transform the formal context to sparse
       if (inherits(I, "transactions")) {
 
@@ -947,6 +953,13 @@ FormalContext <- R6::R6Class(
                     ...) {
 
       private$check_empty()
+      if (!private$can_plot) {
+
+        warning("The R system has not the needed capabilities to plot.",
+                call. = FALSE)
+        return(invisible(FALSE))
+
+      }
 
       if (to_latex) {
 
@@ -1052,6 +1065,7 @@ FormalContext <- R6::R6Class(
   private = list(
 
     is_binary = FALSE,
+    can_plot = TRUE,
 
     check_empty = function() {
 

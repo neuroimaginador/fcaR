@@ -50,6 +50,12 @@ ConceptLattice <- R6::R6Class(
       private$pr_extents <- extents
       private$pr_intents <- intents
 
+      if (!capabilities()["long.double"]) {
+
+        private$can_plot <- FALSE
+
+      }
+
       # Create the SparseConcepts
       if (!is.null(extents)) {
 
@@ -144,6 +150,14 @@ ConceptLattice <- R6::R6Class(
       if (self$size() == 0) {
 
         warning("No concepts.", call. = FALSE)
+
+      }
+
+      if (!private$can_plot) {
+
+        warning("The R system has not the needed capabilities to plot.",
+                call. = FALSE)
+        return(invisible(FALSE))
 
       }
 
@@ -747,6 +761,8 @@ ConceptLattice <- R6::R6Class(
     reduced_matrix = NULL,
     I = NULL,
     concept_support = NULL,
+
+    can_plot = TRUE,
 
     concept_list_to_indices = function(concept_list) {
 
