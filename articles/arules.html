@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.6</span>
       </span>
     </div>
 
@@ -125,7 +125,11 @@
 <p>At the moment, in <code>arules</code> there is no support for fuzzy sets, so we must restrict ourselves to the binary case.</p>
 <p>Let us create a <code>FormalContext</code> object for the <code>planets</code> dataset:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span>
+<span class="co">#&gt; Warning in doTryCatch(return(expr), name, parentenv, handler): unable to load shared object '/Library/Frameworks/R.framework/Resources/modules//R_X11.so':</span>
+<span class="co">#&gt;   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libSM.6.dylib</span>
+<span class="co">#&gt;   Referenced from: /Library/Frameworks/R.framework/Versions/4.0/Resources/modules/R_X11.so</span>
+<span class="co">#&gt;   Reason: image not found</span></code></pre></div>
 </div>
 <div id="converting-between-formal-contexts-and-transactions-objects" class="section level1">
 <h1 class="hasAnchor">
@@ -198,13 +202,13 @@
 <span class="co">#&gt; set item appearances ...[0 item(s)] done [0.00s].</span>
 <span class="co">#&gt; set transactions ...[114 item(s), 8124 transaction(s)] done [0.01s].</span>
 <span class="co">#&gt; sorting and recoding items ... [53 item(s)] done [0.00s].</span>
-<span class="co">#&gt; creating transaction tree ... done [0.00s].</span>
+<span class="co">#&gt; creating transaction tree ... done [0.01s].</span>
 <span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span>
 <span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span>
 <span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span>
-<span class="co">#&gt;  done [2.79s].</span>
-<span class="co">#&gt; writing ... [1799427 rule(s)] done [0.29s].</span>
-<span class="co">#&gt; creating S4 object  ... done [1.03s].</span></code></pre></div>
+<span class="co">#&gt;  done [2.98s].</span>
+<span class="co">#&gt; writing ... [1799427 rule(s)] done [0.30s].</span>
+<span class="co">#&gt; creating S4 object  ... done [1.13s].</span></code></pre></div>
 <p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">mushroom_rules</span><span class="op">)</span></code></pre></div>

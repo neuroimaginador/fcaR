@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.6</span>
       </span>
     </div>
 
@@ -418,7 +418,10 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build a formal context</span>
 <span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='warning'>Warning: unable to load shared object '/Library/Frameworks/R.framework/Resources/modules//R_X11.so':</span>
+#&gt; <span class='warning'>  dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libSM.6.dylib</span>
+#&gt; <span class='warning'>  Referenced from: /Library/Frameworks/R.framework/Versions/4.0/Resources/modules/R_X11.so</span>
+#&gt; <span class='warning'>  Reason: image not found</span></div><div class='input'>
 <span class='co'># Find the concepts</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span><span class='op'>)</span>
 
