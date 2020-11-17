@@ -1,3 +1,8 @@
+# fcaR 1.0.6
+ 
+Bugfixes:
+* Detect if R has been built with no long double capabilities and warn the user if she tries to plot FormalContexts and ConceptLattices.
+
 # fcaR 1.0.5
  
 Bugfixes:
