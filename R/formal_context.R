@@ -850,36 +850,39 @@ FormalContext <- R6::R6Class(
 
       I <- Matrix::as.matrix(Matrix::t(self$I))
 
-      if (dims[2] > 6) {
+      if (private$is_binary) {
 
-        my_attributes <- c(self$attributes[1:6], "...")
-        warning("Too many attributes, output will be truncated.\n",
-                call. = FALSE,
-                noBreaks. = FALSE,
-                immediate. = TRUE)
-
-      } else {
-
-        my_attributes <- self$attributes
+        I <- .print_binary(I, latex = FALSE)
 
       }
 
-      cat("FormalContext with", dims[1], "objects and",
-          dims[2], "attributes.\n")
+      matp <- .print_matrix(I,
+                           objects = self$objects,
+                           attributes = self$attributes)
+      M <- matp$mat
+      ids <- matp$att_id
+      last_attribute <- max(ids) - 1
 
-      str <- paste0("Attributes' names are: ",
-                    stringr::str_flatten(my_attributes, collapse = ", "),
-                    "\n")
-      cat(stringr::str_wrap(str, exdent = 2))
-      cat("\nMatrix:\n")
+      str <- paste0("FormalContext with ", dims[1],
+                    " objects and ",
+                    dims[2], " attributes.") %>%
+        stringr::str_wrap(width = getOption("width"))
 
-      if (length(my_attributes) > 1) {
+      cat(str)
+      cat("\n")
 
-        print(head(I[, seq_along(my_attributes)]))
+      cat(M)
+      cat("\n")
 
-      } else {
+      if (last_attribute < length(self$attributes)) {
 
-        print(head(I))
+        remaining <- self$attributes[-seq(last_attribute)] %>%
+          stringr::str_flatten(", ")
+
+        str <- paste0("Other attributes are: ", remaining) %>%
+          stringr::str_wrap(width = getOption("width"))
+
+        cat(str, "\n")
 
       }
 
@@ -904,20 +907,26 @@ FormalContext <- R6::R6Class(
 
       I <- Matrix::as.matrix(Matrix::t(self$I))
 
-      if (fraction != "none") {
+      if (private$is_binary) {
 
-        I <- .to_fraction(I,
-                          latex = TRUE,
-                          type = fraction)
+        I <- .print_binary(I, latex = TRUE)
+
+
+      } else {
+
+        if (fraction != "none") {
+
+          I <- .to_fraction(I,
+                            latex = TRUE,
+                            type = fraction)
+
+        }
 
       }
 
-      str <- as.character(knitr::kable(I,
-                                       format = "latex",
-                                       booktabs = TRUE,
-                                       align = "c",
-                                       escape = FALSE,
-                                       linesep = ""))
+      str <- context_to_latex(I,
+                              objects = self$objects,
+                              attributes = self$attributes)
 
       str <- c("\\begin{table}",
                "\\centering",
@@ -1033,7 +1042,10 @@ FormalContext <- R6::R6Class(
 
       }
 
-      color_function <- function(s) rbg(red = s, green = s, blue = s)
+      color_function <- function(s)
+        grDevices::rgb(red = 1 - s,
+                       green = 1 - s,
+                       blue = 1 - s)
       heatmap(t(Matrix::as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")

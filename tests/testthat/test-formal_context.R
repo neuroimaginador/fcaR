@@ -202,7 +202,8 @@ test_that("fcaR prints large formal contexts", {
               nrow = 10)
 
   fc <- FormalContext$new(I)
-  expect_warning(fc$print())
+  expect_error(fc$print(), NA)
+  expect_output(fc$print())
 
 })
 

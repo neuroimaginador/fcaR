@@ -36,7 +36,7 @@ Depends:
 Imports: 
     arules,
     fractional,
-    knitr,
+    grDevices,
     Matrix,
     methods,
     Rcpp,

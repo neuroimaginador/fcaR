@@ -35,3 +35,65 @@
   return(A_chr)
 
 }
+
+.print_binary <- function(A, latex = FALSE) {
+
+  if (is.character(A)) return(A)
+
+  A[abs(A) < 1.e-7] <- 0
+
+  x_chr <- ifelse(latex, "$\\times$", "X")
+
+  A[] <- ifelse(A == 1, x_chr, " ")
+
+  return(A)
+
+}
+
+.print_matrix <- function(M,
+                          objects = rownames(M),
+                          attributes = colnames(M),
+                          width = getOption("width")) {
+
+  M <- cbind(objects, M)
+  M <- rbind(c("", attributes), M)
+
+  # Column width
+  col_width <- apply(M, 2,
+                     function(m) max(stringr::str_length(m))) + 2
+
+  # Columns to show
+  ids <- which(cumsum(col_width) < width)
+
+  fmt_row <- rep("%s ", length(ids)) %>%
+    stringr::str_flatten()
+
+  M_str <- list()
+
+  for (i in seq(nrow(M))) {
+
+    M_str[[i]] <- sapply(
+      ids,
+      function(j) {
+
+        stringr::str_pad(M[i, j],
+                width = col_width[j],
+                side = ifelse(j == 1, "left", "both"))
+
+                })
+
+  }
+
+  write_row <- function(...) do.call(
+    pryr::partial(sprintf,
+                  fmt = fmt_row),
+    as.list(...))
+
+  body <- lapply(M_str, write_row) %>%
+    unlist() %>%
+    stringr::str_flatten("\n")
+
+  return(list(mat = body,
+              att_id = ids))
+
+}
