@@ -39,10 +39,8 @@ Imports:
     knitr,
     Matrix,
     methods,
-    RColorBrewer,
     Rcpp,
     registry,
-    scales,
     stringr,
     tictoc,
     tikzDevice

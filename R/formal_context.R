@@ -1033,7 +1033,7 @@ FormalContext <- R6::R6Class(
 
       }
 
-      color_function <- scales::colour_ramp(RColorBrewer::brewer.pal(9, "Greys"))
+      color_function <- function(s) rbg(red = s, green = s, blue = s)
       heatmap(t(Matrix::as.matrix(self$I)), Rowv = NA, Colv = NA,
               col = color_function(seq(0, 1, 0.01)),
               scale = "none")
