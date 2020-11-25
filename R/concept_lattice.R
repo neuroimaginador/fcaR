@@ -161,6 +161,15 @@ ConceptLattice <- R6::R6Class(
 
       }
 
+      if (!requireNamespace("hasseDiagram", quietly = TRUE)) {
+
+        warning("You have not installed the 'hasseDiagram' package, which is needed to plot the lattice.",
+                call. = FALSE)
+
+        return(invisible(FALSE))
+
+      }
+
       if (to_latex) {
 
         if (object_names) {
