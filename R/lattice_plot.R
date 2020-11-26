@@ -153,7 +153,7 @@ lattice_plot <- function(concepts, subconcept_matrix,
 
   if (to_latex) {
 
-    dev.off()
+    grDevices::dev.off()
 
     tex <- readLines(tmp_file)
     unlink(tmp_file)
