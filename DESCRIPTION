@@ -43,7 +43,8 @@ Imports:
     registry,
     stringr,
     tictoc,
-    tikzDevice
+    tikzDevice,
+    magrittr
 Suggests: 
     covr,
     hasseDiagram,
