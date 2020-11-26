@@ -181,34 +181,11 @@ ImplicationSet <- R6::R6Class(
 
       }
 
-      # Needed to export to arules
-      L <- .reduction(LHS = private$lhs_matrix,
-                      RHS = private$rhs_matrix,
-                      attributes = private$attributes)
+      rules <- imps_to_arules(LHS = private$lhs_matrix,
+                              RHS = private$rhs_matrix,
+                              attributes = private$attributes,
+                              I = private$I)
 
-      LHS <- methods::as(L$lhs, "ngCMatrix")
-      LHS <- methods::as(LHS, "itemMatrix")
-      arules::itemLabels(LHS) <- private$attributes
-
-      RHS <- methods::as(L$rhs, "ngCMatrix")
-      RHS <- methods::as(RHS, "itemMatrix")
-      arules::itemLabels(RHS) <- private$attributes
-
-      rules <- new("rules", lhs = LHS, rhs = RHS)
-
-      # This is needed in arules from version 1.6-6
-      # Solves issue #15 by Michael Hahsler
-      arules::info(rules) <- list(data = private$name,
-                                  support = 0,
-                                  confidence = 1,
-                                  ntransactions = ncol(private$I))
-
-      if (quality) {
-
-        arules::quality(rules) <- arules::interestMeasure(rules,
-                                                          transactions = methods::as(methods::as(private$I, "ngCMatrix"), "transactions"))
-
-      }
 
       return(rules)
 

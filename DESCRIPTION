@@ -34,7 +34,6 @@ BugReports: https://github.com/neuroimaginador/fcaR/issues
 Depends: 
     R (>= 3.1)
 Imports: 
-    arules,
     fractional,
     grDevices,
     Matrix,
@@ -46,6 +45,7 @@ Imports:
     tikzDevice,
     magrittr
 Suggests: 
+    arules,
     covr,
     hasseDiagram,
     rmarkdown,
