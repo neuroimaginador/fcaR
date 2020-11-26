@@ -10,6 +10,7 @@
 #' \code{equivalencesRegistry$get_entry_names()}
 #'
 #' @export
+#' @import registry
 equivalencesRegistry <- registry::registry(registry_class = "equivalence_registry",
                                            entry_class = "equivalence_rule")
 
