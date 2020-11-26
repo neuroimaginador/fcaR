@@ -940,9 +940,9 @@ O6
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fc_I<span class="sc">$</span>implications<span class="sc">$</span><span class="fu">apply_rules</span>(<span class="at">rules =</span> <span class="fu">c</span>(<span class="st">&quot;composition&quot;</span>,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">&quot;simplification&quot;</span>))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Processing batch</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.002 secs.</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.089 secs.</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.093 secs.</span></span></code></pre></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.091 secs.</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.095 secs.</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let us build a set of attributes</span></span>

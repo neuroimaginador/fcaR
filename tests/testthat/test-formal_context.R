@@ -355,6 +355,8 @@ test_that("fcaR clarifies and reduces contexts", {
 
 test_that("fcaR computes the standard context", {
 
+  skip_on_os("solaris")
+
   objects <- paste0("O", 1:6)
   n_objects <- length(objects)
 
