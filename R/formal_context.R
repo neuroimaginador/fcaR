@@ -856,9 +856,18 @@ FormalContext <- R6::R6Class(
 
       }
 
+      objects <- self$objects
+      if (nrow(I) > 10) {
+
+        I <- I[1:10, ]
+        objects <- objects[1:10]
+
+      }
+
+
       matp <- .print_matrix(I,
-                           objects = self$objects,
-                           attributes = self$attributes)
+                            objects = objects,
+                            attributes = self$attributes)
       M <- matp$mat
       ids <- matp$att_id
       last_attribute <- max(ids) - 1
@@ -876,7 +885,15 @@ FormalContext <- R6::R6Class(
 
       if (last_attribute < length(self$attributes)) {
 
-        remaining <- self$attributes[-seq(last_attribute)] %>%
+        remaining <- self$attributes[-seq(last_attribute)]
+
+        if (length(remaining) > 6) {
+
+          remaining <- c(remaining[1:6], "...")
+
+        }
+
+        remaining <- remaining %>%
           stringr::str_flatten(", ")
 
         str <- paste0("Other attributes are: ", remaining) %>%
