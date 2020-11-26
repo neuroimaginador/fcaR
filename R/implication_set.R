@@ -184,7 +184,8 @@ ImplicationSet <- R6::R6Class(
       rules <- imps_to_arules(LHS = private$lhs_matrix,
                               RHS = private$rhs_matrix,
                               attributes = private$attributes,
-                              I = private$I)
+                              I = private$I,
+                              quality = quality)
 
 
       return(rules)

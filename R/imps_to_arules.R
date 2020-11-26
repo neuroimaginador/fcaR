@@ -1,4 +1,5 @@
-imps_to_arules <- function(LHS, RHS, attributes, I) {
+imps_to_arules <- function(LHS, RHS, attributes,
+                           I, quality = TRUE) {
 
   if (!requireNamespace("arules", quietly = TRUE)) {
 
