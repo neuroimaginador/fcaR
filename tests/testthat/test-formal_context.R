@@ -1,13 +1,14 @@
 context("Formal Context")
 
-library(arules, quietly = TRUE)
+if (requireNamespace("arules", quietly = TRUE)) {
 
-data("Mushroom", package = "arules")
-expect_warning(mush <- apriori(Mushroom, parameter = list(conf = 1, maxlen = 4)))
+  data("Mushroom", package = "arules")
+  expect_warning(
+    mush <- arules::apriori(Mushroom,
+                            parameter = list(conf = 1,
+                                             maxlen = 4)))
 
-idx_redundant <- is.redundant(mush)
-
-mush_clean <- mush[!idx_redundant]
+}
 
 test_that("fcaR creates a formal context", {
 
@@ -175,6 +176,8 @@ test_that("fcaR generate plots", {
 
 test_that("fcaR imports formal contexts from arules", {
 
+  skip_if_not_installed("arules")
+
   fc <- FormalContext$new(I = Mushroom)
 
   expect_is(fc, "FormalContext")
@@ -185,6 +188,8 @@ test_that("fcaR imports formal contexts from arules", {
 
 
 test_that("fcaR exports formal contexts to arules transactions", {
+
+  skip_if_not_installed("arules")
 
   fc <- FormalContext$new(I = Mushroom)
 
@@ -414,4 +419,5 @@ test_that("fcaR computes object and attribute concepts", {
 
   expect_error(fc$att_concept("P1"), NA)
   expect_error(fc$obj_concept("O3"), NA)
+
 })

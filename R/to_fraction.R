@@ -85,8 +85,7 @@
   }
 
   write_row <- function(...) do.call(
-    pryr::partial(sprintf,
-                  fmt = fmt_row),
+    function(...) sprintf(fmt = fmt_row, ...),
     as.list(...))
 
   body <- lapply(M_str, write_row) %>%

@@ -38,7 +38,6 @@ Imports:
     grDevices,
     Matrix,
     methods,
-    pryr,
     R6,
     Rcpp,
     registry,
