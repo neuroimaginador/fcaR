@@ -125,11 +125,7 @@
 <p>At the moment, in <code>arules</code> there is no support for fuzzy sets, so we must restrict ourselves to the binary case.</p>
 <p>Let us create a <code>FormalContext</code> object for the <code>planets</code> dataset:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span>
-<span class="co">#&gt; Warning in doTryCatch(return(expr), name, parentenv, handler): unable to load shared object '/Library/Frameworks/R.framework/Resources/modules//R_X11.so':</span>
-<span class="co">#&gt;   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libSM.6.dylib</span>
-<span class="co">#&gt;   Referenced from: /Library/Frameworks/R.framework/Versions/4.0/Resources/modules/R_X11.so</span>
-<span class="co">#&gt;   Reason: image not found</span></code></pre></div>
+<code class="sourceCode R"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="converting-between-formal-contexts-and-transactions-objects" class="section level1">
 <h1 class="hasAnchor">
@@ -182,31 +178,7 @@
 <a href="#importing-rules-as-an-implication-set" class="anchor"></a>Importing rules as an implication set</h2>
 <p>Let us suppose that we have extracted implications from the <code>Mushroom</code> dataset using the <code><a href="https://rdrr.io/pkg/arules/man/apriori.html">apriori()</a></code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mushroom_rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/apriori.html">apriori</a></span><span class="op">(</span><span class="va">Mushroom</span>, parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>conf <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Apriori</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter specification:</span>
-<span class="co">#&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen</span>
-<span class="co">#&gt;           1    0.1    1 none FALSE            TRUE       5     0.1      1</span>
-<span class="co">#&gt;  maxlen target  ext</span>
-<span class="co">#&gt;      10  rules TRUE</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Algorithmic control:</span>
-<span class="co">#&gt;  filter tree heap memopt load sort verbose</span>
-<span class="co">#&gt;     0.1 TRUE TRUE  FALSE TRUE    2    TRUE</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Absolute minimum support count: 812 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; set item appearances ...[0 item(s)] done [0.00s].</span>
-<span class="co">#&gt; set transactions ...[114 item(s), 8124 transaction(s)] done [0.01s].</span>
-<span class="co">#&gt; sorting and recoding items ... [53 item(s)] done [0.00s].</span>
-<span class="co">#&gt; creating transaction tree ... done [0.01s].</span>
-<span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span>
-<span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span>
-<span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span>
-<span class="co">#&gt;  done [2.89s].</span>
-<span class="co">#&gt; writing ... [1799427 rule(s)] done [0.30s].</span>
-<span class="co">#&gt; creating S4 object  ... done [1.06s].</span></code></pre></div>
+<code class="sourceCode R"><span class="va">mushroom_rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/apriori.html">apriori</a></span><span class="op">(</span><span class="va">Mushroom</span>, parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>conf <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">mushroom_rules</span><span class="op">)</span></code></pre></div>

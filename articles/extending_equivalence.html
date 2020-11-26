@@ -112,10 +112,6 @@
 <p>Let us use the <code>planets</code> dataset included in the package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span>
-<span class="co">#&gt; Warning in doTryCatch(return(expr), name, parentenv, handler): unable to load shared object '/Library/Frameworks/R.framework/Resources/modules//R_X11.so':</span>
-<span class="co">#&gt;   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libSM.6.dylib</span>
-<span class="co">#&gt;   Referenced from: /Library/Frameworks/R.framework/Versions/4.0/Resources/modules/R_X11.so</span>
-<span class="co">#&gt;   Reason: image not found</span>
 <span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="the-registry" class="section level1">
@@ -223,22 +219,22 @@
 <code class="sourceCode R"><span class="co"># Apply the randomize method</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="st">"randomize"</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Randomize: from 10 to 10 in 0 secs.</span>
-<span class="co">#&gt; Batch took 0.004 secs.</span></code></pre></div>
+<span class="co">#&gt; --&gt; Randomize: from 10 to 10 in 0.001 secs.</span>
+<span class="co">#&gt; Batch took 0.003 secs.</span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Reordered implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
 <span class="co">#&gt; Implication set with 10 implications.</span>
-<span class="co">#&gt; Rule 1: {small, large, far, moon} -&gt; {medium, near, no_moon}</span>
-<span class="co">#&gt; Rule 2: {small, medium, far, moon} -&gt; {large, near, no_moon}</span>
-<span class="co">#&gt; Rule 3: {far} -&gt; {moon}</span>
-<span class="co">#&gt; Rule 4: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
-<span class="co">#&gt; Rule 5: {no_moon} -&gt; {small, near}</span>
-<span class="co">#&gt; Rule 6: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
-<span class="co">#&gt; Rule 7: {medium} -&gt; {far, moon}</span>
-<span class="co">#&gt; Rule 8: {near} -&gt; {small}</span>
-<span class="co">#&gt; Rule 9: {large} -&gt; {far, moon}</span>
-<span class="co">#&gt; Rule 10: {small, near, far, moon} -&gt; {medium, large, no_moon}</span></code></pre></div>
+<span class="co">#&gt; Rule 1: {no_moon} -&gt; {small, near}</span>
+<span class="co">#&gt; Rule 2: {small, near, far, moon} -&gt; {medium, large, no_moon}</span>
+<span class="co">#&gt; Rule 3: {medium} -&gt; {far, moon}</span>
+<span class="co">#&gt; Rule 4: {small, large, far, moon} -&gt; {medium, near, no_moon}</span>
+<span class="co">#&gt; Rule 5: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
+<span class="co">#&gt; Rule 6: {far} -&gt; {moon}</span>
+<span class="co">#&gt; Rule 7: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
+<span class="co">#&gt; Rule 8: {large} -&gt; {far, moon}</span>
+<span class="co">#&gt; Rule 9: {near} -&gt; {small}</span>
+<span class="co">#&gt; Rule 10: {small, medium, far, moon} -&gt; {large, near, no_moon}</span></code></pre></div>
 </div>
   </div>
 

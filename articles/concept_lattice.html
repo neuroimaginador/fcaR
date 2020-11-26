@@ -558,10 +558,6 @@ O6
 <p>In our examples, we create two objects:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span>
-<span class="co">#&gt; Warning in doTryCatch(return(expr), name, parentenv, handler): unable to load shared object '/Library/Frameworks/R.framework/Resources/modules//R_X11.so':</span>
-<span class="co">#&gt;   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libSM.6.dylib</span>
-<span class="co">#&gt;   Referenced from: /Library/Frameworks/R.framework/Versions/4.0/Resources/modules/R_X11.so</span>
-<span class="co">#&gt;   Reason: image not found</span>
 <span class="va">fc_I</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span></code></pre></div>
 <p>Internally, the object stores information about whether the context is binary or the names of objects and attributes, which are taken from the rownames and colnames of the provided matrix.</p>
 <div id="plotting-printing-and-latex-ing-the-formalcontext" class="section level2">
