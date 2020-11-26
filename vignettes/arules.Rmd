@@ -12,7 +12,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 7,
-  fig.height = 5
+  fig.height = 5,
+  warning = FALSE
 )
 ```
 
@@ -69,7 +70,7 @@ Other point of integration between the two packages is the ability to import rul
 
 Let us suppose that we have extracted implications from the `Mushroom` dataset using the `apriori()` function:
 ```{r}
-mushroom_rules <- apriori(Mushroom, parameter = list(conf = 1))
+mushroom_rules <- apriori(Mushroom, parameter = list(conf = 1), control = list(verbose = FALSE))
 ```
 
 Once we have created the `fc` object storing the `Mushroom` dataset, we simply add the implications to it as:

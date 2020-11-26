@@ -87,7 +87,7 @@ rownames(I) <- objects
 knitr::kable(I, format = "html", booktabs = TRUE)
 ```
 
-Here, a value of x in the intersection of a row and a column indicates that the object of the corresponding row possesses the attribute in the column in a degree of at least x (if x = 0, the attribute is absent in the object, and if x = 1, the attribute is fully present in the object).
+Here, a value $x$ in the intersection of a row and a column indicates that the object of the corresponding row possesses the attribute in the column in a degree of at least $x$ (if $x = 0$, the attribute is absent in the object, and if $x = 1$, the attribute is fully present in the object).
 
 We can build a FormalContext object:
 
@@ -130,7 +130,7 @@ fc$implications$support()
 fc$concepts$support()
 ```
 
-In this package, we have implemented a logic to manage implications. This so-called Simplification Logic allows us to simplify the extracted rules by removing redundancies,as well as computing the closure of a given fuzzy attribute set.
+In this package, we have implemented a logic to manage implications. This so-called Simplification Logic allows us to simplify the extracted rules by removing redundancies, as well as computing the closure of a given fuzzy attribute set.
 
 ```{r}
 # Reduce the number of implications using two simple

@@ -3,7 +3,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 7,
-  fig.height = 5
+  fig.height = 5,
+  warning = FALSE
 )
 
 ## ----setup--------------------------------------------------------------------
@@ -24,7 +25,7 @@ fc
 fc_planets$to_transactions()
 
 ## -----------------------------------------------------------------------------
-mushroom_rules <- apriori(Mushroom, parameter = list(conf = 1))
+mushroom_rules <- apriori(Mushroom, parameter = list(conf = 1), control = list(verbose = FALSE))
 
 ## -----------------------------------------------------------------------------
 fc$implications$add(mushroom_rules)

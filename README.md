@@ -230,10 +230,11 @@ O6
 </tbody>
 </table>
 
-Here, a value of x in the intersection of a row and a column indicates
+Here, a value *x* in the intersection of a row and a column indicates
 that the object of the corresponding row possesses the attribute in the
-column in a degree of at least x (if x = 0, the attribute is absent in
-the object, and if x = 1, the attribute is fully present in the object).
+column in a degree of at least *x* (if *x* = 0, the attribute is absent
+in the object, and if *x* = 1, the attribute is fully present in the
+object).
 
 We can build a FormalContext object:
 
@@ -241,16 +242,17 @@ We can build a FormalContext object:
 fc <- FormalContext$new(I)
 
 print(fc)
+#> Registered S3 method overwritten by 'pryr':
+#>   method      from
+#>   print.bytes Rcpp
 #> FormalContext with 6 objects and 6 attributes.
-#> Attributes' names are: P1, P2, P3, P4, P5, P6
-#> Matrix:
-#>     P1  P2  P3  P4  P5 P6
-#> O1 0.0 1.0 0.5 0.5 1.0  0
-#> O2 1.0 1.0 1.0 0.0 0.0  0
-#> O3 0.5 0.5 0.0 0.0 0.0  1
-#> O4 0.0 0.0 0.0 1.0 0.5  0
-#> O5 0.0 0.0 1.0 0.5 0.0  0
-#> O6 0.5 0.0 0.0 0.0 0.0  0
+#>       P1    P2    P3    P4    P5    P6  
+#>   O1   0     1    0.5   0.5    1    0   
+#>   O2   1     1     1     0     0    0   
+#>   O3  0.5   0.5    0     0     0    1   
+#>   O4   0     0     0     1    0.5   0   
+#>   O5   0     0     1    0.5    0    0   
+#>   O6  0.5    0     0     0     0    0
 ```
 
 With a single function, we can compute the set of concepts:
@@ -315,7 +317,7 @@ fc$concepts$support()
 
 In this package, we have implemented a logic to manage implications.
 This so-called Simplification Logic allows us to simplify the extracted
-rules by removing redundancies,as well as computing the closure of a
+rules by removing redundancies, as well as computing the closure of a
 given fuzzy attribute set.
 
 ``` r
@@ -325,9 +327,9 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.005 secs.
-#> --> Generalization: from 12 to 12 in 0.01 secs.
-#> Batch took 0.021 secs.
+#> --> Composition: from 12 to 12 in 0.013 secs.
+#> --> Generalization: from 12 to 12 in 0.019 secs.
+#> Batch took 0.043 secs.
 
 # Reduced set of implications
 fc$implications
