@@ -22,6 +22,8 @@
 #' fc_planets$concepts$support()
 #'
 #' @export
+#' @import R6
+#'
 ConceptLattice <- R6::R6Class(
 
   classname = "ConceptLattice",

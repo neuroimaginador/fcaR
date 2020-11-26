@@ -39,6 +39,7 @@ Imports:
     Matrix,
     methods,
     pryr,
+    R6,
     Rcpp,
     registry,
     stringr,
