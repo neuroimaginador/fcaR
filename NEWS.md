@@ -1,5 +1,9 @@
 # fcaR 1.0.7
 
+Enhancements:
+* Reduced number of dependencies.
+* Better printing of FormalContexts, specially for binary FormalContexts.
+
 # fcaR 1.0.6
  
 Bugfixes:

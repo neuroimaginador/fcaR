@@ -21,7 +21,7 @@ imps_to_arules <- function(LHS, RHS, attributes,
   RHS <- methods::as(RHS, "itemMatrix")
   arules::itemLabels(RHS) <- attributes
 
-  rules <- new("rules", lhs = LHS, rhs = RHS)
+  rules <- methods::new("rules", lhs = LHS, rhs = RHS)
 
   # This is needed in arules from version 1.6-6
   # Solves issue #15 by Michael Hahsler
