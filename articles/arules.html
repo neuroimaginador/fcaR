@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7</span>
       </span>
     </div>
 
@@ -142,25 +142,23 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">Mushroom</span><span class="op">)</span>
 <span class="va">fc</span>
-<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
+<span class="co">#&gt; Registered S3 method overwritten by 'pryr':</span>
+<span class="co">#&gt;   method      from</span>
+<span class="co">#&gt;   print.bytes Rcpp</span>
 <span class="co">#&gt; FormalContext with 8124 objects and 114 attributes.</span>
-<span class="co">#&gt; Attributes' names are: Class=edible, Class=poisonous, CapShape=bell,</span>
-<span class="co">#&gt;   CapShape=conical, CapShape=flat, CapShape=knobbed, ...</span>
-<span class="co">#&gt; Matrix:</span>
-<span class="co">#&gt;   Class=edible Class=poisonous CapShape=bell CapShape=conical CapShape=flat</span>
-<span class="co">#&gt; 1            0               1             0                0             0</span>
-<span class="co">#&gt; 2            1               0             0                0             0</span>
-<span class="co">#&gt; 3            1               0             1                0             0</span>
-<span class="co">#&gt; 4            0               1             0                0             0</span>
-<span class="co">#&gt; 5            1               0             0                0             0</span>
-<span class="co">#&gt; 6            1               0             0                0             0</span>
-<span class="co">#&gt;   CapShape=knobbed CapShape=sunken</span>
-<span class="co">#&gt; 1                0               0</span>
-<span class="co">#&gt; 2                0               0</span>
-<span class="co">#&gt; 3                0               0</span>
-<span class="co">#&gt; 4                0               0</span>
-<span class="co">#&gt; 5                0               0</span>
-<span class="co">#&gt; 6                0               0</span></code></pre></div>
+<span class="co">#&gt;       Class=edible   Class=poisonous   CapShape=bell   CapShape=conical  </span>
+<span class="co">#&gt;    1                        X                                            </span>
+<span class="co">#&gt;    2       X                                                             </span>
+<span class="co">#&gt;    3       X                                 X                           </span>
+<span class="co">#&gt;    4                        X                                            </span>
+<span class="co">#&gt;    5       X                                                             </span>
+<span class="co">#&gt;    6       X                                                             </span>
+<span class="co">#&gt;    7       X                                 X                           </span>
+<span class="co">#&gt;    8       X                                 X                           </span>
+<span class="co">#&gt;    9                        X                                            </span>
+<span class="co">#&gt;   10       X                                 X                           </span>
+<span class="co">#&gt; Other attributes are: CapShape=flat, CapShape=knobbed, CapShape=sunken,</span>
+<span class="co">#&gt; CapShape=convex, CapSurf=fibrous, CapSurf=grooves, ...</span></code></pre></div>
 <p>From this point, we can use all the functionalities in the <code>fcaR</code> package regarding formal contexts, concept lattices and implication sets.</p>
 </div>
 <div id="exporting-a-formalcontext" class="section level2">
@@ -203,12 +201,12 @@
 <span class="co">#&gt; set transactions ...[114 item(s), 8124 transaction(s)] done [0.01s].</span>
 <span class="co">#&gt; sorting and recoding items ... [53 item(s)] done [0.00s].</span>
 <span class="co">#&gt; creating transaction tree ... done [0.01s].</span>
-<span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9 10</span>
-<span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (maxlen</span>
-<span class="co">#&gt; reached). Only patterns up to a length of 10 returned!</span>
-<span class="co">#&gt;  done [2.90s].</span>
-<span class="co">#&gt; writing ... [1799427 rule(s)] done [0.30s].</span>
-<span class="co">#&gt; creating S4 object  ... done [1.08s].</span></code></pre></div>
+<span class="co">#&gt; checking subsets of size 1 2 3 4 5 6 7 8 9</span>
+<span class="co">#&gt; Warning in apriori(Mushroom, parameter = list(conf = 1)): Mining stopped (time</span>
+<span class="co">#&gt; limit reached). Only patterns up to a length of 9 returned!</span>
+<span class="co">#&gt;  done [5.09s].</span>
+<span class="co">#&gt; writing ... [1425243 rule(s)] done [0.23s].</span>
+<span class="co">#&gt; creating S4 object  ... done [0.95s].</span></code></pre></div>
 <p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">mushroom_rules</span><span class="op">)</span></code></pre></div>
