@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 
 void initArray(IntArray *a, size_t initialSize) {
-  a->array = (int *)malloc(initialSize * sizeof(int));
+  a->array = (int *)calloc(initialSize, sizeof(int));
   a->used = 0;
   a->size = initialSize;
 }
@@ -74,7 +74,7 @@ void printArray(IntArray a) {
 
 
 void initArray(DoubleArray *a, size_t initialSize) {
-  a->array = (double *)malloc(initialSize * sizeof(double));
+  a->array = (double *)calloc(initialSize, sizeof(double));
 
   a->used = 0;
   a->size = initialSize;
