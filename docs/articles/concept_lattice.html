@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7</span>
       </span>
     </div>
 
@@ -566,28 +566,26 @@ O6
 <p>Once created the <code>FormalContext</code> objects, we can print them or plot them as heatmaps (with functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc_planets</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
 <span class="co">#&gt; FormalContext with 9 objects and 7 attributes.</span>
-<span class="co">#&gt; Attributes' names are: small, medium, large, near, far, moon, ...</span>
-<span class="co">#&gt; Matrix:</span>
-<span class="co">#&gt;         small medium large near far moon no_moon</span>
-<span class="co">#&gt; Mercury     1      0     0    1   0    0       1</span>
-<span class="co">#&gt; Venus       1      0     0    1   0    0       1</span>
-<span class="co">#&gt; Earth       1      0     0    1   0    1       0</span>
-<span class="co">#&gt; Mars        1      0     0    1   0    1       0</span>
-<span class="co">#&gt; Jupiter     0      0     1    0   1    1       0</span>
-<span class="co">#&gt; Saturn      0      0     1    0   1    1       0</span>
+<span class="co">#&gt;            small   medium   large   near   far   moon   no_moon  </span>
+<span class="co">#&gt;   Mercury    X                       X                     X     </span>
+<span class="co">#&gt;     Venus    X                       X                     X     </span>
+<span class="co">#&gt;     Earth    X                       X            X              </span>
+<span class="co">#&gt;      Mars    X                       X            X              </span>
+<span class="co">#&gt;   Jupiter                     X             X     X              </span>
+<span class="co">#&gt;    Saturn                     X             X     X              </span>
+<span class="co">#&gt;    Uranus            X                      X     X              </span>
+<span class="co">#&gt;   Neptune            X                      X     X              </span>
+<span class="co">#&gt;     Pluto    X                              X     X</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc_I</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span>
-<span class="co">#&gt; Attributes' names are: P1, P2, P3, P4, P5, P6</span>
-<span class="co">#&gt; Matrix:</span>
-<span class="co">#&gt;     P1  P2  P3  P4  P5 P6</span>
-<span class="co">#&gt; O1 0.0 0.0 0.5 0.5 1.0  0</span>
-<span class="co">#&gt; O2 1.0 1.0 1.0 0.0 0.0  0</span>
-<span class="co">#&gt; O3 0.5 0.5 0.0 0.0 0.0  1</span>
-<span class="co">#&gt; O4 0.0 0.0 0.0 1.0 0.5  0</span>
-<span class="co">#&gt; O5 0.0 0.0 1.0 0.5 0.0  0</span>
-<span class="co">#&gt; O6 0.5 0.5 0.0 0.0 0.0  1</span></pre></div>
+<span class="co">#&gt;       P1    P2    P3    P4    P5    P6  </span>
+<span class="co">#&gt;   O1   0     0    0.5   0.5    1    0   </span>
+<span class="co">#&gt;   O2   1     1     1     0     0    0   </span>
+<span class="co">#&gt;   O3  0.5   0.5    0     0     0    1   </span>
+<span class="co">#&gt;   O4   0     0     0     1    0.5   0   </span>
+<span class="co">#&gt;   O5   0     0     1    0.5    0    0   </span>
+<span class="co">#&gt;   O6  0.5   0.5    0     0     0    1</span></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="va">fc_planets</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></pre></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-7-1.png" width="384"></p>
@@ -597,20 +595,19 @@ O6
 <p>Also, we can export the formal context as a LaTeX table:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="va">fc_planets</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; \begin{table} \centering </span>
-<span class="co">#&gt; \begin{tabular}{lccccccc}</span>
+<span class="co">#&gt; \begin{table} \centering \begin{tabular}{lccccccc}</span>
 <span class="co">#&gt; \toprule</span>
-<span class="co">#&gt;   &amp; small &amp; medium &amp; large &amp; near &amp; far &amp; moon &amp; no_moon\\</span>
+<span class="co">#&gt;  &amp; small &amp; medium &amp; large &amp; near &amp; far &amp; moon &amp; no_moon\\</span>
 <span class="co">#&gt; \midrule</span>
-<span class="co">#&gt; Mercury &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\\</span>
-<span class="co">#&gt; Venus &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\\</span>
-<span class="co">#&gt; Earth &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\</span>
-<span class="co">#&gt; Mars &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\</span>
-<span class="co">#&gt; Jupiter &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
-<span class="co">#&gt; Saturn &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
-<span class="co">#&gt; Uranus &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
-<span class="co">#&gt; Neptune &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
-<span class="co">#&gt; Pluto &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0\\</span>
+<span class="co">#&gt; Mercury &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp;   &amp;   &amp; $\times$\\ </span>
+<span class="co">#&gt; Venus &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp;   &amp;   &amp; $\times$\\ </span>
+<span class="co">#&gt; Earth &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp;   &amp; $\times$ &amp;  \\ </span>
+<span class="co">#&gt; Mars &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp;   &amp; $\times$ &amp;  \\ </span>
+<span class="co">#&gt; Jupiter &amp;   &amp;   &amp; $\times$ &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\ </span>
+<span class="co">#&gt; Saturn &amp;   &amp;   &amp; $\times$ &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\ </span>
+<span class="co">#&gt; Uranus &amp;   &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\ </span>
+<span class="co">#&gt; Neptune &amp;   &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\ </span>
+<span class="co">#&gt; Pluto &amp; $\times$ &amp;   &amp;   &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\</span>
 <span class="co">#&gt; \bottomrule</span>
 <span class="co">#&gt; \end{tabular} \caption{\label{}} \end{table}</span></pre></div>
 </div>
@@ -660,27 +657,22 @@ O6
 <p>An interesting point when managing formal contexts is the ability to reduce the context, removing redundancies, while retaining all the knowledge. This is accomplished by two functions: <code>clarify()</code>, which removes duplicated attributes and objects (columns and rows in the original matrix); and <code>reduce()</code>, which uses closures to remove dependent attributes, but only on binary formal contexts. The resulting <code>FormalContext</code> is equivalent to the original one in both cases.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="va">fc_planets</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
 <span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span>
-<span class="co">#&gt; Attributes' names are: small, medium, large, near, far, moon, ...</span>
-<span class="co">#&gt; Matrix:</span>
-<span class="co">#&gt;                   small medium large near far moon no_moon</span>
-<span class="co">#&gt; Pluto                 1      0     0    0   1    1       0</span>
-<span class="co">#&gt; [Mercury, Venus]      1      0     0    1   0    0       1</span>
-<span class="co">#&gt; [Earth, Mars]         1      0     0    1   0    1       0</span>
-<span class="co">#&gt; [Jupiter, Saturn]     0      0     1    0   1    1       0</span>
-<span class="co">#&gt; [Uranus, Neptune]     0      1     0    0   1    1       0</span>
+<span class="co">#&gt;                      small   medium   large   near   far   moon   no_moon  </span>
+<span class="co">#&gt;               Pluto    X                              X     X              </span>
+<span class="co">#&gt;    [Mercury, Venus]    X                       X                     X     </span>
+<span class="co">#&gt;       [Earth, Mars]    X                       X            X              </span>
+<span class="co">#&gt;   [Jupiter, Saturn]                     X             X     X              </span>
+<span class="co">#&gt;   [Uranus, Neptune]            X                      X     X</span>
 
 <span class="va">fc_I</span><span class="op">$</span><span class="fu">clarify</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 5 objects and 5 attributes.</span>
-<span class="co">#&gt; Attributes' names are: P3, P4, P5, P6, [P1, P2]</span>
-<span class="co">#&gt; Matrix:</span>
-<span class="co">#&gt;           P3  P4  P5 P6 [P1, P2]</span>
-<span class="co">#&gt; O1       0.5 0.5 1.0  0      0.0</span>
-<span class="co">#&gt; O2       1.0 0.0 0.0  0      1.0</span>
-<span class="co">#&gt; O4       0.0 1.0 0.5  0      0.0</span>
-<span class="co">#&gt; O5       1.0 0.5 0.0  0      0.0</span>
-<span class="co">#&gt; [O3, O6] 0.0 0.0 0.0  1      0.5</span></pre></div>
+<span class="co">#&gt;             P3    P4    P5    P6   [P1, P2]  </span>
+<span class="co">#&gt;         O1  0.5   0.5    1    0       0      </span>
+<span class="co">#&gt;         O2   1     0     0    0       1      </span>
+<span class="co">#&gt;         O4   0     1    0.5   0       0      </span>
+<span class="co">#&gt;         O5   1    0.5    0    0       0      </span>
+<span class="co">#&gt;   [O3, O6]   0     0     0    1      0.5</span></pre></div>
 <p>Note that merged attributes or objects are stored in the new formal context by using squared brackets to unify them, e.g. <code>[Mercury, Venus]</code>.</p>
 </div>
 <div id="extracting-implications-and-concepts" class="section level2">
@@ -731,28 +723,25 @@ O6
 <p>The function <code>standardize()</code> works for all FormalContext where the concept lattice has been found, and it produces a new <code>FormalContext</code> object:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="va">fc_planets</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
 <span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span>
-<span class="co">#&gt; Attributes' names are: M1, M2, M3, M4, M5, M6, ...</span>
-<span class="co">#&gt; Matrix:</span>
-<span class="co">#&gt;    M1 M2 M3 M4 M5 M6 M7</span>
-<span class="co">#&gt; J1  1  1  1  0  0  0  0</span>
-<span class="co">#&gt; J2  1  1  0  1  0  0  0</span>
-<span class="co">#&gt; J3  1  1  0  0  1  0  0</span>
-<span class="co">#&gt; J4  0  0  0  0  1  1  1</span>
-<span class="co">#&gt; J5  1  0  0  0  1  1  0</span>
+<span class="co">#&gt;       M1   M2   M3   M4   M5   M6   M7  </span>
+<span class="co">#&gt;   J1  X    X    X                       </span>
+<span class="co">#&gt;   J2  X    X         X                  </span>
+<span class="co">#&gt;   J3  X    X              X             </span>
+<span class="co">#&gt;   J4                      X    X    X   </span>
+<span class="co">#&gt;   J5  X                   X    X</span>
 <span class="va">fc_I</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Too many attributes, output will be truncated.</span>
 <span class="co">#&gt; FormalContext with 9 objects and 9 attributes.</span>
-<span class="co">#&gt; Attributes' names are: M1, M2, M3, M4, M5, M6, ...</span>
-<span class="co">#&gt; Matrix:</span>
-<span class="co">#&gt;    M1 M2 M3 M4 M5 M6 M7</span>
-<span class="co">#&gt; J1  1  1  0  1  0  0  0</span>
-<span class="co">#&gt; J2  1  1  1  1  0  0  0</span>
-<span class="co">#&gt; J3  1  1  1  0  1  0  0</span>
-<span class="co">#&gt; J4  1  0  0  0  1  1  0</span>
-<span class="co">#&gt; J5  1  0  0  1  1  1  0</span>
-<span class="co">#&gt; J6  1  1  1  1  1  1  0</span></pre></div>
+<span class="co">#&gt;       M1   M2   M3   M4   M5   M6   M7   M8   M9  </span>
+<span class="co">#&gt;   J1  X    X         X                            </span>
+<span class="co">#&gt;   J2  X    X    X    X                            </span>
+<span class="co">#&gt;   J3  X    X    X         X                       </span>
+<span class="co">#&gt;   J4  X                   X    X                  </span>
+<span class="co">#&gt;   J5  X              X    X    X                  </span>
+<span class="co">#&gt;   J6  X    X    X    X    X    X                  </span>
+<span class="co">#&gt;   J7                                X    X        </span>
+<span class="co">#&gt;   J8                                X    X    X   </span>
+<span class="co">#&gt;   J9                      X    X    X         X</span></pre></div>
 <p>Note that now objects are named J1, J2… and attributes are M1, M2…, from join and meet.</p>
 </div>
 <div id="saving-and-loading" class="section level2">

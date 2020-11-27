@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7</span>
       </span>
     </div>
 
@@ -460,16 +460,17 @@
     <pre class="examples"><div class='input'><span class='co'># Build and print the formal context</span>
 <span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>fc_planets</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Too many attributes, output will be truncated.</span></div><div class='output co'>#&gt; FormalContext with 9 objects and 7 attributes.
-#&gt; Attributes' names are: small, medium, large, near, far, moon, ...
-#&gt; Matrix:
-#&gt;         small medium large near far moon no_moon
-#&gt; Mercury     1      0     0    1   0    0       1
-#&gt; Venus       1      0     0    1   0    0       1
-#&gt; Earth       1      0     0    1   0    1       0
-#&gt; Mars        1      0     0    1   0    1       0
-#&gt; Jupiter     0      0     1    0   1    1       0
-#&gt; Saturn      0      0     1    0   1    1       0</div><div class='input'>
+</div><div class='output co'>#&gt; FormalContext with 9 objects and 7 attributes.
+#&gt;            small   medium   large   near   far   moon   no_moon  
+#&gt;   Mercury    X                       X                     X     
+#&gt;     Venus    X                       X                     X     
+#&gt;     Earth    X                       X            X              
+#&gt;      Mars    X                       X            X              
+#&gt;   Jupiter                     X             X     X              
+#&gt;    Saturn                     X             X     X              
+#&gt;    Uranus            X                      X     X              
+#&gt;   Neptune            X                      X     X              
+#&gt;     Pluto    X                              X     X              </div><div class='input'>
 <span class='co'># Plot the formal context</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='FormalContext-1.png' alt='' width='700' height='433' /></div><div class='input'>
