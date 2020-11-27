@@ -3,6 +3,7 @@
 * win-builder (devel)
 * macos-latest (release), windows-latest (release), ubuntu-16.04 (release and devel) via GitHub actions.
 * local R with valgrind using docker
+* Default platforms using devtools::check_rhub().
 
 ## Comments
 This version addresses the issues in the previous (1.0.6) CRAN version.
