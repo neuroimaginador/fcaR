@@ -28,3 +28,5 @@ void initImplicationTree(struct ImplicationTree *t, int n_attributes);
 void addImplicationToTree(struct ImplicationTree *t, SparseVector A);
 
 // void addImplicationToTree_XPtr(SEXP ext, S4 A);
+
+void freeImplicationTree(struct ImplicationTree* t);

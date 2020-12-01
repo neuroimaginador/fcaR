@@ -68,7 +68,7 @@ void addImplicationToTree(struct ImplicationTree *t, SparseVector A) {
 
   int new_idx = t->n_implications;
 
-  insertArray(&(t->CARD), 0);
+  insertArray(&(t->CARD), 0.0);
   insertArray(&(t->COUNT), 0);
 
   t->n_implications = t->n_implications + 1;
@@ -97,3 +97,21 @@ void addImplicationToTree(struct ImplicationTree *t, SparseVector A) {
 //   addImplicationToTree(tree, S);
 //
 // }
+
+void freeImplicationTree(struct ImplicationTree* t) {
+
+  freeArray(&(t->CARD));
+  freeArray(&(t->COUNT));
+
+  for (int i = 0; i < t->n_attributes; i++) {
+
+    freeArray(&(t->LIST[i]));
+    freeArray(&(t->DEGREE[i]));
+
+  }
+
+  // free(t->DEGREE);
+  // free(t->LIST);
+  // Free(t);
+
+}

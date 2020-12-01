@@ -1,6 +1,5 @@
 #include <Rcpp.h>
 #include "implication_tree.h"
-
 using namespace Rcpp;
 
 
@@ -8,6 +7,9 @@ double cardinal(SparseVector A);
 
 SparseVector setdifference(SparseVector x,
                            SparseVector y);
+void setdifference(SparseVector x,
+                   SparseVector y,
+                   SparseVector* res);
 
 SparseVector compute_intent (SparseVector V,
                              NumericMatrix I);

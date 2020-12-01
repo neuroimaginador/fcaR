@@ -315,11 +315,16 @@ List next_closure_implications(NumericMatrix I,
   initVector(&rhs, n_attributes);
 
   ImplicationTree tree;
+  // (ImplicationTree*)malloc(sizeof(ImplicationTree));
   initImplicationTree(&tree, n_attributes);
 
   SparseVector A;
   initVector(&A, n_attributes);
   compute_closure(&A, empty, I.begin(), n_objects, n_attributes);
+
+  SparseVector this_extent;
+  initVector(&this_extent, n_objects);
+
 
   if (cardinal(A) > 0) {
 
@@ -343,8 +348,11 @@ List next_closure_implications(NumericMatrix I,
 
   if (save_concepts) {
 
+    reinitVector(&this_extent);
+    compute_extent(&this_extent, A, I.begin(),
+                   n_objects, n_attributes);
     add_column(&concepts, A);
-    add_column(&extents, compute_extent(A, I));
+    add_column(&extents, this_extent);
 
   }
 
@@ -381,7 +389,6 @@ List next_closure_implications(NumericMatrix I,
                          attrs, &B);
 
     cloneVector(&A, B);
-    // A = B;
 
     if (verbose) {
 
@@ -399,17 +406,19 @@ List next_closure_implications(NumericMatrix I,
     reinitVector(&B);
     compute_closure(&B, A, I.begin(), n_objects, n_attributes);
 
-    // B = compute_closure(A, I);
-
-    rhs = setdifference(B, A);
+    setdifference(B, A, &rhs);
 
     if (cardinal(rhs) == 0) {
 
       // Concept
       if (save_concepts) {
 
+        reinitVector(&this_extent);
+        compute_extent(&this_extent, A, I.begin(),
+                       n_objects, n_attributes);
+
         add_column(&concepts, A);
-        add_column(&extents, compute_extent(A, I));
+        add_column(&extents, this_extent);
 
         if (verbose) {
 
@@ -452,6 +461,7 @@ List next_closure_implications(NumericMatrix I,
       freeVector(&empty);
       freeVector(&B);
       freeVector(&rhs);
+      freeVector(&this_extent);
 
       S4 intents_S4 = SparseToS4_fast(concepts);
       S4 extents_S4 = SparseToS4_fast(extents);
@@ -462,6 +472,7 @@ List next_closure_implications(NumericMatrix I,
       freeVector(&extents);
       freeVector(&LHS);
       freeVector(&RHS);
+      freeImplicationTree(&tree);
 
       List res = List::create(_["concepts"] = intents_S4,
                               _["extents"] = extents_S4,
@@ -497,6 +508,8 @@ List next_closure_implications(NumericMatrix I,
   freeVector(&empty);
   freeVector(&B);
   freeVector(&rhs);
+  freeVector(&this_extent);
+  freeImplicationTree(&tree);
 
   return res;
 
@@ -627,8 +640,9 @@ List next_closure_concepts(NumericMatrix I,
 
   closure_count = closure_count + 1;
 
+  compute_extent(&B, A, I.begin(), n_objects, n_attributes);
   add_column(&concepts, A);
-  add_column(&extents, compute_extent(A, I));
+  add_column(&extents, B);
 
   // if (verbose) {
   //

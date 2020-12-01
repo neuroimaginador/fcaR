@@ -87,7 +87,7 @@ NumericVector zadeh_I(double x, NumericVector y) {
 
 void zadeh_I(double x, SparseVector *A) {
 
-  for (int i = 0; i < A->i.used; i++) {
+  for (size_t i = 0; i < A->i.used; i++) {
 
     if (A->x.array[i] >= x) {
 
@@ -101,7 +101,7 @@ void zadeh_I(double x, SparseVector *A) {
 
 void intersect(SparseVector *A, SparseVector B) {
 
-  int i, j = 0, to_write = 0;
+  size_t i, j = 0, to_write = 0;
 
   for (i = 0; i < A->i.used; i++) {
 

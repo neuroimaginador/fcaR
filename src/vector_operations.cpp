@@ -500,7 +500,11 @@ S4 set_difference(IntegerVector xi,
                                     yi, yp, yx,
                                     number);
 
-  return SparseToS4_fast(res);
+  S4 res2 = SparseToS4_fast(res);
+
+  freeVector(&res);
+
+  return res2;
 
 }
 

@@ -59,6 +59,44 @@ SparseVector setdifference(SparseVector x,
 
 }
 
+void setdifference(SparseVector x,
+                   SparseVector y,
+                   SparseVector* res) {
+
+  reinitVector(res);
+
+  for (size_t i = 0; i < x.i.used; i++) {
+
+    bool add = true;
+
+    for (size_t j = 0; j < y.i.used; j++) {
+
+      if (x.i.array[i] == y.i.array[j]) {
+
+        if (y.x.array[j] >= x.x.array[i]) {
+
+          add = false;
+          break;
+
+        }
+
+        if (y.i.array[j] > x.i.array[i]) break;
+
+      }
+
+    }
+
+    if (add) {
+
+      insertArray(&(res->i), x.i.array[i]);
+      insertArray(&(res->x), x.x.array[i]);
+
+    }
+
+  }
+
+}
+
 SparseVector compute_intent (SparseVector V,
                              NumericMatrix I) {
 
