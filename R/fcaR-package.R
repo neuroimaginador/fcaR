@@ -32,9 +32,6 @@ NULL
 #' # Find its concepts and implications
 #' fc_planets$find_implications()
 #'
-#' # Plot the concept lattice
-#' fc_planets$concepts$plot()
-#'
 #' # Print the extracted implications
 #' fc_planets$implications
 #'

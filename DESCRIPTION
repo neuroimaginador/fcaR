@@ -50,6 +50,7 @@ Suggests:
     covr,
     hasseDiagram,
     knitr,
+    markdown,
     rmarkdown,
     testthat (>= 2.1.0),
     parallel

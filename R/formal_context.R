@@ -17,9 +17,6 @@
 #' fc_planets <- FormalContext$new(planets)
 #' print(fc_planets)
 #'
-#' # Plot the formal context
-#' fc_planets$plot()
-#'
 #' # Define a set of attributes
 #' S <- SparseSet$new(attributes = fc_planets$attributes)
 #' S$assign(moon = 1, large = 1)

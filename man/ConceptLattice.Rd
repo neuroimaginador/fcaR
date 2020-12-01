@@ -13,9 +13,6 @@ fc_planets <- FormalContext$new(planets)
 # Find the concepts
 fc_planets$find_concepts()
 
-# Plot the concept lattice
-# fc_planets$concepts$plot()
-
 # Find join- and meet- irreducible elements
 fc_planets$concepts$join_irreducibles()
 fc_planets$concepts$meet_irreducibles()
