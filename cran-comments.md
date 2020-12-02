@@ -6,7 +6,7 @@
 * Default platforms using devtools::check_rhub().
 
 ## Comments
-This version addresses the issues in the previous (1.0.6) CRAN version.
+This version addresses the issues in the previous (1.0.6) CRAN version. When tested using valgrind, no errors related to fcaR code are found.
 
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs. 
