@@ -85,24 +85,47 @@
 
 }
 
-# `%-%` <- function(S1, S2) {
-#
-#   # Fuzzy set difference
-#   if (inherits(S1, "SparseSet") |
-#       inherits(S2, "SparseSet")) {
-#
-#     S <- SparseSet$new(attributes = S1$get_attributes())
-#     A <- S1$get_vector()
-#     B <- S2$get_vector()
-#     A[B > A] <- 0
-#     idx <- which(A > 0)
-#     S$assign(attributes = S$get_attributes()[idx], values = A[idx])
-#
-#     return(S)
-#
-#   }
-#
-#   stop("Only implemented for SparseSets.\n",
-#        call. = FALSE)
-#
-# }
+#' Difference in SparseSets
+#'
+#' @param S1 A \code{SparseSet}
+#' @param S2 A \code{SparseSet}
+#'
+#' @details
+#' Both \code{S1} and \code{S2} must be SparseSets.
+#'
+#' @return
+#' Returns the difference \code{S1 - S2}.
+#'
+#' @examples
+#' # Build two sparse sets
+#' S <- SparseSet$new(attributes = c("A", "B", "C"))
+#' S$assign(A = 1, B = 1)
+#' T <- SparseSet$new(attributes = c("A", "B", "C"))
+#' T$assign(A = 1)
+#'
+#' # Difference
+#' S %-% T
+#'
+#' @export
+`%-%` <- function(S1, S2) {
+
+  # Fuzzy set difference
+  if (inherits(S1, "SparseSet") &
+      inherits(S2, "SparseSet")) {
+
+    A <- S1$get_vector()
+    B <- S2$get_vector()
+    my_diff <- .difference2(A, B) %>%
+      Matrix::as.matrix() %>% as.vector()
+    names(my_diff) <- S1$get_attributes()
+
+    S <- as_SparseSet(my_diff)
+
+    return(S)
+
+  }
+
+  stop("Only implemented for SparseSets.\n",
+       call. = FALSE)
+
+}

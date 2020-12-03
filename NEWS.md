@@ -1,3 +1,9 @@
+# fcaR 1.1.0
+ 
+Enhancements: 
+* Better printing of SparseSets.
+* Added function to compute the difference of two SparseSets.
+
 # fcaR 1.0.7
 
 Bugfixes:
