@@ -190,7 +190,7 @@ SparseSet <- R6::R6Class(
 
         cat(stringr::str_wrap(.set_to_string(S = private$v,
                                              attributes = private$attributes),
-                              width = 75,
+                              width = getOption("width"),
                               exdent = 2))
 
       } else {

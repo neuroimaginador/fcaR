@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -301,9 +301,6 @@ O6
 <span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pryr':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.bytes Rcpp</span>
 <span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span>
 <span class="co">#&gt;       P1    P2    P3    P4    P5    P6  </span>
 <span class="co">#&gt;   O1   0     1    0.5   0.5    1    0   </span>
@@ -368,9 +365,9 @@ O6
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
                                       <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.013 secs.</span>
-<span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.019 secs.</span>
-<span class="co">#&gt; Batch took 0.043 secs.</span>
+<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.003 secs.</span>
+<span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.007 secs.</span>
+<span class="co">#&gt; Batch took 0.016 secs.</span>
 
 <span class="co"># Reduced set of implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
