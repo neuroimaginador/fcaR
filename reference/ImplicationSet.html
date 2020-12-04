@@ -186,11 +186,11 @@
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
-<p>Creates and initialize a new <code>FormalContext</code> object. It can be done in two ways:
+<p>Creates and initialize a new <code>ImplicationSet</code> object. It can be done in two ways:
 <code>initialize(name, attributes, lhs, rhs)</code>
 or <code>initialize(rules)</code></p>
 <p>In the first way, the only mandatory argument is <code>attributes</code>, (character vector) which is a vector of names of the attributes on which we define the implications. Optional arguments are: <code>name</code> (character string), name of the implication set, <code>lhs</code> (a <code>dgCMatrix</code>), initial LHS of the implications stored and the analogous <code>rhs</code>.</p>
-<p>The other way is used to initialize the <code>FormalContext</code> object from a <code>rules</code> object from package <code>arules</code>.</p>
+<p>The other way is used to initialize the <code>ImplicationSet</code> object from a <code>rules</code> object from package <code>arules</code>.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A new <code>ImplicationSet</code> object.</p>
@@ -429,7 +429,7 @@ or <code>initialize(rules)</code></p>
 #&gt; 2.5 2.3 </div><div class='input'>
 <span class='co'># Simplify the implication set</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>apply_rules</span><span class='op'>(</span><span class='st'>"simplification"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.082 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.085 secs. </span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.08 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.083 secs. </span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
