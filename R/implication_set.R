@@ -45,13 +45,13 @@ ImplicationSet <- R6::R6Class(
     #' @param ... See Details.
     #'
     #' @details
-    #' Creates and initialize a new \code{FormalContext} object. It can be done in two ways:
+    #' Creates and initialize a new \code{ImplicationSet} object. It can be done in two ways:
     #' \code{initialize(name, attributes, lhs, rhs)}
     #' or \code{initialize(rules)}
     #'
     #' In the first way, the only mandatory argument is \code{attributes}, (character vector) which is a vector of names of the attributes on which we define the implications. Optional arguments are: \code{name} (character string), name of the implication set, \code{lhs} (a \code{dgCMatrix}), initial LHS of the implications stored and the analogous \code{rhs}.
     #'
-    #' The other way is used to initialize the \code{FormalContext} object from a \code{rules} object from package \code{arules}.
+    #' The other way is used to initialize the \code{ImplicationSet} object from a \code{rules} object from package \code{arules}.
     #'
     #' @return A new \code{ImplicationSet} object.
     initialize = function(...) {
