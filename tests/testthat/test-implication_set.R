@@ -566,3 +566,41 @@ test_that("fcaR computes the canonical basis from an ImplicationSet", {
   expect_is(imps, "ImplicationSet")
 
 })
+
+test_that(desc = "fcaR can use equivalence rules", {
+
+  expect_error(rules <- equivalencesRegistry$get_entry_names(),
+               NA)
+
+  for (r in rules) {
+
+    objects <- paste0("O", 1:6)
+    n_objects <- length(objects)
+
+    attributes <- paste0("P", 1:6)
+    n_attributes <- length(attributes)
+
+    I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                         1, 1, 0.5, 0, 0, 0,
+                         0.5, 1, 0, 0, 1, 0,
+                         0.5, 0, 0, 1, 0.5, 0,
+                         1, 0, 0, 0.5, 0, 0,
+                         0, 0, 1, 0, 0, 0),
+                nrow = n_objects,
+                byrow = FALSE)
+
+    colnames(I) <- attributes
+    rownames(I) <- objects
+
+    fc <- FormalContext$new(I = I)
+    fc$find_implications()
+
+    cat("Testing", r, "\n")
+
+    expect_error(fc$implications$apply_rules(r,
+                                             parallelize = FALSE),
+                 NA)
+
+  }
+
+})

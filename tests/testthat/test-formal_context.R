@@ -83,6 +83,37 @@ test_that("fcaR imports a formal context with constant columns", {
 
 })
 
+test_that("fcaR exports FormalContexts to LaTeX", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 1, 1, 1, 1,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 0, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I)
+
+  expect_error(fc$to_latex(fraction = "frac"), NA)
+
+  fc2 <- FormalContext$new(planets)
+
+  expect_error(fc2$to_latex(), NA)
+
+
+})
+
 test_that("fcaR extracts concepts", {
 
   objects <- paste0("O", 1:6)
@@ -166,6 +197,12 @@ test_that("fcaR generate plots", {
   fc$find_implications()
 
   expect_error(fc$plot(), NA)
+  expect_error(fc$plot(to_latex = TRUE), NA)
+  expect_error(fc$plot(to_latex = TRUE,
+                       filename = "./test.tex",
+                       caption = "Test",
+                       label = "fig:test",
+                       pointsize = 12), NA)
 
   fc <- FormalContext$new()
 
@@ -202,9 +239,10 @@ test_that("fcaR exports formal contexts to arules transactions", {
 test_that("fcaR prints large formal contexts", {
 
   I <- matrix(data = sample(c(0, 1),
-                            size = 100,
+                            size = 400,
                             replace = TRUE),
-              nrow = 10)
+              nrow = 20)
+  colnames(I) <- paste0("ATT_", seq(ncol(I)))
 
   fc <- FormalContext$new(I)
   expect_error(fc$print(), NA)
