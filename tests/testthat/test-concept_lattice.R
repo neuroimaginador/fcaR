@@ -42,19 +42,19 @@ test_that("fcaR plots a ConceptLattice", {
   expect_error(fc$concepts$plot(), NA)
   expect_error(fc$concepts$plot(object_names = FALSE), NA)
 
-  expect_error(fc$concepts$plot(to_latex = TRUE), NA)
-  expect_error(fc$concepts$plot(to_latex = TRUE,
-                                filename = "./test.tex",
-                                caption = "Test",
-                                label = "fig:test",
-                                pointsize = 12), NA)
-
-  expect_error(fc$concepts$plot(to_latex = TRUE,
-                                object_names = TRUE,
-                                filename = "./test2.tex",
-                                caption = "Test",
-                                label = "fig:test",
-                                pointsize = 12), NA)
+  # expect_error(fc$concepts$plot(to_latex = TRUE), NA)
+  # expect_error(fc$concepts$plot(to_latex = TRUE,
+  #                               filename = "./test.tex",
+  #                               caption = "Test",
+  #                               label = "fig:test",
+  #                               pointsize = 12), NA)
+  #
+  # expect_error(fc$concepts$plot(to_latex = TRUE,
+  #                               object_names = TRUE,
+  #                               filename = "./test2.tex",
+  #                               caption = "Test",
+  #                               label = "fig:test",
+  #                               pointsize = 12), NA)
 
 
 })

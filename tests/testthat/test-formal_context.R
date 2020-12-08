@@ -197,12 +197,12 @@ test_that("fcaR generate plots", {
   fc$find_implications()
 
   expect_error(fc$plot(), NA)
-  expect_error(fc$plot(to_latex = TRUE), NA)
-  expect_error(fc$plot(to_latex = TRUE,
-                       filename = "./test.tex",
-                       caption = "Test",
-                       label = "fig:test",
-                       pointsize = 12), NA)
+  # expect_error(fc$plot(to_latex = TRUE), NA)
+  # expect_error(fc$plot(to_latex = TRUE,
+  #                      filename = "./test.tex",
+  #                      caption = "Test",
+  #                      label = "fig:test",
+  #                      pointsize = 12), NA)
 
   fc <- FormalContext$new()
 
