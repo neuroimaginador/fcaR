@@ -662,7 +662,7 @@ List next_closure_concepts(NumericMatrix I,
   //
   // }
 
-  double pctg, old_pctg = 0;
+  // double pctg, old_pctg = 0;
 
   while ((cardinal(A) < n_attributes)){
 
