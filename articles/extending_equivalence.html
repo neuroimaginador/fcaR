@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -74,7 +74,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/neuroimaginador/fcaR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -88,8 +88,7 @@
 
       
 
-      </header><script src="extending_equivalence_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="extending_equivalence_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="extending_equivalence_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="extending_equivalence_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Extending fcaR: Equivalence Rules for Implications</h1>
@@ -225,16 +224,16 @@
 <code class="sourceCode R"><span class="co"># Reordered implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
 <span class="co">#&gt; Implication set with 10 implications.</span>
-<span class="co">#&gt; Rule 1: {small, large, far, moon} -&gt; {medium, near, no_moon}</span>
-<span class="co">#&gt; Rule 2: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
+<span class="co">#&gt; Rule 1: {no_moon} -&gt; {small, near}</span>
+<span class="co">#&gt; Rule 2: {large} -&gt; {far, moon}</span>
 <span class="co">#&gt; Rule 3: {small, near, far, moon} -&gt; {medium, large, no_moon}</span>
-<span class="co">#&gt; Rule 4: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
-<span class="co">#&gt; Rule 5: {no_moon} -&gt; {small, near}</span>
-<span class="co">#&gt; Rule 6: {near} -&gt; {small}</span>
-<span class="co">#&gt; Rule 7: {small, medium, far, moon} -&gt; {large, near, no_moon}</span>
-<span class="co">#&gt; Rule 8: {medium} -&gt; {far, moon}</span>
-<span class="co">#&gt; Rule 9: {large} -&gt; {far, moon}</span>
-<span class="co">#&gt; Rule 10: {far} -&gt; {moon}</span></code></pre></div>
+<span class="co">#&gt; Rule 4: {small, medium, far, moon} -&gt; {large, near, no_moon}</span>
+<span class="co">#&gt; Rule 5: {medium} -&gt; {far, moon}</span>
+<span class="co">#&gt; Rule 6: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
+<span class="co">#&gt; Rule 7: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
+<span class="co">#&gt; Rule 8: {far} -&gt; {moon}</span>
+<span class="co">#&gt; Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}</span>
+<span class="co">#&gt; Rule 10: {near} -&gt; {small}</span></code></pre></div>
 </div>
   </div>
 
