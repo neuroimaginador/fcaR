@@ -61,7 +61,6 @@ The development version of this package can be installed with
 
 ## Example of Use
 
-<!-- Example from [here](https://www.sciencedirect.com/science/article/pii/S1877705812021418) -->
 Let us start with a fuzzy dataset (stored in a matrix I) as follows:
 <table>
 <thead>
@@ -242,9 +241,6 @@ We can build a FormalContext object:
 fc <- FormalContext$new(I)
 
 print(fc)
-#> Registered S3 method overwritten by 'pryr':
-#>   method      from
-#>   print.bytes Rcpp
 #> FormalContext with 6 objects and 6 attributes.
 #>       P1    P2    P3    P4    P5    P6  
 #>   O1   0     1    0.5   0.5    1    0   
@@ -327,9 +323,9 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.013 secs.
-#> --> Generalization: from 12 to 12 in 0.019 secs.
-#> Batch took 0.043 secs.
+#> --> Composition: from 12 to 12 in 0.009 secs.
+#> --> Generalization: from 12 to 12 in 0.018 secs.
+#> Batch took 0.041 secs.
 
 # Reduced set of implications
 fc$implications

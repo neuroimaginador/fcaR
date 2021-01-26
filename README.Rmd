@@ -56,15 +56,10 @@ remotes::install_github("neuroimaginador/fcaR", build_vignettes = TRUE)
 
 ## Example of Use
 
-<!-- Example from [here](https://www.sciencedirect.com/science/article/pii/S1877705812021418) -->
-
-
 Let us start with a fuzzy dataset (stored in a matrix I) as follows:
 ```{r results="asis", echo = FALSE}
 
 library(fcaR)
-
-# Table 2 in the paper
 
 objects <- paste0("O", 1:6)
 n_objects <- length(objects)
