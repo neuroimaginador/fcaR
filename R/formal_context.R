@@ -800,7 +800,11 @@ FormalContext <- R6::R6Class(
       self$objects <- L$objects
       self$expanded_grades_set <- L$expanded_grades_set
       self$grades_set <- L$grades_set
-      self$implications <- L$implications
+      self$implications <- ImplicationSet$new(attributes = L$attributes,
+                                              I = L$I,
+                                              lhs = L$implications$get_LHS_matrix(),
+                                              rhs = L$implications$get_RHS_matrix())
+
 
       if (!is.null(L$extents)) {
 
