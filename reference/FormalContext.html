@@ -170,6 +170,7 @@
 <ul>
 <li><p><a href='#method-new'><code>FormalContext$new()</code></a></p></li>
 <li><p><a href='#method-is_empty'><code>FormalContext$is_empty()</code></a></p></li>
+<li><p><a href='#method-dual'><code>FormalContext$dual()</code></a></p></li>
 <li><p><a href='#method-intent'><code>FormalContext$intent()</code></a></p></li>
 <li><p><a href='#method-extent'><code>FormalContext$extent()</code></a></p></li>
 <li><p><a href='#method-closure'><code>FormalContext$closure()</code></a></p></li>
@@ -188,24 +189,27 @@
 <li><p><a href='#method-dim'><code>FormalContext$dim()</code></a></p></li>
 <li><p><a href='#method-print'><code>FormalContext$print()</code></a></p></li>
 <li><p><a href='#method-to_latex'><code>FormalContext$to_latex()</code></a></p></li>
+<li><p><a href='#method-incidence'><code>FormalContext$incidence()</code></a></p></li>
 <li><p><a href='#method-plot'><code>FormalContext$plot()</code></a></p></li>
 <li><p><a href='#method-clone'><code>FormalContext$clone()</code></a></p></li>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creator for the Formal Context class</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>I</span>, remove_const <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>I</span>, <span class='va'>filename</span>, remove_const <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>I</code></dt><dd><p>(numeric matrix) The table of the formal context.</p></dd>
+
+<dt><code>filename</code></dt><dd><p>(character) Path of a file to import.</p></dd>
 
 <dt><code>remove_const</code></dt><dd><p>(logical) If <code>TRUE</code>, remove constant columns. The default is <code>FALSE</code>.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>Columns of <code>I</code> should be named, since they are the names of the attributes of the formal context.</p>
-<p>If no <code>I</code> is used, the resulting <code>FormalContext</code> will be empty and not usable unless for loading a previously saved one.</p>
+<p>If no <code>I</code> is used, the resulting <code>FormalContext</code> will be empty and not usable unless for loading a previously saved one. In this case, one can provide a <code>filename</code> to import. Only RDS, CSV and CXT files are currently supported.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>An object of the <code>FormalContext</code> class.</p>
@@ -216,6 +220,13 @@
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p><code>TRUE</code> if the <code>FormalContext</code> is empty, that is, has not been provided with a matrix, and <code>FALSE</code> otherwise.</p>
+<p><hr>
+<a id="method-dual"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>dual()</code></h3>
+<p>Get the dual formal context</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>dual</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>A <code>FormalContext</code> where objects and attributes have interchanged their roles.</p>
 <p><hr>
 <a id="method-intent"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>intent()</code></h3>
 <p>Get the intent of a fuzzy set of objects</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -381,14 +392,17 @@
 <p>Invisibly the current <code>FormalContext</code>.</p>
 <p><hr>
 <a id="method-load"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/load.html'>load()</a></code></h3>
-<p>Load a <code>FormalContext</code> from a RDS file</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Load a <code>FormalContext</code> from a file</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>load</span><span class='op'>(</span><span class='va'>filename</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>filename</code></dt><dd><p>(character) Path of the RDS file to load the <code>FormalContext</code> from.</p></dd>
+<dt><code>filename</code></dt><dd><p>(character) Path of the file to load the <code>FormalContext</code> from.</p></dd>
 
 </dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<p>Currently, only RDS, CSV and CXT files are supported.</p>
+
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The loaded <code>FormalContext</code>.</p>
 <p><hr>
@@ -425,6 +439,13 @@
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A table environment in LaTeX.</p>
+<p><hr>
+<a id="method-incidence"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>incidence()</code></h3>
+<p>Incidence matrix of the formal context</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>incidence</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>The incidence matrix of the formal context</p>
 <p><hr>
 <a id="method-plot"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></h3>
 <p>Plot the formal context table</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
