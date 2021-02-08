@@ -53,6 +53,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \itemize{
 \item \href{#method-new}{\code{FormalContext$new()}}
 \item \href{#method-is_empty}{\code{FormalContext$is_empty()}}
+\item \href{#method-dual}{\code{FormalContext$dual()}}
 \item \href{#method-intent}{\code{FormalContext$intent()}}
 \item \href{#method-extent}{\code{FormalContext$extent()}}
 \item \href{#method-closure}{\code{FormalContext$closure()}}
@@ -71,6 +72,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-dim}{\code{FormalContext$dim()}}
 \item \href{#method-print}{\code{FormalContext$print()}}
 \item \href{#method-to_latex}{\code{FormalContext$to_latex()}}
+\item \href{#method-incidence}{\code{FormalContext$incidence()}}
 \item \href{#method-plot}{\code{FormalContext$plot()}}
 \item \href{#method-clone}{\code{FormalContext$clone()}}
 }
@@ -81,13 +83,15 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \subsection{Method \code{new()}}{
 Creator for the Formal Context class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$new(I, remove_const = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$new(I, filename, remove_const = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{I}}{(numeric matrix) The table of the formal context.}
+
+\item{\code{filename}}{(character) Path of a file to import.}
 
 \item{\code{remove_const}}{(logical) If \code{TRUE}, remove constant columns. The default is \code{FALSE}.}
 }
@@ -96,7 +100,7 @@ Creator for the Formal Context class
 \subsection{Details}{
 Columns of \code{I} should be named, since they are the names of the attributes of the formal context.
 
-If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one.
+If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one. In this case, one can provide a \code{filename} to import. Only RDS, CSV and CXT files are currently supported.
 }
 
 \subsection{Returns}{
@@ -114,6 +118,19 @@ Check if the \code{FormalContext} is empty
 
 \subsection{Returns}{
 \code{TRUE} if the \code{FormalContext} is empty, that is, has not been provided with a matrix, and \code{FALSE} otherwise.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-dual"></a>}}
+\if{latex}{\out{\hypertarget{method-dual}{}}}
+\subsection{Method \code{dual()}}{
+Get the dual formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$dual()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A \code{FormalContext} where objects and attributes have interchanged their roles.
 }
 }
 \if{html}{\out{<hr>}}
@@ -392,7 +409,7 @@ Invisibly the current \code{FormalContext}.
 \if{html}{\out{<a id="method-load"></a>}}
 \if{latex}{\out{\hypertarget{method-load}{}}}
 \subsection{Method \code{load()}}{
-Load a \code{FormalContext} from a RDS file
+Load a \code{FormalContext} from a file
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$load(filename)}\if{html}{\out{</div>}}
 }
@@ -400,10 +417,14 @@ Load a \code{FormalContext} from a RDS file
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{filename}}{(character) Path of the RDS file to load the \code{FormalContext} from.}
+\item{\code{filename}}{(character) Path of the file to load the \code{FormalContext} from.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Details}{
+Currently, only RDS, CSV and CXT files are supported.
+}
+
 \subsection{Returns}{
 The loaded \code{FormalContext}.
 }
@@ -460,6 +481,19 @@ Write the context in LaTeX format
 }
 \subsection{Returns}{
 A table environment in LaTeX.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-incidence"></a>}}
+\if{latex}{\out{\hypertarget{method-incidence}{}}}
+\subsection{Method \code{incidence()}}{
+Incidence matrix of the formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$incidence()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The incidence matrix of the formal context
 }
 }
 \if{html}{\out{<hr>}}

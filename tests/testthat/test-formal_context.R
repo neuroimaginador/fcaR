@@ -55,6 +55,60 @@ test_that("fcaR creates a formal context", {
 
   expect_is(fc, "FormalContext")
 
+  # Return the incidence matrix
+  expect_true(all(fc$incidence() == I))
+
+})
+
+test_that("fcaR imports from CXT and CSV files", {
+
+  # Read CSV
+  filename <- system.file("contexts", "airlines.csv",
+                          package = "fcaR")
+
+  fc <- FormalContext$new(filename)
+  expect_is(fc, "FormalContext")
+
+  # Read CXT
+  filename <- system.file("contexts", "lives_in_water.cxt",
+                          package = "fcaR")
+
+  fc <- FormalContext$new(filename)
+  expect_is(fc, "FormalContext")
+
+})
+
+test_that("fcaR computes the dual formal context", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new()
+  fc <- FormalContext$new(I)
+
+  fc2 <- fc$dual()
+  expect_is(fc2, "FormalContext")
+
+  expect_equal(fc2$dim(), c(n_attributes, n_objects))
+  expect_output(fc2$print())
+  expect_equal(fc2$objects, fc$attributes)
+  expect_equal(fc2$attributes, fc$objects)
+
 })
 
 test_that("fcaR imports a formal context with constant columns", {

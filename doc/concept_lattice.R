@@ -51,6 +51,25 @@ fc_I$plot()
 fc_planets$to_latex()
 
 ## -----------------------------------------------------------------------------
+# Read CSV
+filename <- system.file("contexts", "airlines.csv",
+                        package = "fcaR")
+
+fc1 <- FormalContext$new(filename)
+fc1
+
+# Read CXT
+filename <- system.file("contexts", "lives_in_water.cxt",
+                        package = "fcaR")
+
+fc2 <- FormalContext$new(filename)
+fc2
+
+## -----------------------------------------------------------------------------
+fc_dual <- fc_planets$dual()
+fc_dual
+
+## -----------------------------------------------------------------------------
 # Define a set of objects
 S <- SparseSet$new(attributes = fc_planets$objects)
 S$assign(Earth = 1, Mars = 1)
@@ -100,11 +119,9 @@ fc_I$standardize()
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  fc$save(filename = "./fc.rds")
-#  
-#  # Create an empty FormalContext where to
-#  # import the previously saved
-#  fc2 <- FormalContext$new()
-#  fc2$load("./fc.rds")
+
+## ----eval = FALSE-------------------------------------------------------------
+#  fc2 <- FormalContext$new("./fc.rds")
 
 ## -----------------------------------------------------------------------------
 fc_planets$concepts$plot()

@@ -67,20 +67,35 @@ FormalContext <- R6::R6Class(
     #' Creator for the Formal Context class
     #'
     #' @param I           (numeric matrix) The table of the formal context.
+    #' @param filename    (character) Path of a file to import.
     #' @param remove_const (logical) If \code{TRUE}, remove constant columns. The default is \code{FALSE}.
     #'
     #' @details
     #' Columns of \code{I} should be named, since they are the names of the attributes of the formal context.
     #'
-    #' If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one.
+    #' If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one. In this case, one can provide a \code{filename} to import. Only RDS, CSV and CXT files are currently supported.
     #'
     #' @return An object of the \code{FormalContext} class.
     #' @export
     #'
-    initialize = function(I,
+    initialize = function(I, filename,
                           remove_const = FALSE) {
 
       if (missing(I)) {
+
+        if (!missing(filename)) {
+
+          self$load(filename)
+
+        }
+
+        return(invisible(self))
+
+      }
+
+      if (is.character(I)) {
+
+        self$load(I)
 
         return(invisible(self))
 
@@ -186,6 +201,22 @@ FormalContext <- R6::R6Class(
     is_empty = function() {
 
       return(is.null(self$I))
+
+    },
+
+    #' @description
+    #' Get the dual formal context
+    #'
+    #' @return A \code{FormalContext} where objects and attributes have interchanged their roles.
+    #'
+    #' @export
+    dual = function() {
+
+      I <- Matrix::as.matrix(self$I)
+      colnames(I) <- self$objects
+      rownames(I) <- self$attributes
+
+      return(FormalContext$new(I))
 
     },
 
@@ -676,8 +707,8 @@ FormalContext <- R6::R6Class(
       private$check_empty()
 
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
-      grades_set <- rep(list(self$grades_set), length(self$attributes))
-      # grades_set <- self$expanded_grades_set
+      # grades_set <- rep(list(self$grades_set), length(self$attributes))
+      grades_set <- self$expanded_grades_set
       attrs <- self$attributes
 
       L <- next_closure_implications(I = my_I,
@@ -784,35 +815,102 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
-    #' Load a \code{FormalContext} from a RDS file
+    #' Load a \code{FormalContext} from a file
     #'
-    #' @param filename   (character) Path of the RDS file to load the \code{FormalContext} from.
+    #' @param filename   (character) Path of the file to load the \code{FormalContext} from.
+    #'
+    #' @details Currently, only RDS, CSV and CXT files are supported.
     #'
     #' @return The loaded \code{FormalContext}.
     #'
     #' @export
     load = function(filename) {
 
-      L <- readRDS(filename)
+      pattern <- "(?<!^|[.]|/)[.]([^.]+)$"
 
-      self$I <- L$I
-      self$attributes <- L$attributes
-      self$objects <- L$objects
-      self$expanded_grades_set <- L$expanded_grades_set
-      self$grades_set <- L$grades_set
-      self$implications <- ImplicationSet$new(attributes = L$attributes,
-                                              I = L$I,
-                                              lhs = L$implications$get_LHS_matrix(),
-                                              rhs = L$implications$get_RHS_matrix())
+      extension <- filename %>%
+        stringr::str_extract_all(pattern) %>%
+        unlist() %>%
+        tolower()
+
+      if (extension == ".rds") {
+
+        L <- readRDS(filename)
+
+        self$I <- L$I
+        self$attributes <- L$attributes
+        self$objects <- L$objects
+        self$expanded_grades_set <- L$expanded_grades_set
+        self$grades_set <- L$grades_set
+        self$implications <- ImplicationSet$new(
+          attributes = L$attributes,
+          I = L$I,
+          lhs = L$implications$get_LHS_matrix(),
+          rhs = L$implications$get_RHS_matrix())
 
 
-      if (!is.null(L$extents)) {
+        if (!is.null(L$extents)) {
 
-        self$concepts <- ConceptLattice$new(extents = L$extents,
-                                            intents = L$intents,
-                                            objects = L$objects,
-                                            attributes = L$attributes,
-                                            I = L$I)
+          self$concepts <- ConceptLattice$new(
+            extents = L$extents,
+            intents = L$intents,
+            objects = L$objects,
+            attributes = L$attributes,
+            I = L$I)
+
+        }
+
+      }
+
+      if (extension == ".csv") {
+
+        I <- read.csv(filename)
+
+        if (is.character(I[[1]])) {
+
+          objects <- I[[1]]
+          I <- I[, -1]
+          rownames(I) <- objects
+
+        }
+
+        I <- as.matrix(I)
+
+        self$initialize(I)
+
+      }
+
+      if (extension == ".cxt") {
+
+        txt <- readLines(filename)
+
+        n_objects <- txt[3] %>% as.numeric()
+        n_attributes <- txt[4] %>% as.numeric()
+
+        obj_idx <- seq(6, 6 + n_objects - 1)
+        att_idx <- seq(6 + n_objects,
+                       6 + n_objects + n_attributes - 1)
+        matrix_idx <- seq(6 + n_objects + n_attributes,
+                          6 + 2 * n_objects + n_attributes - 1)
+
+        objects <- txt[obj_idx]
+        attributes <- txt[att_idx]
+        matrix <- txt[matrix_idx]  %>%
+          stringr::str_replace_all(
+            pattern = "X",
+            replacement = "1") %>%
+          stringr::str_replace_all(
+            pattern = stringr::fixed("."),
+            replacement = "0") %>%
+          as.list() %>%
+          stringr::str_split(pattern = "") %>%
+          purrr::map(as.numeric)
+
+        I <- do.call(rbind, matrix)
+        rownames(I) <- objects
+        colnames(I) <- attributes
+
+        self$initialize(I)
 
       }
 
@@ -959,6 +1057,17 @@ FormalContext <- R6::R6Class(
       cat(str)
 
       return(invisible(str))
+
+    },
+
+    #' @description
+    #' Incidence matrix of the formal context
+    #'
+    #' @return The incidence matrix of the formal context
+    #' @export
+    incidence = function() {
+
+      Matrix::as.matrix(Matrix::t(self$I))
 
     },
 

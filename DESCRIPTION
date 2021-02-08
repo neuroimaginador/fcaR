@@ -44,7 +44,8 @@ Imports:
     stringr,
     tictoc,
     tikzDevice,
-    magrittr
+    magrittr,
+    purrr
 Suggests: 
     arules,
     covr,

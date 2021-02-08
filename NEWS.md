@@ -3,6 +3,8 @@
 Enhancements: 
 * Better printing of SparseSets.
 * Added function to compute the difference of two SparseSets.
+* Added function to compute the dual of a FormalContext.
+* Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to "load()".
 
 # fcaR 1.0.7
 

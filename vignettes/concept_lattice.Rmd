@@ -75,6 +75,7 @@ fc_I <- FormalContext$new(I)
 
 Internally, the object stores information about whether the context is binary or the names of objects and attributes, which are taken from the rownames and colnames of the provided matrix.
 
+
 ## Plotting, printing and latex-ing the FormalContext
 
 Once created the `FormalContext` objects, we can print them or plot them as heatmaps (with functions `print()` and `plot()`):
@@ -92,7 +93,35 @@ Also, we can export the formal context as a LaTeX table:
 ```{r}
 fc_planets$to_latex()
 ```
+## Importing a Formal Context from File
 
+One can also create `FormalContext`s by importing RDS, CSV or CXT files directly:
+```{r}
+# Read CSV
+filename <- system.file("contexts", "airlines.csv",
+                        package = "fcaR")
+
+fc1 <- FormalContext$new(filename)
+fc1
+
+# Read CXT
+filename <- system.file("contexts", "lives_in_water.cxt",
+                        package = "fcaR")
+
+fc2 <- FormalContext$new(filename)
+fc2
+```
+
+## Dual Formal Context
+
+We can compute the dual formal context of a given one by using the `dual()` method:
+
+```{r}
+fc_dual <- fc_planets$dual()
+fc_dual
+```
+
+The result is a `FormalContext` where attributes are now the objects of the previous formal context and viceversa.
 
 ## Closures
 
@@ -183,16 +212,18 @@ Note that now objects are named J1, J2... and attributes are M1, M2..., from joi
 
 ## Saving and loading
 
-A `FormalContext` is saved and loaded (in RDS format) using its own methods `save()` and `load()`, which are more efficient than the base `saveRDS()` and `readRDS()`.
+A `FormalContext` is saved in RDS format using its own `save()` method, which is more efficient than the base `saveRDS()` and `readRDS()`.
 
 ```{r eval = FALSE}
 fc$save(filename = "./fc.rds")
-
-# Create an empty FormalContext where to
-# import the previously saved
-fc2 <- FormalContext$new()
-fc2$load("./fc.rds")
 ```
+
+In order to load a previously saved `FormalContext`, it suffices to do:
+```{r eval = FALSE}
+fc2 <- FormalContext$new("./fc.rds")
+```
+
+In this case, `fc` and `fc2` contain the same information.
 
 # Concept Lattice
 
