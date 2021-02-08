@@ -95,11 +95,52 @@ test_that("fcaR prints implications", {
 
 test_that("fcaR checks if implications hold in a context", {
 
-  fc <- FormalContext$new(planets)
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I = I)
   fc$find_implications()
   imps <- fc$implications$clone()
-  expect_true(all(imps %holds% fc))
+  expect_true(all(imps %holds_in% fc))
   expect_true(all(Matrix::as.matrix(fc %respects% imps)))
+
+})
+
+test_that("fcaR checks entailment and equivalence of implication sets", {
+
+  fc_planets <- FormalContext$new(planets)
+  fc_planets$find_implications()
+  # imps is the basis
+  imps <- fc_planets$implications$clone()
+  imps2 <- imps$clone()
+  # imps2 is an equivalent set of implications
+  # where we have removed redundancies
+  imps2$apply_rules(c("simp", "rsimp"))
+  # Any implication in imps2 follows from imps
+  expect_true(all(imps %entails% imps2))
+  # And viceversa
+  expect_true(all(imps2 %entails% imps))
+
+  # Equivalence of implication sets
+  expect_true(imps %~% imps2)
+  # If we remove any implication from imps2,
+  # they will not be equivalent
+  expect_false(imps %~% imps2[1:9])
 
 })
 

@@ -11,14 +11,14 @@
 #'
 #' @return A logical vector, indicating if each implication holds in the formal context.
 #'
-#' @example
+#' @examples
 #' fc <- FormalContext$new(planets)
 #' fc$find_implications()
 #' imps <- fc$implications$clone()
-#' imps %holds% fc
+#' imps %holds_in% fc
 #'
 #' @export
-`%holds%` <- function(imps, fc) {
+`%holds_in%` <- function(imps, fc) {
 
   premises <- imps$get_LHS_matrix()
   conclusions <- imps$get_RHS_matrix()
@@ -50,7 +50,7 @@
 #'
 #' @export
 #'
-#' @example
+#' @examples
 #' fc <- FormalContext$new(planets)
 #' fc$find_implications()
 #' imps <- fc$implications$clone()

@@ -5,7 +5,8 @@ Enhancements:
 * Added function to compute the difference of two SparseSets.
 * Added function to compute the dual of a FormalContext.
 * Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to "load()".
-* Added functions %holds% and %respects%, which check the validity of a set of implications in a formal context, and if a set of attribute sets respect an implication set.
+* Added functions %holds_in% and %respects%, which check the validity of a set of implications in a formal context, and if a set of attribute sets respect an implication set.
+* Added functions %entails% and %~% to check the entailment and equivalence between two implication sets.
 
 # fcaR 1.0.7
 

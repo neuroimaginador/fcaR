@@ -60,6 +60,14 @@ S
 fc_planets$implications$closure(S)$closure
 
 ## -----------------------------------------------------------------------------
+# Let us clone the implication basis
+imps <- fc_planets$implications$clone()
+imps %holds_in% fc_planets
+
+## -----------------------------------------------------------------------------
+fc_planets %respects% imps
+
+## -----------------------------------------------------------------------------
 fc_planets$implications$cardinality()
 
 ## -----------------------------------------------------------------------------
@@ -89,6 +97,24 @@ S$assign(large = 1, far = 1)
 S
 
 fc_planets$implications$closure(S, reduce = TRUE)
+
+## -----------------------------------------------------------------------------
+# imps is the basis
+imps <- fc_planets$implications$clone()
+imps2 <- imps$clone()
+# imps2 is an equivalent set of implications
+# where we have removed redundancies
+imps2$apply_rules(c("simp", "rsimp"))
+# Any implication in imps2 follows from imps
+imps %entails% imps2
+# And viceversa
+imps2 %entails% imps
+
+## -----------------------------------------------------------------------------
+imps %~% imps2
+# If we remove any implication from imps2,
+# they will not be equivalent
+imps %~% imps2[1:9]
 
 ## -----------------------------------------------------------------------------
 S <- SparseSet$new(attributes = fc_I$attributes)

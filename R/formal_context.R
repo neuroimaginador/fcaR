@@ -32,6 +32,14 @@
 #' # Find implications
 #' fc_planets$find_implications()
 #'
+#' # Read a formal context from CSV
+#' filename <- system.file("contexts", "airlines.csv", package = "fcaR")
+#' fc <- FormalContext$new(filename)
+#'
+#' # Read a formal context from a CXT file
+#' filename <- system.file("contexts", "lives_in_water.cxt", package = "fcaR")
+#' fc <- FormalContext$new(filename)
+#'
 #' @references
 #'
 #' Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” _Mathématiques et Sciences humaines_, *95*, 5-18.

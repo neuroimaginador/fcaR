@@ -104,6 +104,23 @@ S
 fc_planets$implications$closure(S)$closure
 ```
 
+## Validity of implications
+We can check if an `ImplicationSet` holds in a `FormalContext` by using the `%holds_in%` operator:
+```{r}
+# Let us clone the implication basis
+imps <- fc_planets$implications$clone()
+imps %holds_in% fc_planets
+```
+
+Each component of this vector represents whether the corresponding implication holds in the formal context. In this case, as the `ImplicationSet` is the Duquenne-Guigues basis for the `FormalContext`, all implications hold.
+
+Conversely, we can check if a list of attribute sets (or a formal context) respects an `ImplicationSet`, via the `%respects%` operator:
+```{r}
+fc_planets %respects% imps
+```
+
+The result is a matrix where each row correspond to a attribute set and each column to an implication. An element is `TRUE` if the corresponding set respects the corresponding implication. If the first argument is a `FormalContext`, the function will consider the set of attributes of each object.
+
 ## Cardinality, size and support of the implication set
 
 Some quantities can be computed for an `ImplicationSet`:
@@ -158,6 +175,30 @@ S$assign(large = 1, far = 1)
 S
 
 fc_planets$implications$closure(S, reduce = TRUE)
+```
+
+## Entailment and equivalence of implications
+
+We can check if a given `ImplicationSet` follows from another one:
+```{r}
+# imps is the basis
+imps <- fc_planets$implications$clone()
+imps2 <- imps$clone()
+# imps2 is an equivalent set of implications
+# where we have removed redundancies
+imps2$apply_rules(c("simp", "rsimp"))
+# Any implication in imps2 follows from imps
+imps %entails% imps2
+# And viceversa
+imps2 %entails% imps
+```
+
+We can also check if the two sets of implications are equivalent:
+```{r}
+imps %~% imps2
+# If we remove any implication from imps2,
+# they will not be equivalent
+imps %~% imps2[1:9]
 ```
 
 ## Recommendations

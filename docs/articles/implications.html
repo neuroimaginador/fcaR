@@ -628,6 +628,32 @@ O6
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">closure</span><span class="op">(</span><span class="va">S</span><span class="op">)</span><span class="op">$</span><span class="va">closure</span>
 <span class="co">#&gt; {large, far, moon}</span></pre></div>
 </div>
+<div id="validity-of-implications" class="section level2">
+<h2 class="hasAnchor">
+<a href="#validity-of-implications" class="anchor"></a>Validity of implications</h2>
+<p>We can check if an <code>ImplicationSet</code> holds in a <code>FormalContext</code> by using the <code><a href="../reference/%holds_in%.html">%holds_in%</a></code> operator:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="co"># Let us clone the implication basis</span>
+<span class="va">imps</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span><span class="op">)</span>
+<span class="va">imps</span> <span class="op">%holds_in%</span> <span class="va">fc_planets</span>
+<span class="co">#&gt;  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></pre></div>
+<p>Each component of this vector represents whether the corresponding implication holds in the formal context. In this case, as the <code>ImplicationSet</code> is the Duquenne-Guigues basis for the <code>FormalContext</code>, all implications hold.</p>
+<p>Conversely, we can check if a list of attribute sets (or a formal context) respects an <code>ImplicationSet</code>, via the <code><a href="../reference/%respects%.html">%respects%</a></code> operator:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="va">fc_planets</span> <span class="op">%respects%</span> <span class="va">imps</span>
+<span class="co">#&gt; 9 x 10 Matrix of class "lgeMatrix"</span>
+<span class="co">#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
+<span class="co">#&gt;  [1,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co">#&gt;  [2,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co">#&gt;  [3,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co">#&gt;  [4,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co">#&gt;  [5,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co">#&gt;  [6,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co">#&gt;  [7,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co">#&gt;  [8,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co">#&gt;  [9,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span></pre></div>
+<p>The result is a matrix where each row correspond to a attribute set and each column to an implication. An element is <code>TRUE</code> if the corresponding set respects the corresponding implication. If the first argument is a <code>FormalContext</code>, the function will consider the set of attributes of each object.</p>
+</div>
 <div id="cardinality-size-and-support-of-the-implication-set" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cardinality-size-and-support-of-the-implication-set" class="anchor"></a>Cardinality, size and support of the implication set</h2>
@@ -635,13 +661,13 @@ O6
 <ul>
 <li>Cardinality: the number of implications in the set</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">cardinality</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 10</span></pre></div>
 <ul>
 <li>Size: The number of attributes in the LHS and the RHS of each implication</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="va">sizes</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span>
 <span class="co"># Total number of attributes in the LHS and the RHS</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">sizes</span><span class="op">)</span>
@@ -650,7 +676,7 @@ O6
 <ul>
 <li>Support: The proportion of objects in the formal context whose attributes contain the LHS of a particular rule</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="downlit">
+<div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;  [1] 0.2222222 0.5555556 0.4444444 0.2222222 0.2222222 0.0000000 0.0000000</span>
 <span class="co">#&gt;  [8] 0.0000000 0.0000000 0.0000000</span></pre></div>
@@ -659,7 +685,7 @@ O6
 <h2 class="hasAnchor">
 <a href="#export-to-latex" class="anchor"></a>Export to LaTeX</h2>
 <p>A nice feature is the ability to export an <code>ImplicationSet</code> to LaTeX format:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
+<div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; \begin{longtable}{rrcl}</span>
 <span class="co">#&gt; 1: &amp;\ensuremath{\left\{\mathrm{no_moon}\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{\mathrm{small},\, \mathrm{near}\right\}}\\</span>
@@ -678,7 +704,7 @@ O6
 <h2 class="hasAnchor">
 <a href="#filtering-of-implications" class="anchor"></a>Filtering of implications</h2>
 <p>Sometimes it is needed to work with a subset of the implications, using only the implications that fulfill certain conditions:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
+<div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="co"># Implications with P1 and P2 in the LHS and P5 in the RHS</span>
 <span class="va">fc_I</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span>lhs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"P1"</span>, <span class="st">"P2"</span><span class="op">)</span>, 
                          rhs <span class="op">=</span> <span class="st">"P5"</span><span class="op">)</span>
@@ -691,16 +717,16 @@ O6
 <a href="#simplification-logic" class="anchor"></a>Simplification Logic</h2>
 <p>In this package, we have implemented logic tools to operate on the implications.</p>
 <p>First, some simplification rules have been developed, named <em>reduction</em>, <em>composition</em>, <em>generalization</em> and <em>simplification</em>, that can be applied using the <code>apply_rules()</code> function:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
+<div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="va">fc_I</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
                                         <span class="st">"simplification"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.007 secs.</span>
-<span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.135 secs.</span>
-<span class="co">#&gt; Batch took 0.146 secs.</span></pre></div>
+<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.009 secs.</span>
+<span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.234 secs.</span>
+<span class="co">#&gt; Batch took 0.267 secs.</span></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
+<div class="sourceCode" id="cb17"><pre class="downlit">
 <span class="co"># Let us build a set of attributes</span>
 <span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SparseSet.html">SparseSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span>
 <span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>large <span class="op">=</span> <span class="fl">1</span>, far <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
@@ -720,11 +746,43 @@ O6
 <span class="co">#&gt; Rule 6: {no_moon} -&gt; {small, near}</span>
 <span class="co">#&gt; Rule 7: {near} -&gt; {small}</span></pre></div>
 </div>
+<div id="entailment-and-equivalence-of-implications" class="section level2">
+<h2 class="hasAnchor">
+<a href="#entailment-and-equivalence-of-implications" class="anchor"></a>Entailment and equivalence of implications</h2>
+<p>We can check if a given <code>ImplicationSet</code> follows from another one:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="co"># imps is the basis</span>
+<span class="va">imps</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span><span class="op">)</span>
+<span class="va">imps2</span> <span class="op">&lt;-</span> <span class="va">imps</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span><span class="op">)</span>
+<span class="co"># imps2 is an equivalent set of implications</span>
+<span class="co"># where we have removed redundancies</span>
+<span class="va">imps2</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"simp"</span>, <span class="st">"rsimp"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Processing batch</span>
+<span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.081 secs.</span>
+<span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.266 secs.</span>
+<span class="co">#&gt; Batch took 0.352 secs.</span>
+<span class="co"># Any implication in imps2 follows from imps</span>
+<span class="va">imps</span> <span class="op">%entails%</span> <span class="va">imps2</span>
+<span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
+<span class="co">#&gt; [1,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span>
+<span class="co"># And viceversa</span>
+<span class="va">imps2</span> <span class="op">%entails%</span> <span class="va">imps</span>
+<span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
+<span class="co">#&gt; [1,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</span></pre></div>
+<p>We can also check if the two sets of implications are equivalent:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="va">imps</span> <span class="op">%~%</span> <span class="va">imps2</span>
+<span class="co">#&gt; [1] TRUE</span>
+<span class="co"># If we remove any implication from imps2,</span>
+<span class="co"># they will not be equivalent</span>
+<span class="va">imps</span> <span class="op">%~%</span> <span class="va">imps2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span>
+<span class="co">#&gt; [1] FALSE</span></pre></div>
+</div>
 <div id="recommendations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#recommendations" class="anchor"></a>Recommendations</h2>
 <p>One of the final applications of an <code>ImplicationSet</code> is the easy development of a recommendation system where, from an attribute set, the system would infer the value to other attribute. This is done by the <code>recommend()</code> function, which internally computes the closure of the attribute set:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
+<div class="sourceCode" id="cb20"><pre class="downlit">
 <span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SparseSet.html">SparseSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_I</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span>
 <span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>P1 <span class="op">=</span> <span class="fl">1</span>, P4 <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
 

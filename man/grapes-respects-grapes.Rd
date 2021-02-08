@@ -17,3 +17,9 @@ A logical matrix with as many rows as \code{SparseSet}s and as many columns as i
 \description{
 Check if SparseSet or FormalContext respects an ImplicationSet
 }
+\examples{
+fc <- FormalContext$new(planets)
+fc$find_implications()
+imps <- fc$implications$clone()
+fc \%respects\% imps
+}
