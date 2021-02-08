@@ -93,6 +93,16 @@ test_that("fcaR prints implications", {
 
 })
 
+test_that("fcaR checks if implications hold in a context", {
+
+  fc <- FormalContext$new(planets)
+  fc$find_implications()
+  imps <- fc$implications$clone()
+  expect_true(all(imps %holds% fc))
+  expect_true(all(Matrix::as.matrix(fc %respects% imps)))
+
+})
+
 test_that("fcaR adds and appends implications", {
 
   skip_if_not_installed("arules")

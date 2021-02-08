@@ -104,6 +104,23 @@ S
 fc_planets$implications$closure(S)$closure
 ```
 
+## Validity of implications
+We can check if an `ImplicationSet` holds in a `FormalContext` by using the `%holds%` operator:
+```{r}
+# Let us clone the implication basis
+imps <- fc_planets$implications$clone()
+imps %holds% fc
+```
+
+Each component of this vector represents whether the corresponding implication holds in the formal context. In this case, as the `ImplicationSet` is the Duquenne-Guigues basis for the `FormalContext`, all implications hold.
+
+Conversely, we can check if a list of attribute sets (or a formal context) respects an `ImplicationSet`, via the `%respects%` operator:
+```{r}
+fc %respects% imps
+```
+
+The result is a matrix where each row correspond to a attribute set and each column to an implication. An element is `TRUE` if the corresponding set respects the corresponding implication. If the first argument is a `FormalContext`, the function will consider the set of attributes of each object.
+
 ## Cardinality, size and support of the implication set
 
 Some quantities can be computed for an `ImplicationSet`:
