@@ -313,7 +313,13 @@ ImplicationSet <- R6::R6Class(
 
       if (inherits(S, "SparseSet")) {
 
+        original <- S$clone()
+        S <- match_attributes(S, private$attributes)
         S <- S$get_vector()
+
+      } else {
+
+        original <- SparseSet$new(private$attributes, M = S)
 
       }
 
@@ -342,6 +348,9 @@ ImplicationSet <- R6::R6Class(
                                               I = private$I)
 
       }
+
+      cl$closure <- match_attributes(cl$closure,
+                                     original$get_attributes())
 
       return(cl)
 

@@ -246,7 +246,15 @@ FormalContext <- R6::R6Class(
 
         } else {
 
-          stop("It is not a set of the required type (set of objects).", call. = FALSE)
+          S <- match_attributes(S, self$objects)
+          S <- S$get_vector()
+          warn <- c("The attributes in the input set are not the same",
+                    " that in the formal context. Attempting to match",
+                    " attribute names gives ",
+                    .set_to_string(S, self$objects)) %>%
+            stringr::str_flatten()
+          warning(warn, call. = FALSE, immediate. = TRUE)
+          # stop("It is not a set of the required type (set of objects).", call. = FALSE)
 
         }
 
@@ -302,7 +310,15 @@ FormalContext <- R6::R6Class(
 
         } else {
 
-          stop("It is not a set of the required type (set of attributes).", call. = FALSE)
+          S <- match_attributes(S, self$attributes)
+          S <- S$get_vector()
+          warn <- c("The attributes in the input set are not the same",
+                    " that in the formal context. Attempting to match",
+                    " attribute names gives ",
+                    .set_to_string(S, self$attributes)) %>%
+            stringr::str_flatten()
+          warning(warn, call. = FALSE, immediate. = TRUE)
+          # stop("It is not a set of the required type (set of attributes).", call. = FALSE)
 
         }
 
@@ -358,7 +374,16 @@ FormalContext <- R6::R6Class(
 
         } else {
 
-          stop("It is not a set of the required type (set of attributes).", call. = FALSE)
+          S <- match_attributes(S, self$attributes)
+          S <- S$get_vector()
+          warn <- c("The attributes in the input set are not the same",
+                    " that in the formal context. Attempting to match",
+                    " attribute names gives ",
+                    .set_to_string(S, self$attributes)) %>%
+            stringr::str_flatten()
+          warning(warn, call. = FALSE, immediate. = TRUE)
+
+          # stop("It is not a set of the required type (set of attributes).", call. = FALSE)
 
         }
 

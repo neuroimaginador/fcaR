@@ -7,6 +7,7 @@ Enhancements:
 * Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to "load()".
 * Added functions %holds_in% and %respects%, which check the validity of a set of implications in a formal context, and if a set of attribute sets respect an implication set.
 * Added functions %entails% and %~% to check the entailment and equivalence between two implication sets.
+* Added new convenience function to map attributes between SparseSets, so computing intents, extents and closures is more robust.
 
 # fcaR 1.0.7
 

@@ -367,9 +367,9 @@ test_that("fcaR computes intents, extents and closures of SparseSets", {
   expect_error(fc$intent(c1$get_extent()), NA)
   expect_error(fc$closure(c1$get_intent()), NA)
 
-  expect_error(fc$intent(c1$get_intent()))
-  expect_error(fc$extent(c1$get_extent()))
-  expect_error(fc$closure(c1$get_extent()))
+  expect_warning(fc$intent(c1$get_intent()))
+  expect_warning(fc$extent(c1$get_extent()))
+  expect_warning(fc$closure(c1$get_extent()))
 
 })
 
