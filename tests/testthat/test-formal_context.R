@@ -339,6 +339,36 @@ test_that("fcaR saves and loads formal contexts", {
 
 })
 
+test_that("fcaR perform context scaling", {
+
+  to_nominal <- sample(0:3, size = 10, replace = TRUE)
+  to_ordinal <- sample(1:4, size = 10, replace = TRUE)
+  to_interordinal <- sample(1:4, size = 10, replace = TRUE)
+  to_interval <- runif(10)
+
+  I <- cbind(nom = to_nominal,
+             ord = to_ordinal,
+             inter = to_interordinal,
+             int = to_interval)
+
+  fc <- FormalContext$new(I)
+
+  expect_error(fc$scale(attributes = "ord",
+                        type = "ordinal"), NA)
+
+  expect_error(fc$scale(attributes = "nom",
+                        type = "nominal"), NA)
+
+  expect_error(fc$scale(attributes = "inter",
+                        type = "interordinal"), NA)
+
+  expect_error(fc$scale(attributes = "int",
+                        type = "interval",
+                        values = c(0, 0.5, 1),
+                        interval_names = c("low", "high")), NA)
+
+})
+
 test_that("fcaR computes intents, extents and closures of SparseSets", {
 
   objects <- paste0("O", 1:6)

@@ -26,25 +26,30 @@ scalingRegistry$set_field("description",
                           type = "character",
                           is_key = FALSE)
 
+##%######################################################%##
+#                                                          #
+####                       Scales                       ####
+#                                                          #
+##%######################################################%##
 
 scalingRegistry$set_entry(method = "Nominal",
                           fun = nominal_scaling,
-                          description = "")
+                          description = "Nominal scaling")
 
 scalingRegistry$set_entry(method = "Ordinal",
                           fun = ordinal_scaling,
-                          description = "")
+                          description = "Ordinal scaling")
 
 scalingRegistry$set_entry(method = "Interordinal",
                           fun = interordinal_scaling,
-                          description = "")
+                          description = "Interordinal scaling")
 
 scalingRegistry$set_entry(method = "Biordinal",
                           fun = biordinal_scaling,
-                          description = "")
+                          description = "Biordinal scaling")
 
 scalingRegistry$set_entry(method = "Interval",
                           fun = interval_scaling,
-                          description = "")
+                          description = "Interval scaling")
 
 
