@@ -61,6 +61,8 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \itemize{
 \item \href{#method-new}{\code{FormalContext$new()}}
 \item \href{#method-is_empty}{\code{FormalContext$is_empty()}}
+\item \href{#method-scale}{\code{FormalContext$scale()}}
+\item \href{#method-get_scales}{\code{FormalContext$get_scales()}}
 \item \href{#method-dual}{\code{FormalContext$dual()}}
 \item \href{#method-intent}{\code{FormalContext$intent()}}
 \item \href{#method-extent}{\code{FormalContext$extent()}}
@@ -126,6 +128,49 @@ Check if the \code{FormalContext} is empty
 
 \subsection{Returns}{
 \code{TRUE} if the \code{FormalContext} is empty, that is, has not been provided with a matrix, and \code{FALSE} otherwise.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-scale"></a>}}
+\if{latex}{\out{\hypertarget{method-scale}{}}}
+\subsection{Method \code{scale()}}{
+Scale the context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$scale(attributes, type, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{attributes}}{The attributes to scale}
+
+\item{\code{type}}{Type of scaling.}
+
+\item{\code{...}}{}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+The types of scaling are implemented in a registry,
+so that \code{scalingRegistry$get_entries()} returns
+all types.
+}
+
+\subsection{Returns}{
+The scaled formal context
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_scales"></a>}}
+\if{latex}{\out{\hypertarget{method-get_scales}{}}}
+\subsection{Method \code{get_scales()}}{
+Scales applied to the formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_scales()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The scales that have been applied to the formal context.
 }
 }
 \if{html}{\out{<hr>}}
