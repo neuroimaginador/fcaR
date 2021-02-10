@@ -247,6 +247,12 @@ FormalContext <- R6::R6Class(
     #'
     #' @return The scaled formal context
     #' @export
+    #' @examples
+    #' filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+    #' fc <- FormalContext$new(filename)
+    #' fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+    #' fc$scale("OS", "nominal", c("O", "S"))
+    #' fc$scale(attributes = "ring", type = "nominal")
     scale = function(attributes, type, ...) {
 
       I <- self$incidence()
@@ -262,30 +268,14 @@ FormalContext <- R6::R6Class(
                             scaled$scale)
         names(private$scales)[length(private$scales)] <- att
 
-        # TODO: Add implications to the bg_implications
+        # Add implications to the bg_implications
         private$bg_implications <- combine_implications(
           private$bg_implications,
           scaled$bg_implications)
-        # if (private$bg_implications$cardinality() == 0) {
-        #
-        #   private$bg_implications <- scaled$bg_implications
-        #
-        # } else {
-        #
-        #   private$bg_implications <- combine_implications(
-        #     private$bg_implications,
-        #     scaled$bg_implications)
-        #
-        # }
 
       }
 
       self$initialize(I)
-
-      # private$bg_implications <- reorder_attributes(
-      #   private$bg_implications,
-      #   self$attributes
-      # )
 
     },
 
@@ -294,6 +284,13 @@ FormalContext <- R6::R6Class(
     #'
     #' @return The scales that have been applied to the formal context.
     #' @export
+    #' @examples
+    #' filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+    #' fc <- FormalContext$new(filename)
+    #' fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+    #' fc$scale("OS", "nominal", c("O", "S"))
+    #' fc$scale(attributes = "ring", type = "nominal")
+    #' fc$get_scales()
     get_scales = function() {
 
       if (length(private$scales) > 0) {
@@ -305,6 +302,28 @@ FormalContext <- R6::R6Class(
         message("No scaling has been performed on this formal context.")
 
       }
+
+    },
+
+    #' @description
+    #' Background knowledge of a scaled formal context
+    #'
+    #' @return
+    #' An \code{ImplicationSet} with the implications
+    #' extracted from the application of scales.
+    #'
+    #' @export
+    #'
+    #' @examples
+    #' filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+    #' fc <- FormalContext$new(filename)
+    #' fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+    #' fc$scale("OS", "nominal", c("O", "S"))
+    #' fc$scale(attributes = "ring", type = "nominal")
+    #' fc$background_knowledge()
+    background_knowledge = function() {
+
+      private$bg_implications$clone()
 
     },
 
@@ -1300,6 +1319,10 @@ FormalContext <- R6::R6Class(
     #'
     #' @return The incidence matrix of the formal context
     #' @export
+    #'
+    #' @examples
+    #' fc <- FormalContext$new(planets)
+    #' fc$incidence()
     incidence = function() {
 
       if (private$is_many_valued) {

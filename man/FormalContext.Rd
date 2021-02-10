@@ -46,6 +46,45 @@ fc <- FormalContext$new(filename)
 filename <- system.file("contexts", "lives_in_water.cxt", package = "fcaR")
 fc <- FormalContext$new(filename)
 
+
+## ------------------------------------------------
+## Method `FormalContext$scale`
+## ------------------------------------------------
+
+filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+fc <- FormalContext$new(filename)
+fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+fc$scale("OS", "nominal", c("O", "S"))
+fc$scale(attributes = "ring", type = "nominal")
+
+## ------------------------------------------------
+## Method `FormalContext$get_scales`
+## ------------------------------------------------
+
+filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+fc <- FormalContext$new(filename)
+fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+fc$scale("OS", "nominal", c("O", "S"))
+fc$scale(attributes = "ring", type = "nominal")
+fc$get_scales()
+
+## ------------------------------------------------
+## Method `FormalContext$background_knowledge`
+## ------------------------------------------------
+
+filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+fc <- FormalContext$new(filename)
+fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+fc$scale("OS", "nominal", c("O", "S"))
+fc$scale(attributes = "ring", type = "nominal")
+fc$background_knowledge()
+
+## ------------------------------------------------
+## Method `FormalContext$incidence`
+## ------------------------------------------------
+
+fc <- FormalContext$new(planets)
+fc$incidence()
 }
 \references{
 Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” \emph{Mathématiques et Sciences humaines}, \emph{95}, 5-18.
@@ -63,6 +102,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-is_empty}{\code{FormalContext$is_empty()}}
 \item \href{#method-scale}{\code{FormalContext$scale()}}
 \item \href{#method-get_scales}{\code{FormalContext$get_scales()}}
+\item \href{#method-background_knowledge}{\code{FormalContext$background_knowledge()}}
 \item \href{#method-dual}{\code{FormalContext$dual()}}
 \item \href{#method-intent}{\code{FormalContext$intent()}}
 \item \href{#method-extent}{\code{FormalContext$extent()}}
@@ -159,6 +199,18 @@ all types.
 \subsection{Returns}{
 The scaled formal context
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+fc <- FormalContext$new(filename)
+fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+fc$scale("OS", "nominal", c("O", "S"))
+fc$scale(attributes = "ring", type = "nominal")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_scales"></a>}}
@@ -172,6 +224,46 @@ Scales applied to the formal context
 \subsection{Returns}{
 The scales that have been applied to the formal context.
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+fc <- FormalContext$new(filename)
+fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+fc$scale("OS", "nominal", c("O", "S"))
+fc$scale(attributes = "ring", type = "nominal")
+fc$get_scales()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-background_knowledge"></a>}}
+\if{latex}{\out{\hypertarget{method-background_knowledge}{}}}
+\subsection{Method \code{background_knowledge()}}{
+Background knowledge of a scaled formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$background_knowledge()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+An \code{ImplicationSet} with the implications
+extracted from the application of scales.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
+fc <- FormalContext$new(filename)
+fc$scale("nitro", "ordinal", comparison = `>=`, values = 1:3)
+fc$scale("OS", "nominal", c("O", "S"))
+fc$scale(attributes = "ring", type = "nominal")
+fc$background_knowledge()
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-dual"></a>}}
@@ -548,6 +640,15 @@ Incidence matrix of the formal context
 \subsection{Returns}{
 The incidence matrix of the formal context
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{fc <- FormalContext$new(planets)
+fc$incidence()
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-plot"></a>}}
