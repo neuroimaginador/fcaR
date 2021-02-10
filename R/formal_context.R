@@ -91,7 +91,7 @@ FormalContext <- R6::R6Class(
 
       if (missing(I)) {
 
-        if (!missing(filename)) {
+        if (!missing(filename) && file.exists(filename)) {
 
           self$load(filename)
 
@@ -101,7 +101,7 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (is.character(I)) {
+      if (is.character(I) && file.exists(I)) {
 
         self$load(I)
 
@@ -143,50 +143,71 @@ FormalContext <- R6::R6Class(
 
         } else {
 
-          objects <- paste0("A", seq(nrow(I)))
+          objects <- paste0("O", seq(nrow(I)))
 
         }
 
-        # Remove the constant columns
-        if (remove_const) {
+        private$is_many_valued <- check_many_valued(I)
 
-          constant_cols <- which(apply(I, 2, max) == apply(I, 2, min))
+        if (!private$is_many_valued) {
 
-          if (length(constant_cols) > 0) {
+          I[] <- as.numeric(I)
 
-            str <- paste0("Removed constant columns: ", stringr::str_flatten(attributes[constant_cols], collapse = ", "))
+          # Remove the constant columns
+          if (remove_const) {
 
-            message(stringr::str_wrap(str,
-                                      exdent = 2,
-                                      width = 75))
+            constant_cols <- which(apply(I, 2, max) == apply(I, 2, min))
 
-            I <- I[, -constant_cols]
-            attributes <- attributes[-constant_cols]
+            if (length(constant_cols) > 0) {
+
+              str <- paste0("Removed constant columns: ", stringr::str_flatten(attributes[constant_cols], collapse = ", "))
+
+              message(stringr::str_wrap(str,
+                                        exdent = 2,
+                                        width = 75))
+
+              I <- I[, -constant_cols]
+              attributes <- attributes[-constant_cols]
+
+            }
 
           }
 
-        }
+          I <- methods::as(Matrix::Matrix(t(I),
+                                          sparse = TRUE), "dgCMatrix")
 
-        I <- methods::as(Matrix::Matrix(t(I),
-                                        sparse = TRUE), "dgCMatrix")
+        }
 
       }
 
-      # Assign everything to its corresponding field
-      expanded_grades_set <- compute_grades(Matrix::t(I))
-      grades_set <- sort(unique(unlist(expanded_grades_set)))
-
-      self$I <- I
-      self$grades_set <- unique(c(0, grades_set, 1))
-      self$expanded_grades_set <- expanded_grades_set
       self$objects <- objects
       self$attributes <- attributes
 
-      colnames(self$I) <- self$objects
-      rownames(self$I) <- self$attributes
+      if (!private$is_many_valued) {
 
-      # Is the FormalContext binary?
-      private$is_binary <- length(self$grades_set) == 2
+        # Assign everything to its corresponding field
+        expanded_grades_set <- compute_grades(Matrix::t(I))
+        grades_set <- sort(unique(unlist(expanded_grades_set)))
+
+        self$I <- I
+        self$grades_set <- unique(c(0, grades_set, 1))
+        self$expanded_grades_set <- expanded_grades_set
+
+        colnames(self$I) <- self$objects
+        rownames(self$I) <- self$attributes
+
+        # Is the FormalContext binary?
+        private$is_binary <- length(self$grades_set) == 2
+
+      } else {
+
+        # browser()
+
+        private$many_valued_I <- I
+        # colnames(private$many_valued_I) <- self$objects
+        # rownames(private$many_valued_I) <- self$attributes
+
+      }
 
       # Create a new empty implication set inside
       self$implications <- ImplicationSet$new(attributes = attributes, I = self$I)
@@ -208,7 +229,82 @@ FormalContext <- R6::R6Class(
     #' @export
     is_empty = function() {
 
-      return(is.null(self$I))
+      return(is.null(self$I) && is.null(private$many_valued_I))
+
+    },
+
+    #' @description
+    #' Scale the context
+    #'
+    #' @param attributes  The attributes to scale
+    #' @param type        Type of scaling.
+    #' @param ...
+    #'
+    #' @details
+    #' The types of scaling are implemented in a registry,
+    #' so that \code{scalingRegistry$get_entries()} returns
+    #' all types.
+    #'
+    #' @return The scaled formal context
+    #' @export
+    scale = function(attributes, type, ...) {
+
+      I <- self$incidence()
+      for (att in attributes) {
+
+        scaled <- I %>%
+          scale_context(column = att,
+                        type = type,
+                        ...)
+
+        I <- scaled$derived
+        private$scales <- c(private$scales,
+                            scaled$scale)
+        names(private$scales)[length(private$scales)] <- att
+
+        # TODO: Add implications to the bg_implications
+        private$bg_implications <- combine_implications(
+          private$bg_implications,
+          scaled$bg_implications)
+        # if (private$bg_implications$cardinality() == 0) {
+        #
+        #   private$bg_implications <- scaled$bg_implications
+        #
+        # } else {
+        #
+        #   private$bg_implications <- combine_implications(
+        #     private$bg_implications,
+        #     scaled$bg_implications)
+        #
+        # }
+
+      }
+
+      self$initialize(I)
+
+      # private$bg_implications <- reorder_attributes(
+      #   private$bg_implications,
+      #   self$attributes
+      # )
+
+    },
+
+    #' @description
+    #' Scales applied to the formal context
+    #'
+    #' @return The scales that have been applied to the formal context.
+    #' @export
+    get_scales = function() {
+
+      if (length(private$scales) > 0) {
+
+        private$scales
+
+      } else {
+
+        message("No scaling has been performed on this formal context.")
+
+      }
 
     },
 
@@ -220,11 +316,19 @@ FormalContext <- R6::R6Class(
     #' @export
     dual = function() {
 
-      I <- Matrix::as.matrix(self$I)
-      colnames(I) <- self$objects
-      rownames(I) <- self$attributes
+      if (private$is_many_valued) {
 
-      return(FormalContext$new(I))
+        return(FormalContext$new(t(private$many_valued_I)))
+
+      } else {
+
+        I <- Matrix::as.matrix(self$I)
+        colnames(I) <- self$objects
+        rownames(I) <- self$attributes
+
+        return(FormalContext$new(I))
+
+      }
 
     },
 
@@ -237,6 +341,8 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     intent = function(S) {
+
+      if (private$is_many_valued) error_many_valued()
 
       if (inherits(S, "SparseSet")) {
 
@@ -302,6 +408,8 @@ FormalContext <- R6::R6Class(
     #' @export
     extent = function(S) {
 
+      if (private$is_many_valued) error_many_valued()
+
       if (inherits(S, "SparseSet")) {
 
         if (all(S$get_attributes() == self$attributes)) {
@@ -365,6 +473,8 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     closure = function(S) {
+
+      if (private$is_many_valued) error_many_valued()
 
       if (inherits(S, "SparseSet")) {
 
@@ -432,6 +542,8 @@ FormalContext <- R6::R6Class(
     #' @export
     obj_concept = function(object) {
 
+      if (private$is_many_valued) error_many_valued()
+
       S <- SparseSet$new(attributes = self$objects)
       S$assign(attributes = object, values = 1)
 
@@ -454,6 +566,8 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     att_concept = function(attribute) {
+
+      if (private$is_many_valued) error_many_valued()
 
       S <- SparseSet$new(attributes = self$attributes)
       S$assign(attributes = attribute, values = 1)
@@ -510,6 +624,8 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     clarify = function(copy = FALSE) {
+
+      if (private$is_many_valued) error_many_valued()
 
       # Redundant attributes
       my_I <- .clarify_matrix(Matrix::t(self$I),
@@ -634,6 +750,8 @@ FormalContext <- R6::R6Class(
     #' @export
     standardize = function() {
 
+      if (private$is_many_valued) error_many_valued()
+
       if (self$concepts$is_empty()) {
 
         stop("Concepts must be computed beforehand.\n", call. = FALSE)
@@ -676,6 +794,8 @@ FormalContext <- R6::R6Class(
     find_concepts = function(verbose = FALSE) {
 
       private$check_empty()
+
+      if (private$is_many_valued) error_many_valued()
 
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
       grades_set <- rep(list(self$grades_set), length(self$attributes))
@@ -804,6 +924,8 @@ FormalContext <- R6::R6Class(
 
       private$check_empty()
 
+      if (private$is_many_valued) error_many_valued()
+
       return(methods::as(methods::as(self$I, "ngCMatrix"), "transactions"))
 
     },
@@ -832,14 +954,30 @@ FormalContext <- R6::R6Class(
 
       }
 
-      L <- list(I = self$I,
-                extents = extents,
-                intents = intents,
-                attributes = self$attributes,
-                objects = self$objects,
-                expanded_grades_set = self$expanded_grades_set,
-                grades_set = self$grades_set,
-                implications = self$implications)
+      if (private$is_many_valued) {
+
+        L <- list(I = self$I,
+                  many_valued_I = private$many_valued_I,
+                  extents = NULL,
+                  intents = NULL,
+                  attributes = self$attributes,
+                  objects = self$objects,
+                  expanded_grades_set = NULL,
+                  grades_set = NULL,
+                  implications = self$implications)
+
+      } else {
+
+        L <- list(I = self$I,
+                  extents = extents,
+                  intents = intents,
+                  attributes = self$attributes,
+                  objects = self$objects,
+                  expanded_grades_set = self$expanded_grades_set,
+                  grades_set = self$grades_set,
+                  implications = self$implications)
+
+      }
 
       saveRDS(L, file = filename)
 
@@ -869,6 +1007,14 @@ FormalContext <- R6::R6Class(
       if (extension == ".rds") {
 
         L <- readRDS(filename)
+
+        if ("many_valued_I" %in% names(L)) {
+
+          self$initialize(L$many_valued_I)
+
+          return()
+
+        }
 
         self$I <- L$I
         self$attributes <- L$attributes
@@ -980,58 +1126,74 @@ FormalContext <- R6::R6Class(
 
       dims <- self$dim()
 
-      I <- Matrix::as.matrix(Matrix::t(self$I))
+      if (!private$is_many_valued) {
 
-      if (private$is_binary) {
+        I <- Matrix::as.matrix(Matrix::t(self$I))
 
-        I <- .print_binary(I, latex = FALSE)
+        if (private$is_binary) {
 
-      }
-
-      objects <- self$objects
-      if (nrow(I) > 10) {
-
-        I <- I[1:10, ]
-        objects <- objects[1:10]
-
-      }
-
-
-      matp <- .print_matrix(I,
-                            objects = objects,
-                            attributes = self$attributes)
-      M <- matp$mat
-      ids <- matp$att_id
-      last_attribute <- max(ids) - 1
-
-      str <- paste0("FormalContext with ", dims[1],
-                    " objects and ",
-                    dims[2], " attributes.") %>%
-        stringr::str_wrap(width = getOption("width"))
-
-      cat(str)
-      cat("\n")
-
-      cat(M)
-      cat("\n")
-
-      if (last_attribute < length(self$attributes)) {
-
-        remaining <- self$attributes[-seq(last_attribute)]
-
-        if (length(remaining) > 6) {
-
-          remaining <- c(remaining[1:6], "...")
+          I <- .print_binary(I, latex = FALSE)
 
         }
 
-        remaining <- remaining %>%
-          stringr::str_flatten(", ")
+        objects <- self$objects
+        if (nrow(I) > 10) {
 
-        str <- paste0("Other attributes are: ", remaining) %>%
+          I <- I[1:10, ]
+          objects <- objects[1:10]
+
+        }
+
+
+        matp <- .print_matrix(I,
+                              objects = objects,
+                              attributes = self$attributes)
+        M <- matp$mat
+        ids <- matp$att_id
+        last_attribute <- max(ids) - 1
+
+        str <- paste0("FormalContext with ", dims[1],
+                      " objects and ",
+                      dims[2], " attributes.") %>%
           stringr::str_wrap(width = getOption("width"))
 
-        cat(str, "\n")
+        cat(str)
+        cat("\n")
+
+        cat(M)
+        cat("\n")
+
+        if (last_attribute < length(self$attributes)) {
+
+          remaining <- self$attributes[-seq(last_attribute)]
+
+          if (length(remaining) > 6) {
+
+            remaining <- c(remaining[1:6], "...")
+
+          }
+
+          remaining <- remaining %>%
+            stringr::str_flatten(", ")
+
+          str <- paste0("Other attributes are: ", remaining) %>%
+            stringr::str_wrap(width = getOption("width"))
+
+          cat(str, "\n")
+
+        }
+
+      } else {
+
+        str <- paste0("FormalContext with ", dims[1],
+                      " objects and ",
+                      dims[2], " attributes.") %>%
+          stringr::str_wrap(width = getOption("width"))
+
+        cat(str)
+        cat("\n")
+
+        print(as.data.frame(private$many_valued_I))
 
       }
 
@@ -1051,6 +1213,9 @@ FormalContext <- R6::R6Class(
     #' @export
     #'
     to_latex = function(label = "", caption = "", fraction = c("none", "frac", "dfrac", "sfrac")) {
+
+      # TODO: export a many-valued context to LaTeX
+      if (private$is_many_valued) error_many_valued()
 
       fraction <- match.arg(fraction)
 
@@ -1100,7 +1265,15 @@ FormalContext <- R6::R6Class(
     #' @export
     incidence = function() {
 
-      Matrix::as.matrix(Matrix::t(self$I))
+      if (private$is_many_valued) {
+
+        return(private$many_valued_I)
+
+      } else {
+
+        Matrix::as.matrix(Matrix::t(self$I))
+
+      }
 
     },
 
@@ -1121,6 +1294,8 @@ FormalContext <- R6::R6Class(
     plot = function(to_latex = FALSE,
                     ...) {
 
+      if (private$is_many_valued) error_many_valued()
+
       private$check_empty()
       if (!private$can_plot) {
 
@@ -1139,7 +1314,11 @@ FormalContext <- R6::R6Class(
   private = list(
 
     is_binary = FALSE,
+    is_many_valued = FALSE,
     can_plot = TRUE,
+    many_valued_I = NULL,
+    scales = list(),
+    bg_implications = NULL,
 
     check_empty = function() {
 
