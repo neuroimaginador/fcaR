@@ -859,16 +859,53 @@ FormalContext <- R6::R6Class(
 
       private$check_empty()
 
+      if (private$is_many_valued) error_many_valued()
+
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
-      # grades_set <- rep(list(self$grades_set), length(self$attributes))
-      grades_set <- self$expanded_grades_set
+      grades_set <- rep(list(self$grades_set), length(self$attributes))
+      # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
 
-      L <- next_closure_implications(I = my_I,
-                                     grades_set = grades_set,
-                                     attrs = attrs,
-                                     save_concepts = save_concepts,
-                                     verbose = verbose)
+      # browser()
+
+      if (!is.null(private$bg_implications)) {
+
+        private$bg_implications <- reorder_attributes(
+          private$bg_implications,
+          self$attributes
+        )
+
+        n_bg <- private$bg_implications$cardinality()
+
+        L <- next_closure_implications_bg(I = my_I,
+                                          grades_set = grades_set,
+                                          attrs = attrs,
+                                          lhs_bg = private$bg_implications$get_LHS_matrix(),
+                                          rhs_bg = private$bg_implications$get_RHS_matrix(),
+                                          n_bg = n_bg,
+                                          save_concepts = save_concepts,
+                                          verbose = verbose)
+
+        L2 <- .simplification_bg(
+          lhs_bg = private$bg_implications$get_LHS_matrix(),
+          rhs_bg = private$bg_implications$get_RHS_matrix(),
+          lhs = L$LHS,
+          rhs = L$RHS)
+        L$LHS <- L2$lhs
+        L$RHS <- L2$rhs
+
+        # L$LHS <- L$LHS[, -seq(n_bg)]
+        # L$RHS <- L$RHS[, -seq(n_bg)]
+
+      } else {
+
+        L <- next_closure_implications(I = my_I,
+                                       grades_set = grades_set,
+                                       attrs = attrs,
+                                       save_concepts = save_concepts,
+                                       verbose = verbose)
+
+      }
 
       # Since the previous function gives the list of intents of
       # the computed concepts, now we will compute the corresponding

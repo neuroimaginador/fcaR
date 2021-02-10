@@ -12,6 +12,24 @@ bool checkInterrupt() {
 }
 
 
+void get_column2(SparseVector* A,
+                SparseVector qA,
+                int id_col) {
+
+  int cont = 0;
+  for (int i = qA.p.array[id_col]; i < qA.p.array[id_col + 1]; i++) {
+
+    insertArray(&(A->i), qA.i.array[i]);
+    insertArray(&(A->x), qA.x.array[i]);
+    cont++;
+
+  }
+
+  insertArray(&(A->p), 0);
+  insertArray(&(A->p), cont);
+
+}
+
 // Ganter's Next Closure Algorithm
 
 
@@ -509,6 +527,258 @@ List next_closure_implications(NumericMatrix I,
   freeVector(&B);
   freeVector(&rhs);
   freeVector(&this_extent);
+  freeImplicationTree(&tree);
+
+  return res;
+
+}
+
+
+// [[Rcpp::export]]
+List next_closure_implications_bg(NumericMatrix I,
+                               List grades_set,
+                               StringVector attrs,
+                               S4 lhs_bg, S4 rhs_bg, int n_bg,
+                               bool save_concepts = true,
+                               bool verbose = false) {
+
+  int n_attributes = attrs.size();
+  int n_objects = I.nrow();
+
+  int n_imp = 0;
+
+  SparseVector concepts;
+  SparseVector extents;
+  initVector(&concepts, n_attributes);
+  initVector(&extents, I.nrow());
+
+  SparseVector LHS, RHS;
+  initVector(&LHS, n_attributes);
+  initVector(&RHS, n_attributes);
+
+  SparseVector empty, B, rhs;
+
+  initVector(&empty, n_attributes);
+  initVector(&B, n_attributes);
+  initVector(&rhs, n_attributes);
+
+  SparseVector A;
+  initVector(&A, n_attributes);
+
+  ImplicationTree tree;
+  // (ImplicationTree*)malloc(sizeof(ImplicationTree));
+  initImplicationTree(&tree, n_attributes);
+
+  // Let's add the background knowledge
+  SparseVector lhs_sparse = S4toSparse(lhs_bg);
+  SparseVector rhs_sparse = S4toSparse(rhs_bg);
+  for (int id = 0; id < n_bg - 1; id++) {
+
+    reinitVector(&A);
+    reinitVector(&B);
+    get_column2(&A, lhs_sparse, id);
+    get_column2(&B, rhs_sparse, id);
+    add_column(&LHS, A);
+    add_column(&RHS, B);
+    addImplicationToTree(&tree, A);
+
+  }
+
+  // The usual NextClosure
+  reinitVector(&A);
+  reinitVector(&B);
+  compute_closure(&A, empty, I.begin(), n_objects, n_attributes);
+
+  SparseVector this_extent;
+  initVector(&this_extent, n_objects);
+
+  if (cardinal(A) > 0) {
+
+    add_column(&LHS, empty);
+    add_column(&RHS, A);
+    addImplicationToTree(&tree, empty);
+
+    if (verbose) {
+
+      Rcout << "Added initial implication to basis" << std::endl << std::endl << std::endl;
+      printVector(A, attrs);
+      Rcout << std::endl << std::endl;
+      // printImpl(empty, A, attrs);
+
+      n_imp++;
+
+    }
+
+  }
+
+  if (save_concepts) {
+
+    reinitVector(&this_extent);
+    compute_extent(&this_extent, A, I.begin(),
+                   n_objects, n_attributes);
+    add_column(&concepts, A);
+    add_column(&extents, this_extent);
+
+  }
+
+
+  if (verbose & save_concepts) {
+
+    Rprintf("Added concept:\n");
+
+    if (cardinal(A) > 0) {
+
+      printVector(A, attrs);
+
+    } else {
+
+      Rprintf("{}");
+
+    }
+
+    Rprintf("\n");
+
+  }
+
+  int count = 0;
+
+  double pctg, old_pctg = 0;
+
+  while ((cardinal(A) < n_attributes)){
+
+    compute_next_closure(A,
+                         n_attributes,
+                         n_attributes,
+                         grades_set,
+                         tree, LHS, RHS,
+                         attrs, &B);
+
+    cloneVector(&A, B);
+
+    if (verbose) {
+
+      pctg = (100 * (n_attributes - A.i.array[0])) / n_attributes;
+
+      if (pctg != old_pctg) {
+
+        Rprintf("Completed = %.2f\n %", pctg);
+        old_pctg = pctg;
+
+      }
+
+    }
+
+    reinitVector(&B);
+    compute_closure(&B, A, I.begin(), n_objects, n_attributes);
+
+    setdifference(B, A, &rhs);
+
+    if (cardinal(rhs) == 0) {
+
+      // Concept
+      if (save_concepts) {
+
+        reinitVector(&this_extent);
+        compute_extent(&this_extent, A, I.begin(),
+                       n_objects, n_attributes);
+
+        add_column(&concepts, A);
+        add_column(&extents, this_extent);
+
+        if (verbose) {
+
+          Rprintf("Added concept:\n");
+          printVector(A, attrs);
+          Rprintf("\n");
+
+        }
+
+      }
+
+    } else {
+
+      add_column(&LHS, A);
+      add_column(&RHS, rhs);
+
+      if (verbose) {
+
+        Rcout << "Added implication " << n_imp++ << " to basis" << std::endl;
+        printImpl(A, rhs, attrs);
+
+      }
+
+      addImplicationToTree(&tree, A);
+
+      count++;
+
+      if (verbose) {
+
+        if (count % 10 == 0) Rprintf("%u\n", count);
+
+      }
+
+    }
+
+    if (checkInterrupt()) { // user interrupted ...
+
+
+      freeVector(&A);
+      freeVector(&empty);
+      freeVector(&B);
+      freeVector(&rhs);
+      freeVector(&this_extent);
+      freeVector(&lhs_sparse);
+      freeVector(&rhs_sparse);
+
+
+      S4 intents_S4 = SparseToS4_fast(concepts);
+      S4 extents_S4 = SparseToS4_fast(extents);
+      S4 lhs_S4 = SparseToS4_fast(LHS);
+      S4 rhs_S4 = SparseToS4_fast(RHS);
+
+      freeVector(&concepts);
+      freeVector(&extents);
+      freeVector(&LHS);
+      freeVector(&RHS);
+      freeImplicationTree(&tree);
+
+      List res = List::create(_["concepts"] = intents_S4,
+                              _["extents"] = extents_S4,
+                              _["LHS"] = lhs_S4,
+                              _["RHS"] = rhs_S4);
+
+      Rprintf("User interrupted.\n");
+      return res;
+
+    }
+
+  }
+
+  S4 intents_S4 = SparseToS4_fast(concepts);
+  S4 extents_S4 = SparseToS4_fast(extents);
+  S4 lhs_S4 = SparseToS4_fast(LHS);
+  S4 rhs_S4 = SparseToS4_fast(RHS);
+
+  freeVector(&concepts);
+  freeVector(&extents);
+  freeVector(&LHS);
+  freeVector(&RHS);
+
+  List res = List::create(_["concepts"] = intents_S4,
+                          _["extents"] = extents_S4,
+                          _["LHS"] = lhs_S4,
+                          _["RHS"] = rhs_S4);
+
+  if (verbose)
+    Rprintf("Finished.\n");
+
+  freeVector(&A);
+  freeVector(&empty);
+  freeVector(&B);
+  freeVector(&rhs);
+  freeVector(&this_extent);
+  freeVector(&lhs_sparse);
+  freeVector(&rhs_sparse);
   freeImplicationTree(&tree);
 
   return res;

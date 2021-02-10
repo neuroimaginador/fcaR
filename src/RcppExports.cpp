@@ -55,6 +55,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// next_closure_implications_bg
+List next_closure_implications_bg(NumericMatrix I, List grades_set, StringVector attrs, S4 lhs_bg, S4 rhs_bg, int n_bg, bool save_concepts, bool verbose);
+RcppExport SEXP _fcaR_next_closure_implications_bg(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP lhs_bgSEXP, SEXP rhs_bgSEXP, SEXP n_bgSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< S4 >::type lhs_bg(lhs_bgSEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs_bg(rhs_bgSEXP);
+    Rcpp::traits::input_parameter< int >::type n_bg(n_bgSEXP);
+    Rcpp::traits::input_parameter< bool >::type save_concepts(save_conceptsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(next_closure_implications_bg(I, grades_set, attrs, lhs_bg, rhs_bg, n_bg, save_concepts, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // next_closure_concepts
 List next_closure_concepts(NumericMatrix I, ListOf<NumericVector> grades_set, StringVector attrs, bool verbose, bool ret);
 RcppExport SEXP _fcaR_next_closure_concepts(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP, SEXP retSEXP) {
@@ -244,6 +262,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 5},
+    {"_fcaR_next_closure_implications_bg", (DL_FUNC) &_fcaR_next_closure_implications_bg, 8},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 5},
     {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
     {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 2},

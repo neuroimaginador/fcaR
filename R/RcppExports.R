@@ -17,6 +17,10 @@ next_closure_implications <- function(I, grades_set, attrs, save_concepts = TRUE
     .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, save_concepts, verbose)
 }
 
+next_closure_implications_bg <- function(I, grades_set, attrs, lhs_bg, rhs_bg, n_bg, save_concepts = TRUE, verbose = FALSE) {
+    .Call(`_fcaR_next_closure_implications_bg`, I, grades_set, attrs, lhs_bg, rhs_bg, n_bg, save_concepts, verbose)
+}
+
 next_closure_concepts <- function(I, grades_set, attrs, verbose = FALSE, ret = TRUE) {
     .Call(`_fcaR_next_closure_concepts`, I, grades_set, attrs, verbose, ret)
 }
