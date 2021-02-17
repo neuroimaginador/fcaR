@@ -34,6 +34,7 @@ BugReports: https://github.com/neuroimaginador/fcaR/issues
 Depends: 
     R (>= 3.1)
 Imports: 
+    forcats,
     fractional,
     grDevices,
     Matrix,
@@ -42,6 +43,7 @@ Imports:
     Rcpp,
     registry,
     stringr,
+    tibble,
     tictoc,
     tikzDevice,
     magrittr,

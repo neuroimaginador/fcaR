@@ -330,17 +330,23 @@ SparseVector S4toSparse(S4 A) {
     insertArray(&(V.x), ax[i]);
 
   }
-  insertArray(&(V.p), 0);
+  // insertArray(&(V.p), 0);
 
-  if (V.i.used > 0) {
+  for (size_t i = 0; i < ap.size(); i++) {
 
-    insertArray(&(V.p), V.i.used);
-
-  } else {
-
-    insertArray(&(V.p), 0);
+    insertArray(&(V.p), ap[i]);
 
   }
+
+  // if (V.i.used > 0) {
+  //
+  //   insertArray(&(V.p), V.i.used);
+  //
+  // } else {
+  //
+  //   insertArray(&(V.p), 0);
+  //
+  // }
 
   return V;
 

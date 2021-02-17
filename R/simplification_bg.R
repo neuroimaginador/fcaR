@@ -1,11 +1,5 @@
 .simplification_bg <- function(lhs_bg, rhs_bg, lhs, rhs) {
 
-  # lhs_bg <- imps_bg$get_LHS_matrix()
-  # rhs_bg <- imps_bg$get_RHS_matrix()
-  #
-  # lhs <- imps$get_LHS_matrix()
-  # rhs <- imps$get_RHS_matrix()
-
   intersections <- .self_intersection(lhs_bg, rhs_bg)
 
   id_inter <- Matrix::which(intersections == 0)
@@ -62,12 +56,14 @@
 
       LHS_subsets[my_idx, ] <- Matrix::t(.subset(lhs_bg, newLHS))
       col_values <- Matrix::colSums(LHS_subsets)
-      condition1 <- which(col_values > 1)
+      condition1 <- col_values > 0
 
       black_list[this_row] <- TRUE
       are_subset <- Matrix::which(condition1 & (!black_list))
 
     }
+
+    # browser()
 
     # Cleaning phase
     idx_to_remove <- Matrix::which(Matrix::colSums(rhs) == 0)

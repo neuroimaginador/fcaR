@@ -552,9 +552,10 @@ List next_closure_implications_bg(NumericMatrix I,
   initVector(&concepts, n_attributes);
   initVector(&extents, I.nrow());
 
-  SparseVector LHS, RHS;
+  SparseVector LHS, RHS, RHS2;
   initVector(&LHS, n_attributes);
   initVector(&RHS, n_attributes);
+  initVector(&RHS2, n_attributes);
 
   SparseVector empty, B, rhs;
 
@@ -565,22 +566,28 @@ List next_closure_implications_bg(NumericMatrix I,
   SparseVector A;
   initVector(&A, n_attributes);
 
+  SparseVector bg_closure;
+  initVector(&bg_closure, n_attributes);
+  SparseVector rhsbg_closure;
+  initVector(&rhsbg_closure, n_attributes);
+
   ImplicationTree tree;
-  // (ImplicationTree*)malloc(sizeof(ImplicationTree));
   initImplicationTree(&tree, n_attributes);
+  ImplicationTree tree_bg;
+  initImplicationTree(&tree_bg, n_attributes);
 
   // Let's add the background knowledge
   SparseVector lhs_sparse = S4toSparse(lhs_bg);
   SparseVector rhs_sparse = S4toSparse(rhs_bg);
-  for (int id = 0; id < n_bg - 1; id++) {
+  for (int id = 0; id < n_bg; id++) {
 
     reinitVector(&A);
-    reinitVector(&B);
+    // reinitVector(&B);
     get_column2(&A, lhs_sparse, id);
-    get_column2(&B, rhs_sparse, id);
-    add_column(&LHS, A);
-    add_column(&RHS, B);
-    addImplicationToTree(&tree, A);
+    // get_column2(&B, rhs_sparse, id);
+    // add_column(&LHS, A);
+    // add_column(&RHS, B);
+    addImplicationToTree(&tree_bg, A);
 
   }
 
@@ -594,18 +601,29 @@ List next_closure_implications_bg(NumericMatrix I,
 
   if (cardinal(A) > 0) {
 
-    add_column(&LHS, empty);
-    add_column(&RHS, A);
-    addImplicationToTree(&tree, empty);
+    // Compute closure with respect to  background knowledge
+    reinitVector(&bg_closure);
+    semantic_closure(empty, tree_bg, lhs_sparse, rhs_sparse, &bg_closure);
+    reinitVector(&rhsbg_closure);
+    setdifference(A, bg_closure, &rhsbg_closure);
 
-    if (verbose) {
+    if (cardinal(rhsbg_closure) > 0) {
 
-      Rcout << "Added initial implication to basis" << std::endl << std::endl << std::endl;
-      printVector(A, attrs);
-      Rcout << std::endl << std::endl;
-      // printImpl(empty, A, attrs);
+      add_column(&LHS, empty);
+      add_column(&RHS2, rhsbg_closure);
+      add_column(&RHS, A);
+      addImplicationToTree(&tree, empty);
 
-      n_imp++;
+      if (verbose) {
+
+        Rcout << "Added initial implication to basis" << std::endl << std::endl << std::endl;
+        printVector(A, attrs);
+        Rcout << std::endl << std::endl;
+        // printImpl(empty, A, attrs);
+
+        n_imp++;
+
+      }
 
     }
 
@@ -697,23 +715,36 @@ List next_closure_implications_bg(NumericMatrix I,
 
     } else {
 
-      add_column(&LHS, A);
-      add_column(&RHS, rhs);
+      // Compute closure with respect to  background knowledge
+      reinitVector(&bg_closure);
+      semantic_closure(A, tree_bg, lhs_sparse, rhs_sparse, &bg_closure);
+      reinitVector(&rhsbg_closure);
+      setdifference(B, bg_closure, &rhsbg_closure);
 
-      if (verbose) {
+      if (cardinal(rhsbg_closure) > 0) {
 
-        Rcout << "Added implication " << n_imp++ << " to basis" << std::endl;
-        printImpl(A, rhs, attrs);
+        add_column(&LHS, A);
+        add_column(&RHS2, rhsbg_closure);
+        reinitVector(&rhsbg_closure);
+        setdifference(B, A, &rhsbg_closure);
+        add_column(&RHS, rhsbg_closure);
 
-      }
+        if (verbose) {
 
-      addImplicationToTree(&tree, A);
+          Rcout << "Added implication " << n_imp++ << " to basis" << std::endl;
+          printImpl(A, rhsbg_closure, attrs);
 
-      count++;
+        }
 
-      if (verbose) {
+        addImplicationToTree(&tree, A);
 
-        if (count % 10 == 0) Rprintf("%u\n", count);
+        count++;
+
+        if (verbose) {
+
+          if (count % 10 == 0) Rprintf("%u\n", count);
+
+        }
 
       }
 
@@ -723,6 +754,8 @@ List next_closure_implications_bg(NumericMatrix I,
 
 
       freeVector(&A);
+      freeVector(&bg_closure);
+      freeVector(&rhsbg_closure);
       freeVector(&empty);
       freeVector(&B);
       freeVector(&rhs);
@@ -734,13 +767,15 @@ List next_closure_implications_bg(NumericMatrix I,
       S4 intents_S4 = SparseToS4_fast(concepts);
       S4 extents_S4 = SparseToS4_fast(extents);
       S4 lhs_S4 = SparseToS4_fast(LHS);
-      S4 rhs_S4 = SparseToS4_fast(RHS);
+      S4 rhs_S4 = SparseToS4_fast(RHS2);
 
       freeVector(&concepts);
       freeVector(&extents);
       freeVector(&LHS);
       freeVector(&RHS);
+      freeVector(&RHS2);
       freeImplicationTree(&tree);
+      freeImplicationTree(&tree_bg);
 
       List res = List::create(_["concepts"] = intents_S4,
                               _["extents"] = extents_S4,
@@ -757,12 +792,13 @@ List next_closure_implications_bg(NumericMatrix I,
   S4 intents_S4 = SparseToS4_fast(concepts);
   S4 extents_S4 = SparseToS4_fast(extents);
   S4 lhs_S4 = SparseToS4_fast(LHS);
-  S4 rhs_S4 = SparseToS4_fast(RHS);
+  S4 rhs_S4 = SparseToS4_fast(RHS2);
 
   freeVector(&concepts);
   freeVector(&extents);
   freeVector(&LHS);
   freeVector(&RHS);
+  freeVector(&RHS2);
 
   List res = List::create(_["concepts"] = intents_S4,
                           _["extents"] = extents_S4,
@@ -773,6 +809,8 @@ List next_closure_implications_bg(NumericMatrix I,
     Rprintf("Finished.\n");
 
   freeVector(&A);
+  freeVector(&bg_closure);
+  freeVector(&rhsbg_closure);
   freeVector(&empty);
   freeVector(&B);
   freeVector(&rhs);
@@ -780,6 +818,7 @@ List next_closure_implications_bg(NumericMatrix I,
   freeVector(&lhs_sparse);
   freeVector(&rhs_sparse);
   freeImplicationTree(&tree);
+  freeImplicationTree(&tree_bg);
 
   return res;
 

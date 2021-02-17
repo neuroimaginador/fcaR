@@ -101,7 +101,7 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (is.character(I) && file.exists(I)) {
+      if ((length(I) == 1) && is.character(I) && file.exists(I)) {
 
         self$load(I)
 
@@ -151,7 +151,7 @@ FormalContext <- R6::R6Class(
 
         if (!private$is_many_valued) {
 
-          I[] <- as.numeric(I)
+          I <- as.matrix(I)
 
           # Remove the constant columns
           if (remove_const) {
@@ -255,6 +255,8 @@ FormalContext <- R6::R6Class(
     #' fc$scale(attributes = "ring", type = "nominal")
     scale = function(attributes, type, ...) {
 
+      # TODO: Check that the attributes are in self$attributes
+
       I <- self$incidence()
       for (att in attributes) {
 
@@ -273,6 +275,12 @@ FormalContext <- R6::R6Class(
           private$bg_implications,
           scaled$bg_implications)
 
+        # if (scaled$bg_implications$cardinality() > 0) {
+        #
+        #   private$bg_implications$to_basis()
+        #
+        # }
+
       }
 
       self$initialize(I)
@@ -282,7 +290,13 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Scales applied to the formal context
     #'
-    #' @return The scales that have been applied to the formal context.
+    #' @param attributes (character) Name of the attributes for which scales
+    #' (if applied) are returned.
+    #'
+    #' @return The scales that have been applied to the specified attributes
+    #' of the formal context. If no \code{attributes} are passed,
+    #' then all applied scales are returned.
+    #'
     #' @export
     #' @examples
     #' filename <- system.file("contexts", "aromatic.csv", package = "fcaR")
@@ -291,15 +305,28 @@ FormalContext <- R6::R6Class(
     #' fc$scale("OS", "nominal", c("O", "S"))
     #' fc$scale(attributes = "ring", type = "nominal")
     #' fc$get_scales()
-    get_scales = function() {
+    get_scales = function(attributes = names(private$scales)) {
 
-      if (length(private$scales) > 0) {
+      # TODO: Get the scales applied to only one or some
+      # of the self$attributes.
+      attributes <- attributes[attributes %in% names(private$scales)]
 
-        private$scales
+      res <- private$scales[attributes]
+      if (length(res) > 0) {
+
+        if (length(res) > 1) {
+
+          return(res)
+
+        } else {
+
+          return(res[[1]])
+
+        }
 
       } else {
 
-        message("No scaling has been performed on this formal context.")
+        message("No scaling has been performed on these attributes.")
 
       }
 
@@ -323,7 +350,15 @@ FormalContext <- R6::R6Class(
     #' fc$background_knowledge()
     background_knowledge = function() {
 
-      private$bg_implications$clone()
+      if (!is.null(private$bg_implications)) {
+
+        private$bg_implications$clone()
+
+      } else {
+
+        ImplicationSet$new(attributes = self$attributes)
+
+      }
 
     },
 
@@ -426,6 +461,8 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     extent = function(S) {
+
+      # TODO: Apply scales to sparsesets.
 
       if (private$is_many_valued) error_many_valued()
 
@@ -887,6 +924,17 @@ FormalContext <- R6::R6Class(
 
       # browser()
 
+      # if (is.null(private$bg_implications)) {
+
+        L <- next_closure_implications(I = my_I,
+                                       grades_set = grades_set,
+                                       attrs = attrs,
+                                       save_concepts = save_concepts,
+                                       verbose = verbose)
+
+      # }
+
+
       if (!is.null(private$bg_implications)) {
 
         private$bg_implications <- reorder_attributes(
@@ -894,35 +942,30 @@ FormalContext <- R6::R6Class(
           self$attributes
         )
 
-        n_bg <- private$bg_implications$cardinality()
+        # n_bg <- private$bg_implications$cardinality()
+        #
+        # L <- next_closure_implications_bg(I = my_I,
+        #                                   grades_set = grades_set,
+        #                                   attrs = attrs,
+        #                                   lhs_bg = private$bg_implications$get_LHS_matrix(),
+        #                                   rhs_bg = private$bg_implications$get_RHS_matrix(),
+        #                                   n_bg = n_bg,
+        #                                   save_concepts = save_concepts,
+        #                                   verbose = verbose)
 
-        L <- next_closure_implications_bg(I = my_I,
-                                          grades_set = grades_set,
-                                          attrs = attrs,
-                                          lhs_bg = private$bg_implications$get_LHS_matrix(),
-                                          rhs_bg = private$bg_implications$get_RHS_matrix(),
-                                          n_bg = n_bg,
-                                          save_concepts = save_concepts,
-                                          verbose = verbose)
+        bg <- private$bg_implications$clone()
+        suppressMessages(bg$apply_rules(c("simp", "rsimp")))
 
-        L2 <- .simplification_bg(
-          lhs_bg = private$bg_implications$get_LHS_matrix(),
-          rhs_bg = private$bg_implications$get_RHS_matrix(),
-          lhs = L$LHS,
-          rhs = L$RHS)
+
+        L2 <- .imp_to_basis_bg(
+          lhs_bg = bg$get_LHS_matrix(),
+          rhs_bg = bg$get_RHS_matrix(),
+          LHS = L$LHS,
+          RHS = L$RHS,
+          attributes = self$attributes)
         L$LHS <- L2$lhs
         L$RHS <- L2$rhs
 
-        # L$LHS <- L$LHS[, -seq(n_bg)]
-        # L$RHS <- L$RHS[, -seq(n_bg)]
-
-      } else {
-
-        L <- next_closure_implications(I = my_I,
-                                       grades_set = grades_set,
-                                       attrs = attrs,
-                                       save_concepts = save_concepts,
-                                       verbose = verbose)
 
       }
 
@@ -1101,9 +1144,9 @@ FormalContext <- R6::R6Class(
 
         I <- read.csv(filename)
 
-        if (is.character(I[[1]])) {
+        if (is.character(I[[1]]) || is.factor(I[[1]])) {
 
-          objects <- I[[1]]
+          objects <- as.character(I[[1]])
           I <- I[, -1]
           rownames(I) <- objects
 
@@ -1249,7 +1292,9 @@ FormalContext <- R6::R6Class(
         cat(str)
         cat("\n")
 
-        print(as.data.frame(private$many_valued_I))
+        print_many_valued(private$many_valued_I)
+
+        # print(tibble::tibble(private$many_valued_I))
 
       }
 
@@ -1395,3 +1440,4 @@ FormalContext <- R6::R6Class(
   )
 
 )
+
