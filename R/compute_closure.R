@@ -28,7 +28,8 @@
 
     if (length(idx_subsets) == 1) {
 
-      A <- Matrix::Matrix(RHS[, idx_subsets], sparse = TRUE)
+      A <- .extract_column(RHS, idx_subsets)
+      # Matrix::Matrix(RHS[, idx_subsets], sparse = TRUE)
 
     } else {
 

@@ -352,7 +352,17 @@ FormalContext <- R6::R6Class(
 
       if (!is.null(private$bg_implications)) {
 
-        private$bg_implications$clone()
+        if (is.null(private$bg_implications_basis)) {
+
+          private$bg_implications_basis <- private$bg_implications$clone()
+          # private$bg_implications_basis$to_basis()
+          suppressMessages(private$bg_implications_basis$apply_rules(c("comp", "simp", "rsimp")))
+
+        }
+
+        private$bg_implications_basis$clone()
+
+        # private$bg_implications$clone()
 
       } else {
 
@@ -944,7 +954,7 @@ FormalContext <- R6::R6Class(
 
         # n_bg <- private$bg_implications$cardinality()
         #
-        # L <- next_closure_implications_bg(I = my_I,
+        # L <- next_closure_implications_bg2(I = my_I,
         #                                   grades_set = grades_set,
         #                                   attrs = attrs,
         #                                   lhs_bg = private$bg_implications$get_LHS_matrix(),
@@ -956,10 +966,17 @@ FormalContext <- R6::R6Class(
         bg <- private$bg_implications$clone()
         suppressMessages(bg$apply_rules(c("simp", "rsimp")))
 
+        # print(private$bg_implications %~% bg)
+        lhs_bg <- bg$get_LHS_matrix()
+        rhs_bg <- bg$get_RHS_matrix()
+        L1 <- complete_rhs(LHS = lhs_bg, RHS = rhs_bg)
+
+        lhs_bg <- L1$lhs
+        rhs_bg <- L1$rhs
 
         L2 <- .imp_to_basis_bg(
-          lhs_bg = bg$get_LHS_matrix(),
-          rhs_bg = bg$get_RHS_matrix(),
+          lhs_bg = lhs_bg,
+          rhs_bg = rhs_bg,
           LHS = L$LHS,
           RHS = L$RHS,
           attributes = self$attributes)
@@ -1424,6 +1441,7 @@ FormalContext <- R6::R6Class(
     many_valued_I = NULL,
     scales = list(),
     bg_implications = NULL,
+    bg_implications_basis = NULL,
 
     check_empty = function() {
 

@@ -38,11 +38,11 @@
 
       } else {
 
-        C <- Matrix::Matrix(lhs[, my_idx], sparse = TRUE)
-        D <- Matrix::Matrix(rhs[, my_idx], sparse = TRUE)
+        C <- .extract_column(lhs, my_idx)
+        D <- .extract_column(rhs, my_idx)
 
       }
-      B <- Matrix::Matrix(rhs_bg[, this_row], sparse = TRUE)
+      B <- .extract_column(rhs_bg, this_row)
       newLHS <- set_difference_single(C@i, C@p, C@x,
                                       B@i, B@p, B@x,
                                       nrow(C))
@@ -79,7 +79,5 @@
 
   return(list(lhs = lhs, rhs = rhs))
 
-  # return(ImplicationSet$new(attributes = imps$get_attributes(),
-  #                           lhs = lhs, rhs = rhs))
 
 }

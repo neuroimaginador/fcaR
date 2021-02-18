@@ -602,6 +602,143 @@ S4 set_difference_single(IntegerVector xi,
 
 }
 
+SparseVector setunion_matrix(IntegerVector xi,
+                             IntegerVector xp,
+                             NumericVector xx,
+                             IntegerVector yi,
+                             IntegerVector yp,
+                             NumericVector yx,
+                             int number) {
+
+  SparseVector res;
+  initVector(&res, number);
+
+  insertArray(&(res.p), 0);
+  int count = 0;
+  for (size_t ip = 0; ip < xp.length() - 1; ip++) {
+
+    int ymin = yp[ip];
+    int ymax = yp[ip + 1];
+    int xmin = xp[ip];
+    int xmax = xp[ip + 1];
+    size_t j = ymin;
+
+    for (size_t i = xmin; i < xmax; i++) {
+
+      while ((j < ymax) & (yi[j] < xi[i])) {
+
+        insertArray(&(res.i), yi[j]);
+        insertArray(&(res.x), yx[j]);
+        j++;
+        count++;
+
+      }
+
+      if (yi[j] == xi[i]) {
+
+        if (xx[i] > yx[j]) {
+
+          insertArray(&(res.i), xi[i]);
+          insertArray(&(res.x), xx[i]);
+          j++;
+          count++;
+
+        } else {
+
+          insertArray(&(res.i), yi[j]);
+          insertArray(&(res.x), yx[j]);
+          j++;
+          count++;
+
+        }
+
+      } else {
+
+        insertArray(&(res.i), xi[i]);
+        insertArray(&(res.x), xx[i]);
+        count++;
+
+      }
+
+    }
+
+    while (j < ymax) {
+
+      insertArray(&(res.i), yi[j]);
+      insertArray(&(res.x), yx[j]);
+      j++;
+      count++;
+
+    }
+
+    insertArray(&(res.p), count);
+
+  }
+
+  return res;
+
+}
+
+// [[Rcpp::export]]
+S4 set_union_sparse(IntegerVector xi,
+                    IntegerVector xp,
+                    NumericVector xx,
+                    IntegerVector yi,
+                    IntegerVector yp,
+                    NumericVector yx,
+                    int number) {
+
+  SparseVector res = setunion_matrix(xi, xp, xx,
+                                     yi, yp, yx,
+                                     number);
+
+  S4 res2 = SparseToS4_fast(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
+// [[Rcpp::export]]
+S4 flatten_sparse_C(IntegerVector p,
+                    IntegerVector i,
+                    NumericVector x,
+                    NumericVector dims) {
+
+  int num_rows = dims[0];
+  int num_cols = dims[1];
+
+  NumericVector v(num_rows);
+
+  for (int x_index = 0; x_index < num_cols; x_index++) {
+
+    int start_index = p[x_index], end_index = p[x_index + 1];
+
+    for (int j = start_index; j < end_index; j++) {
+
+      if (x[j] > v[i[j]]) {
+
+        v[i[j]] = x[j];
+
+      }
+
+    }
+
+  }
+
+  SparseVector res;
+  initVector(&res, num_rows);
+  as_sparse(v, &res);
+
+  S4 resS4 = SparseToS4_fast(res);
+  freeVector(&res);
+
+  return resS4;
+
+}
+
+
 NumericVector as_vector(SparseVector v) {
 
   NumericVector x(v.length);
@@ -621,18 +758,46 @@ SparseVector as_sparse(NumericVector v) {
   SparseVector res;
   initVector(&res, v.size());
 
+  insertArray(&(res.p), 0);
+  int count = 0;
+
   for (int i = 0; i < v.size(); i++) {
 
     if (v[i] > 0) {
 
       insertArray(&(res.i), i);
       insertArray(&(res.x), v[i]);
+      count++;
 
     }
 
   }
 
+  insertArray(&(res.p), count);
+
   return res;
+
+}
+
+void as_sparse(NumericVector v, SparseVector *res) {
+
+  reinitVector(res);
+  insertArray(&(res->p), 0);
+  int count = 0;
+
+  for (int i = 0; i < v.size(); i++) {
+
+    if (v[i] > 0) {
+
+      insertArray(&(res->i), i);
+      insertArray(&(res->x), v[i]);
+      count++;
+
+    }
+
+  }
+
+  insertArray(&(res->p), count);
 
 }
 

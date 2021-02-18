@@ -51,11 +51,11 @@
 
     } else {
 
-      C <- Matrix::Matrix(LHS[, my_idx], sparse = TRUE)
-      D <- Matrix::Matrix(RHS[, my_idx], sparse = TRUE)
+      C <- .extract_column(LHS, my_idx)
+      D <- .extract_column(RHS, my_idx)
 
     }
-    B <- Matrix::Matrix(rhs_bg[, this_row], sparse = TRUE)
+    B <- .extract_column(rhs_bg, this_row)
     newRHS <- set_difference_single(D@i, D@p, D@x,
                                     B@i, B@p, B@x,
                                     nrow(D))
@@ -66,8 +66,6 @@
     LRHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(lhs_bg[, id_inter], .union(C, newRHS)))
     col_values <- Matrix::colSums(LRHS_subsets)
     condition1 <- col_values > 0
-
-    # condition2 <- (intersections == 0) & (Matrix::colSums(RHS) > 0)
 
     black_list[this_row] <- TRUE
     are_subset <- Matrix::which(condition1 & (!black_list))

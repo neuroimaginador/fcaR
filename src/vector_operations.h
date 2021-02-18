@@ -60,6 +60,7 @@ S4 SparseToS4_fast(SparseVector V);
 
 NumericVector as_vector(SparseVector v);
 SparseVector as_sparse(NumericVector v);
+void as_sparse(NumericVector v, SparseVector *res);
 SparseVector as_sparse(double* v, int length);
 SparseVector as_sparse(double* v,
                        int nrow, int ncol,

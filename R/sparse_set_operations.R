@@ -50,10 +50,18 @@
 
   if (ncol(A) == ncol(B)) {
 
-    idx <- Matrix::which(B > A)
-    A[idx] <- B[idx]
+    return(set_union_sparse(A@i, A@p, A@x,
+                            B@i, B@p, B@x,
+                            nrow(A)))
 
-    return(A)
+    # idx <- Matrix::which(B > A)
+    # if (length(idx) > 0) {
+    #
+    #   A[idx] <- B[idx]
+    #
+    # }
+    #
+    # return(A)
 
   }
 
@@ -61,12 +69,18 @@
 
     n <- ncol(A)
 
-    newB <- .replicate_col(B, n)
+    # newB <- .replicate_col(B, n)
 
-    idx <- Matrix::which(newB > A)
-    A[idx] <- newB[idx]
+    return(.union(A, .replicate_col(B, n)))
 
-    return(A)
+    # idx <- Matrix::which(newB > A)
+    # if (length(idx) > 0) {
+    #
+    #   A[idx] <- newB[idx]
+    #
+    # }
+    #
+    # return(A)
 
   }
 
@@ -74,12 +88,19 @@
 
     n <- ncol(B)
 
-    newA <- .replicate_col(A, n)
+    # newA <- .replicate_col(A, n)
 
-    idx <- Matrix::which(B > newA)
-    newA[idx] <- B[idx]
+    return(.union(.replicate_col(A, n), B))
 
-    return(newA)
+    # idx <- Matrix::which(B > newA)
+    #
+    # if (length(idx) > 0) {
+    #
+    #   newA[idx] <- B[idx]
+    #
+    # }
+    #
+    # return(newA)
 
   }
 
@@ -87,9 +108,10 @@
 
 .multiunion <- function(M) {
 
-  v <- flatten_sparse_C(M@p, M@i, M@x, M@Dim)
+  # v <- flatten_sparse_C(M@p, M@i, M@x, M@Dim)
+  flatten_sparse_C(M@p, M@i, M@x, M@Dim)
 
-  return(Matrix::Matrix(v, ncol = 1, sparse = TRUE))
+  # return(Matrix::Matrix(v, ncol = 1, sparse = TRUE))
 
 }
 

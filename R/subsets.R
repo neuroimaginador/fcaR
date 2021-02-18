@@ -2,9 +2,9 @@
 
   if (is.null(y)) y <- x
 
-  stopifnot("x" %in% methods::slotNames(x))
+  # stopifnot("x" %in% methods::slotNames(x))
 
-  stopifnot("x" %in% methods::slotNames(y))
+  # stopifnot("x" %in% methods::slotNames(y))
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
 
@@ -21,7 +21,7 @@
 
   if (length(empty) > 0) {
 
-    M[empty, ] <- Matrix::Matrix(TRUE, ncol = y@Dim[2], nrow = length(empty))
+    M[empty, ] <- TRUE#Matrix::Matrix(TRUE, ncol = y@Dim[2], nrow = length(empty))
 
   }
 
