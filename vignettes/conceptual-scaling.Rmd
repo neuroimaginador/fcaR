@@ -193,6 +193,7 @@ fc_nom$incidence() %>%
                align = "c")
 ```
 and can be categorized into intervals corresponding to the following marks:
+
 - _A_: score in the interval $(4, 5]$.
 - _B_: score in the interval $(3, 4]$.
 - _C_: score in the interval $(2, 3]$.
@@ -265,7 +266,7 @@ fc$scale("Attitude",
          values_ge = c("lazy", "very lazy"))
 ```
 
-The full order of attribute values is "hard working" < "workin" < "lazy" < "very lazy".
+The full order of attribute values is "hard working" < "working" < "lazy" < "very lazy".
 
 Note that we have listed the attribute values in two different arguments, `values_le` (for values that are compared using `<=`) and `values_ge` (values compared using `>=`). Also note that all attributes must appear ordered in the arguments, that is, in the same order as in the full order defined above.
 
@@ -309,7 +310,7 @@ Once scaled, the same `find_concepts()` and `find_implications()` methods can be
 In the case of the basis of implications, the NextClosure algorithm is used, as in the binary/fuzzy case, but the resulting implications have been post-processed to remove redundant information with respect to the _background knowledge_.
 
 In our example, the resulting implications are:
-```{r imps}
+```{r imps, warning=FALSE}
 fc$find_implications()
 fc$implications
 ```
@@ -373,7 +374,7 @@ fc$background_knowledge()
 ```
 
 Also, we can compute the implications that are not represented by the _background knowledge_:
-```{r}
+```{r warning=FALSE}
 fc$find_implications()
 fc$implications
 ```

@@ -218,11 +218,21 @@ fc$scale(attributes = "ring", type = "nominal")
 \subsection{Method \code{get_scales()}}{
 Scales applied to the formal context
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_scales()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_scales(attributes = names(private$scales))}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{attributes}}{(character) Name of the attributes for which scales
+(if applied) are returned.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
-The scales that have been applied to the formal context.
+The scales that have been applied to the specified attributes
+of the formal context. If no \code{attributes} are passed,
+then all applied scales are returned.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
