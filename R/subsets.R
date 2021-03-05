@@ -17,13 +17,13 @@
 
   M <- Matrix::t(M)
 
-  empty <- Matrix::which(Matrix::colSums(x) == 0)
-
-  if (length(empty) > 0) {
-
-    M[empty, ] <- TRUE#Matrix::Matrix(TRUE, ncol = y@Dim[2], nrow = length(empty))
-
-  }
+  # empty <- Matrix::which(Matrix::colSums(x) == 0)
+  #
+  # if (length(empty) > 0) {
+  #
+  #   M[empty, ] <- TRUE#Matrix::Matrix(TRUE, ncol = y@Dim[2], nrow = length(empty))
+  #
+  # }
 
   return(M)
 

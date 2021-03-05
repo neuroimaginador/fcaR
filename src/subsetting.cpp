@@ -15,34 +15,46 @@ void populateMatches(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p
 
   int num_matches = 0;
 
-  for(int x_index = 0; x_index < num_rows; x_index++){
+  if (y_end_index == y_start_index) {
 
-    int loc = y_p[x_index], end_loc = y_p[x_index+1], curr_col;
+    for(int x_index = 0; x_index < num_rows; x_index++) {
 
-    curr_col = y_start_index;
-
-    if (curr_col >= y_end_index) continue;
-
-    while(loc < end_loc){
-
-      if (y_i[loc] == x_i[curr_col]) {
-
-        if (y[loc] >= x[curr_col]) {
-
-          curr_col++;
-
-        } else break;
-
-      }
-      if(curr_col >= y_end_index) break;
-
-      loc++;
+      matches_for_y[num_matches++] = x_index;
 
     }
 
+  } else {
 
-    if(curr_col == y_end_index){
-      matches_for_y[num_matches++] = x_index;
+    for(int x_index = 0; x_index < num_rows; x_index++){
+
+      int loc = y_p[x_index], end_loc = y_p[x_index+1], curr_col;
+
+      curr_col = y_start_index;
+
+      if (curr_col >= y_end_index) continue;
+
+      while(loc < end_loc){
+
+        if (y_i[loc] == x_i[curr_col]) {
+
+          if (y[loc] >= x[curr_col]) {
+
+            curr_col++;
+
+          } else break;
+
+        }
+        if(curr_col >= y_end_index) break;
+
+        loc++;
+
+      }
+
+
+      if(curr_col == y_end_index){
+        matches_for_y[num_matches++] = x_index;
+      }
+
     }
 
   }

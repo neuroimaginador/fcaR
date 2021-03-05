@@ -34,7 +34,14 @@ SparseSet <- R6::R6Class(
 
       if (!is.null(M)) {
 
-        private$v <- Matrix::Matrix(M, sparse = TRUE)
+        if (!inherits(M, "Matrix")) {
+
+
+          M <- Matrix::Matrix(M, sparse = TRUE)
+
+        }
+
+        private$v <- M
 
       } else {
 

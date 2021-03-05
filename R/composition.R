@@ -20,9 +20,15 @@
 
       B <- .multiunion(RHS[, ids_to_merge])
 
-      RHS[, ids_to_merge[1]] <- B
+      RHS <- methods::cbind2(RHS, B)
+      LHS <- methods::cbind2(LHS,
+                             .extract_column(LHS,
+                                             ids_to_merge[1]))
 
-      marked_to_remove[ids_to_merge[-1]] <- TRUE
+      # RHS[, ids_to_merge[1]] <- B
+
+      # marked_to_remove[ids_to_merge[-1]] <- TRUE
+      marked_to_remove[ids_to_merge] <- TRUE
 
     }
 

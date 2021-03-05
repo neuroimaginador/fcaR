@@ -1,3 +1,4 @@
+#' @importFrom methods cbind2
 .imp_to_basis_bg <- function(lhs_bg, rhs_bg, LHS, RHS, attributes) {
 
   n <- ncol(LHS)
@@ -36,7 +37,7 @@
     #   warning(inmediate. = TRUE, call. = FALSE)
 
     B <- .compute_closure(AUB, LHS_clos, RHS_clos,
-                          attributes, reduce = FALSE)$closure
+                          attributes, reduce = TRUE)$closure
 
     LHS <- methods::cbind2(LHS, A)
     RHS <- methods::cbind2(RHS, B)
@@ -69,7 +70,7 @@
     #   warning(inmediate. = TRUE, call. = FALSE)
 
     A <- .compute_closure(A, LHS_clos, RHS_clos,
-                          attributes, reduce = FALSE)$closure
+                          attributes, reduce = TRUE)$closure
 
     if (!(all(A == B))) {
 
