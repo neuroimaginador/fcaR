@@ -426,6 +426,40 @@ S4 SparseToS4_fast(SparseVector V) {
 
 }
 
+List SparseToList(SparseVector V) {
+
+  IntegerVector i(V.i.used);
+  NumericVector x(V.x.used);
+  IntegerVector dims(2);
+  IntegerVector p(V.p.used);
+
+  if (V.i.used > 0) {
+
+    memcpy(i.begin(), V.i.array, V.i.used * sizeof(int));
+    memcpy(x.begin(), V.x.array, V.x.used * sizeof(double));
+
+  }
+
+  if (V.p.used > 0) {
+
+    memcpy(&(p[0]), V.p.array, V.p.used * sizeof(int));
+
+  }
+
+  dims[0] = V.length;
+  dims[1] = V.p.used - 1;
+
+  List res = List::create(
+    _["x"] = x,
+    _["i"] = i,
+    _["Dim"] = dims,
+    _["p"] = p
+  );
+
+  return(res);
+
+}
+
 SparseVector set_difference_sparse(IntegerVector xi,
                             IntegerVector xp,
                             NumericVector xx,
@@ -693,6 +727,27 @@ S4 set_union_sparse(IntegerVector xi,
                                      number);
 
   S4 res2 = SparseToS4_fast(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
+// [[Rcpp::export]]
+List set_union_SpM(IntegerVector xi,
+                   IntegerVector xp,
+                   NumericVector xx,
+                   IntegerVector yi,
+                   IntegerVector yp,
+                   NumericVector yx,
+                   int number) {
+
+  SparseVector res = setunion_matrix(xi, xp, xx,
+                                     yi, yp, yx,
+                                     number);
+
+  List res2 = SparseToList(res);
 
   freeVector(&res);
 

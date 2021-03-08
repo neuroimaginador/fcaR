@@ -277,6 +277,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// set_union_SpM
+List set_union_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
+RcppExport SEXP _fcaR_set_union_SpM(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type xi(xiSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type xp(xpSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type xx(xxSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type yi(yiSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type yp(ypSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type yx(yxSEXP);
+    Rcpp::traits::input_parameter< int >::type number(numberSEXP);
+    rcpp_result_gen = Rcpp::wrap(set_union_SpM(xi, xp, xx, yi, yp, yx, number));
+    return rcpp_result_gen;
+END_RCPP
+}
 // flatten_sparse_C
 S4 flatten_sparse_C(IntegerVector p, IntegerVector i, NumericVector x, NumericVector dims);
 RcppExport SEXP _fcaR_flatten_sparse_C(SEXP pSEXP, SEXP iSEXP, SEXP xSEXP, SEXP dimsSEXP) {
@@ -311,6 +328,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_set_difference", (DL_FUNC) &_fcaR_set_difference, 7},
     {"_fcaR_set_difference_single", (DL_FUNC) &_fcaR_set_difference_single, 7},
     {"_fcaR_set_union_sparse", (DL_FUNC) &_fcaR_set_union_sparse, 7},
+    {"_fcaR_set_union_SpM", (DL_FUNC) &_fcaR_set_union_SpM, 7},
     {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
     {NULL, NULL, 0}
 };

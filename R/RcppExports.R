@@ -73,6 +73,10 @@ set_union_sparse <- function(xi, xp, xx, yi, yp, yx, number) {
     .Call(`_fcaR_set_union_sparse`, xi, xp, xx, yi, yp, yx, number)
 }
 
+set_union_SpM <- function(xi, xp, xx, yi, yp, yx, number) {
+    .Call(`_fcaR_set_union_SpM`, xi, xp, xx, yi, yp, yx, number)
+}
+
 flatten_sparse_C <- function(p, i, x, dims) {
     .Call(`_fcaR_flatten_sparse_C`, p, i, x, dims)
 }
