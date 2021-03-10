@@ -1,43 +1,44 @@
 .difference2 <- function(A, B) {
 
-  if (is.numeric(A)) A <- Matrix::Matrix(A, sparse = TRUE)
-  if (is.numeric(B)) B <- Matrix::Matrix(B, sparse = TRUE)
+  # if (is.numeric(A)) A <- Matrix::Matrix(A, sparse = TRUE)
+  # if (is.numeric(B)) B <- Matrix::Matrix(B, sparse = TRUE)
 
-  applicable <- (ncol(A) == ncol(B)) || (ncol(B) == 1) || (ncol(A) == 1)
+  applicable <- (ncol.SpM(A) == ncol.SpM(B)) ||
+    (ncol.SpM(B) == 1) || (ncol.SpM(A) == 1)
   stopifnot(applicable)
 
-  if (ncol(A) == ncol(B)) {
+  if (ncol.SpM(A) == ncol.SpM(B)) {
 
-    A <- set_difference(A@i, A@p, A@x, B@i, B@p, B@x, nrow(A))
-    # A[B >= A] <- 0
-
-    return(A)
-
-  }
-
-  if (ncol(B) == 1) {
-
-    n <- ncol(A)
-
-    # newB <- .replicate_col(B, n)
-
-    A <- set_difference_single(A@i, A@p, A@x, B@i, B@p, B@x, nrow(A))
-
-    # A[newB >= A] <- 0
+    A <- set_difference_SpM(A$pi, A$pp, A$px,
+                            B$pi, B$pp, B$px,
+                            nrow.SpM(A))
 
     return(A)
 
   }
 
-  if (ncol(A) == 1) {
+  if (ncol.SpM(B) == 1) {
 
-    n <- ncol(B)
+    n <- ncol.SpM(A)
 
-    newA <- .replicate_col(A, n)
+    L <- set_difference_single_SpM(A$pi, A$pp, A$px,
+                                   B$pi, B$pp, B$px,
+                                   nrow.SpM(A))
 
-    newA <- set_difference(newA@i, newA@p, newA@x, B@i, B@p, B@x, nrow(newA))
+    return(new_spm(i = L$i, p = L$p, x = L$x,
+                   nrow = nrow.SpM(B)))
 
-    # newA[B >= newA] <- 0
+  }
+
+  if (ncol.SpM(A) == 1) {
+
+    n <- ncol.SpM(B)
+
+    newA <- A %>% replicate(n)
+
+    newA <- set_difference_SpM(newA$pi, newA$pp, newA$px,
+                               B$pi, B$pp, B$px,
+                               nrow.SpM(newA))
 
     return(newA)
 

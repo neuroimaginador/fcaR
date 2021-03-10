@@ -25,14 +25,14 @@
   if (inherits(C1, "SparseConcept") &
       inherits(C2, "SparseConcept")) {
 
-    return(all(C1$get_extent()$get_vector() <= C2$get_extent()$get_vector()))
+    return(all(to_matrix.SpM(C1$get_extent()$get_vector()) <= to_matrix.SpM(C2$get_extent()$get_vector())))
 
   }
 
   if (inherits(C1, "SparseSet") |
       inherits(C2, "SparseSet")) {
 
-    return(all(C1$get_vector() <= C2$get_vector()))
+    return(all(to_matrix.SpM(C1$get_vector()) <= to_matrix.SpM(C2$get_vector())))
 
   }
 
@@ -69,14 +69,14 @@
   if (inherits(C1, "SparseConcept") &
       inherits(C2, "SparseConcept")) {
 
-    return(all(C1$get_extent()$get_vector() == C2$get_extent()$get_vector()))
+    return(all(to_matrix.SpM(C1$get_extent()$get_vector()) == to_matrix.SpM(C2$get_extent()$get_vector())))
 
   }
 
   if (inherits(C1, "SparseSet") |
       inherits(C2, "SparseSet")) {
 
-    return(all(C1$get_vector() == C2$get_vector()))
+    return(all(to_matrix.SpM(C1$get_vector()) == to_matrix.SpM(C2$get_vector())))
 
   }
 
@@ -115,11 +115,10 @@
 
     A <- S1$get_vector()
     B <- S2$get_vector()
-    my_diff <- .difference2(A, B) %>%
-      Matrix::as.matrix() %>% as.vector()
-    names(my_diff) <- S1$get_attributes()
+    my_diff <- differenceSpM(A, B)
 
-    S <- as_SparseSet(my_diff)
+    S <- SparseSet$new(attributes = S1$get_attributes(),
+                       M = my_diff)
 
     return(S)
 

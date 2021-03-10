@@ -13,7 +13,7 @@ as_SparseSet <- function(A) {
 
   attributes <- names(A)
   SparseSet$new(attributes = attributes,
-                M = Matrix::Matrix(A, sparse = TRUE))
+                M = new_spm(A))
 
 }
 
@@ -32,7 +32,7 @@ as_SparseSet <- function(A) {
 #'
 as_vector <- function(v) {
 
-  A <- as.numeric(v$get_vector())
+  A <- to_matrix.SpM(v$get_vector())
   names(A) <- v$get_attributes()
 
   return(A)

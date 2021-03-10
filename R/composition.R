@@ -2,9 +2,9 @@
 
   # logic_name <- tolower(fuzzy_logic()$name)
 
-  equal_LHS <- .equal_sets(LHS)
+  equal_LHS <- equalSpM(LHS)
 
-  replicas <- Matrix::which(Matrix::colSums(equal_LHS) > 1)
+  replicas <- which(colSums(equal_LHS) > 1)
 
   marked_to_remove <- rep(FALSE, ncol(LHS))
 
@@ -14,20 +14,18 @@
 
       if (marked_to_remove[replicas[rep_id]]) next
 
-      ids_to_merge <- which_at_col(equal_LHS@i,
-                                     equal_LHS@p,
-                                     replicas[rep_id])
+      ids_to_merge <- (equal_LHS %>%
+        extract_columns(replicas[rep_id]))$pi
 
-      B <- .multiunion(RHS[, ids_to_merge])
+      B <- RHS %>%
+        extract_columns(ids_to_merge) %>%
+        flattenSpM()
 
-      RHS <- methods::cbind2(RHS, B)
-      LHS <- methods::cbind2(LHS,
-                             .extract_column(LHS,
-                                             ids_to_merge[1]))
+      RHS <- cbindSpM(RHS, B)
+      LHS <- cbindSpM(LHS,
+                      extract_columns(LHS,
+                                      ids_to_merge[1]))
 
-      # RHS[, ids_to_merge[1]] <- B
-
-      # marked_to_remove[ids_to_merge[-1]] <- TRUE
       marked_to_remove[ids_to_merge] <- TRUE
 
     }
@@ -38,12 +36,12 @@
 
   if (length(remove_id) > 0) {
 
-    LHS <- LHS[, -remove_id]
-    RHS <- RHS[, -remove_id]
+    LHS <- LHS %>% remove_columns(remove_id)
+    RHS <- RHS %>% remove_columns(remove_id)
 
   }
 
-  return(list(lhs = Matrix::Matrix(LHS, sparse = TRUE),
-              rhs = Matrix::Matrix(RHS, sparse = TRUE)))
+  return(list(lhs = LHS,
+              rhs = RHS))
 
 }

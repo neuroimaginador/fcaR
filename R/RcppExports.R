@@ -65,8 +65,16 @@ set_difference <- function(xi, xp, xx, yi, yp, yx, number) {
     .Call(`_fcaR_set_difference`, xi, xp, xx, yi, yp, yx, number)
 }
 
+set_difference_SpM <- function(xi, xp, xx, yi, yp, yx, number) {
+    .Call(`_fcaR_set_difference_SpM`, xi, xp, xx, yi, yp, yx, number)
+}
+
 set_difference_single <- function(xi, xp, xx, yi, yp, yx, number) {
     .Call(`_fcaR_set_difference_single`, xi, xp, xx, yi, yp, yx, number)
+}
+
+set_difference_single_SpM <- function(xi, xp, xx, yi, yp, yx, number) {
+    .Call(`_fcaR_set_difference_single_SpM`, xi, xp, xx, yi, yp, yx, number)
 }
 
 set_union_sparse <- function(xi, xp, xx, yi, yp, yx, number) {

@@ -346,6 +346,67 @@ unionSpM <- function(A, B) {
 
 }
 
+intersectionSpM <- function(x, y, proper = FALSE) {
+
+  p <- as.integer(rep(0, dim.SpM(x)[2] + 1))
+  i <- intersects_C(x$pp, x$pi, dim.SpM(x),
+                    y$pp, y$pi, dim.SpM(y), p)
+
+  M <- new_spm(i = i, p = p, nrow = dim.SpM(y)[2])
+
+  return(M)
+
+}
+
+differenceSpM <- function(A, B) {
+
+  # if (is.numeric(A)) A <- Matrix::Matrix(A, sparse = TRUE)
+  # if (is.numeric(B)) B <- Matrix::Matrix(B, sparse = TRUE)
+
+  applicable <- (ncol.SpM(A) == ncol.SpM(B)) ||
+    (ncol.SpM(B) == 1) || (ncol.SpM(A) == 1)
+  stopifnot(applicable)
+
+  if (ncol.SpM(A) == ncol.SpM(B)) {
+
+    A <- set_difference_SpM(A$pi, A$pp, A$px,
+                            B$pi, B$pp, B$px,
+                            nrow.SpM(A))
+
+    return(A)
+
+  }
+
+  if (ncol.SpM(B) == 1) {
+
+    n <- ncol.SpM(A)
+
+    L <- set_difference_single_SpM(A$pi, A$pp, A$px,
+                                   B$pi, B$pp, B$px,
+                                   nrow.SpM(A))
+
+    return(new_spm(i = L$i, p = L$p, x = L$x,
+                   nrow = nrow.SpM(B)))
+
+  }
+
+  if (ncol.SpM(A) == 1) {
+
+    n <- ncol.SpM(B)
+
+    newA <- A %>% replicate(n)
+
+    newA <- set_difference_SpM(newA$pi, newA$pp, newA$px,
+                               B$pi, B$pp, B$px,
+                               nrow.SpM(newA))
+
+    return(newA)
+
+  }
+
+}
+
+
 flattenSpM <- function(M) {
 
   # browser()
@@ -416,3 +477,119 @@ subsetSpM <- function(x, y = NULL, proper = FALSE) {
 
 }
 
+cbindSpM <- function(...) {
+
+  L <- list(...)
+
+  res <- new_spm(L[[1]])
+  L <- L[-1]
+  for (i in L) {
+
+    res %>% insert_columns(i)
+
+  }
+
+  return(res)
+
+}
+
+
+extract_rows <- function(private, ids) {
+
+  if (!rlang::env_has(env = private, "pi_list")) {
+
+    L <- listing2(private)
+    assign("pi_list", L$pi_list, envir = private)
+    assign("px_list", L$px_list, envir = private)
+
+  }
+
+  idx <- lapply(private$pi_list,
+                function(i) {
+
+                  v <- match(ids, i)
+                  v <- v[!is.na(v)]
+                  v
+
+                })
+
+  new_pi <- lapply(seq_along(private$pi_list),
+                   function(s)
+                     private$pi_list[[s]][idx[[s]]])
+  new_p <- c(0, cumsum(sapply(new_pi, length)))
+  new_pi <- unlist(new_pi)
+  new_px <- lapply(seq_along(private$px_list),
+                   function(s)
+                     private$px_list[[s]][idx[[s]]]) %>%
+    unlist()
+
+  names(ids) <- seq_along(ids)
+  new_pi <- as.numeric(names(sort(ids)[new_pi]))
+
+  new_spm(i = new_pi, x = new_px, p = new_p,
+          nrow = length(ids))
+
+}
+
+# order <- c(2, 1, 3, 4)
+# pi <- c(2, 3, 4)
+# should return c(1, 3, 4)
+reorder_rows <- function(private, order) {
+
+  if (!rlang::env_has(env = private, "pi_list")) {
+
+    L <- listing2(private)
+    assign("pi_list", L$pi_list, envir = private)
+    assign("px_list", L$px_list, envir = private)
+
+  }
+
+  private$pi_list <- lapply(private$pi_list, function(i) id[i])
+  private$px_list <- lapply(private$px_list, function(i) i[id])
+
+
+}
+
+tSpM <- function(S) {
+
+  S <- to_matrix.SpM(S)
+  S <- t(S)
+  new_spm(S)
+
+}
+
+whichSpM <- function(private) {
+
+  if (!rlang::env_has(env = private, "pi_list")) {
+
+    L <- listing2(private)
+    assign("pi_list", L$pi_list, envir = private)
+    assign("px_list", L$px_list, envir = private)
+
+  }
+
+  i <- private$pi_list
+  p <- private$pp
+  n <- private$pnrow
+
+  j <- seq_along(p[-length(p)])
+  idx <- j %>%
+    sapply(function(jj) i[[jj]] + (jj - 1) * n) %>%
+    unlist()
+
+  return(idx)
+
+}
+
+rowSums <- function(A) {
+
+  i <- A$pi
+  x <- A$px
+  rows <- seq(A$pnrow)
+  sapply(rows, function(r) {
+
+    sum(x[i == r])
+
+  })
+
+}

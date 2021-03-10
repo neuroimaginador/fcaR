@@ -30,15 +30,17 @@
   entails <- sapply(seq(ncol(premises)),
                   function(i) {
 
-                    p <- .extract_column(premises, i)
+                    p <- extract_columns(premises, i)
                     cl <- .compute_closure(
                       S = p,
                       LHS = imps$get_LHS_matrix(),
                       RHS = imps$get_RHS_matrix(),
                       attributes = imps$get_attributes())$closure
 
-                    .subset(.extract_column(conclusions, i),
-                            cl)
+                    subsetSpM(extract_columns(conclusions, i),
+                            cl) %>%
+                      to_matrix.SpM() %>%
+                      as.logical()
 
                   }) %>%
     purrr::reduce(cbind) %>%

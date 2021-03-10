@@ -14,27 +14,25 @@ combine_implications <- function(imps1, imps2) {
   rhs2 <- imps2$get_RHS_matrix()
 
   atts <- sort(unique(c(att1, att2)))
-  lhsA <- Matrix::Matrix(0,
-                         ncol = imps1$cardinality(),
-                         nrow = length(atts))
+  lhsA <- zeroSpM(ncol = imps1$cardinality(),
+                  nrow = length(atts))
   rhsA <- lhsA
 
-  lhsB <- Matrix::Matrix(0,
-                         ncol = imps2$cardinality(),
-                         nrow = length(atts))
+  lhsB <- zeroSpM(ncol = imps2$cardinality(),
+                  nrow = length(atts))
   rhsB <- lhsB
 
   id1 <- match(att1, atts)
-  lhsA[id1, ] <- lhs1
-  rhsA[id1, ] <- rhs1
+  lhsA %>% substitute_columns(id1, lhs1)
+  rhsA %>% substitute_columns(id1, rhs1)
 
   id2 <- match(att2, atts)
-  lhsB[id2, ] <- lhs2
-  rhsB[id2, ] <- rhs2
+  lhsB %>% substitute_columns(id2, lhs2)
+  rhsB %>% substitute_columns(id2, rhs2)
 
   ImplicationSet$new(attributes = atts,
-                     lhs = cbind(lhsA, lhsB),
-                     rhs = cbind(rhsA, rhsB))
+                     lhs = cbindSpM(lhsA, lhsB),
+                     rhs = cbindSpM(rhsA, rhsB))
 
 }
 
@@ -46,8 +44,8 @@ reorder_attributes <- function(imps, attributes) {
 
   id <- match(attributes, atts)
 
-  lhs <- lhs[id, ]
-  rhs <- rhs[id, ]
+  lhs <- lhs %>% extract_rows(id)
+  rhs <- rhs %>% extract_rows(id)
 
   ImplicationSet$new(attributes = attributes,
                      lhs = lhs,

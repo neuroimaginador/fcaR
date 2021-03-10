@@ -1,6 +1,7 @@
 set_to_latex <- function(S, attributes) {
 
-  idx <- Matrix::which(S > 0)
+  idx <- whichSpM(S > 0)
+  S <- to_matrix.SpM(S)
 
   if (length(idx) > 0) {
 
@@ -37,8 +38,8 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   for (i in seq(ncol(LHS))) {
 
-    lhs <- Matrix::Matrix(LHS[, i], sparse = TRUE)
-    rhs <- Matrix::Matrix(RHS[, i], sparse = TRUE)
+    lhs <- LHS %>% extract_columns(i)
+    rhs <- RHS %>% extract_columns(i)
 
     prefix <- ifelse(numbered, paste0(numbers[i], ": &"), "")
     output <- c(output,
@@ -48,7 +49,7 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   }
 
-  remaining <- ncol(LHS) %% ncols
+  remaining <- ncol.SpM(LHS) %% ncols
 
   if (remaining > 0) {
 

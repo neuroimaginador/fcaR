@@ -1,18 +1,11 @@
 .intersection <- function(x, y, proper = FALSE) {
 
-  p <- as.integer(rep(0, x@Dim[2] + 1))
-  i <- intersects_C(x@p, x@i, x@Dim,
-                    y@p, y@i, y@Dim, p)
+  p <- as.integer(rep(0, dim.SpM(x)[2] + 1))
+  i <- intersects_C(x$pp, x$pi, dim.SpM(x),
+                    y$pp, y$pi, dim.SpM(y), p)
 
-  M <- build_sparse_matrix(i = i, p = p,
-                           dims = c(y@Dim[2], x@Dim[2]))
+  M <- new_spm(i = i, p = p, nrow = dim.SpM(y)[2])
 
   return(M)
-
-  # M <- Matrix::t(M)
-  #
-  #
-  # Matrix::t(methods::new("ngCMatrix", p = p, i = i,
-  #                        Dim = c(y@Dim[2], x@Dim[2])))
 
 }

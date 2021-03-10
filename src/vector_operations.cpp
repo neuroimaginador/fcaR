@@ -548,6 +548,27 @@ S4 set_difference(IntegerVector xi,
 
 }
 
+// [[Rcpp::export]]
+List set_difference_SpM(IntegerVector xi,
+                  IntegerVector xp,
+                  NumericVector xx,
+                  IntegerVector yi,
+                  IntegerVector yp,
+                  NumericVector yx,
+                  int number) {
+
+  SparseVector res = set_difference_sparse(xi, xp, xx,
+                                           yi, yp, yx,
+                                           number);
+
+  List res2 = SparseToList(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
 SparseVector set_difference_sparse1(IntegerVector xi,
                                    IntegerVector xp,
                                    NumericVector xx,
@@ -629,6 +650,27 @@ S4 set_difference_single(IntegerVector xi,
                                            number);
 
   S4 res2 = SparseToS4_fast(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
+// [[Rcpp::export]]
+List set_difference_single_SpM(IntegerVector xi,
+                         IntegerVector xp,
+                         NumericVector xx,
+                         IntegerVector yi,
+                         IntegerVector yp,
+                         NumericVector yx,
+                         int number) {
+
+  SparseVector res = set_difference_sparse1(xi, xp, xx,
+                                            yi, yp, yx,
+                                            number);
+
+  List res2 = SparseToList(res);
 
   freeVector(&res);
 
