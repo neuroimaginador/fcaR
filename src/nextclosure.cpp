@@ -474,17 +474,16 @@ List next_closure_implications(NumericMatrix I,
 
     if (checkInterrupt()) { // user interrupted ...
 
-
       freeVector(&A);
       freeVector(&empty);
       freeVector(&B);
       freeVector(&rhs);
       freeVector(&this_extent);
 
-      S4 intents_S4 = SparseToS4_fast(concepts);
-      S4 extents_S4 = SparseToS4_fast(extents);
-      S4 lhs_S4 = SparseToS4_fast(LHS);
-      S4 rhs_S4 = SparseToS4_fast(RHS);
+      Environment intents_S4 = SparseToEnv(concepts);
+      Environment extents_S4 = SparseToEnv(extents);
+      Environment lhs_S4 = SparseToEnv(LHS);
+      Environment rhs_S4 = SparseToEnv(RHS);
 
       freeVector(&concepts);
       freeVector(&extents);
@@ -504,10 +503,10 @@ List next_closure_implications(NumericMatrix I,
 
   }
 
-  S4 intents_S4 = SparseToS4_fast(concepts);
-  S4 extents_S4 = SparseToS4_fast(extents);
-  S4 lhs_S4 = SparseToS4_fast(LHS);
-  S4 rhs_S4 = SparseToS4_fast(RHS);
+  Environment intents_S4 = SparseToEnv(concepts);
+  Environment extents_S4 = SparseToEnv(extents);
+  Environment lhs_S4 = SparseToEnv(LHS);
+  Environment rhs_S4 = SparseToEnv(RHS);
 
   freeVector(&concepts);
   freeVector(&extents);
@@ -752,7 +751,6 @@ List next_closure_implications_bg(NumericMatrix I,
 
     if (checkInterrupt()) { // user interrupted ...
 
-
       freeVector(&A);
       freeVector(&bg_closure);
       freeVector(&rhsbg_closure);
@@ -763,11 +761,10 @@ List next_closure_implications_bg(NumericMatrix I,
       freeVector(&lhs_sparse);
       freeVector(&rhs_sparse);
 
-
-      S4 intents_S4 = SparseToS4_fast(concepts);
-      S4 extents_S4 = SparseToS4_fast(extents);
-      S4 lhs_S4 = SparseToS4_fast(LHS);
-      S4 rhs_S4 = SparseToS4_fast(RHS2);
+      Environment intents_S4 = SparseToEnv(concepts);
+      Environment extents_S4 = SparseToEnv(extents);
+      Environment lhs_S4 = SparseToEnv(LHS);
+      Environment rhs_S4 = SparseToEnv(RHS2);
 
       freeVector(&concepts);
       freeVector(&extents);
@@ -789,10 +786,10 @@ List next_closure_implications_bg(NumericMatrix I,
 
   }
 
-  S4 intents_S4 = SparseToS4_fast(concepts);
-  S4 extents_S4 = SparseToS4_fast(extents);
-  S4 lhs_S4 = SparseToS4_fast(LHS);
-  S4 rhs_S4 = SparseToS4_fast(RHS2);
+  Environment intents_S4 = SparseToEnv(concepts);
+  Environment extents_S4 = SparseToEnv(extents);
+  Environment lhs_S4 = SparseToEnv(LHS);
+  Environment rhs_S4 = SparseToEnv(RHS2);
 
   freeVector(&concepts);
   freeVector(&extents);
@@ -1055,10 +1052,10 @@ List next_closure_implications_bg2(NumericMatrix I,
       freeVector(&rhs_sparse);
 
 
-      S4 intents_S4 = SparseToS4_fast(concepts);
-      S4 extents_S4 = SparseToS4_fast(extents);
-      S4 lhs_S4 = SparseToS4_fast(LHS);
-      S4 rhs_S4 = SparseToS4_fast(RHS2);
+      Environment intents_S4 = SparseToEnv(concepts);
+      Environment extents_S4 = SparseToEnv(extents);
+      Environment lhs_S4 = SparseToEnv(LHS);
+      Environment rhs_S4 = SparseToEnv(RHS2);
 
       freeVector(&concepts);
       freeVector(&extents);
@@ -1080,10 +1077,10 @@ List next_closure_implications_bg2(NumericMatrix I,
 
   }
 
-  S4 intents_S4 = SparseToS4_fast(concepts);
-  S4 extents_S4 = SparseToS4_fast(extents);
-  S4 lhs_S4 = SparseToS4_fast(LHS);
-  S4 rhs_S4 = SparseToS4_fast(RHS2);
+  Environment intents_S4 = SparseToEnv(concepts);
+  Environment extents_S4 = SparseToEnv(extents);
+  Environment lhs_S4 = SparseToEnv(LHS);
+  Environment rhs_S4 = SparseToEnv(RHS2);
 
   freeVector(&concepts);
   freeVector(&extents);
@@ -1309,8 +1306,8 @@ List next_closure_concepts(NumericMatrix I,
 
     if (checkInterrupt()) { // user interrupted ...
 
-      S4 intents_S4 = SparseToS4_fast(concepts);
-      S4 extents_S4 = SparseToS4_fast(extents);
+      Environment intents_S4 = SparseToEnv(concepts);
+      Environment extents_S4 = SparseToEnv(extents);
 
       freeVector(&A);
       freeVector(&B);
@@ -1339,8 +1336,8 @@ List next_closure_concepts(NumericMatrix I,
 
   if (ret) {
 
-    S4 intents_S4 = SparseToS4_fast(concepts);
-    S4 extents_S4 = SparseToS4_fast(extents);
+    Environment intents_S4 = SparseToEnv(concepts);
+    Environment extents_S4 = SparseToEnv(extents);
 
     res = List::create(_["intents"] = intents_S4,
                        _["extents"] = extents_S4,

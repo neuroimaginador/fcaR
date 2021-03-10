@@ -118,6 +118,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// compute_intentSpM
+Environment compute_intentSpM(Environment V, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_intentSpM(SEXP VSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Environment >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_intentSpM(V, I));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compute_extent
 S4 compute_extent(S4 V, NumericMatrix I);
 RcppExport SEXP _fcaR_compute_extent(SEXP VSEXP, SEXP ISEXP) {
@@ -130,6 +142,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// compute_extentSpM
+Environment compute_extentSpM(Environment V, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_extentSpM(SEXP VSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Environment >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_extentSpM(V, I));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compute_closure
 S4 compute_closure(S4 V, NumericMatrix I);
 RcppExport SEXP _fcaR_compute_closure(SEXP VSEXP, SEXP ISEXP) {
@@ -139,6 +163,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
     rcpp_result_gen = Rcpp::wrap(compute_closure(V, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_closureSpM
+Environment compute_closureSpM(Environment V, NumericMatrix I);
+RcppExport SEXP _fcaR_compute_closureSpM(SEXP VSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Environment >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_closureSpM(V, I));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -244,7 +280,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // set_difference_SpM
-List set_difference_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
+Environment set_difference_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
 RcppExport SEXP _fcaR_set_difference_SpM(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -278,7 +314,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // set_difference_single_SpM
-List set_difference_single_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
+Environment set_difference_single_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
 RcppExport SEXP _fcaR_set_difference_single_SpM(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -312,7 +348,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // set_union_SpM
-List set_union_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
+Environment set_union_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
 RcppExport SEXP _fcaR_set_union_SpM(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -342,6 +378,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// flatten_sparse_SpM
+Environment flatten_sparse_SpM(IntegerVector p, IntegerVector i, NumericVector x, NumericVector dims);
+RcppExport SEXP _fcaR_flatten_sparse_SpM(SEXP pSEXP, SEXP iSEXP, SEXP xSEXP, SEXP dimsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type i(iSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type dims(dimsSEXP);
+    rcpp_result_gen = Rcpp::wrap(flatten_sparse_SpM(p, i, x, dims));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
@@ -352,8 +402,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_next_closure_implications_bg2", (DL_FUNC) &_fcaR_next_closure_implications_bg2, 8},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 5},
     {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
+    {"_fcaR_compute_intentSpM", (DL_FUNC) &_fcaR_compute_intentSpM, 2},
     {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 2},
+    {"_fcaR_compute_extentSpM", (DL_FUNC) &_fcaR_compute_extentSpM, 2},
     {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 2},
+    {"_fcaR_compute_closureSpM", (DL_FUNC) &_fcaR_compute_closureSpM, 2},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},
@@ -366,6 +419,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_set_union_sparse", (DL_FUNC) &_fcaR_set_union_sparse, 7},
     {"_fcaR_set_union_SpM", (DL_FUNC) &_fcaR_set_union_SpM, 7},
     {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
+    {"_fcaR_flatten_sparse_SpM", (DL_FUNC) &_fcaR_flatten_sparse_SpM, 4},
     {NULL, NULL, 0}
 };
 

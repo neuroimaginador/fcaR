@@ -352,6 +352,34 @@ SparseVector S4toSparse(S4 A) {
 
 }
 
+SparseVector EnvtoSparse(Environment A) {
+
+  IntegerVector ap = A["pp"];
+  IntegerVector ai = A["pi"];
+  NumericVector ax = A["px"];
+  int nrow = A["pnrow"];
+
+  SparseVector V;
+  initVector(&V, nrow);
+
+  for (size_t i = 0; i < ai.size(); i++) {
+
+    insertArray(&(V.i), ai[i] - 1);
+    insertArray(&(V.x), ax[i]);
+
+  }
+  // insertArray(&(V.p), 0);
+
+  for (size_t i = 0; i < ap.size(); i++) {
+
+    insertArray(&(V.p), ap[i]);
+
+  }
+
+  return V;
+
+}
+
 S4 SparseToS4(SparseVector V) {
 
   S4 res("dgCMatrix");
@@ -460,6 +488,47 @@ List SparseToList(SparseVector V) {
 
 }
 
+Environment SparseToEnv(SparseVector V) {
+
+  IntegerVector i(V.i.used);
+  NumericVector x(V.x.used);
+  IntegerVector dims(2);
+  IntegerVector p(V.p.used);
+
+  if (V.i.used > 0) {
+
+    memcpy(i.begin(), V.i.array, V.i.used * sizeof(int));
+    memcpy(x.begin(), V.x.array, V.x.used * sizeof(double));
+
+  }
+
+  for (int r = 0; r < i.size(); r++) {
+
+    i[r] = i[r] + 1;
+
+  }
+
+  if (V.p.used > 0) {
+
+    memcpy(&(p[0]), V.p.array, V.p.used * sizeof(int));
+
+  }
+
+  dims[0] = V.length;
+  dims[1] = V.p.used - 1;
+
+  Environment res = new_env();
+  res.assign("pi", i);
+  res.assign("pp", p);
+  res.assign("px", x);
+  res.assign("pnrow", V.length);
+
+  res.attr("class") = "SpM";
+
+  return(res);
+
+}
+
 SparseVector set_difference_sparse(IntegerVector xi,
                             IntegerVector xp,
                             NumericVector xx,
@@ -549,7 +618,7 @@ S4 set_difference(IntegerVector xi,
 }
 
 // [[Rcpp::export]]
-List set_difference_SpM(IntegerVector xi,
+Environment set_difference_SpM(IntegerVector xi,
                   IntegerVector xp,
                   NumericVector xx,
                   IntegerVector yi,
@@ -561,7 +630,7 @@ List set_difference_SpM(IntegerVector xi,
                                            yi, yp, yx,
                                            number);
 
-  List res2 = SparseToList(res);
+  Environment res2 = SparseToEnv(res);
 
   freeVector(&res);
 
@@ -658,7 +727,7 @@ S4 set_difference_single(IntegerVector xi,
 }
 
 // [[Rcpp::export]]
-List set_difference_single_SpM(IntegerVector xi,
+Environment set_difference_single_SpM(IntegerVector xi,
                          IntegerVector xp,
                          NumericVector xx,
                          IntegerVector yi,
@@ -670,7 +739,7 @@ List set_difference_single_SpM(IntegerVector xi,
                                             yi, yp, yx,
                                             number);
 
-  List res2 = SparseToList(res);
+  Environment res2 = SparseToEnv(res);
 
   freeVector(&res);
 
@@ -777,19 +846,19 @@ S4 set_union_sparse(IntegerVector xi,
 }
 
 // [[Rcpp::export]]
-List set_union_SpM(IntegerVector xi,
-                   IntegerVector xp,
-                   NumericVector xx,
-                   IntegerVector yi,
-                   IntegerVector yp,
-                   NumericVector yx,
-                   int number) {
+Environment set_union_SpM(IntegerVector xi,
+                          IntegerVector xp,
+                          NumericVector xx,
+                          IntegerVector yi,
+                          IntegerVector yp,
+                          NumericVector yx,
+                          int number) {
 
   SparseVector res = setunion_matrix(xi, xp, xx,
                                      yi, yp, yx,
                                      number);
 
-  List res2 = SparseToList(res);
+  Environment res2 = SparseToEnv(res);
 
   freeVector(&res);
 
@@ -835,6 +904,44 @@ S4 flatten_sparse_C(IntegerVector p,
 
 }
 
+
+// [[Rcpp::export]]
+Environment flatten_sparse_SpM(IntegerVector p,
+                    IntegerVector i,
+                    NumericVector x,
+                    NumericVector dims) {
+
+  int num_rows = dims[0];
+  int num_cols = dims[1];
+
+  NumericVector v(num_rows);
+
+  for (int x_index = 0; x_index < num_cols; x_index++) {
+
+    int start_index = p[x_index], end_index = p[x_index + 1];
+
+    for (int j = start_index; j < end_index; j++) {
+
+      if (x[j] > v[i[j]]) {
+
+        v[i[j]] = x[j];
+
+      }
+
+    }
+
+  }
+
+  SparseVector res;
+  initVector(&res, num_rows);
+  as_sparse(v, &res);
+
+  Environment resS4 = SparseToEnv(res);
+  freeVector(&res);
+
+  return resS4;
+
+}
 
 NumericVector as_vector(SparseVector v) {
 

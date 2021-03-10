@@ -33,12 +33,24 @@ compute_intent <- function(V, I) {
     .Call(`_fcaR_compute_intent`, V, I)
 }
 
+compute_intentSpM <- function(V, I) {
+    .Call(`_fcaR_compute_intentSpM`, V, I)
+}
+
 compute_extent <- function(V, I) {
     .Call(`_fcaR_compute_extent`, V, I)
 }
 
+compute_extentSpM <- function(V, I) {
+    .Call(`_fcaR_compute_extentSpM`, V, I)
+}
+
 compute_closure <- function(V, I) {
     .Call(`_fcaR_compute_closure`, V, I)
+}
+
+compute_closureSpM <- function(V, I) {
+    .Call(`_fcaR_compute_closureSpM`, V, I)
 }
 
 self_intersection_C <- function(x_i, x_p, y_i, y_p) {
@@ -87,5 +99,9 @@ set_union_SpM <- function(xi, xp, xx, yi, yp, yx, number) {
 
 flatten_sparse_C <- function(p, i, x, dims) {
     .Call(`_fcaR_flatten_sparse_C`, p, i, x, dims)
+}
+
+flatten_sparse_SpM <- function(p, i, x, dims) {
+    .Call(`_fcaR_flatten_sparse_SpM`, p, i, x, dims)
 }
 

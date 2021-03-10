@@ -323,10 +323,12 @@ unionSpM <- function(A, B) {
                        B$px,
                        nrow.SpM(A))
 
-    return(new_spm(i = L$i + 1,
-                   p = L$p,
-                   x = L$x,
-                   nrow = L$Dim[1]))
+    return(L)
+
+    # return(new_spm(i = L$i + 1,
+    #                p = L$p,
+    #                x = L$x,
+    #                nrow = L$Dim[1]))
 
   }
 
@@ -385,8 +387,10 @@ differenceSpM <- function(A, B) {
                                    B$pi, B$pp, B$px,
                                    nrow.SpM(A))
 
-    return(new_spm(i = L$i, p = L$p, x = L$x,
-                   nrow = nrow.SpM(B)))
+    return(L)
+
+    # return(new_spm(i = L$i, p = L$p, x = L$x,
+    #                nrow = nrow.SpM(B)))
 
   }
 
@@ -411,12 +415,12 @@ flattenSpM <- function(M) {
 
   # browser()
 
-  S <- flatten_sparse_C(M$pp,
+  S <- flatten_sparse_SpM(M$pp,
                         M$pi - 1,
                         M$px,
                         as.integer(dim.SpM(M)))
 
-  new_spm(S)
+  return(S)
 
 }
 
