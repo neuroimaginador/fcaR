@@ -1096,3 +1096,52 @@ double get_element(SparseVector v, int n) {
   return res;
 
 }
+
+void transposeVector(SparseVector A, SparseVector* B) {
+
+  int count_p = 0;
+  insertArray(&(B->p), count_p);
+
+  for (int row = 0; row < A.length; row++) {
+
+    for (int col = 0; col < A.p.used - 1; col++) {
+
+      for (int idx = A.p.array[col]; idx < A.p.array[col + 1]; idx++) {
+
+        if (A.i.array[idx] > row) continue;
+
+        if (A.i.array[idx] == row) {
+
+          insertArray(&(B->i), col);
+          insertArray(&(B->x), A.x.array[idx]);
+          count_p++;
+
+        }
+
+      }
+
+    }
+
+    insertArray(&(B->p), count_p);
+
+  }
+
+}
+
+//[[Rcpp::export]]
+Environment transposeSpM(Environment A) {
+
+  SparseVector R = EnvtoSparse(A);
+  SparseVector T;
+  initVector(&T, R.p.used - 1);
+
+  transposeVector(R, &T);
+
+  freeVector(&R);
+
+  Environment res = SparseToEnv(T);
+  freeVector(&T);
+
+  return res;
+
+}

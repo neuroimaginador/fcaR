@@ -1,29 +1,25 @@
 #' @importFrom methods cbind2
 .imp_to_basis_bg <- function(lhs_bg, rhs_bg, LHS, RHS, attributes) {
 
-  n <- ncol(LHS)
+  n <- ncol.SpM(LHS)
 
   for (i in seq(n)) {
 
     # warning("LHS = ", LHS@Dim, inmediate.= TRUE, call. = FALSE)
     #
-    A <- .extract_column(LHS, 1)
-    B <- .extract_column(RHS, 1)
-    # A <- Matrix::Matrix(LHS[, 1], sparse = TRUE)
-    #
-    # B <- Matrix::Matrix(RHS[, 1], sparse = TRUE)
+    A <- extract_columns(LHS, 1)
+    B <- extract_columns(RHS, 1)
 
-    LHS <- Matrix::Matrix(LHS[, -1], sparse = TRUE)
-    RHS <- Matrix::Matrix(RHS[, -1], sparse = TRUE)
+    LHS <- remove_columns(LHS, 1)
+    RHS <- remove_columns(RHS, 1)
 
     # warning("A = ", A@Dim, inmediate.= TRUE, call. = FALSE)
     # warning("B = ", B@Dim, inmediate.= TRUE, call. = FALSE)
 
-    # AUB <- .union(A, B)
-    AUB <- .multiunion(cbind(A, B))
+    AUB <- flattenSpM(cbindSpM(A, B))
 
-    LHS_clos <- methods::cbind2(lhs_bg, LHS)
-    RHS_clos <- methods::cbind2(rhs_bg, RHS)
+    LHS_clos <- cbindSpM(lhs_bg, LHS)
+    RHS_clos <- cbindSpM(rhs_bg, RHS)
 
     # warning("AUB = ", AUB@Dim, inmediate.= TRUE, call. = FALSE)
     # warning("LHS_clos = ", LHS_clos@Dim, inmediate.= TRUE, call. = FALSE)
@@ -39,24 +35,21 @@
     B <- .compute_closure(AUB, LHS_clos, RHS_clos,
                           attributes, reduce = TRUE)$closure
 
-    LHS <- methods::cbind2(LHS, A)
-    RHS <- methods::cbind2(RHS, B)
+    LHS <- cbindSpM(LHS, A)
+    RHS <- cbindSpM(RHS, B)
 
   }
 
   for (i in seq(n)) {
 
-    A <- .extract_column(LHS, 1)
-    B <- .extract_column(RHS, 1)
-    # A <- Matrix::Matrix(LHS[, 1], sparse = TRUE)
-    #
-    # B <- Matrix::Matrix(RHS[, 1], sparse = TRUE)
+    A <- extract_columns(LHS, 1)
+    B <- extract_columns(RHS, 1)
 
-    LHS <- Matrix::Matrix(LHS[, -1], sparse = TRUE)
-    RHS <- Matrix::Matrix(RHS[, -1], sparse = TRUE)
+    LHS <- remove_columns(LHS, 1)
+    RHS <- remove_columns(RHS, 1)
 
-    LHS_clos <- methods::cbind2(lhs_bg, LHS)
-    RHS_clos <- methods::cbind2(rhs_bg, RHS)
+    LHS_clos <- cbindSpM(lhs_bg, LHS)
+    RHS_clos <- cbindSpM(rhs_bg, RHS)
 
     # warning("AUB = ", AUB@Dim, inmediate.= TRUE, call. = FALSE)
     # warning("LHS_clos = ", LHS_clos@Dim, inmediate.= TRUE, call. = FALSE)
@@ -72,10 +65,10 @@
     A <- .compute_closure(A, LHS_clos, RHS_clos,
                           attributes, reduce = TRUE)$closure
 
-    if (!(all(A == B))) {
+    if (length(equalSpM(A, B)$i) == 0) {
 
-      LHS <- methods::cbind2(LHS, A)
-      RHS <- methods::cbind2(RHS, B)
+      LHS <- cbindSpM(LHS, A)
+      RHS <- cbindSpM(RHS, B)
 
     }
 

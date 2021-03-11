@@ -392,6 +392,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// transposeSpM
+Environment transposeSpM(Environment A);
+RcppExport SEXP _fcaR_transposeSpM(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Environment >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(transposeSpM(A));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
@@ -420,6 +431,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_set_union_SpM", (DL_FUNC) &_fcaR_set_union_SpM, 7},
     {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
     {"_fcaR_flatten_sparse_SpM", (DL_FUNC) &_fcaR_flatten_sparse_SpM, 4},
+    {"_fcaR_transposeSpM", (DL_FUNC) &_fcaR_transposeSpM, 1},
     {NULL, NULL, 0}
 };
 

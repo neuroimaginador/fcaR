@@ -27,10 +27,11 @@
   holds <- sapply(seq(ncol(premises)),
                      function(i) {
 
-                       p <- .extract_column(premises, i)
-                       p <- compute_closure(p, I)
-                       .subset(.extract_column(conclusions, i),
-                               p)
+                       p <- extract_columns(premises, i)
+                       p <- compute_closureSpM(p, I)
+                       subsetSpM(extract_columns(conclusions, i),
+                               p) %>%
+                         to_matrix.SpM()
 
                      }) %>%
     purrr::reduce(cbind) %>%
@@ -69,7 +70,7 @@
                   function(i) {
 
                     SparseSet$new(attributes = set$attributes,
-                                  M = set$I[, i])
+                                  M = set$I %>% extract_columns(i))
 
                   })
     set <- S
@@ -83,7 +84,7 @@
     res <- lapply(set, function(s) .respect(s, imps)) %>%
       purrr::reduce(cbind)
 
-    return(Matrix::t(res))
+    return(t(res))
 
   }
 
@@ -93,7 +94,11 @@
 
 .respect <- function(S, imps) {
 
-  .subset(imps$get_RHS_matrix(), S$get_vector()) |
-    !(.subset(imps$get_LHS_matrix(), S$get_vector()))
+  ((to_matrix.SpM(subsetSpM(imps$get_RHS_matrix(), S$get_vector()))) |
+    (1 - to_matrix.SpM(subsetSpM(imps$get_LHS_matrix(), S$get_vector())))) %>%
+    as.logical()
+
+  # subsetSpM(imps$get_RHS_matrix(), S$get_vector()) |
+  #   !(.subset(imps$get_LHS_matrix(), S$get_vector()))
 
 }

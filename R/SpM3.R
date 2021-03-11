@@ -5,7 +5,18 @@ new_spm <- function(i, p, x, nrow) {
 
   if (inherits(i, "Matrix")) {
 
-    x <- i@x
+    # TODO: Transpose???
+    # i <- Matrix::t(i)
+
+    if ("x" %in% slotNames(i)) {
+
+      x <- i@x
+
+    } else {
+
+      x <- rep(1, length(i@i))
+
+    }
     p <- i@p
     nrow <- dim(i)[1]
     i <- i@i + 1
@@ -20,9 +31,13 @@ new_spm <- function(i, p, x, nrow) {
 
   if (inherits(i, "matrix")) {
 
-    x <- i[i > 0]
+    # x <- i[i > 0]
     nrow <- dim(i)[1]
-    i <- apply(i, 2, function(x) which(x > 0))
+    idx <- which(i > 0)
+    x <- i[idx]
+    cols <- seq(ncol(i))
+    i <- lapply(cols,
+                function(j) which(i[, j] > 0))
     p <- c(0, cumsum(sapply(i, length)))
 
   }
@@ -58,7 +73,8 @@ new_spm <- function(i, p, x, nrow) {
 
   structure(private,
             nrow = nrow,
-            ncol = length(private$pp) - 1)#,
+            ncol = length(private$pp) - 1,
+            class = "SpM")
             # dim = c(nrow, length(private$pp) - 1))
 
 }
@@ -288,15 +304,18 @@ replicate <- function(private, n) {
   return(new_spm(i = new_i,
                  x = new_x,
                  p = new_p,
-                 nrow = self$nrow()))
+                 nrow = private$pnrow))
 
 }
 
-print.SpM <- function(private) {
+#' @export
+print.SpM <- function(x, ...) {
 
-  print_matrix(to_matrix.SpM(private))
+  print_matrix(to_matrix.SpM(x))
 
 }
+
+.S3methods("print", "SpM")
 
 zeroSpM <- function(nrow, ncol) {
 
@@ -348,11 +367,13 @@ unionSpM <- function(A, B) {
 
 }
 
+.union <- unionSpM
+
 intersectionSpM <- function(x, y, proper = FALSE) {
 
   p <- as.integer(rep(0, dim.SpM(x)[2] + 1))
-  i <- intersects_C(x$pp, x$pi, dim.SpM(x),
-                    y$pp, y$pi, dim.SpM(y), p)
+  i <- intersects_C(x$pp, x$pi - 1, dim.SpM(x),
+                    y$pp, y$pi - 1, dim.SpM(y), p)
 
   M <- new_spm(i = i, p = p, nrow = dim.SpM(y)[2])
 
@@ -371,8 +392,8 @@ differenceSpM <- function(A, B) {
 
   if (ncol.SpM(A) == ncol.SpM(B)) {
 
-    A <- set_difference_SpM(A$pi, A$pp, A$px,
-                            B$pi, B$pp, B$px,
+    A <- set_difference_SpM(A$pi - 1, A$pp, A$px,
+                            B$pi - 1, B$pp, B$px,
                             nrow.SpM(A))
 
     return(A)
@@ -383,8 +404,8 @@ differenceSpM <- function(A, B) {
 
     n <- ncol.SpM(A)
 
-    L <- set_difference_single_SpM(A$pi, A$pp, A$px,
-                                   B$pi, B$pp, B$px,
+    L <- set_difference_single_SpM(A$pi - 1, A$pp, A$px,
+                                   B$pi - 1, B$pp, B$px,
                                    nrow.SpM(A))
 
     return(L)
@@ -400,8 +421,8 @@ differenceSpM <- function(A, B) {
 
     newA <- A %>% replicate(n)
 
-    newA <- set_difference_SpM(newA$pi, newA$pp, newA$px,
-                               B$pi, B$pp, B$px,
+    newA <- set_difference_SpM(newA$pi - 1, newA$pp, newA$px,
+                               B$pi - 1, B$pp, B$px,
                                nrow.SpM(newA))
 
     return(newA)
@@ -554,13 +575,7 @@ reorder_rows <- function(private, order) {
 
 }
 
-tSpM <- function(S) {
-
-  S <- to_matrix.SpM(S)
-  S <- t(S)
-  new_spm(S)
-
-}
+tSpM <- transposeSpM
 
 whichSpM <- function(private) {
 
@@ -595,5 +610,64 @@ rowSums <- function(A) {
     sum(x[i == r])
 
   })
+
+}
+
+zero_rows <- function(M, idx) {
+
+  if (!rlang::env_has(env = private, "pi_list")) {
+
+    L <- listing2(private)
+    assign("pi_list", L$pi_list, envir = private)
+    assign("px_list", L$px_list, envir = private)
+
+  }
+
+  idxs <- lapply(L$pi_list, function(ii) which(!(ii %in% idx)))
+  pi_list <- lapply(seq_along(M$pi_list), function(ii) M$pi_list[[ii]][idxs])
+  px_list <- lapply(seq_along(M$px_list), function(ii) M$px_list[[ii]][idxs])
+
+  M$pi_list <- pi_list
+  M$px_list <- px_list
+  M$pi <- unlist(M$pi_list)
+  M$px <- unlist(M$px_list)
+  M$pp <- c(0, cumsum(sapply(M$pi_list, length)))
+
+
+}
+
+assignSpM <- function(private, idx, values) {
+
+  if (length(values) == 1) {
+
+    values <- rep(values, length(idx))
+
+  }
+
+  i <- private$pi
+  x <- private$px
+
+  idx_yes <- idx %in% i
+  idx_no <- !idx_yes
+
+  x[idx[idx_yes]] <- values[idx_yes]
+
+  i <- c(i, idx[idx_no])
+  x <- c(x, values[idx_no])
+
+  o <- order(i)
+  private$pi <- i[o]
+  private$px <- x[o]
+  private$pp <- c(0, length(i))
+
+  # # if (rlang::env_has(env = private, "pi_list")) {
+  #
+  #   L <- listing2(private)
+  #   assign("pi_list", L$pi_list, envir = private)
+  #   assign("px_list", L$px_list, envir = private)
+  #
+  # # }
+  #
+  # private$pp <- c(0, cumsum(sapply(private$pi_list, length)))
 
 }

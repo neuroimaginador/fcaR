@@ -37,7 +37,7 @@ SparseSet <- R6::R6Class(
         if (!inherits(M, "Matrix")) {
 
 
-          M <- Matrix::Matrix(M, sparse = TRUE)
+          M <- new_spm(M)
 
         }
 
@@ -45,10 +45,8 @@ SparseSet <- R6::R6Class(
 
       } else {
 
-        private$v <- Matrix::Matrix(0,
-                                    nrow = length(attributes),
-                                    ncol = 1,
-                                    sparse = TRUE)
+        private$v <- zeroSpM(nrow = length(attributes),
+                             ncol = 1)
 
       }
 
@@ -91,7 +89,7 @@ SparseSet <- R6::R6Class(
 
       if (length(idx) > 0) {
 
-        private$v[idx] <- values
+        private$v %>% assignSpM(idx, values)
 
       }
 
@@ -128,7 +126,7 @@ SparseSet <- R6::R6Class(
 
       w <- private$v
       idx <- setdiff(seq(self$length()), indices)
-      w[idx] <- 0
+      w %>% assignSpM(idx, 0)
       S <- SparseSet$new(attributes = private$attributes,
                          M = w)
 
@@ -145,7 +143,7 @@ SparseSet <- R6::R6Class(
     #' @export
     cardinal = function() {
 
-      sum(private$v)
+      sum(private$v$px)
 
     },
 
@@ -193,7 +191,7 @@ SparseSet <- R6::R6Class(
     #' @export
     print = function() {
 
-      if (sum(private$v) > 0) {
+      if (self$cardinal() > 0) {
 
         cat(stringr::str_wrap(.set_to_string(S = private$v,
                                              attributes = private$attributes),
@@ -218,7 +216,7 @@ SparseSet <- R6::R6Class(
     to_latex = function(print = TRUE) {
 
       str <- "\\ensuremath{\\varnothing}"
-      if (sum(private$v) > 0) {
+      if (self$cardinal() > 0) {
 
         str <- set_to_latex(S = private$v,
                             attributes = private$attributes)

@@ -1,26 +1,29 @@
 .Rsimplification_bg <- function(lhs_bg, rhs_bg, LHS, RHS) {
 
-  LRHS_subsets <- Matrix::Matrix(FALSE, sparse = TRUE,
-                                 ncol = ncol(lhs_bg),
-                                 nrow = ncol(LHS))
-  intersections <- .self_intersection(lhs_bg, rhs_bg)
+  LRHS_subsets <- zeroSpM(ncol.SpM(lhs_bg),
+                          ncol.SpM(LHS))
+  intersections <- self_intersectSpM(lhs_bg, rhs_bg)
 
-  id_inter <- Matrix::which(intersections == 0)
+  id_inter <- which(intersections == 0)
 
   # This gives the union of LHS and RHS
 
-  LRHS_subsets[, id_inter] <- Matrix::t(.subset(lhs_bg[, id_inter], .union(LHS,RHS)))
+  M <- subsetSpM(extract_columns(lhs_bg, id_inter), unionSpM(LHS, RHS))
+
+  substitute_columns(LRHS_subsets, id_inter, M)
+  #
+  #
+  # LRHS_subsets[, id_inter] <- Matrix::t(.subset(lhs_bg[, id_inter], .union(LHS,RHS)))
 
   # This gives the LRHS that are subsets of other LHS
-  col_values <- Matrix::colSums(LRHS_subsets)
+  col_values <- colSums(LRHS_subsets)
   condition1 <- col_values > 0
 
   # This gives those LHS which are disjoint to their RHS
   # condition2 <- intersections == 0
-
   are_subset <- which(condition1)
 
-  black_list <- rep(FALSE, ncol(lhs_bg))
+  black_list <- rep(FALSE, ncol.SpM(lhs_bg))
 
   count <- 0
 
@@ -33,52 +36,37 @@
 
     # print(this_row)
 
-    my_idx <- which_at_col(LRHS_subsets@i,
-                           LRHS_subsets@p,
-                           this_row)
-
-    # this_row <- id_inter[this_row]
-    #my_idx <- setdiff(my_idx, this_row)
-
+    my_idx <- (LRHS_subsets %>% extract_columns(this_row))$pi
 
     # this_row is subset of all my_idx
     # So, we must do C -> D-B in every my_idx rule.
 
-    if (length(my_idx) > 1) {
+    C <- LHS %>% extract_columns(my_idx)
+    D <- RHS %>% extract_columns(my_idx)
 
-      C <- LHS[, my_idx]
-      D <- RHS[, my_idx]
+    B <- extract_columns(rhs_bg, this_row)
+    newRHS <- .difference2(D, B)
 
-    } else {
+    RHS %>% substitute_columns(my_idx, newRHS)
 
-      C <- .extract_column(LHS, my_idx)
-      D <- .extract_column(RHS, my_idx)
-
-    }
-    B <- .extract_column(rhs_bg, this_row)
-    newRHS <- set_difference_single(D@i, D@p, D@x,
-                                    B@i, B@p, B@x,
-                                    nrow(D))
-
-
-    RHS[, my_idx] <- newRHS
-
-    LRHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(lhs_bg[, id_inter], .union(C, newRHS)))
-    col_values <- Matrix::colSums(LRHS_subsets)
+    # TODO: In some places, subsetSpM needs to be transposed.
+    M <- subsetSpM(lhs_bg %>% extract_columns(id_inter), unionSpM(C, newRHS))
+    LRHS_subsets %>% substitute_columns(id_inter, M)
+    col_values <- colSums(LRHS_subsets)
     condition1 <- col_values > 0
 
     black_list[this_row] <- TRUE
-    are_subset <- Matrix::which(condition1 & (!black_list))
+    are_subset <- which(condition1 & (!black_list))
 
   }
 
   # Cleaning phase
-  idx_to_remove <- Matrix::which(Matrix::colSums(RHS) == 0)
+  idx_to_remove <- which(colSums(RHS) == 0)
 
   if (length(idx_to_remove) > 0) {
 
-    LHS <- LHS[, -idx_to_remove]
-    RHS <- RHS[, -idx_to_remove]
+    LHS <- LHS %>% remove_columns(idx_to_remove)
+    RHS <- RHS %>% remove_columns(idx_to_remove)
 
   }
 

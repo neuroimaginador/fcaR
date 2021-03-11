@@ -76,7 +76,7 @@ plot_context <- function(I, to_latex, ...) {
     grDevices::rgb(red = 1 - s,
                    green = 1 - s,
                    blue = 1 - s)
-  stats::heatmap(t(Matrix::as.matrix(I)), Rowv = NA, Colv = NA,
+  stats::heatmap(t(to_matrix.SpM(I)), Rowv = NA, Colv = NA,
           col = color_function(seq(0, 1, 0.01)),
           scale = "none")
 

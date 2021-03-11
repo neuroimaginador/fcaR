@@ -105,3 +105,7 @@ flatten_sparse_SpM <- function(p, i, x, dims) {
     .Call(`_fcaR_flatten_sparse_SpM`, p, i, x, dims)
 }
 
+transposeSpM <- function(A) {
+    .Call(`_fcaR_transposeSpM`, A)
+}
+

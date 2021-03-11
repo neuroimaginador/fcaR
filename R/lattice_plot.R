@@ -147,7 +147,7 @@ lattice_plot <- function(concepts, subconcept_matrix,
   #
   # print(p)
 
-  hasseDiagram::hasse(data = Matrix::as.matrix(Matrix::t(subconcept_matrix)),
+  hasseDiagram::hasse(data = tSpM(subconcept_matrix) %>% to_matrix.SpM(),
                       labels = labels,
                       parameters = list(arrows = "backward"))
 

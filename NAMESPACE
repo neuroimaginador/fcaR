@@ -2,6 +2,7 @@
 
 S3method("[",R6)
 S3method("[<-",R6)
+S3method(print,SpM)
 S3method(print,conceptlist)
 S3method(to_latex,conceptlist)
 export("%-%")

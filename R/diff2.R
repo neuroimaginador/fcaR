@@ -9,8 +9,8 @@
 
   if (ncol.SpM(A) == ncol.SpM(B)) {
 
-    A <- set_difference_SpM(A$pi, A$pp, A$px,
-                            B$pi, B$pp, B$px,
+    A <- set_difference_SpM(A$pi - 1, A$pp, A$px,
+                            B$pi - 1, B$pp, B$px,
                             nrow.SpM(A))
 
     return(A)
@@ -21,12 +21,11 @@
 
     n <- ncol.SpM(A)
 
-    L <- set_difference_single_SpM(A$pi, A$pp, A$px,
-                                   B$pi, B$pp, B$px,
+    L <- set_difference_single_SpM(A$pi - 1, A$pp, A$px,
+                                   B$pi - 1, B$pp, B$px,
                                    nrow.SpM(A))
 
-    return(new_spm(i = L$i, p = L$p, x = L$x,
-                   nrow = nrow.SpM(B)))
+    return(L)
 
   }
 
@@ -36,8 +35,8 @@
 
     newA <- A %>% replicate(n)
 
-    newA <- set_difference_SpM(newA$pi, newA$pp, newA$px,
-                               B$pi, B$pp, B$px,
+    newA <- set_difference_SpM(newA$pi - 1, newA$pp, newA$px,
+                               B$pi - 1, B$pp, B$px,
                                nrow.SpM(newA))
 
     return(newA)
