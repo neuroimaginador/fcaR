@@ -1142,6 +1142,12 @@ Environment transposeSpM(Environment A) {
   Environment res = SparseToEnv(T);
   freeVector(&T);
 
+  // CharacterVector d1, d2;
+  // List dn = A.attr("dimnames");
+  //
+  // List dn2 = List::create(dn[1], dn[0]);
+  // res.attr("dimnames") = dn2;
+
   return res;
 
 }

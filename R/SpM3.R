@@ -1,12 +1,12 @@
 # SpM_struct
-new_spm <- function(i, p, x, nrow) {
+new_spm <- function(i, p, x, nrow,
+                    dimnames = list(NULL, NULL)) {
 
   private <- list()
 
   if (inherits(i, "Matrix")) {
 
-    # TODO: Transpose???
-    # i <- Matrix::t(i)
+    dimnames <- dimnames(i)
 
     if ("x" %in% slotNames(i)) {
 
@@ -31,7 +31,8 @@ new_spm <- function(i, p, x, nrow) {
 
   if (inherits(i, "matrix")) {
 
-    # x <- i[i > 0]
+    dimnames <- dimnames(i)
+
     nrow <- dim(i)[1]
     idx <- which(i > 0)
     x <- i[idx]
@@ -68,6 +69,8 @@ new_spm <- function(i, p, x, nrow) {
   # private$validate()
 
   private$pnrow <- as.integer(nrow)
+  private$dimnames <- dimnames
+  private$dim <- c(nrow, length(private$pp) - 1)
 
   private <- as.environment(private)
 
@@ -75,7 +78,6 @@ new_spm <- function(i, p, x, nrow) {
             nrow = nrow,
             ncol = length(private$pp) - 1,
             class = "SpM")
-            # dim = c(nrow, length(private$pp) - 1))
 
 }
 
@@ -132,20 +134,55 @@ to_matrix.SpM <- function(private) {
   j <- seq_along(p[-length(p)])
   idx <- j %>%
     sapply(function(jj) i[[jj]] + (jj - 1) * n) %>%
-    unlist()
+    unlist() %>% as.vector()
 
   A <- matrix(data = 0,
               nrow = n, ncol = m)
   A[idx] <- unlist(x)
+  dimnames(A) <- private$dimnames
 
   return(A)
 
 }
 
-extract_columns = function(private, idx) {
+to_logical.SpM <- function(private) {
+
+  if (!rlang::env_has(env = private, "pi_list")) {
+
+    L <- listing2(private)
+    assign("pi_list", L$pi_list, envir = private)
+    assign("px_list", L$px_list, envir = private)
+
+  }
+
+  i <- private$pi_list
+  p <- private$pp
+  x <- private$px_list
+  n <- private$pnrow
+  m <- length(private$pp) - 1
+
+  j <- seq_along(p[-length(p)])
+  idx <- j %>%
+    sapply(function(jj) i[[jj]] + (jj - 1) * n) %>%
+    unlist()
+
+  A <- matrix(data = FALSE,
+              nrow = n, ncol = m)
+  A[idx] <- TRUE
+  dimnames(A) <- private$dimnames
+
+  return(A)
+
+}
+
+extract_columns <- function(private, idx) {
 
   dp <- diff(private$pp)
   dp <- dp[idx]
+
+  dn <- private$dimnames
+  if (length(dn[[2]]) > 0)
+    dn[[2]] <- dn[[2]][idx]
 
   p_init <- private$pp[idx]
   p_end <- private$pp[idx + 1]
@@ -165,17 +202,20 @@ extract_columns = function(private, idx) {
   new_i <- private$pi[idx + 1]
   new_x <- private$px[idx + 1]
   new_p <- c(0, cumsum(dp))
+
   return(new_spm(i = new_i,
                  x = new_x,
                  p = new_p,
-                 nrow = private$pnrow))
+                 nrow = private$pnrow,
+                 dimnames = dn))
 
 }
 
 remove_columns = function(private, idx) {
 
-  dp <- diff(private$pp)
-  dp <- dp[idx]
+  dn <- private$dimnames
+  if (length(dn[[2]]) > 0)
+    dn[[2]] <- dn[[2]][-idx]
 
   p_init <- private$pp[idx]
   p_end <- private$pp[idx + 1]
@@ -195,13 +235,23 @@ remove_columns = function(private, idx) {
 
   }
 
-  new_i <- private$pi[-(idx + 1)]
-  new_x <- private$px[-(idx + 1)]
+  if (length(idx) > 0) {
+
+    new_i <- private$pi[-(idx + 1)]
+    new_x <- private$px[-(idx + 1)]
+
+  } else {
+
+    new_i <- private$pi
+    new_x <- private$px
+
+  }
   new_p <- c(0, cumsum(dp))
   return(new_spm(i = new_i,
                  x = new_x,
                  p = new_p,
-                 nrow = private$pnrow))
+                 nrow = private$pnrow,
+                 dimnames = dn))
 
 }
 
@@ -232,6 +282,11 @@ insert_columns = function(private,
   private$px <- unlist(private$px_list)
   private$pp <- c(0, cumsum(sapply(private$pi_list, length)))
 
+  dn <- private$dimnames
+  # if (length(dn) > 1)
+  dn[[2]] <- append(dn[[2]], M$dimnames[[2]], after = after)
+  private$dimnames <- dn
+
   attr(private, "ncol") <- attr(private, "ncol") + ncol.SpM(M)
 
 }
@@ -254,8 +309,8 @@ substitute_columns = function(private, idx, M) {
 
   }
 
-  private$pi_list[idx] <- L$pi_list
-  private$px_list[idx] <- L$px_list
+  private$pi_list[idx] <- M$pi_list
+  private$px_list[idx] <- M$px_list
 
   private$pi <- unlist(private$pi_list)
   private$px <- unlist(private$px_list)
@@ -265,13 +320,13 @@ substitute_columns = function(private, idx, M) {
 
 nrow.SpM <- function(private) {
 
-  private$pnrow
+  as.integer(private$pnrow)
 
 }
 
 ncol.SpM <- function(private) {
 
-  length(private$pp) - 1
+  as.integer(length(private$pp) - 1)
 
 }
 
@@ -291,6 +346,17 @@ colSums <- function(private) {
 
   }
 
+  dn <- private$dimnames
+  if (!is.null(dn[[2]])) {
+
+    dn <- dn[[2]]
+
+  } else {
+
+    dn <- FALSE
+
+  }
+
   sapply(private$px_list, sum)
 
 }
@@ -300,11 +366,15 @@ replicate <- function(private, n) {
   new_i <- rep(private$pi, times = n)
   new_x <- rep(private$px, times = n)
   new_p <- c(0, cumsum(rep(diff(private$pp), n)))
+  dn <- private$dimnames
+  # if (length(dn) > 1)
+  dn[[2]] <- rep(dn[[2]], times = n)
 
   return(new_spm(i = new_i,
                  x = new_x,
                  p = new_p,
-                 nrow = private$pnrow))
+                 nrow = private$pnrow,
+                 dimnames = dn))
 
 }
 
@@ -341,13 +411,9 @@ unionSpM <- function(A, B) {
                        B$pp,
                        B$px,
                        nrow.SpM(A))
+    L$dimnames <- A$dimnames
 
     return(L)
-
-    # return(new_spm(i = L$i + 1,
-    #                p = L$p,
-    #                x = L$x,
-    #                nrow = L$Dim[1]))
 
   }
 
@@ -506,13 +572,17 @@ cbindSpM <- function(...) {
 
   L <- list(...)
 
-  res <- new_spm(L[[1]])
+  L[sapply(L, is.null)] <- NULL
+
+  res <- rlang::env_clone(L[[1]])
   L <- L[-1]
   for (i in L) {
 
-    res %>% insert_columns(i)
+    insert_columns(res, i)
 
   }
+
+  class(res) <- "SpM"
 
   return(res)
 
@@ -551,8 +621,16 @@ extract_rows <- function(private, ids) {
   names(ids) <- seq_along(ids)
   new_pi <- as.numeric(names(sort(ids)[new_pi]))
 
+  dn <- private$dimnames
+  if (length(dn[[1]]) > 0) {
+
+    dn[[1]] <- dn[[1]][ids]
+
+  }
+
   new_spm(i = new_pi, x = new_px, p = new_p,
-          nrow = length(ids))
+          nrow = length(ids),
+          dimnames = dn)
 
 }
 
@@ -605,34 +683,38 @@ rowSums <- function(A) {
   i <- A$pi
   x <- A$px
   rows <- seq(A$pnrow)
-  sapply(rows, function(r) {
+  res <- sapply(rows, function(r) {
 
     sum(x[i == r])
 
   })
 
+  if (length(A$dinnames) > 0)
+    names(res) <- A$dimnames[[1]]
+
+  return(res)
+
 }
 
 zero_rows <- function(M, idx) {
 
-  if (!rlang::env_has(env = private, "pi_list")) {
+  if (!rlang::env_has(env = M, "pi_list")) {
 
-    L <- listing2(private)
-    assign("pi_list", L$pi_list, envir = private)
-    assign("px_list", L$px_list, envir = private)
+    L <- listing2(M)
+    assign("pi_list", L$pi_list, envir = M)
+    assign("px_list", L$px_list, envir = M)
 
   }
 
   idxs <- lapply(L$pi_list, function(ii) which(!(ii %in% idx)))
-  pi_list <- lapply(seq_along(M$pi_list), function(ii) M$pi_list[[ii]][idxs])
-  px_list <- lapply(seq_along(M$px_list), function(ii) M$px_list[[ii]][idxs])
+  pi_list <- lapply(seq_along(M$pi_list), function(ii) M$pi_list[[ii]][idxs[[ii]]])
+  px_list <- lapply(seq_along(M$px_list), function(ii) M$px_list[[ii]][idxs[[ii]]])
 
   M$pi_list <- pi_list
   M$px_list <- px_list
   M$pi <- unlist(M$pi_list)
   M$px <- unlist(M$px_list)
   M$pp <- c(0, cumsum(sapply(M$pi_list, length)))
-
 
 }
 
@@ -660,14 +742,76 @@ assignSpM <- function(private, idx, values) {
   private$px <- x[o]
   private$pp <- c(0, length(i))
 
-  # # if (rlang::env_has(env = private, "pi_list")) {
-  #
-  #   L <- listing2(private)
-  #   assign("pi_list", L$pi_list, envir = private)
-  #   assign("px_list", L$px_list, envir = private)
-  #
-  # # }
-  #
-  # private$pp <- c(0, cumsum(sapply(private$pi_list, length)))
+}
+
+dimnamesSpM <- function(private) {
+
+  private$dimnames
+
+}
+
+assign_dimnamesSpM <- function(private, value) {
+
+  private$dimnames <- value
+
+}
+
+colnamesSpM <- function(private) {
+
+  private$dimnames[[2]]
+
+}
+
+assign_colnamesSpM <- function(private, value) {
+
+  dn <- private$dimnames
+  dn[[2]] <- value
+  private$dimnames <- dn
+
+}
+
+rownamesSpM <- function(private) {
+
+  private$dimnames[[1]]
+
+}
+
+assign_rownamesSpM <- function(private, value) {
+
+  dn <- private$dimnames
+  dn[[1]] <- value
+  private$dimnames <- dn
+
+}
+
+andSpM <- function(A, B) {
+
+  # A and B should have the same
+  # number of columns and rows
+  n <- ncol.SpM(A)
+
+  j <- seq(n)
+  dpA <- diff(A$pp)
+  jjA <- rep(j, times = dpA)
+
+  dpB <- diff(B$pp)
+  jjB <- rep(j, times = dpB)
+
+  iiA <- (jjA - 1) * A$pnrow + A$pi
+  iiB <- (jjB - 1) * B$pnrow + B$pi
+
+  idx <- which(iiA %in% iiB)
+  new_i <- A$pi[idx]
+  new_j <- jjA[idx]
+
+  dp <- sapply(j, function(x)
+    length(which(new_j == x)))
+
+  new_p <- c(0, cumsum(dp))
+
+  new_spm(i = new_i,
+          p = new_p,
+          x = rep(1, length(new_i)),
+          nrow = A$pnrow)
 
 }

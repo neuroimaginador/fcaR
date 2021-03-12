@@ -1,9 +1,9 @@
 .process_batch <- function(LHS, RHS, attributes, rules, verbose = TRUE) {
 
   # Initialize results
-  new_LHS <- zeroSpM(nrow = nrow.SpM(LHS), ncol = 1)
+  new_LHS <- NULL#zeroSpM(nrow = nrow.SpM(LHS), ncol = 1)
 
-  new_RHS <- zeroSpM(nrow = nrow.SpM(LHS), ncol = 1)
+  new_RHS <- NULL#zeroSpM(nrow = nrow.SpM(LHS), ncol = 1)
 
   # Look up the equivalence rules in the registry
   methods <- lapply(rules,

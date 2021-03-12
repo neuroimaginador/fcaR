@@ -11,7 +11,7 @@
   }
 
   # Which are the rules applicable to the set S?
-  S_subsets <- subsetSpM(LHS, S)
+  S_subsets <- tSpM(subsetSpM(LHS, S))
 
   # idx_subsets <- which(S_subsets)
   idx_subsets <- S_subsets$pi
@@ -54,7 +54,7 @@
 
     if (!is_direct) {
 
-      S_subsets <- subsetSpM(LHS, S)
+      S_subsets <- tSpM(subsetSpM(LHS, S))
 
       idx_subsets <- S_subsets$pi
       idx_subsets <- setdiff(idx_subsets, which(do_not_use))
@@ -97,7 +97,7 @@
 .simplification_logic <- function(S, LHS, RHS) {
 
   # Equivalence II
-  subsets <- subsetSpM(RHS, S)
+  subsets <- subsetSpM(RHS, S) %>% tSpM()
   idx_subsets <- subsets$pi
 
   if (length(idx_subsets) > 0) {

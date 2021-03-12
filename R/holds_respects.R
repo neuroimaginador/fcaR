@@ -24,18 +24,16 @@
   conclusions <- imps$get_RHS_matrix()
   I <- fc$incidence()
 
-  holds <- sapply(seq(ncol(premises)),
+  holds <- sapply(seq(ncol.SpM(premises)),
                      function(i) {
 
                        p <- extract_columns(premises, i)
                        p <- compute_closureSpM(p, I)
-                       subsetSpM(extract_columns(conclusions, i),
-                               p) %>%
-                         to_matrix.SpM()
+                       return(length(subsetSpM(extract_columns(conclusions, i),
+                               p)$pi) > 0)
 
-                     }) %>%
-    purrr::reduce(cbind) %>%
-    as.vector()
+                     })
+    # as.vector()
 
   return(holds)
 

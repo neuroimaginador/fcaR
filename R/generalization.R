@@ -8,14 +8,18 @@
   RHS_subsets <- subsetSpM(RHS)
   LHS_subsets <- tSpM(subsetSpM(LHS))
 
-  ALL_subsets <- self_intersectSpM(LHS_subsets, RHS_subsets) # Was &
+  # foo1 <- .difference2(LHS_subsets, RHS_subsets) %>% colSums()
+  # foo2 <- .difference2(RHS_subsets, LHS_subsets) %>% colSums()
+  # foo <- .union(LHS_subsets, RHS_subsets) %>% colSums()
+
+  ALL_subsets <- andSpM(RHS_subsets, LHS_subsets)
 
   # Find A subset of C
   condition1 <- colSums(ALL_subsets) > 1
 
   subsets <- which(condition1)
 
-  marked_as_single <- rep(TRUE, ncol(LHS))
+  marked_as_single <- rep(TRUE, ncol.SpM(LHS))
 
   if (length(subsets) > 0) {
 

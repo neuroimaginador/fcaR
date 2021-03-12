@@ -15,10 +15,12 @@ match_attributes <- function(origin, target_attributes) {
   v <- origin$get_vector()
 
   M <- matrix(0, nrow = length(target_attributes), ncol = 1)
-  M[idx[ii]] <- (v %>% to_matrix.SpM())[, ii]
+  M[idx[ii]] <- (v %>% to_matrix.SpM())[ii]
 
   target <- SparseSet$new(attributes = target_attributes,
                           M = new_spm(M))
+
+  # print(target)
 
   return(target)
 

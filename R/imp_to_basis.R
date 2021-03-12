@@ -32,7 +32,7 @@
                           attributes, reduce = FALSE)$closure
 
 
-    if (length(equalSpM(A, B)$i) == 0) {
+    if (length(equalSpM(A, B)$pi) == 0) {
 
       LHS <- cbindSpM(LHS, A)
       RHS <- cbindSpM(RHS, B)

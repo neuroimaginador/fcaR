@@ -21,7 +21,7 @@ imps_to_arules <- function(LHS, RHS, attributes,
   LHS <- methods::as(LHS, "itemMatrix")
   arules::itemLabels(LHS) <- attributes
 
-  LHS <- Matrix::sparseMatrix(i = L$rhs$pi,
+  RHS <- Matrix::sparseMatrix(i = L$rhs$pi,
                               p = L$rhs$pp,
                               x = L$rhs$px,
                               dims = c(L$rhs$pnrow, length(L$rhs$pp) - 1)) %>%

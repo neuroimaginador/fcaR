@@ -118,6 +118,8 @@ FormalContext <- R6::R6Class(
       # Transform the formal context to sparse
       if (inherits(I, "transactions")) {
 
+        tI <- new_spm(I@data) %>% tSpM()
+
         # If it comes from the arules package
         attributes <- I@itemInfo$labels
         I <- methods::as(I@data, "dgCMatrix")
@@ -127,7 +129,6 @@ FormalContext <- R6::R6Class(
 
       } else {
 
-        # TODO: In SpM, colnames...
         # Or if it comes from a numeric table
         if (length(colnames(I)) > 0) {
 
@@ -192,7 +193,7 @@ FormalContext <- R6::R6Class(
         expanded_grades_set <- compute_grades(tI)
         grades_set <- sort(unique(unlist(expanded_grades_set)))
 
-        self$I <- I
+        self$I <- new_spm(I)
         self$grades_set <- unique(c(0, grades_set, 1))
         self$expanded_grades_set <- expanded_grades_set
 
@@ -213,7 +214,8 @@ FormalContext <- R6::R6Class(
       }
 
       # Create a new empty implication set inside
-      self$implications <- ImplicationSet$new(attributes = attributes, I = self$I)
+      self$implications <- ImplicationSet$new(attributes = attributes,
+                                              I = self$I)
 
       # Create a new empty ConceptLattice inside
       self$concepts <- ConceptLattice$new(extents = NULL,
@@ -263,8 +265,8 @@ FormalContext <- R6::R6Class(
       I <- self$incidence()
       for (att in attributes) {
 
-        scaled <- I %>%
-          scale_context(column = att,
+        scaled <-
+          scale_context(I, column = att,
                         type = type,
                         ...)
 
@@ -433,10 +435,10 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (length(S) == length(self$objects)) {
+      if (nrow.SpM(S) == length(self$objects)) {
 
         R <- compute_intentSpM(S,
-                               tSpM(self$I))
+                               to_matrix.SpM(tSpM(self$I)))
 
         # if (length(R$pi) > 0) {
         #
@@ -455,6 +457,8 @@ FormalContext <- R6::R6Class(
         #
         # }
 
+        R <- SparseSet$new(attributes = self$attributes,
+                           M = R)
         return(R)
 
       } else {
@@ -501,10 +505,10 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (length(S) == length(self$attributes)) {
+      if (nrow.SpM(S) == length(self$attributes)) {
 
         R <- compute_extentSpM(S,
-                            tSpM(self$I))
+                            to_matrix.SpM(tSpM(self$I)))
 
         # if (length(R@i) > 0) {
         #
@@ -522,6 +526,9 @@ FormalContext <- R6::R6Class(
         #   R <- SparseSet$new(attributes = self$objects)
         #
         # }
+
+        R <- SparseSet$new(attributes = self$objects,
+                           M = R)
 
         return(R)
 
@@ -568,10 +575,10 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (length(S) == length(self$attributes)) {
+      if (nrow.SpM(S) == length(self$attributes)) {
 
         R <- compute_closureSpM(S,
-                             tSpM(self$I))
+                             to_matrix.SpM(tSpM(self$I)))
 
         # if (length(R@i) > 0) {
         #
@@ -589,6 +596,9 @@ FormalContext <- R6::R6Class(
         #   R <- SparseSet$new(attributes = self$attributes)
         #
         # }
+
+        R <- SparseSet$new(attributes = self$attributes,
+                           M = R)
 
         return(R)
 
@@ -769,15 +779,17 @@ FormalContext <- R6::R6Class(
           S <- subsetSpM(y_down$get_vector(),
                        yp_down$get_vector())
 
-          if (S[1]) {
+          if (length(S$pi) > 0) {
 
-            R[Matrix::which(yp_down$get_vector() < R)] <- yp_down$get_vector()[Matrix::which(yp_down$get_vector() < R)]
+            R <- .intersection(R, yp_down$get_vector())
+
+            # R[which(yp_down$get_vector() < R)] <- yp_down$get_vector()[Matrix::which(yp_down$get_vector() < R)]
 
           }
 
         }
 
-        if (!equalSpM(R, y_down$get_vector())[1]) {
+        if (length(equalSpM(R, y_down$get_vector())$pi) == 0) {
 
           Z$assign(attributes = y, values = 1)
 
@@ -790,7 +802,6 @@ FormalContext <- R6::R6Class(
       idx <- match(new_att, att)
       my_I <- my_I %>% extract_columns(idx) %>% to_matrix.SpM()
 
-      # TODO: Add colname and rowname support in SpM
       colnames(my_I) <- new_att
       rownames(my_I) <- fc2$objects
 
@@ -932,7 +943,7 @@ FormalContext <- R6::R6Class(
       if (private$is_many_valued) error_many_valued()
 
       # TODO: Assign a private field "tI" to tSpM(self$I)
-      my_I <- tSpM(self$I)
+      my_I <- to_matrix.SpM(tSpM(self$I))
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
@@ -985,8 +996,9 @@ FormalContext <- R6::R6Class(
           LHS = L$LHS,
           RHS = L$RHS,
           attributes = self$attributes)
-        L$LHS <- L2$lhs
-        L$RHS <- L2$rhs
+        L <- .clean(L2$lhs, L2$rhs)
+        L$LHS <- L$lhs
+        L$RHS <- L$rhs
 
       }
 
@@ -1012,7 +1024,7 @@ FormalContext <- R6::R6Class(
 
       # Now, add the computed implications
       # TODO: check what happens with only 1 implication.
-      if (ncol.SpM(L$LHS) > 1) {
+      if (ncol.SpM(L$LHS) > 0) {
 
         # There are implications (the first one is dummy
         # emptyset -> emptyset )
@@ -1398,7 +1410,10 @@ FormalContext <- R6::R6Class(
 
       } else {
 
-        tSpM(self$I) %>% to_matrix.SpM()
+        I <- tSpM(self$I) %>% to_matrix.SpM()
+        dimnames(I) <- list(self$objects, self$attributes)
+
+        return(I)
 
       }
 

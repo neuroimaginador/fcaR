@@ -6,7 +6,7 @@
 
   replicas <- which(colSums(equal_LHS) > 1)
 
-  marked_to_remove <- rep(FALSE, ncol(LHS))
+  marked_to_remove <- rep(FALSE, ncol.SpM(LHS))
 
   if (length(replicas) > 0) {
 

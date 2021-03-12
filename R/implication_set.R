@@ -75,9 +75,6 @@ ImplicationSet <- R6::R6Class(
         private$lhs_matrix <- new_spm(arules_imp@lhs@data)
         private$rhs_matrix <- new_spm(arules_imp@rhs@data)
 
-        # TODO: rownames for SpM
-        rownames(private$lhs_matrix) <- private$attributes
-        rownames(private$rhs_matrix) <- private$attributes
 
       } else {
 
@@ -93,6 +90,20 @@ ImplicationSet <- R6::R6Class(
         private$rhs_matrix <- args$rhs
         private$I <- args$I
         private$implication_support <- numeric(0)
+
+      }
+
+      if (!is.null(private$lhs_matrix)) {
+
+        assign_dimnamesSpM(private$lhs_matrix,
+                           list(private$attributes,
+                                     paste0(seq(ncol.SpM(private$lhs_matrix)))))
+        assign_dimnamesSpM(private$rhs_matrix,
+                           list(private$attributes,
+                                     paste0(seq(ncol.SpM(private$rhs_matrix)))))
+
+        # assign_rownamesSpM(private$lhs_matrix, private$attributes)
+        # assign_rownamesSpM(private$rhs_matrix, private$attributes)
 
       }
 
@@ -132,12 +143,27 @@ ImplicationSet <- R6::R6Class(
 
         if (all(idx < 0) | all(idx > 0)) {
 
-          imp <- ImplicationSet$new(
-            name = paste0(private$name, "_", paste0(idx)),
-            attributes = private$attributes,
-            lhs = private$lhs_matrix %>% extract_columns(idx),
-            rhs = private$rhs_matrix %>% extract_columns(idx),
-            I = private$I)
+          if (all(idx > 0)) {
+
+            imp <- ImplicationSet$new(
+              name = paste0(private$name, "_", paste0(idx)),
+              attributes = private$attributes,
+              lhs = private$lhs_matrix %>% extract_columns(idx),
+              rhs = private$rhs_matrix %>% extract_columns(idx),
+              I = private$I)
+
+          } else {
+
+            idx <- abs(idx)
+            imp <- ImplicationSet$new(
+              name = paste0(private$name, "_", paste0(idx)),
+              attributes = private$attributes,
+              lhs = private$lhs_matrix %>% remove_columns(idx),
+              rhs = private$rhs_matrix %>% remove_columns(idx),
+              I = private$I)
+
+          }
+
 
           return(imp)
 
@@ -552,8 +578,8 @@ ImplicationSet <- R6::R6Class(
       }
 
       # TODO: dimnames of SpM object
-      dimnames(LHS) <- list(private$attributes,
-                            paste0(seq(ncol(LHS))))
+      assign_dimnamesSpM(LHS, list(private$attributes,
+                            paste0(seq(ncol(LHS)))))
 
       return(LHS)
 
@@ -579,8 +605,8 @@ ImplicationSet <- R6::R6Class(
       }
 
       # TODO: dimnames of SpM object
-      dimnames(RHS) <- list(private$attributes,
-                            paste0(seq(ncol(RHS))))
+      assign_dimnamesSpM(RHS, list(private$attributes,
+                            paste0(seq(ncol(RHS)))))
 
 
       return(RHS)

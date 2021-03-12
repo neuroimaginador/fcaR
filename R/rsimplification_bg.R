@@ -1,7 +1,7 @@
 .Rsimplification_bg <- function(lhs_bg, rhs_bg, LHS, RHS) {
 
-  LRHS_subsets <- zeroSpM(ncol.SpM(lhs_bg),
-                          ncol.SpM(LHS))
+  LRHS_subsets <- zeroSpM(ncol = ncol.SpM(lhs_bg),
+                          nrow = ncol.SpM(LHS))
   intersections <- self_intersectSpM(lhs_bg, rhs_bg)
 
   id_inter <- which(intersections == 0)

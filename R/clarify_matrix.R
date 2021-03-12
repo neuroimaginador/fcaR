@@ -13,8 +13,8 @@
     j <- equal_attributes[1]
     keep <- c(keep, j)
 
-    v <- identical[, j]
-    i <- which(v > 0)
+    # v <- identical %>% extract_columns(j)
+    i <- (identical %>% extract_columns(j))$pi
     new_att <- c(new_att,
                  paste0("[",
                         stringr::str_flatten(cols[i],
@@ -26,8 +26,8 @@
 
   my_I <- I
   my_I <- my_I %>% extract_columns(keep)
-  colnames(my_I) <- new_att
-  rownames(my_I) <- rows
+  assign_colnamesSpM(my_I, new_att)
+  assign_rownamesSpM(my_I, rows)
 
   return(my_I)
 

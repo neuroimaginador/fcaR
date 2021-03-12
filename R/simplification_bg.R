@@ -10,11 +10,11 @@
     rhs_bg <- rhs_bg %>% extract_columns(id_inter)
 
     # TODO: transpose??
-    LHS_subsets <- tSpM(subsetSpM(lhs_bg, lhs))
+    LHS_subsets <- subsetSpM(lhs_bg, lhs)
     # This gives the lhs_bg that are subsets of LHS
     col_values <- colSums(LHS_subsets)
     are_subset <- which(col_values > 0)
-    black_list <- rep(FALSE, ncol(lhs_bg))
+    black_list <- rep(FALSE, ncol.SpM(lhs_bg))
 
     count <- 0
 
@@ -40,12 +40,11 @@
       lhs %>% substitute_columns(my_idx, newLHS)
       rhs %>% substitute_columns(my_idx, newRHS)
 
+      foo <- LHS_subsets %>% tSpM()
+      foo %>%
+        substitute_columns(my_idx, tSpM(subsetSpM(lhs_bg, newLHS)))
 
-      LHS_subsets <- LHS_subsets %>%
-        tSpM() %>%
-        substitute_columns(my_idx, subsetSpM(lhs_bg, newLHS)) %>%
-        tSpM()
-
+      LHS_subsets <- tSpM(foo)
       col_values <- colSums(LHS_subsets)
       condition1 <- col_values > 0
 

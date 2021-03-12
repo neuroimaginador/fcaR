@@ -36,7 +36,7 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   output <- c()
 
-  for (i in seq(ncol(LHS))) {
+  for (i in seq(ncol.SpM(LHS))) {
 
     lhs <- LHS %>% extract_columns(i)
     rhs <- RHS %>% extract_columns(i)

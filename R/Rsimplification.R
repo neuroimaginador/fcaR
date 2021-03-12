@@ -2,9 +2,9 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
   LRHS_subsets <- zeroSpM(ncol.SpM(LHS),
                           ncol.SpM(LHS))
-  intersections <- self_intersectSpM(lhs_bg, rhs_bg)
+  intersections <- self_intersectSpM(LHS, RHS)
 
-  id_inter <- Matrix::which(intersections == 0)
+  id_inter <- which(intersections == 0)
 
   # This gives the union of LHS and RHS
 
@@ -21,7 +21,7 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
   are_subset <- which(condition1 & condition2)
 
-  black_list <- rep(FALSE, ncol(LHS))
+  black_list <- rep(FALSE, ncol.SpM(LHS))
 
   count <- 0
 
