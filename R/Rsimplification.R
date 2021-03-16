@@ -100,9 +100,17 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
     intersections[my_idx] <- self_intersectSpM(C, newRHS)
     id_inter <- which(intersections == 0)
 
-    M <- subsetSpM(LHS %>% extract_columns(id_inter),
-                   unionSpM(C, newRHS))
-    LRHS_subsets %>% substitute_columns(id_inter, M)
+    # M <- subsetSpM(LHS %>% extract_columns(id_inter),
+    #                unionSpM(C, newRHS))
+    # M$pi <- my_idx[M$pi]
+    # L <- listing2(M)
+    # M$pi_list <- L$pi_list
+    # M$px_list <- L$px_list
+    # LRHS_subsets %>% substitute_columns(id_inter, M)
+    M <- subsetSpM(extract_columns(LHS, id_inter), unionSpM(LHS, RHS))
+
+    substitute_columns(LRHS_subsets, id_inter, M)
+
     col_values <- colSums(LRHS_subsets)
     condition1 <- col_values > 1
 

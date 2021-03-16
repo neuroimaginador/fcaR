@@ -1,4 +1,6 @@
 # SpM_struct
+#' @importFrom methods slotNames
+#' @importFrom rlang env_clone
 new_spm <- function(i, p, x, nrow,
                     dimnames = list(NULL, NULL)) {
 
@@ -8,7 +10,7 @@ new_spm <- function(i, p, x, nrow,
 
     dimnames <- dimnames(i)
 
-    if ("x" %in% slotNames(i)) {
+    if ("x" %in% methods::slotNames(i)) {
 
       x <- i@x
 
@@ -113,6 +115,7 @@ listing2 <- function(M) {
 
 }
 
+#' @importFrom rlang env_has
 to_matrix.SpM <- function(private) {
 
   if (!rlang::env_has(env = private, "pi_list")) {
@@ -145,6 +148,7 @@ to_matrix.SpM <- function(private) {
 
 }
 
+#' @importFrom rlang env_has
 to_logical.SpM <- function(private) {
 
   if (!rlang::env_has(env = private, "pi_list")) {
@@ -211,6 +215,10 @@ extract_columns <- function(private, idx) {
 
 }
 
+#' #' @export
+#' #' @noRd
+#' `[.SpM` <- function(x, ...) x %>% extract_columns(...)
+#'
 remove_columns = function(private, idx) {
 
   dn <- private$dimnames
@@ -255,6 +263,7 @@ remove_columns = function(private, idx) {
 
 }
 
+#' @importFrom rlang env_has
 insert_columns = function(private,
                           M,
                           after = length(private$pp) - 1) {
@@ -291,6 +300,7 @@ insert_columns = function(private,
 
 }
 
+#' @importFrom rlang env_has
 substitute_columns = function(private, idx, M) {
 
   if (!rlang::env_has(env = private, "pi_list")) {
@@ -324,11 +334,15 @@ nrow.SpM <- function(private) {
 
 }
 
+# nrow <- nrow.SpM
+
 ncol.SpM <- function(private) {
 
   as.integer(length(private$pp) - 1)
 
 }
+
+# ncol <- ncol.SpM
 
 dim.SpM <- function(private) {
 
@@ -336,6 +350,9 @@ dim.SpM <- function(private) {
 
 }
 
+# dim <- dim.SpM
+
+#' @importFrom rlang env_has
 colSums <- function(private) {
 
   if (!rlang::env_has(env = private, "pi_list")) {
@@ -568,6 +585,7 @@ subsetSpM <- function(x, y = NULL, proper = FALSE) {
 
 }
 
+#' @importFrom rlang env_clone
 cbindSpM <- function(...) {
 
   L <- list(...)
@@ -589,6 +607,7 @@ cbindSpM <- function(...) {
 }
 
 
+#' @importFrom rlang env_has
 extract_rows <- function(private, ids) {
 
   if (!rlang::env_has(env = private, "pi_list")) {
@@ -637,24 +656,25 @@ extract_rows <- function(private, ids) {
 # order <- c(2, 1, 3, 4)
 # pi <- c(2, 3, 4)
 # should return c(1, 3, 4)
-reorder_rows <- function(private, order) {
-
-  if (!rlang::env_has(env = private, "pi_list")) {
-
-    L <- listing2(private)
-    assign("pi_list", L$pi_list, envir = private)
-    assign("px_list", L$px_list, envir = private)
-
-  }
-
-  private$pi_list <- lapply(private$pi_list, function(i) id[i])
-  private$px_list <- lapply(private$px_list, function(i) i[id])
-
-
-}
+# reorder_rows <- function(private, order) {
+#
+#   if (!rlang::env_has(env = private, "pi_list")) {
+#
+#     L <- listing2(private)
+#     assign("pi_list", L$pi_list, envir = private)
+#     assign("px_list", L$px_list, envir = private)
+#
+#   }
+#
+#   private$pi_list <- lapply(private$pi_list, function(i) id[i])
+#   private$px_list <- lapply(private$px_list, function(i) i[id])
+#
+#
+# }
 
 tSpM <- transposeSpM
 
+#' @importFrom rlang env_has
 whichSpM <- function(private) {
 
   if (!rlang::env_has(env = private, "pi_list")) {
@@ -696,6 +716,7 @@ rowSums <- function(A) {
 
 }
 
+#' @importFrom rlang env_has
 zero_rows <- function(M, idx) {
 
   if (!rlang::env_has(env = M, "pi_list")) {

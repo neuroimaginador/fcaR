@@ -200,7 +200,7 @@ scale_context <- function(I, column, type, ...) {
   # Derived context
   M <- apply_scale(V, scale_matrix)
 
-  res <- cbind(I[, prev], M, I[, post])
+  res <- cbind.data.frame(I[, prev], M, I[, post])
   colnames(res) <- c(colnames(I)[prev],
                      colnames(M),
                      colnames(I)[post])

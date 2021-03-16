@@ -996,9 +996,9 @@ FormalContext <- R6::R6Class(
           LHS = L$LHS,
           RHS = L$RHS,
           attributes = self$attributes)
-        L <- .clean(L2$lhs, L2$rhs)
-        L$LHS <- L$lhs
-        L$RHS <- L$rhs
+        L3 <- .clean(L2$lhs, L2$rhs)
+        L$LHS <- L3$lhs
+        L$RHS <- L3$rhs
 
       }
 

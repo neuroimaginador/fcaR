@@ -57,17 +57,19 @@
     #     unlist(B$i()) - 1, B$p(), unlist(B$x()),
     #     D$nrow()))
 
-    newLHS <- new_spm(
-      set_difference_single(
-        C$pi - 1, C$pp, C$px,
-        B$pi - 1, B$pp, B$px,
-        nrow.SpM(C)))
+    newLHS <- .difference2(C, B)
+    # new_spm(
+    #   set_difference_single(
+    #     C$pi - 1, C$pp, C$px,
+    #     B$pi - 1, B$pp, B$px,
+    #     nrow.SpM(C)))
 
-    newRHS <- new_spm(
-      set_difference_single(
-        D$pi - 1, D$pp, D$px,
-        B$pi - 1, B$pp, B$px,
-        nrow.SpM(D)))
+    newRHS <- .difference2(D, B)
+      # new_spm(
+      # set_difference_single(
+      #   D$pi - 1, D$pp, D$px,
+      #   B$pi - 1, B$pp, B$px,
+      #   nrow.SpM(D)))
 
     LHS %>% substitute_columns(my_idx, newLHS)
     RHS %>% substitute_columns(my_idx, newRHS)

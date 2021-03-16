@@ -74,10 +74,11 @@
 
   }
 
+  L <- list(lhs = LHS, rhs = RHS)
   L <- .Rsimplification_bg(lhs_bg = lhs_bg,
                            rhs_bg = rhs_bg,
-                           LHS = LHS,
-                           RHS = RHS)
+                           LHS = L$lhs,
+                           RHS = L$rhs)
   L <- .simplification_bg(lhs_bg = lhs_bg,
                           rhs_bg = rhs_bg,
                           lhs = L$lhs,

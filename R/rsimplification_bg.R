@@ -50,8 +50,12 @@
     RHS %>% substitute_columns(my_idx, newRHS)
 
     # TODO: In some places, subsetSpM needs to be transposed.
-    M <- subsetSpM(lhs_bg %>% extract_columns(id_inter), unionSpM(C, newRHS))
-    LRHS_subsets %>% substitute_columns(id_inter, M)
+    # M <- subsetSpM(lhs_bg %>% extract_columns(id_inter), unionSpM(C, newRHS))
+    # LRHS_subsets %>% substitute_columns(id_inter, M)
+    M <- subsetSpM(extract_columns(lhs_bg, id_inter), unionSpM(LHS, RHS))
+
+    substitute_columns(LRHS_subsets, id_inter, M)
+
     col_values <- colSums(LRHS_subsets)
     condition1 <- col_values > 0
 
