@@ -4,7 +4,8 @@ pkgdown_sha: ~
 articles:
   arules: arules.html
   concept_lattice: concept_lattice.html
+  conceptual-scaling: conceptual-scaling.html
   extending_equivalence: extending_equivalence.html
   implications: implications.html
-last_built: 2021-02-09T08:27Z
+last_built: 2021-03-16T16:20Z
 
