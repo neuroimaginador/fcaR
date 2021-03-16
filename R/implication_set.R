@@ -72,11 +72,9 @@ ImplicationSet <- R6::R6Class(
         name <- as.character(arules_imp@info$data)
         private$name <- name
 
-        private$lhs_matrix <- methods::as(arules_imp@lhs@data, "dgCMatrix")
-        private$rhs_matrix <- methods::as(arules_imp@rhs@data, "dgCMatrix")
+        private$lhs_matrix <- new_spm(arules_imp@lhs@data)
+        private$rhs_matrix <- new_spm(arules_imp@rhs@data)
 
-        rownames(private$lhs_matrix) <- private$attributes
-        rownames(private$rhs_matrix) <- private$attributes
 
       } else {
 
@@ -92,6 +90,20 @@ ImplicationSet <- R6::R6Class(
         private$rhs_matrix <- args$rhs
         private$I <- args$I
         private$implication_support <- numeric(0)
+
+      }
+
+      if (!is.null(private$lhs_matrix)) {
+
+        assign_dimnamesSpM(private$lhs_matrix,
+                           list(private$attributes,
+                                     paste0(seq(ncol.SpM(private$lhs_matrix)))))
+        assign_dimnamesSpM(private$rhs_matrix,
+                           list(private$attributes,
+                                     paste0(seq(ncol.SpM(private$rhs_matrix)))))
+
+        # assign_rownamesSpM(private$lhs_matrix, private$attributes)
+        # assign_rownamesSpM(private$rhs_matrix, private$attributes)
 
       }
 
@@ -131,13 +143,27 @@ ImplicationSet <- R6::R6Class(
 
         if (all(idx < 0) | all(idx > 0)) {
 
-          imp <- ImplicationSet$new(
-            name = paste0(private$name, "_", paste0(idx)),
-            attributes = private$attributes,
-            lhs = Matrix::Matrix(private$lhs_matrix[, idx],
-                                 sparse = TRUE),
-            rhs = Matrix::Matrix(private$rhs_matrix[, idx],
-                                 sparse = TRUE))
+          if (all(idx > 0)) {
+
+            imp <- ImplicationSet$new(
+              name = paste0(private$name, "_", paste0(idx)),
+              attributes = private$attributes,
+              lhs = private$lhs_matrix %>% extract_columns(idx),
+              rhs = private$rhs_matrix %>% extract_columns(idx),
+              I = private$I)
+
+          } else {
+
+            idx <- abs(idx)
+            imp <- ImplicationSet$new(
+              name = paste0(private$name, "_", paste0(idx)),
+              attributes = private$attributes,
+              lhs = private$lhs_matrix %>% remove_columns(idx),
+              rhs = private$rhs_matrix %>% remove_columns(idx),
+              I = private$I)
+
+          }
+
 
           return(imp)
 
@@ -266,7 +292,7 @@ ImplicationSet <- R6::R6Class(
 
       if (self$is_empty()) return(0)
 
-      ncol(private$lhs_matrix)
+      ncol.SpM(private$lhs_matrix)
 
     },
 
@@ -290,8 +316,8 @@ ImplicationSet <- R6::R6Class(
     #' @export
     size = function() {
 
-      lhs_size <- Matrix::colSums(private$lhs_matrix)
-      rhs_size <- Matrix::colSums(private$rhs_matrix)
+      lhs_size <- colSums(private$lhs_matrix)
+      rhs_size <- colSums(private$rhs_matrix)
 
       return(cbind(LHS = lhs_size, RHS = rhs_size))
 
@@ -401,7 +427,7 @@ ImplicationSet <- R6::R6Class(
                            reorder= FALSE) {
 
       # If no implications, do nothing
-      if (is.null(private$lhs_matrix) || (ncol(private$lhs_matrix) == 0)) {
+      if (is.null(private$lhs_matrix) || (ncol.SpM(private$lhs_matrix) == 0)) {
 
         return(invisible(self))
 
@@ -409,7 +435,7 @@ ImplicationSet <- R6::R6Class(
 
       # If one implication,
       # just "reduction" can be done
-      if (ncol(private$lhs_matrix) == 1) {
+      if (ncol.SpM(private$lhs_matrix) == 1) {
 
         rules <- intersect(rules, "reduction")
 
@@ -456,9 +482,6 @@ ImplicationSet <- R6::R6Class(
 
       private$lhs_matrix <- L$lhs
       private$rhs_matrix <- L$rhs
-      # imps <- ImplicationSet$new(attributes = attributes,
-      #                            lhs = LHS,
-      #                            rhs = RHS)
 
       return(invisible(self))
 
@@ -480,7 +503,7 @@ ImplicationSet <- R6::R6Class(
 
       }
 
-      n_implications <- ncol(private$lhs_matrix)
+      n_implications <- ncol.SpM(private$lhs_matrix)
       cat("Implication set with", n_implications, "implications.\n")
 
       if (n_implications > 0) {
@@ -492,7 +515,9 @@ ImplicationSet <- R6::R6Class(
         implications <- sapply(seq(n_implications),
                                function(i) paste0("Rule ", i, ": ",
                                # function(i) paste0("Rule: ",
-                                                  .implication_to_string(LHS[, i], RHS[, i], attributes)))
+                                                  .implication_to_string(extract_columns(LHS, i),
+                                                                         extract_columns(RHS, i),
+                                                                         attributes)))
 
         implications <- sapply(implications, function(s) stringr::str_wrap(s, width = getOption("width"), exdent = 2))
 
@@ -543,10 +568,8 @@ ImplicationSet <- R6::R6Class(
 
       if (self$is_empty()) {
 
-        LHS <- Matrix::Matrix(FALSE,
-                      nrow = length(private$attributes),
-                      ncol = 1,
-                      sparse = TRUE)
+        LHS <- zeroSpM(nrow = length(private$attributes),
+                       ncol = 1)
 
       } else {
 
@@ -554,8 +577,9 @@ ImplicationSet <- R6::R6Class(
 
       }
 
-      dimnames(LHS) <- list(private$attributes,
-                            paste0(seq(ncol(LHS))))
+      # TODO: dimnames of SpM object
+      assign_dimnamesSpM(LHS, list(private$attributes,
+                            paste0(seq(ncol(LHS)))))
 
       return(LHS)
 
@@ -571,10 +595,8 @@ ImplicationSet <- R6::R6Class(
 
       if (self$is_empty()) {
 
-        RHS <- Matrix::Matrix(FALSE,
-                      nrow = length(private$attributes),
-                      ncol = 1,
-                      sparse = TRUE)
+        RHS <- zeroSpM(nrow = length(private$attributes),
+                       ncol = 1)
 
       } else {
 
@@ -582,8 +604,9 @@ ImplicationSet <- R6::R6Class(
 
       }
 
-      dimnames(RHS) <- list(private$attributes,
-                            paste0(seq(ncol(RHS))))
+      # TODO: dimnames of SpM object
+      assign_dimnamesSpM(RHS, list(private$attributes,
+                            paste0(seq(ncol(RHS)))))
 
 
       return(RHS)
@@ -615,21 +638,13 @@ ImplicationSet <- R6::R6Class(
         idx_attr <- match(lhs,
                           private$attributes)
 
-        if (length(idx_attr) > 1) {
-
-          idx_lhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
-
-        } else {
-
-          idx_lhs <- which(LHS[idx_attr, ] > 0)
-
-        }
+        idx_lhs <- which(colSums(LHS %>% extract_rows(idx_attr)) > 0)
 
       } else {
 
         # If not specified a filter for LHS,
         # select all implications
-        idx_lhs <- seq(ncol(LHS))
+        idx_lhs <- seq(ncol.SpM(LHS))
 
       }
 
@@ -640,21 +655,13 @@ ImplicationSet <- R6::R6Class(
         idx_attr <- match(rhs,
                           private$attributes)
 
-        if (length(idx_attr) > 1) {
-
-          idx_rhs <- Matrix::which(Matrix::colSums(RHS[idx_attr, ]) > 0)
-
-        } else {
-
-          idx_rhs <- which(RHS[idx_attr, ] > 0)
-
-        }
+        idx_rhs <- which(colSums(RHS %>% extract_rows(idx_attr)) > 0)
 
       } else {
 
         # If not specified a filter for RHS,
         # select all implications
-        idx_rhs <- seq(ncol(RHS))
+        idx_rhs <- seq(ncol.SpM(RHS))
 
       }
 
@@ -673,23 +680,23 @@ ImplicationSet <- R6::R6Class(
 
         if (drop && !is.null(rhs)) {
 
-          newLHS <- LHS[, idx]
-          newRHS <- RHS[, idx]
+          newLHS <- LHS %>% extract_columns(idx)
+          newRHS <- RHS %>% extract_columns(idx)
 
-          other_idx <- setdiff(seq(nrow(RHS)), idx_attr)
-          newRHS[other_idx, ] <- 0
+          other_idx <- setdiff(seq(nrow.SpM(RHS)), idx_attr)
+          newRHS %>% zero_rows(other_idx)
 
           imp <- ImplicationSet$new(name = paste0(private$name, "_filtered"),
                                     attributes = private$attributes,
-                                    lhs = Matrix::Matrix(newLHS, sparse = TRUE),
-                                    rhs = Matrix::Matrix(newRHS, sparse = TRUE))
+                                    lhs = newLHS,
+                                    rhs = newRHS)
 
         } else {
 
           imp <- ImplicationSet$new(name = paste0(private$name, "_filtered"),
                                     attributes = private$attributes,
-                                    lhs = Matrix::Matrix(LHS[, idx], sparse = TRUE),
-                                    rhs = Matrix::Matrix(RHS[, idx], sparse = TRUE))
+                                    lhs = extract_columns(LHS, idx),
+                                    rhs = extract_columns(RHS, idx))
 
         }
 
@@ -718,10 +725,10 @@ ImplicationSet <- R6::R6Class(
 
       }
 
-      subsets <- .subset(private$lhs_matrix,
+      subsets <- subsetSpM(private$lhs_matrix,
                          private$I)
 
-      private$implication_support <- Matrix::rowMeans(subsets)
+      private$implication_support <- colSums(tSpM(subsets)) / subsets$pnrow
 
       return(private$implication_support)
 
@@ -753,14 +760,14 @@ ImplicationSet <- R6::R6Class(
 
       if (!is.null(private$I)) {
 
-        v <- unique(c(0, private$I@x, 1))
+        v <- unique(c(0, private$I$px, 1))
 
       } else {
 
         if (!is.null(private$lhs_matrix)) {
 
-          v <- unique(c(0, private$lhs_matrix@x,
-                        private$rhs_matrix@x, 1))
+          v <- unique(c(0, private$lhs_matrix$px,
+                        private$rhs_matrix$px, 1))
 
         } else {
 
@@ -781,10 +788,10 @@ ImplicationSet <- R6::R6Class(
       LHS <- implications$get_LHS_matrix()
       RHS <- implications$get_RHS_matrix()
 
-      if (length(private$attributes) == nrow(LHS)) {
+      if (length(private$attributes) == nrow.SpM(LHS)) {
 
-        private$lhs_matrix <- cbind(private$lhs_matrix, LHS)
-        private$rhs_matrix <- cbind(private$rhs_matrix, RHS)
+        private$lhs_matrix <- cbindSpM(private$lhs_matrix, LHS)
+        private$rhs_matrix <- cbindSpM(private$rhs_matrix, RHS)
 
       } else {
 

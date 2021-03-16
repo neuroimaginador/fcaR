@@ -237,6 +237,26 @@ S4 compute_intent(S4 V, NumericMatrix I) {
 
 }
 
+// [[Rcpp::export]]
+Environment compute_intentSpM(Environment V,
+                              NumericMatrix I) {
+
+  SparseVector R = EnvtoSparse(V);
+
+  SparseVector R2;
+  initVector(&R2, I.ncol());
+
+  compute_intent(&R2, R, I.begin(),
+                 I.nrow(), I.ncol());
+
+  Environment res = SparseToEnv(R2);
+
+  freeVector(&R);
+  freeVector(&R2);
+  return res;
+
+}
+
 // // [[Rcpp::export]]
 // S4 compute_intent2(S4 V, NumericMatrix I) {
 //
@@ -388,6 +408,22 @@ S4 compute_extent(S4 V, NumericMatrix I) {
 
 }
 
+// [[Rcpp::export]]
+Environment compute_extentSpM(Environment V, NumericMatrix I) {
+
+  SparseVector R = EnvtoSparse(V);
+
+  SparseVector R2 = compute_extent(R, I);
+
+  Environment res = SparseToEnv(R2);
+
+  freeVector(&R);
+  freeVector(&R2);
+
+  return res;
+
+}
+
 SparseVector compute_closure (SparseVector V,
                               NumericMatrix I) {
 
@@ -440,6 +476,23 @@ S4 compute_closure(S4 V, NumericMatrix I) {
   freeVector(&R);
 
   S4 res = SparseToS4_fast(R2);
+
+  freeVector(&R2);
+
+  return res;
+
+}
+
+// [[Rcpp::export]]
+Environment compute_closureSpM(Environment V, NumericMatrix I) {
+
+  SparseVector R = EnvtoSparse(V);
+
+  SparseVector R2 = compute_closure(R, I);
+
+  freeVector(&R);
+
+  Environment res = SparseToEnv(R2);
 
   freeVector(&R2);
 

@@ -101,6 +101,9 @@
       <a href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
     </li>
     <li>
+      <a href="../articles/conceptual-scaling.html">Conceptual Scaling</a>
+    </li>
+    <li>
       <a href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a>
     </li>
     <li>
@@ -159,8 +162,8 @@
 <li><p><a href='#method-to_latex'><code>ConceptLattice$to_latex()</code></a></p></li>
 <li><p><a href='#method-['><code>ConceptLattice$[()</code></a></p></li>
 <li><p><a href='#method-sublattice'><code>ConceptLattice$sublattice()</code></a></p></li>
-<li><p><a href='#method-join_irreducibles'><code>ConceptLattice$join_irreducibles()</code></a></p></li>
 <li><p><a href='#method-meet_irreducibles'><code>ConceptLattice$meet_irreducibles()</code></a></p></li>
+<li><p><a href='#method-join_irreducibles'><code>ConceptLattice$join_irreducibles()</code></a></p></li>
 <li><p><a href='#method-decompose'><code>ConceptLattice$decompose()</code></a></p></li>
 <li><p><a href='#method-supremum'><code>ConceptLattice$supremum()</code></a></p></li>
 <li><p><a href='#method-infimum'><code>ConceptLattice$infimum()</code></a></p></li>
@@ -292,19 +295,19 @@
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The generated sublattice as a new <code>ConceptLattice</code> object.</p>
 <p><hr>
-<a id="method-join_irreducibles"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>join_irreducibles()</code></h3>
-<p>Join-irreducible Elements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>join_irreducibles</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>The join-irreducible elements in the concept lattice.</p>
-<p><hr>
 <a id="method-meet_irreducibles"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>meet_irreducibles()</code></h3>
 <p>Meet-irreducible Elements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>meet_irreducibles</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The meet-irreducible elements in the concept lattice.</p>
+<p><hr>
+<a id="method-join_irreducibles"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>join_irreducibles()</code></h3>
+<p>Join-irreducible Elements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>join_irreducibles</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>The join-irreducible elements in the concept lattice.</p>
 <p><hr>
 <a id="method-decompose"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose()</a></code></h3>
 <p>Decompose a concept as the supremum of meet-irreducible concepts</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>

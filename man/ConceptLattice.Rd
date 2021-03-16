@@ -34,8 +34,8 @@ fc_planets$concepts$support()
 \item \href{#method-to_latex}{\code{ConceptLattice$to_latex()}}
 \item \href{#method-[}{\code{ConceptLattice$[()}}
 \item \href{#method-sublattice}{\code{ConceptLattice$sublattice()}}
-\item \href{#method-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
 \item \href{#method-meet_irreducibles}{\code{ConceptLattice$meet_irreducibles()}}
+\item \href{#method-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
 \item \href{#method-decompose}{\code{ConceptLattice$decompose()}}
 \item \href{#method-supremum}{\code{ConceptLattice$supremum()}}
 \item \href{#method-infimum}{\code{ConceptLattice$infimum()}}
@@ -241,19 +241,6 @@ The generated sublattice as a new \code{ConceptLattice} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-join_irreducibles"></a>}}
-\if{latex}{\out{\hypertarget{method-join_irreducibles}{}}}
-\subsection{Method \code{join_irreducibles()}}{
-Join-irreducible Elements
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$join_irreducibles()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-The join-irreducible elements in the concept lattice.
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-meet_irreducibles"></a>}}
 \if{latex}{\out{\hypertarget{method-meet_irreducibles}{}}}
 \subsection{Method \code{meet_irreducibles()}}{
@@ -264,6 +251,19 @@ Meet-irreducible Elements
 
 \subsection{Returns}{
 The meet-irreducible elements in the concept lattice.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-join_irreducibles"></a>}}
+\if{latex}{\out{\hypertarget{method-join_irreducibles}{}}}
+\subsection{Method \code{join_irreducibles()}}{
+Join-irreducible Elements
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$join_irreducibles()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The join-irreducible elements in the concept lattice.
 }
 }
 \if{html}{\out{<hr>}}

@@ -1,18 +1,19 @@
 Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
-  LRHS_subsets <- Matrix::Matrix(FALSE, sparse = TRUE,
-                        ncol = ncol(LHS),
-                        nrow = ncol(LHS))
-  intersections <- .self_intersection(LHS, RHS)
+  LRHS_subsets <- zeroSpM(ncol.SpM(LHS),
+                          ncol.SpM(LHS))
+  intersections <- self_intersectSpM(LHS, RHS)
 
-  id_inter <- Matrix::which(intersections == 0)
+  id_inter <- which(intersections == 0)
 
   # This gives the union of LHS and RHS
 
-  LRHS_subsets[, id_inter] <- Matrix::t(.subset(LHS[, id_inter], .union(LHS,RHS)))
+  M <- subsetSpM(extract_columns(LHS, id_inter), unionSpM(LHS, RHS))
+
+  substitute_columns(LRHS_subsets, id_inter, M)
 
   # This gives the LRHS that are subsets of other LHS
-  col_values <- Matrix::colSums(LRHS_subsets)
+  col_values <- colSums(LRHS_subsets)
   condition1 <- col_values > 1
 
   # This gives those LHS which are disjoint to their RHS
@@ -20,7 +21,7 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
   are_subset <- which(condition1 & condition2)
 
-  black_list <- rep(FALSE, ncol(LHS))
+  black_list <- rep(FALSE, ncol.SpM(LHS))
 
   count <- 0
 
@@ -31,103 +32,102 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
     id1 <- which.max(col_values[are_subset])
     this_row <- are_subset[id1]
 
-    my_idx <- which_at_col(LRHS_subsets@i,
-                           LRHS_subsets@p,
-                           this_row)
+    my_idx <- (LRHS_subsets %>% extract_columns(this_row))$pi
 
     # this_row <- id_inter[this_row]
     my_idx <- setdiff(my_idx, this_row)
 
     if (trace) {
 
-      original_rule <- ImplicationSet$new(name = "original",
-                                          attributes = attributes,
-                                          lhs = Matrix::Matrix(LHS[, this_row], sparse = TRUE),
-                                          rhs = Matrix::Matrix(RHS[, this_row], sparse = TRUE))
-
-      original_set <- ImplicationSet$new(name = "set",
-                                         attributes = attributes,
-                                         lhs = Matrix::Matrix(LHS[, my_idx], sparse = TRUE),
-                                         rhs = Matrix::Matrix(RHS[, my_idx], sparse = TRUE))
+      # original_rule <- ImplicationSet$new(name = "original",
+      #                                     attributes = attributes,
+      #                                     lhs = Matrix::Matrix(LHS[, this_row], sparse = TRUE),
+      #                                     rhs = Matrix::Matrix(RHS[, this_row], sparse = TRUE))
+      #
+      # original_set <- ImplicationSet$new(name = "set",
+      #                                    attributes = attributes,
+      #                                    lhs = Matrix::Matrix(LHS[, my_idx], sparse = TRUE),
+      #                                    rhs = Matrix::Matrix(RHS[, my_idx], sparse = TRUE))
 
     }
 
     # this_row is subset of all my_idx
     # So, we must do C -> D-B in every my_idx rule.
 
-    if (length(my_idx) > 1) {
+    C <- LHS %>% extract_columns(my_idx)
+    D <- RHS %>% extract_columns(my_idx)
 
-      C <- LHS[, my_idx]
-      D <- RHS[, my_idx]
+    B <- extract_columns(RHS, this_row)
 
-    } else {
-
-      C <- Matrix::Matrix(LHS[, my_idx], sparse = TRUE)
-      D <- Matrix::Matrix(RHS[, my_idx], sparse = TRUE)
-
-    }
-    B <- Matrix::Matrix(RHS[, this_row], sparse = TRUE)
-    newRHS <- set_difference_single(D@i, D@p, D@x,
-                                    B@i, B@p, B@x,
-                                    nrow(D))
+    newRHS <- .difference2(D, B)
 
     if (trace) {
 
-      transformed_set <- ImplicationSet$new(name = "set",
-                                            attributes = attributes,
-                                            lhs = Matrix::Matrix(C, sparse = TRUE),
-                                            rhs = Matrix::Matrix(newRHS, sparse = TRUE))
-
-      message("Iteration", count, "\n")
-      message("=================\n")
-
-      count <- count + 1
-
-      message("** A -> B\n")
-      print(original_rule)
-
-      message("** C -> D\n")
-      print(original_set)
-
-      message("** C-B -> D-B\n")
-      print(transformed_set)
+      # transformed_set <- ImplicationSet$new(name = "set",
+      #                                       attributes = attributes,
+      #                                       lhs = Matrix::Matrix(C, sparse = TRUE),
+      #                                       rhs = Matrix::Matrix(newRHS, sparse = TRUE))
+      #
+      # message("Iteration", count, "\n")
+      # message("=================\n")
+      #
+      # count <- count + 1
+      #
+      # message("** A -> B\n")
+      # print(original_rule)
+      #
+      # message("** C -> D\n")
+      # print(original_set)
+      #
+      # message("** C-B -> D-B\n")
+      # print(transformed_set)
 
     }
 
-    RHS[, my_idx] <- newRHS
+    RHS %>% substitute_columns(my_idx, newRHS)
 
     if (trace) {
-
-      final_set <- ImplicationSet$new(name = "set",
-                                      attributes = attributes,
-                                      lhs = Matrix::Matrix(LHS, sparse = TRUE),
-                                      rhs = Matrix::Matrix(RHS, sparse = TRUE))
-
-      message("** Resulting set\n")
-      print(final_set)
+#
+#       final_set <- ImplicationSet$new(name = "set",
+#                                       attributes = attributes,
+#                                       lhs = Matrix::Matrix(LHS, sparse = TRUE),
+#                                       rhs = Matrix::Matrix(RHS, sparse = TRUE))
+#
+#       message("** Resulting set\n")
+#       print(final_set)
 
     }
-    intersections[my_idx] <- .self_intersection(C, newRHS)
-    id_inter <- Matrix::which(intersections == 0)
+    intersections[my_idx] <- self_intersectSpM(C, newRHS)
+    id_inter <- which(intersections == 0)
 
-    LRHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(LHS[, id_inter], .union(C, newRHS)))
-    col_values <- Matrix::colSums(LRHS_subsets)
+    # M <- subsetSpM(LHS %>% extract_columns(id_inter),
+    #                unionSpM(C, newRHS))
+    # M$pi <- my_idx[M$pi]
+    # L <- listing2(M)
+    # M$pi_list <- L$pi_list
+    # M$px_list <- L$px_list
+    # LRHS_subsets %>% substitute_columns(id_inter, M)
+    M <- subsetSpM(extract_columns(LHS, id_inter), unionSpM(LHS, RHS))
+
+    substitute_columns(LRHS_subsets, id_inter, M)
+
+    col_values <- colSums(LRHS_subsets)
     condition1 <- col_values > 1
 
-    condition2 <- (intersections == 0) & (Matrix::colSums(RHS) > 0)
+    condition2 <- (intersections == 0) & (colSums(RHS) > 0)
 
     black_list[this_row] <- TRUE
-    are_subset <- Matrix::which(condition1 & condition2 & (!black_list))
+    are_subset <- which(condition1 & condition2 & (!black_list))
 
   }
 
   # Cleaning phase
-  idx_to_remove <- Matrix::which(Matrix::colSums(RHS) == 0)
+  idx_to_remove <- which(colSums(RHS) == 0)
 
   if (length(idx_to_remove) > 0) {
 
-    LHS <- LHS[, -idx_to_remove]
-    RHS <- RHS[, -idx_to_remove]
+    LHS <- LHS %>% remove_columns(idx_to_remove)
+    RHS <- RHS %>% remove_columns(idx_to_remove)
 
   }
 

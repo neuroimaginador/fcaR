@@ -8,6 +8,7 @@ Enhancements:
 * Added functions %holds_in% and %respects%, which check the validity of a set of implications in a formal context, and if a set of attribute sets respect an implication set.
 * Added functions %entails% and %~% to check the entailment and equivalence between two implication sets.
 * Added new convenience function to map attributes between SparseSets, so computing intents, extents and closures is more robust.
+* New functionality: Conceptual scaling, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.
 
 # fcaR 1.0.7
 

@@ -41,6 +41,7 @@ test_that("fcaR operates on implications", {
   fc$find_implications()
 
   # Cardinality
+  # TODO: Check that cardinality is an integer
   expect_is(fc$implications$cardinality(), "integer")
 
   # Rule size
@@ -58,6 +59,7 @@ test_that("fcaR operates on implications", {
 
   # At this moment, we're at a fixed point, but we could apply
   # some more rules if needed:
+  # TODO: Revisar Rsimplification conejemplo planets
   expect_error(fc$implications$apply_rules(rules = equivalencesRegistry$get_entry_names(),
                                            reorder = TRUE,
                                            parallelize = FALSE), NA)
@@ -130,7 +132,7 @@ test_that("fcaR checks entailment and equivalence of implication sets", {
   imps2 <- imps$clone()
   # imps2 is an equivalent set of implications
   # where we have removed redundancies
-  imps2$apply_rules(c("simp", "rsimp"))
+  imps2$apply_rules(c("simp"))
   # Any implication in imps2 follows from imps
   expect_true(all(imps %entails% imps2))
   # And viceversa
@@ -150,6 +152,7 @@ test_that("fcaR adds and appends implications", {
 
   fc <- FormalContext$new(I = Mushroom)
 
+  # TODO: Falla cuando se añaden implicaciones a algo vacío
   fc$implications$add(mush_clean)
 
   fc$implications$add(fc$implications)
@@ -299,8 +302,8 @@ test_that("fcaR gets LHS and RHS of implications", {
   fc <- FormalContext$new(I = I)
   fc$find_implications()
 
-  expect_is(fc$implications$get_LHS_matrix(), "dgCMatrix")
-  expect_is(fc$implications$get_RHS_matrix(), "dgCMatrix")
+  expect_is(fc$implications$get_LHS_matrix(), "SpM")
+  expect_is(fc$implications$get_RHS_matrix(), "SpM")
 
 })
 
@@ -348,10 +351,9 @@ test_that("fcaR simplifies implications", {
   fc <- FormalContext$new(I = I)
   fc$find_implications()
 
-  L <- .simplification(LHS = fc$implications$get_LHS_matrix(),
+  L <- .simplificationSpM(LHS = fc$implications$get_LHS_matrix(),
                        RHS = fc$implications$get_RHS_matrix(),
-                       attributes = fc$attributes,
-                       trace = TRUE)
+                       attributes = fc$attributes)
 
   expect_is(L, "list")
 
@@ -411,6 +413,7 @@ test_that("fcaR filters and removes implications", {
   fc <- FormalContext$new(I = I)
   fc$find_implications()
 
+  # TODO: FALLA el filtrado
   expect_error(fc$implications$filter(lhs = fc$attributes[1], rhs = fc$attributes[1:2]), NA)
 
   expect_warning(fc$implications$filter(lhs = fc$attributes[6], rhs = fc$attributes[3]))
@@ -583,6 +586,7 @@ test_that("fcaR subsets implications", {
   fc$find_implications()
 
   expect_error(fc$implications[fc$implications$support() > 0.1], NA)
+  # TODO: FALLA
   expect_error(fc$implications[-c(1:2)], NA)
   expect_error(fc$implications[c(-1, 2)])
   expect_error(fc$implications[0], NA)

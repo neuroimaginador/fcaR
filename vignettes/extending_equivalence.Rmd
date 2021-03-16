@@ -97,14 +97,17 @@ In this case, we begin by defining the method function:
 ```{r}
 random_reorder <- function(LHS, RHS, attributes) {
   
-  # Remember: attributes are in rows, implications are
-  # in columns.
-  # Random order for columns:
-  o <- sample(ncol(LHS), ncol(LHS))
+  imps <- ImplicationSet$new(attributes = attributes, 
+                             lhs = LHS, 
+                             rhs = RHS)
+  o <- sample(imps$cardinality())
   
-  # Return the reordered implications
-  return(list(lhs = LHS[, o],
-              rhs = RHS[, o]))
+  # Reorder implications
+  imps <- imps[o]
+  lhs <- imps$get_LHS_matrix()
+  rhs <- imps$get_RHS_matrix()
+  return(list(lhs = lhs,
+              rhs = rhs))
   
 }
 ```

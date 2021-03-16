@@ -330,15 +330,49 @@ SparseVector S4toSparse(S4 A) {
     insertArray(&(V.x), ax[i]);
 
   }
-  insertArray(&(V.p), 0);
+  // insertArray(&(V.p), 0);
 
-  if (V.i.used > 0) {
+  for (size_t i = 0; i < ap.size(); i++) {
 
-    insertArray(&(V.p), V.i.used);
+    insertArray(&(V.p), ap[i]);
 
-  } else {
+  }
 
-    insertArray(&(V.p), 0);
+  // if (V.i.used > 0) {
+  //
+  //   insertArray(&(V.p), V.i.used);
+  //
+  // } else {
+  //
+  //   insertArray(&(V.p), 0);
+  //
+  // }
+
+  return V;
+
+}
+
+SparseVector EnvtoSparse(Environment A) {
+
+  IntegerVector ap = A["pp"];
+  IntegerVector ai = A["pi"];
+  NumericVector ax = A["px"];
+  int nrow = A["pnrow"];
+
+  SparseVector V;
+  initVector(&V, nrow);
+
+  for (size_t i = 0; i < ai.size(); i++) {
+
+    insertArray(&(V.i), ai[i] - 1);
+    insertArray(&(V.x), ax[i]);
+
+  }
+  // insertArray(&(V.p), 0);
+
+  for (size_t i = 0; i < ap.size(); i++) {
+
+    insertArray(&(V.p), ap[i]);
 
   }
 
@@ -415,6 +449,81 @@ S4 SparseToS4_fast(SparseVector V) {
   res.slot("i") = i;
   res.slot("Dim") = dims;
   res.slot("p") = p;
+
+  return(res);
+
+}
+
+List SparseToList(SparseVector V) {
+
+  IntegerVector i(V.i.used);
+  NumericVector x(V.x.used);
+  IntegerVector dims(2);
+  IntegerVector p(V.p.used);
+
+  if (V.i.used > 0) {
+
+    memcpy(i.begin(), V.i.array, V.i.used * sizeof(int));
+    memcpy(x.begin(), V.x.array, V.x.used * sizeof(double));
+
+  }
+
+  if (V.p.used > 0) {
+
+    memcpy(&(p[0]), V.p.array, V.p.used * sizeof(int));
+
+  }
+
+  dims[0] = V.length;
+  dims[1] = V.p.used - 1;
+
+  List res = List::create(
+    _["x"] = x,
+    _["i"] = i,
+    _["Dim"] = dims,
+    _["p"] = p
+  );
+
+  return(res);
+
+}
+
+Environment SparseToEnv(SparseVector V) {
+
+  IntegerVector i(V.i.used);
+  NumericVector x(V.x.used);
+  IntegerVector dims(2);
+  IntegerVector p(V.p.used);
+
+  if (V.i.used > 0) {
+
+    memcpy(i.begin(), V.i.array, V.i.used * sizeof(int));
+    memcpy(x.begin(), V.x.array, V.x.used * sizeof(double));
+
+  }
+
+  for (int r = 0; r < i.size(); r++) {
+
+    i[r] = i[r] + 1;
+
+  }
+
+  if (V.p.used > 0) {
+
+    memcpy(&(p[0]), V.p.array, V.p.used * sizeof(int));
+
+  }
+
+  dims[0] = V.length;
+  dims[1] = V.p.used - 1;
+
+  Environment res = new_env();
+  res.assign("pi", i);
+  res.assign("pp", p);
+  res.assign("px", x);
+  res.assign("pnrow", V.length);
+
+  res.attr("class") = "SpM";
 
   return(res);
 
@@ -501,6 +610,27 @@ S4 set_difference(IntegerVector xi,
                                     number);
 
   S4 res2 = SparseToS4_fast(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
+// [[Rcpp::export]]
+Environment set_difference_SpM(IntegerVector xi,
+                  IntegerVector xp,
+                  NumericVector xx,
+                  IntegerVector yi,
+                  IntegerVector yp,
+                  NumericVector yx,
+                  int number) {
+
+  SparseVector res = set_difference_sparse(xi, xp, xx,
+                                           yi, yp, yx,
+                                           number);
+
+  Environment res2 = SparseToEnv(res);
 
   freeVector(&res);
 
@@ -596,6 +726,223 @@ S4 set_difference_single(IntegerVector xi,
 
 }
 
+// [[Rcpp::export]]
+Environment set_difference_single_SpM(IntegerVector xi,
+                         IntegerVector xp,
+                         NumericVector xx,
+                         IntegerVector yi,
+                         IntegerVector yp,
+                         NumericVector yx,
+                         int number) {
+
+  SparseVector res = set_difference_sparse1(xi, xp, xx,
+                                            yi, yp, yx,
+                                            number);
+
+  Environment res2 = SparseToEnv(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
+SparseVector setunion_matrix(IntegerVector xi,
+                             IntegerVector xp,
+                             NumericVector xx,
+                             IntegerVector yi,
+                             IntegerVector yp,
+                             NumericVector yx,
+                             int number) {
+
+  SparseVector res;
+  initVector(&res, number);
+
+  insertArray(&(res.p), 0);
+  int count = 0;
+  for (size_t ip = 0; ip < xp.length() - 1; ip++) {
+
+    int ymin = yp[ip];
+    int ymax = yp[ip + 1];
+    int xmin = xp[ip];
+    int xmax = xp[ip + 1];
+    size_t j = ymin;
+
+    for (size_t i = xmin; i < xmax; i++) {
+
+      while ((j < ymax) & (yi[j] < xi[i])) {
+
+        insertArray(&(res.i), yi[j]);
+        insertArray(&(res.x), yx[j]);
+        j++;
+        count++;
+
+      }
+
+      if (yi[j] == xi[i]) {
+
+        if (xx[i] > yx[j]) {
+
+          insertArray(&(res.i), xi[i]);
+          insertArray(&(res.x), xx[i]);
+          j++;
+          count++;
+
+        } else {
+
+          insertArray(&(res.i), yi[j]);
+          insertArray(&(res.x), yx[j]);
+          j++;
+          count++;
+
+        }
+
+      } else {
+
+        insertArray(&(res.i), xi[i]);
+        insertArray(&(res.x), xx[i]);
+        count++;
+
+      }
+
+    }
+
+    while (j < ymax) {
+
+      insertArray(&(res.i), yi[j]);
+      insertArray(&(res.x), yx[j]);
+      j++;
+      count++;
+
+    }
+
+    insertArray(&(res.p), count);
+
+  }
+
+  return res;
+
+}
+
+// [[Rcpp::export]]
+S4 set_union_sparse(IntegerVector xi,
+                    IntegerVector xp,
+                    NumericVector xx,
+                    IntegerVector yi,
+                    IntegerVector yp,
+                    NumericVector yx,
+                    int number) {
+
+  SparseVector res = setunion_matrix(xi, xp, xx,
+                                     yi, yp, yx,
+                                     number);
+
+  S4 res2 = SparseToS4_fast(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
+// [[Rcpp::export]]
+Environment set_union_SpM(IntegerVector xi,
+                          IntegerVector xp,
+                          NumericVector xx,
+                          IntegerVector yi,
+                          IntegerVector yp,
+                          NumericVector yx,
+                          int number) {
+
+  SparseVector res = setunion_matrix(xi, xp, xx,
+                                     yi, yp, yx,
+                                     number);
+
+  Environment res2 = SparseToEnv(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
+// [[Rcpp::export]]
+S4 flatten_sparse_C(IntegerVector p,
+                    IntegerVector i,
+                    NumericVector x,
+                    NumericVector dims) {
+
+  int num_rows = dims[0];
+  int num_cols = dims[1];
+
+  NumericVector v(num_rows);
+
+  for (int x_index = 0; x_index < num_cols; x_index++) {
+
+    int start_index = p[x_index], end_index = p[x_index + 1];
+
+    for (int j = start_index; j < end_index; j++) {
+
+      if (x[j] > v[i[j]]) {
+
+        v[i[j]] = x[j];
+
+      }
+
+    }
+
+  }
+
+  SparseVector res;
+  initVector(&res, num_rows);
+  as_sparse(v, &res);
+
+  S4 resS4 = SparseToS4_fast(res);
+  freeVector(&res);
+
+  return resS4;
+
+}
+
+
+// [[Rcpp::export]]
+Environment flatten_sparse_SpM(IntegerVector p,
+                    IntegerVector i,
+                    NumericVector x,
+                    NumericVector dims) {
+
+  int num_rows = dims[0];
+  int num_cols = dims[1];
+
+  NumericVector v(num_rows);
+
+  for (int x_index = 0; x_index < num_cols; x_index++) {
+
+    int start_index = p[x_index], end_index = p[x_index + 1];
+
+    for (int j = start_index; j < end_index; j++) {
+
+      if (x[j] > v[i[j]]) {
+
+        v[i[j]] = x[j];
+
+      }
+
+    }
+
+  }
+
+  SparseVector res;
+  initVector(&res, num_rows);
+  as_sparse(v, &res);
+
+  Environment resS4 = SparseToEnv(res);
+  freeVector(&res);
+
+  return resS4;
+
+}
+
 NumericVector as_vector(SparseVector v) {
 
   NumericVector x(v.length);
@@ -615,18 +962,46 @@ SparseVector as_sparse(NumericVector v) {
   SparseVector res;
   initVector(&res, v.size());
 
+  insertArray(&(res.p), 0);
+  int count = 0;
+
   for (int i = 0; i < v.size(); i++) {
 
     if (v[i] > 0) {
 
       insertArray(&(res.i), i);
       insertArray(&(res.x), v[i]);
+      count++;
 
     }
 
   }
 
+  insertArray(&(res.p), count);
+
   return res;
+
+}
+
+void as_sparse(NumericVector v, SparseVector *res) {
+
+  reinitVector(res);
+  insertArray(&(res->p), 0);
+  int count = 0;
+
+  for (int i = 0; i < v.size(); i++) {
+
+    if (v[i] > 0) {
+
+      insertArray(&(res->i), i);
+      insertArray(&(res->x), v[i]);
+      count++;
+
+    }
+
+  }
+
+  insertArray(&(res->p), count);
 
 }
 
@@ -717,6 +1092,61 @@ double get_element(SparseVector v, int n) {
     }
 
   }
+
+  return res;
+
+}
+
+void transposeVector(SparseVector A, SparseVector* B) {
+
+  int count_p = 0;
+  insertArray(&(B->p), count_p);
+
+  for (int row = 0; row < A.length; row++) {
+
+    for (int col = 0; col < A.p.used - 1; col++) {
+
+      for (int idx = A.p.array[col]; idx < A.p.array[col + 1]; idx++) {
+
+        if (A.i.array[idx] > row) continue;
+
+        if (A.i.array[idx] == row) {
+
+          insertArray(&(B->i), col);
+          insertArray(&(B->x), A.x.array[idx]);
+          count_p++;
+
+        }
+
+      }
+
+    }
+
+    insertArray(&(B->p), count_p);
+
+  }
+
+}
+
+//[[Rcpp::export]]
+Environment transposeSpM(Environment A) {
+
+  SparseVector R = EnvtoSparse(A);
+  SparseVector T;
+  initVector(&T, R.p.used - 1);
+
+  transposeVector(R, &T);
+
+  freeVector(&R);
+
+  Environment res = SparseToEnv(T);
+  freeVector(&T);
+
+  // CharacterVector d1, d2;
+  // List dn = A.attr("dimnames");
+  //
+  // List dn2 = List::create(dn[1], dn[0]);
+  // res.attr("dimnames") = dn2;
 
   return res;
 

@@ -14,13 +14,13 @@ match_attributes <- function(origin, target_attributes) {
   ii <- which(!is.na(idx))
   v <- origin$get_vector()
 
+  M <- matrix(0, nrow = length(target_attributes), ncol = 1)
+  M[idx[ii]] <- (v %>% to_matrix.SpM())[ii]
+
   target <- SparseSet$new(attributes = target_attributes,
-                          M = Matrix::sparseMatrix(
-                            i = idx[ii],
-                            j = rep(1, length(ii)),
-                            x = v[ii],
-                            dims = c(length(target_attributes), 1))
-  )
+                          M = new_spm(M))
+
+  # print(target)
 
   return(target)
 

@@ -1,15 +1,9 @@
 .process_batch <- function(LHS, RHS, attributes, rules, verbose = TRUE) {
 
   # Initialize results
-  new_LHS <- Matrix::Matrix(0,
-                            nrow = nrow(LHS),
-                            ncol = 1,
-                            sparse = TRUE)
+  new_LHS <- NULL#zeroSpM(nrow = nrow.SpM(LHS), ncol = 1)
 
-  new_RHS <- Matrix::Matrix(0,
-                            nrow = nrow(LHS),
-                            ncol = 1,
-                            sparse = TRUE)
+  new_RHS <- NULL#zeroSpM(nrow = nrow.SpM(LHS), ncol = 1)
 
   # Look up the equivalence rules in the registry
   methods <- lapply(rules,
@@ -27,7 +21,7 @@
 
   old_LHS <- LHS
   old_RHS <- RHS
-  new_cols <- ncol(LHS)
+  new_cols <- ncol.SpM(LHS)
 
   # Loop over all functions
   for (j in seq_along(methods)) {
@@ -43,7 +37,7 @@
     old_LHS <- L$lhs
     old_RHS <- L$rhs
 
-    new_cols <- ncol(old_LHS)
+    new_cols <- ncol.SpM(old_LHS)
 
     if (verbose) {
 
@@ -56,8 +50,8 @@
   }
 
   # Add the computed implications to the set
-  new_LHS <- cbind(new_LHS, old_LHS)
-  new_RHS <- cbind(new_RHS, old_RHS)
+  new_LHS <- cbindSpM(new_LHS, old_LHS)
+  new_RHS <- cbindSpM(new_RHS, old_RHS)
 
   L <- .clean(new_LHS, new_RHS)
 

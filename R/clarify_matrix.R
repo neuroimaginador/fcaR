@@ -1,9 +1,9 @@
 .clarify_matrix <- function(I, rows, cols) {
 
-  identical <- .equal_sets(I)
+  identical <- equalSpM(I)
 
-  equal_attributes <- which(Matrix::colSums(identical) > 1)
-  independent_att <- which(Matrix::colSums(identical) == 1)
+  equal_attributes <- which(colSums(identical) > 1)
+  independent_att <- which(colSums(identical) == 1)
 
   new_att <- c(cols[independent_att])
   keep <- c(independent_att)
@@ -13,8 +13,8 @@
     j <- equal_attributes[1]
     keep <- c(keep, j)
 
-    v <- identical[, j]
-    i <- which(v > 0)
+    # v <- identical %>% extract_columns(j)
+    i <- (identical %>% extract_columns(j))$pi
     new_att <- c(new_att,
                  paste0("[",
                         stringr::str_flatten(cols[i],
@@ -25,9 +25,9 @@
   }
 
   my_I <- I
-  my_I <- my_I[, keep]
-  colnames(my_I) <- new_att
-  rownames(my_I) <- rows
+  my_I <- my_I %>% extract_columns(keep)
+  assign_colnamesSpM(my_I, new_att)
+  assign_rownamesSpM(my_I, rows)
 
   return(my_I)
 

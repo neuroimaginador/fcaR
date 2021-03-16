@@ -55,11 +55,14 @@ void cloneVector(SparseVector *a, SparseVector b);
 void add_column(SparseVector *a, SparseVector b);
 
 SparseVector S4toSparse(S4 A);
+SparseVector EnvtoSparse(Environment A);
 S4 SparseToS4(SparseVector V);
+Environment SparseToEnv(SparseVector V);
 S4 SparseToS4_fast(SparseVector V);
 
 NumericVector as_vector(SparseVector v);
 SparseVector as_sparse(NumericVector v);
+void as_sparse(NumericVector v, SparseVector *res);
 SparseVector as_sparse(double* v, int length);
 SparseVector as_sparse(double* v,
                        int nrow, int ncol,

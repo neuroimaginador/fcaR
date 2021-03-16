@@ -13,11 +13,19 @@ imps_to_arules <- function(LHS, RHS, attributes,
                   RHS = RHS,
                   attributes = attributes)
 
-  LHS <- methods::as(L$lhs, "ngCMatrix")
+  LHS <- Matrix::sparseMatrix(i = L$lhs$pi,
+                              p = L$lhs$pp,
+                              x = L$lhs$px,
+                              dims = c(L$lhs$pnrow, length(L$lhs$pp) - 1)) %>%
+    methods::as("ngCMatrix")
   LHS <- methods::as(LHS, "itemMatrix")
   arules::itemLabels(LHS) <- attributes
 
-  RHS <- methods::as(L$rhs, "ngCMatrix")
+  RHS <- Matrix::sparseMatrix(i = L$rhs$pi,
+                              p = L$rhs$pp,
+                              x = L$rhs$px,
+                              dims = c(L$rhs$pnrow, length(L$rhs$pp) - 1)) %>%
+    methods::as("ngCMatrix")
   RHS <- methods::as(RHS, "itemMatrix")
   arules::itemLabels(RHS) <- attributes
 
@@ -28,12 +36,12 @@ imps_to_arules <- function(LHS, RHS, attributes,
   arules::info(rules) <- list(data = "",
                               support = 0,
                               confidence = 1,
-                              ntransactions = ncol(I))
+                              ntransactions = ncol.SpM(I))
 
   if (quality) {
 
     arules::quality(rules) <- arules::interestMeasure(rules,
-                                                      transactions = methods::as(methods::as(I, "ngCMatrix"), "transactions"))
+                                                      transactions = to_transactions.SpM(I))
 
   }
 
