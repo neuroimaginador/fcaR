@@ -215,9 +215,9 @@ extract_columns <- function(private, idx) {
 
 }
 
-#' #' @export
-#' #' @noRd
-#' `[.SpM` <- function(x, ...) x %>% extract_columns(...)
+# @export
+# @noRd
+# `[.SpM` <- function(x, ...) x %>% extract_columns(...)
 #'
 remove_columns = function(private, idx) {
 
