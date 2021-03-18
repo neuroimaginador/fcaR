@@ -713,19 +713,21 @@ FormalContext <- R6::R6Class(
 
       # And redundant objects
       my_I <- .clarify_matrix(tSpM(my_I),
-                              rows = colnames(my_I),
+                              rows = colnamesSpM(my_I),
                               cols = self$objects)
-      my_I <- tSpM(my_I) %>% to_matrix.SpM()
+      new_I <- tSpM(my_I) %>% to_matrix.SpM()
+      dimnames(new_I) <- list(colnamesSpM(my_I),
+                              rownamesSpM(my_I))
 
       if (copy) {
 
-        fc2 <- FormalContext$new(my_I)
+        fc2 <- FormalContext$new(new_I)
 
         return(fc2)
 
       } else {
 
-        self$initialize(my_I)
+        self$initialize(new_I)
 
         return(invisible(self))
 
