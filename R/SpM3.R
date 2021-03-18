@@ -398,9 +398,12 @@ replicate <- function(private, n) {
 #' @export
 print.SpM <- function(x, ...) {
 
-  .print_matrix(M = to_matrix.SpM(x),
+  matp <- .print_matrix(M = to_matrix.SpM(x),
                 objects = x$dimnames[[1]],
                 attributes = x$dimnames[[2]])
+
+  M <- matp$mat
+  cat(M)
 
 }
 
