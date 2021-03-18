@@ -5,41 +5,6 @@
 
 using namespace Rcpp;
 
-// print_matrix
-void print_matrix(NumericMatrix I);
-RcppExport SEXP _fcaR_print_matrix(SEXP ISEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    print_matrix(I);
-    return R_NilValue;
-END_RCPP
-}
-// print_vector
-void print_vector(NumericVector I, int sz);
-RcppExport SEXP _fcaR_print_vector(SEXP ISEXP, SEXP szSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type I(ISEXP);
-    Rcpp::traits::input_parameter< int >::type sz(szSEXP);
-    print_vector(I, sz);
-    return R_NilValue;
-END_RCPP
-}
-// get_element_array
-double get_element_array(NumericVector I, int i, int j, int k);
-RcppExport SEXP _fcaR_get_element_array(SEXP ISEXP, SEXP iSEXP, SEXP jSEXP, SEXP kSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type I(ISEXP);
-    Rcpp::traits::input_parameter< int >::type i(iSEXP);
-    Rcpp::traits::input_parameter< int >::type j(jSEXP);
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_element_array(I, i, j, k));
-    return rcpp_result_gen;
-END_RCPP
-}
 // next_closure_implications
 List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool save_concepts, bool verbose);
 RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
@@ -52,42 +17,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type save_concepts(save_conceptsSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
     rcpp_result_gen = Rcpp::wrap(next_closure_implications(I, grades_set, attrs, save_concepts, verbose));
-    return rcpp_result_gen;
-END_RCPP
-}
-// next_closure_implications_bg
-List next_closure_implications_bg(NumericMatrix I, List grades_set, StringVector attrs, S4 lhs_bg, S4 rhs_bg, int n_bg, bool save_concepts, bool verbose);
-RcppExport SEXP _fcaR_next_closure_implications_bg(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP lhs_bgSEXP, SEXP rhs_bgSEXP, SEXP n_bgSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
-    Rcpp::traits::input_parameter< S4 >::type lhs_bg(lhs_bgSEXP);
-    Rcpp::traits::input_parameter< S4 >::type rhs_bg(rhs_bgSEXP);
-    Rcpp::traits::input_parameter< int >::type n_bg(n_bgSEXP);
-    Rcpp::traits::input_parameter< bool >::type save_concepts(save_conceptsSEXP);
-    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(next_closure_implications_bg(I, grades_set, attrs, lhs_bg, rhs_bg, n_bg, save_concepts, verbose));
-    return rcpp_result_gen;
-END_RCPP
-}
-// next_closure_implications_bg2
-List next_closure_implications_bg2(NumericMatrix I, List grades_set, StringVector attrs, S4 lhs_bg, S4 rhs_bg, int n_bg, bool save_concepts, bool verbose);
-RcppExport SEXP _fcaR_next_closure_implications_bg2(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP lhs_bgSEXP, SEXP rhs_bgSEXP, SEXP n_bgSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
-    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
-    Rcpp::traits::input_parameter< S4 >::type lhs_bg(lhs_bgSEXP);
-    Rcpp::traits::input_parameter< S4 >::type rhs_bg(rhs_bgSEXP);
-    Rcpp::traits::input_parameter< int >::type n_bg(n_bgSEXP);
-    Rcpp::traits::input_parameter< bool >::type save_concepts(save_conceptsSEXP);
-    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(next_closure_implications_bg2(I, grades_set, attrs, lhs_bg, rhs_bg, n_bg, save_concepts, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -106,18 +35,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// compute_intent
-S4 compute_intent(S4 V, NumericMatrix I);
-RcppExport SEXP _fcaR_compute_intent(SEXP VSEXP, SEXP ISEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_intent(V, I));
-    return rcpp_result_gen;
-END_RCPP
-}
 // compute_intentSpM
 Environment compute_intentSpM(Environment V, NumericMatrix I);
 RcppExport SEXP _fcaR_compute_intentSpM(SEXP VSEXP, SEXP ISEXP) {
@@ -130,18 +47,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// compute_extent
-S4 compute_extent(S4 V, NumericMatrix I);
-RcppExport SEXP _fcaR_compute_extent(SEXP VSEXP, SEXP ISEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_extent(V, I));
-    return rcpp_result_gen;
-END_RCPP
-}
 // compute_extentSpM
 Environment compute_extentSpM(Environment V, NumericMatrix I);
 RcppExport SEXP _fcaR_compute_extentSpM(SEXP VSEXP, SEXP ISEXP) {
@@ -151,18 +56,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Environment >::type V(VSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
     rcpp_result_gen = Rcpp::wrap(compute_extentSpM(V, I));
-    return rcpp_result_gen;
-END_RCPP
-}
-// compute_closure
-S4 compute_closure(S4 V, NumericMatrix I);
-RcppExport SEXP _fcaR_compute_closure(SEXP VSEXP, SEXP ISEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_closure(V, I));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -249,36 +142,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// which_at_col
-IntegerVector which_at_col(IntegerVector x_i, IntegerVector x_p, int col);
-RcppExport SEXP _fcaR_which_at_col(SEXP x_iSEXP, SEXP x_pSEXP, SEXP colSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type x_i(x_iSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type x_p(x_pSEXP);
-    Rcpp::traits::input_parameter< int >::type col(colSEXP);
-    rcpp_result_gen = Rcpp::wrap(which_at_col(x_i, x_p, col));
-    return rcpp_result_gen;
-END_RCPP
-}
-// set_difference
-S4 set_difference(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
-RcppExport SEXP _fcaR_set_difference(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type xi(xiSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type xp(xpSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type xx(xxSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type yi(yiSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type yp(ypSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type yx(yxSEXP);
-    Rcpp::traits::input_parameter< int >::type number(numberSEXP);
-    rcpp_result_gen = Rcpp::wrap(set_difference(xi, xp, xx, yi, yp, yx, number));
-    return rcpp_result_gen;
-END_RCPP
-}
 // set_difference_SpM
 Environment set_difference_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
 RcppExport SEXP _fcaR_set_difference_SpM(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
@@ -293,23 +156,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type yx(yxSEXP);
     Rcpp::traits::input_parameter< int >::type number(numberSEXP);
     rcpp_result_gen = Rcpp::wrap(set_difference_SpM(xi, xp, xx, yi, yp, yx, number));
-    return rcpp_result_gen;
-END_RCPP
-}
-// set_difference_single
-S4 set_difference_single(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
-RcppExport SEXP _fcaR_set_difference_single(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type xi(xiSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type xp(xpSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type xx(xxSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type yi(yiSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type yp(ypSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type yx(yxSEXP);
-    Rcpp::traits::input_parameter< int >::type number(numberSEXP);
-    rcpp_result_gen = Rcpp::wrap(set_difference_single(xi, xp, xx, yi, yp, yx, number));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -330,23 +176,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// set_union_sparse
-S4 set_union_sparse(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
-RcppExport SEXP _fcaR_set_union_sparse(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type xi(xiSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type xp(xpSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type xx(xxSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type yi(yiSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type yp(ypSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type yx(yxSEXP);
-    Rcpp::traits::input_parameter< int >::type number(numberSEXP);
-    rcpp_result_gen = Rcpp::wrap(set_union_sparse(xi, xp, xx, yi, yp, yx, number));
-    return rcpp_result_gen;
-END_RCPP
-}
 // set_union_SpM
 Environment set_union_SpM(IntegerVector xi, IntegerVector xp, NumericVector xx, IntegerVector yi, IntegerVector yp, NumericVector yx, int number);
 RcppExport SEXP _fcaR_set_union_SpM(SEXP xiSEXP, SEXP xpSEXP, SEXP xxSEXP, SEXP yiSEXP, SEXP ypSEXP, SEXP yxSEXP, SEXP numberSEXP) {
@@ -361,20 +190,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type yx(yxSEXP);
     Rcpp::traits::input_parameter< int >::type number(numberSEXP);
     rcpp_result_gen = Rcpp::wrap(set_union_SpM(xi, xp, xx, yi, yp, yx, number));
-    return rcpp_result_gen;
-END_RCPP
-}
-// flatten_sparse_C
-S4 flatten_sparse_C(IntegerVector p, IntegerVector i, NumericVector x, NumericVector dims);
-RcppExport SEXP _fcaR_flatten_sparse_C(SEXP pSEXP, SEXP iSEXP, SEXP xSEXP, SEXP dimsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type p(pSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type i(iSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type dims(dimsSEXP);
-    rcpp_result_gen = Rcpp::wrap(flatten_sparse_C(p, i, x, dims));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -405,31 +220,18 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
-    {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
-    {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 5},
-    {"_fcaR_next_closure_implications_bg", (DL_FUNC) &_fcaR_next_closure_implications_bg, 8},
-    {"_fcaR_next_closure_implications_bg2", (DL_FUNC) &_fcaR_next_closure_implications_bg2, 8},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 5},
-    {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
     {"_fcaR_compute_intentSpM", (DL_FUNC) &_fcaR_compute_intentSpM, 2},
-    {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 2},
     {"_fcaR_compute_extentSpM", (DL_FUNC) &_fcaR_compute_extentSpM, 2},
-    {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 2},
     {"_fcaR_compute_closureSpM", (DL_FUNC) &_fcaR_compute_closureSpM, 2},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},
     {"_fcaR_is_equal_set_C", (DL_FUNC) &_fcaR_is_equal_set_C, 10},
-    {"_fcaR_which_at_col", (DL_FUNC) &_fcaR_which_at_col, 3},
-    {"_fcaR_set_difference", (DL_FUNC) &_fcaR_set_difference, 7},
     {"_fcaR_set_difference_SpM", (DL_FUNC) &_fcaR_set_difference_SpM, 7},
-    {"_fcaR_set_difference_single", (DL_FUNC) &_fcaR_set_difference_single, 7},
     {"_fcaR_set_difference_single_SpM", (DL_FUNC) &_fcaR_set_difference_single_SpM, 7},
-    {"_fcaR_set_union_sparse", (DL_FUNC) &_fcaR_set_union_sparse, 7},
     {"_fcaR_set_union_SpM", (DL_FUNC) &_fcaR_set_union_SpM, 7},
-    {"_fcaR_flatten_sparse_C", (DL_FUNC) &_fcaR_flatten_sparse_C, 4},
     {"_fcaR_flatten_sparse_SpM", (DL_FUNC) &_fcaR_flatten_sparse_SpM, 4},
     {"_fcaR_transposeSpM", (DL_FUNC) &_fcaR_transposeSpM, 1},
     {NULL, NULL, 0}
