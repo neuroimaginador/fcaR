@@ -5,6 +5,8 @@ test_that("fcaR operates on sparse sets", {
   A <- matrix(1, nrow = 10, ncol = 1) %>% new_spm()
   B <- matrix(1, nrow = 10, ncol = 5) %>% new_spm()
 
+  expect_error(print(A), NA)
+
   expect_error(C <- .difference2(A, B), NA)
   expect_error(C <- .difference2(B, B), NA)
   expect_error(C <- .difference2(B, A), NA)
