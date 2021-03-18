@@ -717,21 +717,21 @@ O6
 <div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="va">fc_planets</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span>
-<span class="co">#&gt;       A1   A2   A3   A4   A5   A6   A7  </span>
-<span class="co">#&gt;   O1  X                   X    X        </span>
-<span class="co">#&gt;   O2  X              X              X   </span>
-<span class="co">#&gt;   O3  X              X         X        </span>
-<span class="co">#&gt;   O4            X         X    X        </span>
-<span class="co">#&gt;   O5       X              X    X</span>
+<span class="co">#&gt;                      small   medium   large   near   far   moon   no_moon  </span>
+<span class="co">#&gt;               Pluto    X                              X     X              </span>
+<span class="co">#&gt;    [Mercury, Venus]    X                       X                     X     </span>
+<span class="co">#&gt;       [Earth, Mars]    X                       X            X              </span>
+<span class="co">#&gt;   [Jupiter, Saturn]                     X             X     X              </span>
+<span class="co">#&gt;   [Uranus, Neptune]            X                      X     X</span>
 
 <span class="va">fc_I</span><span class="op">$</span><span class="fu">clarify</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 5 objects and 5 attributes.</span>
-<span class="co">#&gt;       A1    A2    A3    A4   A5   </span>
-<span class="co">#&gt;   O1  0.5   0.5    1    0     0   </span>
-<span class="co">#&gt;   O2   1     0     0    0     1   </span>
-<span class="co">#&gt;   O3   0     1    0.5   0     0   </span>
-<span class="co">#&gt;   O4   1    0.5    0    0     0   </span>
-<span class="co">#&gt;   O5   0     0     0    1    0.5</span></pre></div>
+<span class="co">#&gt;             P3    P4    P5    P6   [P1, P2]  </span>
+<span class="co">#&gt;         O1  0.5   0.5    1    0       0      </span>
+<span class="co">#&gt;         O2   1     0     0    0       1      </span>
+<span class="co">#&gt;         O4   0     1    0.5   0       0      </span>
+<span class="co">#&gt;         O5   1    0.5    0    0       0      </span>
+<span class="co">#&gt;   [O3, O6]   0     0     0    1      0.5</span></pre></div>
 <p>Note that merged attributes or objects are stored in the new formal context by using squared brackets to unify them, e.g. <code>[Mercury, Venus]</code>.</p>
 </div>
 <div id="extracting-implications-and-concepts" class="section level2">
