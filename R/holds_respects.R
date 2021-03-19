@@ -48,6 +48,7 @@
 #' @return A logical matrix with as many rows as \code{SparseSet}s and as many columns as implications in the \code{ImplicationSet}. A \code{TRUE} in element (i, j) of the result means that the i-th \code{SparseSet} respects the j-th implication of the \code{ImplicationSet}.
 #'
 #' @export
+#' @importFrom stringr str_pad str_length
 #'
 #' @examples
 #' fc <- FormalContext$new(planets)
@@ -81,6 +82,18 @@
 
     res <- lapply(set, function(s) .respect(s, imps)) %>%
       purrr::reduce(cbind)
+
+    setnumber <- stringr::str_pad(seq_along(set),
+                                  width = stringr::str_length(length(set)),
+                                  side = "left",
+                                  pad = "0")
+    impnumber <- stringr::str_pad(seq(imps$cardinality()),
+                                  width = stringr::str_length(imps$cardinality()),
+                                  side = "left",
+                                  pad = "0")
+
+    colnames(res) <- paste0("set_", setnumber)
+    rownames(res) <- paste0("imp_", impnumber)
 
     return(t(res))
 
