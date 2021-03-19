@@ -323,9 +323,9 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.009 secs.
-#> --> Generalization: from 12 to 12 in 0.018 secs.
-#> Batch took 0.041 secs.
+#> --> Composition: from 12 to 12 in 0.001 secs.
+#> --> Generalization: from 12 to 12 in 0.001 secs.
+#> Batch took 0.005 secs.
 
 # Reduced set of implications
 fc$implications
@@ -348,6 +348,40 @@ All these functions work natively with fuzzy and with binary datasets.
 
 For more details on the methods implemented and further examples, see
 the vignettes in this package.
+
+## Changelog
+
+With respect to the CRAN version, the development version has the
+following changes.
+
+### fcaR 1.1.0
+
+Enhancements:
+
+-   Better printing of SparseSets.
+
+New functionality:
+
+-   Added function to compute the **difference** of two SparseSets.
+-   Added function to compute the **dual** of a FormalContext.
+-   Now one can create a FormalContext from a CSV, CXT or RDS file
+    directly, without needing to “load()” it.
+-   Added functions %holds\_in% and %respects%, which check the
+    **validity** of a set of implications in a formal context, and if a
+    list of attribute sets respect an implication set.
+-   Added functions %entails% and %\~% to check the **entailment** and
+    **equivalence** between two implication sets.
+-   Added new convenience function to map attributes between SparseSets,
+    so computing intents, extents and closures is more robust.
+-   **Conceptual scaling**, including nominal, ordinal, interordinal,
+    biordinal and interval scales for many-valued formal contexts. Also,
+    computation of background knowledge from the applied scales and of
+    the implications that hold in the formal context. Added new
+    vignette.
+
+Bugfixes:
+
+-   Minor bugfixes in several functions.
 
 ## References
 

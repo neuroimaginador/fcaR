@@ -728,7 +728,7 @@ ImplicationSet <- R6::R6Class(
       subsets <- subsetSpM(private$lhs_matrix,
                          private$I)
 
-      private$implication_support <- colSums(tSpM(subsets)) / subsets$pnrow
+      private$implication_support <- colSums(subsets) / nrow.SpM(subsets)
 
       return(private$implication_support)
 

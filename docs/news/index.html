@@ -145,13 +145,21 @@
 <p>Enhancements:</p>
 <ul>
 <li>Better printing of SparseSets.</li>
-<li>Added function to compute the difference of two SparseSets.</li>
-<li>Added function to compute the dual of a FormalContext.</li>
-<li>Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to “load()”.</li>
-<li>Added functions %holds_in% and %respects%, which check the validity of a set of implications in a formal context, and if a set of attribute sets respect an implication set.</li>
-<li>Added functions %entails% and %~% to check the entailment and equivalence between two implication sets.</li>
+</ul>
+<p>New functionality:</p>
+<ul>
+<li>Added function to compute the <strong>difference</strong> of two SparseSets.</li>
+<li>Added function to compute the <strong>dual</strong> of a FormalContext.</li>
+<li>Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to “load()” it.</li>
+<li>Added functions %holds_in% and %respects%, which check the <strong>validity</strong> of a set of implications in a formal context, and if a list of attribute sets respect an implication set.</li>
+<li>Added functions %entails% and %~% to check the <strong>entailment</strong> and <strong>equivalence</strong> between two implication sets.</li>
 <li>Added new convenience function to map attributes between SparseSets, so computing intents, extents and closures is more robust.</li>
-<li>New functionality: Conceptual scaling, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.</li>
+<li>
+<strong>Conceptual scaling</strong>, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.</li>
+</ul>
+<p>Bugfixes:</p>
+<ul>
+<li>Minor bugfixes in several functions.</li>
 </ul>
 </div>
     <div id="fcar-107" class="section level1">
