@@ -963,7 +963,7 @@ FormalContext <- R6::R6Class(
       # }
 
 
-      if (!is.null(private$bg_implications)) {
+      if (!is.null(private$bg_implications) && private$bg_implications$cardinality() > 0) {
 
         private$bg_implications <- reorder_attributes(
           private$bg_implications,
