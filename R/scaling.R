@@ -192,13 +192,13 @@ scale_context <- function(I, column, type, ...) {
   post <- seq(idx, ncol(I))[-1]
   V <- I[, idx]
   fun <- scalingRegistry$get_entry(type)$fun
-  scale_matrix <- fun(V, col_name = column, ...)
+  scale_matrix <- fun(as.matrix(V), col_name = column, ...)
 
   # The scale
   scale <- FormalContext$new(scale_matrix)
 
   # Derived context
-  M <- apply_scale(V, scale_matrix)
+  M <- apply_scale(as.matrix(V), scale_matrix)
 
   res <- cbind.data.frame(I[, prev], M, I[, post])
   colnames(res) <- c(colnames(I)[prev],
