@@ -13,7 +13,6 @@
   # Which are the rules applicable to the set S?
   S_subsets <- tSpM(subsetSpM(LHS, S))
 
-  # idx_subsets <- which(S_subsets)
   idx_subsets <- S_subsets$pi
 
   do_not_use <- rep(FALSE, ncol.SpM(LHS))
@@ -102,8 +101,6 @@
 }
 
 .simplification_logic <- function(S, LHS, RHS) {
-
-  # browser()
 
   # Equivalence II
   subsets <- subsetSpM(RHS, S) %>% tSpM()
