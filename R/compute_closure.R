@@ -132,7 +132,6 @@
 
   CD <- unionSpM(LHS, RHS)
 
-  # browser()
   intersections <- tSpM(.intersection(x = S, y = CD))
   idx_not_empty <- which(colSums(intersections) > 0)
 
