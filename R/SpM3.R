@@ -229,6 +229,11 @@ remove_columns = function(private, idx) {
   p_end <- private$pp[idx + 1]
   dp <- diff(private$pp)
   dp <- dp[-idx]
+  if (length(dp) == 0) {
+
+    dp <- 0
+
+  }
 
   if (length(p_init) > 1) {
 
@@ -293,6 +298,11 @@ insert_columns = function(private,
 
   dn <- private$dimnames
   # if (length(dn) > 1)
+  if (is.null(dn[[2]])) {
+
+    dn[[2]] <- rep("", length(private$pi_list) - length(M$pi_list))
+
+  }
   dn[[2]] <- append(dn[[2]], M$dimnames[[2]], after = after)
   private$dimnames <- dn
 
@@ -478,12 +488,16 @@ differenceSpM <- function(A, B) {
     (ncol.SpM(B) == 1) || (ncol.SpM(A) == 1)
   stopifnot(applicable)
 
+  dnA <- A$dimnames
+  dnB <- B$dimnames
+
   if (ncol.SpM(A) == ncol.SpM(B)) {
 
     A <- set_difference_SpM(A$pi - 1, A$pp, A$px,
                             B$pi - 1, B$pp, B$px,
                             nrow.SpM(A))
 
+    A$dimnames <- dnA
     return(A)
 
   }
@@ -495,6 +509,8 @@ differenceSpM <- function(A, B) {
     L <- set_difference_single_SpM(A$pi - 1, A$pp, A$px,
                                    B$pi - 1, B$pp, B$px,
                                    nrow.SpM(A))
+
+    L$dimnames <- dnA
 
     return(L)
 
@@ -512,6 +528,8 @@ differenceSpM <- function(A, B) {
     newA <- set_difference_SpM(newA$pi - 1, newA$pp, newA$px,
                                B$pi - 1, B$pp, B$px,
                                nrow.SpM(newA))
+
+    newA$dimnames <- dnB
 
     return(newA)
 

@@ -155,7 +155,9 @@ SparseSet <- R6::R6Class(
     #' @export
     get_vector = function() {
 
-      private$v
+      res <- private$v
+      class(res) <- "SpM"
+      return(res)
 
     },
 

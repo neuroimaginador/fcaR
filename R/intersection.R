@@ -5,7 +5,7 @@
                     as.integer(y$pp), as.integer(y$pi - 1), as.integer(dim.SpM(y)),
                     p)
 
-  M <- new_spm(i = i, p = p, nrow = dim.SpM(y)[2])
+  M <- new_spm(i = i + 1, p = p, nrow = dim.SpM(y)[2])
 
   return(M)
 
