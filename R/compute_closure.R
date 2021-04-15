@@ -68,7 +68,7 @@
       if (verbose) {
 
         print(idx_subsets)
-        print(SparseSet$new(attributes = attributes,
+        print(Set$new(attributes = attributes,
                             M = S))
         cat("\n")
 

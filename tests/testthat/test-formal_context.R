@@ -369,7 +369,7 @@ test_that("fcaR perform context scaling", {
 
 })
 
-test_that("fcaR computes intents, extents and closures of SparseSets", {
+test_that("fcaR computes intents, extents and closures of Sets", {
 
   objects <- paste0("O", 1:6)
   n_objects <- length(objects)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>R6 class for a fuzzy set with sparse internal representation — SparseSet • fcaR</title>
+<title>R6 class for a fuzzy set with sparse internal representation — Set • fcaR</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="R6 class for a fuzzy set with sparse internal representation — SparseSet" />
+<meta property="og:title" content="R6 class for a fuzzy set with sparse internal representation — Set" />
 <meta property="og:description" content="This class implements the data structure and methods for fuzzy sets." />
 <meta name="twitter:card" content="summary" />
 
@@ -121,8 +121,8 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>R6 class for a fuzzy set with sparse internal representation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/SparseSet.R'><code>R/SparseSet.R</code></a></small>
-    <div class="hidden name"><code>SparseSet.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/Set.R'><code>R/Set.R</code></a></small>
+    <div class="hidden name"><code>Set.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -137,18 +137,18 @@
 <h3>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>SparseSet$new()</code></a></p></li>
-<li><p><a href='#method-assign'><code>SparseSet$assign()</code></a></p></li>
-<li><p><a href='#method-get_vector'><code>SparseSet$get_vector()</code></a></p></li>
-<li><p><a href='#method-get_attributes'><code>SparseSet$get_attributes()</code></a></p></li>
-<li><p><a href='#method-length'><code>SparseSet$length()</code></a></p></li>
-<li><p><a href='#method-print'><code>SparseSet$print()</code></a></p></li>
-<li><p><a href='#method-to_latex'><code>SparseSet$to_latex()</code></a></p></li>
+<li><p><a href='#method-new'><code>Set$new()</code></a></p></li>
+<li><p><a href='#method-assign'><code>Set$assign()</code></a></p></li>
+<li><p><a href='#method-get_vector'><code>Set$get_vector()</code></a></p></li>
+<li><p><a href='#method-get_attributes'><code>Set$get_attributes()</code></a></p></li>
+<li><p><a href='#method-length'><code>Set$length()</code></a></p></li>
+<li><p><a href='#method-print'><code>Set$print()</code></a></p></li>
+<li><p><a href='#method-to_latex'><code>Set$to_latex()</code></a></p></li>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-<p>Creator for objects of class <code>SparseSet</code></p><h3>Usage</h3>
-<p><div class="r"></p><pre>SparseSet$new(attributes, M = NULL)</pre><p></div></p>
+<p>Creator for objects of class <code>Set</code></p><h3>Usage</h3>
+<p><div class="r"></p><pre>Set$new(attributes, M = NULL)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -161,11 +161,11 @@
 <p>If <code>M</code> is omitted, the fuzzy set is the empty set. Later, one can use the <code>assign</code> method to assign grades to any of its attributes.</p>
 
 <h3>Returns</h3>
-<p>An object of class <code>SparseSet</code>.</p>
+<p>An object of class <code>Set</code>.</p>
 <p><hr>
 <a id="method-assign"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/assign.html'>assign()</a></code></h3>
 <p>Assign grades to attributes in the set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>SparseSet$assign(attributes, values)</pre><p></div></p>
+<p><div class="r"></p><pre>Set$assign(attributes, values)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
@@ -181,35 +181,35 @@
 <p><hr>
 <a id="method-get_vector"></a></p><h3>Method <code>get_vector()</code></h3>
 <p>Internal <code>Matrix</code></p><h3>Usage</h3>
-<p><div class="r"></p><pre>SparseSet$get_vector()</pre><p></div></p>
+<p><div class="r"></p><pre>Set$get_vector()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The internal sparse <code>Matrix</code> representation of the set.</p>
 <p><hr>
 <a id="method-get_attributes"></a></p><h3>Method <code>get_attributes()</code></h3>
 <p>Attributes defined for the set</p><h3>Usage</h3>
-<p><div class="r"></p><pre>SparseSet$get_attributes()</pre><p></div></p>
+<p><div class="r"></p><pre>Set$get_attributes()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A character vector with the names of the attributes.</p>
 <p><hr>
 <a id="method-length"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/length.html'>length()</a></code></h3>
 <p>Number of attributes</p><h3>Usage</h3>
-<p><div class="r"></p><pre>SparseSet$length()</pre><p></div></p>
+<p><div class="r"></p><pre>Set$length()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The number of attributes that are defined for this fuzzy set.</p>
 <p><hr>
 <a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Prints the set to console</p><h3>Usage</h3>
-<p><div class="r"></p><pre>SparseSet$print()</pre><p></div></p>
+<p><div class="r"></p><pre>Set$print()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>A string with the elements of the set and their grades between brackets .</p>
 <p><hr>
 <a id="method-to_latex"></a></p><h3>Method <code>to_latex()</code></h3>
 <p>Write the set in LaTeX format</p><h3>Usage</h3>
-<p><div class="r"></p><pre>SparseSet$to_latex()</pre><p></div></p>
+<p><div class="r"></p><pre>Set$to_latex()</pre><p></div></p>
 
 <h3>Returns</h3>
 <p>The fuzzy set in LaTeX.</p>

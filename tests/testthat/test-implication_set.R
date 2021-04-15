@@ -316,13 +316,13 @@ test_that("fcaR computes closure wrt implications", {
   fc$implications$add(mush_clean)
 
   # A fuzzy set
-  A <- SparseSet$new(attributes = fc$attributes)
+  A <- Set$new(attributes = fc$attributes)
   A$assign(attributes = "CapColor=white", values = 1)
 
   # Compute the closure
   expect_error(cl <- fc$implications$closure(A, reduce = TRUE, verbose = TRUE), NA)
   # Associated attributes
-  expect_is(cl$closure, "SparseSet")
+  expect_is(cl$closure, "Set")
 
   expect_is(cl$implications, "ImplicationSet")
 
@@ -383,7 +383,7 @@ test_that("fcaR makes a recommendation", {
   fc$find_implications()
 
   # A fuzzy set
-  S <- SparseSet$new(attributes = fc$attributes)
+  S <- Set$new(attributes = fc$attributes)
   S$assign(P1 = 1)
 
   expect_error(fc$implications$recommend(S = S, attribute_filter = fc$attributes[1]), NA)
@@ -460,11 +460,11 @@ test_that("fcaR adds implications from scratch", {
 
   expect_output(print(fc$implications))
 
-  lhs1 <- SparseSet$new(attributes = fc$attributes)
+  lhs1 <- Set$new(attributes = fc$attributes)
   lhs1$assign(attributes = fc$attributes[1],
               values = 1)
 
-  rhs1 <- SparseSet$new(attributes = fc$attributes)
+  rhs1 <- Set$new(attributes = fc$attributes)
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 
@@ -497,11 +497,11 @@ test_that("fcaR can use generalization", {
   fc$implications <- ImplicationSet$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
-  lhs1 <- SparseSet$new(attributes = fc$attributes)
+  lhs1 <- Set$new(attributes = fc$attributes)
   lhs1$assign(attributes = fc$attributes[1],
               values = 1)
 
-  rhs1 <- SparseSet$new(attributes = fc$attributes)
+  rhs1 <- Set$new(attributes = fc$attributes)
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 
@@ -509,11 +509,11 @@ test_that("fcaR can use generalization", {
 
   expect_error(fc$implications$apply_rules("composition"), NA)
 
-  lhs2 <- SparseSet$new(attributes = fc$attributes)
+  lhs2 <- Set$new(attributes = fc$attributes)
   lhs2$assign(attributes = fc$attributes[c(1, 3)],
               values = c(1, 1))
 
-  rhs2 <- SparseSet$new(attributes = fc$attributes)
+  rhs2 <- Set$new(attributes = fc$attributes)
   rhs2$assign(fc$attributes[4],
               values = 1)
 
@@ -548,11 +548,11 @@ test_that("fcaR filters implications", {
   fc$implications <- ImplicationSet$new(attributes = fc$attributes)
   expect_equal(fc$implications$cardinality(), 0)
 
-  lhs1 <- SparseSet$new(attributes = fc$attributes)
+  lhs1 <- Set$new(attributes = fc$attributes)
   lhs1$assign(attributes = fc$attributes[1],
               values = 1)
 
-  rhs1 <- SparseSet$new(attributes = fc$attributes)
+  rhs1 <- Set$new(attributes = fc$attributes)
   rhs1$assign(fc$attributes[c(2,4)],
               values = c(1, 1))
 

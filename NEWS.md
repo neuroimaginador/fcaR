@@ -1,15 +1,15 @@
 # fcaR 1.1.0
  
 Enhancements: 
-* Better printing of SparseSets.
+* Better printing of Sets.
 
 New functionality:
-* Added function to compute the __difference__ of two SparseSets.
+* Added function to compute the __difference__ of two Sets.
 * Added function to compute the __dual__ of a FormalContext.
 * Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to "load()" it.
 * Added functions %holds_in% and %respects%, which check the __validity__ of a set of implications in a formal context, and if a list of attribute sets respect an implication set.
 * Added functions %entails% and %~% to check the __entailment__ and __equivalence__ between two implication sets.
-* Added new convenience function to map attributes between SparseSets, so computing intents, extents and closures is more robust.
+* Added new convenience function to map attributes between Sets, so computing intents, extents and closures is more robust.
 * __Conceptual scaling__, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.
 
 Bugfixes:

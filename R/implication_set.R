@@ -221,7 +221,7 @@ ImplicationSet <- R6::R6Class(
     #' @description
     #' Add a precomputed implication set
     #'
-    #' @param ...   An \code{ImplicationSet} object, a \code{rules} object, or a pair \code{lhs}, \code{rhs} of \code{SparseSet} objects or \code{dgCMatrix}. The implications to add to this formal context.
+    #' @param ...   An \code{ImplicationSet} object, a \code{rules} object, or a pair \code{lhs}, \code{rhs} of \code{Set} objects or \code{dgCMatrix}. The implications to add to this formal context.
     #'
     #' @return Nothing, just updates the internal \code{implications} field.
     #'
@@ -253,13 +253,13 @@ ImplicationSet <- R6::R6Class(
           lhs <- dots[[1]]
           rhs <- dots[[2]]
 
-          if (inherits(lhs, "SparseSet")) {
+          if (inherits(lhs, "Set")) {
 
             lhs <- lhs$get_vector()
 
           }
 
-          if (inherits(rhs, "SparseSet")) {
+          if (inherits(rhs, "Set")) {
 
             rhs <- rhs$get_vector()
 
@@ -326,7 +326,7 @@ ImplicationSet <- R6::R6Class(
     #' @description
     #' Compute the semantic closure of a fuzzy set with respect to the implication set
     #'
-    #' @param S        (a \code{SparseSet} object)  Fuzzy set to compute its closure. Use class \code{SparseSet} to build it.
+    #' @param S        (a \code{Set} object)  Fuzzy set to compute its closure. Use class \code{Set} to build it.
     #' @param reduce   (logical) Reduce the implications using simplification logic?
     #' @param verbose  (logical) Show verbose output?
     #'
@@ -337,7 +337,7 @@ ImplicationSet <- R6::R6Class(
                        reduce = FALSE,
                        verbose = FALSE) {
 
-      if (inherits(S, "SparseSet")) {
+      if (inherits(S, "Set")) {
 
         original <- S$clone()
         S <- match_attributes(S, private$attributes)
@@ -345,7 +345,7 @@ ImplicationSet <- R6::R6Class(
 
       } else {
 
-        original <- SparseSet$new(private$attributes, M = S)
+        original <- Set$new(private$attributes, M = S)
 
       }
 
@@ -359,12 +359,12 @@ ImplicationSet <- R6::R6Class(
 
       if (!reduce) {
 
-        cl <- list(closure = SparseSet$new(attributes = private$attributes,
+        cl <- list(closure = Set$new(attributes = private$attributes,
                                            M = cl$closure))
 
       } else {
 
-        cl$closure <- SparseSet$new(attributes = private$attributes,
+        cl$closure <- Set$new(attributes = private$attributes,
                                     M = cl$closure)
 
         cl$implications <- ImplicationSet$new(attributes = private$attributes,
@@ -393,7 +393,7 @@ ImplicationSet <- R6::R6Class(
     #' @export
     recommend = function(S, attribute_filter) {
 
-      if (inherits(S, "SparseSet")) {
+      if (inherits(S, "Set")) {
 
         S <- S$get_vector()
 

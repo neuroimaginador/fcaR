@@ -839,7 +839,7 @@ O6
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   no_moon  0   0   0   0   0   1   0   1   1   1</span></span></code></pre></div>
 <p>The main practical use of an <code>ImplicationSet</code> is to compute the closure of a set of attributes, by using the <code>closure()</code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let us build a set of attributes</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> SparseSet<span class="sc">$</span><span class="fu">new</span>(<span class="at">attributes =</span> fc_planets<span class="sc">$</span>attributes)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> Set<span class="sc">$</span><span class="fu">new</span>(<span class="at">attributes =</span> fc_planets<span class="sc">$</span>attributes)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>S<span class="sc">$</span><span class="fu">assign</span>(<span class="at">large =</span> <span class="dv">1</span>, <span class="at">far =</span> <span class="dv">1</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>S</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {large, far}</span></span>
@@ -927,12 +927,12 @@ O6
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">&quot;simplification&quot;</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Processing batch</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.008 secs.</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.014 secs.</span></span></code></pre></div>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.012 secs.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.017 secs.</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let us build a set of attributes</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> SparseSet<span class="sc">$</span><span class="fu">new</span>(<span class="at">attributes =</span> fc_planets<span class="sc">$</span>attributes)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> Set<span class="sc">$</span><span class="fu">new</span>(<span class="at">attributes =</span> fc_planets<span class="sc">$</span>attributes)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>S<span class="sc">$</span><span class="fu">assign</span>(<span class="at">large =</span> <span class="dv">1</span>, <span class="at">far =</span> <span class="dv">1</span>)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>S</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {large, far}</span></span>
@@ -960,9 +960,9 @@ O6
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># where we have removed redundancies</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>imps2<span class="sc">$</span><span class="fu">apply_rules</span>(<span class="fu">c</span>(<span class="st">&quot;simp&quot;</span>, <span class="st">&quot;rsimp&quot;</span>))</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Processing batch</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.013 secs.</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.015 secs.</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.031 secs.</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.028 secs.</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.028 secs.</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.06 secs.</span></span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Any implication in imps2 follows from imps</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>imps <span class="sc">%entails%</span> imps2</span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
@@ -980,7 +980,7 @@ O6
 <div id="recommendations" class="section level2">
 <h2>Recommendations</h2>
 <p>One of the final applications of an <code>ImplicationSet</code> is the easy development of a recommendation system where, from an attribute set, the system would infer the value to other attribute. This is done by the <code>recommend()</code> function, which internally computes the closure of the attribute set:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> SparseSet<span class="sc">$</span><span class="fu">new</span>(<span class="at">attributes =</span> fc_I<span class="sc">$</span>attributes)</span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> Set<span class="sc">$</span><span class="fu">new</span>(<span class="at">attributes =</span> fc_I<span class="sc">$</span>attributes)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>S<span class="sc">$</span><span class="fu">assign</span>(<span class="at">P1 =</span> <span class="dv">1</span>, <span class="at">P4 =</span> <span class="fl">0.5</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>fc_I<span class="sc">$</span>implications<span class="sc">$</span><span class="fu">recommend</span>(S, <span class="at">attribute_filter =</span> <span class="fu">c</span>(<span class="st">&quot;P3&quot;</span>, <span class="st">&quot;P5&quot;</span>))</span>

@@ -245,7 +245,7 @@
 <a href="#computing-closure" class="anchor"></a>Computing Closure</h1>
 <p>Given a fuzzy set represented by a sparse matrix, we can compute its closure with respect to the implications in the ruleset.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># A fuzzy set</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>A &lt;-<span class="st"> </span>SparseSet<span class="op">$</span><span class="kw">new</span>(<span class="dt">attributes =</span> fc<span class="op">$</span>attributes)</span>
+<span id="cb8-2"><a href="#cb8-2"></a>A &lt;-<span class="st"> </span>Set<span class="op">$</span><span class="kw">new</span>(<span class="dt">attributes =</span> fc<span class="op">$</span>attributes)</span>
 <span id="cb8-3"><a href="#cb8-3"></a>A<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/base/assign.html">assign</a></span>(<span class="st">"CapColor=white"</span> =<span class="st"> </span><span class="dv">1</span>)</span>
 <span id="cb8-4"><a href="#cb8-4"></a></span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="co"># Compute the closure</span></span>

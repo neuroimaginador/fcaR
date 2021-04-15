@@ -39,10 +39,10 @@ object-oriented-programming paradigm in R:
 
 Two additional helper classes are implemented:
 
--   SparseSet is a class solely used for visualization purposes, since
-    it encapsulates in sparse format a (fuzzy) set.
--   SparseConcept encapsulates internally both extent and intent of a
-    formal concept as SparseSet.
+-   Set is a class solely used for visualization purposes, since it
+    encapsulates in sparse format a (fuzzy) set.
+-   Concept encapsulates internally both extent and intent of a formal
+    concept as Set.
 
 Since fcaR is an extension of the data model in the arules package, most
 of the methods and classes implemented interoperates with the main S4
@@ -358,11 +358,11 @@ following changes.
 
 Enhancements:
 
--   Better printing of SparseSets.
+-   Better printing of Sets.
 
 New functionality:
 
--   Added function to compute the **difference** of two SparseSets.
+-   Added function to compute the **difference** of two Sets.
 -   Added function to compute the **dual** of a FormalContext.
 -   Now one can create a FormalContext from a CSV, CXT or RDS file
     directly, without needing to “load()” it.
@@ -371,8 +371,8 @@ New functionality:
     list of attribute sets respect an implication set.
 -   Added functions %entails% and %\~% to check the **entailment** and
     **equivalence** between two implication sets.
--   Added new convenience function to map attributes between SparseSets,
-    so computing intents, extents and closures is more robust.
+-   Added new convenience function to map attributes between Sets, so
+    computing intents, extents and closures is more robust.
 -   **Conceptual scaling**, including nominal, ordinal, interordinal,
     biordinal and interval scales for many-valued formal contexts. Also,
     computation of background knowledge from the applied scales and of

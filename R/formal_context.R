@@ -18,7 +18,7 @@
 #' print(fc_planets)
 #'
 #' # Define a set of attributes
-#' S <- SparseSet$new(attributes = fc_planets$attributes)
+#' S <- Set$new(attributes = fc_planets$attributes)
 #' S$assign(moon = 1, large = 1)
 #'
 #' # Compute the closure of S
@@ -404,16 +404,16 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Get the intent of a fuzzy set of objects
     #'
-    #' @param S   (\code{SparseSet}) The set of objects to compute the intent for.
+    #' @param S   (\code{Set}) The set of objects to compute the intent for.
     #'
-    #' @return A \code{SparseSet} with the intent.
+    #' @return A \code{Set} with the intent.
     #'
     #' @export
     intent = function(S) {
 
       if (private$is_many_valued) error_many_valued()
 
-      if (inherits(S, "SparseSet")) {
+      if (inherits(S, "Set")) {
 
         if (all(S$get_attributes() == self$objects)) {
 
@@ -448,16 +448,16 @@ FormalContext <- R6::R6Class(
         #                             x = R@x,
         #                             dims = c(length(self$attributes), 1))
         #
-        #   R <- SparseSet$new(attributes = self$attributes,
+        #   R <- Set$new(attributes = self$attributes,
         #                      M = R)
         # } else {
         #
         #   # Empty intent
-        #   R <- SparseSet$new(attributes = self$attributes)
+        #   R <- Set$new(attributes = self$attributes)
         #
         # }
 
-        R <- SparseSet$new(attributes = self$attributes,
+        R <- Set$new(attributes = self$attributes,
                            M = R)
         return(R)
 
@@ -472,9 +472,9 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Get the extent of a fuzzy set of attributes
     #'
-    #' @param S   (\code{SparseSet}) The set of attributes to compute the extent for.
+    #' @param S   (\code{Set}) The set of attributes to compute the extent for.
     #'
-    #' @return A \code{SparseSet} with the intent.
+    #' @return A \code{Set} with the intent.
     #'
     #' @export
     extent = function(S) {
@@ -483,7 +483,7 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      if (inherits(S, "SparseSet")) {
+      if (inherits(S, "Set")) {
 
         if (all(S$get_attributes() == self$attributes)) {
 
@@ -518,16 +518,16 @@ FormalContext <- R6::R6Class(
         #                             x = R@x,
         #                             dims = c(length(self$objects), 1))
         #
-        #   R <- SparseSet$new(attributes = self$objects,
+        #   R <- Set$new(attributes = self$objects,
         #                      M = R)
         # } else {
         #
         #   # Empty extent
-        #   R <- SparseSet$new(attributes = self$objects)
+        #   R <- Set$new(attributes = self$objects)
         #
         # }
 
-        R <- SparseSet$new(attributes = self$objects,
+        R <- Set$new(attributes = self$objects,
                            M = R)
 
         return(R)
@@ -543,16 +543,16 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Get the closure of a fuzzy set of attributes
     #'
-    #' @param S   (\code{SparseSet}) The set of attributes to compute the closure for.
+    #' @param S   (\code{Set}) The set of attributes to compute the closure for.
     #'
-    #' @return A \code{SparseSet} with the closure.
+    #' @return A \code{Set} with the closure.
     #'
     #' @export
     closure = function(S) {
 
       if (private$is_many_valued) error_many_valued()
 
-      if (inherits(S, "SparseSet")) {
+      if (inherits(S, "Set")) {
 
         if (all(S$get_attributes() == self$attributes)) {
 
@@ -588,16 +588,16 @@ FormalContext <- R6::R6Class(
         #                             x = R@x,
         #                             dims = c(length(self$attributes), 1))
         #
-        #   R <- SparseSet$new(attributes = self$attributes,
+        #   R <- Set$new(attributes = self$attributes,
         #                      M = R)
         # } else {
         #
         #   # Empty closure
-        #   R <- SparseSet$new(attributes = self$attributes)
+        #   R <- Set$new(attributes = self$attributes)
         #
         # }
 
-        R <- SparseSet$new(attributes = self$attributes,
+        R <- Set$new(attributes = self$attributes,
                            M = R)
 
         return(R)
@@ -623,13 +623,13 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      S <- SparseSet$new(attributes = self$objects)
+      S <- Set$new(attributes = self$objects)
       S$assign(attributes = object, values = 1)
 
       B <- self$intent(S)
       A <- self$extent(B)
 
-      C <- SparseConcept$new(extent = A, intent = B)
+      C <- Concept$new(extent = A, intent = B)
 
       return(C)
 
@@ -648,13 +648,13 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      S <- SparseSet$new(attributes = self$attributes)
+      S <- Set$new(attributes = self$attributes)
       S$assign(attributes = attribute, values = 1)
 
       A <- self$extent(S)
       B <- self$intent(A)
 
-      C <- SparseConcept$new(extent = A, intent = B)
+      C <- Concept$new(extent = A, intent = B)
 
       return(C)
 
@@ -663,7 +663,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Is a Concept?
     #'
-    #' @param C A \code{SparseConcept} object
+    #' @param C A \code{Concept} object
     #'
     #' @return
     #' \code{TRUE} if \code{C} is a concept.
@@ -682,7 +682,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Testing closure of attribute sets
     #'
-    #' @param S A \code{SparseSet} of attributes
+    #' @param S A \code{Set} of attributes
     #'
     #' @return
     #' \code{TRUE} if the set \code{S} is closed in this formal context.
@@ -758,23 +758,23 @@ FormalContext <- R6::R6Class(
 
       att <- fc2$attributes
 
-      Z <- SparseSet$new(attributes = att)
+      Z <- Set$new(attributes = att)
 
       for (y in att) {
 
-        R <- SparseSet$new(attributes = fc2$objects)
+        R <- Set$new(attributes = fc2$objects)
         R$assign(attributes = fc2$objects,
                  values = rep(1, length(fc2$objects)))
 
         R <- R$get_vector()
 
-        yv <- SparseSet$new(attributes = att)
+        yv <- Set$new(attributes = att)
         yv$assign(attributes = y, values = 1)
         y_down <- fc2$extent(yv)
 
         for (yp in setdiff(att, y)) {
 
-          ypv <- SparseSet$new(attributes = att)
+          ypv <- Set$new(attributes = att)
           ypv$assign(attributes = yp, values = 1)
           yp_down <- fc2$extent(ypv)
 

@@ -1,4 +1,4 @@
-# Maps the origin SparseSet to another SparseSet with
+# Maps the origin Set to another Set with
 # target_attributes, keeping the value of the attributes
 # present in both attribute sets.
 # @examples
@@ -17,7 +17,7 @@ match_attributes <- function(origin, target_attributes) {
   M <- matrix(0, nrow = length(target_attributes), ncol = 1)
   M[idx[ii]] <- (v %>% to_matrix.SpM())[ii]
 
-  target <- SparseSet$new(attributes = target_attributes,
+  target <- Set$new(attributes = target_attributes,
                           M = new_spm(M))
 
   # print(target)

@@ -24,7 +24,7 @@ fc_planets <- FormalContext$new(planets)
 print(fc_planets)
 
 # Define a set of attributes
-S <- SparseSet$new(attributes = fc_planets$attributes)
+S <- Set$new(attributes = fc_planets$attributes)
 S$assign(moon = 1, large = 1)
 
 # Compute the closure of S
@@ -300,12 +300,12 @@ Get the intent of a fuzzy set of objects
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(\code{SparseSet}) The set of objects to compute the intent for.}
+\item{\code{S}}{(\code{Set}) The set of objects to compute the intent for.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A \code{SparseSet} with the intent.
+A \code{Set} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
@@ -320,12 +320,12 @@ Get the extent of a fuzzy set of attributes
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(\code{SparseSet}) The set of attributes to compute the extent for.}
+\item{\code{S}}{(\code{Set}) The set of attributes to compute the extent for.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A \code{SparseSet} with the intent.
+A \code{Set} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
@@ -340,12 +340,12 @@ Get the closure of a fuzzy set of attributes
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(\code{SparseSet}) The set of attributes to compute the closure for.}
+\item{\code{S}}{(\code{Set}) The set of attributes to compute the closure for.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A \code{SparseSet} with the closure.
+A \code{Set} with the closure.
 }
 }
 \if{html}{\out{<hr>}}
@@ -400,7 +400,7 @@ Is a Concept?
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{C}}{A \code{SparseConcept} object}
+\item{\code{C}}{A \code{Concept} object}
 }
 \if{html}{\out{</div>}}
 }
@@ -420,7 +420,7 @@ Testing closure of attribute sets
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{A \code{SparseSet} of attributes}
+\item{\code{S}}{A \code{Set} of attributes}
 }
 \if{html}{\out{</div>}}
 }

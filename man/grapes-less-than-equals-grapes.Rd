@@ -7,9 +7,9 @@
 C1 \%<=\% C2
 }
 \arguments{
-\item{C1}{A \code{SparseSet} or \code{SparseConcept}}
+\item{C1}{A \code{Set} or \code{Concept}}
 
-\item{C2}{A \code{SparseSet} or \code{SparseConcept}}
+\item{C2}{A \code{Set} or \code{Concept}}
 }
 \value{
 Returns \code{TRUE} if concept \code{C1} is subconcept of \code{C2} or if set \code{C1} is subset of \code{C2}.
@@ -22,9 +22,9 @@ Both \code{C1} and \code{C2} must be of the same class.
 }
 \examples{
 # Build two sparse sets
-S <- SparseSet$new(attributes = c("A", "B", "C"))
+S <- Set$new(attributes = c("A", "B", "C"))
 S$assign(A = 1)
-T <- SparseSet$new(attributes = c("A", "B", "C"))
+T <- Set$new(attributes = c("A", "B", "C"))
 T$assign(A = 1, B = 1)
 
 # Test whether S is subset of T
