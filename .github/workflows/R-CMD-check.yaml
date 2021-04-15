@@ -39,13 +39,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: remove git-lfs
-        if: runner.os == 'Linux'
-        shell: bash
-        run: |
-          sudo rm /etc/apt/sources.list.d/github_git-lfs.list
-          sudo rm /etc/apt/sources.list.d/github_git-lfs.list.save
-
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.config.r }}
