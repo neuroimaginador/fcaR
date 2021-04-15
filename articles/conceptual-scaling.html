@@ -1832,7 +1832,7 @@ Score is A
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
-<span class="co">#&gt; Implication set with 22 implications.</span>
+<span class="co">#&gt; Implication set with 21 implications.</span>
 <span class="co">#&gt; Rule 1: {} -&gt; {Agreement &gt;= disagree}</span>
 <span class="co">#&gt; Rule 2: {Agreement &gt;= disagree, Score is A} -&gt; {Grant = yes, Agreement &gt;=</span>
 <span class="co">#&gt;   strongly agree, Attitude &lt;= hard working}</span>
@@ -1870,10 +1870,7 @@ Score is A
 <span class="co">#&gt; Rule 20: {Grant = yes, Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= agree,</span>
 <span class="co">#&gt;   Attitude &lt;= working} -&gt; {Score is C}</span>
 <span class="co">#&gt; Rule 21: {Grant = no, Agreement &gt;= disagree} -&gt; {Intern &lt;= 5, Agreement &lt;=</span>
-<span class="co">#&gt;   neither agree nor disagree, Score is B}</span>
-<span class="co">#&gt; Rule 22: {Grant = no, Grant = yes, Intern &lt;= 5, Agreement &lt;= strongly disagree,</span>
-<span class="co">#&gt;   Agreement &gt;= strongly agree, Attitude &lt;= working, Score is B, Score is A} -&gt;</span>
-<span class="co">#&gt;   {Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy}</span></code></pre></div>
+<span class="co">#&gt;   neither agree nor disagree, Score is B}</span></code></pre></div>
 <p>Note that, in this case, this is not the basis of implications, since the <em>background knowledge</em> has to be incorporated. That is, these implications are valid, but to be complete they need the implications derived from the scales.</p>
 </div>
 </div>
