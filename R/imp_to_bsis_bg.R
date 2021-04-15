@@ -33,7 +33,7 @@
     #   warning(inmediate. = TRUE, call. = FALSE)
 
     B <- .compute_closure(AUB, LHS_clos, RHS_clos,
-                          attributes, reduce = TRUE)$closure
+                          attributes, reduce = FALSE)$closure
 
     LHS <- cbindSpM(LHS, A)
     RHS <- cbindSpM(RHS, B)
@@ -63,7 +63,7 @@
     #   warning(inmediate. = TRUE, call. = FALSE)
 
     A <- .compute_closure(A, LHS_clos, RHS_clos,
-                          attributes, reduce = TRUE)$closure
+                          attributes, reduce = FALSE)$closure
 
     if (length(equalSpM(A, B)$i) == 0) {
 
