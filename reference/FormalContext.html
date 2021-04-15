@@ -310,11 +310,11 @@ extracted from the application of scales.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of objects to compute the intent for.</p></dd>
+<dt><code>S</code></dt><dd><p>(<code>Set</code>) The set of objects to compute the intent for.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A <code>SparseSet</code> with the intent.</p>
+<p>A <code>Set</code> with the intent.</p>
 <p><hr>
 <a id="method-extent"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>extent()</code></h3>
 <p>Get the extent of a fuzzy set of attributes</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -322,11 +322,11 @@ extracted from the application of scales.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of attributes to compute the extent for.</p></dd>
+<dt><code>S</code></dt><dd><p>(<code>Set</code>) The set of attributes to compute the extent for.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A <code>SparseSet</code> with the intent.</p>
+<p>A <code>Set</code> with the intent.</p>
 <p><hr>
 <a id="method-closure"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
 <p>Get the closure of a fuzzy set of attributes</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -334,11 +334,11 @@ extracted from the application of scales.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>S</code></dt><dd><p>(<code>SparseSet</code>) The set of attributes to compute the closure for.</p></dd>
+<dt><code>S</code></dt><dd><p>(<code>Set</code>) The set of attributes to compute the closure for.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A <code>SparseSet</code> with the closure.</p>
+<p>A <code>Set</code> with the closure.</p>
 <p><hr>
 <a id="method-obj_concept"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>obj_concept()</code></h3>
 <p>Object Concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -370,7 +370,7 @@ extracted from the application of scales.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>C</code></dt><dd><p>A <code>SparseConcept</code> object</p></dd>
+<dt><code>C</code></dt><dd><p>A <code>Concept</code> object</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
@@ -382,7 +382,7 @@ extracted from the application of scales.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>S</code></dt><dd><p>A <code>SparseSet</code> of attributes</p></dd>
+<dt><code>S</code></dt><dd><p>A <code>Set</code> of attributes</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
@@ -574,7 +574,7 @@ extracted from the application of scales.</p>
 #&gt;   Neptune            X                      X     X              
 #&gt;     Pluto    X                              X     X              </div><div class='input'>
 <span class='co'># Define a set of attributes</span>
-<span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'><a href='SparseSet.html'>SparseSet</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>attributes</span><span class='op'>)</span>
+<span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>attributes</span><span class='op'>)</span>
 <span class='va'>S</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>moon <span class='op'>=</span> <span class='fl'>1</span>, large <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># Compute the closure of S</span>

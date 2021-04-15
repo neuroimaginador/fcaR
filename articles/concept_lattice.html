@@ -677,7 +677,7 @@ O6
 <p>The intent of a (probably fuzzy) set of objects is the set of their common attributes:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Define a set of objects</span>
-<span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SparseSet.html">SparseSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">objects</span><span class="op">)</span>
+<span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">objects</span><span class="op">)</span>
 <span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>Earth <span class="op">=</span> <span class="fl">1</span>, Mars <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">S</span>
 <span class="co">#&gt; {Earth, Mars}</span>
@@ -688,7 +688,7 @@ O6
 <p>Analogously, the extent of a set of attributes is the set of objects which possess all the attributes in the given set:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Define a set of objects</span>
-<span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SparseSet.html">SparseSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span>
+<span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span>
 <span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>moon <span class="op">=</span> <span class="fl">1</span>, large <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">S</span>
 <span class="co">#&gt; {large, moon}</span>
