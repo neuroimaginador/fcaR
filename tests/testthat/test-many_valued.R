@@ -56,18 +56,18 @@ test_that("fcaR operates on many-valued contexts", {
 
   ## --------------------------------------------------
   expect_error(fc$scale("Attitude",
-           type = "biordinal",
-           values_le = c("hard working", "working"),
-           values_ge = c("lazy", "very lazy")),
-           NA)
+                        type = "biordinal",
+                        values_le = c("hard working", "working"),
+                        values_ge = c("lazy", "very lazy")),
+               NA)
 
 
   ## --------------------------------------------------
   expect_error(fc$scale("Score",
-           type = "interval",
-           values = c(2, 3, 4, 5),
-           interval_names = c("C", "B", "A")),
-           NA)
+                        type = "interval",
+                        values = c(2, 3, 4, 5),
+                        interval_names = c("C", "B", "A")),
+               NA)
 
 
   ## --------------------------------------------------

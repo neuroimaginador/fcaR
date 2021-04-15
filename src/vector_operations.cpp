@@ -824,26 +824,111 @@ SparseVector setunion_matrix(IntegerVector xi,
 
 }
 
-// ## export
-// S4 set_union_sparse(IntegerVector xi,
-//                     IntegerVector xp,
-//                     NumericVector xx,
-//                     IntegerVector yi,
-//                     IntegerVector yp,
-//                     NumericVector yx,
-//                     int number) {
-//
-//   SparseVector res = setunion_matrix(xi, xp, xx,
-//                                      yi, yp, yx,
-//                                      number);
-//
-//   S4 res2 = SparseToS4_fast(res);
-//
-//   freeVector(&res);
-//
-//   return res2;
-//
-// }
+void setunion_matrix(SparseVector *res,
+                     IntegerVector xi,
+                     IntegerVector xp,
+                     NumericVector xx,
+                     IntegerVector yi,
+                     IntegerVector yp,
+                     NumericVector yx,
+                     int number) {
+
+  reinitVector(res);
+  insertArray(&(res->p), 0);
+  int count = 0;
+
+  // Rcout << "xp " << xp.length() << std::endl;
+  // Rcout << "yp " << yp.length() << std::endl;
+
+  for (size_t ip = 0; ip < xp.length() - 1; ip++) {
+
+    // Rcout << "ip " << ip << std::endl;
+    int ymin = yp[ip];
+    int ymax = yp[ip + 1];
+    int xmin = xp[ip];
+    int xmax = xp[ip + 1];
+    size_t j = ymin;
+
+    // Rcout << "xmin " << xmin << std::endl;
+    // Rcout << "xmax " << xmax << std::endl;
+    //
+    // Rcout << "ymin " << ymin << std::endl;
+    // Rcout << "ymax " << ymax << std::endl;
+
+    for (size_t i = xmin; i < xmax; i++) {
+
+      // Rcout << "i " << i << std::endl;
+      // Rcout << "j " << j << std::endl;
+
+      while ((j < ymax) && (yi[j] < xi[i])) {
+
+        insertArray(&(res->i), yi[j]);
+        insertArray(&(res->x), yx[j]);
+        j++;
+        // Rcout << "j " << j << std::endl;
+        count++;
+
+      }
+
+      if (j < ymax) {
+
+        if (yi[j] == xi[i]) {
+
+          if (xx[i] > yx[j]) {
+
+            insertArray(&(res->i), xi[i]);
+            insertArray(&(res->x), xx[i]);
+            j++;
+            // Rcout << "j " << j << std::endl;
+            count++;
+
+          } else {
+
+            insertArray(&(res->i), yi[j]);
+            insertArray(&(res->x), yx[j]);
+            j++;
+            // Rcout << "j " << j << std::endl;
+            count++;
+
+          }
+
+        } else {
+
+          insertArray(&(res->i), xi[i]);
+          insertArray(&(res->x), xx[i]);
+          count++;
+
+        }
+
+      } else {
+
+        insertArray(&(res->i), xi[i]);
+        insertArray(&(res->x), xx[i]);
+        count++;
+
+      }
+
+    }
+
+    while (j < ymax) {
+
+      insertArray(&(res->i), yi[j]);
+      insertArray(&(res->x), yx[j]);
+      j++;
+      // Rcout << "j " << j << std::endl;
+      count++;
+
+    }
+
+    // Rcout << " Inserting p" << std::endl;
+
+    insertArray(&(res->p), count);
+
+  }
+
+  // Rcout << "Exiting" << std::endl;
+
+}
 
 // [[Rcpp::export]]
 Environment set_union_SpM(IntegerVector xi,
@@ -854,9 +939,13 @@ Environment set_union_SpM(IntegerVector xi,
                           NumericVector yx,
                           int number) {
 
-  SparseVector res = setunion_matrix(xi, xp, xx,
-                                     yi, yp, yx,
-                                     number);
+  SparseVector res;
+  initVector(&res, number);
+
+  setunion_matrix(&res,
+                  xi, xp, xx,
+                  yi, yp, yx,
+                  number);
 
   Environment res2 = SparseToEnv(res);
 
