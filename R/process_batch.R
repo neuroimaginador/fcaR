@@ -1,5 +1,15 @@
 .process_batch <- function(LHS, RHS, attributes, rules, verbose = TRUE) {
 
+  if (requireNamespace("tictoc", quietly = TRUE)) {
+
+    timing <- TRUE
+
+  } else {
+
+    timing <- FALSE
+
+  }
+
   # Initialize results
   new_LHS <- NULL#zeroSpM(nrow = nrow.SpM(LHS), ncol = 1)
 
@@ -11,7 +21,7 @@
   methods[sapply(methods, is.null)] <- NULL
 
   # Begin the timing
-  tictoc::tic("batch")
+  if (timing) tictoc::tic("batch")
 
   if (verbose) {
 
@@ -30,10 +40,10 @@
 
     current_rule <- methods[[j]]$fun
 
-    tictoc::tic("rule")
+    if (timing) tictoc::tic("rule")
     L <- current_rule(old_LHS, old_RHS, attributes)
 
-    rule_time <- tictoc::toc(quiet = TRUE)
+    if (timing) rule_time <- tictoc::toc(quiet = TRUE)
     old_LHS <- L$lhs
     old_RHS <- L$rhs
 
@@ -41,9 +51,19 @@
 
     if (verbose) {
 
-      message("--> ", methods[[j]]$method[1], ": from ", current_cols, " to ",
-              new_cols, " in ", round(rule_time$toc - rule_time$tic, 3),
-              " secs.")
+      if (timing) {
+
+        message("--> ", methods[[j]]$method[1], ": from ", current_cols, " to ",
+                new_cols, " in ", round(rule_time$toc - rule_time$tic, 3),
+                " secs.")
+
+      } else {
+
+        message("--> ", methods[[j]]$method[1], ": from ", current_cols, " to ",
+                new_cols, ".")
+
+      }
+
 
     }
 
@@ -55,9 +75,9 @@
 
   L <- .clean(new_LHS, new_RHS)
 
-  batch_toc <- tictoc::toc(quiet = TRUE)
+  if (timing) batch_toc <- tictoc::toc(quiet = TRUE)
 
-  if (verbose) {
+  if (verbose && timing) {
 
     message("Batch took ", round(batch_toc$toc - batch_toc$tic, 3),
             " secs. \n")
