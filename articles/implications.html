@@ -685,7 +685,7 @@ O6
 <p>A nice feature is the ability to export an <code>ImplicationSet</code> to LaTeX format:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; \begin{longtable}{rrcl}</span>
+<span class="co">#&gt; \begin{longtable*}{rrcl}</span>
 <span class="co">#&gt; 1: &amp;\ensuremath{\left\{\mathrm{no_moon}\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{\mathrm{small},\, \mathrm{near}\right\}}\\</span>
 <span class="co">#&gt; 2: &amp;\ensuremath{\left\{\mathrm{far}\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{\mathrm{moon}\right\}}\\</span>
 <span class="co">#&gt; 3: &amp;\ensuremath{\left\{\mathrm{near}\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{\mathrm{small}\right\}}\\</span>
@@ -696,7 +696,7 @@ O6
 <span class="co">#&gt; 8: &amp;\ensuremath{\left\{\mathrm{small},\, \mathrm{near},\, \mathrm{far},\, \mathrm{moon}\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{\mathrm{medium},\, \mathrm{large},\, \mathrm{no_moon}\right\}}\\</span>
 <span class="co">#&gt; 9: &amp;\ensuremath{\left\{\mathrm{small},\, \mathrm{large},\, \mathrm{far},\, \mathrm{moon}\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{\mathrm{medium},\, \mathrm{near},\, \mathrm{no_moon}\right\}}\\</span>
 <span class="co">#&gt; 10: &amp;\ensuremath{\left\{\mathrm{small},\, \mathrm{medium},\, \mathrm{far},\, \mathrm{moon}\right\}}&amp;\ensuremath{\Rightarrow}&amp;\ensuremath{\left\{\mathrm{large},\, \mathrm{near},\, \mathrm{no_moon}\right\}}\\</span>
-<span class="co">#&gt; \end{longtable}</span></code></pre></div>
+<span class="co">#&gt; \end{longtable*}</span></code></pre></div>
 </div>
 <div id="filtering-of-implications" class="section level2">
 <h2 class="hasAnchor">
@@ -719,7 +719,7 @@ O6
 <code class="sourceCode R"><span class="va">fc_I</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
                                         <span class="st">"simplification"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span>
+<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0 secs.</span>
 <span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.007 secs.</span>
 <span class="co">#&gt; Batch took 0.01 secs.</span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the <code>ImplicationSet</code>.</p>
@@ -756,9 +756,9 @@ O6
 <span class="co"># where we have removed redundancies</span>
 <span class="va">imps2</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"simp"</span>, <span class="st">"rsimp"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.007 secs.</span>
-<span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.01 secs.</span>
-<span class="co">#&gt; Batch took 0.02 secs.</span>
+<span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.008 secs.</span>
+<span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.011 secs.</span>
+<span class="co">#&gt; Batch took 0.021 secs.</span>
 <span class="co"># Any implication in imps2 follows from imps</span>
 <span class="va">imps</span> <span class="op">%entails%</span> <span class="va">imps2</span>
 <span class="co">#&gt;  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span>
