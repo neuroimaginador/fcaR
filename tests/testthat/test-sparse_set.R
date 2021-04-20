@@ -61,3 +61,18 @@ test_that("fcaR uses class Set", {
   expect_true(A %==% A2)
 
 })
+
+test_that("fcaR computes differences of Sets", {
+
+  attributes <- paste0("P", 1:6)
+
+  expect_error(A <- Set$new(attributes = attributes), NA)
+  expect_error(A$assign(attributes = "P1", values = 0.5), NA)
+
+  expect_error(B <- Set$new(attributes = attributes), NA)
+  expect_error(B$assign(attributes = "P1", values = 0.3), NA)
+
+  expect_error(A %-% B, NA)
+  expect_error(B %-% A, NA)
+
+})

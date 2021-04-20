@@ -401,6 +401,11 @@ test_that("fcaR computes intents, extents and closures of Sets", {
   expect_warning(fc$extent(c1$get_extent()))
   # expect_warning(fc$closure(c1$get_extent()))
 
+  S <- Set$new(attributes = rev(attributes))
+  S$assign(P6 = 0.5, P5 = 0.5)
+  expect_warning(cl <- fc$closure(S))
+
+
 })
 
 test_that("fcaR checks for concepts", {

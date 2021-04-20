@@ -357,6 +357,13 @@ test_that("fcaR simplifies implications", {
 
   expect_is(L, "list")
 
+  L <- Rsimplification(LHS = fc$implications$get_LHS_matrix(),
+                          RHS = fc$implications$get_RHS_matrix(),
+                          attributes = fc$attributes)
+
+  expect_is(L, "list")
+
+
 })
 
 test_that("fcaR makes a recommendation", {
