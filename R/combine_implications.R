@@ -70,13 +70,20 @@ reorder_attributes <- function(imps, attributes) {
   rhs <- imps$get_RHS_matrix()
   atts <- imps$get_attributes()
 
+  # browser()
+
+  LHS <- Matrix::spMatrix(nrow = length(attributes),
+                          ncol = imps$cardinality())
+  RHS <- Matrix::spMatrix(nrow = length(attributes),
+                          ncol = imps$cardinality())
+
   id <- match(attributes, atts)
 
-  lhs <- lhs[id, ]
-  rhs <- rhs[id, ]
+  LHS[!is.na(id), ] <- lhs[id[!is.na(id)], ]
+  RHS[!is.na(id), ] <- rhs[id[!is.na(id)], ]
 
   ImplicationSet$new(attributes = attributes,
-                     lhs = lhs,
-                     rhs = rhs)
+                     lhs = LHS,
+                     rhs = RHS)
 
 }

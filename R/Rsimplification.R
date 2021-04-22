@@ -1,5 +1,8 @@
 Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
+  LHS <- methods::as(LHS, "dgCMatrix")
+  RHS <- methods::as(RHS, "dgCMatrix")
+
   LRHS_subsets <- Matrix::Matrix(FALSE, sparse = TRUE,
                         ncol = ncol(LHS),
                         nrow = ncol(LHS))
