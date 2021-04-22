@@ -10,12 +10,12 @@
 
     s <- .extract_column(M_int, i)
 
-    extent <- SparseSet$new(attributes = objects,
+    extent <- Set$new(attributes = objects,
                              M = x)
-    intent <- SparseSet$new(attributes = attributes,
+    intent <- Set$new(attributes = attributes,
                              M = s)
 
-    L[[i]] <- SparseConcept$new(extent = extent,
+    L[[i]] <- Concept$new(extent = extent,
                                  intent = intent)
 
   }

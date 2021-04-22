@@ -5,20 +5,20 @@
 #' This class implements the data structure and methods for fuzzy sets.
 #'
 #' @examples
-#' S <- SparseSet$new(attributes = c("A", "B", "C"))
+#' S <- Set$new(attributes = c("A", "B", "C"))
 #' S$assign(A = 1)
 #' print(S)
 #' S$to_latex()
 #'
 #' @export
-SparseSet <- R6::R6Class(
+Set <- R6::R6Class(
 
-  classname = "SparseSet",
+  classname = "Set",
 
   public = list(
 
     #' @description
-    #' Creator for objects of class \code{SparseSet}
+    #' Creator for objects of class \code{Set}
     #'
     #' @param attributes  (character vector) Names of the attributes that will be available in the fuzzy set.
     #' @param M           (numeric vector or column \code{Matrix}) Values (grades) to be assigned to the attributes.
@@ -26,7 +26,7 @@ SparseSet <- R6::R6Class(
     #' @details
     #' If \code{M} is omitted, the fuzzy set is the empty set. Later, one can use the \code{assign} method to assign grades to any of its attributes.
     #'
-    #' @return An object of class \code{SparseSet}.
+    #' @return An object of class \code{Set}.
     #' @export
     initialize = function(attributes, M = NULL) {
 
@@ -95,7 +95,7 @@ SparseSet <- R6::R6Class(
     #'
     #' @param indices (numeric, logical or character vector) The indices of the elements to return. It can be a vector of logicals where \code{TRUE} elements are to be retained.
     #'
-    #' @return A \code{SparseSet} but with only the required elements.
+    #' @return A \code{Set} but with only the required elements.
     #'
     #' @export
     `[` = function(indices) {
@@ -122,7 +122,7 @@ SparseSet <- R6::R6Class(
       w <- private$v
       idx <- setdiff(seq(self$length()), indices)
       w[idx] <- 0
-      S <- SparseSet$new(attributes = private$attributes,
+      S <- Set$new(attributes = private$attributes,
                          M = w)
 
       return(S)
@@ -130,9 +130,9 @@ SparseSet <- R6::R6Class(
     },
 
     #' @description
-    #' Cardinal of the SparseSet
+    #' Cardinal of the Set
     #'
-    #' @return the cardinal of the \code{SparseSet}, counted
+    #' @return the cardinal of the \code{Set}, counted
     #' as the sum of the degrees of each element.
     #'
     #' @export

@@ -21,8 +21,8 @@ NULL
 #' - \code{ConceptLattice} represents the set of concepts and their relationships, including methods to operate on the lattice.
 #'
 #' Two additional helper classes are implemented:
-#' - \code{SparseSet} is a class solely used for visualization purposes, since it encapsulates in sparse format a (fuzzy) set.
-#' - \code{SparseConcept} encapsulates internally both extent and intent of a formal concept as \code{SparseSet}.
+#' - \code{Set} is a class solely used for visualization purposes, since it encapsulates in sparse format a (fuzzy) set.
+#' - \code{Concept} encapsulates internally both extent and intent of a formal concept as \code{Set}.
 #' Since fcaR is an extension of the data model in the arules package, most of the methods and classes implemented interoperates with the main \code{S4} classes in arules (\code{transactions} and \code{rules}).
 #'
 #' @examples

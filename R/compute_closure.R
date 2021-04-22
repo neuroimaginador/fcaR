@@ -13,7 +13,6 @@
   # Which are the rules applicable to the set S?
   S_subsets <- .subset(LHS, S)
 
-  # idx_subsets <- which(S_subsets)
   idx_subsets <- S_subsets@i + 1
 
   do_not_use <- rep(FALSE, ncol(LHS))
@@ -38,6 +37,8 @@
 
     S <- .multiunion(add_col(A, S))
 
+    do_not_use[idx_subsets] <- TRUE
+
     if (reduce) {
 
       L <- .simplification_logic(S = S,
@@ -47,9 +48,14 @@
       LHS <- L$lhs
       RHS <- L$rhs
 
+      for (rem in L$idx_removed) {
+
+        do_not_use <- do_not_use[-rem]
+
+      }
+
     }
 
-    do_not_use[idx_subsets] <- TRUE
 
     if (is.null(LHS) || (ncol(LHS) == 0)) {
 
@@ -68,7 +74,7 @@
       if (verbose) {
 
         print(idx_subsets)
-        print(SparseSet$new(attributes = attributes,
+        print(Set$new(attributes = attributes,
                             M = S))
         cat("\n")
 
@@ -106,7 +112,11 @@
   subsets <- .subset(RHS, S)
   idx_subsets <- subsets@i + 1
 
+  idx_removed <- list()
+
   if (length(idx_subsets) > 0) {
+
+    idx_removed[[1]] <- idx_subsets
 
     LHS <- Matrix::Matrix(LHS[, -idx_subsets], sparse = TRUE)
     RHS <- Matrix::Matrix(RHS[, -idx_subsets], sparse = TRUE)
@@ -166,6 +176,6 @@
 
   }
 
-  return(list(lhs = LHS, rhs = RHS))
+  return(list(lhs = LHS, rhs = RHS, idx_removed = idx_removed))
 
 }

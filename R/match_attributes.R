@@ -1,4 +1,4 @@
-# Maps the origin SparseSet to another SparseSet with
+# Maps the origin Set to another Set with
 # target_attributes, keeping the value of the attributes
 # present in both attribute sets.
 # @examples
@@ -14,12 +14,12 @@ match_attributes <- function(origin, target_attributes) {
   ii <- which(!is.na(idx))
   v <- origin$get_vector()
 
-  target <- SparseSet$new(attributes = target_attributes,
-                          M = Matrix::sparseMatrix(
-                            i = idx[ii],
-                            j = rep(1, length(ii)),
-                            x = v[ii],
-                            dims = c(length(target_attributes), 1))
+  target <- Set$new(attributes = target_attributes,
+                    M = Matrix::sparseMatrix(
+                      i = idx[ii],
+                      j = rep(1, length(ii)),
+                      x = v[ii],
+                      dims = c(length(target_attributes), 1))
   )
 
   return(target)

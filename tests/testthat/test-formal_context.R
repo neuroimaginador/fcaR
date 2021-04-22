@@ -276,8 +276,6 @@ test_that("fcaR imports formal contexts from arules", {
 })
 
 
-
-
 test_that("fcaR exports formal contexts to arules transactions", {
 
   skip_if_not_installed("arules")
@@ -287,8 +285,6 @@ test_that("fcaR exports formal contexts to arules transactions", {
   expect_is(fc$to_transactions(), "transactions")
 
 })
-
-
 
 test_that("fcaR prints large formal contexts", {
 
@@ -336,10 +332,44 @@ test_that("fcaR saves and loads formal contexts", {
   expect_error(fc2 <- FormalContext$new(), NA)
   expect_error(fc2$load(filename), NA)
 
+  expect_error(fc2 <- FormalContext$new(filename), NA)
+
 
 })
 
-test_that("fcaR computes intents, extents and closures of SparseSets", {
+# TODO: Revisar todo lo de las escalas
+
+test_that("fcaR perform context scaling", {
+
+  to_nominal <- sample(0:3, size = 10, replace = TRUE)
+  to_ordinal <- sample(1:4, size = 10, replace = TRUE)
+  to_interordinal <- sample(1:4, size = 10, replace = TRUE)
+  to_interval <- runif(10)
+
+  I <- cbind(nom = to_nominal,
+             ord = to_ordinal,
+             inter = to_interordinal,
+             int = to_interval)
+
+  fc <- FormalContext$new(I)
+
+  expect_error(fc$scale(attributes = "ord",
+                        type = "ordinal"), NA)
+
+  expect_error(fc$scale(attributes = "nom",
+                        type = "nominal"), NA)
+
+  expect_error(fc$scale(attributes = "inter",
+                        type = "interordinal"), NA)
+
+  expect_error(fc$scale(attributes = "int",
+                        type = "interval",
+                        values = c(0, 0.5, 1),
+                        interval_names = c("low", "high")), NA)
+
+})
+
+test_that("fcaR computes intents, extents and closures of Sets", {
 
   objects <- paste0("O", 1:6)
   n_objects <- length(objects)
@@ -369,7 +399,12 @@ test_that("fcaR computes intents, extents and closures of SparseSets", {
 
   expect_warning(fc$intent(c1$get_intent()))
   expect_warning(fc$extent(c1$get_extent()))
-  expect_warning(fc$closure(c1$get_extent()))
+  # expect_warning(fc$closure(c1$get_extent()))
+
+  S <- Set$new(attributes = rev(attributes))
+  S$assign(P6 = 0.5, P5 = 0.5)
+  expect_warning(cl <- fc$closure(S))
+
 
 })
 
@@ -408,7 +443,6 @@ test_that("fcaR checks for concepts", {
 
   }
 
-
 })
 
 test_that("fcaR clarifies and reduces contexts", {
@@ -445,6 +479,7 @@ test_that("fcaR clarifies and reduces contexts", {
 
   fc <- FormalContext$new(I2)
 
+  # TODO: Revisar reduce
   expect_error(fc2 <- fc$reduce(TRUE), NA)
   expect_error(fc$reduce(), NA)
 

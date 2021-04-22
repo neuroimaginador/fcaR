@@ -55,7 +55,7 @@ ConceptLattice <- R6::R6Class(
 
       }
 
-      # Create the SparseConcepts
+      # Create the Concepts
       if (!is.null(extents)) {
 
         private$concepts <- .matrix_to_concepts(
@@ -149,6 +149,7 @@ ConceptLattice <- R6::R6Class(
       if (self$size() == 0) {
 
         warning("No concepts.", call. = FALSE)
+        return(invisible(NULL))
 
       }
 
@@ -260,9 +261,9 @@ ConceptLattice <- R6::R6Class(
     #' @description
     #' Get Concepts by Index
     #'
-    #' @param indices (numeric or logical vector) The indices of the concepts to return as a list of SparseConcepts. It can be a vector of logicals where \code{TRUE} elements are to be retained.
+    #' @param indices (numeric or logical vector) The indices of the concepts to return as a list of Concepts. It can be a vector of logicals where \code{TRUE} elements are to be retained.
     #'
-    #' @return A list of SparseConcepts.
+    #' @return A list of Concepts.
     #'
     #' @export
     `[` = function(indices) {
@@ -293,7 +294,7 @@ ConceptLattice <- R6::R6Class(
     #' @param ... See Details.
     #'
     #' @details
-    #' As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to generate a sublattice.
+    #' As argument, one can provide both integer indices or \code{Concepts}, separated by commas. The corresponding concepts are used to generate a sublattice.
     #'
     #' @return
     #' The generated sublattice as a new \code{ConceptLattice} object.
@@ -392,7 +393,7 @@ ConceptLattice <- R6::R6Class(
     #' @description
     #' Decompose a concept as the supremum of meet-irreducible concepts
     #'
-    #' @param C A list of \code{SparseConcept}s
+    #' @param C A list of \code{Concept}s
     #' @return
     #' A list, each field is the set of meet-irreducible elements whose supremum is the corresponding element in \code{C}.
     #'
@@ -438,7 +439,7 @@ ConceptLattice <- R6::R6Class(
     #' @param ... See Details.
     #'
     #' @details
-    #' As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to compute their supremum in the lattice.
+    #' As argument, one can provide both integer indices or \code{Concepts}, separated by commas. The corresponding concepts are used to compute their supremum in the lattice.
     #'
     #' @return
     #' The supremum of the list of concepts.
@@ -464,7 +465,7 @@ ConceptLattice <- R6::R6Class(
     #' @param ... See Details.
     #'
     #' @details
-    #' As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to compute their infimum in the lattice.
+    #' As argument, one can provide both integer indices or \code{Concepts}, separated by commas. The corresponding concepts are used to compute their infimum in the lattice.
     #'
     #' @return
     #' The infimum of the list of concepts.
@@ -668,7 +669,7 @@ ConceptLattice <- R6::R6Class(
 
       sets <- sapply(dots,
                      function(l)
-                       inherits(l, "SparseConcept"))
+                       inherits(l, "Concept"))
       sets <- dots[which(sets)]
 
       indices <- sapply(dots, is.numeric)

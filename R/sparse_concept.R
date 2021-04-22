@@ -20,24 +20,24 @@
 #' C$get_intent()
 #'
 #' @export
-SparseConcept <- R6::R6Class(
+Concept <- R6::R6Class(
 
-  classname = "SparseConcept",
+  classname = "Concept",
 
   public = list(
 
     #' @description
-    #' Creator for objects of class \code{SparseConcept}
+    #' Creator for objects of class \code{Concept}
     #'
-    #' @param extent  (\code{SparseSet}) The extent of the concept.
-    #' @param intent  (\code{SparseSet}) The intent of the concept.
+    #' @param extent  (\code{Set}) The extent of the concept.
+    #' @param intent  (\code{Set}) The intent of the concept.
     #'
-    #' @return An object of class \code{SparseConcept}.
+    #' @return An object of class \code{Concept}.
     #' @export
     initialize = function(extent, intent) {
 
-      stopifnot(inherits(extent, "SparseSet"))
-      stopifnot(inherits(intent, "SparseSet"))
+      stopifnot(inherits(extent, "Set"))
+      stopifnot(inherits(intent, "Set"))
 
       private$extent <- extent
       private$intent <- intent
@@ -45,9 +45,9 @@ SparseConcept <- R6::R6Class(
     },
 
     #' @description
-    #' Internal \code{SparseSet} for the extent
+    #' Internal \code{Set} for the extent
     #'
-    #' @return The \code{SparseSet} representation of the extent.
+    #' @return The \code{Set} representation of the extent.
     #'
     #' @export
     get_extent = function() {
@@ -57,9 +57,9 @@ SparseConcept <- R6::R6Class(
     },
 
     #' @description
-    #' Internal \code{SparseSet} for the intent
+    #' Internal \code{Set} for the intent
     #'
-    #' @return The \code{SparseSet} representation of the intent.
+    #' @return The \code{Set} representation of the intent.
     #'
     #' @export
     get_intent = function() {
