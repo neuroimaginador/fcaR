@@ -101,6 +101,9 @@
       <a href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
     </li>
     <li>
+      <a href="../articles/conceptual-scaling.html">Conceptual Scaling</a>
+    </li>
+    <li>
       <a href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a>
     </li>
     <li>
@@ -232,7 +235,7 @@ or <code>initialize(rules)</code></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>...</code></dt><dd><p>An <code>ImplicationSet</code> object, a <code>rules</code> object, or a pair <code>lhs</code>, <code>rhs</code> of <code>SparseSet</code> objects or <code>dgCMatrix</code>. The implications to add to this formal context.</p></dd>
+<dt><code>...</code></dt><dd><p>An <code>ImplicationSet</code> object, a <code>rules</code> object, or a pair <code>lhs</code>, <code>rhs</code> of <code>Set</code> objects or <code>dgCMatrix</code>. The implications to add to this formal context.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
@@ -265,7 +268,7 @@ or <code>initialize(rules)</code></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>S</code></dt><dd><p>(a <code>SparseSet</code> object)  Fuzzy set to compute its closure. Use class <code>SparseSet</code> to build it.</p></dd>
+<dt><code>S</code></dt><dd><p>(a <code>Set</code> object)  Fuzzy set to compute its closure. Use class <code>Set</code> to build it.</p></dd>
 
 <dt><code>reduce</code></dt><dd><p>(logical) Reduce the implications using simplification logic?</p></dd>
 
@@ -429,7 +432,7 @@ or <code>initialize(rules)</code></p>
 #&gt; 2.5 2.3 </div><div class='input'>
 <span class='co'># Simplify the implication set</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>apply_rules</span><span class='op'>(</span><span class='st'>"simplification"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.274 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.292 secs. </span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10.</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

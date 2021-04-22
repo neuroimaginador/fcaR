@@ -1,6 +1,8 @@
 .subset <- function(x, y = NULL, proper = FALSE) {
 
+  x <- methods::as(x, "dgCMatrix")
   if (is.null(y)) y <- x
+  y <- methods::as(y, "dgCMatrix")
 
   stopifnot("x" %in% methods::slotNames(x))
 
@@ -31,10 +33,13 @@
 
 .equal_sets <- function(x, y = NULL, proper = FALSE) {
 
+  x <- methods::as(x, "dgCMatrix")
   if (is.null(y)) y <- x
+  y <- methods::as(y, "dgCMatrix")
 
   stopifnot("x" %in% methods::slotNames(x))
   stopifnot("x" %in% methods::slotNames(y))
+
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
   i <- is_equal_set_C(x@p, x@i, x@Dim, x@x,

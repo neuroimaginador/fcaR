@@ -1019,8 +1019,8 @@ FormalContext <- R6::R6Class(
 
         # There are implications (the first one is dummy
         # emptyset -> emptyset )
-        my_LHS <- L$LHS
-        my_RHS <- L$RHS
+        my_LHS <- methods::as(L$LHS, "dgCMatrix")
+        my_RHS <- methods::as(L$RHS, "dgCMatrix")
 
         extracted_implications <- ImplicationSet$new(attributes = self$attributes,
                                                      lhs = my_LHS,
