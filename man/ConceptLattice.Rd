@@ -34,8 +34,8 @@ fc_planets$concepts$support()
 \item \href{#method-to_latex}{\code{ConceptLattice$to_latex()}}
 \item \href{#method-[}{\code{ConceptLattice$[()}}
 \item \href{#method-sublattice}{\code{ConceptLattice$sublattice()}}
-\item \href{#method-meet_irreducibles}{\code{ConceptLattice$meet_irreducibles()}}
 \item \href{#method-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
+\item \href{#method-meet_irreducibles}{\code{ConceptLattice$meet_irreducibles()}}
 \item \href{#method-decompose}{\code{ConceptLattice$decompose()}}
 \item \href{#method-supremum}{\code{ConceptLattice$supremum()}}
 \item \href{#method-infimum}{\code{ConceptLattice$infimum()}}
@@ -208,12 +208,12 @@ Get Concepts by Index
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{indices}}{(numeric or logical vector) The indices of the concepts to return as a list of Concepts. It can be a vector of logicals where \code{TRUE} elements are to be retained.}
+\item{\code{indices}}{(numeric or logical vector) The indices of the concepts to return as a list of SparseConcepts. It can be a vector of logicals where \code{TRUE} elements are to be retained.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A list of Concepts.
+A list of SparseConcepts.
 }
 }
 \if{html}{\out{<hr>}}
@@ -233,24 +233,11 @@ Sublattice
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-As argument, one can provide both integer indices or \code{Concepts}, separated by commas. The corresponding concepts are used to generate a sublattice.
+As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to generate a sublattice.
 }
 
 \subsection{Returns}{
 The generated sublattice as a new \code{ConceptLattice} object.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-meet_irreducibles"></a>}}
-\if{latex}{\out{\hypertarget{method-meet_irreducibles}{}}}
-\subsection{Method \code{meet_irreducibles()}}{
-Meet-irreducible Elements
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$meet_irreducibles()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-The meet-irreducible elements in the concept lattice.
 }
 }
 \if{html}{\out{<hr>}}
@@ -267,6 +254,19 @@ The join-irreducible elements in the concept lattice.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-meet_irreducibles"></a>}}
+\if{latex}{\out{\hypertarget{method-meet_irreducibles}{}}}
+\subsection{Method \code{meet_irreducibles()}}{
+Meet-irreducible Elements
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$meet_irreducibles()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The meet-irreducible elements in the concept lattice.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-decompose"></a>}}
 \if{latex}{\out{\hypertarget{method-decompose}{}}}
 \subsection{Method \code{decompose()}}{
@@ -278,7 +278,7 @@ Decompose a concept as the supremum of meet-irreducible concepts
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{C}}{A list of \code{Concept}s}
+\item{\code{C}}{A list of \code{SparseConcept}s}
 }
 \if{html}{\out{</div>}}
 }
@@ -303,7 +303,7 @@ Supremum of Concepts
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-As argument, one can provide both integer indices or \code{Concepts}, separated by commas. The corresponding concepts are used to compute their supremum in the lattice.
+As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to compute their supremum in the lattice.
 }
 
 \subsection{Returns}{
@@ -327,7 +327,7 @@ Infimum of Concepts
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-As argument, one can provide both integer indices or \code{Concepts}, separated by commas. The corresponding concepts are used to compute their infimum in the lattice.
+As argument, one can provide both integer indices or \code{SparseConcepts}, separated by commas. The corresponding concepts are used to compute their infimum in the lattice.
 }
 
 \subsection{Returns}{
@@ -346,7 +346,7 @@ Subconcepts of a Concept
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{C}}{(numeric or \code{Concept}) The concept to which determine all its subconcepts.}
+\item{\code{C}}{(numeric or \code{SparseConcept}) The concept to which determine all its subconcepts.}
 }
 \if{html}{\out{</div>}}
 }
@@ -366,7 +366,7 @@ Superconcepts of a Concept
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{C}}{(numeric or \code{Concept}) The concept to which determine all its superconcepts.}
+\item{\code{C}}{(numeric or \code{SparseConcept}) The concept to which determine all its superconcepts.}
 }
 \if{html}{\out{</div>}}
 }
@@ -386,7 +386,7 @@ Lower Neighbours of a Concept
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{C}}{(\code{Concept}) The concept to which find its lower neighbours}
+\item{\code{C}}{(\code{SparseConcept}) The concept to which find its lower neighbours}
 }
 \if{html}{\out{</div>}}
 }
@@ -406,7 +406,7 @@ Upper Neighbours of a Concept
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{C}}{(\code{Concept}) The concept to which find its upper neighbours}
+\item{\code{C}}{(\code{SparseConcept}) The concept to which find its upper neighbours}
 }
 \if{html}{\out{</div>}}
 }

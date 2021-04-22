@@ -2,29 +2,29 @@
 % Please edit documentation in R/compare_concepts.R
 \name{\%-\%}
 \alias{\%-\%}
-\title{Difference in Sets}
+\title{Difference in SparseSets}
 \usage{
 S1 \%-\% S2
 }
 \arguments{
-\item{S1}{A \code{Set}}
+\item{S1}{A \code{SparseSet}}
 
-\item{S2}{A \code{Set}}
+\item{S2}{A \code{SparseSet}}
 }
 \value{
 Returns the difference \code{S1 - S2}.
 }
 \description{
-Difference in Sets
+Difference in SparseSets
 }
 \details{
-Both \code{S1} and \code{S2} must be Sets.
+Both \code{S1} and \code{S2} must be SparseSets.
 }
 \examples{
 # Build two sparse sets
-S <- Set$new(attributes = c("A", "B", "C"))
+S <- SparseSet$new(attributes = c("A", "B", "C"))
 S$assign(A = 1, B = 1)
-T <- Set$new(attributes = c("A", "B", "C"))
+T <- SparseSet$new(attributes = c("A", "B", "C"))
 T$assign(A = 1)
 
 # Difference

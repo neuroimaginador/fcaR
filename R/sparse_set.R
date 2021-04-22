@@ -5,20 +5,20 @@
 #' This class implements the data structure and methods for fuzzy sets.
 #'
 #' @examples
-#' S <- Set$new(attributes = c("A", "B", "C"))
+#' S <- SparseSet$new(attributes = c("A", "B", "C"))
 #' S$assign(A = 1)
 #' print(S)
 #' S$to_latex()
 #'
 #' @export
-Set <- R6::R6Class(
+SparseSet <- R6::R6Class(
 
-  classname = "Set",
+  classname = "SparseSet",
 
   public = list(
 
     #' @description
-    #' Creator for objects of class \code{Set}
+    #' Creator for objects of class \code{SparseSet}
     #'
     #' @param attributes  (character vector) Names of the attributes that will be available in the fuzzy set.
     #' @param M           (numeric vector or column \code{Matrix}) Values (grades) to be assigned to the attributes.
@@ -26,7 +26,7 @@ Set <- R6::R6Class(
     #' @details
     #' If \code{M} is omitted, the fuzzy set is the empty set. Later, one can use the \code{assign} method to assign grades to any of its attributes.
     #'
-    #' @return An object of class \code{Set}.
+    #' @return An object of class \code{SparseSet}.
     #' @export
     initialize = function(attributes, M = NULL) {
 
@@ -34,19 +34,14 @@ Set <- R6::R6Class(
 
       if (!is.null(M)) {
 
-        if (!inherits(M, "Matrix")) {
-
-
-          M <- new_spm(M)
-
-        }
-
-        private$v <- M
+        private$v <- Matrix::Matrix(M, sparse = TRUE)
 
       } else {
 
-        private$v <- zeroSpM(nrow = length(attributes),
-                             ncol = 1)
+        private$v <- Matrix::Matrix(0,
+                                    nrow = length(attributes),
+                                    ncol = 1,
+                                    sparse = TRUE)
 
       }
 
@@ -89,7 +84,7 @@ Set <- R6::R6Class(
 
       if (length(idx) > 0) {
 
-        private$v %>% assignSpM(idx, values)
+        private$v[idx] <- values
 
       }
 
@@ -100,7 +95,7 @@ Set <- R6::R6Class(
     #'
     #' @param indices (numeric, logical or character vector) The indices of the elements to return. It can be a vector of logicals where \code{TRUE} elements are to be retained.
     #'
-    #' @return A \code{Set} but with only the required elements.
+    #' @return A \code{SparseSet} but with only the required elements.
     #'
     #' @export
     `[` = function(indices) {
@@ -126,8 +121,8 @@ Set <- R6::R6Class(
 
       w <- private$v
       idx <- setdiff(seq(self$length()), indices)
-      w %>% assignSpM(idx, 0)
-      S <- Set$new(attributes = private$attributes,
+      w[idx] <- 0
+      S <- SparseSet$new(attributes = private$attributes,
                          M = w)
 
       return(S)
@@ -135,15 +130,15 @@ Set <- R6::R6Class(
     },
 
     #' @description
-    #' Cardinal of the Set
+    #' Cardinal of the SparseSet
     #'
-    #' @return the cardinal of the \code{Set}, counted
+    #' @return the cardinal of the \code{SparseSet}, counted
     #' as the sum of the degrees of each element.
     #'
     #' @export
     cardinal = function() {
 
-      sum(private$v$px)
+      sum(private$v)
 
     },
 
@@ -155,9 +150,7 @@ Set <- R6::R6Class(
     #' @export
     get_vector = function() {
 
-      res <- private$v
-      class(res) <- "SpM"
-      return(res)
+      private$v
 
     },
 
@@ -193,7 +186,7 @@ Set <- R6::R6Class(
     #' @export
     print = function() {
 
-      if (self$cardinal() > 0) {
+      if (sum(private$v) > 0) {
 
         cat(stringr::str_wrap(.set_to_string(S = private$v,
                                              attributes = private$attributes),
@@ -218,7 +211,7 @@ Set <- R6::R6Class(
     to_latex = function(print = TRUE) {
 
       str <- "\\ensuremath{\\varnothing}"
-      if (self$cardinal() > 0) {
+      if (sum(private$v) > 0) {
 
         str <- set_to_latex(S = private$v,
                             attributes = private$attributes)

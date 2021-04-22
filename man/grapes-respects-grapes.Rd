@@ -2,20 +2,20 @@
 % Please edit documentation in R/holds_respects.R
 \name{\%respects\%}
 \alias{\%respects\%}
-\title{Check if Set or FormalContext respects an ImplicationSet}
+\title{Check if SparseSet or FormalContext respects an ImplicationSet}
 \usage{
 set \%respects\% imps
 }
 \arguments{
-\item{set}{(list of \code{Set}s, or a \code{FormalContext}) The sets of attributes to check whether they respect the \code{ImplicationSet}.}
+\item{set}{(list of \code{SparseSet}s, or a \code{FormalContext}) The sets of attributes to check whether they respect the \code{ImplicationSet}.}
 
 \item{imps}{(\code{ImplicationSet}) The set of implications to check.}
 }
 \value{
-A logical matrix with as many rows as \code{Set}s and as many columns as implications in the \code{ImplicationSet}. A \code{TRUE} in element (i, j) of the result means that the i-th \code{Set} respects the j-th implication of the \code{ImplicationSet}.
+A logical matrix with as many rows as \code{SparseSet}s and as many columns as implications in the \code{ImplicationSet}. A \code{TRUE} in element (i, j) of the result means that the i-th \code{SparseSet} respects the j-th implication of the \code{ImplicationSet}.
 }
 \description{
-Check if Set or FormalContext respects an ImplicationSet
+Check if SparseSet or FormalContext respects an ImplicationSet
 }
 \examples{
 fc <- FormalContext$new(planets)

@@ -10,7 +10,7 @@
   idx <- match(attribute_filter, attributes)
 
   # Return the recommendation for those attributes
-  rec <- (S$closure %>% to_matrix.SpM())[idx]
+  rec <- S$closure[idx]
   names(rec) <- attribute_filter
 
   return(rec)

@@ -97,7 +97,7 @@ fc_planets$implications$get_RHS_matrix()
 The main practical use of an `ImplicationSet` is to compute the closure of a set of attributes, by using the `closure()` function:
 ```{r}
 # Let us build a set of attributes
-S <- Set$new(attributes = fc_planets$attributes)
+S <- SparseSet$new(attributes = fc_planets$attributes)
 S$assign(large = 1, far = 1)
 S
 
@@ -170,7 +170,7 @@ This enables the reduction of the cardinality and/or the size of the `Implicatio
 In addition, the "simplification" rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:
 ```{r}
 # Let us build a set of attributes
-S <- Set$new(attributes = fc_planets$attributes)
+S <- SparseSet$new(attributes = fc_planets$attributes)
 S$assign(large = 1, far = 1)
 S
 
@@ -205,7 +205,7 @@ imps %~% imps2[1:9]
 
 One of the final applications of an `ImplicationSet` is the easy development of a recommendation system where, from an attribute set, the system would infer the value to other attribute. This is done by the `recommend()` function, which internally computes the closure of the attribute set:
 ```{r}
-S <- Set$new(attributes = fc_I$attributes)
+S <- SparseSet$new(attributes = fc_I$attributes)
 S$assign(P1 = 1, P4 = 0.5)
 
 fc_I$implications$recommend(S, attribute_filter = c("P3", "P5"))

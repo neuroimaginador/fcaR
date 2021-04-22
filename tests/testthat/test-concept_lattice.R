@@ -81,7 +81,7 @@ test_that("fcaR extracts concepts from a ConceptLattice", {
 
   expect_error(L <- fc$concepts[10:12], NA)
   expect_is(L, "conceptlist")
-  expect_is(L[[1]], "Concept")
+  expect_is(L[[1]], "SparseConcept")
   expect_error(fc$concepts[fc$concepts$support() > 0.5], NA)
 
 })

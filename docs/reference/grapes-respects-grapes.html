@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if Set or FormalContext respects an ImplicationSet — %respects% • fcaR</title>
+<title>Check if SparseSet or FormalContext respects an ImplicationSet — %respects% • fcaR</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Check if Set or FormalContext respects an ImplicationSet — %respects%" />
-<meta property="og:description" content="Check if Set or FormalContext respects an ImplicationSet" />
+<meta property="og:title" content="Check if SparseSet or FormalContext respects an ImplicationSet — %respects%" />
+<meta property="og:description" content="Check if SparseSet or FormalContext respects an ImplicationSet" />
 
 
 
@@ -101,9 +101,6 @@
       <a href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
     </li>
     <li>
-      <a href="../articles/conceptual-scaling.html">Conceptual Scaling</a>
-    </li>
-    <li>
       <a href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a>
     </li>
     <li>
@@ -135,13 +132,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if Set or FormalContext respects an ImplicationSet</h1>
+    <h1>Check if SparseSet or FormalContext respects an ImplicationSet</h1>
     <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/holds_respects.R'><code>R/holds_respects.R</code></a></small>
     <div class="hidden name"><code>grapes-respects-grapes.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Check if Set or FormalContext respects an ImplicationSet</p>
+    <p>Check if SparseSet or FormalContext respects an ImplicationSet</p>
     </div>
 
     <pre class="usage"><span class='va'>set</span> <span class='op'>%respects%</span> <span class='va'>imps</span></pre>
@@ -151,7 +148,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>set</th>
-      <td><p>(list of <code>Set</code>s, or a <code>FormalContext</code>) The sets of attributes to check whether they respect the <code>ImplicationSet</code>.</p></td>
+      <td><p>(list of <code>SparseSet</code>s, or a <code>FormalContext</code>) The sets of attributes to check whether they respect the <code>ImplicationSet</code>.</p></td>
     </tr>
     <tr>
       <th>imps</th>
@@ -161,23 +158,24 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A logical matrix with as many rows as <code>Set</code>s and as many columns as implications in the <code>ImplicationSet</code>. A <code>TRUE</code> in element (i, j) of the result means that the i-th <code>Set</code> respects the j-th implication of the <code>ImplicationSet</code>.</p>
+    <p>A logical matrix with as many rows as <code>SparseSet</code>s and as many columns as implications in the <code>ImplicationSet</code>. A <code>TRUE</code> in element (i, j) of the result means that the i-th <code>SparseSet</code> respects the j-th implication of the <code>ImplicationSet</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>fc</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
 <span class='va'>fc</span><span class='op'>$</span><span class='fu'>find_implications</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>imps</span> <span class='op'>&lt;-</span> <span class='va'>fc</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>fc</span> <span class='op'>%respects%</span> <span class='va'>imps</span>
-</div><div class='output co'>#&gt;       imp_01 imp_02 imp_03 imp_04 imp_05 imp_06 imp_07 imp_08 imp_09 imp_10
-#&gt; set_1   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
-#&gt; set_2   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
-#&gt; set_3   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
-#&gt; set_4   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
-#&gt; set_5   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
-#&gt; set_6   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
-#&gt; set_7   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
-#&gt; set_8   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE
-#&gt; set_9   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</div></pre>
+</div><div class='output co'>#&gt; 9 x 10 Matrix of class "lgeMatrix"
+#&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+#&gt;  [1,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE
+#&gt;  [2,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE
+#&gt;  [3,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE
+#&gt;  [4,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE
+#&gt;  [5,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE
+#&gt;  [6,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE
+#&gt;  [7,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE
+#&gt;  [8,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE
+#&gt;  [9,] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE  TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

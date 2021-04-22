@@ -60,9 +60,6 @@
       <a href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
     </li>
     <li>
-      <a href="../articles/conceptual-scaling.html">Conceptual Scaling</a>
-    </li>
-    <li>
       <a href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a>
     </li>
     <li>
@@ -677,7 +674,7 @@ O6
 <p>The intent of a (probably fuzzy) set of objects is the set of their common attributes:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="co"># Define a set of objects</span>
-<span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">objects</span><span class="op">)</span>
+<span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SparseSet.html">SparseSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">objects</span><span class="op">)</span>
 <span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>Earth <span class="op">=</span> <span class="fl">1</span>, Mars <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">S</span>
 <span class="co">#&gt; {Earth, Mars}</span>
@@ -688,7 +685,7 @@ O6
 <p>Analogously, the extent of a set of attributes is the set of objects which possess all the attributes in the given set:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="co"># Define a set of objects</span>
-<span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span>
+<span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SparseSet.html">SparseSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span>
 <span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>moon <span class="op">=</span> <span class="fl">1</span>, large <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">S</span>
 <span class="co">#&gt; {large, moon}</span>
@@ -928,14 +925,14 @@ O6
 <span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
 <span class="co"># Its subconcepts:</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">subconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span>
+<span class="co"># And its superconcepts:</span>
+<span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">superconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
 <span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
 <span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
 <span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
-<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
-<span class="co"># And its superconcepts:</span>
-<span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">superconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
-<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></pre></div>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></pre></div>
 <p>Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit">
 <span class="co"># A list of concepts</span>
@@ -947,10 +944,10 @@ O6
 
 <span class="co"># Supremum of the concepts in C</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">supremum</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
 <span class="co"># Infimum of the concepts in C</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">infimum</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></pre></div>
+<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></pre></div>
 </div>
 <div id="join--and-meet--irreducible-elements" class="section level2">
 <h2 class="hasAnchor">

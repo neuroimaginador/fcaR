@@ -60,9 +60,6 @@
       <a href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
     </li>
     <li>
-      <a href="../articles/conceptual-scaling.html">Conceptual Scaling</a>
-    </li>
-    <li>
       <a href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a>
     </li>
     <li>
@@ -181,17 +178,14 @@
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="va">random_reorder</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">LHS</span>, <span class="va">RHS</span>, <span class="va">attributes</span><span class="op">)</span> <span class="op">{</span>
   
-  <span class="va">imps</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/ImplicationSet.html">ImplicationSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">attributes</span>, 
-                             lhs <span class="op">=</span> <span class="va">LHS</span>, 
-                             rhs <span class="op">=</span> <span class="va">RHS</span><span class="op">)</span>
-  <span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/sample.html">sample</a></span><span class="op">(</span><span class="va">imps</span><span class="op">$</span><span class="fu">cardinality</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="co"># Remember: attributes are in rows, implications are</span>
+  <span class="co"># in columns.</span>
+  <span class="co"># Random order for columns:</span>
+  <span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">LHS</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">LHS</span><span class="op">)</span><span class="op">)</span>
   
-  <span class="co"># Reorder implications</span>
-  <span class="va">imps</span> <span class="op">&lt;-</span> <span class="va">imps</span><span class="op">[</span><span class="va">o</span><span class="op">]</span>
-  <span class="va">lhs</span> <span class="op">&lt;-</span> <span class="va">imps</span><span class="op">$</span><span class="fu">get_LHS_matrix</span><span class="op">(</span><span class="op">)</span>
-  <span class="va">rhs</span> <span class="op">&lt;-</span> <span class="va">imps</span><span class="op">$</span><span class="fu">get_RHS_matrix</span><span class="op">(</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>lhs <span class="op">=</span> <span class="va">lhs</span>,
-              rhs <span class="op">=</span> <span class="va">rhs</span><span class="op">)</span><span class="op">)</span>
+  <span class="co"># Return the reordered implications</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>lhs <span class="op">=</span> <span class="va">LHS</span><span class="op">[</span>, <span class="va">o</span><span class="op">]</span>,
+              rhs <span class="op">=</span> <span class="va">RHS</span><span class="op">[</span>, <span class="va">o</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
   
 <span class="op">}</span></pre></div>
 <p>Once we have defined the function, we add the method to the registry:</p>
@@ -225,21 +219,21 @@
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="st">"randomize"</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
 <span class="co">#&gt; --&gt; Randomize: from 10 to 10 in 0.001 secs.</span>
-<span class="co">#&gt; Batch took 0.007 secs.</span></pre></div>
+<span class="co">#&gt; Batch took 0.01 secs.</span></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="co"># Reordered implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
 <span class="co">#&gt; Implication set with 10 implications.</span>
-<span class="co">#&gt; Rule 1: {medium} -&gt; {far, moon}</span>
-<span class="co">#&gt; Rule 2: {near} -&gt; {small}</span>
+<span class="co">#&gt; Rule 1: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
+<span class="co">#&gt; Rule 2: {large} -&gt; {far, moon}</span>
 <span class="co">#&gt; Rule 3: {small, near, far, moon} -&gt; {medium, large, no_moon}</span>
-<span class="co">#&gt; Rule 4: {large} -&gt; {far, moon}</span>
-<span class="co">#&gt; Rule 5: {far} -&gt; {moon}</span>
+<span class="co">#&gt; Rule 4: {medium} -&gt; {far, moon}</span>
+<span class="co">#&gt; Rule 5: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
 <span class="co">#&gt; Rule 6: {small, medium, far, moon} -&gt; {large, near, no_moon}</span>
-<span class="co">#&gt; Rule 7: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
-<span class="co">#&gt; Rule 8: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
+<span class="co">#&gt; Rule 7: {far} -&gt; {moon}</span>
+<span class="co">#&gt; Rule 8: {no_moon} -&gt; {small, near}</span>
 <span class="co">#&gt; Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}</span>
-<span class="co">#&gt; Rule 10: {no_moon} -&gt; {small, near}</span></pre></div>
+<span class="co">#&gt; Rule 10: {near} -&gt; {small}</span></pre></div>
 </div>
   </div>
 

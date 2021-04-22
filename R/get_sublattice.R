@@ -3,7 +3,7 @@
   idx <- starting_idx
   idx_final <- starting_idx
 
-  N <- ncol.SpM(M)
+  N <- ncol(M)
 
   # joins
   added <- TRUE

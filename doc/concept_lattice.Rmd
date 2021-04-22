@@ -130,7 +130,7 @@ The basic operation in FCA is the computation of closures given an attribute set
 The intent of a (probably fuzzy) set of objects is the set of their common attributes:
 ```{r}
 # Define a set of objects
-S <- Set$new(attributes = fc_planets$objects)
+S <- SparseSet$new(attributes = fc_planets$objects)
 S$assign(Earth = 1, Mars = 1)
 S
 
@@ -141,7 +141,7 @@ fc_planets$intent(S)
 Analogously, the extent of a set of attributes is the set of objects which possess all the attributes in the given set:
 ```{r}
 # Define a set of objects
-S <- Set$new(attributes = fc_planets$attributes)
+S <- SparseSet$new(attributes = fc_planets$attributes)
 S$assign(moon = 1, large = 1)
 S
 

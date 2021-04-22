@@ -153,7 +153,7 @@ Add a precomputed implication set
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{An \code{ImplicationSet} object, a \code{rules} object, or a pair \code{lhs}, \code{rhs} of \code{Set} objects or \code{dgCMatrix}. The implications to add to this formal context.}
+\item{\code{...}}{An \code{ImplicationSet} object, a \code{rules} object, or a pair \code{lhs}, \code{rhs} of \code{SparseSet} objects or \code{dgCMatrix}. The implications to add to this formal context.}
 }
 \if{html}{\out{</div>}}
 }
@@ -212,7 +212,7 @@ Compute the semantic closure of a fuzzy set with respect to the implication set
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(a \code{Set} object)  Fuzzy set to compute its closure. Use class \code{Set} to build it.}
+\item{\code{S}}{(a \code{SparseSet} object)  Fuzzy set to compute its closure. Use class \code{SparseSet} to build it.}
 
 \item{\code{reduce}}{(logical) Reduce the implications using simplification logic?}
 

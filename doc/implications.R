@@ -53,7 +53,7 @@ fc_planets$implications$get_RHS_matrix()
 
 ## -----------------------------------------------------------------------------
 # Let us build a set of attributes
-S <- Set$new(attributes = fc_planets$attributes)
+S <- SparseSet$new(attributes = fc_planets$attributes)
 S$assign(large = 1, far = 1)
 S
 
@@ -92,7 +92,7 @@ fc_I$implications$apply_rules(rules = c("composition",
 
 ## -----------------------------------------------------------------------------
 # Let us build a set of attributes
-S <- Set$new(attributes = fc_planets$attributes)
+S <- SparseSet$new(attributes = fc_planets$attributes)
 S$assign(large = 1, far = 1)
 S
 
@@ -117,7 +117,7 @@ imps %~% imps2
 imps %~% imps2[1:9]
 
 ## -----------------------------------------------------------------------------
-S <- Set$new(attributes = fc_I$attributes)
+S <- SparseSet$new(attributes = fc_I$attributes)
 S$assign(P1 = 1, P4 = 0.5)
 
 fc_I$implications$recommend(S, attribute_filter = c("P3", "P5"))

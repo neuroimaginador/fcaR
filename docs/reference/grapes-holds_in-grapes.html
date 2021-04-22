@@ -101,9 +101,6 @@
       <a href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
     </li>
     <li>
-      <a href="../articles/conceptual-scaling.html">Conceptual Scaling</a>
-    </li>
-    <li>
       <a href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a>
     </li>
     <li>
@@ -167,8 +164,8 @@
     <pre class="examples"><div class='input'><span class='va'>fc</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
 <span class='va'>fc</span><span class='op'>$</span><span class='fu'>find_implications</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>imps</span> <span class='op'>&lt;-</span> <span class='va'>fc</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>imps</span> <span class='op'>%holds_in%</span> <span class='va'>fc</span>
-</div><div class='output co'>#&gt;  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</div><div class='input'>
+<span class='va'>imps</span> <span class='op'>%holds%</span> <span class='va'>fc</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in imps %holds% fc: no se pudo encontrar la función "%holds%"</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

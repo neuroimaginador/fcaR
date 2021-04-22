@@ -71,7 +71,7 @@ fc_dual
 
 ## -----------------------------------------------------------------------------
 # Define a set of objects
-S <- Set$new(attributes = fc_planets$objects)
+S <- SparseSet$new(attributes = fc_planets$objects)
 S$assign(Earth = 1, Mars = 1)
 S
 
@@ -80,7 +80,7 @@ fc_planets$intent(S)
 
 ## -----------------------------------------------------------------------------
 # Define a set of objects
-S <- Set$new(attributes = fc_planets$attributes)
+S <- SparseSet$new(attributes = fc_planets$attributes)
 S$assign(moon = 1, large = 1)
 S
 

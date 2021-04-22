@@ -1,7 +1,6 @@
 .set_to_string <- function(S, attributes) {
 
-  idx <- whichSpM(S)
-  S <- to_matrix.SpM(S)
+  idx <- Matrix::which(S > 0)
 
   if (length(idx) > 0) {
 

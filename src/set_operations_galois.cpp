@@ -17,47 +17,47 @@ double cardinal(SparseVector A) {
 
 }
 
-// SparseVector setdifference(SparseVector x,
-//                            SparseVector y) {
-//
-//   SparseVector res;
-//   initVector(&res, x.length);
-//
-//
-//   for (size_t i = 0; i < x.i.used; i++) {
-//
-//     bool add = true;
-//
-//     for (size_t j = 0; j < y.i.used; j++) {
-//
-//       if (x.i.array[i] == y.i.array[j]) {
-//
-//         if (y.x.array[j] >= x.x.array[i]) {
-//
-//           add = false;
-//           break;
-//
-//         }
-//
-//         if (y.i.array[j] > x.i.array[i]) break;
-//
-//       }
-//
-//     }
-//
-//     if (add) {
-//
-//       insertArray(&(res.i), x.i.array[i]);
-//       insertArray(&(res.x), x.x.array[i]);
-//
-//     }
-//
-//   }
-//
-//
-//   return res;
-//
-// }
+SparseVector setdifference(SparseVector x,
+                           SparseVector y) {
+
+  SparseVector res;
+  initVector(&res, x.length);
+
+
+  for (size_t i = 0; i < x.i.used; i++) {
+
+    bool add = true;
+
+    for (size_t j = 0; j < y.i.used; j++) {
+
+      if (x.i.array[i] == y.i.array[j]) {
+
+        if (y.x.array[j] >= x.x.array[i]) {
+
+          add = false;
+          break;
+
+        }
+
+        if (y.i.array[j] > x.i.array[i]) break;
+
+      }
+
+    }
+
+    if (add) {
+
+      insertArray(&(res.i), x.i.array[i]);
+      insertArray(&(res.x), x.x.array[i]);
+
+    }
+
+  }
+
+
+  return res;
+
+}
 
 void setdifference(SparseVector x,
                    SparseVector y,
@@ -136,48 +136,48 @@ SparseVector compute_intent (SparseVector V,
 
 }
 
-// SparseVector compute_intent (SparseVector V,
-//                              double* I,
-//                              int n_objects,
-//                              int n_attributes) {
-//
-//   SparseVector R;
-//
-//   initVector(&R, n_attributes);
-//
-//   int i;
-//
-//   for (int c = 0; c < n_attributes; c++) {
-//
-//     double ms = 1;
-//
-//     for (size_t r = 0; r < V.i.used; r++) {
-//
-//       i = V.i.array[r];
-//
-//       double tmp = (V.x.array[r] <= I[c * n_objects + i]) ? 1.0 : I[c * n_objects + i];
-//
-//       if (tmp < ms) ms = tmp;
-//
-//       if (ms == 0) break;
-//
-//     }
-//
-//     if (ms > 0) {
-//
-//       insertArray(&(R.i), c);
-//       insertArray(&(R.x), ms);
-//
-//     }
-//
-//   }
-//
-//   insertArray(&(R.p), 0);
-//   insertArray(&(R.p), R.i.used);
-//
-//   return(R);
-//
-// }
+SparseVector compute_intent (SparseVector V,
+                             double* I,
+                             int n_objects,
+                             int n_attributes) {
+
+  SparseVector R;
+
+  initVector(&R, n_attributes);
+
+  int i;
+
+  for (int c = 0; c < n_attributes; c++) {
+
+    double ms = 1;
+
+    for (size_t r = 0; r < V.i.used; r++) {
+
+      i = V.i.array[r];
+
+      double tmp = (V.x.array[r] <= I[c * n_objects + i]) ? 1.0 : I[c * n_objects + i];
+
+      if (tmp < ms) ms = tmp;
+
+      if (ms == 0) break;
+
+    }
+
+    if (ms > 0) {
+
+      insertArray(&(R.i), c);
+      insertArray(&(R.x), ms);
+
+    }
+
+  }
+
+  insertArray(&(R.p), 0);
+  insertArray(&(R.p), R.i.used);
+
+  return(R);
+
+}
 
 void compute_intent (SparseVector *R,
                      SparseVector V,
@@ -218,30 +218,10 @@ void compute_intent (SparseVector *R,
 
 }
 
-// ## export
-// S4 compute_intent(S4 V, NumericMatrix I) {
-//
-//   SparseVector R = S4toSparse(V);
-//
-//   SparseVector R2;
-//   initVector(&R2, I.ncol());
-//
-//   compute_intent(&R2, R, I.begin(),
-//                  I.nrow(), I.ncol());
-//
-//   S4 res = SparseToS4_fast(R2);
-//
-//   freeVector(&R);
-//   freeVector(&R2);
-//   return res;
-//
-// }
-
 // [[Rcpp::export]]
-Environment compute_intentSpM(Environment V,
-                              NumericMatrix I) {
+S4 compute_intent(S4 V, NumericMatrix I) {
 
-  SparseVector R = EnvtoSparse(V);
+  SparseVector R = S4toSparse(V);
 
   SparseVector R2;
   initVector(&R2, I.ncol());
@@ -249,7 +229,7 @@ Environment compute_intentSpM(Environment V,
   compute_intent(&R2, R, I.begin(),
                  I.nrow(), I.ncol());
 
-  Environment res = SparseToEnv(R2);
+  S4 res = SparseToS4_fast(R2);
 
   freeVector(&R);
   freeVector(&R2);
@@ -268,7 +248,6 @@ Environment compute_intentSpM(Environment V,
 //   return(SparseToS4_fast(R2));
 //
 // }
-//
 
 SparseVector compute_extent (SparseVector V,
                              NumericMatrix I) {
@@ -309,50 +288,50 @@ SparseVector compute_extent (SparseVector V,
   return R;
 
 }
-//
-// SparseVector compute_extent (SparseVector V,
-//                              double* I,
-//                              int n_objects,
-//                              int n_attributes) {
-//
-//   SparseVector R;
-//
-//   initVector(&R, n_objects);
-//
-//   int i;
-//
-//   for (int r = 0; r < n_objects; r++) {
-//
-//     double ms = 1;
-//
-//     for (size_t c = 0; c < V.i.used; c++) {
-//
-//       i = V.i.array[c];
-//
-//       double tmp = (V.x.array[c] <= I[i * n_objects + r]) ? 1 : I[i * n_objects + r];
-//
-//       if (tmp < ms) ms = tmp;
-//
-//       if (ms == 0) break;
-//
-//     }
-//
-//     if (ms > 0) {
-//
-//       insertArray(&(R.i), r);
-//       insertArray(&(R.x), ms);
-//
-//     }
-//
-//   }
-//
-//   insertArray(&(R.p), 0);
-//   insertArray(&(R.p), R.i.used);
-//
-//
-//   return R;
-//
-// }
+
+SparseVector compute_extent (SparseVector V,
+                             double* I,
+                             int n_objects,
+                             int n_attributes) {
+
+  SparseVector R;
+
+  initVector(&R, n_objects);
+
+  int i;
+
+  for (int r = 0; r < n_objects; r++) {
+
+    double ms = 1;
+
+    for (size_t c = 0; c < V.i.used; c++) {
+
+      i = V.i.array[c];
+
+      double tmp = (V.x.array[c] <= I[i * n_objects + r]) ? 1 : I[i * n_objects + r];
+
+      if (tmp < ms) ms = tmp;
+
+      if (ms == 0) break;
+
+    }
+
+    if (ms > 0) {
+
+      insertArray(&(R.i), r);
+      insertArray(&(R.x), ms);
+
+    }
+
+  }
+
+  insertArray(&(R.p), 0);
+  insertArray(&(R.p), R.i.used);
+
+
+  return R;
+
+}
 
 void compute_extent (SparseVector *R,
                      SparseVector V,
@@ -393,30 +372,14 @@ void compute_extent (SparseVector *R,
 
 }
 
-// ## export
-// S4 compute_extent(S4 V, NumericMatrix I) {
-//
-//   SparseVector R = S4toSparse(V);
-//
-//   SparseVector R2 = compute_extent(R, I);
-//
-//   S4 res = SparseToS4_fast(R2);
-//
-//   freeVector(&R);
-//   freeVector(&R2);
-//
-//   return res;
-//
-// }
-
 // [[Rcpp::export]]
-Environment compute_extentSpM(Environment V, NumericMatrix I) {
+S4 compute_extent(S4 V, NumericMatrix I) {
 
-  SparseVector R = EnvtoSparse(V);
+  SparseVector R = S4toSparse(V);
 
   SparseVector R2 = compute_extent(R, I);
 
-  Environment res = SparseToEnv(R2);
+  S4 res = SparseToS4_fast(R2);
 
   freeVector(&R);
   freeVector(&R2);
@@ -437,19 +400,19 @@ SparseVector compute_closure (SparseVector V,
 
 }
 
-// SparseVector compute_closure (SparseVector V,
-//                               double* I,
-//                               int n_objects,
-//                               int n_attributes) {
-//
-//   SparseVector A = compute_extent(V, I, n_objects, n_attributes);
-//   SparseVector B = compute_intent(A, I, n_objects, n_attributes);
-//
-//   freeVector(&A);
-//
-//   return B;
-//
-// }
+SparseVector compute_closure (SparseVector V,
+                              double* I,
+                              int n_objects,
+                              int n_attributes) {
+
+  SparseVector A = compute_extent(V, I, n_objects, n_attributes);
+  SparseVector B = compute_intent(A, I, n_objects, n_attributes);
+
+  freeVector(&A);
+
+  return B;
+
+}
 
 void compute_closure (SparseVector* B,
                       SparseVector V,
@@ -467,33 +430,16 @@ void compute_closure (SparseVector* B,
 }
 
 
-// ## export
-// S4 compute_closure(S4 V, NumericMatrix I) {
-//
-//   SparseVector R = S4toSparse(V);
-//
-//   SparseVector R2 = compute_closure(R, I);
-//
-//   freeVector(&R);
-//
-//   S4 res = SparseToS4_fast(R2);
-//
-//   freeVector(&R2);
-//
-//   return res;
-//
-// }
-
 // [[Rcpp::export]]
-Environment compute_closureSpM(Environment V, NumericMatrix I) {
+S4 compute_closure(S4 V, NumericMatrix I) {
 
-  SparseVector R = EnvtoSparse(V);
+  SparseVector R = S4toSparse(V);
 
   SparseVector R2 = compute_closure(R, I);
 
   freeVector(&R);
 
-  Environment res = SparseToEnv(R2);
+  S4 res = SparseToS4_fast(R2);
 
   freeVector(&R2);
 

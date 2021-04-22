@@ -66,9 +66,6 @@
       <a href="articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a>
     </li>
     <li>
-      <a href="articles/conceptual-scaling.html">Conceptual Scaling</a>
-    </li>
-    <li>
       <a href="articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a>
     </li>
     <li>
@@ -116,8 +113,8 @@
 </ul>
 <p>Two additional helper classes are implemented:</p>
 <ul>
-<li>Set is a class solely used for visualization purposes, since it encapsulates in sparse format a (fuzzy) set.</li>
-<li>Concept encapsulates internally both extent and intent of a formal concept as Set.</li>
+<li>SparseSet is a class solely used for visualization purposes, since it encapsulates in sparse format a (fuzzy) set.</li>
+<li>SparseConcept encapsulates internally both extent and intent of a formal concept as SparseSet.</li>
 </ul>
 <p>Since fcaR is an extension of the data model in the arules package, most of the methods and classes implemented interoperates with the main S4 classes in arules (transactions and rules).</p>
 </div>
@@ -367,9 +364,9 @@ O6
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
                                       <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span>
-<span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.001 secs.</span>
-<span class="co">#&gt; Batch took 0.005 secs.</span>
+<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.009 secs.</span>
+<span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.018 secs.</span>
+<span class="co">#&gt; Batch took 0.041 secs.</span>
 
 <span class="co"># Reduced set of implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
@@ -388,34 +385,6 @@ O6
 <span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></pre></div>
 <p>All these functions work natively with fuzzy and with binary datasets.</p>
 <p>For more details on the methods implemented and further examples, see the vignettes in this package.</p>
-</div>
-<div id="changelog" class="section level2">
-<h2 class="hasAnchor">
-<a href="#changelog" class="anchor"></a>Changelog</h2>
-<p>With respect to the CRAN version, the development version has the following changes.</p>
-<div id="fcar-110" class="section level3">
-<h3 class="hasAnchor">
-<a href="#fcar-110" class="anchor"></a>fcaR 1.1.0</h3>
-<p>Enhancements:</p>
-<ul>
-<li>Better printing of Sets.</li>
-</ul>
-<p>New functionality:</p>
-<ul>
-<li>Added function to compute the <strong>difference</strong> of two Sets.</li>
-<li>Added function to compute the <strong>dual</strong> of a FormalContext.</li>
-<li>Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to “load()” it.</li>
-<li>Added functions %holds_in% and %respects%, which check the <strong>validity</strong> of a set of implications in a formal context, and if a list of attribute sets respect an implication set.</li>
-<li>Added functions %entails% and %~% to check the <strong>entailment</strong> and <strong>equivalence</strong> between two implication sets.</li>
-<li>Added new convenience function to map attributes between Sets, so computing intents, extents and closures is more robust.</li>
-<li>
-<strong>Conceptual scaling</strong>, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.</li>
-</ul>
-<p>Bugfixes:</p>
-<ul>
-<li>Minor bugfixes in several functions.</li>
-</ul>
-</div>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">

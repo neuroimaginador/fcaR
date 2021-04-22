@@ -27,24 +27,22 @@
   conclusions <- imps2$get_RHS_matrix()
   premises <- imps2$get_LHS_matrix()
 
-  entails <- sapply(seq(ncol.SpM(premises)),
+  entails <- sapply(seq(ncol(premises)),
                   function(i) {
 
-                    p <- extract_columns(premises, i)
+                    p <- .extract_column(premises, i)
                     cl <- .compute_closure(
                       S = p,
                       LHS = imps$get_LHS_matrix(),
                       RHS = imps$get_RHS_matrix(),
                       attributes = imps$get_attributes())$closure
 
-                    p
-                    cl
-                    imps2[i]
+                    .subset(.extract_column(conclusions, i),
+                            cl)
 
-                    length(subsetSpM(extract_columns(conclusions, i),
-                            cl)$pi) > 0
-
-                  })
+                  }) %>%
+    purrr::reduce(cbind) %>%
+    Matrix::as.matrix()
 
   return(entails)
 
