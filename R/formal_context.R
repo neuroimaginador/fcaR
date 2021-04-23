@@ -1330,6 +1330,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Write the context in LaTeX format
     #'
+    #' @param table (logical) If \code{TRUE}, surrounds everything between \code{\\begin{table}} and \code{\\end{table}}.
     #' @param label (character) The label for the table environment.
     #' @param caption (character) The caption of the table.
     #' @param fraction (character) If \code{none}, no fractions are produced. Otherwise, if it is \code{frac}, \code{dfrac} or \code{sfrac}, decimal numbers are represented as fractions with the corresponding LaTeX typesetting.
@@ -1339,7 +1340,10 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     #'
-    to_latex = function(label = "", caption = "", fraction = c("none", "frac", "dfrac", "sfrac")) {
+    to_latex = function(table = TRUE,
+                        label = "",
+                        caption = "",
+                        fraction = c("none", "frac", "dfrac", "sfrac")) {
 
       # TODO: export a many-valued context to LaTeX
       if (private$is_many_valued) error_many_valued()
@@ -1369,15 +1373,19 @@ FormalContext <- R6::R6Class(
                               objects = self$objects,
                               attributes = self$attributes)
 
-      str <- c("\\begin{table}",
-               "\\centering",
-               str)
+      if (table) {
 
-      my_caption <- paste0("\\caption{\\label{",
-                           label, "}",
-                           caption, "}")
+        str <- c("\\begin{table}",
+                 "\\centering",
+                 str)
 
-      str <- c(str, my_caption, "\\end{table}")
+        my_caption <- paste0("\\caption{\\label{",
+                             label, "}",
+                             caption, "}")
+
+        str <- c(str, my_caption, "\\end{table}")
+
+      }
 
       cat(str)
 
