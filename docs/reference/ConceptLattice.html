@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,12 +90,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -149,7 +154,7 @@
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
+<h3 class='hasAnchor' id='public-methods'><a class='anchor' aria-hidden='true' href='#public-methods'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>ConceptLattice$new()</code></a></p></li>
@@ -175,11 +180,11 @@
 <li><p><a href='#method-clone'><code>ConceptLattice$clone()</code></a></p></li>
 </ul>
 <p><hr>
-<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Create a new <code>ConceptLattice</code> object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>new()</code></h3>
+<p>Create a new <code>ConceptLattice</code> object.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>extents</span>, <span class='va'>intents</span>, <span class='va'>objects</span>, <span class='va'>attributes</span>, I <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>extents</code></dt><dd><p>(<code>dgCMatrix</code>) The extents of all concepts</p></dd>
 
@@ -192,42 +197,85 @@
 <dt><code>I</code></dt><dd><p>(<code>dgCMatrix</code>) The matrix of the formal context</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A new <code>ConceptLattice</code> object.</p>
+<h3 class='hasAnchor' id='list-new-'><a class='anchor' aria-hidden='true' href='#list-new-'></a>Method <code>new()</code></h3>
+<p>Create a new <code>ConceptLattice</code> object.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>extents</span>, <span class='va'>intents</span>, <span class='va'>objects</span>, <span class='va'>attributes</span>, I <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>extents</code></dt><dd><p>(<code>dgCMatrix</code>) The extents of all concepts</p></dd>
+
+<dt><code>intents</code></dt><dd><p>(<code>dgCMatrix</code>) The intents of all concepts</p></dd>
+
+<dt><code>objects</code></dt><dd><p>(character vector) Names of the objects in the formal context</p></dd>
+
+<dt><code>attributes</code></dt><dd><p>(character vector) Names of the attributes in the formal context</p></dd>
+
+<dt><code>I</code></dt><dd><p>(<code>dgCMatrix</code>) The matrix of the formal context</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A new <code>ConceptLattice</code> object.</p>
 <p><hr>
-<a id="method-size"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>size()</code></h3>
-<p>Size of the Lattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-size"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>size()</code></h3>
+<p>Size of the Lattice</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>size</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The number of concepts in the lattice.</p>
+<h3 class='hasAnchor' id='list-size-'><a class='anchor' aria-hidden='true' href='#list-size-'></a>Method <code>size()</code></h3>
+<p>Size of the Lattice</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>size</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The number of concepts in the lattice.</p>
 <p><hr>
-<a id="method-is_empty"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>is_empty()</code></h3>
-<p>Is the lattice empty?</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-is_empty"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>is_empty()</code></h3>
+<p>Is the lattice empty?</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>is_empty</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p><code>TRUE</code> if the lattice has no concepts.</p>
+<h3 class='hasAnchor' id='list-is-empty-'><a class='anchor' aria-hidden='true' href='#list-is-empty-'></a>Method <code>is_empty()</code></h3>
+<p>Is the lattice empty?</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>is_empty</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p><code>TRUE</code> if the lattice has no concepts.</p>
 <p><hr>
-<a id="method-extents"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>extents()</code></h3>
-<p>Concept Extents</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-extents"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>extents()</code></h3>
+<p>Concept Extents</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>extents</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The extents of all concepts, as a <code>dgCMatrix</code>.</p>
+<h3 class='hasAnchor' id='list-extents-'><a class='anchor' aria-hidden='true' href='#list-extents-'></a>Method <code>extents()</code></h3>
+<p>Concept Extents</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>extents</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The extents of all concepts, as a <code>dgCMatrix</code>.</p>
 <p><hr>
-<a id="method-intents"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>intents()</code></h3>
-<p>Concept Intents</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-intents"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>intents()</code></h3>
+<p>Concept Intents</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>intents</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The intents of all concepts, as a <code>dgCMatrix</code>.</p>
+<h3 class='hasAnchor' id='list-intents-'><a class='anchor' aria-hidden='true' href='#list-intents-'></a>Method <code>intents()</code></h3>
+<p>Concept Intents</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>intents</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The intents of all concepts, as a <code>dgCMatrix</code>.</p>
 <p><hr>
-<a id="method-plot"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></h3>
-<p>Plot the concept lattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-plot"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></h3>
+<p>Plot the concept lattice</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span>object_names <span class='op'>=</span> <span class='cn'>TRUE</span>, to_latex <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>object_names</code></dt><dd><p>(logical) If <code>TRUE</code>, plot object names, otherwise omit them from the diagram.</p></dd>
 
@@ -236,25 +284,50 @@
 <dt><code>...</code></dt><dd><p>Other parameters to be passed to the <code>tikzDevice</code> that renders the lattice in <code>LaTeX</code>, or for the figure caption. See <code>Details</code>.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
 <p>Particular parameters that control the size of the <code>tikz</code> output are: <code>width</code>, <code>height</code> (both in inches), and <code>pointsize</code> (in points), that should be set to the font size used in the <code>documentclass</code> header in the <code>LaTeX</code> file where the code is to be inserted.</p>
 <p>If a <code>caption</code> is provided, the whole <code>tikz</code> picture will be wrapped by a <code>figure</code> environment and the caption set.</p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the concept lattice.</p>
+<h3 class='hasAnchor' id='list-plot-'><a class='anchor' aria-hidden='true' href='#list-plot-'></a>Method <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></h3>
+<p>Plot the concept lattice</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>plot</span><span class='op'>(</span>object_names <span class='op'>=</span> <span class='cn'>TRUE</span>, to_latex <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>object_names</code></dt><dd><p>(logical) If <code>TRUE</code>, plot object names, otherwise omit them from the diagram.</p></dd>
+
+<dt><code>to_latex</code></dt><dd><p>(logical) If <code>TRUE</code>, export the plot as a <code>tikzpicture</code> environment that can be included in a <code>LaTeX</code> file.</p></dd>
+
+<dt><code>...</code></dt><dd><p>Other parameters to be passed to the <code>tikzDevice</code> that renders the lattice in <code>LaTeX</code>, or for the figure caption. See <code>Details</code>.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
+<p>Particular parameters that control the size of the <code>tikz</code> output are: <code>width</code>, <code>height</code> (both in inches), and <code>pointsize</code> (in points), that should be set to the font size used in the <code>documentclass</code> header in the <code>LaTeX</code> file where the code is to be inserted.</p>
+<p>If a <code>caption</code> is provided, the whole <code>tikz</code> picture will be wrapped by a <code>figure</code> environment and the caption set.</p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the concept lattice.</p>
 <p><hr>
-<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Print the Concept Lattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the Concept Lattice</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>Nothing, just prints the lattice.</p>
+<h3 class='hasAnchor' id='list-print-'><a class='anchor' aria-hidden='true' href='#list-print-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print the Concept Lattice</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>Nothing, just prints the lattice.</p>
 <p><hr>
-<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
-<p>Write in LaTeX</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
+<p>Write in LaTeX</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>TRUE</span>, ncols <span class='op'>=</span> <span class='fl'>1</span>, numbered <span class='op'>=</span> <span class='cn'>TRUE</span>, align <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
 
@@ -265,43 +338,110 @@
 <dt><code>align</code></dt><dd><p>(logical) Align objects and attributes independently?</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The <code>LaTeX</code> code to list all concepts.</p>
+<h3 class='hasAnchor' id='list-to-latex-'><a class='anchor' aria-hidden='true' href='#list-to-latex-'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
+<p>Write in LaTeX</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>TRUE</span>, ncols <span class='op'>=</span> <span class='fl'>1</span>, numbered <span class='op'>=</span> <span class='cn'>TRUE</span>, align <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
+
+<dt><code>ncols</code></dt><dd><p>(integer) Number of columns of the output.</p></dd>
+
+<dt><code>numbered</code></dt><dd><p>(logical) Number the concepts?</p></dd>
+
+<dt><code>align</code></dt><dd><p>(logical) Align objects and attributes independently?</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The <code>LaTeX</code> code to list all concepts.</p>
 <p><hr>
-<a id="method-["></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>[()</code></h3>
-<p>Get Concepts by Index</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-["></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>[()</code></h3>
+<p>Get Concepts by Index</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre>ConceptLattice$[(indices)</pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>indices</code></dt><dd><p>(numeric or logical vector) The indices of the concepts to return as a list of Concepts. It can be a vector of logicals where <code>TRUE</code> elements are to be retained.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A list of Concepts.</p>
+<h3 class='hasAnchor' id='list-'><a class='anchor' aria-hidden='true' href='#list-'></a>Method <code>[()</code></h3>
+<p>Get Concepts by Index</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre>ConceptLattice$[(indices)</pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>indices</code></dt><dd><p>(numeric or logical vector) The indices of the concepts to return as a list of Concepts. It can be a vector of logicals where <code>TRUE</code> elements are to be retained.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A list of Concepts.</p>
 <p><hr>
-<a id="method-sublattice"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>sublattice()</code></h3>
-<p>Sublattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-sublattice"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>sublattice()</code></h3>
+<p>Sublattice</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>sublattice</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>See Details.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
 <p>As argument, one can provide both integer indices or <code>Concepts</code>, separated by commas. The corresponding concepts are used to generate a sublattice.</p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The generated sublattice as a new <code>ConceptLattice</code> object.</p>
+<h3 class='hasAnchor' id='list-sublattice-'><a class='anchor' aria-hidden='true' href='#list-sublattice-'></a>Method <code>sublattice()</code></h3>
+<p>Sublattice</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>sublattice</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>See Details.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
+<p>As argument, one can provide both integer indices or <code>Concepts</code>, separated by commas. The corresponding concepts are used to generate a sublattice.</p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The generated sublattice as a new <code>ConceptLattice</code> object.</p>
 <p><hr>
+<<<<<<< HEAD
 <a id="method-join_irreducibles"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>join_irreducibles()</code></h3>
 <p>Join-irreducible Elements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+=======
+<a id="method-meet_irreducibles"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>meet_irreducibles()</code></h3>
+<p>Meet-irreducible Elements</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>meet_irreducibles</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The meet-irreducible elements in the concept lattice.</p>
+<h3 class='hasAnchor' id='list-meet-irreducibles-'><a class='anchor' aria-hidden='true' href='#list-meet-irreducibles-'></a>Method <code>meet_irreducibles()</code></h3>
+<p>Meet-irreducible Elements</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>meet_irreducibles</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The meet-irreducible elements in the concept lattice.</p>
+<p><hr>
+<a id="method-join_irreducibles"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>join_irreducibles()</code></h3>
+<p>Join-irreducible Elements</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>join_irreducibles</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The join-irreducible elements in the concept lattice.</p>
+<h3 class='hasAnchor' id='list-join-irreducibles-'><a class='anchor' aria-hidden='true' href='#list-join-irreducibles-'></a>Method <code>join_irreducibles()</code></h3>
+<p>Join-irreducible Elements</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>join_irreducibles</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The join-irreducible elements in the concept lattice.</p>
 <p><hr>
+<<<<<<< HEAD
 <a id="method-meet_irreducibles"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>meet_irreducibles()</code></h3>
 <p>Meet-irreducible Elements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>meet_irreducibles</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
@@ -311,106 +451,208 @@
 <p><hr>
 <a id="method-decompose"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose()</a></code></h3>
 <p>Decompose a concept as the supremum of meet-irreducible concepts</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+=======
+<a id="method-decompose"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose()</a></code></h3>
+<p>Decompose a concept as the supremum of meet-irreducible concepts</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>decompose</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>C</code></dt><dd><p>A list of <code>Concept</code>s</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A list, each field is the set of meet-irreducible elements whose supremum is the corresponding element in <code>C</code>.</p>
+<h3 class='hasAnchor' id='list-decompose-'><a class='anchor' aria-hidden='true' href='#list-decompose-'></a>Method <code><a href='https://rdrr.io/r/stats/decompose.html'>decompose()</a></code></h3>
+<p>Decompose a concept as the supremum of meet-irreducible concepts</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>decompose</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>C</code></dt><dd><p>A list of <code>Concept</code>s</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A list, each field is the set of meet-irreducible elements whose supremum is the corresponding element in <code>C</code>.</p>
 <p><hr>
-<a id="method-supremum"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>supremum()</code></h3>
-<p>Supremum of Concepts</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-supremum"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>supremum()</code></h3>
+<p>Supremum of Concepts</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>supremum</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>See Details.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
 <p>As argument, one can provide both integer indices or <code>Concepts</code>, separated by commas. The corresponding concepts are used to compute their supremum in the lattice.</p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The supremum of the list of concepts.</p>
-<p><hr>
-<a id="method-infimum"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>infimum()</code></h3>
-<p>Infimum of Concepts</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>infimum</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+<h3 class='hasAnchor' id='list-supremum-'><a class='anchor' aria-hidden='true' href='#list-supremum-'></a>Method <code>supremum()</code></h3>
+<p>Supremum of Concepts</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>supremum</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>See Details.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
+<p>As argument, one can provide both integer indices or <code>Concepts</code>, separated by commas. The corresponding concepts are used to compute their supremum in the lattice.</p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The supremum of the list of concepts.</p>
+<p><hr>
+<a id="method-infimum"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>infimum()</code></h3>
+<p>Infimum of Concepts</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>infimum</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>See Details.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
 <p>As argument, one can provide both integer indices or <code>Concepts</code>, separated by commas. The corresponding concepts are used to compute their infimum in the lattice.</p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The infimum of the list of concepts.</p>
+<h3 class='hasAnchor' id='list-infimum-'><a class='anchor' aria-hidden='true' href='#list-infimum-'></a>Method <code>infimum()</code></h3>
+<p>Infimum of Concepts</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>infimum</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>See Details.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
+<p>As argument, one can provide both integer indices or <code>Concepts</code>, separated by commas. The corresponding concepts are used to compute their infimum in the lattice.</p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The infimum of the list of concepts.</p>
 <p><hr>
-<a id="method-subconcepts"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>subconcepts()</code></h3>
-<p>Subconcepts of a Concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-subconcepts"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>subconcepts()</code></h3>
+<p>Subconcepts of a Concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>subconcepts</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>C</code></dt><dd><p>(numeric or <code>SparseConcept</code>) The concept to which determine all its subconcepts.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A list with the subconcepts.</p>
+<h3 class='hasAnchor' id='list-subconcepts-'><a class='anchor' aria-hidden='true' href='#list-subconcepts-'></a>Method <code>subconcepts()</code></h3>
+<p>Subconcepts of a Concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>subconcepts</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>C</code></dt><dd><p>(numeric or <code>Concept</code>) The concept to which determine all its subconcepts.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A list with the subconcepts.</p>
 <p><hr>
-<a id="method-superconcepts"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>superconcepts()</code></h3>
-<p>Superconcepts of a Concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-superconcepts"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>superconcepts()</code></h3>
+<p>Superconcepts of a Concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>superconcepts</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>C</code></dt><dd><p>(numeric or <code>Concept</code>) The concept to which determine all its superconcepts.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A list with the superconcepts.</p>
+<h3 class='hasAnchor' id='list-superconcepts-'><a class='anchor' aria-hidden='true' href='#list-superconcepts-'></a>Method <code>superconcepts()</code></h3>
+<p>Superconcepts of a Concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>superconcepts</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>C</code></dt><dd><p>(numeric or <code>SparseConcept</code>) The concept to which determine all its superconcepts.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A list with the superconcepts.</p>
 <p><hr>
-<a id="method-lower_neighbours"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>lower_neighbours()</code></h3>
-<p>Lower Neighbours of a Concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-lower_neighbours"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>lower_neighbours()</code></h3>
+<p>Lower Neighbours of a Concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>lower_neighbours</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>C</code></dt><dd><p>(<code>SparseConcept</code>) The concept to which find its lower neighbours</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A list with the lower neighbours of <code>C</code>.</p>
+<h3 class='hasAnchor' id='list-lower-neighbours-'><a class='anchor' aria-hidden='true' href='#list-lower-neighbours-'></a>Method <code>lower_neighbours()</code></h3>
+<p>Lower Neighbours of a Concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>lower_neighbours</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>C</code></dt><dd><p>(<code>Concept</code>) The concept to which find its lower neighbours</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A list with the lower neighbours of <code>C</code>.</p>
 <p><hr>
-<a id="method-upper_neighbours"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>upper_neighbours()</code></h3>
-<p>Upper Neighbours of a Concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-upper_neighbours"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>upper_neighbours()</code></h3>
+<p>Upper Neighbours of a Concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>upper_neighbours</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>C</code></dt><dd><p>(<code>Concept</code>) The concept to which find its upper neighbours</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A list with the upper neighbours of <code>C</code>.</p>
+<h3 class='hasAnchor' id='list-upper-neighbours-'><a class='anchor' aria-hidden='true' href='#list-upper-neighbours-'></a>Method <code>upper_neighbours()</code></h3>
+<p>Upper Neighbours of a Concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>upper_neighbours</span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>C</code></dt><dd><p>(<code>SparseConcept</code>) The concept to which find its upper neighbours</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A list with the upper neighbours of <code>C</code>.</p>
 <p><hr>
-<a id="method-support"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>support()</code></h3>
-<p>Get support of each concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-support"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>support()</code></h3>
+<p>Get support of each concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A vector with the support of each concept.</p>
+<h3 class='hasAnchor' id='list-support-'><a class='anchor' aria-hidden='true' href='#list-support-'></a>Method <code>support()</code></h3>
+<p>Get support of each concept</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A vector with the support of each concept.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-clone-'><a class='anchor' aria-hidden='true' href='#list-clone-'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
@@ -455,11 +697,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p><p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -467,6 +709,8 @@
 
   
 
+
+  
 
   </body>
 </html>

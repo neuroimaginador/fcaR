@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,12 +90,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -155,7 +160,7 @@
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
+<h3 class='hasAnchor' id='public-methods'><a class='anchor' aria-hidden='true' href='#public-methods'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>ImplicationSet$new()</code></a></p></li>
@@ -179,94 +184,169 @@
 <li><p><a href='#method-clone'><code>ImplicationSet$clone()</code></a></p></li>
 </ul>
 <p><hr>
-<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Initialize with an optional name</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>new()</code></h3>
+<p>Initialize with an optional name</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>See Details.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
 <p>Creates and initialize a new <code>ImplicationSet</code> object. It can be done in two ways:
 <code>initialize(name, attributes, lhs, rhs)</code>
 or <code>initialize(rules)</code></p>
 <p>In the first way, the only mandatory argument is <code>attributes</code>, (character vector) which is a vector of names of the attributes on which we define the implications. Optional arguments are: <code>name</code> (character string), name of the implication set, <code>lhs</code> (a <code>dgCMatrix</code>), initial LHS of the implications stored and the analogous <code>rhs</code>.</p>
 <p>The other way is used to initialize the <code>ImplicationSet</code> object from a <code>rules</code> object from package <code>arules</code>.</p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A new <code>ImplicationSet</code> object.</p>
+<h3 class='hasAnchor' id='list-new-'><a class='anchor' aria-hidden='true' href='#list-new-'></a>Method <code>new()</code></h3>
+<p>Initialize with an optional name</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>See Details.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
+<p>Creates and initialize a new <code>ImplicationSet</code> object. It can be done in two ways:
+<code>initialize(name, attributes, lhs, rhs)</code>
+or <code>initialize(rules)</code></p>
+<p>In the first way, the only mandatory argument is <code>attributes</code>, (character vector) which is a vector of names of the attributes on which we define the implications. Optional arguments are: <code>name</code> (character string), name of the implication set, <code>lhs</code> (a <code>dgCMatrix</code>), initial LHS of the implications stored and the analogous <code>rhs</code>.</p>
+<p>The other way is used to initialize the <code>ImplicationSet</code> object from a <code>rules</code> object from package <code>arules</code>.</p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A new <code>ImplicationSet</code> object.</p>
 <p><hr>
-<a id="method-get_attributes"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_attributes()</code></h3>
-<p>Get the names of the attributes</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-get_attributes"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>get_attributes()</code></h3>
+<p>Get the names of the attributes</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>get_attributes</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A character vector with the names of the attributes used in the implications.</p>
+<h3 class='hasAnchor' id='list-get-attributes-'><a class='anchor' aria-hidden='true' href='#list-get-attributes-'></a>Method <code>get_attributes()</code></h3>
+<p>Get the names of the attributes</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>get_attributes</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A character vector with the names of the attributes used in the implications.</p>
 <p><hr>
-<a id="method-["></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>[()</code></h3>
-<p>Get a subset of the implication set</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-["></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>[()</code></h3>
+<p>Get a subset of the implication set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre>ImplicationSet$[(idx)</pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>idx</code></dt><dd><p>(integer or logical vector) Indices of the implications to extract or remove. If logical vector, only <code>TRUE</code> elements are retained and the rest discarded.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A new <code>ImplicationSet</code> with only the rules given by the <code>idx</code> indices (if all <code>idx &gt; 0</code> and all but <code>idx</code> if all <code>idx &lt; 0</code>.</p>
+<h3 class='hasAnchor' id='list-'><a class='anchor' aria-hidden='true' href='#list-'></a>Method <code>[()</code></h3>
+<p>Get a subset of the implication set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre>ImplicationSet$[(idx)</pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>idx</code></dt><dd><p>(integer or logical vector) Indices of the implications to extract or remove. If logical vector, only <code>TRUE</code> elements are retained and the rest discarded.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A new <code>ImplicationSet</code> with only the rules given by the <code>idx</code> indices (if all <code>idx &gt; 0</code> and all but <code>idx</code> if all <code>idx &lt; 0</code>.</p>
 <p><hr>
-<a id="method-to_arules"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>to_arules()</code></h3>
-<p>Convert to arules format</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-to_arules"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>to_arules()</code></h3>
+<p>Convert to arules format</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>to_arules</span><span class='op'>(</span>quality <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>quality</code></dt><dd><p>(logical) Compute the interest measures for each rule?</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A <code>rules</code> object as used by package <code>arules</code>.</p>
+<h3 class='hasAnchor' id='list-to-arules-'><a class='anchor' aria-hidden='true' href='#list-to-arules-'></a>Method <code>to_arules()</code></h3>
+<p>Convert to arules format</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>to_arules</span><span class='op'>(</span>quality <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>quality</code></dt><dd><p>(logical) Compute the interest measures for each rule?</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A <code>rules</code> object as used by package <code>arules</code>.</p>
 <p><hr>
-<a id="method-add"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add()</code></h3>
-<p>Add a precomputed implication set</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-add"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>add()</code></h3>
+<p>Add a precomputed implication set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>add</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>...</code></dt><dd><p>An <code>ImplicationSet</code> object, a <code>rules</code> object, or a pair <code>lhs</code>, <code>rhs</code> of <code>Set</code> objects or <code>dgCMatrix</code>. The implications to add to this formal context.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>Nothing, just updates the internal <code>implications</code> field.</p>
+<h3 class='hasAnchor' id='list-add-'><a class='anchor' aria-hidden='true' href='#list-add-'></a>Method <code>add()</code></h3>
+<p>Add a precomputed implication set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>add</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>...</code></dt><dd><p>An <code>ImplicationSet</code> object, a <code>rules</code> object, or a pair <code>lhs</code>, <code>rhs</code> of <code>Set</code> objects or <code>dgCMatrix</code>. The implications to add to this formal context.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>Nothing, just updates the internal <code>implications</code> field.</p>
 <p><hr>
-<a id="method-cardinality"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>cardinality()</code></h3>
-<p>Cardinality: Number of implications in the set</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-cardinality"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>cardinality()</code></h3>
+<p>Cardinality: Number of implications in the set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>cardinality</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The cardinality of the implication set.</p>
+<h3 class='hasAnchor' id='list-cardinality-'><a class='anchor' aria-hidden='true' href='#list-cardinality-'></a>Method <code>cardinality()</code></h3>
+<p>Cardinality: Number of implications in the set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>cardinality</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The cardinality of the implication set.</p>
 <p><hr>
-<a id="method-is_empty"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>is_empty()</code></h3>
-<p>Empty set</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-is_empty"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>is_empty()</code></h3>
+<p>Empty set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>is_empty</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p><code>TRUE</code> if the set of implications is empty, <code>FALSE</code> otherwise.</p>
+<h3 class='hasAnchor' id='list-is-empty-'><a class='anchor' aria-hidden='true' href='#list-is-empty-'></a>Method <code>is_empty()</code></h3>
+<p>Empty set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>is_empty</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p><code>TRUE</code> if the set of implications is empty, <code>FALSE</code> otherwise.</p>
 <p><hr>
-<a id="method-size"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>size()</code></h3>
-<p>Size: number of attributes in each of LHS and RHS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-size"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>size()</code></h3>
+<p>Size: number of attributes in each of LHS and RHS</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>size</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A vector with two components: the number of attributes present in each of the LHS and RHS of each implication in the set.</p>
+<h3 class='hasAnchor' id='list-size-'><a class='anchor' aria-hidden='true' href='#list-size-'></a>Method <code>size()</code></h3>
+<p>Size: number of attributes in each of LHS and RHS</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>size</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A vector with two components: the number of attributes present in each of the LHS and RHS of each implication in the set.</p>
 <p><hr>
-<a id="method-closure"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
-<p>Compute the semantic closure of a fuzzy set with respect to the implication set</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-closure"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
+<p>Compute the semantic closure of a fuzzy set with respect to the implication set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>closure</span><span class='op'>(</span><span class='va'>S</span>, reduce <span class='op'>=</span> <span class='cn'>FALSE</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>S</code></dt><dd><p>(a <code>Set</code> object)  Fuzzy set to compute its closure. Use class <code>Set</code> to build it.</p></dd>
 
@@ -275,25 +355,53 @@ or <code>initialize(rules)</code></p>
 <dt><code>verbose</code></dt><dd><p>(logical) Show verbose output?</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>If <code>reduce == FALSE</code>, the output is a fuzzy set corresponding to the closure of <code>S</code>. If <code>reduce == TRUE</code>, a list with two components: <code>closure</code>, with the closure as above, and <code>implications</code>, the reduced set of implications.</p>
+<h3 class='hasAnchor' id='list-closure-'><a class='anchor' aria-hidden='true' href='#list-closure-'></a>Method <code><a href='https://rdrr.io/r/base/function.html'>closure()</a></code></h3>
+<p>Compute the semantic closure of a fuzzy set with respect to the implication set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>closure</span><span class='op'>(</span><span class='va'>S</span>, reduce <span class='op'>=</span> <span class='cn'>FALSE</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>S</code></dt><dd><p>(a <code>Set</code> object)  Fuzzy set to compute its closure. Use class <code>Set</code> to build it.</p></dd>
+
+<dt><code>reduce</code></dt><dd><p>(logical) Reduce the implications using simplification logic?</p></dd>
+
+<dt><code>verbose</code></dt><dd><p>(logical) Show verbose output?</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>If <code>reduce == FALSE</code>, the output is a fuzzy set corresponding to the closure of <code>S</code>. If <code>reduce == TRUE</code>, a list with two components: <code>closure</code>, with the closure as above, and <code>implications</code>, the reduced set of implications.</p>
 <p><hr>
-<a id="method-recommend"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>recommend()</code></h3>
-<p>Generate a recommendation for a subset of the attributes</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-recommend"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>recommend()</code></h3>
+<p>Generate a recommendation for a subset of the attributes</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>recommend</span><span class='op'>(</span><span class='va'>S</span>, <span class='va'>attribute_filter</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>S</code></dt><dd><p>(a vector) Vector with the grades of each attribute (a fuzzy set).</p></dd>
 
 <dt><code>attribute_filter</code></dt><dd><p>(character vector) Names of the attributes to get recommendation for.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A fuzzy set describing the values of the attributes in <code>attribute_filter</code> within the closure of <code>S</code>.</p>
+<h3 class='hasAnchor' id='list-recommend-'><a class='anchor' aria-hidden='true' href='#list-recommend-'></a>Method <code>recommend()</code></h3>
+<p>Generate a recommendation for a subset of the attributes</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>recommend</span><span class='op'>(</span><span class='va'>S</span>, <span class='va'>attribute_filter</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>S</code></dt><dd><p>(a vector) Vector with the grades of each attribute (a fuzzy set).</p></dd>
+
+<dt><code>attribute_filter</code></dt><dd><p>(character vector) Names of the attributes to get recommendation for.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A fuzzy set describing the values of the attributes in <code>attribute_filter</code> within the closure of <code>S</code>.</p>
 <p><hr>
-<a id="method-apply_rules"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>apply_rules()</code></h3>
-<p>Apply rules to remove redundancies</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-apply_rules"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>apply_rules()</code></h3>
+<p>Apply rules to remove redundancies</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>apply_rules</span><span class='op'>(</span>
   rules <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"composition"</span>, <span class='st'>"generalization"</span><span class='op'>)</span>,
   batch_size <span class='op'>=</span> <span class='fl'>25000L</span>,
@@ -301,7 +409,7 @@ or <code>initialize(rules)</code></p>
   reorder <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>rules</code></dt><dd><p>(character vector) Names of the rules to use. See <code>details</code>.</p></dd>
 
@@ -312,28 +420,65 @@ or <code>initialize(rules)</code></p>
 <dt><code>reorder</code></dt><dd><p>(logical) Should the rules be randomly reordered previous to the computation?</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
 <p>Currently, the implemented rules are <code>"generalization"</code>, <code>"simplification"</code>, <code>"reduction"</code> and <code>"composition"</code>.</p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>Nothing, just updates the internal matrices for LHS and RHS.</p>
+<h3 class='hasAnchor' id='list-apply-rules-'><a class='anchor' aria-hidden='true' href='#list-apply-rules-'></a>Method <code>apply_rules()</code></h3>
+<p>Apply rules to remove redundancies</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>apply_rules</span><span class='op'>(</span>
+  rules <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"composition"</span>, <span class='st'>"generalization"</span><span class='op'>)</span>,
+  batch_size <span class='op'>=</span> <span class='fl'>25000L</span>,
+  parallelize <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  reorder <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>rules</code></dt><dd><p>(character vector) Names of the rules to use. See <code>details</code>.</p></dd>
+
+<dt><code>batch_size</code></dt><dd><p>(integer) If the number of rules is large, apply the rules by batches of this size.</p></dd>
+
+<dt><code>parallelize</code></dt><dd><p>(logical) If possible, should we parallelize the computation among different batches?</p></dd>
+
+<dt><code>reorder</code></dt><dd><p>(logical) Should the rules be randomly reordered previous to the computation?</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
+<p>Currently, the implemented rules are <code>"generalization"</code>, <code>"simplification"</code>, <code>"reduction"</code> and <code>"composition"</code>.</p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>Nothing, just updates the internal matrices for LHS and RHS.</p>
 <p><hr>
-<a id="method-to_basis"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>to_basis()</code></h3>
-<p>Convert Implications to Canonical Basis</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-to_basis"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>to_basis()</code></h3>
+<p>Convert Implications to Canonical Basis</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>to_basis</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>The canonical basis of implications obtained from the current <code>ImplicationSet</code></p>
+<h3 class='hasAnchor' id='list-to-basis-'><a class='anchor' aria-hidden='true' href='#list-to-basis-'></a>Method <code>to_basis()</code></h3>
+<p>Convert Implications to Canonical Basis</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>to_basis</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>The canonical basis of implications obtained from the current <code>ImplicationSet</code></p>
 <p><hr>
-<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Print all implications to text</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print all implications to text</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A string with all the implications in the set.</p>
+<h3 class='hasAnchor' id='list-print-'><a class='anchor' aria-hidden='true' href='#list-print-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Print all implications to text</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A string with all the implications in the set.</p>
 <p><hr>
-<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
-<p>Export to LaTeX</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
+<p>Export to LaTeX</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>
   print <span class='op'>=</span> <span class='cn'>TRUE</span>,
   ncols <span class='op'>=</span> <span class='fl'>1</span>,
@@ -341,7 +486,7 @@ or <code>initialize(rules)</code></p>
   numbers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>self</span><span class='op'>$</span><span class='fu'>cardinality</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
 
@@ -352,28 +497,62 @@ or <code>initialize(rules)</code></p>
 <dt><code>numbers</code></dt><dd><p>(vector) If <code>numbered</code>, use these elements to enumerate the implications. The default is to enumerate 1, 2, ..., but can be changed.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A string in LaTeX format that prints nicely all the implications.</p>
+<h3 class='hasAnchor' id='list-to-latex-'><a class='anchor' aria-hidden='true' href='#list-to-latex-'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
+<p>Export to LaTeX</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>
+  print <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  ncols <span class='op'>=</span> <span class='fl'>1</span>,
+  numbered <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  numbers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>self</span><span class='op'>$</span><span class='fu'>cardinality</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
+
+<dt><code>ncols</code></dt><dd><p>(integer) Number of columns for the output.</p></dd>
+
+<dt><code>numbered</code></dt><dd><p>(logical) If <code>TRUE</code> (default), implications will be numbered in the output.</p></dd>
+
+<dt><code>numbers</code></dt><dd><p>(vector) If <code>numbered</code>, use these elements to enumerate the implications. The default is to enumerate 1, 2, ..., but can be changed.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A string in LaTeX format that prints nicely all the implications.</p>
 <p><hr>
-<a id="method-get_LHS_matrix"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_LHS_matrix()</code></h3>
-<p>Get internal LHS matrix</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-get_LHS_matrix"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>get_LHS_matrix()</code></h3>
+<p>Get internal LHS matrix</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>get_LHS_matrix</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A sparse matrix representing the LHS of the implications in the set.</p>
+<h3 class='hasAnchor' id='list-get-lhs-matrix-'><a class='anchor' aria-hidden='true' href='#list-get-lhs-matrix-'></a>Method <code>get_LHS_matrix()</code></h3>
+<p>Get internal LHS matrix</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>get_LHS_matrix</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A sparse matrix representing the LHS of the implications in the set.</p>
 <p><hr>
-<a id="method-get_RHS_matrix"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_RHS_matrix()</code></h3>
-<p>Get internal RHS matrix</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-get_RHS_matrix"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>get_RHS_matrix()</code></h3>
+<p>Get internal RHS matrix</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>get_RHS_matrix</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A sparse matrix representing the RHS of the implications in the set.</p>
+<h3 class='hasAnchor' id='list-get-rhs-matrix-'><a class='anchor' aria-hidden='true' href='#list-get-rhs-matrix-'></a>Method <code>get_RHS_matrix()</code></h3>
+<p>Get internal RHS matrix</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>get_RHS_matrix</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A sparse matrix representing the RHS of the implications in the set.</p>
 <p><hr>
-<a id="method-filter"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/filter.html'>filter()</a></code></h3>
-<p>Filter implications by attributes in LHS and RHS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-filter"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/stats/filter.html'>filter()</a></code></h3>
+<p>Filter implications by attributes in LHS and RHS</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>filter</span><span class='op'>(</span>lhs <span class='op'>=</span> <span class='cn'>NULL</span>, rhs <span class='op'>=</span> <span class='cn'>NULL</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>lhs</code></dt><dd><p>(character vector) Names of the attributes to filter the LHS by. If <code>NULL</code>, no filtering is done on the LHS.</p></dd>
 
@@ -382,21 +561,51 @@ or <code>initialize(rules)</code></p>
 <dt><code>drop</code></dt><dd><p>(logical) Remove the rest of attributes in RHS?</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>An <code>ImplicationSet</code> that is a subset of the current set, only with those rules which has the attributes in <code>lhs</code> and <code>rhs</code> in their LHS and RHS, respectively.</p>
+<h3 class='hasAnchor' id='list-filter-'><a class='anchor' aria-hidden='true' href='#list-filter-'></a>Method <code><a href='https://rdrr.io/r/stats/filter.html'>filter()</a></code></h3>
+<p>Filter implications by attributes in LHS and RHS</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>filter</span><span class='op'>(</span>lhs <span class='op'>=</span> <span class='cn'>NULL</span>, rhs <span class='op'>=</span> <span class='cn'>NULL</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>lhs</code></dt><dd><p>(character vector) Names of the attributes to filter the LHS by. If <code>NULL</code>, no filtering is done on the LHS.</p></dd>
+
+<dt><code>rhs</code></dt><dd><p>(character vector) Names of the attributes to filter the RHS by. If <code>NULL</code>, no filtering is done on the RHS.</p></dd>
+
+<dt><code>drop</code></dt><dd><p>(logical) Remove the rest of attributes in RHS?</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>An <code>ImplicationSet</code> that is a subset of the current set, only with those rules which has the attributes in <code>lhs</code> and <code>rhs</code> in their LHS and RHS, respectively.</p>
 <p><hr>
-<a id="method-support"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>support()</code></h3>
-<p>Compute support of each implication</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-support"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>support()</code></h3>
+<p>Compute support of each implication</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<p>A vector with the support of each implication</p>
+<h3 class='hasAnchor' id='list-support-'><a class='anchor' aria-hidden='true' href='#list-support-'></a>Method <code>support()</code></h3>
+<p>Compute support of each implication</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
 <p>A vector with the support of each implication</p>
 <p><hr>
-<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+<h3 class='hasAnchor' id='list-clone-'><a class='anchor' aria-hidden='true' href='#list-clone-'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
@@ -432,7 +641,11 @@ or <code>initialize(rules)</code></p>
 #&gt; 2.5 2.3 </div><div class='input'>
 <span class='co'># Simplify the implication set</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>apply_rules</span><span class='op'>(</span><span class='st'>"simplification"</span><span class='op'>)</span>
+<<<<<<< HEAD
 </div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.02 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.022 secs. </span></div><div class='input'>
+=======
+</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.006 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.008 secs. </span></div><div class='input'>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -445,11 +658,11 @@ or <code>initialize(rules)</code></p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p><p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -457,6 +670,8 @@ or <code>initialize(rules)</code></p>
 
   
 
+
+  
 
   </body>
 </html>

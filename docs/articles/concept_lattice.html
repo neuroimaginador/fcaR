@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,12 +39,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/neuroimaginador/fcaR/">
+  <a href="https://github.com/neuroimaginador/fcaR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,7 +93,7 @@
       <h1 data-toc-skip>Using FormalContexts and ConceptLattices</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/neuroimaginador/fcaR/blob/master/vignettes/concept_lattice.Rmd"><code>vignettes/concept_lattice.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/neuroimaginador/fcaR/blob/master/vignettes/concept_lattice.Rmd" class="external-link"><code>vignettes/concept_lattice.Rmd</code></a></small>
       <div class="hidden name"><code>concept_lattice.Rmd</code></div>
 
     </div>
@@ -106,22 +102,30 @@
     
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<a href="#introduction" class="anchor" aria-hidden="true"></a>Introduction</h1>
 <p>In this vignette, we present the main functionalities and data structures of the <code>fcaR</code> package when working with formal contexts and concepts, in FCA.</p>
 <p>We load the <code>fcaR</code> package by:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<<<<<<< HEAD
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/neuroimaginador/fcaR">fcaR</a></span><span class="op">)</span></code></pre></div>
+=======
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/neuroimaginador/fcaR" class="external-link">fcaR</a></span><span class="op">)</span></code></pre></div>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 </div>
 <div id="datasets" class="section level1">
 <h1 class="hasAnchor">
-<a href="#datasets" class="anchor"></a>Datasets</h1>
+<a href="#datasets" class="anchor" aria-hidden="true"></a>Datasets</h1>
 <p>We are going to work with two datasets, a crisp one and a fuzzy one.</p>
 <p>The classical (binary) dataset is the well-known <code>planets</code> formal context, presented in</p>
 <blockquote>
 <p>Wille R (1982). “Restructuring Lattice Theory: An Approach Based on Hierarchies of Concepts.” In Ordered Sets, pp. 445–470. Springer.</p>
 </blockquote>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<<<<<<< HEAD
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">planets</span>, format <span class="op">=</span> <span class="st">"html"</span>, booktabs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+=======
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">planets</span>, format <span class="op">=</span> <span class="st">"html"</span>, booktabs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -387,7 +391,11 @@ Pluto
 </table>
 <p>The other formal context is fuzzy and is defined by the following matrix I:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<<<<<<< HEAD
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">I</span>, format <span class="op">=</span> <span class="st">"html"</span>, booktabs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+=======
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">I</span>, format <span class="op">=</span> <span class="st">"html"</span>, booktabs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -555,7 +563,7 @@ O6
 </div>
 <div id="working-with-formal-contexts" class="section level1">
 <h1 class="hasAnchor">
-<a href="#working-with-formal-contexts" class="anchor"></a>Working with Formal Contexts</h1>
+<a href="#working-with-formal-contexts" class="anchor" aria-hidden="true"></a>Working with Formal Contexts</h1>
 <p>The first step when using the <code>fcaR</code> package to analyze a formal context is to create an object of class <code>FormalContext</code> which will store all the information related to the context.</p>
 <p>In our examples, we create two objects:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -564,10 +572,17 @@ O6
 <p>Internally, the object stores information about whether the context is binary or the names of objects and attributes, which are taken from the rownames and colnames of the provided matrix.</p>
 <div id="plotting-printing-and-latex-ing-the-formalcontext" class="section level2">
 <h2 class="hasAnchor">
+<<<<<<< HEAD
 <a href="#plotting-printing-and-latex-ing-the-formalcontext" class="anchor"></a>Plotting, printing and latex-ing the FormalContext</h2>
 <p>Once created the <code>FormalContext</code> objects, we can print them or plot them as heatmaps (with functions <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc_planets</span><span class="op">)</span>
+=======
+<a href="#plotting-printing-and-latex-ing-the-formalcontext" class="anchor" aria-hidden="true"></a>Plotting, printing and latex-ing the FormalContext</h2>
+<p>Once created the <code>FormalContext</code> objects, we can print them or plot them as heatmaps (with functions <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>):</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc_planets</span><span class="op">)</span>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <span class="co">#&gt; FormalContext with 9 objects and 7 attributes.</span>
 <span class="co">#&gt;            small   medium   large   near   far   moon   no_moon  </span>
 <span class="co">#&gt;   Mercury    X                       X                     X     </span>
@@ -579,7 +594,7 @@ O6
 <span class="co">#&gt;    Uranus            X                      X     X              </span>
 <span class="co">#&gt;   Neptune            X                      X     X              </span>
 <span class="co">#&gt;     Pluto    X                              X     X</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc_I</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc_I</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span>
 <span class="co">#&gt;       P1    P2    P3    P4    P5    P6  </span>
 <span class="co">#&gt;   O1   0     0    0.5   0.5    1    0   </span>
@@ -615,11 +630,15 @@ O6
 </div>
 <div id="importing-a-formal-context-from-file" class="section level2">
 <h2 class="hasAnchor">
-<a href="#importing-a-formal-context-from-file" class="anchor"></a>Importing a Formal Context from File</h2>
+<a href="#importing-a-formal-context-from-file" class="anchor" aria-hidden="true"></a>Importing a Formal Context from File</h2>
 <p>One can also create <code>FormalContext</code>s by importing RDS, CSV or CXT files directly:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read CSV</span>
+<<<<<<< HEAD
 <span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"airlines.csv"</span>,
+=======
+<span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"airlines.csv"</span>,
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
                         package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span>
 
 <span class="va">fc1</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
@@ -634,7 +653,7 @@ O6
 <span class="co">#&gt; Other attributes are: Africa, Mexico, Caribbean, USA</span>
 
 <span class="co"># Read CXT</span>
-<span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"lives_in_water.cxt"</span>,
+<span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"lives_in_water.cxt"</span>,
                         package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span>
 
 <span class="va">fc2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
@@ -654,7 +673,7 @@ O6
 </div>
 <div id="dual-formal-context" class="section level2">
 <h2 class="hasAnchor">
-<a href="#dual-formal-context" class="anchor"></a>Dual Formal Context</h2>
+<a href="#dual-formal-context" class="anchor" aria-hidden="true"></a>Dual Formal Context</h2>
 <p>We can compute the dual formal context of a given one by using the <code>dual()</code> method:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_dual</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="fu">dual</span><span class="op">(</span><span class="op">)</span>
@@ -672,7 +691,7 @@ O6
 </div>
 <div id="closures" class="section level2">
 <h2 class="hasAnchor">
-<a href="#closures" class="anchor"></a>Closures</h2>
+<a href="#closures" class="anchor" aria-hidden="true"></a>Closures</h2>
 <p>The basic operation in FCA is the computation of closures given an attribute set, by using the two derivation operators, extent and intent.</p>
 <p>The intent of a (probably fuzzy) set of objects is the set of their common attributes:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -712,7 +731,7 @@ O6
 </div>
 <div id="clarification-and-reduction" class="section level2">
 <h2 class="hasAnchor">
-<a href="#clarification-and-reduction" class="anchor"></a>Clarification and Reduction</h2>
+<a href="#clarification-and-reduction" class="anchor" aria-hidden="true"></a>Clarification and Reduction</h2>
 <p>An interesting point when managing formal contexts is the ability to reduce the context, removing redundancies, while retaining all the knowledge. This is accomplished by two functions: <code>clarify()</code>, which removes duplicated attributes and objects (columns and rows in the original matrix); and <code>reduce()</code>, which uses closures to remove dependent attributes, but only on binary formal contexts. The resulting <code>FormalContext</code> is equivalent to the original one in both cases.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span>
@@ -736,7 +755,7 @@ O6
 </div>
 <div id="extracting-implications-and-concepts" class="section level2">
 <h2 class="hasAnchor">
-<a href="#extracting-implications-and-concepts" class="anchor"></a>Extracting Implications and Concepts</h2>
+<a href="#extracting-implications-and-concepts" class="anchor" aria-hidden="true"></a>Extracting Implications and Concepts</h2>
 <p>The function to extract the canonical basis of implications and the concept lattice is <code>find_implications()</code>. Its use is to store a <code>ConceptLattice</code> and an <code>ImplicationSet</code> objects internally in the <code>FormalContext</code> object after running the NextClosure algorithm.</p>
 <p>It can be used both for binary and fuzzy formal contexts, resulting in binary or fuzzy concepts and implications:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -777,7 +796,7 @@ O6
 </div>
 <div id="standard-context" class="section level2">
 <h2 class="hasAnchor">
-<a href="#standard-context" class="anchor"></a>Standard Context</h2>
+<a href="#standard-context" class="anchor" aria-hidden="true"></a>Standard Context</h2>
 <p>Once we have computed the concepts, we can build the <em>standard context</em> (J, M, <span class="math inline">\(\le\)</span>), where J is the set of join-irreducible concepts and M are the meet-irreducible ones. Join and meet are another name for supremum and infimum operations in the concept lattice.</p>
 <p>The function <code>standardize()</code> works for all FormalContext where the concept lattice has been found, and it produces a new <code>FormalContext</code> object:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -805,8 +824,13 @@ O6
 </div>
 <div id="saving-and-loading" class="section level2">
 <h2 class="hasAnchor">
+<<<<<<< HEAD
 <a href="#saving-and-loading" class="anchor"></a>Saving and loading</h2>
 <p>A <code>FormalContext</code> is saved in RDS format using its own <code><a href="https://rdrr.io/r/base/save.html">save()</a></code> method, which is more efficient than the base <code><a href="https://rdrr.io/r/base/readRDS.html">saveRDS()</a></code> and <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code>.</p>
+=======
+<a href="#saving-and-loading" class="anchor" aria-hidden="true"></a>Saving and loading</h2>
+<p>A <code>FormalContext</code> is saved in RDS format using its own <code><a href="https://rdrr.io/r/base/save.html" class="external-link">save()</a></code> method, which is more efficient than the base <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> and <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>.</p>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span>filename <span class="op">=</span> <span class="st">"./fc.rds"</span><span class="op">)</span></code></pre></div>
 <p>In order to load a previously saved <code>FormalContext</code>, it suffices to do:</p>
@@ -817,12 +841,17 @@ O6
 </div>
 <div id="concept-lattice" class="section level1">
 <h1 class="hasAnchor">
-<a href="#concept-lattice" class="anchor"></a>Concept Lattice</h1>
+<a href="#concept-lattice" class="anchor" aria-hidden="true"></a>Concept Lattice</h1>
 <p>We are going to use the previously computed concept lattices for the two <code>FormalContext</code> objects.</p>
 <div id="plot-print-and-latex" class="section level2">
 <h2 class="hasAnchor">
+<<<<<<< HEAD
 <a href="#plot-print-and-latex" class="anchor"></a>Plot, print and LaTeX</h2>
 <p>The concept lattice can be plotted using a Hasse diagram and the function <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> inside the <code>ConceptLattice</code> component:</p>
+=======
+<a href="#plot-print-and-latex" class="anchor" aria-hidden="true"></a>Plot, print and LaTeX</h2>
+<p>The concept lattice can be plotted using a Hasse diagram and the function <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> inside the <code>ConceptLattice</code> component:</p>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
@@ -866,7 +895,7 @@ O6
 </div>
 <div id="getting-all-extents-intents-and-retrieving-concepts" class="section level2">
 <h2 class="hasAnchor">
-<a href="#getting-all-extents-intents-and-retrieving-concepts" class="anchor"></a>Getting all extents, intents and retrieving concepts</h2>
+<a href="#getting-all-extents-intents-and-retrieving-concepts" class="anchor" aria-hidden="true"></a>Getting all extents, intents and retrieving concepts</h2>
 <p>For a <code>ConceptLattice</code>, one may want to retrieve particular concepts, using a subsetting as in <code>R</code>:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
@@ -879,8 +908,13 @@ O6
 </div>
 <div id="concept-support" class="section level2">
 <h2 class="hasAnchor">
+<<<<<<< HEAD
 <a href="#concept-support" class="anchor"></a>Concept support</h2>
 <p>The support of concepts can be computed using the function <code><a href="https://rdrr.io/pkg/arules/man/support.html">support()</a></code>:</p>
+=======
+<a href="#concept-support" class="anchor" aria-hidden="true"></a>Concept support</h2>
+<p>The support of concepts can be computed using the function <code><a href="https://rdrr.io/pkg/arules/man/support.html" class="external-link">support()</a></code>:</p>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333</span>
@@ -888,13 +922,13 @@ O6
 </div>
 <div id="sublattices" class="section level2">
 <h2 class="hasAnchor">
-<a href="#sublattices" class="anchor"></a>Sublattices</h2>
+<a href="#sublattices" class="anchor" aria-hidden="true"></a>Sublattices</h2>
 <p>When the concept lattice is too large, it can be useful in certain occasions to just work with a sublattice of the complete lattice. To this end, we use the <code>sublattice()</code> function.</p>
 <p>For instance, to build the sublattice of those concepts with support greater than 0.5, we can do:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the index of those concepts with support </span>
 <span class="co"># greater than the threshold</span>
-<span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">fc_I</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0.2</span><span class="op">)</span>
+<span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">fc_I</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0.2</span><span class="op">)</span>
 <span class="co"># Build the sublattice</span>
 <span class="va">sublattice</span> <span class="op">&lt;-</span> <span class="va">fc_I</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">sublattice</span><span class="op">(</span><span class="va">idx</span><span class="op">)</span>
 <span class="va">sublattice</span>
@@ -919,7 +953,7 @@ O6
 </div>
 <div id="subconcepts-superconcepts-infimum-and-supremum" class="section level2">
 <h2 class="hasAnchor">
-<a href="#subconcepts-superconcepts-infimum-and-supremum" class="anchor"></a>Subconcepts, superconcepts, infimum and supremum</h2>
+<a href="#subconcepts-superconcepts-infimum-and-supremum" class="anchor" aria-hidden="true"></a>Subconcepts, superconcepts, infimum and supremum</h2>
 <p>It may be interesting to use the notions of subconcept and superconcept. Given a concept, we can compute all its subconcepts and all its superconcepts:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># The fifth concept</span>
@@ -932,10 +966,15 @@ O6
 <span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span>
 <span class="co"># And its superconcepts:</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">superconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
+<<<<<<< HEAD
 <span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
 <span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
 <span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
 <span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></code></pre></div>
+=======
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></code></pre></div>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <p>Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A list of concepts</span>
@@ -950,11 +989,15 @@ O6
 <span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
 <span class="co"># Infimum of the concepts in C</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">infimum</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
+<<<<<<< HEAD
 <span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></code></pre></div>
+=======
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span></code></pre></div>
+>>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 </div>
 <div id="join--and-meet--irreducible-elements" class="section level2">
 <h2 class="hasAnchor">
-<a href="#join--and-meet--irreducible-elements" class="anchor"></a>Join- and meet- irreducible elements</h2>
+<a href="#join--and-meet--irreducible-elements" class="anchor" aria-hidden="true"></a>Join- and meet- irreducible elements</h2>
 <p>Also irreducible elements with respect to join (supremum) and meet (infimum) can be computed for a given concept lattice:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span>
@@ -987,11 +1030,13 @@ O6
 
 
       <footer><div class="copyright">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p></p>
+<p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -999,6 +1044,8 @@ O6
 
   
 
+
+  
 
   </body>
 </html>
