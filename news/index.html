@@ -157,6 +157,10 @@
 <li>
 <strong>Conceptual scaling</strong>, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.</li>
 </ul>
+<p><em>Breaking changes</em>:</p>
+<ul>
+<li>The former SparseSet and SparseConcept classes are now named Set and Concept. Thus, to create an object of these types, just use Set<span class="math inline"><em>n</em><em>e</em><em>w</em>(...)<em>o</em><em>r</em><em>C</em><em>o</em><em>n</em><em>c</em><em>e</em><em>p</em><em>t</em></span>new(…). Analogously, the former function as_SparseSet() is now as_Set().</li>
+</ul>
 <p>Bugfixes:</p>
 <ul>
 <li>Minor bugfixes in several functions.</li>
@@ -241,14 +245,15 @@
 <a href="#fcar-101" class="anchor"></a>fcaR 1.0.1<small> Unreleased </small>
 </h1>
 <ul>
-<li>Made changes suggested by CRAN:
+<li>
+<p>Made changes suggested by CRAN:</p>
 <ul>
 <li>Added examples in the documentation.</li>
 <li>Changed cat() to message() in functions not related to printing.</li>
 <li>Added proper contributors.</li>
 </ul>
 </li>
-<li>Updated vignettes</li>
+<li><p>Updated vignettes</p></li>
 </ul>
 </div>
     <div id="fcar-100" class="section level1">
