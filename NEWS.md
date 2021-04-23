@@ -14,6 +14,10 @@ New functionality:
 * Added new convenience function to map attributes between Sets, so computing intents, extents and closures is more robust.
 * __Conceptual scaling__, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.
 
+_Breaking changes_:
+
+* The former SparseSet and SparseConcept classes are now named Set and Concept. Thus, to create an object of these types, just use Set$new(...) or Concept$new(...). Analogously, the former function as_SparseSet() is now as_Set().
+
 Bugfixes:
 
 * Minor bugfixes in several functions.
