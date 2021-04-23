@@ -15,46 +15,34 @@ void populateMatches(int* matches_for_y, int* x_i, int* x_p, double* x, int* y_p
 
   int num_matches = 0;
 
-  if (y_end_index == y_start_index) {
+  for(int x_index = 0; x_index < num_rows; x_index++){
 
-    for(int x_index = 0; x_index < num_rows; x_index++) {
+    int loc = y_p[x_index], end_loc = y_p[x_index+1], curr_col;
 
-      matches_for_y[num_matches++] = x_index;
+    curr_col = y_start_index;
+
+    if (curr_col >= y_end_index) continue;
+
+    while(loc < end_loc){
+
+      if (y_i[loc] == x_i[curr_col]) {
+
+        if (y[loc] >= x[curr_col]) {
+
+          curr_col++;
+
+        } else break;
+
+      }
+      if(curr_col >= y_end_index) break;
+
+      loc++;
 
     }
 
-  } else {
 
-    for(int x_index = 0; x_index < num_rows; x_index++){
-
-      int loc = y_p[x_index], end_loc = y_p[x_index+1], curr_col;
-
-      curr_col = y_start_index;
-
-      if (curr_col >= y_end_index) continue;
-
-      while(loc < end_loc){
-
-        if (y_i[loc] == x_i[curr_col]) {
-
-          if (y[loc] >= x[curr_col]) {
-
-            curr_col++;
-
-          } else break;
-
-        }
-        if(curr_col >= y_end_index) break;
-
-        loc++;
-
-      }
-
-
-      if(curr_col == y_end_index){
-        matches_for_y[num_matches++] = x_index;
-      }
-
+    if(curr_col == y_end_index){
+      matches_for_y[num_matches++] = x_index;
     }
 
   }
@@ -373,55 +361,55 @@ SEXP is_equal_set_C(SEXP X_P, SEXP X_I, SEXP X_DIM, SEXP X, SEXP Y_P, SEXP Y_I, 
 
 // From here, own code
 
-// ## export
-// IntegerVector which_at_col(IntegerVector x_i, IntegerVector x_p, int col) {
-//
-//   col--;
-//   if (x_p[col + 1] == x_p[col]) return 0;
-//
-//   int len = x_p[col + 1] - x_p[col];
-//
-//   IntegerVector res(len);
-//
-//   for (int i = 0; i < len; i++) {
-//
-//     res[i] = x_i[x_p[col] + i] + 1;
-//
-//   }
-//
-//   return res;
-//
-// }
+// [[Rcpp::export]]
+IntegerVector which_at_col(IntegerVector x_i, IntegerVector x_p, int col) {
 
-// // [[Rcpp::export]]
-// NumericVector flatten_sparse_C(IntegerVector p,
-//                                IntegerVector i,
-//                                NumericVector x,
-//                                NumericVector dims) {
-//
-//   int num_rows = dims[0];
-//   int num_cols = dims[1];
-//
-//   NumericVector v(num_rows);
-//
-//   for (int x_index = 0; x_index < num_cols; x_index++) {
-//
-//     int start_index = p[x_index], end_index = p[x_index + 1];
-//
-//     for (int j = start_index; j < end_index; j++) {
-//
-//       if (x[j] > v[i[j]]) {
-//
-//         v[i[j]] = x[j];
-//
-//       }
-//
-//     }
-//
-//   }
-//
-//   return v;
-//
-// }
+  col--;
+  if (x_p[col + 1] == x_p[col]) return 0;
+
+  int len = x_p[col + 1] - x_p[col];
+
+  IntegerVector res(len);
+
+  for (int i = 0; i < len; i++) {
+
+    res[i] = x_i[x_p[col] + i] + 1;
+
+  }
+
+  return res;
+
+}
+
+// [[Rcpp::export]]
+NumericVector flatten_sparse_C(IntegerVector p,
+                               IntegerVector i,
+                               NumericVector x,
+                               NumericVector dims) {
+
+  int num_rows = dims[0];
+  int num_cols = dims[1];
+
+  NumericVector v(num_rows);
+
+  for (int x_index = 0; x_index < num_cols; x_index++) {
+
+    int start_index = p[x_index], end_index = p[x_index + 1];
+
+    for (int j = start_index; j < end_index; j++) {
+
+      if (x[j] > v[i[j]]) {
+
+        v[i[j]] = x[j];
+
+      }
+
+    }
+
+  }
+
+  return v;
+
+}
 
 

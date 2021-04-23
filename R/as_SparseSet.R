@@ -13,7 +13,7 @@ as_Set <- function(A) {
 
   attributes <- names(A)
   Set$new(attributes = attributes,
-                M = new_spm(matrix(A, ncol = 1)))
+          M = Matrix::Matrix(A, sparse = TRUE))
 
 }
 
@@ -32,7 +32,7 @@ as_Set <- function(A) {
 #'
 as_vector <- function(v) {
 
-  A <- to_matrix.SpM(v$get_vector())
+  A <- as.numeric(v$get_vector())
   names(A) <- v$get_attributes()
 
   return(A)

@@ -2,8 +2,8 @@ context("Set")
 
 test_that("fcaR operates on sparse sets", {
 
-  A <- matrix(1, nrow = 10, ncol = 1) %>% new_spm()
-  B <- matrix(1, nrow = 10, ncol = 5) %>% new_spm()
+  A <- matrix(1, nrow = 10, ncol = 1)
+  B <- matrix(1, nrow = 10, ncol = 5)
 
   expect_error(print(A), NA)
 
@@ -11,24 +11,24 @@ test_that("fcaR operates on sparse sets", {
   expect_error(C <- .difference2(B, B), NA)
   expect_error(C <- .difference2(B, A), NA)
 
-  expect_error(C <- unionSpM(A, B), NA)
-  expect_error(C <- unionSpM(B, B), NA)
-  expect_error(C <- unionSpM(B, A), NA)
+  expect_error(C <- .union(A, B), NA)
+  expect_error(C <- .union(B, B), NA)
+  expect_error(C <- .union(B, A), NA)
 
 })
 
 test_that("fcaR operates on sparse sets II", {
 
-  A <- Matrix::Matrix(c(FALSE, TRUE, FALSE), nrow = 3, ncol = 1) %>%  new_spm()
-  B <- matrix(1, nrow = 3, ncol = 5) %>% new_spm()
+  A <- Matrix::Matrix(c(FALSE, TRUE, FALSE), nrow = 3, ncol = 1)
+  B <- matrix(1, nrow = 3, ncol = 5)
 
   expect_error(C <- .difference2(A, B), NA)
   expect_error(C <- .difference2(B, B), NA)
   expect_error(C <- .difference2(B, A), NA)
 
-  expect_error(C <- unionSpM(A, B), NA)
-  expect_error(C <- unionSpM(B, B), NA)
-  expect_error(C <- unionSpM(B, A), NA)
+  expect_error(C <- .union(A, B), NA)
+  expect_error(C <- .union(B, B), NA)
+  expect_error(C <- .union(B, A), NA)
 
 })
 
@@ -43,7 +43,7 @@ test_that("fcaR uses class Set", {
   expect_is(A["P1"], "Set")
   expect_equal(A["P1"]$cardinal(), 0.3)
 
-  expect_is(A$get_vector(), "SpM")
+  expect_is(A$get_vector(), "Matrix")
 
   expect_equal(A$get_attributes(), attributes)
 

@@ -1,41 +1,42 @@
 .imp_to_basis <- function(LHS, RHS, attributes) {
 
-  n <- ncol.SpM(LHS)
+  n <- ncol(LHS)
 
   for (i in seq(n)) {
 
-    A <- LHS %>% extract_columns(1)
-    B <- RHS %>% extract_columns(1)
+    A <- Matrix::Matrix(LHS[, 1], sparse = TRUE)
 
-    LHS <- LHS %>% remove_columns(1)
-    RHS <- RHS %>% remove_columns(1)
+    B <- Matrix::Matrix(RHS[, 1], sparse = TRUE)
 
-    AUB <- unionSpM(A, B)
+    LHS <- Matrix::Matrix(LHS[, -1], sparse = TRUE)
+    RHS <- Matrix::Matrix(RHS[, -1], sparse = TRUE)
+
+    AUB <- .union(A, B)
 
     B <- .compute_closure(AUB, LHS, RHS,
-                            attributes, reduce = FALSE)$closure
+                          attributes, reduce = FALSE)$closure
 
-    LHS <- cbindSpM(LHS, A)
-    RHS <- cbindSpM(RHS, B)
+    LHS <- cbind(LHS, A)
+    RHS <- cbind(RHS, B)
 
   }
 
   for (i in seq(n)) {
 
-    A <- LHS %>% extract_columns(1)
-    B <- RHS %>% extract_columns(1)
+    A <- Matrix::Matrix(LHS[, 1], sparse = TRUE)
 
-    LHS <- LHS %>% remove_columns(1)
-    RHS <- RHS %>% remove_columns(1)
+    B <- Matrix::Matrix(RHS[, 1], sparse = TRUE)
+
+    LHS <- Matrix::Matrix(LHS[, -1], sparse = TRUE)
+    RHS <- Matrix::Matrix(RHS[, -1], sparse = TRUE)
 
     A <- .compute_closure(A, LHS, RHS,
                           attributes, reduce = FALSE)$closure
 
+    if (!(all(A == B))) {
 
-    if (length(equalSpM(A, B)$pi) == 0) {
-
-      LHS <- cbindSpM(LHS, A)
-      RHS <- cbindSpM(RHS, B)
+      LHS <- cbind(LHS, A)
+      RHS <- cbind(RHS, B)
 
     }
 
@@ -47,23 +48,23 @@
 
 complete_rhs <- function(LHS, RHS) {
 
-  n <- ncol.SpM(LHS)
+  n <- ncol(LHS)
 
   for (i in seq(n)) {
 
-    A <- LHS %>% extract_columns(1)
-    B <- RHS %>% extract_columns(1)
+    A <- Matrix::Matrix(LHS[, 1], sparse = TRUE)# %>% extract_columns(1)
+    B <- Matrix::Matrix(RHS[, 1], sparse = TRUE)# %>% extract_columns(1)
 
-    LHS <- LHS %>% remove_columns(1)
-    RHS <- RHS %>% remove_columns(1)
+    LHS <- Matrix::Matrix(LHS[, -1], sparse = TRUE)# %>% remove_columns(1)
+    RHS <- Matrix::Matrix(RHS[, -1], sparse = TRUE)# %>% remove_columns(1)
 
-    AUB <- unionSpM(A, B)
+    AUB <- .union(A, B)
 
     B <- .compute_closure(AUB, LHS, RHS,
                           attributes, reduce = FALSE)$closure
 
-    LHS <- cbindSpM(LHS, A)
-    RHS <- cbindSpM(RHS, B)
+    LHS <- cbind(LHS, A)
+    RHS <- cbind(RHS, B)
 
   }
 

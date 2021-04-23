@@ -118,12 +118,9 @@ FormalContext <- R6::R6Class(
       # Transform the formal context to sparse
       if (inherits(I, "transactions")) {
 
-        tI <- new_spm(I@data) %>% tSpM()
-
         # If it comes from the arules package
         attributes <- I@itemInfo$labels
         I <- methods::as(I@data, "dgCMatrix")
-        # TODO: Change accordingly
         objects <- paste0(seq(ncol(I)))
         dimnames(I) <- list(attributes, objects)
 
@@ -176,9 +173,13 @@ FormalContext <- R6::R6Class(
 
           }
 
-          # TODO: save tI???
-          tI <- new_spm(I)
-          I <- new_spm(t(I))
+          # # TODO: save tI???
+          # tI <- new_spm(I)
+          # I <- new_spm(t(I))
+          I <- methods::as(Matrix::Matrix(t(I),
+                                          sparse = TRUE),
+                           "dgCMatrix")
+
 
         }
 
@@ -190,15 +191,15 @@ FormalContext <- R6::R6Class(
       if (!private$is_many_valued) {
 
         # Assign everything to its corresponding field
-        expanded_grades_set <- compute_grades(tI)
+        expanded_grades_set <- compute_grades(Matrix::t(I))
         grades_set <- sort(unique(unlist(expanded_grades_set)))
 
-        self$I <- new_spm(I)
+        self$I <- I
         self$grades_set <- unique(c(0, grades_set, 1))
         self$expanded_grades_set <- expanded_grades_set
 
-        # colnames(self$I) <- self$objects
-        # rownames(self$I) <- self$attributes
+        colnames(self$I) <- self$objects
+        rownames(self$I) <- self$attributes
 
         # Is the FormalContext binary?
         private$is_binary <- length(self$grades_set) == 2
@@ -391,7 +392,7 @@ FormalContext <- R6::R6Class(
 
       } else {
 
-        I <- to_matrix.SpM(self$I)
+        I <- Matrix::as.matrix(self$I)
         colnames(I) <- self$objects
         rownames(I) <- self$attributes
 
@@ -435,30 +436,28 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (nrow.SpM(S) == length(self$objects)) {
+      if (length(S) == length(self$objects)) {
 
-        R <- compute_intentSpM(S,
-                               to_matrix.SpM(tSpM(self$I)))
+        R <- compute_intent(S,
+                            Matrix::as.matrix(Matrix::t(self$I)))
 
-        # if (length(R$pi) > 0) {
-        #
-        #   # Non-empty set:
-        #   R <- Matrix::sparseMatrix(i = R@i + 1,
-        #                             j = rep(1, length(R@i)),
-        #                             x = R@x,
-        #                             dims = c(length(self$attributes), 1))
-        #
-        #   R <- Set$new(attributes = self$attributes,
-        #                      M = R)
-        # } else {
-        #
-        #   # Empty intent
-        #   R <- Set$new(attributes = self$attributes)
-        #
-        # }
+        if (length(R@i) > 0) {
 
-        R <- Set$new(attributes = self$attributes,
-                           M = R)
+          # Non-empty set:
+          R <- Matrix::sparseMatrix(i = R@i + 1,
+                                    j = rep(1, length(R@i)),
+                                    x = R@x,
+                                    dims = c(length(self$attributes), 1))
+
+          R <- Set$new(attributes = self$attributes,
+                             M = R)
+        } else {
+
+          # Empty intent
+          R <- Set$new(attributes = self$attributes)
+
+        }
+
         return(R)
 
       } else {
@@ -479,7 +478,7 @@ FormalContext <- R6::R6Class(
     #' @export
     extent = function(S) {
 
-      # TODO: Apply scales to sparsesets.
+      # TODO: Apply scales to Sets.
 
       if (private$is_many_valued) error_many_valued()
 
@@ -505,30 +504,27 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (nrow.SpM(S) == length(self$attributes)) {
+      if (length(S) == length(self$attributes)) {
 
-        R <- compute_extentSpM(S,
-                            to_matrix.SpM(tSpM(self$I)))
+        R <- compute_extent(S,
+                            Matrix::as.matrix(Matrix::t(self$I)))
 
-        # if (length(R@i) > 0) {
-        #
-        #   # Non-empty set:
-        #   R <- Matrix::sparseMatrix(i = R@i + 1,
-        #                             j = rep(1, length(R@i)),
-        #                             x = R@x,
-        #                             dims = c(length(self$objects), 1))
-        #
-        #   R <- Set$new(attributes = self$objects,
-        #                      M = R)
-        # } else {
-        #
-        #   # Empty extent
-        #   R <- Set$new(attributes = self$objects)
-        #
-        # }
+        if (length(R@i) > 0) {
 
-        R <- Set$new(attributes = self$objects,
-                           M = R)
+          # Non-empty set:
+          R <- Matrix::sparseMatrix(i = R@i + 1,
+                                    j = rep(1, length(R@i)),
+                                    x = R@x,
+                                    dims = c(length(self$objects), 1))
+
+          R <- Set$new(attributes = self$objects,
+                             M = R)
+        } else {
+
+          # Empty extent
+          R <- Set$new(attributes = self$objects)
+
+        }
 
         return(R)
 
@@ -575,30 +571,27 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (nrow.SpM(S) == length(self$attributes)) {
+      if (length(S) == length(self$attributes)) {
 
-        R <- compute_closureSpM(S,
-                             to_matrix.SpM(tSpM(self$I)))
+        R <- compute_closure(S,
+                             Matrix::as.matrix(Matrix::t(self$I)))
 
-        # if (length(R@i) > 0) {
-        #
-        #   # Non-empty set:
-        #   R <- Matrix::sparseMatrix(i = R@i + 1,
-        #                             j = rep(1, length(R@i)),
-        #                             x = R@x,
-        #                             dims = c(length(self$attributes), 1))
-        #
-        #   R <- Set$new(attributes = self$attributes,
-        #                      M = R)
-        # } else {
-        #
-        #   # Empty closure
-        #   R <- Set$new(attributes = self$attributes)
-        #
-        # }
+        if (length(R@i) > 0) {
 
-        R <- Set$new(attributes = self$attributes,
-                           M = R)
+          # Non-empty set:
+          R <- Matrix::sparseMatrix(i = R@i + 1,
+                                    j = rep(1, length(R@i)),
+                                    x = R@x,
+                                    dims = c(length(self$attributes), 1))
+
+          R <- Set$new(attributes = self$attributes,
+                             M = R)
+        } else {
+
+          # Empty closure
+          R <- Set$new(attributes = self$attributes)
+
+        }
 
         return(R)
 
@@ -707,27 +700,25 @@ FormalContext <- R6::R6Class(
       if (private$is_many_valued) error_many_valued()
 
       # Redundant attributes
-      my_I <- .clarify_matrix(tSpM(self$I),
+      my_I <- .clarify_matrix(Matrix::t(self$I),
                               rows = self$objects,
                               cols = self$attributes)
 
       # And redundant objects
-      my_I <- .clarify_matrix(tSpM(my_I),
-                              rows = colnamesSpM(my_I),
+      my_I <- .clarify_matrix(Matrix::t(my_I),
+                              rows = colnames(my_I),
                               cols = self$objects)
-      new_I <- tSpM(my_I) %>% to_matrix.SpM()
-      dimnames(new_I) <- list(colnamesSpM(my_I),
-                              rownamesSpM(my_I))
+      my_I <- Matrix::as.matrix(Matrix::t(my_I))
 
       if (copy) {
 
-        fc2 <- FormalContext$new(new_I)
+        fc2 <- FormalContext$new(my_I)
 
         return(fc2)
 
       } else {
 
-        self$initialize(new_I)
+        self$initialize(my_I)
 
         return(invisible(self))
 
@@ -754,7 +745,7 @@ FormalContext <- R6::R6Class(
       # Make a copy with the clarified context
       fc2 <- self$clarify(TRUE)
 
-      my_I <- tSpM(fc2$I)
+      my_I <- Matrix::as.matrix(Matrix::t(fc2$I))
 
       att <- fc2$attributes
 
@@ -778,20 +769,18 @@ FormalContext <- R6::R6Class(
           ypv$assign(attributes = yp, values = 1)
           yp_down <- fc2$extent(ypv)
 
-          S <- subsetSpM(y_down$get_vector(),
+          S <- .subset(y_down$get_vector(),
                        yp_down$get_vector())
 
-          if (length(S$pi) > 0) {
+          if (S[1]) {
 
-            R <- .intersection(R, yp_down$get_vector())
-
-            # R[which(yp_down$get_vector() < R)] <- yp_down$get_vector()[Matrix::which(yp_down$get_vector() < R)]
+            R[Matrix::which(yp_down$get_vector() < R)] <- yp_down$get_vector()[Matrix::which(yp_down$get_vector() < R)]
 
           }
 
         }
 
-        if (length(equalSpM(R, y_down$get_vector())$pi) == 0) {
+        if (!.equal_sets(R, y_down$get_vector())[1]) {
 
           Z$assign(attributes = y, values = 1)
 
@@ -799,11 +788,10 @@ FormalContext <- R6::R6Class(
 
       }
 
-      new_att <- Z$get_attributes()[Z$get_vector()$pi]
+      new_att <- Z$get_attributes()[Matrix::which(Z$get_vector() > 0)]
 
       idx <- match(new_att, att)
-      my_I <- my_I %>% extract_columns(idx) %>% to_matrix.SpM()
-
+      my_I <- my_I[, idx]
       colnames(my_I) <- new_att
       rownames(my_I) <- fc2$objects
 
@@ -881,7 +869,7 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      my_I <- tSpM(self$I) %>% to_matrix.SpM()
+      my_I <- Matrix::as.matrix(Matrix::t(self$I))
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
@@ -897,14 +885,15 @@ FormalContext <- R6::R6Class(
 
       if (length(self$attributes) == 1) {
 
-        # TODO: What happens when there is only one attribute?
-        # my_intents <- Matrix::Matrix(t(as.vector(L$intents)), sparse = TRUE)
-        #
-        # my_extents <- Matrix::Matrix(t(as.vector(L$extents)), sparse = TRUE)
+
+        my_intents <- Matrix::Matrix(t(as.vector(L$intents)), sparse = TRUE)
+
+        my_extents <- Matrix::Matrix(t(as.vector(L$extents)), sparse = TRUE)
 
       } else {
 
         my_intents <- L$intents
+
         my_extents <- L$extents
 
       }
@@ -945,7 +934,7 @@ FormalContext <- R6::R6Class(
       if (private$is_many_valued) error_many_valued()
 
       # TODO: Assign a private field "tI" to tSpM(self$I)
-      my_I <- to_matrix.SpM(tSpM(self$I))
+      my_I <- Matrix::as.matrix(Matrix::t(self$I))
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
@@ -1026,12 +1015,12 @@ FormalContext <- R6::R6Class(
 
       # Now, add the computed implications
       # TODO: check what happens with only 1 implication.
-      if (ncol.SpM(L$LHS) > 0) {
+      if (ncol(L$LHS) > 0) {
 
         # There are implications (the first one is dummy
         # emptyset -> emptyset )
-        my_LHS <- L$LHS
-        my_RHS <- L$RHS
+        my_LHS <- methods::as(L$LHS, "dgCMatrix")
+        my_RHS <- methods::as(L$RHS, "dgCMatrix")
 
         extracted_implications <- ImplicationSet$new(attributes = self$attributes,
                                                      lhs = my_LHS,
@@ -1061,7 +1050,8 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      return(to_transactions.SpM(self$I))
+      return(methods::as(methods::as(self$I, "ngCMatrix"), "transactions"))
+      # return(to_transactions.SpM(self$I))
 
     },
 
@@ -1263,7 +1253,7 @@ FormalContext <- R6::R6Class(
 
       if (!private$is_many_valued) {
 
-        I <- tSpM(self$I) %>% to_matrix.SpM()
+        I <- Matrix::as.matrix(Matrix::t(self$I))
 
         if (private$is_binary) {
 
@@ -1340,6 +1330,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Write the context in LaTeX format
     #'
+    #' @param table (logical) If \code{TRUE}, surrounds everything between \code{\\begin{table}} and \code{\\end{table}}.
     #' @param label (character) The label for the table environment.
     #' @param caption (character) The caption of the table.
     #' @param fraction (character) If \code{none}, no fractions are produced. Otherwise, if it is \code{frac}, \code{dfrac} or \code{sfrac}, decimal numbers are represented as fractions with the corresponding LaTeX typesetting.
@@ -1349,14 +1340,17 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     #'
-    to_latex = function(label = "", caption = "", fraction = c("none", "frac", "dfrac", "sfrac")) {
+    to_latex = function(table = TRUE,
+                        label = "",
+                        caption = "",
+                        fraction = c("none", "frac", "dfrac", "sfrac")) {
 
       # TODO: export a many-valued context to LaTeX
       if (private$is_many_valued) error_many_valued()
 
       fraction <- match.arg(fraction)
 
-      I <- tSpM(self$I) %>% to_matrix.SpM()
+      I <- Matrix::as.matrix(Matrix::t(self$I))
 
       if (private$is_binary) {
 
@@ -1379,15 +1373,19 @@ FormalContext <- R6::R6Class(
                               objects = self$objects,
                               attributes = self$attributes)
 
-      str <- c("\\begin{table}",
-               "\\centering",
-               str)
+      if (table) {
 
-      my_caption <- paste0("\\caption{\\label{",
-                           label, "}",
-                           caption, "}")
+        str <- c("\\begin{table}",
+                 "\\centering",
+                 str)
 
-      str <- c(str, my_caption, "\\end{table}")
+        my_caption <- paste0("\\caption{\\label{",
+                             label, "}",
+                             caption, "}")
+
+        str <- c(str, my_caption, "\\end{table}")
+
+      }
 
       cat(str)
 
@@ -1412,7 +1410,7 @@ FormalContext <- R6::R6Class(
 
       } else {
 
-        I <- tSpM(self$I) %>% to_matrix.SpM()
+        I <- Matrix::as.matrix(Matrix::t(self$I))
         dimnames(I) <- list(self$objects, self$attributes)
 
         return(I)

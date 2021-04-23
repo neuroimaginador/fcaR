@@ -10,7 +10,6 @@ combine_implications <- function(imps1, imps2) {
   att2 <- imps2$get_attributes()
   atts <- sort(unique(c(att1, att2)))
 
-
   if (imps1$cardinality() + imps2$cardinality() == 0) {
 
     return(ImplicationSet$new(attributes = atts))
@@ -19,19 +18,18 @@ combine_implications <- function(imps1, imps2) {
 
   if (imps1$cardinality() > 0) {
 
-    lhs1 <- imps1$get_LHS_matrix() %>% tSpM()
-    rhs1 <- imps1$get_RHS_matrix() %>% tSpM()
-
-    lhsA <- zeroSpM(nrow = imps1$cardinality(),
-                    ncol = length(atts))
-    rhsA <- rlang::env_clone(lhsA)
+    lhs1 <- imps1$get_LHS_matrix()
+    rhs1 <- imps1$get_RHS_matrix()
 
     id1 <- match(att1, atts)
-    lhsA %>% substitute_columns(id1, lhs1)
-    rhsA %>% substitute_columns(id1, rhs1)
 
-    lhsA <- tSpM(lhsA)
-    rhsA <- tSpM(rhsA)
+    lhsA <- Matrix::spMatrix(nrow = length(atts),
+                             ncol = imps1$cardinality())
+    rhsA <- Matrix::spMatrix(nrow = length(atts),
+                             ncol = imps1$cardinality())
+
+    lhsA[id1, ] <- lhs1
+    rhsA[id1, ] <- rhs1
 
   } else {
 
@@ -41,19 +39,18 @@ combine_implications <- function(imps1, imps2) {
 
   if (imps2$cardinality() > 0) {
 
-    lhs2 <- imps2$get_LHS_matrix() %>% tSpM()
-    rhs2 <- imps2$get_RHS_matrix() %>% tSpM()
-
-    lhsB <- zeroSpM(nrow = imps2$cardinality(),
-                    ncol = length(atts))
-    rhsB <- rlang::env_clone(lhsB)
+    lhs2 <- imps2$get_LHS_matrix()
+    rhs2 <- imps2$get_RHS_matrix()
 
     id2 <- match(att2, atts)
-    lhsB %>% substitute_columns(id2, lhs2)
-    rhsB %>% substitute_columns(id2, rhs2)
 
-    lhsB <- tSpM(lhsB)
-    rhsB <- tSpM(rhsB)
+    lhsB <- Matrix::spMatrix(nrow = length(atts),
+                             ncol = imps2$cardinality())
+    rhsB <- Matrix::spMatrix(nrow = length(atts),
+                             ncol = imps2$cardinality())
+
+    lhsB[id2, ] <- lhs2
+    rhsB[id2, ] <- rhs2
 
   } else {
 
@@ -62,8 +59,8 @@ combine_implications <- function(imps1, imps2) {
   }
 
   ImplicationSet$new(attributes = atts,
-                     lhs = cbindSpM(lhsA, lhsB),
-                     rhs = cbindSpM(rhsA, rhsB))
+                     lhs = cbind(lhsA, lhsB),
+                     rhs = cbind(rhsA, rhsB))
 
 }
 
@@ -73,13 +70,20 @@ reorder_attributes <- function(imps, attributes) {
   rhs <- imps$get_RHS_matrix()
   atts <- imps$get_attributes()
 
+  # browser()
+
+  LHS <- Matrix::spMatrix(nrow = length(attributes),
+                          ncol = imps$cardinality())
+  RHS <- Matrix::spMatrix(nrow = length(attributes),
+                          ncol = imps$cardinality())
+
   id <- match(attributes, atts)
 
-  lhs <- lhs %>% extract_rows(id)
-  rhs <- rhs %>% extract_rows(id)
+  LHS[!is.na(id), ] <- lhs[id[!is.na(id)], ]
+  RHS[!is.na(id), ] <- rhs[id[!is.na(id)], ]
 
   ImplicationSet$new(attributes = attributes,
-                     lhs = lhs,
-                     rhs = rhs)
+                     lhs = LHS,
+                     rhs = RHS)
 
 }

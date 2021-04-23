@@ -11,7 +11,7 @@ equivalencesRegistry$set_entry(method = "Reduction",
                                description = "A -> B equivalent to A -> B-A")
 
 equivalencesRegistry$set_entry(method = "Simplification",
-                               fun = .simplificationSpM,
+                               fun = .simplification,
                                description = "A -> B and C -> D with A, B disjoint, and A subset of C, equivalent to A -> B, C-B -> D-B")
 
 equivalencesRegistry$set_entry(method = c("Right Simplification", "RSimplification"),

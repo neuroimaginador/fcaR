@@ -617,6 +617,7 @@ Prints information regarding the formal context.
 Write the context in LaTeX format
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex(
+  table = TRUE,
   label = "",
   caption = "",
   fraction = c("none", "frac", "dfrac", "sfrac")
@@ -626,6 +627,8 @@ Write the context in LaTeX format
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{table}}{(logical) If \code{TRUE}, surrounds everything between \code{\\begin{table}} and \code{\\end{table}}.}
+
 \item{\code{label}}{(character) The label for the table environment.}
 
 \item{\code{caption}}{(character) The caption of the table.}

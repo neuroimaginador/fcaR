@@ -1,4 +1,4 @@
-pandoc: 2.11.0.2
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -7,5 +7,5 @@ articles:
   conceptual-scaling: conceptual-scaling.html
   extending_equivalence: extending_equivalence.html
   implications: implications.html
-last_built: 2021-04-19T12:29Z
+last_built: 2021-04-23T11:33Z
 

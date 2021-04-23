@@ -302,8 +302,8 @@ test_that("fcaR gets LHS and RHS of implications", {
   fc <- FormalContext$new(I = I)
   fc$find_implications()
 
-  expect_is(fc$implications$get_LHS_matrix(), "SpM")
-  expect_is(fc$implications$get_RHS_matrix(), "SpM")
+  expect_is(fc$implications$get_LHS_matrix(), "dgCMatrix")
+  expect_is(fc$implications$get_RHS_matrix(), "dgCMatrix")
 
 })
 
@@ -351,9 +351,10 @@ test_that("fcaR simplifies implications", {
   fc <- FormalContext$new(I = I)
   fc$find_implications()
 
-  L <- .simplificationSpM(LHS = fc$implications$get_LHS_matrix(),
+  L <- .simplification(LHS = fc$implications$get_LHS_matrix(),
                        RHS = fc$implications$get_RHS_matrix(),
-                       attributes = fc$attributes)
+                       attributes = fc$attributes,
+                       trace = TRUE)
 
   expect_is(L, "list")
 

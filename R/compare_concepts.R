@@ -25,14 +25,14 @@
   if (inherits(C1, "Concept") &
       inherits(C2, "Concept")) {
 
-    return(all(to_matrix.SpM(C1$get_extent()$get_vector()) <= to_matrix.SpM(C2$get_extent()$get_vector())))
+    return(all(C1$get_extent()$get_vector() <= C2$get_extent()$get_vector()))
 
   }
 
   if (inherits(C1, "Set") |
       inherits(C2, "Set")) {
 
-    return(all(to_matrix.SpM(C1$get_vector()) <= to_matrix.SpM(C2$get_vector())))
+    return(all(C1$get_vector() <= C2$get_vector()))
 
   }
 
@@ -69,14 +69,14 @@
   if (inherits(C1, "Concept") &
       inherits(C2, "Concept")) {
 
-    return(all(to_matrix.SpM(C1$get_extent()$get_vector()) == to_matrix.SpM(C2$get_extent()$get_vector())))
+    return(all(C1$get_extent()$get_vector() == C2$get_extent()$get_vector()))
 
   }
 
   if (inherits(C1, "Set") |
       inherits(C2, "Set")) {
 
-    return(all(to_matrix.SpM(C1$get_vector()) == to_matrix.SpM(C2$get_vector())))
+    return(all(C1$get_vector() == C2$get_vector()))
 
   }
 
@@ -115,10 +115,11 @@
 
     A <- S1$get_vector()
     B <- S2$get_vector()
-    my_diff <- differenceSpM(A, B)
+    my_diff <- .difference2(A, B) %>%
+      Matrix::as.matrix() %>% as.vector()
+    names(my_diff) <- S1$get_attributes()
 
-    S <- Set$new(attributes = S1$get_attributes(),
-                       M = my_diff)
+    S <- as_Set(my_diff)
 
     return(S)
 

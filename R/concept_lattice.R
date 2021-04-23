@@ -172,11 +172,9 @@ ConceptLattice <- R6::R6Class(
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-        private$subconcept_matrix <- subsetSpM(private$pr_extents)
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
-
-      # print(private$subconcept_matrix)
 
       lattice_plot(private$concepts,
                    private$subconcept_matrix,
@@ -310,17 +308,24 @@ ConceptLattice <- R6::R6Class(
 
         if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-          private$subconcept_matrix <- subsetSpM(private$pr_extents) %>% tSpM()
+          private$subconcept_matrix <- .subset(private$pr_extents)
 
         }
 
         idx <- .get_sublattice(private$subconcept_matrix,
                                starting_idx = idx)
 
-        my_intents <- private$pr_intents %>%
-          extract_columns(idx)
-        my_extents <- private$pr_extents %>%
-          extract_columns(idx)
+        if (length(idx) > 1) {
+
+          my_intents <- private$pr_intents[, idx]
+          my_extents <- private$pr_extents[, idx]
+
+        } else {
+
+          my_intents <- .extract_column(private$pr_intents, idx)
+          my_extents <- .extract_column(private$pr_extents, idx)
+
+        }
 
         cl <- ConceptLattice$new(extents = my_extents,
                                  intents = my_intents,
@@ -334,32 +339,6 @@ ConceptLattice <- R6::R6Class(
 
     },
 
-    #' @description
-    #' Meet-irreducible Elements
-    #'
-    #' @return
-    #' The meet-irreducible elements in the concept lattice.
-    #'
-    #' @export
-    #'
-    meet_irreducibles= function() {
-
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-
-        private$subconcept_matrix <- subsetSpM(private$pr_extents)
-
-      }
-
-      if (is.null(private$reduced_matrix)) {
-
-        private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
-
-      }
-
-      idx <- which(colSums(private$reduced_matrix) == 1)
-      self[idx]
-
-    },
 
     #' @description
     #' Join-irreducible Elements
@@ -369,17 +348,44 @@ ConceptLattice <- R6::R6Class(
     #'
     #' @export
     #'
-    join_irreducibles= function() {
+    join_irreducibles = function() {
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-        private$subconcept_matrix <- subsetSpM(private$pr_extents)
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
 
-      M <- .reduce_transitivity(private$subconcept_matrix)
+      if (is.null(private$reduced_matrix)) {
 
-      idx <- which(rowSums(M) == 1)
+        private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
+
+      }
+
+      idx <- which(Matrix::colSums(private$reduced_matrix) == 1)
+      self[idx]
+
+    },
+
+    #' @description
+    #' Meet-irreducible Elements
+    #'
+    #' @return
+    #' The meet-irreducible elements in the concept lattice.
+    #'
+    #' @export
+    #'
+    meet_irreducibles = function() {
+
+      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
+
+        private$subconcept_matrix <- .subset(private$pr_extents)
+
+      }
+
+      M <- .reduce_transitivity(Matrix::t(private$subconcept_matrix))
+
+      idx <- which(Matrix::colSums(M) == 1)
       self[idx]
 
     },
@@ -396,8 +402,8 @@ ConceptLattice <- R6::R6Class(
     decompose = function(C) {
 
       irreducible <- self$meet_irreducibles()
-      irr_intents <- do.call(cbindSpM,
-                             lapply(irreducible,
+      irr_intents <- do.call(cbind,
+                             sapply(irreducible,
                                     function(r) r$get_intent()$get_vector()))
 
       ss <- lapply(C,
@@ -405,13 +411,13 @@ ConceptLattice <- R6::R6Class(
 
                      if (r$get_intent()$cardinal() == 0) return(r)
 
-                     id <- whichSpM(subsetSpM(irr_intents,
+                     id <- Matrix::which(.subset(irr_intents,
                                                  r$get_intent()$get_vector()))
 
                      if (length(id) > 1) {
 
-                       MM <- subsetSpM(irr_intents %>% extract_columns(id))
-                       id <- id[rowSums(MM) == 1]
+                       MM <- .subset(irr_intents[, id])
+                       id <- id[Matrix::rowSums(MM) == 1]
 
                      }
                      foo <- irreducible[id]
@@ -445,7 +451,7 @@ ConceptLattice <- R6::R6Class(
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-        private$subconcept_matrix <- subsetSpM(private$pr_extents)
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
 
@@ -471,7 +477,7 @@ ConceptLattice <- R6::R6Class(
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-        private$subconcept_matrix <- subsetSpM(private$pr_extents)
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
 
@@ -482,7 +488,7 @@ ConceptLattice <- R6::R6Class(
     #' @description
     #' Subconcepts of a Concept
     #'
-    #' @param C (numeric or \code{Concept}) The concept to which determine all its subconcepts.
+    #' @param C (numeric or \code{SparseConcept}) The concept to which determine all its subconcepts.
     #'
     #' @return
     #' A list with the subconcepts.
@@ -493,16 +499,13 @@ ConceptLattice <- R6::R6Class(
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-        private$subconcept_matrix <- subsetSpM(private$pr_extents) %>% tSpM()
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
 
       # Get the index of all subconcepts
-      M <- private$subconcept_matrix %>%
-        tSpM() %>%
-        extract_rows(idx) %>%
-        colSums()
-      candidates <- which(M > 0)
+      M <- Matrix::t(private$subconcept_matrix)[idx, ]
+      candidates <- Matrix::which(M > 0)
 
       self[candidates]
 
@@ -511,7 +514,7 @@ ConceptLattice <- R6::R6Class(
     #' @description
     #' Superconcepts of a Concept
     #'
-    #' @param C (numeric or \code{Concept}) The concept to which determine all its superconcepts.
+    #' @param C (numeric or \code{SparseConcept}) The concept to which determine all its superconcepts.
     #'
     #' @return
     #' A list with the superconcepts.
@@ -522,14 +525,12 @@ ConceptLattice <- R6::R6Class(
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-        private$subconcept_matrix <- subsetSpM(private$pr_extents) %>% tSpM()
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
 
       # Get the index of all superconcepts
-      M <- private$subconcept_matrix %>%
-        extract_rows(idx) %>%
-        colSums()
+      M <- private$subconcept_matrix[idx, ]
       candidates <- which(M > 0)
 
       self[candidates]
@@ -539,7 +540,7 @@ ConceptLattice <- R6::R6Class(
     #' @description
     #' Lower Neighbours of a Concept
     #'
-    #' @param C (\code{Concept}) The concept to which find its lower neighbours
+    #' @param C (\code{SparseConcept}) The concept to which find its lower neighbours
     #'
     #' @return
     #' A list with the lower neighbours of \code{C}.
@@ -551,7 +552,7 @@ ConceptLattice <- R6::R6Class(
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-        private$subconcept_matrix <- subsetSpM(private$pr_extents)
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
 
@@ -561,14 +562,14 @@ ConceptLattice <- R6::R6Class(
 
       }
 
-      self[(private$reduced_matrix %>% extract_rows(idx) %>% colSums()) > 0]
+      self[which(private$reduced_matrix[, idx] > 0)]
 
     },
 
     #' @description
     #' Upper Neighbours of a Concept
     #'
-    #' @param C (\code{Concept}) The concept to which find its upper neighbours
+    #' @param C (\code{SparseConcept}) The concept to which find its upper neighbours
     #'
     #' @return
     #' A list with the upper neighbours of \code{C}.
@@ -580,7 +581,7 @@ ConceptLattice <- R6::R6Class(
 
       if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
 
-        private$subconcept_matrix <- subsetSpM(private$pr_extents)
+        private$subconcept_matrix <- .subset(private$pr_extents)
 
       }
 
@@ -590,11 +591,7 @@ ConceptLattice <- R6::R6Class(
 
       }
 
-      M <- private$reduced_matrix %>%
-        extract_columns(idx) %>%
-        rowSums()
-
-      self[which(M > 0)]
+      self[which(private$reduced_matrix[idx, ] > 0)]
 
     },
 
@@ -605,12 +602,6 @@ ConceptLattice <- R6::R6Class(
     #' @export
     support = function() {
 
-      if (self$size() == 0) {
-
-        return(numeric(0))
-
-      }
-
       if (!is.null(private$concept_support)) {
 
         return(private$concept_support)
@@ -618,11 +609,11 @@ ConceptLattice <- R6::R6Class(
       }
 
       my_I <- private$I
-      # my_I$px <- as.numeric(my_I$px)
+      my_I@x <- as.numeric(my_I@x)
 
-      subsets <- subsetSpM(private$pr_intents, my_I)
+      subsets <- .subset(private$pr_intents, my_I)
 
-      private$concept_support <- colSums(subsets) / nrow.SpM(subsets)
+      private$concept_support <- Matrix::rowMeans(subsets)
 
       return(private$concept_support)
 
@@ -649,13 +640,13 @@ ConceptLattice <- R6::R6Class(
       extents <- lapply(concept_list,
                         function(l) l$get_extent()$get_vector())
 
-      extents <- Reduce(cbindSpM, extents)
+      extents <- Reduce(cbind, extents)
 
-      indices <- equalSpM(x = extents,
-                          y = private$pr_extents)
+      indices <- .equal_sets(x = extents,
+                             y = private$pr_extents)
 
-      indices <- arrayInd(whichSpM(indices),
-                          .dim = dim.SpM(indices))[, 1]
+      indices <- arrayInd(Matrix::which(indices),
+                          .dim = dim(indices))[, 2]
 
       return(indices)
 

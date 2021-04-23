@@ -5,21 +5,17 @@
   # and D subset of B (axiom B -> D)
   #  => remove C -> D
 
-  RHS_subsets <- subsetSpM(RHS)
-  LHS_subsets <- tSpM(subsetSpM(LHS))
+  RHS_subsets <- .subset(RHS)
+  LHS_subsets <- Matrix::t(.subset(LHS))
 
-  # foo1 <- .difference2(LHS_subsets, RHS_subsets) %>% colSums()
-  # foo2 <- .difference2(RHS_subsets, LHS_subsets) %>% colSums()
-  # foo <- .union(LHS_subsets, RHS_subsets) %>% colSums()
-
-  ALL_subsets <- andSpM(RHS_subsets, LHS_subsets)
+  ALL_subsets <- LHS_subsets & RHS_subsets
 
   # Find A subset of C
-  condition1 <- colSums(ALL_subsets) > 1
+  condition1 <- Matrix::colSums(ALL_subsets) > 1
 
-  subsets <- which(condition1)
+  subsets <- Matrix::which(condition1)
 
-  marked_as_single <- rep(TRUE, ncol.SpM(LHS))
+  marked_as_single <- rep(TRUE, ncol(LHS))
 
   if (length(subsets) > 0) {
 
@@ -31,8 +27,9 @@
       if (!marked_as_single[this_row]) next
 
       # Select C -> D with A subset of C and B superset of D
-      idx_subset <- (ALL_subsets %>%
-        extract_columns(this_row))$pi
+      idx_subset <- which_at_col(ALL_subsets@i,
+                                 ALL_subsets@p,
+                                 this_row)
 
       idx_subset <- setdiff(idx_subset, this_row)
 
@@ -45,10 +42,10 @@
   # Add singles
   singles <- which(marked_as_single)
 
-  LHS <- LHS %>% extract_columns(singles)
-  RHS <- RHS %>% extract_columns(singles)
+  LHS <- LHS[, singles]
+  RHS <- RHS[, singles]
 
-  return(list(lhs = LHS,
-              rhs = RHS))
+  return(list(lhs = Matrix::Matrix(LHS, sparse = TRUE),
+              rhs = Matrix::Matrix(RHS, sparse = TRUE)))
 
 }
