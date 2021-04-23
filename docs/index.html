@@ -25,6 +25,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,12 +45,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -101,13 +97,13 @@
   <div class="contents col-md-9">
 <div id="fcar-tools-for-formal-concept-analysis" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#fcar-tools-for-formal-concept-analysis" class="anchor"></a>fcaR: Tools for Formal Concept Analysis</h1></div>
+<a href="#fcar-tools-for-formal-concept-analysis" class="anchor" aria-hidden="true"></a>fcaR: Tools for Formal Concept Analysis</h1></div>
 <!-- badges: start -->
 
 <p>The aim of this package is to provide tools to perform fuzzy formal concept analysis (FCA) from within R. It provides functions to load and save a Formal Context, extract its concept lattice and implications. In addition, one can use the implications to compute semantic closures of fuzzy sets and, thus, build recommendation systems.</p>
 <div id="details" class="section level2">
 <h2 class="hasAnchor">
-<a href="#details" class="anchor"></a>Details</h2>
+<a href="#details" class="anchor" aria-hidden="true"></a>Details</h2>
 <p>The fcaR package provides data structures which allow the user to work seamlessly with formal contexts and sets of implications. More explicitly, three main classes are implemented, using the object-oriented-programming paradigm in R:</p>
 <ul>
 <li>FormalContext encapsulates the definition of a formal context (G, M, I), being G the set of objects, M the set of attributes and I the (fuzzy) relationship matrix, and provides methods to operate on the context using FCA tools.</li>
@@ -123,7 +119,7 @@
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
 <p>This package is available at CRAN, so its stable version can be easily installed using:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"fcaR"</span>)</span></code></pre></div>
 <p>The development version of this package can be installed with</p>
@@ -131,7 +127,7 @@
 </div>
 <div id="example-of-use" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-of-use" class="anchor"></a>Example of Use</h2>
+<a href="#example-of-use" class="anchor" aria-hidden="true"></a>Example of Use</h2>
 Let us start with a fuzzy dataset (stored in a matrix I) as follows:
 <table class="table">
 <thead><tr>
@@ -299,10 +295,10 @@ O6
 </table>
 <p>Here, a value <em>x</em> in the intersection of a row and a column indicates that the object of the corresponding row possesses the attribute in the column in a degree of at least <em>x</em> (if <em>x</em> = 0, the attribute is absent in the object, and if <em>x</em> = 1, the attribute is fully present in the object).</p>
 <p>We can build a FormalContext object:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span>
 <span class="co">#&gt;       P1    P2    P3    P4    P5    P6  </span>
 <span class="co">#&gt;   O1   0     1    0.5   0.5    1    0   </span>
@@ -310,10 +306,10 @@ O6
 <span class="co">#&gt;   O3  0.5   0.5    0     0     0    1   </span>
 <span class="co">#&gt;   O4   0     0     0     1    0.5   0   </span>
 <span class="co">#&gt;   O5   0     0     1    0.5    0    0   </span>
-<span class="co">#&gt;   O6  0.5    0     0     0     0    0</span></pre></div>
+<span class="co">#&gt;   O6  0.5    0     0     0     0    0</span></code></pre></div>
 <p>With a single function, we can compute the set of concepts:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># Compute all concepts</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Compute all concepts</span>
 <span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># The first concept</span>
@@ -321,11 +317,11 @@ O6
 <span class="co">#&gt; ({O1, O2, O3, O4, O5, O6}, {})</span>
 
 <span class="co"># And plot the concept lattice</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 <p>We can also extract implications from the formal context:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co"># Extract implications</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Extract implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Which implications have been extracted</span>
@@ -342,7 +338,7 @@ O6
 <span class="co">#&gt; Rule 9: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span>
 <span class="co">#&gt; Rule 10: {P1 [0.5], P2} -&gt; {P1}</span>
 <span class="co">#&gt; Rule 11: {P1, P2 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></pre></div>
+<span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></code></pre></div>
 <p>Some fundamental functionalities on the concept lattice associated to the formal context have been implemented:</p>
 <ul>
 <li>Computing a sublattice.</li>
@@ -350,26 +346,25 @@ O6
 <li>Finding the join- and meet- irreducible elements, which allows to reduce the context and find the <em>standard context</em>.</li>
 </ul>
 <p>Also, one can compute the support of both implications and concepts:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000</span>
 <span class="co">#&gt;  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000</span>
 <span class="co">#&gt;  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333</span>
 <span class="co">#&gt; [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667</span>
-<span class="co">#&gt; [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000</span></pre></div>
+<span class="co">#&gt; [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000</span></code></pre></div>
 <p>In this package, we have implemented a logic to manage implications. This so-called Simplification Logic allows us to simplify the extracted rules by removing redundancies, as well as computing the closure of a given fuzzy attribute set.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="co"># Reduce the number of implications using two simple</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Reduce the number of implications using two simple</span>
 <span class="co"># rules. The algorithm applies the specified rules</span>
 <span class="co"># in batches, if the number of rules is high.</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
+<span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
                                       <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span>
-<span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.001 secs.</span>
-<span class="co">#&gt; Batch took 0.005 secs.</span>
+<span class="co">#&gt; --&gt; Composition: from 12 to 12.</span>
+<span class="co">#&gt; --&gt; Generalization: from 12 to 12.</span>
 
 <span class="co"># Reduced set of implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
@@ -385,17 +380,17 @@ O6
 <span class="co">#&gt; Rule 9: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span>
 <span class="co">#&gt; Rule 10: {P1 [0.5], P2} -&gt; {P1}</span>
 <span class="co">#&gt; Rule 11: {P1, P2 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></pre></div>
+<span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></code></pre></div>
 <p>All these functions work natively with fuzzy and with binary datasets.</p>
 <p>For more details on the methods implemented and further examples, see the vignettes in this package.</p>
 </div>
 <div id="changelog" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changelog" class="anchor"></a>Changelog</h2>
+<a href="#changelog" class="anchor" aria-hidden="true"></a>Changelog</h2>
 <p>With respect to the CRAN version, the development version has the following changes.</p>
 <div id="fcar-110" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fcar-110" class="anchor"></a>fcaR 1.1.0</h3>
+<a href="#fcar-110" class="anchor" aria-hidden="true"></a>fcaR 1.1.0</h3>
 <p>Enhancements:</p>
 <ul>
 <li>Better printing of Sets.</li>
@@ -419,10 +414,10 @@ O6
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<a href="#references" class="anchor" aria-hidden="true"></a>References</h2>
 <p>Guigues J, Duquenne V (1986). “Familles minimales d’implications informatives résultant d’un tableau de données binaires.” <em>Mathématiques et Sciences humaines</em>, <em>95</em>, 5-18.</p>
 <p>Ganter B, Wille R (1999). <em>Formal concept analysis : mathematical foundations</em>. Springer. ISBN 3540627715.</p>
-<p>Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic: Elimination of Data Redundancy in Knowledge Representation.” <em>Advances in Artificial Intelligence - IBERAMIA 2002</em>, <em>2527</em>, 141-150. doi: 10.1007/3-540-36131-6_15 (URL: <a href="https://doi.org/10.1007/3-540-36131-6_15" class="uri">https://doi.org/10.1007/3-540-36131-6_15</a>).</p>
+<p>Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic: Elimination of Data Redundancy in Knowledge Representation.” <em>Advances in Artificial Intelligence - IBERAMIA 2002</em>, <em>2527</em>, 141-150. doi: 10.1007/3-540-36131-6_15 (URL: <a href="https://doi.org/10.1007/3-540-36131-6_15" class="external-link uri">https://doi.org/10.1007/3-540-36131-6_15</a>).</p>
 <p>Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In <em>Proc. Fourth Int. Conf. on Recent Advances in Soft Computing</em>. Nottingham, United Kingdom, 200-205.</p>
 <p>Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” <em>J Stat Softw</em>, <em>14</em>, 1-25.</p>
 <p>Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” <em>International Journal of Computer Mathematics</em>, <em>89</em>(4), 510-526.</p>
@@ -433,7 +428,7 @@ O6
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=fcaR">https://​cloud.r-project.org/​package=fcaR</a>
 </li>
@@ -443,51 +438,57 @@ O6
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Domingo Lopez Rodriguez <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0172-1585" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Angel Mora <br><small class="roles"> Author </small>  </li>
 <li>Jesus Dominguez <br><small class="roles"> Author </small>  </li>
 <li>Ana Villalon <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More on authors...</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
-<li><a href="https://cran.r-project.org/package=fcaR"><img src="https://www.r-pkg.org/badges/version/fcaR" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/neuroimaginador/fcaR"><img src="https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI" alt="codecov"></a></li>
-<li><a href="https://github.com/neuroimaginador/fcaR/actions"><img src="https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://cran.r-project.org/package=fcaR"><img src="https://cranlogs.r-pkg.org/badges/grand-total/fcaR" alt="Downloads"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://cran.r-project.org/package=fcaR" class="external-link"><img src="https://www.r-pkg.org/badges/version/fcaR" alt="CRAN status"></a></li>
+<li><a href="https://codecov.io/gh/neuroimaginador/fcaR" class="external-link"><img src="https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI" alt="codecov"></a></li>
+<li><a href="https://github.com/neuroimaginador/fcaR/actions" class="external-link"><img src="https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://cran.r-project.org/package=fcaR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/fcaR" alt="Downloads"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p></p>
+<p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -495,6 +496,8 @@ O6
 
   
 
+
+  
 
   </body>
 </html>
