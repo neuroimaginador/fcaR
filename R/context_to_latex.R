@@ -6,6 +6,10 @@ context_to_latex <- function(I,
               rep("c", length(attributes))) %>%
     stringr::str_flatten()
 
+  objects <- objects %>%
+    stringr::str_replace_all(pattern = stringr::fixed("["),
+                             replacement = "{}[")
+
   header <- c("", attributes) %>%
     stringr::str_flatten(" & ")
   header <- paste0(header, "\\\\")
