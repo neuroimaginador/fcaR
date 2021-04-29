@@ -12,6 +12,9 @@ S$assign(A = 1)
 print(S)
 S$to_latex()
 
+S <- Set$new(c("A", "B", "C"), C = 1, B = 0.5)
+S
+
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -34,7 +37,7 @@ S$to_latex()
 \subsection{Method \code{new()}}{
 Creator for objects of class \code{Set}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Set$new(attributes, M = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Set$new(attributes, M = NULL, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -43,11 +46,13 @@ Creator for objects of class \code{Set}
 \item{\code{attributes}}{(character vector) Names of the attributes that will be available in the fuzzy set.}
 
 \item{\code{M}}{(numeric vector or column \code{Matrix}) Values (grades) to be assigned to the attributes.}
+
+\item{\code{...}}{\code{key} = \code{value} pairs, where the value \code{value} is assigned to the \code{key} attribute name.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-If \code{M} is omitted, the fuzzy set is the empty set. Later, one can use the \code{assign} method to assign grades to any of its attributes.
+If \code{M} is omitted and no pair \code{key} = \code{value}, the fuzzy set is the empty set. Later, one can use the \code{assign} method to assign grades to any of its attributes.
 }
 
 \subsection{Returns}{

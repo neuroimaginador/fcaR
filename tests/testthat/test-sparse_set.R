@@ -7,13 +7,13 @@ test_that("fcaR operates on sparse sets", {
 
   expect_error(print(A), NA)
 
-  expect_error(C <- .difference2(A, B), NA)
-  expect_error(C <- .difference2(B, B), NA)
-  expect_error(C <- .difference2(B, A), NA)
+  expect_error(.difference2(A, B), NA)
+  expect_error(.difference2(B, B), NA)
+  expect_error(.difference2(B, A), NA)
 
-  expect_error(C <- .union(A, B), NA)
-  expect_error(C <- .union(B, B), NA)
-  expect_error(C <- .union(B, A), NA)
+  expect_error(.union(A, B), NA)
+  expect_error(.union(B, B), NA)
+  expect_error(.union(B, A), NA)
 
 })
 
@@ -22,13 +22,13 @@ test_that("fcaR operates on sparse sets II", {
   A <- Matrix::Matrix(c(FALSE, TRUE, FALSE), nrow = 3, ncol = 1)
   B <- matrix(1, nrow = 3, ncol = 5)
 
-  expect_error(C <- .difference2(A, B), NA)
-  expect_error(C <- .difference2(B, B), NA)
-  expect_error(C <- .difference2(B, A), NA)
+  expect_error(.difference2(A, B), NA)
+  expect_error(.difference2(B, B), NA)
+  expect_error(.difference2(B, A), NA)
 
-  expect_error(C <- .union(A, B), NA)
-  expect_error(C <- .union(B, B), NA)
-  expect_error(C <- .union(B, A), NA)
+  expect_error(.union(A, B), NA)
+  expect_error(.union(B, B), NA)
+  expect_error(.union(B, A), NA)
 
 })
 
@@ -51,7 +51,8 @@ test_that("fcaR uses class Set", {
 
   expect_output(A$print())
 
-  expect_is(A$to_latex(), "character")
+  expect_is(A$to_latex(FALSE), "character")
+  expect_is(capture_output(A$to_latex(TRUE)), "character")
 
   expect_true(A %<=% A)
 

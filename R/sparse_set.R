@@ -10,6 +10,9 @@
 #' print(S)
 #' S$to_latex()
 #'
+#' S <- Set$new(c("A", "B", "C"), C = 1, B = 0.5)
+#' S
+#'
 #' @export
 Set <- R6::R6Class(
 
@@ -21,14 +24,15 @@ Set <- R6::R6Class(
     #' Creator for objects of class \code{Set}
     #'
     #' @param attributes  (character vector) Names of the attributes that will be available in the fuzzy set.
+    #' @param ... \code{key} = \code{value} pairs, where the value \code{value} is assigned to the \code{key} attribute name.
     #' @param M           (numeric vector or column \code{Matrix}) Values (grades) to be assigned to the attributes.
     #'
     #' @details
-    #' If \code{M} is omitted, the fuzzy set is the empty set. Later, one can use the \code{assign} method to assign grades to any of its attributes.
+    #' If \code{M} is omitted and no pair \code{key} = \code{value}, the fuzzy set is the empty set. Later, one can use the \code{assign} method to assign grades to any of its attributes.
     #'
     #' @return An object of class \code{Set}.
     #' @export
-    initialize = function(attributes, M = NULL) {
+    initialize = function(attributes, M = NULL, ...) {
 
       private$attributes <- attributes
 
@@ -42,6 +46,13 @@ Set <- R6::R6Class(
                                     nrow = length(attributes),
                                     ncol = 1,
                                     sparse = TRUE)
+
+      }
+
+      dots <- list(...)
+      if (length(dots) > 0) {
+
+        do.call(self$assign, dots)
 
       }
 
