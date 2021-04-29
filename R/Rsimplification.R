@@ -12,7 +12,9 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
   # This gives the union of LHS and RHS
 
-  LRHS_subsets[, id_inter] <- Matrix::t(.subset(LHS[, id_inter], .union(LHS,RHS)))
+  LRHS_subsets[, id_inter] <- Matrix::t(.subset(Matrix::Matrix(LHS[, id_inter],
+                                                               sparse = TRUE),
+                                                .union(LHS,RHS)))
 
   # This gives the LRHS that are subsets of other LHS
   col_values <- Matrix::colSums(LRHS_subsets)
@@ -113,7 +115,9 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
     intersections[my_idx] <- .self_intersection(C, newRHS)
     id_inter <- Matrix::which(intersections == 0)
 
-    LRHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(LHS[, id_inter], .union(C, newRHS)))
+    LRHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(Matrix::Matrix(LHS[, id_inter],
+                                                                       sparse = TRUE),
+                                                        .union(C, newRHS)))
     col_values <- Matrix::colSums(LRHS_subsets)
     condition1 <- col_values > 1
 

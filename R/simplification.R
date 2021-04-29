@@ -10,7 +10,9 @@
 
   id_inter <- Matrix::which(intersections == 0)
 
-  LHS_subsets[, id_inter] <- Matrix::t(.subset(LHS[, id_inter], LHS))
+  LHS_subsets[, id_inter] <- Matrix::t(.subset(Matrix::Matrix(LHS[, id_inter],
+                                                              sparse = TRUE),
+                                               LHS))
 
   # This gives the LHS that are subsets of other LHS
   col_values <- Matrix::colSums(LHS_subsets)
@@ -67,7 +69,9 @@
     intersections[my_idx] <- .self_intersection(newLHS, newRHS)
     id_inter <- which(intersections == 0)
 
-    LHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(LHS[, id_inter], newLHS))
+    LHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(Matrix::Matrix(LHS[, id_inter],
+                                                                      sparse = TRUE),
+                                                       newLHS))
     col_values <- Matrix::colSums(LHS_subsets)
     condition1 <- col_values > 1
 
