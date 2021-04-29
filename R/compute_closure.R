@@ -176,6 +176,11 @@
 
   }
 
+  L <- .generalization(LHS, RHS)
+  L <- .composition(L$lhs, L$rhs)
+  LHS <- L$lhs
+  RHS <- L$rhs
+
   return(list(lhs = LHS, rhs = RHS, idx_removed = idx_removed))
 
 }
