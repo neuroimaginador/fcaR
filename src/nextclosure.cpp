@@ -336,8 +336,8 @@ List next_closure_implications(NumericMatrix I,
     if (verbose) {
 
       Rcout << "Added initial implication to basis" << std::endl << std::endl << std::endl;
-      printVector(A, attrs);
-      Rcout << std::endl << std::endl;
+      // printVector(A, attrs);
+      // Rcout << std::endl << std::endl;
       // printImpl(empty, A, attrs);
 
       n_imp++;
@@ -423,8 +423,8 @@ List next_closure_implications(NumericMatrix I,
         if (verbose) {
 
           Rprintf("Added concept:\n");
-          printVector(A, attrs);
-          Rprintf("\n");
+          // printVector(A, attrs);
+          // Rprintf("\n");
 
         }
 
@@ -437,8 +437,8 @@ List next_closure_implications(NumericMatrix I,
 
       if (verbose) {
 
-        Rcout << "Added implication " << n_imp++ << " to basis" << std::endl;
-        printImpl(A, rhs, attrs);
+        // Rcout << "Added implication " << n_imp++ << " to basis" << std::endl;
+        // printImpl(A, rhs, attrs);
 
       }
 
