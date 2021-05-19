@@ -166,7 +166,7 @@
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creator for objects of class <code>Set</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>attributes</span>, M <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>attributes</span>, M <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -174,9 +174,11 @@
 
 <dt><code>M</code></dt><dd><p>(numeric vector or column <code>Matrix</code>) Values (grades) to be assigned to the attributes.</p></dd>
 
+<dt><code>...</code></dt><dd><p><code>key</code> = <code>value</code> pairs, where the value <code>value</code> is assigned to the <code>key</code> attribute name.</p></dd>
+
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
-<p>If <code>M</code> is omitted, the fuzzy set is the empty set. Later, one can use the <code>assign</code> method to assign grades to any of its attributes.</p>
+<p>If <code>M</code> is omitted and no pair <code>key</code> = <code>value</code>, the fuzzy set is the empty set. Later, one can use the <code>assign</code> method to assign grades to any of its attributes.</p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>An object of class <code>Set</code>.</p>
@@ -278,6 +280,9 @@ as the sum of the degrees of each element.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>S</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; {A}</div><div class='input'><span class='va'>S</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; \ensuremath{\left\{\mathrm{A}\right\}}</div><div class='input'>
+<span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>, C <span class='op'>=</span> <span class='fl'>1</span>, B <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+<span class='va'>S</span>
+</div><div class='output co'>#&gt; {B [0.5], C}</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

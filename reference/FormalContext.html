@@ -456,14 +456,17 @@ extracted from the application of scales.</p>
 <p>A <code>transactions</code> object.</p>
 <p><hr>
 <a id="method-save"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code></h3>
-<p>Save a <code>FormalContext</code> to RDS format</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Save a <code>FormalContext</code> to RDS or CXT format</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>save</span><span class='op'>(</span>filename <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>".rds"</span><span class='op'>)</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>filename</code></dt><dd><p>(character) Path of the RDS file where to store the <code>FormalContext</code>.</p></dd>
+<dt><code>filename</code></dt><dd><p>(character) Path of the  file where to store the <code>FormalContext</code>.</p></dd>
 
 </dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<p>The format is inferred from the extension of the filename.</p>
+
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Invisibly the current <code>FormalContext</code>.</p>
 <p><hr>

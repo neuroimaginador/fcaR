@@ -371,13 +371,23 @@ or <code>initialize(rules)</code></p>
 <p><hr>
 <a id="method-filter"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/stats/filter.html'>filter()</a></code></h3>
 <p>Filter implications by attributes in LHS and RHS</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>filter</span><span class='op'>(</span>lhs <span class='op'>=</span> <span class='cn'>NULL</span>, rhs <span class='op'>=</span> <span class='cn'>NULL</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>ImplicationSet</span><span class='op'>$</span><span class='fu'>filter</span><span class='op'>(</span>
+  lhs <span class='op'>=</span> <span class='cn'>NULL</span>,
+  not_lhs <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rhs <span class='op'>=</span> <span class='cn'>NULL</span>,
+  not_rhs <span class='op'>=</span> <span class='cn'>NULL</span>,
+  drop <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>lhs</code></dt><dd><p>(character vector) Names of the attributes to filter the LHS by. If <code>NULL</code>, no filtering is done on the LHS.</p></dd>
 
+<dt><code>not_lhs</code></dt><dd><p>(character vector) Names of the attributes to not include in the LHS. If <code>NULL</code> (the default), it is not considered at all.</p></dd>
+
 <dt><code>rhs</code></dt><dd><p>(character vector) Names of the attributes to filter the RHS by. If <code>NULL</code>, no filtering is done on the RHS.</p></dd>
+
+<dt><code>not_rhs</code></dt><dd><p>(character vector) Names of the attributes to not include in the RHS. If <code>NULL</code> (the default), it is not considered at all.</p></dd>
 
 <dt><code>drop</code></dt><dd><p>(logical) Remove the rest of attributes in RHS?</p></dd>
 
@@ -432,7 +442,7 @@ or <code>initialize(rules)</code></p>
 #&gt; 2.5 2.3 </div><div class='input'>
 <span class='co'># Simplify the implication set</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>apply_rules</span><span class='op'>(</span><span class='st'>"simplification"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.044 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.046 secs. </span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Processing batch</span></div><div class='output co'>#&gt; <span class='message'>--&gt; Simplification: from 10 to 10 in 0.041 secs.</span></div><div class='output co'>#&gt; <span class='message'>Batch took 0.042 secs. </span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
