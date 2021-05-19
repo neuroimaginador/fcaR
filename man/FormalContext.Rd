@@ -544,7 +544,7 @@ A \code{transactions} object.
 \if{html}{\out{<a id="method-save"></a>}}
 \if{latex}{\out{\hypertarget{method-save}{}}}
 \subsection{Method \code{save()}}{
-Save a \code{FormalContext} to RDS format
+Save a \code{FormalContext} to RDS or CXT format
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$save(filename = tempfile(fileext = ".rds"))}\if{html}{\out{</div>}}
 }
@@ -552,10 +552,14 @@ Save a \code{FormalContext} to RDS format
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{filename}}{(character) Path of the RDS file where to store the \code{FormalContext}.}
+\item{\code{filename}}{(character) Path of the  file where to store the \code{FormalContext}.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Details}{
+The format is inferred from the extension of the filename.
+}
+
 \subsection{Returns}{
 Invisibly the current \code{FormalContext}.
 }

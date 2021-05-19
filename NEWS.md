@@ -9,6 +9,7 @@ New functionality:
 * Added function to compute the __difference__ of two Sets.
 * Added function to compute the __dual__ of a FormalContext.
 * Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to "load()" it.
+* FormalContexts can now be saved to CXT formart, in addition to RDS.
 * Added functions %holds_in% and %respects%, which check the __validity__ of a set of implications in a formal context, and if a list of attribute sets respect an implication set.
 * Added functions %entails% and %~% to check the __entailment__ and __equivalence__ between two implication sets.
 * Added new convenience function to map attributes between Sets, so computing intents, extents and closures is more robust.

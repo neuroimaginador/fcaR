@@ -1058,16 +1058,40 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
-    #' Save a \code{FormalContext} to RDS format
+    #' Save a \code{FormalContext} to RDS or CXT format
     #'
-    #' @param filename   (character) Path of the RDS file where to store the \code{FormalContext}.
+    #' @param filename   (character) Path of the  file where to store the \code{FormalContext}.
     #'
     #' @return Invisibly the current \code{FormalContext}.
+    #'
+    #' @details The format is inferred from the extension of the filename.
     #'
     #' @export
     save = function(filename = tempfile(fileext = ".rds")) {
 
       private$check_empty()
+
+      pattern <- "(?<!^|[.]|/)[.]([^.]+)$"
+
+      extension <- filename %>%
+        stringr::str_extract_all(pattern) %>%
+        unlist() %>%
+        tolower()
+
+      if (extension == ".cxt") {
+
+        if (!private$is_many_valued) {
+
+          to_cxt(I = self$incidence(),
+                 objects = self$objects,
+                 attributes = self$attributes,
+                 filename)
+
+        }
+
+        return(invisible(self))
+
+      }
 
       if (!self$concepts$is_empty()) {
 
