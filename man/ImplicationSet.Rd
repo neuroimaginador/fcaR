@@ -370,7 +370,13 @@ A sparse matrix representing the RHS of the implications in the set.
 \subsection{Method \code{filter()}}{
 Filter implications by attributes in LHS and RHS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$filter(lhs = NULL, rhs = NULL, drop = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$filter(
+  lhs = NULL,
+  not_lhs = NULL,
+  rhs = NULL,
+  not_rhs = NULL,
+  drop = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -378,7 +384,11 @@ Filter implications by attributes in LHS and RHS
 \describe{
 \item{\code{lhs}}{(character vector) Names of the attributes to filter the LHS by. If \code{NULL}, no filtering is done on the LHS.}
 
+\item{\code{not_lhs}}{(character vector) Names of the attributes to not include in the LHS. If \code{NULL} (the default), it is not considered at all.}
+
 \item{\code{rhs}}{(character vector) Names of the attributes to filter the RHS by. If \code{NULL}, no filtering is done on the RHS.}
+
+\item{\code{not_rhs}}{(character vector) Names of the attributes to not include in the RHS. If \code{NULL} (the default), it is not considered at all.}
 
 \item{\code{drop}}{(logical) Remove the rest of attributes in RHS?}
 }

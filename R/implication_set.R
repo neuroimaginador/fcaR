@@ -592,14 +592,18 @@ ImplicationSet <- R6::R6Class(
     #' Filter implications by attributes in LHS and RHS
     #'
     #' @param lhs  (character vector) Names of the attributes to filter the LHS by. If \code{NULL}, no filtering is done on the LHS.
+    #' @param not_lhs  (character vector) Names of the attributes to not include in the LHS. If \code{NULL} (the default), it is not considered at all.
     #' @param rhs  (character vector) Names of the attributes to filter the RHS by. If \code{NULL}, no filtering is done on the RHS.
+    #' @param not_rhs  (character vector) Names of the attributes to not include in the RHS. If \code{NULL} (the default), it is not considered at all.
     #' @param drop  (logical) Remove the rest of attributes in RHS?
     #'
     #' @return An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
     #'
     #' @export
     filter = function(lhs = NULL,
+                      not_lhs = NULL,
                       rhs = NULL,
+                      not_rhs = NULL,
                       drop = FALSE) {
 
       RHS <- private$rhs_matrix
@@ -630,6 +634,33 @@ ImplicationSet <- R6::R6Class(
 
       }
 
+      if (!is.null(not_lhs)) {
+
+        # Filter the implications which
+        # does not have the given not_lhs
+        idx_attr <- match(not_lhs,
+                          private$attributes)
+
+        if (length(idx_attr) > 1) {
+
+          idx_not_lhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
+
+        } else {
+
+          idx_not_lhs <- which(LHS[idx_attr, ] > 0)
+
+        }
+
+      } else {
+
+        # If not specified a filter for LHS,
+        # select none.
+        idx_not_lhs <- c()
+
+      }
+
+      idx_lhs <- setdiff(idx_lhs, idx_not_lhs)
+
       if (!is.null(rhs)) {
 
         # Filter the implications which have
@@ -654,6 +685,33 @@ ImplicationSet <- R6::R6Class(
         idx_rhs <- seq(ncol(RHS))
 
       }
+
+      if (!is.null(not_rhs)) {
+
+        # Filter the implications which
+        # does not have the given not_lhs
+        idx_attr <- match(not_rhs,
+                          private$attributes)
+
+        if (length(idx_attr) > 1) {
+
+          idx_not_rhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
+
+        } else {
+
+          idx_not_rhs <- which(LHS[idx_attr, ] > 0)
+
+        }
+
+      } else {
+
+        # If not specified a filter for LHS,
+        # select none.
+        idx_not_rhs <- c()
+
+      }
+
+      idx_rhs <- setdiff(idx_rhs, idx_not_rhs)
 
       idx <- intersect(idx_lhs, idx_rhs)
 
