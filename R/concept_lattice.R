@@ -49,7 +49,7 @@ ConceptLattice <- R6::R6Class(
       private$pr_extents <- extents
       private$pr_intents <- intents
 
-      if (!capabilities()["long.double"]) {
+      if (!capabilities()["long.double"] & getRversion() < "4.1.0") {
 
         private$can_plot <- FALSE
 

@@ -109,7 +109,9 @@ FormalContext <- R6::R6Class(
 
       }
 
-      if (!capabilities()["long.double"]) {
+      version
+
+      if (!capabilities()["long.double"] & getRversion() < "4.1.0") {
 
         private$can_plot <- FALSE
 
