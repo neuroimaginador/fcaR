@@ -203,10 +203,11 @@ Set <- R6::R6Class(
                                              attributes = private$attributes),
                               width = getOption("width"),
                               exdent = 2))
+        cat("\n")
 
       } else {
 
-        cat("{}")
+        cat("{}\n")
 
       }
 

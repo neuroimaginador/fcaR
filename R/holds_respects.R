@@ -41,12 +41,12 @@
 }
 
 
-#' Check if SparseSet or FormalContext respects an ImplicationSet
+#' Check if Set or FormalContext respects an ImplicationSet
 #'
 #' @param set    (list of \code{Set}s, or a \code{FormalContext}) The sets of attributes to check whether they respect the \code{ImplicationSet}.
 #' @param imps  (\code{ImplicationSet}) The set of implications to check.
 #'
-#' @return A logical matrix with as many rows as \code{Set}s and as many columns as implications in the \code{ImplicationSet}. A \code{TRUE} in element (i, j) of the result means that the i-th \code{SparseSet} respects the j-th implication of the \code{ImplicationSet}.
+#' @return A logical matrix with as many rows as \code{Set}s and as many columns as implications in the \code{ImplicationSet}. A \code{TRUE} in element (i, j) of the result means that the i-th \code{Set} respects the j-th implication of the \code{ImplicationSet}.
 #'
 #' @export
 #'
