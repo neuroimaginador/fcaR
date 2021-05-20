@@ -259,8 +259,8 @@ void cloneVector(SparseVector *a, SparseVector b) {
     // std::copy(&b.i.array[0], &b.i.array[b.i.used], a->i.array);
     // std::copy(&b.x.array[0], &b.x.array[b.i.used], a->x.array);
 
-       memcpy(a->i.array, b.i.array, b.i.used * sizeof(int));
-       memcpy(a->x.array, b.x.array, b.i.used * sizeof(double));
+    memcpy(a->i.array, b.i.array, b.i.used * sizeof(int));
+    memcpy(a->x.array, b.x.array, b.i.used * sizeof(double));
 
   }
 
@@ -421,12 +421,12 @@ S4 SparseToS4_fast(SparseVector V) {
 }
 
 SparseVector set_difference_sparse(IntegerVector xi,
-                            IntegerVector xp,
-                            NumericVector xx,
-                            IntegerVector yi,
-                            IntegerVector yp,
-                            NumericVector yx,
-                            int number) {
+                                   IntegerVector xp,
+                                   NumericVector xx,
+                                   IntegerVector yi,
+                                   IntegerVector yp,
+                                   NumericVector yx,
+                                   int number) {
 
   SparseVector res;
   initVector(&res, number);
@@ -511,8 +511,8 @@ S4 set_difference(IntegerVector xi,
                   int number) {
 
   SparseVector res = set_difference_sparse(xi, xp, xx,
-                                    yi, yp, yx,
-                                    number);
+                                           yi, yp, yx,
+                                           number);
 
   S4 res2 = SparseToS4_fast(res);
 
@@ -523,12 +523,12 @@ S4 set_difference(IntegerVector xi,
 }
 
 SparseVector set_difference_sparse1(IntegerVector xi,
-                                   IntegerVector xp,
-                                   NumericVector xx,
-                                   IntegerVector yi,
-                                   IntegerVector yp,
-                                   NumericVector yx,
-                                   int number) {
+                                    IntegerVector xp,
+                                    NumericVector xx,
+                                    IntegerVector yi,
+                                    IntegerVector yp,
+                                    NumericVector yx,
+                                    int number) {
 
   SparseVector res;
   initVector(&res, number);
@@ -551,21 +551,21 @@ SparseVector set_difference_sparse1(IntegerVector xi,
 
       bool add = true;
 
-      for (size_t j = init_y; j < end_y; j++) {
+      size_t j = init_y;
 
-        if (xi[i] == yi[j]) {
+      while ((j < end_y) && (yi[j] < xi[i])) {
 
-          if (yx[j] >= xx[i]) {
+        j++;
 
-            add = false;
-            break;
+      }
 
-          }
+      if (yi[j] == xi[i]) {
 
-          if (yi[j] > xi[i]) break;
+        if (yx[j] >= xx[j]) {
+
+          add = false;
 
         }
-
       }
 
       if (add) {
@@ -591,16 +591,16 @@ SparseVector set_difference_sparse1(IntegerVector xi,
 
 // [[Rcpp::export]]
 S4 set_difference_single(IntegerVector xi,
-                  IntegerVector xp,
-                  NumericVector xx,
-                  IntegerVector yi,
-                  IntegerVector yp,
-                  NumericVector yx,
-                  int number) {
+                         IntegerVector xp,
+                         NumericVector xx,
+                         IntegerVector yi,
+                         IntegerVector yp,
+                         NumericVector yx,
+                         int number) {
 
   SparseVector res = set_difference_sparse1(xi, xp, xx,
-                                           yi, yp, yx,
-                                           number);
+                                            yi, yp, yx,
+                                            number);
 
   S4 res2 = SparseToS4_fast(res);
 
