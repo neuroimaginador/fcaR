@@ -441,7 +441,6 @@ SparseVector set_difference_sparse(IntegerVector xi,
 
     // Rcout << "Added column with " << my_p << std::endl;
 
-
     int init_x = xp[p], end_x = xp[p + 1];
     int init_y = yp[p], end_y = yp[p + 1];
 
@@ -449,22 +448,35 @@ SparseVector set_difference_sparse(IntegerVector xi,
 
       bool add = true;
 
-      for (size_t j = init_y; j < end_y; j++) {
+      size_t j = init_y;
 
-        if (xi[i] == yi[j]) {
+      while ((j < end_y) && (yi[j] < xi[i])) {
 
-          if (yx[j] >= xx[i]) {
-
-            add = false;
-            break;
-
-          }
-
-          if (yi[j] > xi[i]) break;
-
-        }
+        j++;
 
       }
+
+      if (yi[j] == xi[i]) {
+
+        if (yx[j] >= xx[j]) {
+
+          add = false;
+
+        }
+      }
+
+      // for (size_t j = init_y; j < end_y; j++) {
+      //
+      //   if (yi[j] > xi[i]) break;
+      //
+      //   if (xi[i] == yi[j]) {
+      //
+      //       add = false;
+      //       break;
+      //
+      //   }
+      //
+      // }
 
       if (add) {
 
@@ -474,6 +486,8 @@ SparseVector set_difference_sparse(IntegerVector xi,
 
         insertArray(&(res.i), xi[i]);
         insertArray(&(res.x), xx[i]);
+
+        // Rcout << xi[i] << std::endl;
 
       }
 
