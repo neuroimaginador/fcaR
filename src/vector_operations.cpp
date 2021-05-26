@@ -458,7 +458,7 @@ SparseVector set_difference_sparse(IntegerVector xi,
 
       if (yi[j] == xi[i]) {
 
-        if (yx[j] >= xx[j]) {
+        if (yx[j] >= xx[i]) {
 
           add = false;
 
@@ -561,7 +561,7 @@ SparseVector set_difference_sparse1(IntegerVector xi,
 
       if (yi[j] == xi[i]) {
 
-        if (yx[j] >= xx[j]) {
+        if (yx[j] >= xx[i]) {
 
           add = false;
 
