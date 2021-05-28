@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release', bioc: '3.14'}
+          - {os: macOS-latest,   r: 'release', bioc: '3.13'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -68,7 +68,7 @@ jobs:
 
       - name: Set BiocVersion
         run: |
-          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE, force = FALSE)
+          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE, force = FALSE, repos = BiocManager::repositories())
         shell: Rscript {0}
 
       - name: Install dependencies
