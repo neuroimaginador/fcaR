@@ -448,35 +448,39 @@ SparseVector set_difference_sparse(IntegerVector xi,
 
       bool add = true;
 
-      size_t j = init_y;
-
-      while ((j < end_y) && (yi[j] < xi[i])) {
-
-        j++;
-
-      }
-
-      if (yi[j] == xi[i]) {
-
-        if (yx[j] >= xx[i]) {
-
-          add = false;
-
-        }
-      }
-
-      // for (size_t j = init_y; j < end_y; j++) {
+      // size_t j = init_y;
       //
-      //   if (yi[j] > xi[i]) break;
+      // while ((j < end_y) && (yi[j] < xi[i])) {
       //
-      //   if (xi[i] == yi[j]) {
-      //
-      //       add = false;
-      //       break;
-      //
-      //   }
+      //   j++;
       //
       // }
+      //
+      // if (yi[j] == xi[i]) {
+      //
+      //   if (yx[j] >= xx[i]) {
+      //
+      //     add = false;
+      //
+      //   }
+      // }
+
+      for (size_t j = init_y; j < end_y; j++) {
+
+        if (yi[j] > xi[i]) break;
+
+        if (xi[i] == yi[j]) {
+
+          if (yx[j] >= xx[i]) {
+
+            add = false;
+            break;
+
+          }
+
+        }
+
+      }
 
       if (add) {
 
@@ -551,21 +555,38 @@ SparseVector set_difference_sparse1(IntegerVector xi,
 
       bool add = true;
 
-      size_t j = init_y;
+      // size_t j = init_y;
+      //
+      // while ((j < end_y) && (yi[j] < xi[i])) {
+      //
+      //   j++;
+      //
+      // }
+      //
+      // if (yi[j] == xi[i]) {
+      //
+      //   if (yx[j] >= xx[i]) {
+      //
+      //     add = false;
+      //
+      //   }
+      // }
 
-      while ((j < end_y) && (yi[j] < xi[i])) {
+      for (size_t j = init_y; j < end_y; j++) {
 
-        j++;
+        if (yi[j] > xi[i]) break;
 
-      }
+        if (xi[i] == yi[j]) {
 
-      if (yi[j] == xi[i]) {
+          if (yx[j] >= xx[i]) {
 
-        if (yx[j] >= xx[i]) {
+            add = false;
+            break;
 
-          add = false;
+          }
 
         }
+
       }
 
       if (add) {
