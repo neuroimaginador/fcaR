@@ -1,85 +1,123 @@
-.simplification_bg <- function(lhs_bg, rhs_bg, lhs, rhs) {
+.simplification_bg <- function(LHS, RHS, fixed = 0) {
 
-  intersections <- .self_intersection(lhs_bg, rhs_bg)
+
+  LHS <- methods::as(LHS, "dgCMatrix")
+  RHS <- methods::as(RHS, "dgCMatrix")
+
+  LHS_subsets <- Matrix::Matrix(FALSE, sparse = TRUE,
+                                ncol = ncol(LHS),
+                                nrow = ncol(LHS))
+  intersections <- .self_intersection(LHS, RHS)
 
   id_inter <- Matrix::which(intersections == 0)
 
-  if (length(id_inter) > 0) {
+  LHS_subsets[, id_inter] <- Matrix::t(.subset(Matrix::Matrix(LHS[, id_inter],
+                                                              sparse = TRUE),
+                                               LHS))
 
-    lhs_bg <- Matrix::Matrix(lhs_bg[, id_inter], sparse = TRUE)
-    rhs_bg <- Matrix::Matrix(rhs_bg[, id_inter], sparse = TRUE)
+  # This gives the LHS that are subsets of other LHS
+  col_values <- Matrix::colSums(LHS_subsets)
+  condition1 <- col_values > 1
 
-    LHS_subsets <- Matrix::t(.subset(lhs_bg, lhs))
-    # This gives the lhs_bg that are subsets of LHS
-    col_values <- Matrix::colSums(LHS_subsets)
-    are_subset <- which(col_values > 0)
-    black_list <- rep(FALSE, ncol(lhs_bg))
+  # This gives those LHS which are disjoint to their RHS
+  condition2 <- intersections == 0
 
-    count <- 0
+  black_list <- rep(FALSE, ncol(LHS))
 
-    while (length(are_subset) > 0) {
+  are_subset <- Matrix::which(condition1 & condition2)
 
-      count <- count + 1
+  are_subset <- intersect(are_subset, seq(fixed))
 
-      id1 <- which.max(col_values[are_subset])
-      this_row <- are_subset[id1]
+  count <- 0
 
-      my_idx <- which_at_col(LHS_subsets@i,
-                             LHS_subsets@p,
-                             this_row)
+  while (length(are_subset) > 0) {
 
-      # this_row is subset of all my_idx
-      # So, we must do C-B -> D-B in every my_idx rule.
+    count <- count + 1
 
-      if (length(my_idx) > 1) {
+    id1 <- which.max(col_values[are_subset])
+    this_row <- are_subset[id1]
 
-        C <- lhs[, my_idx]
-        D <- rhs[, my_idx]
+    my_idx <- which_at_col(LHS_subsets@i,
+                           LHS_subsets@p,
+                           this_row)
 
-      } else {
-
-        C <- Matrix::Matrix(lhs[, my_idx], sparse = TRUE)
-        D <- Matrix::Matrix(rhs[, my_idx], sparse = TRUE)
-
-      }
-      B <- Matrix::Matrix(rhs_bg[, this_row], sparse = TRUE)
-      newLHS <- set_difference_single(C@i, C@p, C@x,
-                                      B@i, B@p, B@x,
-                                      nrow(C))
-      newRHS <- set_difference_single(D@i, D@p, D@x,
-                                      B@i, B@p, B@x,
-                                      nrow(D))
-
-      lhs[, my_idx] <- newLHS
-      rhs[, my_idx] <- newRHS
+    # this_row <- id_inter[this_row]
+    my_idx <- setdiff(my_idx, this_row)
+    if (fixed > 0)
+      my_idx <- setdiff(my_idx, seq(fixed))
 
 
-      LHS_subsets[my_idx, ] <- Matrix::t(.subset(lhs_bg, newLHS))
-      col_values <- Matrix::colSums(LHS_subsets)
-      condition1 <- col_values > 0
+    if (length(my_idx) == 0) {
 
       black_list[this_row] <- TRUE
-      are_subset <- Matrix::which(condition1 & (!black_list))
+      are_subset <- Matrix::which(condition1 & condition2 & (!black_list))
+      are_subset <- intersect(are_subset, seq(fixed))
+
+
+      next
 
     }
 
-    # browser()
+    # this_row is subset of all my_idx
+    # So, we must do C-B -> D-B in every my_idx rule.
 
-    # Cleaning phase
-    idx_to_remove <- Matrix::which(Matrix::colSums(rhs) == 0)
+    if (length(my_idx) > 1) {
 
-    if (length(idx_to_remove) > 0) {
+      C <- LHS[, my_idx]
+      D <- RHS[, my_idx]
 
-      lhs <- lhs[, -idx_to_remove]
-      rhs <- rhs[, -idx_to_remove]
+    } else {
+
+      C <- Matrix::Matrix(LHS[, my_idx], sparse = TRUE)
+      D <- Matrix::Matrix(RHS[, my_idx], sparse = TRUE)
 
     }
+    B <- Matrix::Matrix(RHS[, this_row], sparse = TRUE)
+    newLHS <- set_difference_single(C@i, C@p, C@x,
+                                    B@i, B@p, B@x,
+                                    nrow(C))
+    newRHS <- set_difference_single(D@i, D@p, D@x,
+                                    B@i, B@p, B@x,
+                                    nrow(D))
+
+    LHS[, my_idx] <- newLHS
+    RHS[, my_idx] <- newRHS
+
+    intersections[my_idx] <- .self_intersection(newLHS, newRHS)
+    id_inter <- which(intersections == 0)
+
+    LHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(Matrix::Matrix(LHS[, id_inter],
+                                                                      sparse = TRUE),
+                                                       newLHS))
+    col_values <- Matrix::colSums(LHS_subsets)
+    condition1 <- col_values > 1
+
+    condition2 <- (intersections == 0) & (Matrix::colSums(RHS) > 0)
+
+    black_list[this_row] <- TRUE
+    are_subset <- Matrix::which(condition1 & condition2 & (!black_list))
+
+    are_subset <- intersect(are_subset, seq(fixed))
 
   }
 
-  return(list(lhs = lhs, rhs = rhs))
+  # Cleaning phase
+  idx_to_remove <- Matrix::which(Matrix::colSums(RHS) == 0)
 
-  # return(ImplicationSet$new(attributes = imps$get_attributes(),
-  #                           lhs = lhs, rhs = rhs))
+  if (length(idx_to_remove) > 0) {
+
+    LHS <- LHS[, -idx_to_remove]
+    RHS <- RHS[, -idx_to_remove]
+
+  }
+
+  if (fixed > 0) {
+
+    LHS <- LHS[, -seq(fixed)]
+    RHS <- RHS[, -seq(fixed)]
+
+  }
+
+  return(list(lhs = LHS, rhs = RHS))
 
 }
