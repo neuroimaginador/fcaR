@@ -74,7 +74,7 @@ jobs:
       - name: Install dependencies
         run: |
           #remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown", type = "binary")
+          install.packages("pkgdown", type = "binary", dependencies = TRUE)
           ## Try installing the package dependencies in steps. First the local
           ## dependencies, then any remaining dependencies to avoid the
           ## issues described at
