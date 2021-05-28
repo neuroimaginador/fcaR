@@ -427,42 +427,18 @@
 
 <span class='co'># Find join- and meet- irreducible elements</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>join_irreducibles</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ({Jupiter, Saturn}
-#&gt; , {large, far, moon}
-#&gt; )
-#&gt; ({Uranus, Neptune}
-#&gt; , {medium, far, moon}
-#&gt; )
-#&gt; ({Pluto}
-#&gt; , {small, far, moon}
-#&gt; )
-#&gt; ({Mercury, Venus}
-#&gt; , {small, near, no_moon}
-#&gt; )
-#&gt; ({Earth, Mars}
-#&gt; , {small, near, moon}
-#&gt; )</div><div class='input'><span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>meet_irreducibles</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}
-#&gt; , {moon}
-#&gt; )
-#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}
-#&gt; , {far, moon}
-#&gt; )
-#&gt; ({Jupiter, Saturn}
-#&gt; , {large, far, moon}
-#&gt; )
-#&gt; ({Uranus, Neptune}
-#&gt; , {medium, far, moon}
-#&gt; )
-#&gt; ({Mercury, Venus, Earth, Mars, Pluto}
-#&gt; , {small}
-#&gt; )
-#&gt; ({Mercury, Venus, Earth, Mars}
-#&gt; , {small, near}
-#&gt; )
-#&gt; ({Mercury, Venus}
-#&gt; , {small, near, no_moon}
-#&gt; )</div><div class='input'>
+</div><div class='output co'>#&gt; ({Jupiter, Saturn}, {large, far, moon})
+#&gt; ({Uranus, Neptune}, {medium, far, moon})
+#&gt; ({Pluto}, {small, far, moon})
+#&gt; ({Mercury, Venus}, {small, near, no_moon})
+#&gt; ({Earth, Mars}, {small, near, moon})</div><div class='input'><span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>meet_irreducibles</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})
+#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})
+#&gt; ({Jupiter, Saturn}, {large, far, moon})
+#&gt; ({Uranus, Neptune}, {medium, far, moon})
+#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})
+#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})
+#&gt; ({Mercury, Venus}, {small, near, no_moon})</div><div class='input'>
 <span class='co'># Get concept support</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333

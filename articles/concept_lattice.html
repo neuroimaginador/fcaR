@@ -870,12 +870,8 @@ O6
 <p>For a <code>ConceptLattice</code>, one may want to retrieve particular concepts, using a subsetting as in <code>R</code>:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
-<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
-<span class="co">#&gt; , {moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
-<span class="co">#&gt; , {far, moon}</span>
-<span class="co">#&gt; )</span></code></pre></div>
+<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></code></pre></div>
 <p>Or get all the extents and all the intents of all concepts, as sparse matrices:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">extents</span><span class="op">(</span><span class="op">)</span>
@@ -929,56 +925,32 @@ O6
 <code class="sourceCode R"><span class="co"># The fifth concept</span>
 <span class="va">C</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="va">C</span>
-<span class="co">#&gt; ({Uranus, Neptune}</span>
-<span class="co">#&gt; , {medium, far, moon}</span>
-<span class="co">#&gt; )</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
 <span class="co"># Its subconcepts:</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">subconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({Uranus, Neptune}</span>
-<span class="co">#&gt; , {medium, far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({}</span>
-<span class="co">#&gt; , {small, medium, large, near, far, moon, no_moon}</span>
-<span class="co">#&gt; )</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span>
 <span class="co"># And its superconcepts:</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">superconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
-<span class="co">#&gt; , {}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
-<span class="co">#&gt; , {moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
-<span class="co">#&gt; , {far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Uranus, Neptune}</span>
-<span class="co">#&gt; , {medium, far, moon}</span>
-<span class="co">#&gt; )</span></code></pre></div>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
+<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></code></pre></div>
 <p>Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A list of concepts</span>
 <span class="va">C</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>
 <span class="va">C</span>
-<span class="co">#&gt; ({Uranus, Neptune}</span>
-<span class="co">#&gt; , {medium, far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}</span>
-<span class="co">#&gt; , {small}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Earth, Mars, Pluto}</span>
-<span class="co">#&gt; , {small, moon}</span>
-<span class="co">#&gt; )</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="co">#&gt; ({Earth, Mars, Pluto}, {small, moon})</span>
 
 <span class="co"># Supremum of the concepts in C</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">supremum</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
-<span class="co">#&gt; , {}</span>
-<span class="co">#&gt; )</span>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
 <span class="co"># Infimum of the concepts in C</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">infimum</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({}</span>
-<span class="co">#&gt; , {small, medium, large, near, far, moon, no_moon}</span>
-<span class="co">#&gt; )</span></code></pre></div>
+<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span></code></pre></div>
 </div>
 <div id="join--and-meet--irreducible-elements" class="section level2">
 <h2 class="hasAnchor">
@@ -986,43 +958,19 @@ O6
 <p>Also irreducible elements with respect to join (supremum) and meet (infimum) can be computed for a given concept lattice:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; ({Jupiter, Saturn}</span>
-<span class="co">#&gt; , {large, far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Uranus, Neptune}</span>
-<span class="co">#&gt; , {medium, far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Pluto}</span>
-<span class="co">#&gt; , {small, far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Mercury, Venus}</span>
-<span class="co">#&gt; , {small, near, no_moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Earth, Mars}</span>
-<span class="co">#&gt; , {small, near, moon}</span>
-<span class="co">#&gt; )</span>
+<span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({Pluto}, {small, far, moon})</span>
+<span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span>
+<span class="co">#&gt; ({Earth, Mars}, {small, near, moon})</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
-<span class="co">#&gt; , {moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
-<span class="co">#&gt; , {far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Jupiter, Saturn}</span>
-<span class="co">#&gt; , {large, far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Uranus, Neptune}</span>
-<span class="co">#&gt; , {medium, far, moon}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}</span>
-<span class="co">#&gt; , {small}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars}</span>
-<span class="co">#&gt; , {small, near}</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; ({Mercury, Venus}</span>
-<span class="co">#&gt; , {small, near, no_moon}</span>
-<span class="co">#&gt; )</span></code></pre></div>
+<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="co">#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})</span>
+<span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></code></pre></div>
 <p>This are the concepts used to build the <em>standard context</em>, mentioned above.</p>
 </div>
 </div>
