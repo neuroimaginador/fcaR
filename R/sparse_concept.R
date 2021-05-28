@@ -83,9 +83,9 @@ Concept <- R6::R6Class(
     print = function() {
 
       cat("(")
-      cat(private$extent$print())
+      cat(private$extent$print(FALSE))
       cat(", ")
-      cat(private$intent$print())
+      cat(private$intent$print(FALSE))
       cat(")\n")
 
     },

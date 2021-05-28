@@ -134,7 +134,7 @@ Set <- R6::R6Class(
       idx <- setdiff(seq(self$length()), indices)
       w[idx] <- 0
       S <- Set$new(attributes = private$attributes,
-                         M = w)
+                   M = w)
 
       return(S)
 
@@ -195,7 +195,7 @@ Set <- R6::R6Class(
     #' @return A string with the elements of the set and their grades between brackets {}.
     #'
     #' @export
-    print = function() {
+    print = function(eol = TRUE) {
 
       if (sum(private$v) > 0) {
 
@@ -203,11 +203,27 @@ Set <- R6::R6Class(
                                              attributes = private$attributes),
                               width = getOption("width"),
                               exdent = 2))
-        cat("\n")
+        if (eol) {
+
+          cat("\n")
+
+        } else {
+
+          cat("")
+
+        }
 
       } else {
 
-        cat("{}\n")
+        if (eol) {
+
+          cat("{}\n")
+
+        } else {
+
+          cat("{}")
+
+        }
 
       }
 
