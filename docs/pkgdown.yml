@@ -1,20 +1,11 @@
 pandoc: 2.11.4
-<<<<<<< HEAD
 pkgdown: 1.6.1
 pkgdown_sha: ~
-=======
-pkgdown: 1.6.1.9001
-pkgdown_sha: 1224e7d19dc1247a45d2885cf7b18b37bd02797b
->>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 articles:
   arules: arules.html
   concept_lattice: concept_lattice.html
   conceptual-scaling: conceptual-scaling.html
   extending_equivalence: extending_equivalence.html
   implications: implications.html
-<<<<<<< HEAD
-last_built: 2021-04-23T11:33Z
-=======
-last_built: 2021-04-23T12:27Z
->>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
+last_built: 2021-05-31T17:56Z
 

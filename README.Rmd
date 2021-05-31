@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # fcaR: Tools for Formal Concept Analysis
 
 <!-- badges: start -->
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
 [![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://codecov.io/gh/neuroimaginador/fcaR)
 [![R build status](https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg)](https://github.com/neuroimaginador/fcaR/actions)

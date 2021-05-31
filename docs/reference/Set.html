@@ -45,8 +45,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -58,18 +56,9 @@
 
 
 
-<!-- dependencies from examples -->
-
-
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -90,6 +79,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -154,7 +149,7 @@
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-<h3 class='hasAnchor' id='public-methods'><a class='anchor' aria-hidden='true' href='#public-methods'></a>Public methods</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
 <li><p><a href='#method-new'><code>Set$new()</code></a></p></li>
@@ -169,44 +164,30 @@
 <li><p><a href='#method-clone'><code>Set$clone()</code></a></p></li>
 </ul>
 <p><hr>
-<a id="method-new"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>new()</code></h3>
-<p>Creator for objects of class <code>Set</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>attributes</span>, M <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
+<p>Creator for objects of class <code>Set</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>attributes</span>, M <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>attributes</code></dt><dd><p>(character vector) Names of the attributes that will be available in the fuzzy set.</p></dd>
 
 <dt><code>M</code></dt><dd><p>(numeric vector or column <code>Matrix</code>) Values (grades) to be assigned to the attributes.</p></dd>
 
-</dl><p></div></p>
-<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
-<p>If <code>M</code> is omitted, the fuzzy set is the empty set. Later, one can use the <code>assign</code> method to assign grades to any of its attributes.</p>
-
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
-<p>An object of class <code>Set</code>.</p>
-<h3 class='hasAnchor' id='list-new-'><a class='anchor' aria-hidden='true' href='#list-new-'></a>Method <code>new()</code></h3>
-<p>Creator for objects of class <code>Set</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>attributes</span>, M <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>attributes</code></dt><dd><p>(character vector) Names of the attributes that will be available in the fuzzy set.</p></dd>
-
-<dt><code>M</code></dt><dd><p>(numeric vector or column <code>Matrix</code>) Values (grades) to be assigned to the attributes.</p></dd>
+<dt><code>...</code></dt><dd><p><code>key</code> = <code>value</code> pairs, where the value <code>value</code> is assigned to the <code>key</code> attribute name.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
-<p>If <code>M</code> is omitted, the fuzzy set is the empty set. Later, one can use the <code>assign</code> method to assign grades to any of its attributes.</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
+<p>If <code>M</code> is omitted and no pair <code>key</code> = <code>value</code>, the fuzzy set is the empty set. Later, one can use the <code>assign</code> method to assign grades to any of its attributes.</p>
 
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>An object of class <code>Set</code>.</p>
 <p><hr>
-<a id="method-assign"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/assign.html'>assign()</a></code></h3>
-<p>Assign grades to attributes in the set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<a id="method-assign"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/assign.html'>assign()</a></code></h3>
+<p>Assign grades to attributes in the set</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>attributes</code></dt><dd><p>(character vector) Names of the attributes to assign a grade to.</p></dd>
 
@@ -215,157 +196,77 @@
 <dt><code>...</code></dt><dd><p><code>key</code> = <code>value</code> pairs, where the value <code>value</code> is assigned to the <code>key</code> attribute name.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
-<p>One can use both of:
-<code>S$assign(A = 1, B = 0.3)</code>
-<code>S$assign(attributes = c(A, B), values = c(1, 0.3))</code>.</p>
-
-<h3 class='hasAnchor' id='list-assign-'><a class='anchor' aria-hidden='true' href='#list-assign-'></a>Method <code><a href='https://rdrr.io/r/base/assign.html'>assign()</a></code></h3>
-<p>Assign grades to attributes in the set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>attributes</code></dt><dd><p>(character vector) Names of the attributes to assign a grade to.</p></dd>
-
-<dt><code>values</code></dt><dd><p>(numeric vector) Grades to be assigned to the previous <code>attributes</code>.</p></dd>
-
-<dt><code>...</code></dt><dd><p><code>key</code> = <code>value</code> pairs, where the value <code>value</code> is assigned to the <code>key</code> attribute name.</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='details'><a class='anchor' aria-hidden='true' href='#details'></a>Details</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Details</h4>
 <p>One can use both of:
 <code>S$assign(A = 1, B = 0.3)</code>
 <code>S$assign(attributes = c(A, B), values = c(1, 0.3))</code>.</p>
 
 <p><hr>
-<a id="method-["></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>[()</code></h3>
-<p>Get elements by index</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<a id="method-["></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>[()</code></h3>
+<p>Get elements by index</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre>Set$[(indices)</pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>indices</code></dt><dd><p>(numeric, logical or character vector) The indices of the elements to return. It can be a vector of logicals where <code>TRUE</code> elements are to be retained.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
-<p>A <code>Set</code> but with only the required elements.</p>
-<h3 class='hasAnchor' id='list-'><a class='anchor' aria-hidden='true' href='#list-'></a>Method <code>[()</code></h3>
-<p>Get elements by index</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre>Set$[(indices)</pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>indices</code></dt><dd><p>(numeric, logical or character vector) The indices of the elements to return. It can be a vector of logicals where <code>TRUE</code> elements are to be retained.</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A <code>Set</code> but with only the required elements.</p>
 <p><hr>
-<a id="method-cardinal"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>cardinal()</code></h3>
-<p>Cardinal of the Set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<a id="method-cardinal"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>cardinal()</code></h3>
+<p>Cardinal of the Set</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>cardinal</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
-<p>the cardinal of the <code>Set</code>, counted
-as the sum of the degrees of each element.</p>
-<h3 class='hasAnchor' id='list-cardinal-'><a class='anchor' aria-hidden='true' href='#list-cardinal-'></a>Method <code>cardinal()</code></h3>
-<p>Cardinal of the Set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>cardinal</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>the cardinal of the <code>Set</code>, counted
 as the sum of the degrees of each element.</p>
 <p><hr>
-<a id="method-get_vector"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>get_vector()</code></h3>
-<p>Internal <code>Matrix</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<a id="method-get_vector"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_vector()</code></h3>
+<p>Internal <code>Matrix</code></p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>get_vector</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
-<p>The internal sparse <code>Matrix</code> representation of the set.</p>
-<h3 class='hasAnchor' id='list-get-vector-'><a class='anchor' aria-hidden='true' href='#list-get-vector-'></a>Method <code>get_vector()</code></h3>
-<p>Internal <code>Matrix</code></p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>get_vector</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The internal sparse <code>Matrix</code> representation of the set.</p>
 <p><hr>
-<a id="method-get_attributes"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>get_attributes()</code></h3>
-<p>Attributes defined for the set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<a id="method-get_attributes"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_attributes()</code></h3>
+<p>Attributes defined for the set</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>get_attributes</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
-<p>A character vector with the names of the attributes.</p>
-<h3 class='hasAnchor' id='list-get-attributes-'><a class='anchor' aria-hidden='true' href='#list-get-attributes-'></a>Method <code>get_attributes()</code></h3>
-<p>Attributes defined for the set</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>get_attributes</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A character vector with the names of the attributes.</p>
 <p><hr>
-<a id="method-length"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/length.html'>length()</a></code></h3>
-<p>Number of attributes</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<a id="method-length"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/length.html'>length()</a></code></h3>
+<p>Number of attributes</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>length</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
-<p>The number of attributes that are defined for this fuzzy set.</p>
-<h3 class='hasAnchor' id='list-length-'><a class='anchor' aria-hidden='true' href='#list-length-'></a>Method <code><a href='https://rdrr.io/r/base/length.html'>length()</a></code></h3>
-<p>Number of attributes</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>length</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The number of attributes that are defined for this fuzzy set.</p>
 <p><hr>
-<a id="method-print"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Prints the set to console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Prints the set to console</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span>eol <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
-<p>A string with the elements of the set and their grades between brackets .</p>
-<h3 class='hasAnchor' id='list-print-'><a class='anchor' aria-hidden='true' href='#list-print-'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Prints the set to console</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A string with the elements of the set and their grades between brackets .</p>
 <p><hr>
-<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
-<p>Write the set in LaTeX format</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
+<p>Write the set in LaTeX format</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
-<p>The fuzzy set in LaTeX.</p>
-<h3 class='hasAnchor' id='list-to-latex-'><a class='anchor' aria-hidden='true' href='#list-to-latex-'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
-<p>Write the set in LaTeX format</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='returns'><a class='anchor' aria-hidden='true' href='#returns'></a>Returns</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The fuzzy set in LaTeX.</p>
 <p><hr>
-<a id="method-clone"></a></p><h3 class='hasAnchor' id='method-'><a class='anchor' aria-hidden='true' href='#method-'></a>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
+<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
-
-</dl><p></div></p>
-<h3 class='hasAnchor' id='list-clone-'><a class='anchor' aria-hidden='true' href='#list-clone-'></a>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='usage'><a class='anchor' aria-hidden='true' href='#usage'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>Set</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' aria-hidden='true' href='#arguments'></a>Arguments</h4>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
@@ -374,12 +275,18 @@ as the sum of the degrees of each element.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>S</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>S</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; {A}</div><div class='input'><span class='va'>S</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; \ensuremath{\left\{\mathrm{A}\right\}}</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>S</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>S</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {A}</span>
+<span class='r-in'><span class='va'>S</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> \ensuremath{\left\{\mathrm{A}\right\}}</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'>Set</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>, C <span class='op'>=</span> <span class='fl'>1</span>, B <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>S</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> {B [0.5], C}</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -391,11 +298,11 @@ as the sum of the degrees of each element.</p>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p></p>
+  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -403,8 +310,6 @@ as the sum of the degrees of each element.</p>
 
   
 
-
-  
 
   </body>
 </html>

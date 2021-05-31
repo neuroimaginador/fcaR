@@ -19,8 +19,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,6 +37,12 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -72,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/neuroimaginador/fcaR/" class="external-link">
+  <a href="https://github.com/neuroimaginador/fcaR/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -87,13 +91,13 @@
 
       
 
-      </header><script src="conceptual-scaling_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="conceptual-scaling_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Conceptual Scaling</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/neuroimaginador/fcaR/blob/master/vignettes/conceptual-scaling.Rmd" class="external-link"><code>vignettes/conceptual-scaling.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/neuroimaginador/fcaR/blob/master/vignettes/conceptual-scaling.Rmd"><code>vignettes/conceptual-scaling.Rmd</code></a></small>
       <div class="hidden name"><code>conceptual-scaling.Rmd</code></div>
 
     </div>
@@ -102,7 +106,7 @@
     
 <div id="introduction-and-motivation" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction-and-motivation" class="anchor" aria-hidden="true"></a>Introduction and Motivation</h1>
+<a href="#introduction-and-motivation" class="anchor"></a>Introduction and Motivation</h1>
 Let us consider the following formal context about intern students:
 <table class="table">
 <thead><tr>
@@ -245,11 +249,11 @@ lazy
 </div>
 <div id="types-of-scaling" class="section level1">
 <h1 class="hasAnchor">
-<a href="#types-of-scaling" class="anchor" aria-hidden="true"></a>Types of Scaling</h1>
+<a href="#types-of-scaling" class="anchor"></a>Types of Scaling</h1>
 <p>The <em>transformations</em> to the attributes of a many-valued formal context are called <em>scaling</em>. Depending on the meaning of each attribute, different types of scaling can be applied.</p>
 <div id="nominal-scaling" class="section level2">
 <h2 class="hasAnchor">
-<a href="#nominal-scaling" class="anchor" aria-hidden="true"></a>Nominal scaling</h2>
+<a href="#nominal-scaling" class="anchor"></a>Nominal scaling</h2>
 <p><strong>Nominal</strong> scales are used for scaling attributes whose values exclude each other.</p>
 For instance, in the example above, the attribute <code>Grant</code> is categorical:
 <table class="table">
@@ -413,7 +417,7 @@ yes
 </div>
 <div id="ordinal-scaling" class="section level2">
 <h2 class="hasAnchor">
-<a href="#ordinal-scaling" class="anchor" aria-hidden="true"></a>Ordinal scaling</h2>
+<a href="#ordinal-scaling" class="anchor"></a>Ordinal scaling</h2>
 <p><strong>Ordinal</strong> scales are used for attributes with ordered values, where each value implies the smaller values (e.g. the number of children of an individual).</p>
 In our example, the attribute <code>Intern</code> is ordinal:
 <table class="table">
@@ -718,7 +722,7 @@ Intern &lt;= 10
 </div>
 <div id="interordinal-scaling" class="section level2">
 <h2 class="hasAnchor">
-<a href="#interordinal-scaling" class="anchor" aria-hidden="true"></a>Interordinal scaling</h2>
+<a href="#interordinal-scaling" class="anchor"></a>Interordinal scaling</h2>
 <p><strong>Interordinal</strong> scales are used in attributes that express different degrees (for instance, the Likert scale: <em>strongly disagree</em>, <em>disagree</em>, <em>neither agree nor disagree</em>, <em>agree</em> and <em>strongly agree</em>).</p>
 In our example, the attribute <code>Agreement</code> is interordinal:
 <table class="table">
@@ -1203,7 +1207,7 @@ strongly agree
 </div>
 <div id="biordinal-scaling" class="section level2">
 <h2 class="hasAnchor">
-<a href="#biordinal-scaling" class="anchor" aria-hidden="true"></a>Biordinal scaling</h2>
+<a href="#biordinal-scaling" class="anchor"></a>Biordinal scaling</h2>
 <p><strong>Biordinal</strong> scales are used when the attribute values express a degree in one of two poles (for instance, <em>1:very silent</em>, <em>2:silent</em>, <em>3:loud</em>, <em>4:very loud</em>, where <em>1:very silent</em> implies <em>2:silent</em>, and <em>4:very loud</em> implies <em>3:loud</em>, but neither <em>silent</em> implies <em>loud</em> nor <em>loud</em> implies <em>silent</em>).</p>
 In our example, the attribute <code>Attitude</code> is biordinal:
 <table class="table">
@@ -1455,7 +1459,7 @@ very lazy
 </div>
 <div id="interval-scaling" class="section level2">
 <h2 class="hasAnchor">
-<a href="#interval-scaling" class="anchor" aria-hidden="true"></a>Interval scaling</h2>
+<a href="#interval-scaling" class="anchor"></a>Interval scaling</h2>
 <p><strong>Interval</strong> scales group continuous attributes in intervals or bins.</p>
 In our example, the attribute <code>Score</code> is continuous:
 <table class="table">
@@ -1684,12 +1688,12 @@ Score is A
 </div>
 <div id="scaling-in-fcar" class="section level1">
 <h1 class="hasAnchor">
-<a href="#scaling-in-fcar" class="anchor" aria-hidden="true"></a>Scaling in <code>fcaR</code>
+<a href="#scaling-in-fcar" class="anchor"></a>Scaling in <code>fcaR</code>
 </h1>
 <p>Let us see how we can perform scaling with <code>fcaR</code>.</p>
 <div id="available-scales" class="section level2">
 <h2 class="hasAnchor">
-<a href="#available-scales" class="anchor" aria-hidden="true"></a>Available scales</h2>
+<a href="#available-scales" class="anchor"></a>Available scales</h2>
 <p>The available scales are stored in a <code>registry</code> object called <code>scalingRegistry</code>, which keeps the functions to perform the different types of scaling:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">scalingRegistry</span><span class="op">$</span><span class="fu">get_entry_names</span><span class="op">(</span><span class="op">)</span>
@@ -1697,7 +1701,7 @@ Score is A
 </div>
 <div id="applying-scales" class="section level2">
 <h2 class="hasAnchor">
-<a href="#applying-scales" class="anchor" aria-hidden="true"></a>Applying scales</h2>
+<a href="#applying-scales" class="anchor"></a>Applying scales</h2>
 <p>In order to scale an attribute of a <code>FormalContext</code>, we use the method <code>scale</code>.</p>
 <p>This method has two mandatory arguments: <code>attribute</code> (the attribute to scale) and <code>type</code> (the type of scaling). Additional arguments can be supplied for certain types of scaling, as we will se shortly.</p>
 <p>For instance, if we call <code>fc</code> the formal context of the example at the beginning of this document, we can replicate the above scales:</p>
@@ -1733,50 +1737,36 @@ Score is A
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Agreement"</span>, 
          type <span class="op">=</span> <span class="st">"interordinal"</span>,
-         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"strongly disagree"</span>,
+         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"strongly disagree"</span>,
                     <span class="st">"disagree"</span>,
                     <span class="st">"neither agree nor disagree"</span>,
                     <span class="st">"agree"</span>,
                     <span class="st">"strongly agree"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The resulting formal context has 19 columns, thus it is difficult to print.</p>
-<p>Note that the call to <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale()</a></code> has an additional optional argument, <code>values</code>, that indicate, for character attributes, the order between the different attribute values. In this case, the order is “strongly disagree” &lt; “disagree” &lt; “neither agree nor disagree” &lt; “agree” &lt; “strongly agree”.</p>
+<p>Note that the call to <code><a href="https://rdrr.io/r/base/scale.html">scale()</a></code> has an additional optional argument, <code>values</code>, that indicate, for character attributes, the order between the different attribute values. In this case, the order is “strongly disagree” &lt; “disagree” &lt; “neither agree nor disagree” &lt; “agree” &lt; “strongly agree”.</p>
 <p>The <code>Attitude</code> attribute can be scaled using a <em>biordinal</em> scale, since it represents two poles: the first is given by values “hard working” and “working” and the other is given by “very lazy” and “lazy”. Then, we can do:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Attitude"</span>, 
          type <span class="op">=</span> <span class="st">"biordinal"</span>, 
-<<<<<<< HEAD
          values_le <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"hard working"</span>, <span class="st">"working"</span><span class="op">)</span>,
          values_ge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"lazy"</span>, <span class="st">"very lazy"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-=======
-         values_le <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hard working"</span>, <span class="st">"working"</span><span class="op">)</span>,
-         values_ge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lazy"</span>, <span class="st">"very lazy"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
->>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <p>The full order of attribute values is “hard working” &lt; “working” &lt; “lazy” &lt; “very lazy”.</p>
-<p>Note that we have listed the attribute values in two different arguments, <code>values_le</code> (for values that are compared using <code><a href="https://rdrr.io/r/base/Comparison.html" class="external-link">&lt;=</a></code>) and <code>values_ge</code> (values compared using <code><a href="https://rdrr.io/r/base/Comparison.html" class="external-link">&gt;=</a></code>). Also note that all attributes must appear ordered in the arguments, that is, in the same order as in the full order defined above.</p>
+<p>Note that we have listed the attribute values in two different arguments, <code>values_le</code> (for values that are compared using <code>&lt;=</code>) and <code>values_ge</code> (values compared using <code>&gt;=</code>). Also note that all attributes must appear ordered in the arguments, that is, in the same order as in the full order defined above.</p>
 <p>The last attribute was the <code>Score</code>, that can be grouped in intervals using:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Score"</span>, 
          type <span class="op">=</span> <span class="st">"interval"</span>, 
-<<<<<<< HEAD
          values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, 
          interval_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-=======
-         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, 
-         interval_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
->>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <p>The additional arguments are <code>values</code> (the endpoints of the intervals) and <code>interval_names</code> (an optional name indicating how to call a given interval).</p>
 <p>Note that all of these scales can be applied to numerical and string attributes.</p>
 </div>
 <div id="scale-contexts" class="section level2">
 <h2 class="hasAnchor">
-<a href="#scale-contexts" class="anchor" aria-hidden="true"></a>Scale contexts</h2>
+<a href="#scale-contexts" class="anchor"></a>Scale contexts</h2>
 <p>In order to see the transformation (the <em>scale</em> context) used for any of the attributes, we use the <code>get_scales()</code> method of a <code>FormalContext</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<<<<<<< HEAD
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"Grant"</span>, <span class="st">"Score"</span><span class="op">)</span><span class="op">)</span>
-=======
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Grant"</span>, <span class="st">"Score"</span><span class="op">)</span><span class="op">)</span>
->>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <span class="co">#&gt; $Grant</span>
 <span class="co">#&gt; FormalContext with 2 objects and 2 attributes.</span>
 <span class="co">#&gt;        Grant = no   Grant = yes  </span>
@@ -1794,7 +1784,7 @@ Score is A
 </div>
 <div id="background-knowledge" class="section level2">
 <h2 class="hasAnchor">
-<a href="#background-knowledge" class="anchor" aria-hidden="true"></a>Background knowledge</h2>
+<a href="#background-knowledge" class="anchor"></a>Background knowledge</h2>
 <p>Some scalings, particularly of the <em>ordinal</em> family, assume an implicit knowledge (e.g., if attribute <code>Intern</code> is lower than 5, then it is also lower than 7).</p>
 <p>This <em>background knowledge</em> is computed after each scaling is performed, and can be printed with:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -1822,24 +1812,15 @@ Score is A
 <span class="co">#&gt; Rule 15: {Attitude &gt;= very lazy} -&gt; {Attitude &gt;= lazy}</span>
 <span class="co">#&gt; Rule 16: {Attitude &lt;= working, Attitude &gt;= lazy} -&gt; {Attitude &lt;= hard working,</span>
 <span class="co">#&gt;   Attitude &gt;= very lazy}</span>
-<<<<<<< HEAD
 <span class="co">#&gt; Rule 17: {Attitude &lt;= hard working} -&gt; {Attitude &lt;= working}</span>
 <span class="co">#&gt; Rule 18: {Score is A, Score is B} -&gt; {Score is C}</span>
 <span class="co">#&gt; Rule 19: {Score is A, Score is C} -&gt; {Score is B}</span>
 <span class="co">#&gt; Rule 20: {Score is B, Score is C} -&gt; {Score is A}</span></code></pre></div>
-=======
-<span class="co">#&gt; Rule 16: {Attitude &lt;= hard working} -&gt; {Attitude &lt;= working}</span>
-<span class="co">#&gt; Rule 17: {Score is A, Score is B} -&gt; {Score is C}</span>
-<span class="co">#&gt; Rule 18: {Score is A, Score is C} -&gt; {Score is B}</span>
-<span class="co">#&gt; Rule 19: {Score is B, Score is C} -&gt; {Score is A}</span>
-<span class="co">#&gt; Rule 20: {} -&gt; {Agreement &lt;= strongly agree, Agreement &gt;= strongly disagree,</span>
-<span class="co">#&gt;   Intern &lt;= 10}</span></code></pre></div>
->>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
 <p>It is a simple <code>ImplicationSet</code> that stores all the implications that can be derived from the scale contexts.</p>
 </div>
 <div id="concepts-and-implications" class="section level2">
 <h2 class="hasAnchor">
-<a href="#concepts-and-implications" class="anchor" aria-hidden="true"></a>Concepts and implications</h2>
+<a href="#concepts-and-implications" class="anchor"></a>Concepts and implications</h2>
 <p>As usual, for a given <code>FormalContext</code>, binary or fuzzy, one can compute its concept lattice and its basis of implications. In the case of <em>many-valued</em> contexts, one has first to scale all necessary attributes, such that the resulting context is binary or fuzzy.</p>
 <p>Once scaled, the same <code>find_concepts()</code> and <code>find_implications()</code> methods can be used to compute the lattice and the basis.</p>
 <p>In the case of the basis of implications, the NextClosure algorithm is used, as in the binary/fuzzy case, but the resulting implications have been post-processed to remove redundant information with respect to the <em>background knowledge</em>.</p>
@@ -1847,69 +1828,73 @@ Score is A
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
-<span class="co">#&gt; Implication set with 21 implications.</span>
+<span class="co">#&gt; Implication set with 26 implications.</span>
 <span class="co">#&gt; Rule 1: {} -&gt; {Agreement &gt;= disagree}</span>
 <span class="co">#&gt; Rule 2: {Agreement &gt;= disagree, Score is A} -&gt; {Grant = yes, Agreement &gt;=</span>
 <span class="co">#&gt;   strongly agree, Attitude &lt;= hard working}</span>
 <span class="co">#&gt; Rule 3: {Agreement &gt;= disagree, Score is B} -&gt; {Intern &lt;= 8, Agreement &lt;= agree}</span>
 <span class="co">#&gt; Rule 4: {Agreement &gt;= disagree, Score is C} -&gt; {Grant = yes, Intern &lt;= 7,</span>
 <span class="co">#&gt;   Agreement &lt;= agree, Agreement &gt;= agree, Attitude &lt;= working}</span>
-<span class="co">#&gt; Rule 5: {Grant = no, Intern &lt;= 4, Agreement &lt;= disagree, Agreement &gt;= disagree,</span>
-<span class="co">#&gt;   Attitude &gt;= very lazy, Score is B} -&gt; {Grant = yes, Agreement &gt;= strongly</span>
-<span class="co">#&gt;   agree, Attitude &lt;= hard working, Score is A}</span>
+<span class="co">#&gt; Rule 5: {Agreement &gt;= disagree, Attitude &gt;= very lazy} -&gt; {Grant = no, Grant =</span>
+<span class="co">#&gt;   yes, Intern &lt;= 4, Agreement &lt;= strongly disagree, Attitude &lt;= hard working,</span>
+<span class="co">#&gt;   Score is B, Score is A}</span>
 <span class="co">#&gt; Rule 6: {Agreement &gt;= disagree, Attitude &gt;= lazy} -&gt; {Grant = no, Intern &lt;= 4,</span>
 <span class="co">#&gt;   Agreement &lt;= disagree, Score is B}</span>
 <span class="co">#&gt; Rule 7: {Agreement &gt;= disagree, Attitude &lt;= working} -&gt; {Agreement &gt;= neither</span>
 <span class="co">#&gt;   agree nor disagree}</span>
-<span class="co">#&gt; Rule 8: {Agreement &gt;= neither agree nor disagree, Attitude &lt;= hard working} -&gt;</span>
-<span class="co">#&gt;   {Grant = yes, Agreement &gt;= strongly agree, Score is A}</span>
-<span class="co">#&gt; Rule 9: {Grant = yes, Agreement &gt;= strongly agree, Attitude &lt;= working} -&gt;</span>
-<span class="co">#&gt;   {Attitude &lt;= hard working, Score is A}</span>
-<span class="co">#&gt; Rule 10: {Agreement &gt;= agree, Attitude &lt;= working} -&gt; {Grant = yes}</span>
+<span class="co">#&gt; Rule 8: {Agreement &gt;= disagree, Attitude &lt;= hard working} -&gt; {Grant = yes,</span>
+<span class="co">#&gt;   Agreement &gt;= strongly agree, Score is A}</span>
+<span class="co">#&gt; Rule 9: {Agreement &gt;= strongly agree} -&gt; {Grant = yes, Attitude &lt;= hard working,</span>
+<span class="co">#&gt;   Score is A}</span>
+<span class="co">#&gt; Rule 10: {Agreement &gt;= agree} -&gt; {Grant = yes, Attitude &lt;= working}</span>
 <span class="co">#&gt; Rule 11: {Agreement &gt;= neither agree nor disagree} -&gt; {Attitude &lt;= working}</span>
 <span class="co">#&gt; Rule 12: {Agreement &lt;= agree, Agreement &gt;= disagree} -&gt; {Intern &lt;= 8}</span>
-<span class="co">#&gt; Rule 13: {Intern &lt;= 8, Agreement &lt;= neither agree nor disagree, Agreement &gt;=</span>
-<span class="co">#&gt;   disagree} -&gt; {Grant = no, Intern &lt;= 5, Score is B}</span>
-<span class="co">#&gt; Rule 14: {Grant = no, Intern &lt;= 5, Agreement &lt;= disagree, Agreement &gt;= disagree,</span>
-<span class="co">#&gt;   Score is B} -&gt; {Intern &lt;= 4, Attitude &gt;= lazy}</span>
-<span class="co">#&gt; Rule 15: {Intern &lt;= 8, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span>
-<span class="co">#&gt; Rule 16: {Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= disagree, Score is B} -&gt;</span>
+<span class="co">#&gt; Rule 13: {Agreement &lt;= neither agree nor disagree, Agreement &gt;= disagree} -&gt;</span>
+<span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Score is B}</span>
+<span class="co">#&gt; Rule 14: {Agreement &lt;= disagree, Agreement &gt;= disagree} -&gt; {Grant = no, Intern</span>
+<span class="co">#&gt;   &lt;= 4, Attitude &gt;= lazy, Score is B}</span>
+<span class="co">#&gt; Rule 15: {Agreement &lt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Grant =</span>
+<span class="co">#&gt;   no, Grant = yes, Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy,</span>
+<span class="co">#&gt;   Score is B, Score is A}</span>
+<span class="co">#&gt; Rule 16: {Intern &lt;= 8, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span>
+<span class="co">#&gt; Rule 17: {Intern &lt;= 7, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span>
+<span class="co">#&gt; Rule 18: {Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= disagree, Score is B} -&gt;</span>
 <span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Agreement &lt;= neither agree nor disagree}</span>
-<span class="co">#&gt; Rule 17: {Intern &lt;= 5, Agreement &lt;= agree, Agreement &gt;= disagree} -&gt; {Grant =</span>
-<span class="co">#&gt;   no, Agreement &lt;= neither agree nor disagree, Score is B}</span>
-<span class="co">#&gt; Rule 18: {Grant = no, Intern &lt;= 4, Agreement &lt;= neither agree nor disagree,</span>
-<span class="co">#&gt;   Agreement &gt;= disagree, Score is B} -&gt; {Agreement &lt;= disagree, Attitude &gt;=</span>
-<span class="co">#&gt;   lazy}</span>
-<span class="co">#&gt; Rule 19: {Grant = yes, Agreement &gt;= disagree} -&gt; {Agreement &gt;= agree, Attitude</span>
+<span class="co">#&gt; Rule 19: {Intern &lt;= 5, Agreement &gt;= disagree} -&gt; {Grant = no, Agreement &lt;=</span>
+<span class="co">#&gt;   neither agree nor disagree, Score is B}</span>
+<span class="co">#&gt; Rule 20: {Intern &lt;= 4, Agreement &gt;= disagree} -&gt; {Grant = no, Agreement &lt;=</span>
+<span class="co">#&gt;   disagree, Attitude &gt;= lazy, Score is B}</span>
+<span class="co">#&gt; Rule 21: {Grant = yes, Agreement &gt;= disagree} -&gt; {Agreement &gt;= agree, Attitude</span>
 <span class="co">#&gt;   &lt;= working}</span>
-<span class="co">#&gt; Rule 20: {Grant = yes, Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= agree,</span>
+<span class="co">#&gt; Rule 22: {Grant = yes, Intern &lt;= 8, Agreement &lt;= agree, Agreement &gt;= strongly</span>
+<span class="co">#&gt;   agree, Attitude &lt;= hard working, Score is A} -&gt; {Grant = no, Intern &lt;= 4,</span>
+<span class="co">#&gt;   Attitude &gt;= very lazy, Score is B}</span>
+<span class="co">#&gt; Rule 23: {Grant = yes, Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= agree,</span>
 <span class="co">#&gt;   Attitude &lt;= working} -&gt; {Score is C}</span>
-<span class="co">#&gt; Rule 21: {Grant = no, Agreement &gt;= disagree} -&gt; {Intern &lt;= 5, Agreement &lt;=</span>
-<span class="co">#&gt;   neither agree nor disagree, Score is B}</span></code></pre></div>
+<span class="co">#&gt; Rule 24: {Grant = no, Agreement &gt;= disagree} -&gt; {Intern &lt;= 5, Agreement &lt;=</span>
+<span class="co">#&gt;   neither agree nor disagree, Score is B}</span>
+<span class="co">#&gt; Rule 25: {Grant = no, Intern &lt;= 4, Agreement &lt;= disagree, Agreement &gt;= neither</span>
+<span class="co">#&gt;   agree nor disagree, Attitude &lt;= working, Attitude &gt;= lazy, Score is B} -&gt;</span>
+<span class="co">#&gt;   {Grant = yes, Score is A}</span>
+<span class="co">#&gt; Rule 26: {Grant = no, Grant = yes, Intern &lt;= 5, Agreement &lt;= neither agree nor</span>
+<span class="co">#&gt;   disagree, Agreement &gt;= agree, Attitude &lt;= working, Score is C, Score is B} -&gt;</span>
+<span class="co">#&gt;   {Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy}</span></code></pre></div>
 <p>Note that, in this case, this is not the basis of implications, since the <em>background knowledge</em> has to be incorporated. That is, these implications are valid, but to be complete they need the implications derived from the scales.</p>
 </div>
 </div>
 <div id="another-example" class="section level1">
 <h1 class="hasAnchor">
-<a href="#another-example" class="anchor" aria-hidden="true"></a>Another example</h1>
+<a href="#another-example" class="anchor"></a>Another example</h1>
 <p>Let us consider the following context of attributes of aromatic molecules:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<<<<<<< HEAD
 <code class="sourceCode R"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>,
-=======
-<code class="sourceCode R"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>,
->>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
                         <span class="st">"aromatic.csv"</span>,
                         package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span>
 
 <span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-<<<<<<< HEAD
+<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> 
   <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"html"</span>,
-=======
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"html"</span>,
->>>>>>> 646172c6fcd1679fc5dd5069ed41387901db2ceb
                align <span class="op">=</span> <span class="st">"c"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
@@ -2105,7 +2090,7 @@ hex
          values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
 <span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"OS"</span>, 
          type <span class="op">=</span> <span class="st">"nominal"</span>, 
-         <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span>
+         <span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, 
          type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></code></pre></div>
 The final formal context is:
@@ -2501,13 +2486,11 @@ Thiophene
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -2515,8 +2498,6 @@ Thiophene
 
   
 
-
-  
 
   </body>
 </html>

@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
 [![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://codecov.io/gh/neuroimaginador/fcaR)
@@ -324,8 +324,8 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
 #> --> Composition: from 12 to 12 in 0.001 secs.
-#> --> Generalization: from 12 to 12 in 0.001 secs.
-#> Batch took 0.005 secs.
+#> --> Generalization: from 12 to 12 in 0.003 secs.
+#> Batch took 0.004 secs.
 
 # Reduced set of implications
 fc$implications

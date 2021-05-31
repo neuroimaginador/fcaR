@@ -47,8 +47,6 @@ In addition, one can use the implications to compute semantic closures of fuzzy 
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -60,18 +58,9 @@ In addition, one can use the implications to compute semantic closures of fuzzy 
 
 
 
-<!-- dependencies from examples -->
-
-
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -92,6 +81,12 @@ In addition, one can use the implications to compute semantic closures of fuzzy 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -180,26 +175,27 @@ Since fcaR is an extension of the data model in the arules package, most of the 
 Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” <em>International Journal of Approximate Reasoning</em>, <em>70</em>, 51-67.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Build a formal context</span>
-<span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
-
-<span class='co'># Find its concepts and implications</span>
-<span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>find_implications</span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># Print the extracted implications</span>
-<span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span>
-</div><div class='output co'>#&gt; Implication set with 10 implications.
-#&gt; Rule 1: {no_moon} -&gt; {small, near}
-#&gt; Rule 2: {far} -&gt; {moon}
-#&gt; Rule 3: {near} -&gt; {small}
-#&gt; Rule 4: {large} -&gt; {far, moon}
-#&gt; Rule 5: {medium} -&gt; {far, moon}
-#&gt; Rule 6: {medium, large, far, moon} -&gt; {small, near, no_moon}
-#&gt; Rule 7: {small, near, moon, no_moon} -&gt; {medium, large, far}
-#&gt; Rule 8: {small, near, far, moon} -&gt; {medium, large, no_moon}
-#&gt; Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}
-#&gt; Rule 10: {small, medium, far, moon} -&gt; {large, near, no_moon}</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Build a formal context</span></span>
+<span class='r-in'><span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Find its concepts and implications</span></span>
+<span class='r-in'><span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>find_implications</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Print the extracted implications</span></span>
+<span class='r-in'><span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>implications</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Implication set with 10 implications.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 1: {no_moon} -&gt; {small, near}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 2: {far} -&gt; {moon}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 3: {near} -&gt; {small}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 4: {large} -&gt; {far, moon}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 5: {medium} -&gt; {far, moon}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 6: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 7: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 8: {small, near, far, moon} -&gt; {medium, large, no_moon}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Rule 10: {small, medium, far, moon} -&gt; {large, near, no_moon}</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -211,11 +207,11 @@ Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prov
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p></p>
+  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -223,8 +219,6 @@ Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prov
 
   
 
-
-  
 
   </body>
 </html>

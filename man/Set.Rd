@@ -165,7 +165,7 @@ The number of attributes that are defined for this fuzzy set.
 \subsection{Method \code{print()}}{
 Prints the set to console
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Set$print()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Set$print(eol = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
