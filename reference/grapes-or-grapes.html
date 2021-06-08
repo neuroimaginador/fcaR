@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print a list of concepts — print.conceptlist • fcaR</title>
+<title>Union (Logical OR) of Fuzzy Sets — %or% • fcaR</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Print a list of concepts — print.conceptlist" />
-<meta property="og:description" content="Print a list of concepts" />
+<meta property="og:title" content="Union (Logical OR) of Fuzzy Sets — %or%" />
+<meta property="og:description" content="Union (Logical OR) of Fuzzy Sets" />
 
 
 
@@ -135,48 +135,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print a list of concepts</h1>
-    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/conceptlist.R'><code>R/conceptlist.R</code></a></small>
-    <div class="hidden name"><code>print.Rd</code></div>
+    <h1>Union (Logical OR) of Fuzzy Sets</h1>
+    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/compare_concepts.R'><code>R/compare_concepts.R</code></a></small>
+    <div class="hidden name"><code>grapes-or-grapes.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Print a list of concepts</p>
+    <p>Union (Logical OR) of Fuzzy Sets</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for conceptlist</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>S1</span> <span class='op'>%|%</span> <span class='va'>S2</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A list of concepts as a result of subsetting a <code>ConceptLattice</code></p></td>
+      <th>S1</th>
+      <td><p>A <code>Set</code></p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Another (unused) arguments.</p></td>
+      <th>S2</th>
+      <td><p>A <code>Set</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Nothing, just prints a list of concepts nicely.</p>
+    <p>Returns the union of <code>S1</code> and <code>S2</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Both <code>S1</code> and <code>S2</code> must be Sets.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Build a formal context</span>
-<span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># Build two sparse sets</span>
+<span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>S</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>1</span>, B <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='cn'>T</span> <span class='op'>&lt;-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='cn'>T</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>C <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
-<span class='co'># Find its concepts</span>
-<span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'># Print the first 3 concepts</span>
-<span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; A set of 3 concepts:
-#&gt; 1: ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})
-#&gt; 2: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})
-#&gt; 3: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</div><div class='input'>
+<span class='co'># Union</span>
+<span class='va'>S</span> <span class='op'>%|%</span> <span class='cn'>T</span>
+</div><div class='output co'>#&gt; {A, B, C}</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

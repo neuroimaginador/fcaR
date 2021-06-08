@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>R6 class for a context lattice — ConceptLattice • fcaR</title>
+<title>R6 class for a concept lattice — ConceptLattice • fcaR</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="R6 class for a context lattice — ConceptLattice" />
+<meta property="og:title" content="R6 class for a concept lattice — ConceptLattice" />
 <meta property="og:description" content="This class implements the data structure and methods for concept lattices." />
 
 
@@ -135,7 +135,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>R6 class for a context lattice</h1>
+    <h1>R6 class for a concept lattice</h1>
     <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/concept_lattice.R'><code>R/concept_lattice.R</code></a></small>
     <div class="hidden name"><code>ConceptLattice.Rd</code></div>
     </div>
@@ -146,6 +146,9 @@
 
 
 
+    <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
+
+    <p><code><a href='ConceptSet.html'>fcaR::ConceptSet</a></code> -&gt; <code>ConceptLattice</code></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
@@ -153,15 +156,10 @@
 
 <ul>
 <li><p><a href='#method-new'><code>ConceptLattice$new()</code></a></p></li>
-<li><p><a href='#method-size'><code>ConceptLattice$size()</code></a></p></li>
-<li><p><a href='#method-is_empty'><code>ConceptLattice$is_empty()</code></a></p></li>
-<li><p><a href='#method-extents'><code>ConceptLattice$extents()</code></a></p></li>
-<li><p><a href='#method-intents'><code>ConceptLattice$intents()</code></a></p></li>
 <li><p><a href='#method-plot'><code>ConceptLattice$plot()</code></a></p></li>
-<li><p><a href='#method-print'><code>ConceptLattice$print()</code></a></p></li>
-<li><p><a href='#method-to_latex'><code>ConceptLattice$to_latex()</code></a></p></li>
-<li><p><a href='#method-['><code>ConceptLattice$[()</code></a></p></li>
 <li><p><a href='#method-sublattice'><code>ConceptLattice$sublattice()</code></a></p></li>
+<li><p><a href='#method-top'><code>ConceptLattice$top()</code></a></p></li>
+<li><p><a href='#method-bottom'><code>ConceptLattice$bottom()</code></a></p></li>
 <li><p><a href='#method-join_irreducibles'><code>ConceptLattice$join_irreducibles()</code></a></p></li>
 <li><p><a href='#method-meet_irreducibles'><code>ConceptLattice$meet_irreducibles()</code></a></p></li>
 <li><p><a href='#method-decompose'><code>ConceptLattice$decompose()</code></a></p></li>
@@ -171,10 +169,24 @@
 <li><p><a href='#method-superconcepts'><code>ConceptLattice$superconcepts()</code></a></p></li>
 <li><p><a href='#method-lower_neighbours'><code>ConceptLattice$lower_neighbours()</code></a></p></li>
 <li><p><a href='#method-upper_neighbours'><code>ConceptLattice$upper_neighbours()</code></a></p></li>
-<li><p><a href='#method-support'><code>ConceptLattice$support()</code></a></p></li>
 <li><p><a href='#method-clone'><code>ConceptLattice$clone()</code></a></p></li>
 </ul>
-<p><hr>
+<p><details ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-['><code>fcaR::ConceptSet$[()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href='../../fcaR/html/ConceptSet.html#method-extents'><code>fcaR::ConceptSet$extents()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents"><a href='../../fcaR/html/ConceptSet.html#method-intents'><code>fcaR::ConceptSet$intents()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href='../../fcaR/html/ConceptSet.html#method-is_empty'><code>fcaR::ConceptSet$is_empty()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="print"><a href='../../fcaR/html/ConceptSet.html#method-print'><code>fcaR::ConceptSet$print()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="size"><a href='../../fcaR/html/ConceptSet.html#method-size'><code>fcaR::ConceptSet$size()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="sub"><a href='../../fcaR/html/ConceptSet.html#method-sub'><code>fcaR::ConceptSet$sub()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="support"><a href='../../fcaR/html/ConceptSet.html#method-support'><code>fcaR::ConceptSet$support()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_latex"><a href='../../fcaR/html/ConceptSet.html#method-to_latex'><code>fcaR::ConceptSet$to_latex()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_list"><a href='../../fcaR/html/ConceptSet.html#method-to_list'><code>fcaR::ConceptSet$to_list()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Create a new <code>ConceptLattice</code> object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>extents</span>, <span class='va'>intents</span>, <span class='va'>objects</span>, <span class='va'>attributes</span>, I <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre><p></div></p>
@@ -194,34 +206,6 @@
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A new <code>ConceptLattice</code> object.</p>
-<p><hr>
-<a id="method-size"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>size()</code></h3>
-<p>Size of the Lattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>size</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>The number of concepts in the lattice.</p>
-<p><hr>
-<a id="method-is_empty"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>is_empty()</code></h3>
-<p>Is the lattice empty?</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>is_empty</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p><code>TRUE</code> if the lattice has no concepts.</p>
-<p><hr>
-<a id="method-extents"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>extents()</code></h3>
-<p>Concept Extents</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>extents</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>The extents of all concepts, as a <code>dgCMatrix</code>.</p>
-<p><hr>
-<a id="method-intents"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>intents()</code></h3>
-<p>Concept Intents</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>intents</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>The intents of all concepts, as a <code>dgCMatrix</code>.</p>
 <p><hr>
 <a id="method-plot"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></h3>
 <p>Plot the concept lattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -243,43 +227,6 @@
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the concept lattice.</p>
 <p><hr>
-<a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
-<p>Print the Concept Lattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>Nothing, just prints the lattice.</p>
-<p><hr>
-<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
-<p>Write in LaTeX</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>print <span class='op'>=</span> <span class='cn'>TRUE</span>, ncols <span class='op'>=</span> <span class='fl'>1</span>, numbered <span class='op'>=</span> <span class='cn'>TRUE</span>, align <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>print</code></dt><dd><p>(logical) Print to output?</p></dd>
-
-<dt><code>ncols</code></dt><dd><p>(integer) Number of columns of the output.</p></dd>
-
-<dt><code>numbered</code></dt><dd><p>(logical) Number the concepts?</p></dd>
-
-<dt><code>align</code></dt><dd><p>(logical) Align objects and attributes independently?</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>The <code>LaTeX</code> code to list all concepts.</p>
-<p><hr>
-<a id="method-["></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>[()</code></h3>
-<p>Get Concepts by Index</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre>ConceptLattice$[(indices)</pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>indices</code></dt><dd><p>(numeric or logical vector) The indices of the concepts to return as a list of Concepts. It can be a vector of logicals where <code>TRUE</code> elements are to be retained.</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A list of Concepts.</p>
-<p><hr>
 <a id="method-sublattice"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>sublattice()</code></h3>
 <p>Sublattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>sublattice</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
@@ -294,6 +241,34 @@
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>The generated sublattice as a new <code>ConceptLattice</code> object.</p>
+<p><hr>
+<a id="method-top"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>top()</code></h3>
+<p>Top of a Lattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>top</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>The top of the Concept Lattice</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>fc</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
+<span class='va'>fc</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>fc</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>top</span><span class='op'>(</span><span class='op'>)</span>
+
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-bottom"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>bottom()</code></h3>
+<p>Bottom of a Lattice</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>bottom</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>The bottom of the Concept Lattice</p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>fc</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
+<span class='va'>fc</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>fc</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>bottom</span><span class='op'>(</span><span class='op'>)</span>
+
+</pre><p></div></p>
+
 <p><hr>
 <a id="method-join_irreducibles"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>join_irreducibles()</code></h3>
 <p>Join-irreducible Elements</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -399,13 +374,6 @@
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A list with the upper neighbours of <code>C</code>.</p>
 <p><hr>
-<a id="method-support"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>support()</code></h3>
-<p>Get support of each concept</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A vector with the support of each concept.</p>
-<p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>ConceptLattice</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
@@ -427,22 +395,42 @@
 
 <span class='co'># Find join- and meet- irreducible elements</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>join_irreducibles</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ({Jupiter, Saturn}, {large, far, moon})
-#&gt; ({Uranus, Neptune}, {medium, far, moon})
-#&gt; ({Pluto}, {small, far, moon})
-#&gt; ({Mercury, Venus}, {small, near, no_moon})
-#&gt; ({Earth, Mars}, {small, near, moon})</div><div class='input'><span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>meet_irreducibles</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})
-#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})
-#&gt; ({Jupiter, Saturn}, {large, far, moon})
-#&gt; ({Uranus, Neptune}, {medium, far, moon})
-#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})
-#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})
-#&gt; ({Mercury, Venus}, {small, near, no_moon})</div><div class='input'>
+</div><div class='output co'>#&gt; A set of 5 concepts:
+#&gt; 1: ({Jupiter, Saturn}, {large, far, moon})
+#&gt; 2: ({Uranus, Neptune}, {medium, far, moon})
+#&gt; 3: ({Pluto}, {small, far, moon})
+#&gt; 4: ({Mercury, Venus}, {small, near, no_moon})
+#&gt; 5: ({Earth, Mars}, {small, near, moon})</div><div class='input'><span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>meet_irreducibles</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; A set of 7 concepts:
+#&gt; 1: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})
+#&gt; 2: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})
+#&gt; 3: ({Jupiter, Saturn}, {large, far, moon})
+#&gt; 4: ({Uranus, Neptune}, {medium, far, moon})
+#&gt; 5: ({Mercury, Venus, Earth, Mars, Pluto}, {small})
+#&gt; 6: ({Mercury, Venus, Earth, Mars}, {small, near})
+#&gt; 7: ({Mercury, Venus}, {small, near, no_moon})</div><div class='input'>
 <span class='co'># Get concept support</span>
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>support</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333
 #&gt;  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</div><div class='input'>
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `ConceptLattice$top`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>fc</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
+<span class='va'>fc</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>fc</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>top</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</div><div class='input'>
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `ConceptLattice$bottom`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>fc</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
+<span class='va'>fc</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>fc</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>$</span><span class='fu'>bottom</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -170,12 +170,10 @@
 <span class='va'>fc_planets</span><span class='op'>$</span><span class='fu'>find_concepts</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Print the first 3 concepts to latex</span>
-<span class='fu'>to_latex</span><span class='op'>(</span><span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; \begin{longtable}{ll}
-#&gt; $\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\varnothing}\,\right)$\\
-#&gt; $\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{moon}\right\}}\,\right)$\\
-#&gt; $\left(\,\ensuremath{\left\{\mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\
-#&gt; \end{longtable}</div><div class='input'>
+<span class='fu'>to_latex</span><span class='op'>(</span><span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>concepts</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>$</span><span class='fu'>to_list</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; \ensuremath{\left(\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}}, \ensuremath{\varnothing}\right)}
+#&gt; \ensuremath{\left(\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}}, \ensuremath{\left\{\mathrm{moon}\right\}}\right)}
+#&gt; \ensuremath{\left(\ensuremath{\left\{\mathrm{Jupiter},\, \mathrm{Saturn},\, \mathrm{Uranus},\, \mathrm{Neptune},\, \mathrm{Pluto}\right\}}, \ensuremath{\left\{\mathrm{far},\, \mathrm{moon}\right\}}\right)}</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

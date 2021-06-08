@@ -145,6 +145,7 @@
 <p>Enhancements:</p>
 <ul>
 <li>Better printing of Sets.</li>
+<li>More optimized ConceptLattice class. Now it inherits from a ConceptSet superclass with generic functions.</li>
 </ul>
 <p>New functionality:</p>
 <ul>
@@ -152,15 +153,18 @@
 <li>Added function to compute the <strong>dual</strong> of a FormalContext.</li>
 <li>Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to “load()” it.</li>
 <li>FormalContexts can now be saved to CXT format, in addition to RDS.</li>
+<li>Added functions to compute the top and the bottom of a concept lattice.</li>
+<li>Added new function sub() to extract a single Concept from a ConceptSet.</li>
 <li>Added functions %holds_in% and %respects%, which check the <strong>validity</strong> of a set of implications in a formal context, and if a list of attribute sets respect an implication set.</li>
 <li>Added functions %entails% and %~% to check the <strong>entailment</strong> and <strong>equivalence</strong> between two implication sets.</li>
 <li>Added new convenience function to map attributes between Sets, so computing intents, extents and closures is more robust.</li>
+<li>Added new functions <code><a href="../reference/%&amp;%.html">%&amp;%</a></code> and <code><a href="../reference/%or%.html">%|%</a></code> that compute the intersection (logical <em>and</em>) and the union (<em>or</em> operation) on Sets.</li>
 <li>
 <strong>Conceptual scaling</strong>, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.</li>
 </ul>
 <p><em>Breaking changes</em>:</p>
 <ul>
-<li>The former SparseSet and SparseConcept classes are now named Set and Concept. Thus, to create an object of these types, just use Set<span class="math inline"><em>n</em><em>e</em><em>w</em>(...)<em>o</em><em>r</em><em>C</em><em>o</em><em>n</em><em>c</em><em>e</em><em>p</em><em>t</em></span>new(…). Analogously, the former function as_SparseSet() is now as_Set().</li>
+<li>The former SparseSet and SparseConcept classes are now named Set and Concept. Thus, to create an object of these types, just use Set$new(…) or Concept$new(…). Analogously, the former function as_SparseSet() is now as_Set().</li>
 </ul>
 <p>Bugfixes:</p>
 <ul>
