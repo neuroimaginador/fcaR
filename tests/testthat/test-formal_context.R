@@ -392,7 +392,7 @@ test_that("fcaR computes intents, extents and closures of Sets", {
   fc <- FormalContext$new(I = I)
   fc$find_implications()
 
-  c1 <- fc$concepts[2][[1]]
+  c1 <- fc$concepts[2]$to_list()[[1]]
   expect_error(fc$extent(c1$get_intent()), NA)
   expect_error(fc$intent(c1$get_extent()), NA)
   expect_error(fc$closure(c1$get_intent()), NA)
@@ -433,7 +433,7 @@ test_that("fcaR checks for concepts", {
 
   for (i in seq(fc$concepts$size())) {
 
-    C <- fc$concepts[i][[1]]
+    C <- fc$concepts[i]$to_list()[[1]]
 
     expect_error(fc$is_closed(C$get_intent()), NA)
     expect_error(fc$is_concept(C), NA)

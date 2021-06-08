@@ -547,7 +547,6 @@ SparseVector set_difference_sparse1(IntegerVector xi,
 
     // Rcout << "Added column with " << my_p << std::endl;
 
-
     int init_x = xp[p], end_x = xp[p + 1];
     int init_y = yp[0], end_y = yp[1];
 
@@ -620,6 +619,89 @@ S4 set_difference_single(IntegerVector xi,
                          int number) {
 
   SparseVector res = set_difference_sparse1(xi, xp, xx,
+                                            yi, yp, yx,
+                                            number);
+
+  S4 res2 = SparseToS4_fast(res);
+
+  freeVector(&res);
+
+  return res2;
+
+}
+
+
+SparseVector set_intersection_sparse1(IntegerVector xi,
+                                    IntegerVector xp,
+                                    NumericVector xx,
+                                    IntegerVector yi,
+                                    IntegerVector yp,
+                                    NumericVector yx,
+                                    int number) {
+
+  SparseVector res;
+  initVector(&res, number);
+
+  int my_p = 0;
+
+  // Rcout << "x.p.used = " << xp.size() << std::endl;
+
+  insertArray(&(res.p), 0);
+
+  for (size_t p = 0; p < xp.size() - 1; p++) {
+
+    // Rcout << "Added column with " << my_p << std::endl;
+
+    int init_x = xp[p], end_x = xp[p + 1];
+    int init_y = yp[0], end_y = yp[1];
+
+    for (size_t i = init_x; i < end_x; i++) {
+
+      bool add = false;
+
+      for (size_t j = init_y; j < end_y; j++) {
+
+        if (yi[j] > xi[i]) break;
+
+        if (xi[i] == yi[j]) {
+
+          double val = (xx[i] > yx[j]) ? yx[j] : xx[i];
+
+          if (val > 0) {
+
+            my_p++;
+
+            // Rcout << "Added element " << my_p << std::endl;
+
+            insertArray(&(res.i), xi[i]);
+            insertArray(&(res.x), val);
+
+          }
+
+        }
+
+      }
+
+    }
+
+    insertArray(&(res.p), my_p);
+
+  }
+
+  return res;
+
+}
+
+// [[Rcpp::export]]
+S4 set_intersection_single(IntegerVector xi,
+                         IntegerVector xp,
+                         NumericVector xx,
+                         IntegerVector yi,
+                         IntegerVector yp,
+                         NumericVector yx,
+                         int number) {
+
+  SparseVector res = set_intersection_sparse1(xi, xp, xx,
                                             yi, yp, yx,
                                             number);
 

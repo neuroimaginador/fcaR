@@ -22,7 +22,7 @@ These fuzzy attributes are mapped to values in the interval [0, 1].
 }
 \source{
 Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., ... & Liu, J. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. Neuroinformatics, 15(4), 343-364.
-\url{http://schizconnect.org/}
+\url{https://pubmed.ncbi.nlm.nih.gov/26142271/}
 }
 \usage{
 cobre32

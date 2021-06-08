@@ -13,7 +13,7 @@
 #' fc_planets$concepts[1:3]
 #'
 #' # Select the first concept:
-#' C <- fc_planets$concepts[1][[1]]
+#' C <- fc_planets$concepts$sub(1)
 #'
 #' # Get its extent and intent
 #' C$get_extent()

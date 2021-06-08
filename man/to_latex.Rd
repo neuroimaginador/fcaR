@@ -26,6 +26,6 @@ fc_planets <- FormalContext$new(planets)
 fc_planets$find_concepts()
 
 # Print the first 3 concepts to latex
-to_latex(fc_planets$concepts[1:3])
+to_latex(fc_planets$concepts[1:3]$to_list())
 
 }

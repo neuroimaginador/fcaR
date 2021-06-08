@@ -870,8 +870,9 @@ O6
 <p>For a <code>ConceptLattice</code>, one may want to retrieve particular concepts, using a subsetting as in <code>R</code>:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
-<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
-<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></code></pre></div>
+<span class="co">#&gt; A set of 2 concepts:</span>
+<span class="co">#&gt; 1: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; 2: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span></code></pre></div>
 <p>Or get all the extents and all the intents of all concepts, as sparse matrices:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">extents</span><span class="op">(</span><span class="op">)</span>
@@ -923,27 +924,30 @@ O6
 <p>It may be interesting to use the notions of subconcept and superconcept. Given a concept, we can compute all its subconcepts and all its superconcepts:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># The fifth concept</span>
-<span class="va">C</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="va">C</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">sub</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="va">C</span>
 <span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
 <span class="co"># Its subconcepts:</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">subconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
-<span class="co">#&gt; ({}, {small, medium, large, near, far, moon, no_moon})</span>
+<span class="co">#&gt; A set of 2 concepts:</span>
+<span class="co">#&gt; 1: ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; 2: ({}, {small, medium, large, near, far, moon, no_moon})</span>
 <span class="co"># And its superconcepts:</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">superconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
-<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
-<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
-<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span></code></pre></div>
+<span class="co">#&gt; A set of 4 concepts:</span>
+<span class="co">#&gt; 1: ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
+<span class="co">#&gt; 2: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; 3: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="co">#&gt; 4: ({Uranus, Neptune}, {medium, far, moon})</span></code></pre></div>
 <p>Also, we can define infimum and supremum of a set of concepts as the greatest common subconcept of all the given concepts, and the lowest common superconcept of them, and can be computed by:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A list of concepts</span>
 <span class="va">C</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>
 <span class="va">C</span>
-<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
-<span class="co">#&gt; ({Earth, Mars, Pluto}, {small, moon})</span>
+<span class="co">#&gt; A set of 3 concepts:</span>
+<span class="co">#&gt; 1: ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; 2: ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="co">#&gt; 3: ({Earth, Mars, Pluto}, {small, moon})</span>
 
 <span class="co"># Supremum of the concepts in C</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">supremum</span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
@@ -958,19 +962,21 @@ O6
 <p>Also irreducible elements with respect to join (supremum) and meet (infimum) can be computed for a given concept lattice:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span>
-<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
-<span class="co">#&gt; ({Pluto}, {small, far, moon})</span>
-<span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span>
-<span class="co">#&gt; ({Earth, Mars}, {small, near, moon})</span>
+<span class="co">#&gt; A set of 5 concepts:</span>
+<span class="co">#&gt; 1: ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="co">#&gt; 2: ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; 3: ({Pluto}, {small, far, moon})</span>
+<span class="co">#&gt; 4: ({Mercury, Venus}, {small, near, no_moon})</span>
+<span class="co">#&gt; 5: ({Earth, Mars}, {small, near, moon})</span>
 <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
-<span class="co">#&gt; ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
-<span class="co">#&gt; ({Jupiter, Saturn}, {large, far, moon})</span>
-<span class="co">#&gt; ({Uranus, Neptune}, {medium, far, moon})</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
-<span class="co">#&gt; ({Mercury, Venus, Earth, Mars}, {small, near})</span>
-<span class="co">#&gt; ({Mercury, Venus}, {small, near, no_moon})</span></code></pre></div>
+<span class="co">#&gt; A set of 7 concepts:</span>
+<span class="co">#&gt; 1: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="co">#&gt; 2: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="co">#&gt; 3: ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="co">#&gt; 4: ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="co">#&gt; 5: ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="co">#&gt; 6: ({Mercury, Venus, Earth, Mars}, {small, near})</span>
+<span class="co">#&gt; 7: ({Mercury, Venus}, {small, near, no_moon})</span></code></pre></div>
 <p>This are the concepts used to build the <em>standard context</em>, mentioned above.</p>
 </div>
 </div>

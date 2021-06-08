@@ -290,7 +290,7 @@ sublattice$plot()
 It may be interesting to use the notions of subconcept and superconcept. Given a concept, we can compute all its subconcepts and all its superconcepts:
 ```{r}
 # The fifth concept
-C <- fc_planets$concepts[5][[1]]
+C <- fc_planets$concepts$sub(5)
 C
 # Its subconcepts:
 fc_planets$concepts$subconcepts(C)

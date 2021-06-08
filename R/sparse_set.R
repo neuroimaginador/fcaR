@@ -192,6 +192,8 @@ Set <- R6::R6Class(
     #' @description
     #' Prints the set to console
     #'
+    #' @param eol (logical) If \code{TRUE}, adds an end of line to the output.
+    #'
     #' @return A string with the elements of the set and their grades between brackets {}.
     #'
     #' @export

@@ -77,7 +77,7 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
 }
 
-concepts_to_latex <- function(concept_list,
+old_concepts_to_latex <- function(concept_list,
                               ncols = 1,
                               align = TRUE,
                               numbered = TRUE,
@@ -96,6 +96,59 @@ concepts_to_latex <- function(concept_list,
                        ifelse(align, "&", "\\,"),
                        "$\\left.",
                        concept_list[[i]]$get_intent()$to_latex(print = FALSE),
+                       "\\,\\right)$"))
+
+  }
+
+  output <- matrix(output, ncol = ncols)
+
+  output <- sapply(seq(nrow(output)), function(r) {
+
+    paste0(stringr::str_flatten(output[r, ], collapse = " & "), "\\\\")
+
+  })
+
+  format_cols <- c(ifelse(numbered, "l", ""),
+                   ifelse(align, "ll", "l"))
+
+  output <- c(paste0("\\begin{longtable}{",
+                     stringr::str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
+
+  output <- paste(output, collapse = "\n")
+
+  # cat(output)
+
+  return(invisible(output))
+
+}
+
+concepts_to_latex <- function(extents, intents,
+                              objects, attributes,
+                              ncols = 1,
+                              align = TRUE,
+                              numbered = TRUE,
+                              numbers = seq(ncol(extents))) {
+
+  output <- c()
+  n <- ncol(extents)
+
+  for (i in seq(n)) {
+
+    A <- Matrix::Matrix(extents[, i], sparse = TRUE)
+    B <- Matrix::Matrix(intents[, i], sparse = TRUE)
+
+    A <- Set$new(attributes = objects, M = A)
+    B <- Set$new(attributes = attributes, M = B)
+
+    prefix <- ifelse(numbered, paste0(numbers[i], ": &"), "")
+    output <- c(output,
+                paste0(prefix,
+                       "$\\left(\\,",
+                       A$to_latex(print = FALSE),
+                       ",\\right.$",
+                       ifelse(align, "&", "\\,"),
+                       "$\\left.",
+                       B$to_latex(print = FALSE),
                        "\\,\\right)$"))
 
   }

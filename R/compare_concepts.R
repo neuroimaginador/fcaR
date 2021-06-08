@@ -129,3 +129,96 @@
        call. = FALSE)
 
 }
+
+#' Intersection (Logical AND) of Fuzzy Sets
+#'
+#' @param S1 A \code{Set}
+#' @param S2 A \code{Set}
+#'
+#' @details
+#' Both \code{S1} and \code{S2} must be Sets.
+#'
+#' @return
+#' Returns the intersection of \code{S1} and \code{S2}.
+#'
+#' @examples
+#' # Build two sparse sets
+#' S <- Set$new(attributes = c("A", "B", "C"))
+#' S$assign(A = 1, B = 1)
+#' T <- Set$new(attributes = c("A", "B", "C"))
+#' T$assign(A = 1, C = 1)
+#'
+#' # Intersection
+#' S %&% T
+#'
+#' @export
+`%&%` <- function(S1, S2) {
+
+  # Fuzzy set difference
+  if (inherits(S1, "Set") &
+      inherits(S2, "Set")) {
+
+    att <- S1$get_attributes()
+
+    A <- S1$get_vector()
+    B <- S2$get_vector()
+    my_diff <- set_intersection_single(A@i, A@p, A@x,
+                                       B@i, B@p, B@x,
+                                       nrow(A))
+    S <- Set$new(attributes = att, M = my_diff)
+
+    return(S)
+
+  }
+
+  stop("Only implemented for Sets.\n",
+       call. = FALSE)
+
+}
+
+#' Union (Logical OR) of Fuzzy Sets
+#'
+#' @param S1 A \code{Set}
+#' @param S2 A \code{Set}
+#'
+#' @details
+#' Both \code{S1} and \code{S2} must be Sets.
+#'
+#' @return
+#' Returns the union of \code{S1} and \code{S2}.
+#'
+#' @examples
+#' # Build two sparse sets
+#' S <- Set$new(attributes = c("A", "B", "C"))
+#' S$assign(A = 1, B = 1)
+#' T <- Set$new(attributes = c("A", "B", "C"))
+#' T$assign(C = 1)
+#'
+#' # Union
+#' S %|% T
+#'
+#' @name %or%
+#'
+#' @export
+`%|%` <- function(S1, S2) {
+
+  # Fuzzy set difference
+  if (inherits(S1, "Set") &
+      inherits(S2, "Set")) {
+
+    att <- S1$get_attributes()
+
+    A <- S1$get_vector()
+    B <- S2$get_vector()
+    my_diff <- .union(A, B)
+    S <- Set$new(attributes = att, M = my_diff)
+
+    return(S)
+
+  }
+
+  stop("Only implemented for Sets.\n",
+       call. = FALSE)
+
+}
+

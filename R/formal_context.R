@@ -832,8 +832,8 @@ FormalContext <- R6::R6Class(
 
       }
 
-      join_irr <- self$concepts$join_irreducibles()
-      meet_irr <- self$concepts$meet_irreducibles()
+      join_irr <- self$concepts$join_irreducibles()$to_list()
+      meet_irr <- self$concepts$meet_irreducibles()$to_list()
 
       nj <- length(join_irr)
       nm <- length(meet_irr)

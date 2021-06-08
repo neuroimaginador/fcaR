@@ -157,7 +157,7 @@ sublattice$plot()
 
 ## -----------------------------------------------------------------------------
 # The fifth concept
-C <- fc_planets$concepts[5][[1]]
+C <- fc_planets$concepts$sub(5)
 C
 # Its subconcepts:
 fc_planets$concepts$subconcepts(C)

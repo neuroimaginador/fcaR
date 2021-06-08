@@ -20,7 +20,7 @@
 #'
 #' @source
 #' Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., ... & Liu, J. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. Neuroinformatics, 15(4), 343-364.
-#' \url{http://schizconnect.org/}
+#' \url{https://pubmed.ncbi.nlm.nih.gov/26142271/}
 "cobre32"
 
 #' Data for Differential Diagnosis for Schizophrenia
@@ -46,7 +46,7 @@
 #'
 #' @source
 #' Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., ... & Liu, J. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. Neuroinformatics, 15(4), 343-364.
-#' \url{http://schizconnect.org/}
+#' \url{https://pubmed.ncbi.nlm.nih.gov/26142271/}
 "cobre61"
 
 #' Data for Tourist Destination in Las Vegas

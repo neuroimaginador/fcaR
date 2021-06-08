@@ -1,23 +1,55 @@
-lattice_plot <- function(concepts, subconcept_matrix,
+lattice_plot <- function(extents, intents,
+                         subconcept_matrix,
                          objects, attributes,
                          object_names,
                          to_latex, ...) {
+
+  # Number of concepts
+  n <- ncol(extents)
 
   if (to_latex) {
 
     if (object_names) {
 
-      labels <- sapply(concepts,
-                       function(l) l$to_latex(print = FALSE)) %>%
-        stringr::str_replace_all(pattern = "\n",
-                                 replacement = "")
+      labels <- sapply(seq(n),
+                       function(i) {
+
+                         vA <- Matrix::Matrix(extents[, i],
+                                              sparse = TRUE)
+                         vB <- Matrix::Matrix(intents[, i],
+                                              sparse = TRUE)
+
+                         vA <- Set$new(attributes = objects,
+                                       M = vA)
+                         vB <- Set$new(attributes = attributes,
+                                       M = vB)
+
+                         paste0("$\\left(\\,",
+                                vA$to_latex(print = FALSE),
+                                ",\\right.",
+                                "\\left.",
+                                vB$to_latex(print = FALSE),
+                                "\\,\\right)$") %>%
+                           stringr::str_replace_all(pattern = "\n",
+                                                    replacement = "")
+
+                       })
 
     } else {
 
-      labels <- sapply(concepts,
-                       function(l) {
-                         v <- l$get_intent()
-                         v$to_latex(print = FALSE)
+      labels <- sapply(seq(n),
+                       function(i) {
+
+                         vB <- Matrix::Matrix(intents[, i],
+                                              sparse = TRUE)
+
+                         vB <- Set$new(attributes = attributes,
+                                       M = vB)
+
+                         vB$to_latex(print = FALSE) %>%
+                           stringr::str_replace_all(pattern = "\n",
+                                                    replacement = "")
+
                        })
 
     }
@@ -30,18 +62,31 @@ lattice_plot <- function(concepts, subconcept_matrix,
 
     if (object_names) {
 
-      labels <- sapply(concepts,
-                       function(l) .concept_to_string(l,
-                                                      objects,
-                                                      attributes))
+      labels <- sapply(seq(n),
+                       function(i) {
+
+                         vA <- Matrix::Matrix(extents[, i],
+                                              sparse = TRUE)
+                         vB <- Matrix::Matrix(intents[, i],
+                                              sparse = TRUE)
+
+                         .concept_to_string(vA, vB,
+                                            objects,
+                                            attributes)
+
+                       })
 
     } else {
 
-      labels <- sapply(concepts,
-                       function(l) {
-                         v <- l$get_intent()
-                         .set_to_string(S = v$get_vector(),
-                                        attributes = v$get_attributes())
+      labels <- sapply(seq(n),
+                       function(i) {
+
+                         vB <- Matrix::Matrix(intents[, i],
+                                              sparse = TRUE)
+
+                         .set_to_string(vB,
+                                        attributes)
+
                        })
 
     }

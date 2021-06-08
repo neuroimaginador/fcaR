@@ -168,6 +168,13 @@ Prints the set to console
 \if{html}{\out{<div class="r">}}\preformatted{Set$print(eol = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{eol}}{(logical) If \code{TRUE}, adds an end of line to the output.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 A string with the elements of the set and their grades between brackets {}.
 }

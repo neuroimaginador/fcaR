@@ -2,7 +2,7 @@
 % Please edit documentation in R/concept_lattice.R
 \name{ConceptLattice}
 \alias{ConceptLattice}
-\title{R6 class for a context lattice}
+\title{R6 class for a concept lattice}
 \description{
 This class implements the data structure and methods for concept lattices.
 }
@@ -20,20 +20,36 @@ fc_planets$concepts$meet_irreducibles()
 # Get concept support
 fc_planets$concepts$support()
 
+
+## ------------------------------------------------
+## Method `ConceptLattice$top`
+## ------------------------------------------------
+
+fc <- FormalContext$new(planets)
+fc$find_concepts()
+fc$concepts$top()
+
+
+## ------------------------------------------------
+## Method `ConceptLattice$bottom`
+## ------------------------------------------------
+
+fc <- FormalContext$new(planets)
+fc$find_concepts()
+fc$concepts$bottom()
+
+}
+\section{Super class}{
+\code{\link[fcaR:ConceptSet]{fcaR::ConceptSet}} -> \code{ConceptLattice}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{ConceptLattice$new()}}
-\item \href{#method-size}{\code{ConceptLattice$size()}}
-\item \href{#method-is_empty}{\code{ConceptLattice$is_empty()}}
-\item \href{#method-extents}{\code{ConceptLattice$extents()}}
-\item \href{#method-intents}{\code{ConceptLattice$intents()}}
 \item \href{#method-plot}{\code{ConceptLattice$plot()}}
-\item \href{#method-print}{\code{ConceptLattice$print()}}
-\item \href{#method-to_latex}{\code{ConceptLattice$to_latex()}}
-\item \href{#method-[}{\code{ConceptLattice$[()}}
 \item \href{#method-sublattice}{\code{ConceptLattice$sublattice()}}
+\item \href{#method-top}{\code{ConceptLattice$top()}}
+\item \href{#method-bottom}{\code{ConceptLattice$bottom()}}
 \item \href{#method-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
 \item \href{#method-meet_irreducibles}{\code{ConceptLattice$meet_irreducibles()}}
 \item \href{#method-decompose}{\code{ConceptLattice$decompose()}}
@@ -43,9 +59,24 @@ fc_planets$concepts$support()
 \item \href{#method-superconcepts}{\code{ConceptLattice$superconcepts()}}
 \item \href{#method-lower_neighbours}{\code{ConceptLattice$lower_neighbours()}}
 \item \href{#method-upper_neighbours}{\code{ConceptLattice$upper_neighbours()}}
-\item \href{#method-support}{\code{ConceptLattice$support()}}
 \item \href{#method-clone}{\code{ConceptLattice$clone()}}
 }
+}
+\if{html}{
+\out{<details ><summary>Inherited methods</summary>}
+\itemize{
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="[">}\href{../../fcaR/html/ConceptSet.html#method-[}{\code{fcaR::ConceptSet$[()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents">}\href{../../fcaR/html/ConceptSet.html#method-extents}{\code{fcaR::ConceptSet$extents()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents">}\href{../../fcaR/html/ConceptSet.html#method-intents}{\code{fcaR::ConceptSet$intents()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty">}\href{../../fcaR/html/ConceptSet.html#method-is_empty}{\code{fcaR::ConceptSet$is_empty()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="print">}\href{../../fcaR/html/ConceptSet.html#method-print}{\code{fcaR::ConceptSet$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="size">}\href{../../fcaR/html/ConceptSet.html#method-size}{\code{fcaR::ConceptSet$size()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="sub">}\href{../../fcaR/html/ConceptSet.html#method-sub}{\code{fcaR::ConceptSet$sub()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="support">}\href{../../fcaR/html/ConceptSet.html#method-support}{\code{fcaR::ConceptSet$support()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_latex">}\href{../../fcaR/html/ConceptSet.html#method-to_latex}{\code{fcaR::ConceptSet$to_latex()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_list">}\href{../../fcaR/html/ConceptSet.html#method-to_list}{\code{fcaR::ConceptSet$to_list()}}\out{</span>}
+}
+\out{</details>}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
@@ -73,58 +104,6 @@ Create a new \code{ConceptLattice} object.
 }
 \subsection{Returns}{
 A new \code{ConceptLattice} object.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-size"></a>}}
-\if{latex}{\out{\hypertarget{method-size}{}}}
-\subsection{Method \code{size()}}{
-Size of the Lattice
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$size()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-The number of concepts in the lattice.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_empty"></a>}}
-\if{latex}{\out{\hypertarget{method-is_empty}{}}}
-\subsection{Method \code{is_empty()}}{
-Is the lattice empty?
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$is_empty()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-\code{TRUE} if the lattice has no concepts.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extents"></a>}}
-\if{latex}{\out{\hypertarget{method-extents}{}}}
-\subsection{Method \code{extents()}}{
-Concept Extents
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$extents()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-The extents of all concepts, as a \code{dgCMatrix}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-intents"></a>}}
-\if{latex}{\out{\hypertarget{method-intents}{}}}
-\subsection{Method \code{intents()}}{
-Concept Intents
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$intents()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-The intents of all concepts, as a \code{dgCMatrix}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -158,65 +137,6 @@ If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of 
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
-\subsection{Method \code{print()}}{
-Print the Concept Lattice
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-Nothing, just prints the lattice.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_latex"></a>}}
-\if{latex}{\out{\hypertarget{method-to_latex}{}}}
-\subsection{Method \code{to_latex()}}{
-Write in LaTeX
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$to_latex(print = TRUE, ncols = 1, numbered = TRUE, align = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{print}}{(logical) Print to output?}
-
-\item{\code{ncols}}{(integer) Number of columns of the output.}
-
-\item{\code{numbered}}{(logical) Number the concepts?}
-
-\item{\code{align}}{(logical) Align objects and attributes independently?}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The \code{LaTeX} code to list all concepts.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-["></a>}}
-\if{latex}{\out{\hypertarget{method-[}{}}}
-\subsection{Method \code{[()}}{
-Get Concepts by Index
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$[(indices)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{indices}}{(numeric or logical vector) The indices of the concepts to return as a list of Concepts. It can be a vector of logicals where \code{TRUE} elements are to be retained.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A list of Concepts.
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-sublattice"></a>}}
 \if{latex}{\out{\hypertarget{method-sublattice}{}}}
 \subsection{Method \code{sublattice()}}{
@@ -239,6 +159,54 @@ As argument, one can provide both integer indices or \code{Concepts}, separated 
 \subsection{Returns}{
 The generated sublattice as a new \code{ConceptLattice} object.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-top"></a>}}
+\if{latex}{\out{\hypertarget{method-top}{}}}
+\subsection{Method \code{top()}}{
+Top of a Lattice
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$top()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The top of the Concept Lattice
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{fc <- FormalContext$new(planets)
+fc$find_concepts()
+fc$concepts$top()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-bottom"></a>}}
+\if{latex}{\out{\hypertarget{method-bottom}{}}}
+\subsection{Method \code{bottom()}}{
+Bottom of a Lattice
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$bottom()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+The bottom of the Concept Lattice
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{fc <- FormalContext$new(planets)
+fc$find_concepts()
+fc$concepts$bottom()
+
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-join_irreducibles"></a>}}
@@ -412,19 +380,6 @@ Upper Neighbours of a Concept
 }
 \subsection{Returns}{
 A list with the upper neighbours of \code{C}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-support"></a>}}
-\if{latex}{\out{\hypertarget{method-support}{}}}
-\subsection{Method \code{support()}}{
-Get support of each concept
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$support()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A vector with the support of each concept.
 }
 }
 \if{html}{\out{<hr>}}

@@ -71,17 +71,17 @@ test_that("fcaR writes a ConceptLattice to LaTeX", {
   expect_error(fc$concepts$to_latex(numbered = FALSE, align = FALSE), NA)
   expect_error(fc$concepts$to_latex(ncols = 2), NA)
 
-  expect_error(fc$concepts[2][[1]]$to_latex(), NA)
+  expect_error(fc$concepts[2]$to_latex(), NA)
 
-  expect_error(to_latex(fc$concepts[1:3]), NA)
+  expect_error(to_latex(fc$concepts[1:3]$to_list()), NA)
 
 })
 
 test_that("fcaR extracts concepts from a ConceptLattice", {
 
   expect_error(L <- fc$concepts[10:12], NA)
-  expect_is(L, "conceptlist")
-  expect_is(L[[1]], "Concept")
+  expect_is(L, "ConceptSet")
+  expect_is(L$to_list()[[1]], "Concept")
   expect_error(fc$concepts[fc$concepts$support() > 0.5], NA)
 
 })
@@ -102,6 +102,9 @@ test_that("fcaR computes the sublattice of a ConceptLattice", {
   expect_is(cl, "ConceptLattice")
 
   expect_error(cl <- fc$concepts$sublattice(L), NA)
+  expect_is(cl, "ConceptLattice")
+
+  expect_error(cl <- fc$concepts$sublattice(fc$concepts$sub(10)), NA)
   expect_is(cl, "ConceptLattice")
 
   expect_error(cl <- fc$concepts$sublattice(fc$concepts$support() > 0.1), NA)
@@ -131,8 +134,8 @@ test_that("fcaR computes the subconcepts and superconcepts of a given concept", 
 
   L <- fc$concepts[10:12]
 
-  expect_error(fc$concepts$subconcepts(L[[3]]), NA)
-  expect_error(fc$concepts$superconcepts(L[[3]]), NA)
+  expect_error(fc$concepts$subconcepts(L[3]), NA)
+  expect_error(fc$concepts$superconcepts(L[3]), NA)
 
 })
 
@@ -155,7 +158,7 @@ test_that("fcaR computes the size of a ConceptLattice", {
 test_that("fcaR finds the lower and upper neighbours of a concept",
           {
 
-            C <- fc$concepts[2][[1]]
+            C <- fc$concepts[2]
             expect_error(fc$concepts$lower_neighbours(C), NA)
             expect_error(fc$concepts$upper_neighbours(C), NA)
 
@@ -168,6 +171,6 @@ test_that("fcaR decomposes concepts in its meet-irreducible elements", {
 
   expect_error(cl <- fc$concepts$decompose(L), NA)
   expect_is(cl, "list")
-  expect_is(cl[[1]], "conceptlist")
+  expect_is(cl[[1]], "ConceptSet")
 
 })

@@ -65,3 +65,7 @@ set_difference_single <- function(xi, xp, xx, yi, yp, yx, number) {
     .Call(`_fcaR_set_difference_single`, xi, xp, xx, yi, yp, yx, number)
 }
 
+set_intersection_single <- function(xi, xp, xx, yi, yp, yx, number) {
+    .Call(`_fcaR_set_intersection_single`, xi, xp, xx, yi, yp, yx, number)
+}
+

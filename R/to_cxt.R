@@ -7,6 +7,8 @@
 #'
 #' @return \code{TRUE} invisibly.
 #'
+#' @noRd
+#'
 to_cxt <- function(I, objects, attributes,
                    filename) {
 
