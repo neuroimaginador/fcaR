@@ -68,5 +68,5 @@ to_latex.conceptlist <- function(x) {
 
 }
 
-.S3methods("to_latex", "conceptlist")
-.S3methods("print", "conceptlist")
+# .S3methods("to_latex", "conceptlist")
+# .S3methods("print", "conceptlist")

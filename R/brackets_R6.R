@@ -9,6 +9,7 @@
 `[.Set` <- function(x, ...) x$`[`(...)
 
 #' @export
+#' @method as.list ConceptSet
 #' @noRd
 as.list.ConceptSet <- function(x, ...) {
 
@@ -21,5 +22,14 @@ as.list.ConceptSet <- function(x, ...) {
     stop("Cannot convert R6 class to list...")
 
   }
+
+}
+
+#' @export
+#' @method length ConceptSet
+#' @noRd
+length.ConceptSet <- function(x, ...) {
+
+  x$size()
 
 }

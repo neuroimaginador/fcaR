@@ -203,7 +203,8 @@ ConceptSet <- R6::R6Class(
         objects = private$objects,
         attributes = private$attributes)
 
-      class(elements) <- "conceptlist"
+      class(elements) <- c("conceptlist", "list")
+
       return(elements)
 
     },
