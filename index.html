@@ -128,6 +128,8 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">"fcaR"</span>)</span></code></pre></div>
 <p>The development version of this package can be installed with</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"neuroimaginador/fcaR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"Malaga-FCA-group/fcaR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="example-of-use" class="section level2">
 <h2 class="hasAnchor">
@@ -299,7 +301,7 @@ O6
 </table>
 <p>Here, a value <em>x</em> in the intersection of a row and a column indicates that the object of the corresponding row possesses the attribute in the column in a degree of at least <em>x</em> (if <em>x</em> = 0, the attribute is absent in the object, and if <em>x</em> = 1, the attribute is fully present in the object).</p>
 <p>We can build a FormalContext object:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span>
@@ -312,19 +314,20 @@ O6
 <span class="co">#&gt;   O5   0     0     1    0.5    0    0   </span>
 <span class="co">#&gt;   O6  0.5    0     0     0     0    0</span></code></pre></div>
 <p>With a single function, we can compute the set of concepts:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Compute all concepts</span>
 <span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># The first concept</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
-<span class="co">#&gt; ({O1, O2, O3, O4, O5, O6}, {})</span>
+<span class="co">#&gt; A set of 1 concepts:</span>
+<span class="co">#&gt; 1: ({O1, O2, O3, O4, O5, O6}, {})</span>
 
 <span class="co"># And plot the concept lattice</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 <p>We can also extract implications from the formal context:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Extract implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span>
 
@@ -350,7 +353,7 @@ O6
 <li>Finding the join- and meet- irreducible elements, which allows to reduce the context and find the <em>standard context</em>.</li>
 </ul>
 <p>Also, one can compute the support of both implications and concepts:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000</span>
 <span class="co">#&gt;  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000</span>
@@ -360,7 +363,7 @@ O6
 <span class="co">#&gt; [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667</span>
 <span class="co">#&gt; [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000</span></code></pre></div>
 <p>In this package, we have implemented a logic to manage implications. This so-called Simplification Logic allows us to simplify the extracted rules by removing redundancies, as well as computing the closure of a given fuzzy attribute set.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Reduce the number of implications using two simple</span>
 <span class="co"># rules. The algorithm applies the specified rules</span>
 <span class="co"># in batches, if the number of rules is high.</span>
@@ -399,17 +402,26 @@ O6
 <p>Enhancements:</p>
 <ul>
 <li>Better printing of Sets.</li>
+<li>More optimized ConceptLattice class. Now it inherits from a ConceptSet superclass with generic functions.</li>
 </ul>
 <p>New functionality:</p>
 <ul>
 <li>Added function to compute the <strong>difference</strong> of two Sets.</li>
 <li>Added function to compute the <strong>dual</strong> of a FormalContext.</li>
 <li>Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to “load()” it.</li>
+<li>FormalContexts can now be saved to CXT format, in addition to RDS.</li>
+<li>Added functions to compute the top and the bottom of a concept lattice.</li>
+<li>Added new function sub() to extract a single Concept from a ConceptSet.</li>
 <li>Added functions %holds_in% and %respects%, which check the <strong>validity</strong> of a set of implications in a formal context, and if a list of attribute sets respect an implication set.</li>
 <li>Added functions %entails% and %~% to check the <strong>entailment</strong> and <strong>equivalence</strong> between two implication sets.</li>
 <li>Added new convenience function to map attributes between Sets, so computing intents, extents and closures is more robust.</li>
+<li>Added new functions <code><a href="reference/%&amp;%.html">%&amp;%</a></code> and <code><a href="reference/%or%.html">%|%</a></code> that compute the intersection (logical <em>and</em>) and the union (<em>or</em> operation) on Sets.</li>
 <li>
 <strong>Conceptual scaling</strong>, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.</li>
+</ul>
+<p><em>Breaking changes</em>:</p>
+<ul>
+<li>The former SparseSet and SparseConcept classes are now named Set and Concept. Thus, to create an object of these types, just use Set<span class="math inline"><em>n</em><em>e</em><em>w</em>(…)<em>o</em><em>r</em><em>C</em><em>o</em><em>n</em><em>c</em><em>e</em><em>p</em><em>t</em></span>new(…). Analogously, the former function as_SparseSet() is now as_Set().</li>
 </ul>
 <p>Bugfixes:</p>
 <ul>
