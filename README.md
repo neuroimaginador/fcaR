@@ -59,6 +59,10 @@ The development version of this package can be installed with
 
     remotes::install_github("neuroimaginador/fcaR", build_vignettes = TRUE)
 
+or
+
+    remotes::install_github("Malaga-FCA-group/fcaR", build_vignettes = TRUE)
+
 ## Example of Use
 
 Let us start with a fuzzy dataset (stored in a matrix I) as follows:
@@ -259,7 +263,8 @@ fc$find_concepts()
 
 # The first concept
 fc$concepts[1]
-#> ({O1, O2, O3, O4, O5, O6}, {})
+#> A set of 1 concepts:
+#> 1: ({O1, O2, O3, O4, O5, O6}, {})
 
 # And plot the concept lattice
 fc$concepts$plot()
@@ -359,6 +364,8 @@ following changes.
 Enhancements:
 
 -   Better printing of Sets.
+-   More optimized ConceptLattice class. Now it inherits from a
+    ConceptSet superclass with generic functions.
 
 New functionality:
 
@@ -366,6 +373,11 @@ New functionality:
 -   Added function to compute the **dual** of a FormalContext.
 -   Now one can create a FormalContext from a CSV, CXT or RDS file
     directly, without needing to “load()” it.
+-   FormalContexts can now be saved to CXT format, in addition to RDS.
+-   Added functions to compute the top and the bottom of a concept
+    lattice.
+-   Added new function sub() to extract a single Concept from a
+    ConceptSet.
 -   Added functions %holds\_in% and %respects%, which check the
     **validity** of a set of implications in a formal context, and if a
     list of attribute sets respect an implication set.
@@ -373,11 +385,20 @@ New functionality:
     **equivalence** between two implication sets.
 -   Added new convenience function to map attributes between Sets, so
     computing intents, extents and closures is more robust.
+-   Added new functions `%&%` and `%|%` that compute the intersection
+    (logical *and*) and the union (*or* operation) on Sets.
 -   **Conceptual scaling**, including nominal, ordinal, interordinal,
     biordinal and interval scales for many-valued formal contexts. Also,
     computation of background knowledge from the applied scales and of
     the implications that hold in the formal context. Added new
     vignette.
+
+*Breaking changes*:
+
+-   The former SparseSet and SparseConcept classes are now named Set and
+    Concept. Thus, to create an object of these types, just use
+    Set$new(…) or Concept$new(…). Analogously, the former function
+    as\_SparseSet() is now as\_Set().
 
 Bugfixes:
 
