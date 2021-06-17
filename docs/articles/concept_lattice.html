@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -569,25 +569,25 @@ O6
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc_planets</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 9 objects and 7 attributes.</span>
-<span class="co">#&gt;            small   medium   large   near   far   moon   no_moon  </span>
-<span class="co">#&gt;   Mercury    X                       X                     X     </span>
-<span class="co">#&gt;     Venus    X                       X                     X     </span>
-<span class="co">#&gt;     Earth    X                       X            X              </span>
-<span class="co">#&gt;      Mars    X                       X            X              </span>
-<span class="co">#&gt;   Jupiter                     X             X     X              </span>
-<span class="co">#&gt;    Saturn                     X             X     X              </span>
-<span class="co">#&gt;    Uranus            X                      X     X              </span>
-<span class="co">#&gt;   Neptune            X                      X     X              </span>
-<span class="co">#&gt;     Pluto    X                              X     X</span>
+<span class="co">#&gt;          small  medium  large  near  far  moon  no_moon  </span>
+<span class="co">#&gt;  Mercury   X                     X                 X     </span>
+<span class="co">#&gt;    Venus   X                     X                 X     </span>
+<span class="co">#&gt;    Earth   X                     X          X            </span>
+<span class="co">#&gt;     Mars   X                     X          X            </span>
+<span class="co">#&gt;  Jupiter                  X           X     X            </span>
+<span class="co">#&gt;   Saturn                  X           X     X            </span>
+<span class="co">#&gt;   Uranus           X                  X     X            </span>
+<span class="co">#&gt;  Neptune           X                  X     X            </span>
+<span class="co">#&gt;    Pluto   X                          X     X</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc_I</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span>
-<span class="co">#&gt;       P1    P2    P3    P4    P5    P6  </span>
-<span class="co">#&gt;   O1   0     0    0.5   0.5    1    0   </span>
-<span class="co">#&gt;   O2   1     1     1     0     0    0   </span>
-<span class="co">#&gt;   O3  0.5   0.5    0     0     0    1   </span>
-<span class="co">#&gt;   O4   0     0     0     1    0.5   0   </span>
-<span class="co">#&gt;   O5   0     0     1    0.5    0    0   </span>
-<span class="co">#&gt;   O6  0.5   0.5    0     0     0    1</span></code></pre></div>
+<span class="co">#&gt;      P1   P2   P3   P4   P5  P6  </span>
+<span class="co">#&gt;  O1  0    0   0.5  0.5   1    0  </span>
+<span class="co">#&gt;  O2  1    1    1    0    0    0  </span>
+<span class="co">#&gt;  O3 0.5  0.5   0    0    0    1  </span>
+<span class="co">#&gt;  O4  0    0    0    1   0.5   0  </span>
+<span class="co">#&gt;  O5  0    0    1   0.5   0    0  </span>
+<span class="co">#&gt;  O6 0.5  0.5   0    0    0    1</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="concept_lattice_files/figure-html/unnamed-chunk-7-1.png" width="384"></p>
@@ -625,13 +625,13 @@ O6
 <span class="va">fc1</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
 <span class="va">fc1</span>
 <span class="co">#&gt; FormalContext with 5 objects and 9 attributes.</span>
-<span class="co">#&gt;                      Latin.America   Europe   Canada   Asia.Pacific   Middle.east  </span>
-<span class="co">#&gt;          Air Canada        X           X        X           X              X       </span>
-<span class="co">#&gt;     Air New Zealand                    X                    X                      </span>
-<span class="co">#&gt;      Nippon Airways                    X                    X                      </span>
-<span class="co">#&gt;    Ansett Australia                                         X                      </span>
-<span class="co">#&gt;   Austrian Airlines                    X        X           X              X       </span>
-<span class="co">#&gt; Other attributes are: Africa, Mexico, Caribbean, USA</span>
+<span class="co">#&gt;                    Latin.America  Europe  Canada  Asia.Pacific  Middle.east  Africa  </span>
+<span class="co">#&gt;         Air Canada       X           X       X          X            X               </span>
+<span class="co">#&gt;    Air New Zealand                   X                  X                            </span>
+<span class="co">#&gt;     Nippon Airways                   X                  X                            </span>
+<span class="co">#&gt;   Ansett Australia                                      X                            </span>
+<span class="co">#&gt;  Austrian Airlines                   X       X          X            X          X    </span>
+<span class="co">#&gt; Other attributes are: Mexico, Caribbean, USA</span>
 
 <span class="co"># Read CXT</span>
 <span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"lives_in_water.cxt"</span>,
@@ -640,17 +640,17 @@ O6
 <span class="va">fc2</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
 <span class="va">fc2</span>
 <span class="co">#&gt; FormalContext with 8 objects and 9 attributes.</span>
-<span class="co">#&gt;                needs water to live   lives in water   lives on land  </span>
-<span class="co">#&gt;    fish leech           X                  X                         </span>
-<span class="co">#&gt;         bream           X                  X                         </span>
-<span class="co">#&gt;          frog           X                  X                X        </span>
-<span class="co">#&gt;           dog           X                                   X        </span>
-<span class="co">#&gt;   water weeds           X                  X                         </span>
-<span class="co">#&gt;          reed           X                  X                X        </span>
-<span class="co">#&gt;          bean           X                                   X        </span>
-<span class="co">#&gt;          corn           X                                   X        </span>
-<span class="co">#&gt; Other attributes are: needs chlorophyll, dicotyledon, monocotyledon, can move,</span>
-<span class="co">#&gt; has limbs, breast feeds</span></code></pre></div>
+<span class="co">#&gt;              needs water to live  lives in water  lives on land  needs chlorophyll  </span>
+<span class="co">#&gt;   fish leech          X                  X                                          </span>
+<span class="co">#&gt;        bream          X                  X                                          </span>
+<span class="co">#&gt;         frog          X                  X              X                           </span>
+<span class="co">#&gt;          dog          X                                 X                           </span>
+<span class="co">#&gt;  water weeds          X                  X                               X          </span>
+<span class="co">#&gt;         reed          X                  X              X                X          </span>
+<span class="co">#&gt;         bean          X                                 X                X          </span>
+<span class="co">#&gt;         corn          X                                 X                X          </span>
+<span class="co">#&gt; Other attributes are: dicotyledon, monocotyledon, can move, has limbs, breast</span>
+<span class="co">#&gt; feeds</span></code></pre></div>
 </div>
 <div id="dual-formal-context" class="section level2">
 <h2 class="hasAnchor">
@@ -660,14 +660,14 @@ O6
 <code class="sourceCode R"><span class="va">fc_dual</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="fu">dual</span><span class="op">(</span><span class="op">)</span>
 <span class="va">fc_dual</span>
 <span class="co">#&gt; FormalContext with 7 objects and 9 attributes.</span>
-<span class="co">#&gt;            Mercury   Venus   Earth   Mars   Jupiter   Saturn   Uranus   Neptune   Pluto  </span>
-<span class="co">#&gt;     small     X        X       X      X                                             X    </span>
-<span class="co">#&gt;    medium                                                        X         X             </span>
-<span class="co">#&gt;     large                                      X        X                                </span>
-<span class="co">#&gt;      near     X        X       X      X                                                  </span>
-<span class="co">#&gt;       far                                      X        X        X         X        X    </span>
-<span class="co">#&gt;      moon                      X      X        X        X        X         X        X    </span>
-<span class="co">#&gt;   no_moon     X        X</span></code></pre></div>
+<span class="co">#&gt;          Mercury  Venus  Earth  Mars  Jupiter  Saturn  Uranus  Neptune  Pluto  </span>
+<span class="co">#&gt;    small    X       X      X      X                                       X    </span>
+<span class="co">#&gt;   medium                                                  X       X            </span>
+<span class="co">#&gt;    large                                 X        X                            </span>
+<span class="co">#&gt;     near    X       X      X      X                                            </span>
+<span class="co">#&gt;      far                                 X        X       X       X       X    </span>
+<span class="co">#&gt;     moon                   X      X      X        X       X       X       X    </span>
+<span class="co">#&gt;  no_moon    X       X</span></code></pre></div>
 <p>The result is a <code>FormalContext</code> where attributes are now the objects of the previous formal context and viceversa.</p>
 </div>
 <div id="closures" class="section level2">
@@ -717,21 +717,21 @@ O6
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span>
-<span class="co">#&gt;                      small   medium   large   near   far   moon   no_moon  </span>
-<span class="co">#&gt;               Pluto    X                              X     X              </span>
-<span class="co">#&gt;    [Mercury, Venus]    X                       X                     X     </span>
-<span class="co">#&gt;       [Earth, Mars]    X                       X            X              </span>
-<span class="co">#&gt;   [Jupiter, Saturn]                     X             X     X              </span>
-<span class="co">#&gt;   [Uranus, Neptune]            X                      X     X</span>
+<span class="co">#&gt;                    small  medium  large  near  far  moon  no_moon  </span>
+<span class="co">#&gt;              Pluto   X                          X     X            </span>
+<span class="co">#&gt;   [Mercury, Venus]   X                     X                 X     </span>
+<span class="co">#&gt;      [Earth, Mars]   X                     X          X            </span>
+<span class="co">#&gt;  [Jupiter, Saturn]                  X           X     X            </span>
+<span class="co">#&gt;  [Uranus, Neptune]           X                  X     X</span>
 
 <span class="va">fc_I</span><span class="op">$</span><span class="fu">clarify</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 5 objects and 5 attributes.</span>
-<span class="co">#&gt;             P3    P4    P5    P6   [P1, P2]  </span>
-<span class="co">#&gt;         O1  0.5   0.5    1    0       0      </span>
-<span class="co">#&gt;         O2   1     0     0    0       1      </span>
-<span class="co">#&gt;         O4   0     1    0.5   0       0      </span>
-<span class="co">#&gt;         O5   1    0.5    0    0       0      </span>
-<span class="co">#&gt;   [O3, O6]   0     0     0    1      0.5</span></code></pre></div>
+<span class="co">#&gt;            P3   P4   P5  P6  [P1, P2]  </span>
+<span class="co">#&gt;        O1 0.5  0.5   1    0      0     </span>
+<span class="co">#&gt;        O2  1    0    0    0      1     </span>
+<span class="co">#&gt;        O4  0    1   0.5   0      0     </span>
+<span class="co">#&gt;        O5  1   0.5   0    0      0     </span>
+<span class="co">#&gt;  [O3, O6]  0    0    0    1     0.5</span></code></pre></div>
 <p>Note that merged attributes or objects are stored in the new formal context by using squared brackets to unify them, e.g. <code>[Mercury, Venus]</code>.</p>
 </div>
 <div id="extracting-implications-and-concepts" class="section level2">
@@ -783,24 +783,24 @@ O6
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span>
-<span class="co">#&gt;       M1   M2   M3   M4   M5   M6   M7  </span>
-<span class="co">#&gt;   J1  X    X    X                       </span>
-<span class="co">#&gt;   J2  X    X         X                  </span>
-<span class="co">#&gt;   J3  X    X              X             </span>
-<span class="co">#&gt;   J4                      X    X    X   </span>
-<span class="co">#&gt;   J5  X                   X    X</span>
+<span class="co">#&gt;     M1  M2  M3  M4  M5  M6  M7  </span>
+<span class="co">#&gt;  J1  X   X   X                  </span>
+<span class="co">#&gt;  J2  X   X       X              </span>
+<span class="co">#&gt;  J3  X   X           X          </span>
+<span class="co">#&gt;  J4                  X   X   X  </span>
+<span class="co">#&gt;  J5  X               X   X</span>
 <span class="va">fc_I</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 9 objects and 9 attributes.</span>
-<span class="co">#&gt;       M1   M2   M3   M4   M5   M6   M7   M8   M9  </span>
-<span class="co">#&gt;   J1  X    X         X                            </span>
-<span class="co">#&gt;   J2  X    X    X    X                            </span>
-<span class="co">#&gt;   J3  X    X    X         X                       </span>
-<span class="co">#&gt;   J4  X                   X    X                  </span>
-<span class="co">#&gt;   J5  X              X    X    X                  </span>
-<span class="co">#&gt;   J6  X    X    X    X    X    X                  </span>
-<span class="co">#&gt;   J7                                X    X        </span>
-<span class="co">#&gt;   J8                                X    X    X   </span>
-<span class="co">#&gt;   J9                      X    X    X         X</span></code></pre></div>
+<span class="co">#&gt;     M1  M2  M3  M4  M5  M6  M7  M8  M9  </span>
+<span class="co">#&gt;  J1  X   X       X                      </span>
+<span class="co">#&gt;  J2  X   X   X   X                      </span>
+<span class="co">#&gt;  J3  X   X   X       X                  </span>
+<span class="co">#&gt;  J4  X               X   X              </span>
+<span class="co">#&gt;  J5  X           X   X   X              </span>
+<span class="co">#&gt;  J6  X   X   X   X   X   X              </span>
+<span class="co">#&gt;  J7                          X   X      </span>
+<span class="co">#&gt;  J8                          X   X   X  </span>
+<span class="co">#&gt;  J9                  X   X   X       X</span></code></pre></div>
 <p>Note that now objects are named J1, J2… and attributes are M1, M2…, from join and meet.</p>
 </div>
 <div id="saving-and-loading" class="section level2">
@@ -859,9 +859,9 @@ O6
 <span class="co">#&gt; 7: &amp;$\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars},\, \mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{moon}\right\}}\,\right)$\\</span>
 <span class="co">#&gt; 8: &amp;$\left(\,\ensuremath{\left\{\mathrm{Pluto}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{far},\, \mathrm{moon}\right\}}\,\right)$\\</span>
 <span class="co">#&gt; 9: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus},\, \mathrm{Earth},\, \mathrm{Mars}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near}\right\}}\,\right)$\\</span>
-<span class="co">#&gt; 10: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near},\, \mathrm{no_moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 10: &amp;$\left(\,\ensuremath{\left\{\mathrm{Mercury},\, \mathrm{Venus}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near},\, \mathrm{no\_moon}\right\}}\,\right)$\\</span>
 <span class="co">#&gt; 11: &amp;$\left(\,\ensuremath{\left\{\mathrm{Earth},\, \mathrm{Mars}\right\}},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{near},\, \mathrm{moon}\right\}}\,\right)$\\</span>
-<span class="co">#&gt; 12: &amp;$\left(\,\ensuremath{\varnothing},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{medium},\, \mathrm{large},\, \mathrm{near},\, \mathrm{far},\, \mathrm{moon},\, \mathrm{no_moon}\right\}}\,\right)$\\</span>
+<span class="co">#&gt; 12: &amp;$\left(\,\ensuremath{\varnothing},\right.$&amp;$\left.\ensuremath{\left\{\mathrm{small},\, \mathrm{medium},\, \mathrm{large},\, \mathrm{near},\, \mathrm{far},\, \mathrm{moon},\, \mathrm{no\_moon}\right\}}\,\right)$\\</span>
 <span class="co">#&gt; \end{longtable}</span></code></pre></div>
 </div>
 <div id="getting-all-extents-intents-and-retrieving-concepts" class="section level2">

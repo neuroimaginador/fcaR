@@ -42,6 +42,7 @@ Imports:
     R6,
     Rcpp,
     registry,
+    settings,
     stringr,
     tibble,
     tikzDevice,

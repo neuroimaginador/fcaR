@@ -7,7 +7,7 @@
 * Default platforms using devtools::check_rhub().
 
 ## Comments
-This version adds new functionalities and optimizations to code. When tested using valgrind, no errors related to fcaR code are found.
+This version is just a minor update fixing some minor bugs that appeared in some specific cases.
 
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs. 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if Set or FormalContext respects an ImplicationSet — %respects% • fcaR</title>
+<title>Set or get options for fcaR — fcaR_options • fcaR</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Check if Set or FormalContext respects an ImplicationSet — %respects%" />
-<meta property="og:description" content="Check if Set or FormalContext respects an ImplicationSet" />
+<meta property="og:title" content="Set or get options for fcaR — fcaR_options" />
+<meta property="og:description" content="Set or get options for fcaR" />
 
 
 
@@ -135,51 +135,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if Set or FormalContext respects an ImplicationSet</h1>
-    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/holds_respects.R'><code>R/holds_respects.R</code></a></small>
-    <div class="hidden name"><code>grapes-respects-grapes.Rd</code></div>
+    <h1>Set or get options for fcaR</h1>
+    <small class="dont-index">Source: <a href='https://github.com/neuroimaginador/fcaR/blob/master/R/options.R'><code>R/options.R</code></a></small>
+    <div class="hidden name"><code>fcaR_options.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Check if Set or FormalContext respects an ImplicationSet</p>
+    <p>Set or get options for fcaR</p>
     </div>
 
-    <pre class="usage"><span class='va'>set</span> <span class='op'>%respects%</span> <span class='va'>imps</span></pre>
+    <pre class="usage"><span class='fu'>fcaR_options</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>set</th>
-      <td><p>(list of <code>Set</code>s, or a <code>FormalContext</code>) The sets of attributes to check whether they respect the <code>ImplicationSet</code>.</p></td>
-    </tr>
-    <tr>
-      <th>imps</th>
-      <td><p>(<code>ImplicationSet</code>) The set of implications to check.</p></td>
+      <th>...</th>
+      <td><p>Option names to retrieve option values or <code>[key]=[value]</code> pairs to set options.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="supported-options"><a class="anchor" href="#supported-options"></a>Supported options</h2>
 
-    <p>A logical matrix with as many rows as <code>Set</code>s and as many columns as implications in the <code>ImplicationSet</code>. A <code>TRUE</code> in element (i, j) of the result means that the i-th <code>Set</code> respects the j-th implication of the <code>ImplicationSet</code>.</p>
+    
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='va'>fc</span> <span class='op'>&lt;-</span> <span class='va'><a href='FormalContext.html'>FormalContext</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>fc</span><span class='op'>$</span><span class='fu'>find_implications</span><span class='op'>(</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>imps</span> <span class='op'>&lt;-</span> <span class='va'>fc</span><span class='op'>$</span><span class='va'>implications</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>fc</span> <span class='op'>%respects%</span> <span class='va'>imps</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 9 x 10 Matrix of class "lgeMatrix"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>       imp_01 imp_02 imp_03 imp_04 imp_05 imp_06 imp_07 imp_08 imp_09 imp_10</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_1   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_2   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_3   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_4   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_5   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_6   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_7   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_8   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> set_9   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
-</pre>
+<p>The following options are supported</p><ul>
+<li><p><code>decimal_places</code>(<code>numeric</code>;2) The number of decimal places to show when printing or exporting to LaTeX sets, implications, concepts, etc.</p></li>
+</ul>
+
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

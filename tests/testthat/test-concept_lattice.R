@@ -73,7 +73,7 @@ test_that("fcaR writes a ConceptLattice to LaTeX", {
 
   expect_error(fc$concepts[2]$to_latex(), NA)
 
-  expect_error(to_latex(fc$concepts[1:3]$to_list()), NA)
+  expect_error(fc$concepts[1:3]$to_latex(), NA)
 
 })
 

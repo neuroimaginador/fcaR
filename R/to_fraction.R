@@ -55,12 +55,17 @@
                           attributes = colnames(M),
                           width = getOption("width")) {
 
+  decimal_places <- fcaR_options("decimal_places")
+  M[] <- M %>%
+    formatC(digits = decimal_places) %>%
+    stringr::str_replace_all("\\s*", "")
+
   M <- cbind(objects, M)
   M <- rbind(c("", attributes), M)
 
   # Column width
   col_width <- apply(M, 2,
-                     function(m) max(stringr::str_length(m))) + 2
+                     function(m) max(stringr::str_length(m))) + 1
 
   # Columns to show
   ids <- which(cumsum(col_width) < width)

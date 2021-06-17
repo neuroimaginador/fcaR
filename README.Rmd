@@ -152,34 +152,20 @@ For more details on the methods implemented and further examples, see the vignet
 
 With respect to the CRAN version, the development version has the following changes.
 
-### fcaR 1.1.0
+### fcaR 1.1.1
  
-Enhancements: 
 
-* Better printing of Sets.
-* More optimized ConceptLattice class. Now it inherits from a ConceptSet superclass with generic functions.
+Enhancements:
+
+* The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.
 
 New functionality:
 
-* Added function to compute the __difference__ of two Sets.
-* Added function to compute the __dual__ of a FormalContext.
-* Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to "load()" it.
-* FormalContexts can now be saved to CXT format, in addition to RDS.
-* Added functions to compute the top and the bottom of a concept lattice.
-* Added new function sub() to extract a single Concept from a ConceptSet.
-* Added functions %holds_in% and %respects%, which check the __validity__ of a set of implications in a formal context, and if a list of attribute sets respect an implication set.
-* Added functions %entails% and %~% to check the __entailment__ and __equivalence__ between two implication sets.
-* Added new convenience function to map attributes between Sets, so computing intents, extents and closures is more robust.
-* Added new functions `%&%` and `%|%` that compute the intersection (logical _and_) and the union (_or_ operation) on Sets.
-* __Conceptual scaling__, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.
-
-_Breaking changes_:
-
-* The former SparseSet and SparseConcept classes are now named Set and Concept. Thus, to create an object of these types, just use Set\$new(...) or Concept\$new(...). Analogously, the former function as_SparseSet() is now as_Set().
+* Now the package uses the _settings_ package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.
 
 Bugfixes:
 
-* Minor bugfixes in several functions.
+* Fixed exporting to latex with special characters such as $, _, etc.
 
 
 ## References

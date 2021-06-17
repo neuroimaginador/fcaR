@@ -1391,6 +1391,13 @@ FormalContext <- R6::R6Class(
                             latex = TRUE,
                             type = fraction)
 
+        } else {
+
+          decimal_places <- fcaR_options("decimal_places")
+          I[] <- I %>%
+            formatC(digits = decimal_places) %>%
+            stringr::str_replace_all("\\s*", "")
+
         }
 
       }

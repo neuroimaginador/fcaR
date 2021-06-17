@@ -1,5 +1,17 @@
 # fcaR 1.1.1
 
+Enhancements:
+
+* The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.
+
+New functionality:
+
+* Now the package uses the _settings_ package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.
+
+Bugfixes:
+
+* Fixed exporting to latex with special characters such as $, _, etc.
+
 # fcaR 1.1.0
  
 Enhancements: 

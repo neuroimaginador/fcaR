@@ -246,13 +246,13 @@ fc <- FormalContext$new(I)
 
 print(fc)
 #> FormalContext with 6 objects and 6 attributes.
-#>       P1    P2    P3    P4    P5    P6  
-#>   O1   0     1    0.5   0.5    1    0   
-#>   O2   1     1     1     0     0    0   
-#>   O3  0.5   0.5    0     0     0    1   
-#>   O4   0     0     0     1    0.5   0   
-#>   O5   0     0     1    0.5    0    0   
-#>   O6  0.5    0     0     0     0    0
+#>      P1   P2   P3   P4   P5  P6  
+#>  O1  0    1   0.5  0.5   1    0  
+#>  O2  1    1    1    0    0    0  
+#>  O3 0.5  0.5   0    0    0    1  
+#>  O4  0    0    0    1   0.5   0  
+#>  O5  0    0    1   0.5   0    0  
+#>  O6 0.5   0    0    0    0    0
 ```
 
 With a single function, we can compute the set of concepts:
@@ -329,7 +329,7 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
 #> --> Composition: from 12 to 12 in 0.001 secs.
-#> --> Generalization: from 12 to 12 in 0.003 secs.
+#> --> Generalization: from 12 to 12 in 0.002 secs.
 #> Batch took 0.004 secs.
 
 # Reduced set of implications
@@ -359,50 +359,24 @@ the vignettes in this package.
 With respect to the CRAN version, the development version has the
 following changes.
 
-### fcaR 1.1.0
+### fcaR 1.1.1
 
 Enhancements:
 
--   Better printing of Sets.
--   More optimized ConceptLattice class. Now it inherits from a
-    ConceptSet superclass with generic functions.
+-   The user can control the number of decimal digits when exporting to
+    LaTeX or when printing formal contexts, concept lattices and
+    implications. Just use fcaR\_options(decimal\_places = n), where n
+    is the number of desired decimal digits.
 
 New functionality:
 
--   Added function to compute the **difference** of two Sets.
--   Added function to compute the **dual** of a FormalContext.
--   Now one can create a FormalContext from a CSV, CXT or RDS file
-    directly, without needing to “load()” it.
--   FormalContexts can now be saved to CXT format, in addition to RDS.
--   Added functions to compute the top and the bottom of a concept
-    lattice.
--   Added new function sub() to extract a single Concept from a
-    ConceptSet.
--   Added functions %holds\_in% and %respects%, which check the
-    **validity** of a set of implications in a formal context, and if a
-    list of attribute sets respect an implication set.
--   Added functions %entails% and %\~% to check the **entailment** and
-    **equivalence** between two implication sets.
--   Added new convenience function to map attributes between Sets, so
-    computing intents, extents and closures is more robust.
--   Added new functions `%&%` and `%|%` that compute the intersection
-    (logical *and*) and the union (*or* operation) on Sets.
--   **Conceptual scaling**, including nominal, ordinal, interordinal,
-    biordinal and interval scales for many-valued formal contexts. Also,
-    computation of background knowledge from the applied scales and of
-    the implications that hold in the formal context. Added new
-    vignette.
-
-*Breaking changes*:
-
--   The former SparseSet and SparseConcept classes are now named Set and
-    Concept. Thus, to create an object of these types, just use
-    Set$new(…) or Concept$new(…). Analogously, the former function
-    as\_SparseSet() is now as\_Set().
+-   Now the package uses the *settings* package to manage several
+    options. Currently, the only option is the number of decimal digits
+    to use when printing or exporting to LaTeX.
 
 Bugfixes:
 
--   Minor bugfixes in several functions.
+-   Fixed exporting to latex with special characters such as $, \_, etc.
 
 ## References
 

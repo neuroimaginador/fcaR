@@ -5,7 +5,13 @@ set_to_latex <- function(S, attributes) {
   if (length(idx) > 0) {
 
     A <- S[idx]
-    att <- attributes[idx]
+    decimal_places <- fcaR_options("decimal_places")
+    A <- A %>%
+      formatC(digits = decimal_places) %>%
+      stringr::str_replace_all("\\s*", "")
+
+    att <- attributes[idx] %>%
+      format_label()
 
     tmp <- paste0("\\ensuremath{\\left\\{",
                   stringr::str_flatten(paste0("{^{", A, "}}\\!/\\mathrm{", att, "}"),
@@ -68,51 +74,6 @@ imp_to_latex <- function(imp_set, ncols = 1,
   format_cols <- ifelse(numbered, "rrcl", "rcl")
 
   output <- c(paste0("\\begin{longtable*}{", stringr::str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable*}")
-
-  output <- paste(output, collapse = "\n")
-
-  # cat(output)
-
-  return(invisible(output))
-
-}
-
-old_concepts_to_latex <- function(concept_list,
-                              ncols = 1,
-                              align = TRUE,
-                              numbered = TRUE,
-                              numbers = seq_along(concept_list)) {
-
-  output <- c()
-
-  for (i in seq_along(concept_list)) {
-
-    prefix <- ifelse(numbered, paste0(numbers[i], ": &"), "")
-    output <- c(output,
-                paste0(prefix,
-                       "$\\left(\\,",
-                       concept_list[[i]]$get_extent()$to_latex(print = FALSE),
-                       ",\\right.$",
-                       ifelse(align, "&", "\\,"),
-                       "$\\left.",
-                       concept_list[[i]]$get_intent()$to_latex(print = FALSE),
-                       "\\,\\right)$"))
-
-  }
-
-  output <- matrix(output, ncol = ncols)
-
-  output <- sapply(seq(nrow(output)), function(r) {
-
-    paste0(stringr::str_flatten(output[r, ], collapse = " & "), "\\\\")
-
-  })
-
-  format_cols <- c(ifelse(numbered, "l", ""),
-                   ifelse(align, "ll", "l"))
-
-  output <- c(paste0("\\begin{longtable}{",
-                     stringr::str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
 
   output <- paste(output, collapse = "\n")
 

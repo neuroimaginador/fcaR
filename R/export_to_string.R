@@ -5,6 +5,10 @@
   if (length(idx) > 0) {
 
     A <- S[idx]
+    decimal_places <- fcaR_options("decimal_places")
+    A <- A %>%
+      formatC(digits = decimal_places) %>%
+      stringr::str_replace_all("\\s*", "")
     att <- attributes[idx]
 
     tmp <- paste0("{",
@@ -18,15 +22,6 @@
     "{}"
 
   }
-
-}
-
-.old.concept_to_string <- function(C, objects, attributes) {
-
-  A <- .set_to_string(C$get_extent()$get_vector(), objects)
-  B <- .set_to_string(C$get_intent()$get_vector(), attributes)
-
-  return(paste0("(", A, ", ", B, ")"))
 
 }
 
