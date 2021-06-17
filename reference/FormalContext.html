@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -499,7 +499,7 @@ extracted from the application of scales.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Prints information regarding the formal context.</p>
 <p><hr>
-<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='to_latex.html'>to_latex()</a></code></h3>
+<a id="method-to_latex"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>to_latex()</code></h3>
 <p>Write the context in LaTeX format</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>to_latex</span><span class='op'>(</span>
   table <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -569,16 +569,16 @@ extracted from the application of scales.</p>
 <span class='va'>fc_planets</span> <span class='op'>&lt;-</span> <span class='va'>FormalContext</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>planets</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>fc_planets</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; FormalContext with 9 objects and 7 attributes.
-#&gt;            small   medium   large   near   far   moon   no_moon  
-#&gt;   Mercury    X                       X                     X     
-#&gt;     Venus    X                       X                     X     
-#&gt;     Earth    X                       X            X              
-#&gt;      Mars    X                       X            X              
-#&gt;   Jupiter                     X             X     X              
-#&gt;    Saturn                     X             X     X              
-#&gt;    Uranus            X                      X     X              
-#&gt;   Neptune            X                      X     X              
-#&gt;     Pluto    X                              X     X              </div><div class='input'>
+#&gt;          small  medium  large  near  far  moon  no_moon  
+#&gt;  Mercury   X                     X                 X     
+#&gt;    Venus   X                     X                 X     
+#&gt;    Earth   X                     X          X            
+#&gt;     Mars   X                     X          X            
+#&gt;  Jupiter                  X           X     X            
+#&gt;   Saturn                  X           X     X            
+#&gt;   Uranus           X                  X     X            
+#&gt;  Neptune           X                  X     X            
+#&gt;    Pluto   X                          X     X            </div><div class='input'>
 <span class='co'># Define a set of attributes</span>
 <span class='va'>S</span> <span class='op'>&lt;-</span> <span class='va'><a href='Set.html'>Set</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>attributes <span class='op'>=</span> <span class='va'>fc_planets</span><span class='op'>$</span><span class='va'>attributes</span><span class='op'>)</span>
 <span class='va'>S</span><span class='op'>$</span><span class='fu'>assign</span><span class='op'>(</span>moon <span class='op'>=</span> <span class='fl'>1</span>, large <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
@@ -625,23 +625,23 @@ extracted from the application of scales.</p>
 <span class='va'>fc</span><span class='op'>$</span><span class='fu'>get_scales</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $nitro
 #&gt; FormalContext with 3 objects and 3 attributes.
-#&gt;      nitro &gt;= 1   nitro &gt;= 2   nitro &gt;= 3  
-#&gt;   1      X                                 
-#&gt;   2      X            X                    
-#&gt;   3      X            X            X       
+#&gt;    nitro &gt;= 1  nitro &gt;= 2  nitro &gt;= 3  
+#&gt;  1      X                              
+#&gt;  2      X           X                  
+#&gt;  3      X           X           X      
 #&gt; 
 #&gt; $OS
 #&gt; FormalContext with 3 objects and 2 attributes.
-#&gt;      OS = O   OS = S  
-#&gt;                       
-#&gt;   O    X              
-#&gt;   S             X     
+#&gt;    OS = O  OS = S  
+#&gt;                    
+#&gt;  O    X            
+#&gt;  S            X    
 #&gt; 
 #&gt; $ring
 #&gt; FormalContext with 2 objects and 2 attributes.
-#&gt;          ring = hex   ring = penta  
-#&gt;     hex      X                      
-#&gt;   penta                    X        
+#&gt;        ring = hex  ring = penta  
+#&gt;    hex      X                    
+#&gt;  penta                   X       
 #&gt; </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `FormalContext$background_knowledge`</span>
