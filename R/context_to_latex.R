@@ -2,6 +2,9 @@ context_to_latex <- function(I,
                              objects = rownames(I),
                              attributes = colnames(I)) {
 
+  objects <- format_label(objects)
+  attributes <- format_label(attributes)
+
   format <- c("l",
               rep("c", length(attributes))) %>%
     stringr::str_flatten()
