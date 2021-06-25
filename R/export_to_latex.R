@@ -156,11 +156,11 @@ concepts_to_latex <- function(extents, intents,
   }
 
   output <- c(paste0(size_prefix,
-                     "\\begin{longtable}{",
+                     "\\begin{longtable*}{",
                      stringr::str_flatten(rep(format_cols, ncols)),
                      "}"),
               output,
-              "\\end{longtable}",
+              "\\end{longtable*}",
               size_suffix)
 
   output <- paste(output, collapse = "\n")
