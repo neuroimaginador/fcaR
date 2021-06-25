@@ -160,12 +160,20 @@ lattice_plot <- function(extents, intents,
     }
 
     options( tikzLatexPackages = c(
-      getOption( "tikzLatexPackages" ),
+      "\\usepackage{tikz}",
+      "\\usepackage[active,tightpage,psfixbb]{preview}",
+      "\\PreviewEnvironment{pgfpicture}",
+      "\\setlength\\PreviewBorder{0pt}",
+      # getOption( "tikzLatexPackages" ),
       "\\usepackage{amssymb}"
     ))
 
     args[names(dots)] <- dots[names(dots)]
 
+    on.exit({
+      if (!is.null(grDevices::dev.list()))
+        grDevices::dev.off()
+    })
     do.call(tikzDevice::tikz, args = args)
 
   }

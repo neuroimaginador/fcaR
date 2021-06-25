@@ -66,6 +66,15 @@ plot_context <- function(I, to_latex, ...) {
 
     }
 
+    options( tikzLatexPackages = c(
+      "\\usepackage{tikz}",
+      "\\usepackage[active,tightpage,psfixbb]{preview}",
+      "\\PreviewEnvironment{pgfpicture}",
+      "\\setlength\\PreviewBorder{0pt}",
+      # getOption( "tikzLatexPackages" ),
+      "\\usepackage{amssymb}"
+    ))
+
     args[names(dots)] <- dots[names(dots)]
 
     do.call(tikzDevice::tikz, args = args)
