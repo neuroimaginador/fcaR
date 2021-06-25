@@ -73,7 +73,25 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   format_cols <- ifelse(numbered, "rrcl", "rcl")
 
-  output <- c(paste0("\\begin{longtable*}{", stringr::str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable*}")
+  sz <- fcaR_options("latex_size")
+  if (sz != "normalsize") {
+
+    size_prefix <- paste0("\\begingroup\\", sz)
+    size_suffix <- "\\endgroup\n"
+
+  } else {
+
+    size_prefix <- size_suffix <- ""
+
+  }
+
+  output <- c(paste0(size_prefix,
+                     "\\begin{longtable*}{",
+                     stringr::str_flatten(rep(format_cols, ncols)),
+                     "}"),
+              output,
+              paste0("\\end{longtable*}",
+                     size_suffix))
 
   output <- paste(output, collapse = "\n")
 
@@ -125,8 +143,25 @@ concepts_to_latex <- function(extents, intents,
   format_cols <- c(ifelse(numbered, "l", ""),
                    ifelse(align, "ll", "l"))
 
-  output <- c(paste0("\\begin{longtable}{",
-                     stringr::str_flatten(rep(format_cols, ncols)), "}"), output, "\\end{longtable}")
+  sz <- fcaR_options("latex_size")
+  if (sz != "normalsize") {
+
+    size_prefix <- paste0("\\begingroup\\", sz)
+    size_suffix <- "\\endgroup\n"
+
+  } else {
+
+    size_prefix <- size_suffix <- ""
+
+  }
+
+  output <- c(paste0(size_prefix,
+                     "\\begin{longtable}{",
+                     stringr::str_flatten(rep(format_cols, ncols)),
+                     "}"),
+              output,
+              "\\end{longtable}",
+              size_suffix)
 
   output <- paste(output, collapse = "\n")
 
