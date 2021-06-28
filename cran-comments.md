@@ -7,7 +7,7 @@
 * Default platforms using devtools::check_rhub().
 
 ## Comments
-This version is just a minor update fixing some minor bugs that appeared in some specific cases.
+This version is just an update fixing some minor bugs that appeared in some specific cases. In addition, we have changed the Github repo hosting the most stable version, and reflected the change in the DESCRIPTION file.
 
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs. 
