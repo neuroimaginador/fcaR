@@ -11,7 +11,7 @@
 #' fc <- FormalContext$new(planets)
 #' fc$find_implications()
 #' mitotal <- tamaño(fc$implications)
-tamaño <- function(implications){
+size <- function(implications){
   # calcula el tamaño de un conjunto de implicaciones
   total <- sum(implications$size())
   return(total)
