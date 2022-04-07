@@ -13,21 +13,38 @@ set_to_latex <- function(S, attributes) {
     att <- attributes[idx] %>%
       format_label()
 
-    tmp <- paste0("\\ensuremath{\\left\\{",
-                  stringr::str_flatten(paste0("{^{", A, "}}\\!/\\mathrm{", att, "}"),
-                                       collapse = ",\\, "), "\\right\\}}")
+    str <- sapply(length(att),
+                  \(i) element_to_latex(nm = att[i],
+                                        val = A[i])) %>%
+      stringr::str_flatten(", ")
+
+    str <- paste0("\\\\left\\\\{", str, "\\\\right\\\\}")
+    return(str)
 
   } else {
 
-    tmp <- "\\ensuremath{\\varnothing}"
+    return("\\\\varnothing")
 
   }
 
-  tmp <- gsub(pattern = "(\\{\\^\\{1\\}\\}\\\\!\\/)",
-              replacement = "",
-              x = tmp)
+}
 
-  return(tmp)
+element_to_latex <- function(nm, val) {
+
+  if (val == "1") {
+
+    return(nm)
+
+  } else {
+
+    str <- glue::glue(
+      "{^{[val]}}\\\\!/[nm]",
+      .open = "[", .close = "]"
+    )
+
+    return(str)
+
+  }
 
 }
 
