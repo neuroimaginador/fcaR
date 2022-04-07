@@ -25,6 +25,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,23 +39,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -82,7 +78,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/Malaga-FCA-group/fcaR/">
+  <a href="https://github.com/Malaga-FCA-group/fcaR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -99,15 +95,15 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="fcar-tools-for-formal-concept-analysis" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#fcar-tools-for-formal-concept-analysis" class="anchor"></a>fcaR: Tools for Formal Concept Analysis</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="fcar-tools-for-formal-concept-analysis">fcaR: Tools for Formal Concept Analysis<a class="anchor" aria-label="anchor" href="#fcar-tools-for-formal-concept-analysis"></a>
+</h1></div>
 <!-- badges: start -->
 
 <p>The aim of this package is to provide tools to perform fuzzy formal concept analysis (FCA) from within R. It provides functions to load and save a Formal Context, extract its concept lattice and implications. In addition, one can use the implications to compute semantic closures of fuzzy sets and, thus, build recommendation systems.</p>
-<div id="details" class="section level2">
-<h2 class="hasAnchor">
-<a href="#details" class="anchor"></a>Details</h2>
+<div class="section level2">
+<h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
+</h2>
 <p>The fcaR package provides data structures which allow the user to work seamlessly with formal contexts and sets of implications. More explicitly, three main classes are implemented, using the object-oriented-programming paradigm in R:</p>
 <ul>
 <li>FormalContext encapsulates the definition of a formal context (G, M, I), being G the set of objects, M the set of attributes and I the (fuzzy) relationship matrix, and provides methods to operate on the context using FCA tools.</li>
@@ -121,9 +117,9 @@
 </ul>
 <p>Since fcaR is an extension of the data model in the arules package, most of the methods and classes implemented interoperates with the main S4 classes in arules (transactions and rules).</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>This package is available at CRAN, so its stable version can be easily installed using:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">"fcaR"</span>)</span></code></pre></div>
 <p>The development version of this package can be installed with</p>
@@ -131,9 +127,9 @@
 <p>or</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"Malaga-FCA-group/fcaR"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 </div>
-<div id="example-of-use" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-of-use" class="anchor"></a>Example of Use</h2>
+<div class="section level2">
+<h2 id="example-of-use">Example of Use<a class="anchor" aria-label="anchor" href="#example-of-use"></a>
+</h2>
 Let us start with a fuzzy dataset (stored in a matrix I) as follows:
 <table class="table">
 <thead><tr>
@@ -304,7 +300,7 @@ O6
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span>
 <span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span>
 <span class="co">#&gt;      P1   P2   P3   P4   P5  P6  </span>
 <span class="co">#&gt;  O1  0    1   0.5  0.5   1    0  </span>
@@ -367,7 +363,7 @@ O6
 <code class="sourceCode R"><span class="co"># Reduce the number of implications using two simple</span>
 <span class="co"># rules. The algorithm applies the specified rules</span>
 <span class="co"># in batches, if the number of rules is high.</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
+<span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
                                       <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
 <span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span>
@@ -392,13 +388,13 @@ O6
 <p>All these functions work natively with fuzzy and with binary datasets.</p>
 <p>For more details on the methods implemented and further examples, see the vignettes in this package.</p>
 </div>
-<div id="changelog" class="section level2">
-<h2 class="hasAnchor">
-<a href="#changelog" class="anchor"></a>Changelog</h2>
+<div class="section level2">
+<h2 id="changelog">Changelog<a class="anchor" aria-label="anchor" href="#changelog"></a>
+</h2>
 <p>With respect to the CRAN version, the development version has the following changes.</p>
-<div id="fcar-111" class="section level3">
-<h3 class="hasAnchor">
-<a href="#fcar-111" class="anchor"></a>fcaR 1.1.1</h3>
+<div class="section level3">
+<h3 id="fcar-111">fcaR 1.1.1<a class="anchor" aria-label="anchor" href="#fcar-111"></a>
+</h3>
 <p>Enhancements:</p>
 <ul>
 <li>The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.</li>
@@ -413,12 +409,12 @@ O6
 </ul>
 </div>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <p>Guigues J, Duquenne V (1986). “Familles minimales d’implications informatives résultant d’un tableau de données binaires.” <em>Mathématiques et Sciences humaines</em>, <em>95</em>, 5-18.</p>
 <p>Ganter B, Wille R (1999). <em>Formal concept analysis : mathematical foundations</em>. Springer. ISBN 3540627715.</p>
-<p>Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic: Elimination of Data Redundancy in Knowledge Representation.” <em>Advances in Artificial Intelligence - IBERAMIA 2002</em>, <em>2527</em>, 141-150. doi: 10.1007/3-540-36131-6_15 (URL: <a href="https://doi.org/10.1007/3-540-36131-6_15" class="uri">https://doi.org/10.1007/3-540-36131-6_15</a>).</p>
+<p>Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic: Elimination of Data Redundancy in Knowledge Representation.” <em>Advances in Artificial Intelligence - IBERAMIA 2002</em>, <em>2527</em>, 141-150. doi: 10.1007/3-540-36131-6_15 (URL: <a href="https://doi.org/10.1007/3-540-36131-6_15" class="external-link uri">https://doi.org/10.1007/3-540-36131-6_15</a>).</p>
 <p>Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In <em>Proc. Fourth Int. Conf. on Recent Advances in Soft Computing</em>. Nottingham, United Kingdom, 200-205.</p>
 <p>Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” <em>J Stat Softw</em>, <em>14</em>, 1-25.</p>
 <p>Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” <em>International Journal of Computer Mathematics</em>, <em>89</em>(4), 510-526.</p>
@@ -429,61 +425,71 @@ O6
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=fcaR">https://​cloud.r-project.org/​package=fcaR</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/Malaga-FCA-group/fcaR/">https://​github.com/​Malaga-FCA-group/​fcaR/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/Malaga-FCA-group/fcaR/issues">https://​github.com/​Malaga-FCA-group/​fcaR/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=fcaR" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/Malaga-FCA-group/fcaR/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/Malaga-FCA-group/fcaR/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
+<li><small><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Domingo Lopez Rodriguez <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0172-1585" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Angel Mora <br><small class="roles"> Author </small>  </li>
-<li>Jesus Dominguez <br><small class="roles"> Author </small>  </li>
-<li>Ana Villalon <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing fcaR</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
-<li><a href="https://cran.r-project.org/package=fcaR"><img src="https://www.r-pkg.org/badges/version/fcaR" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/neuroimaginador/fcaR"><img src="https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI" alt="codecov"></a></li>
-<li><a href="https://github.com/neuroimaginador/fcaR/actions"><img src="https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://cran.r-project.org/package=fcaR"><img src="https://cranlogs.r-pkg.org/badges/grand-total/fcaR" alt="Downloads"></a></li>
+<li>Domingo Lopez Rodriguez <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0172-1585" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Angel Mora <br><small class="roles"> Author </small>  </li>
+<li>Jesus Dominguez <br><small class="roles"> Author </small>  </li>
+<li>Ana Villalon <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://cran.r-project.org/package=fcaR" class="external-link"><img src="https://www.r-pkg.org/badges/version/fcaR" alt="CRAN status"></a></li>
+<li><a href="https://codecov.io/gh/neuroimaginador/fcaR" class="external-link"><img src="https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI" alt="codecov"></a></li>
+<li><a href="https://github.com/neuroimaginador/fcaR/actions" class="external-link"><img src="https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://cran.r-project.org/package=fcaR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/fcaR" alt="Downloads"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p></p>
+<p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -491,6 +497,8 @@ O6
 
   
 
+
+  
 
   </body>
 </html>
