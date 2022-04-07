@@ -872,6 +872,7 @@ FormalContext <- R6::R6Class(
       if (private$is_many_valued) error_many_valued()
 
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
+      my_I <- unique(my_I)
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
@@ -935,13 +936,11 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      # TODO: Assign a private field "tI" to tSpM(self$I)
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
+      my_I <- unique(my_I)
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
-
-      # browser()
 
       # if (is.null(private$bg_implications)) {
 
