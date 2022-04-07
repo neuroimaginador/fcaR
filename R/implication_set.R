@@ -431,6 +431,8 @@ ImplicationSet <- R6::R6Class(
 
       }
 
+      return(invisible(self))
+
     },
 
     #' @description
