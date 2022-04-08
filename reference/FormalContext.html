@@ -75,23 +75,40 @@
     </div>
 
 
-    <div id="public-fields">
-    <h2>Public fields</h2>
-    
-
-<ul><li><p><code>I</code>: the table for the formal context.</p></li>
-<li><p><code>attributes</code>: name of the attributes in the formal context.</p></li>
-<li><p><code>objects</code>: name of the objects in the context.</p></li>
-<li><p><code>grades_set</code>: set of grades (in [0, 1]) of the attributes.</p></li>
-<li><p><code>concepts</code>: list of concepts (extent, intent).</p></li>
-<li><p><code>implications</code>: extracted implications as an <code>ImplicationSet</code>.</p></li>
-</ul></div>
     <div id="references">
     <h2>References</h2>
     <p>Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” <em>Mathématiques et Sciences humaines</em>, <em>95</em>, 5-18.</p>
 <p>Ganter B, Wille R (1999). <em>Formal concept analysis : mathematical foundations</em>. Springer. ISBN 3540627715.</p>
 <p>Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In <em>Proc. Fourth Int. Conf. on Recent Advances in Soft Computing</em>. Nottingham, United Kingdom, 200-205.</p>
 <p>Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” <em>J Stat Softw</em>, <em>14</em>, 1-25.</p>
+    </div>
+    <div id="public-fields">
+    <h2>Public fields</h2>
+    <p></p><div class="r6-fields"><dl><dt><code>I</code></dt>
+<dd><p>The table of the formal context as a matrix.</p></dd>
+
+
+<dt><code>attributes</code></dt>
+<dd><p>The attributes of the formal context.</p></dd>
+
+
+<dt><code>objects</code></dt>
+<dd><p>The objects of the formal context.</p></dd>
+
+
+<dt><code>grades_set</code></dt>
+<dd><p>The set of degrees (in [0, 1]) the attribute can take.</p></dd>
+
+
+<dt><code>concepts</code></dt>
+<dd><p>The concept lattice associated to the formal context as a <code><a href="ConceptLattice.html">ConceptLattice</a></code>.</p></dd>
+
+
+<dt><code>implications</code></dt>
+<dd><p>A set of implications on the formal context as an <code><a href="ImplicationSet.html">ImplicationSet</a></code>.</p></dd>
+
+
+</dl><p></p></div>
     </div>
     <div id="methods">
     <h2>Methods</h2>
@@ -106,7 +123,9 @@
 <li><p><a href="#method-background_knowledge"><code>FormalContext$background_knowledge()</code></a></p></li>
 <li><p><a href="#method-dual"><code>FormalContext$dual()</code></a></p></li>
 <li><p><a href="#method-intent"><code>FormalContext$intent()</code></a></p></li>
+<li><p><a href="#method-uparrow"><code>FormalContext$uparrow()</code></a></p></li>
 <li><p><a href="#method-extent"><code>FormalContext$extent()</code></a></p></li>
+<li><p><a href="#method-downarrow"><code>FormalContext$downarrow()</code></a></p></li>
 <li><p><a href="#method-closure"><code>FormalContext$closure()</code></a></p></li>
 <li><p><a href="#method-obj_concept"><code>FormalContext$obj_concept()</code></a></p></li>
 <li><p><a href="#method-att_concept"><code>FormalContext$att_concept()</code></a></p></li>
@@ -304,17 +323,17 @@ extracted from the application of scales.</p>
 <p>A <code>Set</code> with the intent.</p>
 </div>
 
-</div><p></p><hr><a id="method-extent"></a><div class="section">
-<h3 id="method-extent-">Method <code>extent()</code><a class="anchor" aria-label="anchor" href="#method-extent-"></a></h3>
-<p>Get the extent of a fuzzy set of attributes</p><div class="section">
+</div><p></p><hr><a id="method-uparrow"></a><div class="section">
+<h3 id="method-uparrow-">Method <code>uparrow()</code><a class="anchor" aria-label="anchor" href="#method-uparrow-"></a></h3>
+<p>Get the intent of a fuzzy set of objects</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">extent</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">uparrow</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>S</code></dt>
-<dd><p>(<code>Set</code>) The set of attributes to compute the extent for.</p></dd>
+<dd><p>(<code>Set</code>) The set of objects to compute the intent for.</p></dd>
 
 
 </dl><p></p></div>
@@ -324,15 +343,55 @@ extracted from the application of scales.</p>
 <p>A <code>Set</code> with the intent.</p>
 </div>
 
-</div><p></p><hr><a id="method-closure"></a><div class="section">
-<h3 id="method-closure-">Method <code><a href="https://rdrr.io/r/base/function.html" class="external-link">closure()</a></code><a class="anchor" aria-label="anchor" href="#method-closure-"></a></h3>
-<p>Get the closure of a fuzzy set of attributes</p><div class="section">
+</div><p></p><hr><a id="method-extent"></a><div class="section">
+<h3 id="method-extent-">Method <code>extent()</code><a class="anchor" aria-label="anchor" href="#method-extent-"></a></h3>
+<p>Get the extent of a fuzzy set of attributes</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">closure</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">extent</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>S</code></dt>
+<dd><p>(<code>Set</code>) The set of attributes to compute the extent for.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<p>A <code>Set</code> with the intent.</p>
+</div>
+
+</div><p></p><hr><a id="method-downarrow"></a><div class="section">
+<h3 id="method-downarrow-">Method <code>downarrow()</code><a class="anchor" aria-label="anchor" href="#method-downarrow-"></a></h3>
+<p>Get the extent of a fuzzy set of attributes</p><div class="section">
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">downarrow</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>S</code></dt>
+<dd><p>(<code>Set</code>) The set of attributes to compute the extent for.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<p>A <code>Set</code> with the intent.</p>
+</div>
+
+</div><p></p><hr><a id="method-closure"></a><div class="section">
+<h3 id="method-closure-">Method <code><a href="https://rdrr.io/r/base/function.html" class="external-link">closure()</a></code><a class="anchor" aria-label="anchor" href="#method-closure-"></a></h3>
+<p>Get the closure of a fuzzy set of attributes</p><div class="section">
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">closure</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>S</code></dt>
 <dd><p>(<code>Set</code>) The set of attributes to compute the closure for.</p></dd>
 
@@ -340,19 +399,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
 <p>A <code>Set</code> with the closure.</p>
 </div>
 
 </div><p></p><hr><a id="method-obj_concept"></a><div class="section">
 <h3 id="method-obj-concept-">Method <code>obj_concept()</code><a class="anchor" aria-label="anchor" href="#method-obj-concept-"></a></h3>
 <p>Object Concept</p><div class="section">
-<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">obj_concept</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>object</code></dt>
 <dd><p>(character) Name of the object to compute its associated concept</p></dd>
 
@@ -360,19 +419,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
 <p>The object concept associated to the object given.</p>
 </div>
 
 </div><p></p><hr><a id="method-att_concept"></a><div class="section">
 <h3 id="method-att-concept-">Method <code>att_concept()</code><a class="anchor" aria-label="anchor" href="#method-att-concept-"></a></h3>
 <p>Attribute Concept</p><div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">att_concept</span><span class="op">(</span><span class="va">attribute</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
+<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>attribute</code></dt>
 <dd><p>(character) Name of the attribute to compute its associated concept</p></dd>
 
@@ -380,19 +439,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
+<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
 <p>The attribute concept associated to the attribute given.</p>
 </div>
 
 </div><p></p><hr><a id="method-is_concept"></a><div class="section">
 <h3 id="method-is-concept-">Method <code>is_concept()</code><a class="anchor" aria-label="anchor" href="#method-is-concept-"></a></h3>
 <p>Is a Concept?</p><div class="section">
-<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_concept</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
+<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>C</code></dt>
 <dd><p>A <code>Concept</code> object</p></dd>
 
@@ -400,19 +459,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
 <p><code>TRUE</code> if <code>C</code> is a concept.</p>
 </div>
 
 </div><p></p><hr><a id="method-is_closed"></a><div class="section">
 <h3 id="method-is-closed-">Method <code>is_closed()</code><a class="anchor" aria-label="anchor" href="#method-is-closed-"></a></h3>
 <p>Testing closure of attribute sets</p><div class="section">
-<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_closed</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
+<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>S</code></dt>
 <dd><p>A <code>Set</code> of attributes</p></dd>
 
@@ -420,19 +479,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
 <p><code>TRUE</code> if the set <code>S</code> is closed in this formal context.</p>
 </div>
 
 </div><p></p><hr><a id="method-clarify"></a><div class="section">
 <h3 id="method-clarify-">Method <code>clarify()</code><a class="anchor" aria-label="anchor" href="#method-clarify-"></a></h3>
 <p>Clarify a formal context</p><div class="section">
-<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
+<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">clarify</span><span class="op">(</span>copy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
+<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>copy</code></dt>
 <dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified context, otherwise the current one is overwritten.</p></dd>
 
@@ -440,19 +499,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
+<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
 <p>The clarified <code>FormalContext</code>.</p>
 </div>
 
 </div><p></p><hr><a id="method-reduce"></a><div class="section">
 <h3 id="method-reduce-">Method <code>reduce()</code><a class="anchor" aria-label="anchor" href="#method-reduce-"></a></h3>
 <p>Reduce a formal context</p><div class="section">
-<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
+<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span>copy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
+<h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>copy</code></dt>
 <dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified and reduced context, otherwise the current one is overwritten.</p></dd>
 
@@ -460,14 +519,14 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
+<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
 <p>The clarified and reduced <code>FormalContext</code>.</p>
 </div>
 
 </div><p></p><hr><a id="method-standardize"></a><div class="section">
 <h3 id="method-standardize-">Method <code>standardize()</code><a class="anchor" aria-label="anchor" href="#method-standardize-"></a></h3>
 <p>Build the Standard Context</p><div class="section">
-<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
+<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
@@ -477,19 +536,19 @@ extracted from the application of scales.</p>
 </div>
 
 <div class="section">
-<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
+<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
 <p>The standard context using the join- and meet- irreducible elements.</p>
 </div>
 
 </div><p></p><hr><a id="method-find_concepts"></a><div class="section">
 <h3 id="method-find-concepts-">Method <code>find_concepts()</code><a class="anchor" aria-label="anchor" href="#method-find-concepts-"></a></h3>
 <p>Use Ganter Algorithm to compute concepts</p><div class="section">
-<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
+<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
+<h4 id="arguments-14">Arguments<a class="anchor" aria-label="anchor" href="#arguments-14"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>verbose</code></dt>
 <dd><p>(logical) TRUE will provide a verbose output.</p></dd>
 
@@ -497,19 +556,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
+<h4 id="returns-18">Returns<a class="anchor" aria-label="anchor" href="#returns-18"></a></h4>
 <p>A list with all the concepts in the formal context.</p>
 </div>
 
 </div><p></p><hr><a id="method-find_implications"></a><div class="section">
 <h3 id="method-find-implications-">Method <code>find_implications()</code><a class="anchor" aria-label="anchor" href="#method-find-implications-"></a></h3>
 <p>Use modified Ganter algorithm to compute both concepts and implications</p><div class="section">
-<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
+<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span>save_concepts <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
+<h4 id="arguments-15">Arguments<a class="anchor" aria-label="anchor" href="#arguments-15"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>save_concepts</code></dt>
 <dd><p>(logical) <code>TRUE</code> will also compute and save the concept lattice. <code>FALSE</code> is usually faster, since it only computes implications.</p></dd>
 
@@ -521,31 +580,31 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
+<h4 id="returns-19">Returns<a class="anchor" aria-label="anchor" href="#returns-19"></a></h4>
 <p>Nothing, just updates the internal fields <code>concepts</code> and <code>implications</code>.</p>
 </div>
 
 </div><p></p><hr><a id="method-to_transactions"></a><div class="section">
 <h3 id="method-to-transactions-">Method <code>to_transactions()</code><a class="anchor" aria-label="anchor" href="#method-to-transactions-"></a></h3>
 <p>Convert the formal context to object of class <code>transactions</code> from the <code>arules</code> package</p><div class="section">
-<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
+<h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">to_transactions</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-18">Returns<a class="anchor" aria-label="anchor" href="#returns-18"></a></h4>
+<h4 id="returns-20">Returns<a class="anchor" aria-label="anchor" href="#returns-20"></a></h4>
 <p>A <code>transactions</code> object.</p>
 </div>
 
 </div><p></p><hr><a id="method-save"></a><div class="section">
 <h3 id="method-save-">Method <code><a href="https://rdrr.io/r/base/save.html" class="external-link">save()</a></code><a class="anchor" aria-label="anchor" href="#method-save-"></a></h3>
 <p>Save a <code>FormalContext</code> to RDS or CXT format</p><div class="section">
-<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
+<h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-14">Arguments<a class="anchor" aria-label="anchor" href="#arguments-14"></a></h4>
+<h4 id="arguments-16">Arguments<a class="anchor" aria-label="anchor" href="#arguments-16"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>filename</code></dt>
 <dd><p>(character) Path of the  file where to store the <code>FormalContext</code>.</p></dd>
 
@@ -558,19 +617,19 @@ extracted from the application of scales.</p>
 </div>
 
 <div class="section">
-<h4 id="returns-19">Returns<a class="anchor" aria-label="anchor" href="#returns-19"></a></h4>
+<h4 id="returns-21">Returns<a class="anchor" aria-label="anchor" href="#returns-21"></a></h4>
 <p>Invisibly the current <code>FormalContext</code>.</p>
 </div>
 
 </div><p></p><hr><a id="method-load"></a><div class="section">
 <h3 id="method-load-">Method <code><a href="https://rdrr.io/r/base/load.html" class="external-link">load()</a></code><a class="anchor" aria-label="anchor" href="#method-load-"></a></h3>
 <p>Load a <code>FormalContext</code> from a file</p><div class="section">
-<h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
+<h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">load</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-15">Arguments<a class="anchor" aria-label="anchor" href="#arguments-15"></a></h4>
+<h4 id="arguments-17">Arguments<a class="anchor" aria-label="anchor" href="#arguments-17"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>filename</code></dt>
 <dd><p>(character) Path of the file to load the <code>FormalContext</code> from.</p></dd>
 
@@ -583,38 +642,38 @@ extracted from the application of scales.</p>
 </div>
 
 <div class="section">
-<h4 id="returns-20">Returns<a class="anchor" aria-label="anchor" href="#returns-20"></a></h4>
+<h4 id="returns-22">Returns<a class="anchor" aria-label="anchor" href="#returns-22"></a></h4>
 <p>The loaded <code>FormalContext</code>.</p>
 </div>
 
 </div><p></p><hr><a id="method-dim"></a><div class="section">
 <h3 id="method-dim-">Method <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim()</a></code><a class="anchor" aria-label="anchor" href="#method-dim-"></a></h3>
 <p>Dimensions of the formal context</p><div class="section">
-<h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
+<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">dim</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-21">Returns<a class="anchor" aria-label="anchor" href="#returns-21"></a></h4>
+<h4 id="returns-23">Returns<a class="anchor" aria-label="anchor" href="#returns-23"></a></h4>
 <p>A vector with (number of objects, number of attributes).</p>
 </div>
 
 </div><p></p><hr><a id="method-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Prints the formal context</p><div class="section">
-<h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
+<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-22">Returns<a class="anchor" aria-label="anchor" href="#returns-22"></a></h4>
+<h4 id="returns-24">Returns<a class="anchor" aria-label="anchor" href="#returns-24"></a></h4>
 <p>Prints information regarding the formal context.</p>
 </div>
 
 </div><p></p><hr><a id="method-to_latex"></a><div class="section">
 <h3 id="method-to-latex-">Method <code>to_latex()</code><a class="anchor" aria-label="anchor" href="#method-to-latex-"></a></h3>
 <p>Write the context in LaTeX format</p><div class="section">
-<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
+<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span>
   table <span class="op">=</span> <span class="cn">TRUE</span>,
   label <span class="op">=</span> <span class="st">""</span>,
@@ -624,7 +683,7 @@ extracted from the application of scales.</p>
 </div>
 
 <div class="section">
-<h4 id="arguments-16">Arguments<a class="anchor" aria-label="anchor" href="#arguments-16"></a></h4>
+<h4 id="arguments-18">Arguments<a class="anchor" aria-label="anchor" href="#arguments-18"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>table</code></dt>
 <dd><p>(logical) If <code>TRUE</code>, surrounds everything between <code>\begin{table}</code> and <code>\end{table}</code>.</p></dd>
 
@@ -644,19 +703,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-23">Returns<a class="anchor" aria-label="anchor" href="#returns-23"></a></h4>
+<h4 id="returns-25">Returns<a class="anchor" aria-label="anchor" href="#returns-25"></a></h4>
 <p>A table environment in LaTeX.</p>
 </div>
 
 </div><p></p><hr><a id="method-incidence"></a><div class="section">
 <h3 id="method-incidence-">Method <code>incidence()</code><a class="anchor" aria-label="anchor" href="#method-incidence-"></a></h3>
 <p>Incidence matrix of the formal context</p><div class="section">
-<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
+<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-24">Returns<a class="anchor" aria-label="anchor" href="#returns-24"></a></h4>
+<h4 id="returns-26">Returns<a class="anchor" aria-label="anchor" href="#returns-26"></a></h4>
 <p>The incidence matrix of the formal context</p>
 </div>
 <div class="section">
@@ -669,12 +728,12 @@ extracted from the application of scales.</p>
 </div><p></p><hr><a id="method-plot"></a><div class="section">
 <h3 id="method-plot-">Method <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code><a class="anchor" aria-label="anchor" href="#method-plot-"></a></h3>
 <p>Plot the formal context table</p><div class="section">
-<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
+<h4 id="usage-27">Usage<a class="anchor" aria-label="anchor" href="#usage-27"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>to_latex <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-17">Arguments<a class="anchor" aria-label="anchor" href="#arguments-17"></a></h4>
+<h4 id="arguments-19">Arguments<a class="anchor" aria-label="anchor" href="#arguments-19"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>to_latex</code></dt>
 <dd><p>(logical) If <code>TRUE</code>, export the plot as a <code>tikzpicture</code> environment that can be included in a <code>LaTeX</code> file.</p></dd>
 
@@ -692,19 +751,19 @@ extracted from the application of scales.</p>
 </div>
 
 <div class="section">
-<h4 id="returns-25">Returns<a class="anchor" aria-label="anchor" href="#returns-25"></a></h4>
+<h4 id="returns-27">Returns<a class="anchor" aria-label="anchor" href="#returns-27"></a></h4>
 <p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the formal context plot.</p>
 </div>
 
 </div><p></p><hr><a id="method-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
+<h4 id="usage-28">Usage<a class="anchor" aria-label="anchor" href="#usage-28"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-18">Arguments<a class="anchor" aria-label="anchor" href="#arguments-18"></a></h4>
+<h4 id="arguments-20">Arguments<a class="anchor" aria-label="anchor" href="#arguments-20"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
