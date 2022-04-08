@@ -6,18 +6,6 @@
 \description{
 This class implements the data structure and methods for formal contexts.
 }
-\section{Public fields}{
-
-\itemize{
-\item \code{I}: the table for the formal context.
-\item \code{attributes}: name of the attributes in the formal context.
-\item \code{objects}: name of the objects in the context.
-\item \code{grades_set}: set of grades (in [0, 1]) of the attributes.
-\item \code{concepts}: list of concepts (extent, intent).
-\item \code{implications}: extracted implications as an \code{ImplicationSet}.
-}
-}
-
 \examples{
 # Build and print the formal context
 fc_planets <- FormalContext$new(planets)
@@ -95,6 +83,23 @@ Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In \emph{Proc.
 
 Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” \emph{J Stat Softw}, \emph{14}, 1-25.
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{I}}{The table of the formal context as a matrix.}
+
+\item{\code{attributes}}{The attributes of the formal context.}
+
+\item{\code{objects}}{The objects of the formal context.}
+
+\item{\code{grades_set}}{The set of degrees (in [0, 1]) the attribute can take.}
+
+\item{\code{concepts}}{The concept lattice associated to the formal context as a \code{\link{ConceptLattice}}.}
+
+\item{\code{implications}}{A set of implications on the formal context as an \code{\link{ImplicationSet}}.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -105,7 +110,9 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-background_knowledge}{\code{FormalContext$background_knowledge()}}
 \item \href{#method-dual}{\code{FormalContext$dual()}}
 \item \href{#method-intent}{\code{FormalContext$intent()}}
+\item \href{#method-uparrow}{\code{FormalContext$uparrow()}}
 \item \href{#method-extent}{\code{FormalContext$extent()}}
+\item \href{#method-downarrow}{\code{FormalContext$downarrow()}}
 \item \href{#method-closure}{\code{FormalContext$closure()}}
 \item \href{#method-obj_concept}{\code{FormalContext$obj_concept()}}
 \item \href{#method-att_concept}{\code{FormalContext$att_concept()}}
@@ -309,12 +316,52 @@ A \code{Set} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-uparrow"></a>}}
+\if{latex}{\out{\hypertarget{method-uparrow}{}}}
+\subsection{Method \code{uparrow()}}{
+Get the intent of a fuzzy set of objects
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$uparrow(S)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{S}}{(\code{Set}) The set of objects to compute the intent for.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{Set} with the intent.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-extent"></a>}}
 \if{latex}{\out{\hypertarget{method-extent}{}}}
 \subsection{Method \code{extent()}}{
 Get the extent of a fuzzy set of attributes
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$extent(S)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{S}}{(\code{Set}) The set of attributes to compute the extent for.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{Set} with the intent.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-downarrow"></a>}}
+\if{latex}{\out{\hypertarget{method-downarrow}{}}}
+\subsection{Method \code{downarrow()}}{
+Get the extent of a fuzzy set of attributes
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$downarrow(S)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
