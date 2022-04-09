@@ -36,6 +36,7 @@ Depends:
 Imports: 
     forcats,
     fractional,
+    glue,
     grDevices,
     Matrix,
     methods,
