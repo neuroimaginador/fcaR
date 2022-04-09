@@ -29,6 +29,7 @@ set_to_latex <- function(S, attributes) {
 
 }
 
+#' @importFrom glue glue
 element_to_latex <- function(nm, val) {
 
   if (val == "1") {
