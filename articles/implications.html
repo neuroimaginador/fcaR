@@ -721,8 +721,8 @@ O6
                                         <span class="st">"simplification"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
 <span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.004 secs.</span>
-<span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.085 secs.</span>
-<span class="co">#&gt; Batch took 0.092 secs.</span></code></pre></div>
+<span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.09 secs.</span>
+<span class="co">#&gt; Batch took 0.096 secs.</span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be used in the computation of the closure of a set, to provide a reduced set of implications that is inferred from the set of attributes:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -756,8 +756,8 @@ O6
 <span class="va">imps2</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"simp"</span>, <span class="st">"rsimp"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
 <span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.053 secs.</span>
-<span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.08 secs.</span>
-<span class="co">#&gt; Batch took 0.134 secs.</span>
+<span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.131 secs.</span>
+<span class="co">#&gt; Batch took 0.186 secs.</span>
 <span class="co"># Any implication in imps2 follows from imps</span>
 <span class="va">imps</span> <span class="op"><a href="../reference/grapes-entails-grapes.html">%entails%</a></span> <span class="va">imps2</span>
 <span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
