@@ -185,6 +185,23 @@ interval_scaling <- function(V, col_name, interval_names,
 
 }
 
+implication_scaling <- function(V, col_name,
+                             values = sort(unique(c(0, V, 1)))) {
+
+  I <- function(a, b) ifelse(a >= b, 1, a)
+
+  # Scale (context)
+  vals <- sort(unique(c(0, V, 1)))
+  scale_matrix <- outer(vals, values, I)
+  rownames(scale_matrix) <- as.character(vals)
+  colnames(scale_matrix) <- paste0("(", col_name, ", ",
+                                   as.character(values), ")")
+  scale_matrix[] <- as.numeric(scale_matrix)
+
+  return(scale_matrix)
+
+}
+
 scale_context <- function(I, column, type, ...) {
 
   idx <- which(colnames(I) == column)

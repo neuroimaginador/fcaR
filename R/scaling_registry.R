@@ -52,4 +52,7 @@ scalingRegistry$set_entry(method = "Interval",
                           fun = interval_scaling,
                           description = "Interval scaling")
 
+scalingRegistry$set_entry(method = "Implication",
+                          fun = implication_scaling,
+                          description = "Implication scaling")
 
