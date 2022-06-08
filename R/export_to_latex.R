@@ -13,12 +13,17 @@ set_to_latex <- function(S, attributes) {
     att <- attributes[idx] %>%
       format_label()
 
-    str <- sapply(length(att),
+    str <- sapply(seq(length(att)),
                   \(i) element_to_latex(nm = att[i],
                                         val = A[i])) %>%
       stringr::str_flatten(", ")
 
-    str <- paste0("\\\\left\\\\{", str, "\\\\right\\\\}")
+    str <- paste0("\\left\\{", str, "\\right\\}")
+    if (fcaR_options("use_ensuremath")) {
+
+      str <- paste0("\\ensuremath{", str, "}")
+
+    }
     return(str)
 
   } else {
@@ -32,6 +37,12 @@ set_to_latex <- function(S, attributes) {
 #' @importFrom glue glue
 element_to_latex <- function(nm, val) {
 
+  if (fcaR_options("use_mathrm")) {
+
+    nm <- glue::glue("\\mathrm{{{nm}}}")
+
+  }
+
   if (val == "1") {
 
     return(nm)
@@ -39,7 +50,7 @@ element_to_latex <- function(nm, val) {
   } else {
 
     str <- glue::glue(
-      "{^{[val]}}\\\\!/[nm]",
+      "{^{[val]}}\\!/[nm]",
       .open = "[", .close = "]"
     )
 

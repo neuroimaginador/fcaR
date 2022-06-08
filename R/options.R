@@ -3,6 +3,9 @@
 MYPKGOPTIONS <- settings::options_manager(
   decimal_places = 2,
   latex_size = "normalsize",
+  reduced_lattice = TRUE,
+  use_mathrm = TRUE,
+  use_ensuremath = FALSE,
   .allowed = list(
     latex_size = settings::inlist("tiny",
                                   "scriptsize",
@@ -27,6 +30,7 @@ MYPKGOPTIONS <- settings::options_manager(
 #' \itemize{
 #'  \item{\code{decimal_places}}{(\code{numeric};2) The number of decimal places to show when printing or exporting to \LaTeX sets, implications, concepts, etc.}
 #'  \item{\code{latex_size}}{(\code{character};"normalsize") Size to use when exporting to LaTeX.}
+#'  \item{\code{reduced\_lattice}}{(\code{logical};TRUE) Plot the reduced concept lattice?}
 #' }
 #'
 #' @export

@@ -7,87 +7,100 @@ lattice_plot <- function(extents, intents,
   # Number of concepts
   n <- ncol(extents)
 
-  if (to_latex) {
+  if (fcaR_options("reduced_lattice")) {
 
-    if (object_names) {
-
-      labels <- sapply(seq(n),
-                       function(i) {
-
-                         vA <- Matrix::Matrix(extents[, i],
-                                              sparse = TRUE)
-                         vB <- Matrix::Matrix(intents[, i],
-                                              sparse = TRUE)
-
-                         vA <- Set$new(attributes = objects,
-                                       M = vA)
-                         vB <- Set$new(attributes = attributes,
-                                       M = vB)
-
-                         paste0("$\\left(\\,",
-                                vA$to_latex(print = FALSE),
-                                ",\\right.",
-                                "\\left.",
-                                vB$to_latex(print = FALSE),
-                                "\\,\\right)$") %>%
-                           stringr::str_replace_all(pattern = "\n",
-                                                    replacement = "")
-
-                       })
-
-    } else {
-
-      labels <- sapply(seq(n),
-                       function(i) {
-
-                         vB <- Matrix::Matrix(intents[, i],
-                                              sparse = TRUE)
-
-                         vB <- Set$new(attributes = attributes,
-                                       M = vB)
-
-                         vB$to_latex(print = FALSE) %>%
-                           stringr::str_replace_all(pattern = "\n",
-                                                    replacement = "")
-
-                       })
-
-    }
-
-    labels <- labels %>%
-      stringr::str_replace_all(pattern = stringr::fixed(" "),
-                               replacement = "\\,")
+    labels <- obtain_reduced_labels(
+      subconcept_matrix,
+      intents = intents,
+      attributes = attributes,
+      latex = to_latex
+    )
 
   } else {
 
-    if (object_names) {
+    if (to_latex) {
 
-      labels <- sapply(seq(n),
-                       function(i) {
+      if (object_names) {
 
-                         vA <- Matrix::Matrix(extents[, i],
-                                              sparse = TRUE)
-                         vB <- Matrix::Matrix(intents[, i],
-                                              sparse = TRUE)
+        labels <- sapply(seq(n),
+                         function(i) {
 
-                         .concept_to_string(vA, vB,
-                                            objects,
-                                            attributes)
+                           vA <- Matrix::Matrix(extents[, i],
+                                                sparse = TRUE)
+                           vB <- Matrix::Matrix(intents[, i],
+                                                sparse = TRUE)
 
-                       })
+                           vA <- Set$new(attributes = objects,
+                                         M = vA)
+                           vB <- Set$new(attributes = attributes,
+                                         M = vB)
+
+                           paste0("$\\left(\\,",
+                                  vA$to_latex(print = FALSE),
+                                  ",\\right.",
+                                  "\\left.",
+                                  vB$to_latex(print = FALSE),
+                                  "\\,\\right)$") %>%
+                             stringr::str_replace_all(pattern = "\n",
+                                                      replacement = "")
+
+                         })
+
+      } else {
+
+        labels <- sapply(seq(n),
+                         function(i) {
+
+                           vB <- Matrix::Matrix(intents[, i],
+                                                sparse = TRUE)
+
+                           vB <- Set$new(attributes = attributes,
+                                         M = vB)
+
+                           vB$to_latex(print = FALSE) %>%
+                             stringr::str_replace_all(pattern = "\n",
+                                                      replacement = "")
+
+                         })
+
+      }
+
+      labels <- labels %>%
+        stringr::str_replace_all(pattern = stringr::fixed(" "),
+                                 replacement = "\\,")
 
     } else {
 
-      labels <- sapply(seq(n),
-                       function(i) {
+      if (object_names) {
 
-                         vB <- Matrix::Matrix(intents[, i],
-                                              sparse = TRUE)
+        labels <- sapply(seq(n),
+                         function(i) {
 
-                         .set_to_string(vB,
-                                        attributes)
+                           vA <- Matrix::Matrix(extents[, i],
+                                                sparse = TRUE)
+                           vB <- Matrix::Matrix(intents[, i],
+                                                sparse = TRUE)
 
-                       })
+                           .concept_to_string(vA, vB,
+                                              objects,
+                                              attributes)
+
+                         })
+
+      } else {
+
+        labels <- sapply(seq(n),
+                         function(i) {
+
+                           vB <- Matrix::Matrix(intents[, i],
+                                                sparse = TRUE)
+
+                           .set_to_string(vB,
+                                          attributes)
+
+                         })
+
+      }
 
     }
 
@@ -159,13 +172,14 @@ lattice_plot <- function(extents, intents,
 
     }
 
-    options( tikzLatexPackages = c(
+    options(tikzLatexPackages = c(
       "\\usepackage{tikz}",
       "\\usepackage[active,tightpage,psfixbb]{preview}",
       "\\PreviewEnvironment{pgfpicture}",
       "\\setlength\\PreviewBorder{0pt}",
-      # getOption( "tikzLatexPackages" ),
-      "\\usepackage{amssymb}"
+      "\\usepackage{amssymb}",
+      "\\usepackage{amsmath}",
+      ""
     ))
 
     args[names(dots)] <- dots[names(dots)]
@@ -196,7 +210,7 @@ lattice_plot <- function(extents, intents,
   #   aes(x = x, y = y, xend = xend, yend = yend)) +
   #   ggnetwork::geom_edges(color = "grey50", arrow = arrow(length = unit(6, "points"))) +
   #   ggnetwork::geom_nodelabel(aes(label = vertex.names)) +
-  #   theme_blank()
+  #   theme_void()
   #
   # print(p)
 
@@ -224,3 +238,64 @@ lattice_plot <- function(extents, intents,
   }
 
 }
+
+obtain_reduced_labels <- function(subconcept_matrix,
+                                  intents,
+                                  attributes,
+                                  latex = FALSE) {
+
+  if (latex) {
+
+    attr <- format_label(attributes)
+
+    s2t <- function(set)
+      set_to_latex(S = set,
+                   attributes = attr)
+
+  } else {
+
+    s2t <- function(set)
+      .set_to_string(S = set,
+                     attributes = attributes)
+
+  }
+
+  cardinality <- Matrix::colSums(intents)
+  bottom <- which.max(cardinality)
+  top <- which.min(cardinality)
+  A <- as.matrix(subconcept_matrix)
+  colnames(A) <- rownames(A) <- seq(nrow(subconcept_matrix))
+  poset <- POSetR::poset_from_incidence(A)
+  nodes <- as.numeric(poset$firstLE())
+  nodes <- rev(nodes)
+
+  last_node <- .extract_column(intents, nodes[1])
+  accumulated <- last_node
+  reduced <- list(last_node)
+  for (i in nodes[-1]) {
+
+    node <- .extract_column(intents, i)
+    accumulated <- .union(accumulated, last_node)
+    reduced[[i]] <- .difference2(node, accumulated)
+    last_node <- node
+
+  }
+
+  reduced_labels <- sapply(reduced, s2t)
+
+  if (latex) {
+
+    reduced_labels <- reduced_labels %>%
+      stringr::str_remove_all(pattern = stringr::fixed("\\\\varnothing"))
+
+  } else {
+
+    reduced_labels <- reduced_labels %>%
+      stringr::str_remove_all(pattern = stringr::fixed("{}"))
+
+  }
+
+  return(reduced_labels)
+
+}
+
