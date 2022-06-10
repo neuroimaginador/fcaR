@@ -5,7 +5,7 @@
 \alias{scalingRegistry}
 \title{Scaling Registry}
 \format{
-An object of class \code{scaling_registry} (inherits from \code{registry}) of length 5.
+An object of class \code{scaling_registry} (inherits from \code{registry}) of length 6.
 }
 \usage{
 scalingRegistry

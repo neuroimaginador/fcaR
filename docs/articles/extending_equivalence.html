@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,23 +33,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/Malaga-FCA-group/fcaR/">
+  <a href="https://github.com/Malaga-FCA-group/fcaR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -91,34 +87,34 @@
 
       
 
-      </header><script src="extending_equivalence_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Extending fcaR: Equivalence Rules for Implications</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Malaga-FCA-group/fcaR/blob/master/vignettes/extending_equivalence.Rmd"><code>vignettes/extending_equivalence.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Malaga-FCA-group/fcaR/blob/HEAD/vignettes/extending_equivalence.Rmd" class="external-link"><code>vignettes/extending_equivalence.Rmd</code></a></small>
       <div class="hidden name"><code>extending_equivalence.Rmd</code></div>
 
     </div>
 
     
     
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>In this vignette, we present a way to extend the functionalities provided in the <code>fcaR</code> package: define new operations on an <code>ImplicationSet</code>.</p>
 <p>First, we load the <code>fcaR</code> package by:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Malaga-FCA-group/fcaR">fcaR</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Malaga-FCA-group/fcaR" class="external-link">fcaR</a></span><span class="op">)</span></code></pre></div>
 <p>Let us use the <code>planets</code> dataset included in the package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span>
 <span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="the-registry" class="section level1">
-<h1 class="hasAnchor">
-<a href="#the-registry" class="anchor"></a>The Registry</h1>
+<div class="section level2">
+<h2 id="the-registry">The Registry<a class="anchor" aria-label="anchor" href="#the-registry"></a>
+</h2>
 <p>In <code>fcaR</code>, we have decided to use a <code>registry</code> from the <code>registry</code> package to store the operations that can be performed on an <code>ImplicationSet</code>. Currently, its purpose is to store equivalence rules, that is, methods that obtain equivalent <code>ImplicationSet</code>s from one given.</p>
 <p>This registry is called <code>equivalencesRegistry</code> and one can inspect its contents by:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -138,16 +134,16 @@
 <span class="co">#&gt;         fun &lt;&lt;function&gt;&gt;</span>
 <span class="co">#&gt; description A -&gt; B and A -&gt; C equivalent to A -&gt; BC</span></code></pre></div>
 </div>
-<div id="use-of-the-rules" class="section level1">
-<h1 class="hasAnchor">
-<a href="#use-of-the-rules" class="anchor"></a>Use of the Rules</h1>
+<div class="section level2">
+<h2 id="use-of-the-rules">Use of the Rules<a class="anchor" aria-label="anchor" href="#use-of-the-rules"></a>
+</h2>
 <p>As explained in the vignette corresponding to <code>ImplicationSet</code>s, we can use any of these methods by using the <code>apply_rules()</code> method in the <code>ImplicationSet</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/combine.html">c</a></span><span class="op">(</span><span class="st">"comp"</span>, <span class="st">"simp"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"comp"</span>, <span class="st">"simp"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="definition-of-new-equivalence-rules" class="section level1">
-<h1 class="hasAnchor">
-<a href="#definition-of-new-equivalence-rules" class="anchor"></a>Definition of New Equivalence Rules</h1>
+<div class="section level2">
+<h2 id="definition-of-new-equivalence-rules">Definition of New Equivalence Rules<a class="anchor" aria-label="anchor" href="#definition-of-new-equivalence-rules"></a>
+</h2>
 <p>The way to extend the functionality in <code>fcaR</code> is to define new equivalence operators and include them in the registry.</p>
 <p>In order to add a new method, we use:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -167,15 +163,15 @@
   <span class="co"># ...</span>
   
   <span class="co"># Must return a list with two components: lhs and rhs</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>lhs <span class="op">=</span> <span class="va">LHS</span>,
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lhs <span class="op">=</span> <span class="va">LHS</span>,
               rhs <span class="op">=</span> <span class="va">RHS</span><span class="op">)</span><span class="op">)</span>
   
 <span class="op">}</span></code></pre></div>
 <p>The <code>method_function()</code> function must be defined before adding the method to the registry. Once the method is added, it can be executed by using the corresponding call to <code>apply_rules()</code>.</p>
 </div>
-<div id="an-example" class="section level1">
-<h1 class="hasAnchor">
-<a href="#an-example" class="anchor"></a>An Example</h1>
+<div class="section level2">
+<h2 id="an-example">An Example<a class="anchor" aria-label="anchor" href="#an-example"></a>
+</h2>
 <p>Let us define an operator which randomly reorders the implications. Evidently, this operation provides an equivalent <code>ImplicationSet</code>.</p>
 <p>In this case, we begin by defining the method function:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -184,10 +180,10 @@
   <span class="co"># Remember: attributes are in rows, implications are</span>
   <span class="co"># in columns.</span>
   <span class="co"># Random order for columns:</span>
-  <span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">LHS</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">LHS</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">o</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">LHS</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">LHS</span><span class="op">)</span><span class="op">)</span>
   
   <span class="co"># Return the reordered implications</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>lhs <span class="op">=</span> <span class="va">LHS</span><span class="op">[</span>, <span class="va">o</span><span class="op">]</span>,
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lhs <span class="op">=</span> <span class="va">LHS</span><span class="op">[</span>, <span class="va">o</span><span class="op">]</span>,
               rhs <span class="op">=</span> <span class="va">RHS</span><span class="op">[</span>, <span class="va">o</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
   
 <span class="op">}</span></code></pre></div>
@@ -222,21 +218,21 @@
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="st">"randomize"</span><span class="op">)</span>
 <span class="co">#&gt; Processing batch</span>
 <span class="co">#&gt; --&gt; Randomize: from 10 to 10 in 0 secs.</span>
-<span class="co">#&gt; Batch took 0.001 secs.</span></code></pre></div>
+<span class="co">#&gt; Batch took 0.002 secs.</span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Reordered implications</span>
 <span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
 <span class="co">#&gt; Implication set with 10 implications.</span>
-<span class="co">#&gt; Rule 1: {small, medium, far, moon} -&gt; {large, near, no_moon}</span>
+<span class="co">#&gt; Rule 1: {no_moon} -&gt; {small, near}</span>
 <span class="co">#&gt; Rule 2: {medium} -&gt; {far, moon}</span>
-<span class="co">#&gt; Rule 3: {large} -&gt; {far, moon}</span>
-<span class="co">#&gt; Rule 4: {small, near, far, moon} -&gt; {medium, large, no_moon}</span>
-<span class="co">#&gt; Rule 5: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
-<span class="co">#&gt; Rule 6: {near} -&gt; {small}</span>
-<span class="co">#&gt; Rule 7: {far} -&gt; {moon}</span>
-<span class="co">#&gt; Rule 8: {medium, large, far, moon} -&gt; {small, near, no_moon}</span>
+<span class="co">#&gt; Rule 3: {small, near, far, moon} -&gt; {medium, large, no_moon}</span>
+<span class="co">#&gt; Rule 4: {small, medium, far, moon} -&gt; {large, near, no_moon}</span>
+<span class="co">#&gt; Rule 5: {far} -&gt; {moon}</span>
+<span class="co">#&gt; Rule 6: {large} -&gt; {far, moon}</span>
+<span class="co">#&gt; Rule 7: {near} -&gt; {small}</span>
+<span class="co">#&gt; Rule 8: {small, near, moon, no_moon} -&gt; {medium, large, far}</span>
 <span class="co">#&gt; Rule 9: {small, large, far, moon} -&gt; {medium, near, no_moon}</span>
-<span class="co">#&gt; Rule 10: {no_moon} -&gt; {small, near}</span></code></pre></div>
+<span class="co">#&gt; Rule 10: {medium, large, far, moon} -&gt; {small, near, no_moon}</span></code></pre></div>
 </div>
   </div>
 
@@ -251,11 +247,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p></p>
+<p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
@@ -263,6 +261,8 @@
 
   
 
+
+  
 
   </body>
 </html>

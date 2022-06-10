@@ -1,5 +1,5 @@
-pandoc: 2.11.4
-pkgdown: 1.6.1
+pandoc: 2.14.0.3
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   arules: arules.html
@@ -7,5 +7,5 @@ articles:
   conceptual-scaling: conceptual-scaling.html
   extending_equivalence: extending_equivalence.html
   implications: implications.html
-last_built: 2021-06-28T19:40Z
+last_built: 2022-06-10T07:03Z
 
