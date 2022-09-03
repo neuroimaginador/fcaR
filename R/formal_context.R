@@ -58,9 +58,10 @@ FormalContext <- R6::R6Class(
     #' @field objects The objects of the formal context.
     objects = NULL,
 
-    #' @field grades_set The set of degrees (in \[0, 1\]) the attribute can take.
+    #' @field grades_set The set of degrees (in \[0, 1\]) the whole set of attributes can take.
     grades_set = NULL,
 
+    #' @field expanded_grades_set The set of degrees (in \[0, 1\]) each attribute can take.
     expanded_grades_set = NULL,
 
     #' @field concepts The concept lattice associated to the formal context as a \code{\link{ConceptLattice}}.
@@ -120,7 +121,7 @@ FormalContext <- R6::R6Class(
 
         # If it comes from the arules package
         attributes <- I@itemInfo$labels
-        I <- methods::as(I@data, "dgCMatrix")
+        I <- convert_to_sparse(I@data)
         objects <- paste0(seq(ncol(I)))
         dimnames(I) <- list(attributes, objects)
 
@@ -176,9 +177,8 @@ FormalContext <- R6::R6Class(
           # # TODO: save tI???
           # tI <- new_spm(I)
           # I <- new_spm(t(I))
-          I <- methods::as(Matrix::Matrix(t(I),
-                                          sparse = TRUE),
-                           "dgCMatrix")
+          I <- convert_to_sparse(
+            Matrix::Matrix(t(I), sparse = TRUE))
 
 
         }
@@ -1046,8 +1046,8 @@ FormalContext <- R6::R6Class(
 
         # There are implications (the first one is dummy
         # emptyset -> emptyset )
-        my_LHS <- methods::as(L$LHS, "dgCMatrix")
-        my_RHS <- methods::as(L$RHS, "dgCMatrix")
+        my_LHS <- convert_to_sparse(L$LHS)
+        my_RHS <- convert_to_sparse(L$RHS)
 
         extracted_implications <- ImplicationSet$new(attributes = self$attributes,
                                                      lhs = my_LHS,
@@ -1079,7 +1079,7 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      return(methods::as(methods::as(self$I, "ngCMatrix"), "transactions"))
+      return(methods::as(methods::as(self$I, "nMatrix"), "transactions"))
       # return(to_transactions.SpM(self$I))
 
     },

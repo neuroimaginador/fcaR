@@ -1,7 +1,7 @@
 .simplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
-  LHS <- methods::as(LHS, "dgCMatrix")
-  RHS <- methods::as(RHS, "dgCMatrix")
+  LHS <- convert_to_sparse(LHS)
+  RHS <- convert_to_sparse(RHS)
 
   LHS_subsets <- Matrix::Matrix(FALSE, sparse = TRUE,
                                 ncol = ncol(LHS),

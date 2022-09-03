@@ -72,8 +72,8 @@ ImplicationSet <- R6::R6Class(
         name <- as.character(arules_imp@info$data)
         private$name <- name
 
-        private$lhs_matrix <- methods::as(arules_imp@lhs@data, "dgCMatrix")
-        private$rhs_matrix <- methods::as(arules_imp@rhs@data, "dgCMatrix")
+        private$lhs_matrix <- convert_to_sparse(arules_imp@lhs@data)
+        private$rhs_matrix <- convert_to_sparse(arules_imp@rhs@data)
 
         rownames(private$lhs_matrix) <- private$attributes
         rownames(private$rhs_matrix) <- private$attributes

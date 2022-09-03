@@ -6,6 +6,7 @@ MYPKGOPTIONS <- settings::options_manager(
   reduced_lattice = TRUE,
   use_mathrm = TRUE,
   use_ensuremath = FALSE,
+  use_tabulary = FALSE,
   .allowed = list(
     latex_size = settings::inlist("tiny",
                                   "scriptsize",

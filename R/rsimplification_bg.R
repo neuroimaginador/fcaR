@@ -1,8 +1,8 @@
 .Rsimplification_bg <- function(LHS, RHS,
                                 fixed = 0) {
 
-  LHS <- methods::as(LHS, "dgCMatrix")
-  RHS <- methods::as(RHS, "dgCMatrix")
+  LHS <- convert_to_sparse(LHS)
+  RHS <- convert_to_sparse(RHS)
 
   LRHS_subsets <- Matrix::Matrix(FALSE, sparse = TRUE,
                                  ncol = ncol(LHS),

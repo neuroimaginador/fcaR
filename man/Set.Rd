@@ -19,21 +19,21 @@ S
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Set$new()}}
-\item \href{#method-assign}{\code{Set$assign()}}
-\item \href{#method-[}{\code{Set$[()}}
-\item \href{#method-cardinal}{\code{Set$cardinal()}}
-\item \href{#method-get_vector}{\code{Set$get_vector()}}
-\item \href{#method-get_attributes}{\code{Set$get_attributes()}}
-\item \href{#method-length}{\code{Set$length()}}
-\item \href{#method-print}{\code{Set$print()}}
-\item \href{#method-to_latex}{\code{Set$to_latex()}}
-\item \href{#method-clone}{\code{Set$clone()}}
+\item \href{#method-Set-new}{\code{Set$new()}}
+\item \href{#method-Set-assign}{\code{Set$assign()}}
+\item \href{#method-Set-[}{\code{Set$[()}}
+\item \href{#method-Set-cardinal}{\code{Set$cardinal()}}
+\item \href{#method-Set-get_vector}{\code{Set$get_vector()}}
+\item \href{#method-Set-get_attributes}{\code{Set$get_attributes()}}
+\item \href{#method-Set-length}{\code{Set$length()}}
+\item \href{#method-Set-print}{\code{Set$print()}}
+\item \href{#method-Set-to_latex}{\code{Set$to_latex()}}
+\item \href{#method-Set-clone}{\code{Set$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Set-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-new}{}}}
 \subsection{Method \code{new()}}{
 Creator for objects of class \code{Set}
 \subsection{Usage}{
@@ -60,8 +60,8 @@ An object of class \code{Set}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-assign"></a>}}
-\if{latex}{\out{\hypertarget{method-assign}{}}}
+\if{html}{\out{<a id="method-Set-assign"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-assign}{}}}
 \subsection{Method \code{assign()}}{
 Assign grades to attributes in the set
 \subsection{Usage}{
@@ -87,8 +87,8 @@ One can use both of:
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-["></a>}}
-\if{latex}{\out{\hypertarget{method-[}{}}}
+\if{html}{\out{<a id="method-Set-["></a>}}
+\if{latex}{\out{\hypertarget{method-Set-[}{}}}
 \subsection{Method \code{[()}}{
 Get elements by index
 \subsection{Usage}{
@@ -107,8 +107,8 @@ A \code{Set} but with only the required elements.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cardinal"></a>}}
-\if{latex}{\out{\hypertarget{method-cardinal}{}}}
+\if{html}{\out{<a id="method-Set-cardinal"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-cardinal}{}}}
 \subsection{Method \code{cardinal()}}{
 Cardinal of the Set
 \subsection{Usage}{
@@ -121,8 +121,8 @@ as the sum of the degrees of each element.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_vector"></a>}}
-\if{latex}{\out{\hypertarget{method-get_vector}{}}}
+\if{html}{\out{<a id="method-Set-get_vector"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-get_vector}{}}}
 \subsection{Method \code{get_vector()}}{
 Internal \code{Matrix}
 \subsection{Usage}{
@@ -134,8 +134,8 @@ The internal sparse \code{Matrix} representation of the set.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_attributes"></a>}}
-\if{latex}{\out{\hypertarget{method-get_attributes}{}}}
+\if{html}{\out{<a id="method-Set-get_attributes"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-get_attributes}{}}}
 \subsection{Method \code{get_attributes()}}{
 Attributes defined for the set
 \subsection{Usage}{
@@ -147,8 +147,8 @@ A character vector with the names of the attributes.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-length"></a>}}
-\if{latex}{\out{\hypertarget{method-length}{}}}
+\if{html}{\out{<a id="method-Set-length"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-length}{}}}
 \subsection{Method \code{length()}}{
 Number of attributes
 \subsection{Usage}{
@@ -160,8 +160,8 @@ The number of attributes that are defined for this fuzzy set.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Set-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the set to console
 \subsection{Usage}{
@@ -180,8 +180,8 @@ A string with the elements of the set and their grades between brackets {}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_latex"></a>}}
-\if{latex}{\out{\hypertarget{method-to_latex}{}}}
+\if{html}{\out{<a id="method-Set-to_latex"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-to_latex}{}}}
 \subsection{Method \code{to_latex()}}{
 Write the set in LaTeX format
 \subsection{Usage}{
@@ -200,8 +200,8 @@ The fuzzy set in LaTeX.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Set-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -13,11 +13,11 @@ imps_to_arules <- function(LHS, RHS, attributes,
                   RHS = RHS,
                   attributes = attributes)
 
-  LHS <- methods::as(L$lhs, "ngCMatrix")
+  LHS <- methods::as(L$lhs, "nMatrix")
   LHS <- methods::as(LHS, "itemMatrix")
   arules::itemLabels(LHS) <- attributes
 
-  RHS <- methods::as(L$rhs, "ngCMatrix")
+  RHS <- methods::as(L$rhs, "nMatrix")
   RHS <- methods::as(RHS, "itemMatrix")
   arules::itemLabels(RHS) <- attributes
 
@@ -33,7 +33,7 @@ imps_to_arules <- function(LHS, RHS, attributes,
   if (quality) {
 
     arules::quality(rules) <- arules::interestMeasure(rules,
-                                                      transactions = methods::as(methods::as(I, "ngCMatrix"), "transactions"))
+                                                      transactions = methods::as(methods::as(I, "nMatrix"), "transactions"))
 
   }
 

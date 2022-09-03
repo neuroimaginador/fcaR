@@ -1,5 +1,9 @@
 # fcaR 1.2.0
 
+Bugfixes:
+
+* Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.
+
 # fcaR 1.1.1
 
 Enhancements:

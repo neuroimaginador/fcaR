@@ -9,7 +9,7 @@
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
-[![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://codecov.io/gh/neuroimaginador/fcaR)
+[![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://app.codecov.io/gh/neuroimaginador/fcaR)
 [![R build
 status](https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg)](https://github.com/neuroimaginador/fcaR/actions)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcaR)](https://cran.r-project.org/package=fcaR)
@@ -233,11 +233,17 @@ O6
 </tbody>
 </table>
 
-Here, a value *x* in the intersection of a row and a column indicates
-that the object of the corresponding row possesses the attribute in the
-column in a degree of at least *x* (if *x* = 0, the attribute is absent
-in the object, and if *x* = 1, the attribute is fully present in the
-object).
+Here, a value
+![x](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;x "x")
+in the intersection of a row and a column indicates that the object of
+the corresponding row possesses the attribute in the column in a degree
+of at least
+![x](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;x "x")
+(if
+![x = 0](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;x%20%3D%200 "x = 0"),
+the attribute is absent in the object, and if
+![x = 1](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;x%20%3D%201 "x = 1"),
+the attribute is fully present in the object).
 
 We can build a FormalContext object:
 
@@ -262,9 +268,8 @@ With a single function, we can compute the set of concepts:
 fc$find_concepts()
 
 # The first concept
-fc$concepts[1]
-#> A set of 1 concepts:
-#> 1: ({O1, O2, O3, O4, O5, O6}, {})
+fc$concepts$sub(1)
+#> ({O1, O2, O3, O4, O5, O6}, {})
 
 # And plot the concept lattice
 fc$concepts$plot()
@@ -365,8 +370,8 @@ Enhancements:
 
 -   The user can control the number of decimal digits when exporting to
     LaTeX or when printing formal contexts, concept lattices and
-    implications. Just use fcaR\_options(decimal\_places = n), where n
-    is the number of desired decimal digits.
+    implications. Just use fcaR_options(decimal_places = n), where n is
+    the number of desired decimal digits.
 
 New functionality:
 
@@ -390,7 +395,7 @@ foundations*. Springer. ISBN 3540627715.
 Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic:
 Elimination of Data Redundancy in Knowledge Representation.” *Advances
 in Artificial Intelligence - IBERAMIA 2002*, *2527*, 141-150. doi:
-10.1007/3-540-36131-6\_15 (URL:
+10.1007/3-540-36131-6_15 (URL:
 <https://doi.org/10.1007/3-540-36131-6_15>).
 
 Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In *Proc.

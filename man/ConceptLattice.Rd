@@ -45,42 +45,42 @@ fc$concepts$bottom()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ConceptLattice$new()}}
-\item \href{#method-plot}{\code{ConceptLattice$plot()}}
-\item \href{#method-sublattice}{\code{ConceptLattice$sublattice()}}
-\item \href{#method-top}{\code{ConceptLattice$top()}}
-\item \href{#method-bottom}{\code{ConceptLattice$bottom()}}
-\item \href{#method-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
-\item \href{#method-meet_irreducibles}{\code{ConceptLattice$meet_irreducibles()}}
-\item \href{#method-decompose}{\code{ConceptLattice$decompose()}}
-\item \href{#method-supremum}{\code{ConceptLattice$supremum()}}
-\item \href{#method-infimum}{\code{ConceptLattice$infimum()}}
-\item \href{#method-subconcepts}{\code{ConceptLattice$subconcepts()}}
-\item \href{#method-superconcepts}{\code{ConceptLattice$superconcepts()}}
-\item \href{#method-lower_neighbours}{\code{ConceptLattice$lower_neighbours()}}
-\item \href{#method-upper_neighbours}{\code{ConceptLattice$upper_neighbours()}}
-\item \href{#method-clone}{\code{ConceptLattice$clone()}}
+\item \href{#method-ConceptLattice-new}{\code{ConceptLattice$new()}}
+\item \href{#method-ConceptLattice-plot}{\code{ConceptLattice$plot()}}
+\item \href{#method-ConceptLattice-sublattice}{\code{ConceptLattice$sublattice()}}
+\item \href{#method-ConceptLattice-top}{\code{ConceptLattice$top()}}
+\item \href{#method-ConceptLattice-bottom}{\code{ConceptLattice$bottom()}}
+\item \href{#method-ConceptLattice-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
+\item \href{#method-ConceptLattice-meet_irreducibles}{\code{ConceptLattice$meet_irreducibles()}}
+\item \href{#method-ConceptLattice-decompose}{\code{ConceptLattice$decompose()}}
+\item \href{#method-ConceptLattice-supremum}{\code{ConceptLattice$supremum()}}
+\item \href{#method-ConceptLattice-infimum}{\code{ConceptLattice$infimum()}}
+\item \href{#method-ConceptLattice-subconcepts}{\code{ConceptLattice$subconcepts()}}
+\item \href{#method-ConceptLattice-superconcepts}{\code{ConceptLattice$superconcepts()}}
+\item \href{#method-ConceptLattice-lower_neighbours}{\code{ConceptLattice$lower_neighbours()}}
+\item \href{#method-ConceptLattice-upper_neighbours}{\code{ConceptLattice$upper_neighbours()}}
+\item \href{#method-ConceptLattice-clone}{\code{ConceptLattice$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="[">}\href{../../fcaR/html/ConceptSet.html#method-[}{\code{fcaR::ConceptSet$[()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents">}\href{../../fcaR/html/ConceptSet.html#method-extents}{\code{fcaR::ConceptSet$extents()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents">}\href{../../fcaR/html/ConceptSet.html#method-intents}{\code{fcaR::ConceptSet$intents()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty">}\href{../../fcaR/html/ConceptSet.html#method-is_empty}{\code{fcaR::ConceptSet$is_empty()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="print">}\href{../../fcaR/html/ConceptSet.html#method-print}{\code{fcaR::ConceptSet$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="size">}\href{../../fcaR/html/ConceptSet.html#method-size}{\code{fcaR::ConceptSet$size()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="sub">}\href{../../fcaR/html/ConceptSet.html#method-sub}{\code{fcaR::ConceptSet$sub()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="support">}\href{../../fcaR/html/ConceptSet.html#method-support}{\code{fcaR::ConceptSet$support()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_latex">}\href{../../fcaR/html/ConceptSet.html#method-to_latex}{\code{fcaR::ConceptSet$to_latex()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_list">}\href{../../fcaR/html/ConceptSet.html#method-to_list}{\code{fcaR::ConceptSet$to_list()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-['><code>fcaR::ConceptSet$[()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-extents'><code>fcaR::ConceptSet$extents()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-intents'><code>fcaR::ConceptSet$intents()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-is_empty'><code>fcaR::ConceptSet$is_empty()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="print"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-print'><code>fcaR::ConceptSet$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="size"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-size'><code>fcaR::ConceptSet$size()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="sub"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-sub'><code>fcaR::ConceptSet$sub()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="support"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-support'><code>fcaR::ConceptSet$support()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_latex"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-to_latex'><code>fcaR::ConceptSet$to_latex()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_list"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-to_list'><code>fcaR::ConceptSet$to_list()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ConceptLattice} object.
 \subsection{Usage}{
@@ -107,8 +107,8 @@ A new \code{ConceptLattice} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot"></a>}}
-\if{latex}{\out{\hypertarget{method-plot}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-plot"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-plot}{}}}
 \subsection{Method \code{plot()}}{
 Plot the concept lattice
 \subsection{Usage}{
@@ -137,8 +137,8 @@ If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of 
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-sublattice"></a>}}
-\if{latex}{\out{\hypertarget{method-sublattice}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-sublattice"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-sublattice}{}}}
 \subsection{Method \code{sublattice()}}{
 Sublattice
 \subsection{Usage}{
@@ -161,8 +161,8 @@ The generated sublattice as a new \code{ConceptLattice} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-top"></a>}}
-\if{latex}{\out{\hypertarget{method-top}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-top"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-top}{}}}
 \subsection{Method \code{top()}}{
 Top of a Lattice
 \subsection{Usage}{
@@ -185,8 +185,8 @@ fc$concepts$top()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-bottom"></a>}}
-\if{latex}{\out{\hypertarget{method-bottom}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-bottom"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-bottom}{}}}
 \subsection{Method \code{bottom()}}{
 Bottom of a Lattice
 \subsection{Usage}{
@@ -209,8 +209,8 @@ fc$concepts$bottom()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-join_irreducibles"></a>}}
-\if{latex}{\out{\hypertarget{method-join_irreducibles}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-join_irreducibles"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-join_irreducibles}{}}}
 \subsection{Method \code{join_irreducibles()}}{
 Join-irreducible Elements
 \subsection{Usage}{
@@ -222,8 +222,8 @@ The join-irreducible elements in the concept lattice.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-meet_irreducibles"></a>}}
-\if{latex}{\out{\hypertarget{method-meet_irreducibles}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-meet_irreducibles"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-meet_irreducibles}{}}}
 \subsection{Method \code{meet_irreducibles()}}{
 Meet-irreducible Elements
 \subsection{Usage}{
@@ -235,8 +235,8 @@ The meet-irreducible elements in the concept lattice.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-decompose"></a>}}
-\if{latex}{\out{\hypertarget{method-decompose}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-decompose"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-decompose}{}}}
 \subsection{Method \code{decompose()}}{
 Decompose a concept as the supremum of meet-irreducible concepts
 \subsection{Usage}{
@@ -255,8 +255,8 @@ A list, each field is the set of meet-irreducible elements whose supremum is the
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-supremum"></a>}}
-\if{latex}{\out{\hypertarget{method-supremum}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-supremum"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-supremum}{}}}
 \subsection{Method \code{supremum()}}{
 Supremum of Concepts
 \subsection{Usage}{
@@ -279,8 +279,8 @@ The supremum of the list of concepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-infimum"></a>}}
-\if{latex}{\out{\hypertarget{method-infimum}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-infimum"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-infimum}{}}}
 \subsection{Method \code{infimum()}}{
 Infimum of Concepts
 \subsection{Usage}{
@@ -303,8 +303,8 @@ The infimum of the list of concepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-subconcepts"></a>}}
-\if{latex}{\out{\hypertarget{method-subconcepts}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-subconcepts"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-subconcepts}{}}}
 \subsection{Method \code{subconcepts()}}{
 Subconcepts of a Concept
 \subsection{Usage}{
@@ -323,8 +323,8 @@ A list with the subconcepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-superconcepts"></a>}}
-\if{latex}{\out{\hypertarget{method-superconcepts}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-superconcepts"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-superconcepts}{}}}
 \subsection{Method \code{superconcepts()}}{
 Superconcepts of a Concept
 \subsection{Usage}{
@@ -343,8 +343,8 @@ A list with the superconcepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-lower_neighbours"></a>}}
-\if{latex}{\out{\hypertarget{method-lower_neighbours}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-lower_neighbours"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-lower_neighbours}{}}}
 \subsection{Method \code{lower_neighbours()}}{
 Lower Neighbours of a Concept
 \subsection{Usage}{
@@ -363,8 +363,8 @@ A list with the lower neighbours of \code{C}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-upper_neighbours"></a>}}
-\if{latex}{\out{\hypertarget{method-upper_neighbours}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-upper_neighbours"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-upper_neighbours}{}}}
 \subsection{Method \code{upper_neighbours()}}{
 Upper Neighbours of a Concept
 \subsection{Usage}{
@@ -383,8 +383,8 @@ A list with the upper neighbours of \code{C}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ConceptLattice-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -92,7 +92,9 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 
 \item{\code{objects}}{The objects of the formal context.}
 
-\item{\code{grades_set}}{The set of degrees (in [0, 1]) the attribute can take.}
+\item{\code{grades_set}}{The set of degrees (in [0, 1]) the whole set of attributes can take.}
+
+\item{\code{expanded_grades_set}}{The set of degrees (in [0, 1]) each attribute can take.}
 
 \item{\code{concepts}}{The concept lattice associated to the formal context as a \code{\link{ConceptLattice}}.}
 
@@ -103,40 +105,40 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{FormalContext$new()}}
-\item \href{#method-is_empty}{\code{FormalContext$is_empty()}}
-\item \href{#method-scale}{\code{FormalContext$scale()}}
-\item \href{#method-get_scales}{\code{FormalContext$get_scales()}}
-\item \href{#method-background_knowledge}{\code{FormalContext$background_knowledge()}}
-\item \href{#method-dual}{\code{FormalContext$dual()}}
-\item \href{#method-intent}{\code{FormalContext$intent()}}
-\item \href{#method-uparrow}{\code{FormalContext$uparrow()}}
-\item \href{#method-extent}{\code{FormalContext$extent()}}
-\item \href{#method-downarrow}{\code{FormalContext$downarrow()}}
-\item \href{#method-closure}{\code{FormalContext$closure()}}
-\item \href{#method-obj_concept}{\code{FormalContext$obj_concept()}}
-\item \href{#method-att_concept}{\code{FormalContext$att_concept()}}
-\item \href{#method-is_concept}{\code{FormalContext$is_concept()}}
-\item \href{#method-is_closed}{\code{FormalContext$is_closed()}}
-\item \href{#method-clarify}{\code{FormalContext$clarify()}}
-\item \href{#method-reduce}{\code{FormalContext$reduce()}}
-\item \href{#method-standardize}{\code{FormalContext$standardize()}}
-\item \href{#method-find_concepts}{\code{FormalContext$find_concepts()}}
-\item \href{#method-find_implications}{\code{FormalContext$find_implications()}}
-\item \href{#method-to_transactions}{\code{FormalContext$to_transactions()}}
-\item \href{#method-save}{\code{FormalContext$save()}}
-\item \href{#method-load}{\code{FormalContext$load()}}
-\item \href{#method-dim}{\code{FormalContext$dim()}}
-\item \href{#method-print}{\code{FormalContext$print()}}
-\item \href{#method-to_latex}{\code{FormalContext$to_latex()}}
-\item \href{#method-incidence}{\code{FormalContext$incidence()}}
-\item \href{#method-plot}{\code{FormalContext$plot()}}
-\item \href{#method-clone}{\code{FormalContext$clone()}}
+\item \href{#method-FormalContext-new}{\code{FormalContext$new()}}
+\item \href{#method-FormalContext-is_empty}{\code{FormalContext$is_empty()}}
+\item \href{#method-FormalContext-scale}{\code{FormalContext$scale()}}
+\item \href{#method-FormalContext-get_scales}{\code{FormalContext$get_scales()}}
+\item \href{#method-FormalContext-background_knowledge}{\code{FormalContext$background_knowledge()}}
+\item \href{#method-FormalContext-dual}{\code{FormalContext$dual()}}
+\item \href{#method-FormalContext-intent}{\code{FormalContext$intent()}}
+\item \href{#method-FormalContext-uparrow}{\code{FormalContext$uparrow()}}
+\item \href{#method-FormalContext-extent}{\code{FormalContext$extent()}}
+\item \href{#method-FormalContext-downarrow}{\code{FormalContext$downarrow()}}
+\item \href{#method-FormalContext-closure}{\code{FormalContext$closure()}}
+\item \href{#method-FormalContext-obj_concept}{\code{FormalContext$obj_concept()}}
+\item \href{#method-FormalContext-att_concept}{\code{FormalContext$att_concept()}}
+\item \href{#method-FormalContext-is_concept}{\code{FormalContext$is_concept()}}
+\item \href{#method-FormalContext-is_closed}{\code{FormalContext$is_closed()}}
+\item \href{#method-FormalContext-clarify}{\code{FormalContext$clarify()}}
+\item \href{#method-FormalContext-reduce}{\code{FormalContext$reduce()}}
+\item \href{#method-FormalContext-standardize}{\code{FormalContext$standardize()}}
+\item \href{#method-FormalContext-find_concepts}{\code{FormalContext$find_concepts()}}
+\item \href{#method-FormalContext-find_implications}{\code{FormalContext$find_implications()}}
+\item \href{#method-FormalContext-to_transactions}{\code{FormalContext$to_transactions()}}
+\item \href{#method-FormalContext-save}{\code{FormalContext$save()}}
+\item \href{#method-FormalContext-load}{\code{FormalContext$load()}}
+\item \href{#method-FormalContext-dim}{\code{FormalContext$dim()}}
+\item \href{#method-FormalContext-print}{\code{FormalContext$print()}}
+\item \href{#method-FormalContext-to_latex}{\code{FormalContext$to_latex()}}
+\item \href{#method-FormalContext-incidence}{\code{FormalContext$incidence()}}
+\item \href{#method-FormalContext-plot}{\code{FormalContext$plot()}}
+\item \href{#method-FormalContext-clone}{\code{FormalContext$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-FormalContext-new"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-new}{}}}
 \subsection{Method \code{new()}}{
 Creator for the Formal Context class
 \subsection{Usage}{
@@ -165,8 +167,8 @@ An object of the \code{FormalContext} class.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_empty"></a>}}
-\if{latex}{\out{\hypertarget{method-is_empty}{}}}
+\if{html}{\out{<a id="method-FormalContext-is_empty"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-is_empty}{}}}
 \subsection{Method \code{is_empty()}}{
 Check if the \code{FormalContext} is empty
 \subsection{Usage}{
@@ -178,8 +180,8 @@ Check if the \code{FormalContext} is empty
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-scale"></a>}}
-\if{latex}{\out{\hypertarget{method-scale}{}}}
+\if{html}{\out{<a id="method-FormalContext-scale"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-scale}{}}}
 \subsection{Method \code{scale()}}{
 Scale the context
 \subsection{Usage}{
@@ -220,8 +222,8 @@ fc$scale(attributes = "ring", type = "nominal")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_scales"></a>}}
-\if{latex}{\out{\hypertarget{method-get_scales}{}}}
+\if{html}{\out{<a id="method-FormalContext-get_scales"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-get_scales}{}}}
 \subsection{Method \code{get_scales()}}{
 Scales applied to the formal context
 \subsection{Usage}{
@@ -256,8 +258,8 @@ fc$get_scales()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-background_knowledge"></a>}}
-\if{latex}{\out{\hypertarget{method-background_knowledge}{}}}
+\if{html}{\out{<a id="method-FormalContext-background_knowledge"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-background_knowledge}{}}}
 \subsection{Method \code{background_knowledge()}}{
 Background knowledge of a scaled formal context
 \subsection{Usage}{
@@ -283,8 +285,8 @@ fc$background_knowledge()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-dual"></a>}}
-\if{latex}{\out{\hypertarget{method-dual}{}}}
+\if{html}{\out{<a id="method-FormalContext-dual"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-dual}{}}}
 \subsection{Method \code{dual()}}{
 Get the dual formal context
 \subsection{Usage}{
@@ -296,8 +298,8 @@ A \code{FormalContext} where objects and attributes have interchanged their role
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-intent"></a>}}
-\if{latex}{\out{\hypertarget{method-intent}{}}}
+\if{html}{\out{<a id="method-FormalContext-intent"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-intent}{}}}
 \subsection{Method \code{intent()}}{
 Get the intent of a fuzzy set of objects
 \subsection{Usage}{
@@ -316,8 +318,8 @@ A \code{Set} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-uparrow"></a>}}
-\if{latex}{\out{\hypertarget{method-uparrow}{}}}
+\if{html}{\out{<a id="method-FormalContext-uparrow"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-uparrow}{}}}
 \subsection{Method \code{uparrow()}}{
 Get the intent of a fuzzy set of objects
 \subsection{Usage}{
@@ -336,8 +338,8 @@ A \code{Set} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extent"></a>}}
-\if{latex}{\out{\hypertarget{method-extent}{}}}
+\if{html}{\out{<a id="method-FormalContext-extent"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-extent}{}}}
 \subsection{Method \code{extent()}}{
 Get the extent of a fuzzy set of attributes
 \subsection{Usage}{
@@ -356,8 +358,8 @@ A \code{Set} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-downarrow"></a>}}
-\if{latex}{\out{\hypertarget{method-downarrow}{}}}
+\if{html}{\out{<a id="method-FormalContext-downarrow"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-downarrow}{}}}
 \subsection{Method \code{downarrow()}}{
 Get the extent of a fuzzy set of attributes
 \subsection{Usage}{
@@ -376,8 +378,8 @@ A \code{Set} with the intent.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-closure"></a>}}
-\if{latex}{\out{\hypertarget{method-closure}{}}}
+\if{html}{\out{<a id="method-FormalContext-closure"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-closure}{}}}
 \subsection{Method \code{closure()}}{
 Get the closure of a fuzzy set of attributes
 \subsection{Usage}{
@@ -396,8 +398,8 @@ A \code{Set} with the closure.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-obj_concept"></a>}}
-\if{latex}{\out{\hypertarget{method-obj_concept}{}}}
+\if{html}{\out{<a id="method-FormalContext-obj_concept"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-obj_concept}{}}}
 \subsection{Method \code{obj_concept()}}{
 Object Concept
 \subsection{Usage}{
@@ -416,8 +418,8 @@ The object concept associated to the object given.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-att_concept"></a>}}
-\if{latex}{\out{\hypertarget{method-att_concept}{}}}
+\if{html}{\out{<a id="method-FormalContext-att_concept"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-att_concept}{}}}
 \subsection{Method \code{att_concept()}}{
 Attribute Concept
 \subsection{Usage}{
@@ -436,8 +438,8 @@ The attribute concept associated to the attribute given.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_concept"></a>}}
-\if{latex}{\out{\hypertarget{method-is_concept}{}}}
+\if{html}{\out{<a id="method-FormalContext-is_concept"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-is_concept}{}}}
 \subsection{Method \code{is_concept()}}{
 Is a Concept?
 \subsection{Usage}{
@@ -456,8 +458,8 @@ Is a Concept?
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_closed"></a>}}
-\if{latex}{\out{\hypertarget{method-is_closed}{}}}
+\if{html}{\out{<a id="method-FormalContext-is_closed"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-is_closed}{}}}
 \subsection{Method \code{is_closed()}}{
 Testing closure of attribute sets
 \subsection{Usage}{
@@ -476,8 +478,8 @@ Testing closure of attribute sets
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clarify"></a>}}
-\if{latex}{\out{\hypertarget{method-clarify}{}}}
+\if{html}{\out{<a id="method-FormalContext-clarify"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-clarify}{}}}
 \subsection{Method \code{clarify()}}{
 Clarify a formal context
 \subsection{Usage}{
@@ -496,8 +498,8 @@ The clarified \code{FormalContext}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reduce"></a>}}
-\if{latex}{\out{\hypertarget{method-reduce}{}}}
+\if{html}{\out{<a id="method-FormalContext-reduce"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-reduce}{}}}
 \subsection{Method \code{reduce()}}{
 Reduce a formal context
 \subsection{Usage}{
@@ -516,8 +518,8 @@ The clarified and reduced \code{FormalContext}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-standardize"></a>}}
-\if{latex}{\out{\hypertarget{method-standardize}{}}}
+\if{html}{\out{<a id="method-FormalContext-standardize"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-standardize}{}}}
 \subsection{Method \code{standardize()}}{
 Build the Standard Context
 \subsection{Usage}{
@@ -533,8 +535,8 @@ The standard context using the join- and meet- irreducible elements.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-find_concepts"></a>}}
-\if{latex}{\out{\hypertarget{method-find_concepts}{}}}
+\if{html}{\out{<a id="method-FormalContext-find_concepts"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-find_concepts}{}}}
 \subsection{Method \code{find_concepts()}}{
 Use Ganter Algorithm to compute concepts
 \subsection{Usage}{
@@ -553,8 +555,8 @@ A list with all the concepts in the formal context.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-find_implications"></a>}}
-\if{latex}{\out{\hypertarget{method-find_implications}{}}}
+\if{html}{\out{<a id="method-FormalContext-find_implications"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-find_implications}{}}}
 \subsection{Method \code{find_implications()}}{
 Use modified Ganter algorithm to compute both concepts and implications
 \subsection{Usage}{
@@ -575,8 +577,8 @@ Nothing, just updates the internal fields \code{concepts} and \code{implications
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_transactions"></a>}}
-\if{latex}{\out{\hypertarget{method-to_transactions}{}}}
+\if{html}{\out{<a id="method-FormalContext-to_transactions"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-to_transactions}{}}}
 \subsection{Method \code{to_transactions()}}{
 Convert the formal context to object of class \code{transactions} from the \code{arules} package
 \subsection{Usage}{
@@ -588,8 +590,8 @@ A \code{transactions} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-save"></a>}}
-\if{latex}{\out{\hypertarget{method-save}{}}}
+\if{html}{\out{<a id="method-FormalContext-save"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-save}{}}}
 \subsection{Method \code{save()}}{
 Save a \code{FormalContext} to RDS or CXT format
 \subsection{Usage}{
@@ -612,8 +614,8 @@ Invisibly the current \code{FormalContext}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-load"></a>}}
-\if{latex}{\out{\hypertarget{method-load}{}}}
+\if{html}{\out{<a id="method-FormalContext-load"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-load}{}}}
 \subsection{Method \code{load()}}{
 Load a \code{FormalContext} from a file
 \subsection{Usage}{
@@ -636,8 +638,8 @@ The loaded \code{FormalContext}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-dim"></a>}}
-\if{latex}{\out{\hypertarget{method-dim}{}}}
+\if{html}{\out{<a id="method-FormalContext-dim"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-dim}{}}}
 \subsection{Method \code{dim()}}{
 Dimensions of the formal context
 \subsection{Usage}{
@@ -649,8 +651,8 @@ A vector with (number of objects, number of attributes).
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-FormalContext-print"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the formal context
 \subsection{Usage}{
@@ -662,8 +664,8 @@ Prints information regarding the formal context.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_latex"></a>}}
-\if{latex}{\out{\hypertarget{method-to_latex}{}}}
+\if{html}{\out{<a id="method-FormalContext-to_latex"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-to_latex}{}}}
 \subsection{Method \code{to_latex()}}{
 Write the context in LaTeX format
 \subsection{Usage}{
@@ -693,8 +695,8 @@ A table environment in LaTeX.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-incidence"></a>}}
-\if{latex}{\out{\hypertarget{method-incidence}{}}}
+\if{html}{\out{<a id="method-FormalContext-incidence"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-incidence}{}}}
 \subsection{Method \code{incidence()}}{
 Incidence matrix of the formal context
 \subsection{Usage}{
@@ -715,8 +717,8 @@ fc$incidence()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-plot"></a>}}
-\if{latex}{\out{\hypertarget{method-plot}{}}}
+\if{html}{\out{<a id="method-FormalContext-plot"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-plot}{}}}
 \subsection{Method \code{plot()}}{
 Plot the formal context table
 \subsection{Usage}{
@@ -743,8 +745,8 @@ If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of 
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-FormalContext-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

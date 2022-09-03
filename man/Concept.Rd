@@ -25,17 +25,17 @@ C$get_intent()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Concept$new()}}
-\item \href{#method-get_extent}{\code{Concept$get_extent()}}
-\item \href{#method-get_intent}{\code{Concept$get_intent()}}
-\item \href{#method-print}{\code{Concept$print()}}
-\item \href{#method-to_latex}{\code{Concept$to_latex()}}
-\item \href{#method-clone}{\code{Concept$clone()}}
+\item \href{#method-Concept-new}{\code{Concept$new()}}
+\item \href{#method-Concept-get_extent}{\code{Concept$get_extent()}}
+\item \href{#method-Concept-get_intent}{\code{Concept$get_intent()}}
+\item \href{#method-Concept-print}{\code{Concept$print()}}
+\item \href{#method-Concept-to_latex}{\code{Concept$to_latex()}}
+\item \href{#method-Concept-clone}{\code{Concept$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Concept-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Concept-new}{}}}
 \subsection{Method \code{new()}}{
 Creator for objects of class \code{Concept}
 \subsection{Usage}{
@@ -56,8 +56,8 @@ An object of class \code{Concept}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_extent"></a>}}
-\if{latex}{\out{\hypertarget{method-get_extent}{}}}
+\if{html}{\out{<a id="method-Concept-get_extent"></a>}}
+\if{latex}{\out{\hypertarget{method-Concept-get_extent}{}}}
 \subsection{Method \code{get_extent()}}{
 Internal \code{Set} for the extent
 \subsection{Usage}{
@@ -69,8 +69,8 @@ The \code{Set} representation of the extent.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_intent"></a>}}
-\if{latex}{\out{\hypertarget{method-get_intent}{}}}
+\if{html}{\out{<a id="method-Concept-get_intent"></a>}}
+\if{latex}{\out{\hypertarget{method-Concept-get_intent}{}}}
 \subsection{Method \code{get_intent()}}{
 Internal \code{Set} for the intent
 \subsection{Usage}{
@@ -82,8 +82,8 @@ The \code{Set} representation of the intent.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-Concept-print"></a>}}
+\if{latex}{\out{\hypertarget{method-Concept-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the concept to console
 \subsection{Usage}{
@@ -95,8 +95,8 @@ A string with the elements of the set and their grades between brackets {}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_latex"></a>}}
-\if{latex}{\out{\hypertarget{method-to_latex}{}}}
+\if{html}{\out{<a id="method-Concept-to_latex"></a>}}
+\if{latex}{\out{\hypertarget{method-Concept-to_latex}{}}}
 \subsection{Method \code{to_latex()}}{
 Write the concept in LaTeX format
 \subsection{Usage}{
@@ -115,8 +115,8 @@ The fuzzy concept in LaTeX.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Concept-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Concept-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

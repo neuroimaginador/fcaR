@@ -48,12 +48,14 @@ parse_implications <- function(input) {
 
   # Combine matrices of each implication
   LHS <- LR %>%
-    purrr::map(purrr::pluck("lhs")) %>%
-    do.call(cbind, .)
+    purrr::map(purrr::pluck("lhs"))
+
+  LHS <- do.call(cbind, LHS)
 
   RHS <- LR %>%
-    purrr::map(purrr::pluck("rhs")) %>%
-    do.call(cbind, .)
+    purrr::map(purrr::pluck("rhs"))
+
+  RHS <- do.call(cbind, RHS)
 
   # Build the ImplicationSet
   ImplicationSet$new(attributes = attributes,
@@ -77,14 +79,16 @@ parse_implication <- function(string, attributes) {
   # Split left and right hand sides
   LR <- string %>%
     stringr::str_split(pattern = stringr::fixed("->")) %>%
-    purrr::map(stringr::str_squish) %>%
-    .[[1]]
+    purrr::map(stringr::str_squish)
+
+  LR <- LR[[1]]
 
   # Add some markers as delimiters for attributes
   LR <- LR %>%
     stringr::str_replace_all(pattern = "\\s*,\\s*",
-                             replacement = "%%%") %>%
-    paste0("%%%", ., "%%%")
+                             replacement = "%%%")
+
+  LR <- paste0("%%%", LR, "%%%")
 
   # Index of the attributes found in the string
   idx <- LR %>%

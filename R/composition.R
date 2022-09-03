@@ -1,8 +1,8 @@
 .composition <- function(LHS, RHS, attributes) {
 
   # logic_name <- tolower(fuzzy_logic()$name)
-  LHS <- methods::as(LHS, "dgCMatrix")
-  RHS <- methods::as(RHS, "dgCMatrix")
+  LHS <- convert_to_sparse(LHS)
+  RHS <- convert_to_sparse(RHS)
 
   equal_LHS <- .equal_sets(LHS)
 

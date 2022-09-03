@@ -1,8 +1,8 @@
 .subset <- function(x, y = NULL, proper = FALSE) {
 
-  x <- methods::as(x, "dgCMatrix")
+  x <- convert_to_sparse(x)
   if (is.null(y)) y <- x
-  y <- methods::as(y, "dgCMatrix")
+  y <- convert_to_sparse(y)
 
   stopifnot("x" %in% methods::slotNames(x))
 
@@ -33,9 +33,9 @@
 
 .equal_sets <- function(x, y = NULL, proper = FALSE) {
 
-  x <- methods::as(x, "dgCMatrix")
+  x <- convert_to_sparse(x)
   if (is.null(y)) y <- x
-  y <- methods::as(y, "dgCMatrix")
+  y <- convert_to_sparse(y)
 
   stopifnot("x" %in% methods::slotNames(x))
   stopifnot("x" %in% methods::slotNames(y))

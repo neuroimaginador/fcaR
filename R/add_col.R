@@ -1,6 +1,6 @@
 add_col <- function(M, sparse_v) {
 
-  sparse_v <- methods::as(sparse_v, "dgCMatrix")
+  sparse_v <- convert_to_sparse(sparse_v)
 
   newM <- M
 

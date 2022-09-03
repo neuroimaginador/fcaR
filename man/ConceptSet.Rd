@@ -22,23 +22,23 @@ fc_planets$concepts$meet_irreducibles()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{ConceptSet$new()}}
-\item \href{#method-size}{\code{ConceptSet$size()}}
-\item \href{#method-is_empty}{\code{ConceptSet$is_empty()}}
-\item \href{#method-extents}{\code{ConceptSet$extents()}}
-\item \href{#method-intents}{\code{ConceptSet$intents()}}
-\item \href{#method-print}{\code{ConceptSet$print()}}
-\item \href{#method-to_latex}{\code{ConceptSet$to_latex()}}
-\item \href{#method-to_list}{\code{ConceptSet$to_list()}}
-\item \href{#method-[}{\code{ConceptSet$[()}}
-\item \href{#method-sub}{\code{ConceptSet$sub()}}
-\item \href{#method-support}{\code{ConceptSet$support()}}
-\item \href{#method-clone}{\code{ConceptSet$clone()}}
+\item \href{#method-ConceptSet-new}{\code{ConceptSet$new()}}
+\item \href{#method-ConceptSet-size}{\code{ConceptSet$size()}}
+\item \href{#method-ConceptSet-is_empty}{\code{ConceptSet$is_empty()}}
+\item \href{#method-ConceptSet-extents}{\code{ConceptSet$extents()}}
+\item \href{#method-ConceptSet-intents}{\code{ConceptSet$intents()}}
+\item \href{#method-ConceptSet-print}{\code{ConceptSet$print()}}
+\item \href{#method-ConceptSet-to_latex}{\code{ConceptSet$to_latex()}}
+\item \href{#method-ConceptSet-to_list}{\code{ConceptSet$to_list()}}
+\item \href{#method-ConceptSet-[}{\code{ConceptSet$[()}}
+\item \href{#method-ConceptSet-sub}{\code{ConceptSet$sub()}}
+\item \href{#method-ConceptSet-support}{\code{ConceptSet$support()}}
+\item \href{#method-ConceptSet-clone}{\code{ConceptSet$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-ConceptSet-new"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{ConceptLattice} object.
 \subsection{Usage}{
@@ -65,8 +65,8 @@ A new \code{ConceptLattice} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-size"></a>}}
-\if{latex}{\out{\hypertarget{method-size}{}}}
+\if{html}{\out{<a id="method-ConceptSet-size"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-size}{}}}
 \subsection{Method \code{size()}}{
 Size of the Lattice
 \subsection{Usage}{
@@ -78,8 +78,8 @@ The number of concepts in the lattice.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_empty"></a>}}
-\if{latex}{\out{\hypertarget{method-is_empty}{}}}
+\if{html}{\out{<a id="method-ConceptSet-is_empty"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-is_empty}{}}}
 \subsection{Method \code{is_empty()}}{
 Is the lattice empty?
 \subsection{Usage}{
@@ -91,8 +91,8 @@ Is the lattice empty?
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-extents"></a>}}
-\if{latex}{\out{\hypertarget{method-extents}{}}}
+\if{html}{\out{<a id="method-ConceptSet-extents"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-extents}{}}}
 \subsection{Method \code{extents()}}{
 Concept Extents
 \subsection{Usage}{
@@ -104,8 +104,8 @@ The extents of all concepts, as a \code{dgCMatrix}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-intents"></a>}}
-\if{latex}{\out{\hypertarget{method-intents}{}}}
+\if{html}{\out{<a id="method-ConceptSet-intents"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-intents}{}}}
 \subsection{Method \code{intents()}}{
 Concept Intents
 \subsection{Usage}{
@@ -117,8 +117,8 @@ The intents of all concepts, as a \code{dgCMatrix}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-ConceptSet-print"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-print}{}}}
 \subsection{Method \code{print()}}{
 Print the Concept Set
 \subsection{Usage}{
@@ -130,8 +130,8 @@ Nothing, just prints the concepts
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_latex"></a>}}
-\if{latex}{\out{\hypertarget{method-to_latex}{}}}
+\if{html}{\out{<a id="method-ConceptSet-to_latex"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-to_latex}{}}}
 \subsection{Method \code{to_latex()}}{
 Write in LaTeX
 \subsection{Usage}{
@@ -156,8 +156,8 @@ The \code{LaTeX} code to list all concepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_list"></a>}}
-\if{latex}{\out{\hypertarget{method-to_list}{}}}
+\if{html}{\out{<a id="method-ConceptSet-to_list"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-to_list}{}}}
 \subsection{Method \code{to_list()}}{
 Returns a list with all the concepts
 \subsection{Usage}{
@@ -169,8 +169,8 @@ A list of concepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-["></a>}}
-\if{latex}{\out{\hypertarget{method-[}{}}}
+\if{html}{\out{<a id="method-ConceptSet-["></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-[}{}}}
 \subsection{Method \code{[()}}{
 Subsets a ConceptSet
 \subsection{Usage}{
@@ -189,8 +189,8 @@ Another ConceptSet.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-sub"></a>}}
-\if{latex}{\out{\hypertarget{method-sub}{}}}
+\if{html}{\out{<a id="method-ConceptSet-sub"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-sub}{}}}
 \subsection{Method \code{sub()}}{
 Individual Concepts
 \subsection{Usage}{
@@ -209,8 +209,8 @@ The Concept.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-support"></a>}}
-\if{latex}{\out{\hypertarget{method-support}{}}}
+\if{html}{\out{<a id="method-ConceptSet-support"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-support}{}}}
 \subsection{Method \code{support()}}{
 Get support of each concept
 \subsection{Usage}{
@@ -222,8 +222,8 @@ A vector with the support of each concept.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-ConceptSet-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

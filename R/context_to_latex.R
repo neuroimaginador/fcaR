@@ -5,9 +5,20 @@ context_to_latex <- function(I,
   objects <- format_label(objects)
   attributes <- format_label(attributes)
 
-  format <- c("l",
-              rep("c", length(attributes))) %>%
-    stringr::str_flatten()
+  if (fcaR_options("use_tabulary")) {
+
+    format <- c("L",
+                rep("C", length(attributes))) %>%
+      stringr::str_flatten()
+
+  } else {
+
+    format <- c("l",
+                rep("c", length(attributes))) %>%
+      stringr::str_flatten()
+
+  }
+
 
   objects <- objects %>%
     stringr::str_replace_all(pattern = stringr::fixed("["),
@@ -38,12 +49,25 @@ context_to_latex <- function(I,
             "\\bottomrule") %>%
     stringr::str_flatten("\n")
 
-  tabular <- c(
-    paste0("\\begin{tabular}{",
-           format, "}"),
-    body,
-    "\\end{tabular}") %>%
-    stringr::str_flatten("\n")
+  if (fcaR_options("use_tabulary")) {
+
+    tabular <- c(
+      paste0("\\begin{tabulary}{0.9\\textwidth}{",
+             format, "}"),
+      body,
+      "\\end{tabulary}") %>%
+      stringr::str_flatten("\n")
+
+  } else {
+
+    tabular <- c(
+      paste0("\\begin{tabular}{",
+             format, "}"),
+      body,
+      "\\end{tabular}") %>%
+      stringr::str_flatten("\n")
+
+  }
 
   return(tabular)
 
