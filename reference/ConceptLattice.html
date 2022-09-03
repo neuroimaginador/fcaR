@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -85,36 +85,36 @@
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>ConceptLattice$new()</code></a></p></li>
-<li><p><a href="#method-plot"><code>ConceptLattice$plot()</code></a></p></li>
-<li><p><a href="#method-sublattice"><code>ConceptLattice$sublattice()</code></a></p></li>
-<li><p><a href="#method-top"><code>ConceptLattice$top()</code></a></p></li>
-<li><p><a href="#method-bottom"><code>ConceptLattice$bottom()</code></a></p></li>
-<li><p><a href="#method-join_irreducibles"><code>ConceptLattice$join_irreducibles()</code></a></p></li>
-<li><p><a href="#method-meet_irreducibles"><code>ConceptLattice$meet_irreducibles()</code></a></p></li>
-<li><p><a href="#method-decompose"><code>ConceptLattice$decompose()</code></a></p></li>
-<li><p><a href="#method-supremum"><code>ConceptLattice$supremum()</code></a></p></li>
-<li><p><a href="#method-infimum"><code>ConceptLattice$infimum()</code></a></p></li>
-<li><p><a href="#method-subconcepts"><code>ConceptLattice$subconcepts()</code></a></p></li>
-<li><p><a href="#method-superconcepts"><code>ConceptLattice$superconcepts()</code></a></p></li>
-<li><p><a href="#method-lower_neighbours"><code>ConceptLattice$lower_neighbours()</code></a></p></li>
-<li><p><a href="#method-upper_neighbours"><code>ConceptLattice$upper_neighbours()</code></a></p></li>
-<li><p><a href="#method-clone"><code>ConceptLattice$clone()</code></a></p></li>
-</ul></div><p><details><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href="ConceptSet.html#method-%5B"><code>fcaR::ConceptSet$[()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href="ConceptSet.html#method-extents"><code>fcaR::ConceptSet$extents()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents"><a href="ConceptSet.html#method-intents"><code>fcaR::ConceptSet$intents()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href="ConceptSet.html#method-is_empty"><code>fcaR::ConceptSet$is_empty()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="print"><a href="ConceptSet.html#method-print"><code>fcaR::ConceptSet$print()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="size"><a href="ConceptSet.html#method-size"><code>fcaR::ConceptSet$size()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="sub"><a href="ConceptSet.html#method-sub"><code>fcaR::ConceptSet$sub()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="support"><a href="ConceptSet.html#method-support"><code>fcaR::ConceptSet$support()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_latex"><a href="ConceptSet.html#method-to_latex"><code>fcaR::ConceptSet$to_latex()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_list"><a href="ConceptSet.html#method-to_list"><code>fcaR::ConceptSet$to_list()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-ConceptLattice-new"><code>ConceptLattice$new()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-plot"><code>ConceptLattice$plot()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-sublattice"><code>ConceptLattice$sublattice()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-top"><code>ConceptLattice$top()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-bottom"><code>ConceptLattice$bottom()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-join_irreducibles"><code>ConceptLattice$join_irreducibles()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-meet_irreducibles"><code>ConceptLattice$meet_irreducibles()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-decompose"><code>ConceptLattice$decompose()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-supremum"><code>ConceptLattice$supremum()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-infimum"><code>ConceptLattice$infimum()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-subconcepts"><code>ConceptLattice$subconcepts()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-superconcepts"><code>ConceptLattice$superconcepts()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-lower_neighbours"><code>ConceptLattice$lower_neighbours()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-upper_neighbours"><code>ConceptLattice$upper_neighbours()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-clone"><code>ConceptLattice$clone()</code></a></p></li>
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href="ConceptSet.html#method-%5B"><code>fcaR::ConceptSet$[()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href="ConceptSet.html#method-extents"><code>fcaR::ConceptSet$extents()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents"><a href="ConceptSet.html#method-intents"><code>fcaR::ConceptSet$intents()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href="ConceptSet.html#method-is_empty"><code>fcaR::ConceptSet$is_empty()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="print"><a href="ConceptSet.html#method-print"><code>fcaR::ConceptSet$print()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="size"><a href="ConceptSet.html#method-size"><code>fcaR::ConceptSet$size()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="sub"><a href="ConceptSet.html#method-sub"><code>fcaR::ConceptSet$sub()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="support"><a href="ConceptSet.html#method-support"><code>fcaR::ConceptSet$support()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_latex"><a href="ConceptSet.html#method-to_latex"><code>fcaR::ConceptSet$to_latex()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_list"><a href="ConceptSet.html#method-to_list"><code>fcaR::ConceptSet$to_list()</code></a></span></li>
+</ul></details></p><hr><a id="method-ConceptLattice-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new <code>ConceptLattice</code> object.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/ConceptLattice.html">ConceptLattice</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">extents</span>, <span class="va">intents</span>, <span class="va">objects</span>, <span class="va">attributes</span>, I <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/ConceptLattice.html">ConceptLattice</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">extents</span>, <span class="va">intents</span>, <span class="va">objects</span>, <span class="va">attributes</span>, I <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -146,11 +146,11 @@
 <p>A new <code>ConceptLattice</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-plot"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-plot"></a><div class="section">
 <h3 id="method-plot-">Method <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code><a class="anchor" aria-label="anchor" href="#method-plot-"></a></h3>
 <p>Plot the concept lattice</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>object_names <span class="op">=</span> <span class="cn">TRUE</span>, to_latex <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>object_names <span class="op">=</span> <span class="cn">TRUE</span>, to_latex <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -180,11 +180,11 @@
 <p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the concept lattice.</p>
 </div>
 
-</div><p></p><hr><a id="method-sublattice"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-sublattice"></a><div class="section">
 <h3 id="method-sublattice-">Method <code>sublattice()</code><a class="anchor" aria-label="anchor" href="#method-sublattice-"></a></h3>
 <p>Sublattice</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">sublattice</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">sublattice</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -205,11 +205,11 @@
 <p>The generated sublattice as a new <code>ConceptLattice</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-top"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-top"></a><div class="section">
 <h3 id="method-top-">Method <code>top()</code><a class="anchor" aria-label="anchor" href="#method-top-"></a></h3>
 <p>Top of a Lattice</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">top</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">top</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -218,17 +218,18 @@
 </div>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">top</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">top</span><span class="op">(</span><span class="op">)</span></span>
+<span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-bottom"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-bottom"></a><div class="section">
 <h3 id="method-bottom-">Method <code>bottom()</code><a class="anchor" aria-label="anchor" href="#method-bottom-"></a></h3>
 <p>Bottom of a Lattice</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">bottom</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">bottom</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -237,17 +238,18 @@
 </div>
 <div class="section">
 <h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">bottom</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">bottom</span><span class="op">(</span><span class="op">)</span></span>
+<span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-join_irreducibles"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-join_irreducibles"></a><div class="section">
 <h3 id="method-join-irreducibles-">Method <code>join_irreducibles()</code><a class="anchor" aria-label="anchor" href="#method-join-irreducibles-"></a></h3>
 <p>Join-irreducible Elements</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -255,11 +257,11 @@
 <p>The join-irreducible elements in the concept lattice.</p>
 </div>
 
-</div><p></p><hr><a id="method-meet_irreducibles"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-meet_irreducibles"></a><div class="section">
 <h3 id="method-meet-irreducibles-">Method <code>meet_irreducibles()</code><a class="anchor" aria-label="anchor" href="#method-meet-irreducibles-"></a></h3>
 <p>Meet-irreducible Elements</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -267,11 +269,11 @@
 <p>The meet-irreducible elements in the concept lattice.</p>
 </div>
 
-</div><p></p><hr><a id="method-decompose"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-decompose"></a><div class="section">
 <h3 id="method-decompose-">Method <code><a href="https://rdrr.io/r/stats/decompose.html" class="external-link">decompose()</a></code><a class="anchor" aria-label="anchor" href="#method-decompose-"></a></h3>
 <p>Decompose a concept as the supremum of meet-irreducible concepts</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">decompose</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">decompose</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -287,11 +289,11 @@
 <p>A list, each field is the set of meet-irreducible elements whose supremum is the corresponding element in <code>C</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-supremum"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-supremum"></a><div class="section">
 <h3 id="method-supremum-">Method <code>supremum()</code><a class="anchor" aria-label="anchor" href="#method-supremum-"></a></h3>
 <p>Supremum of Concepts</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">supremum</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">supremum</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -312,11 +314,11 @@
 <p>The supremum of the list of concepts.</p>
 </div>
 
-</div><p></p><hr><a id="method-infimum"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-infimum"></a><div class="section">
 <h3 id="method-infimum-">Method <code>infimum()</code><a class="anchor" aria-label="anchor" href="#method-infimum-"></a></h3>
 <p>Infimum of Concepts</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">infimum</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">infimum</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -337,11 +339,11 @@
 <p>The infimum of the list of concepts.</p>
 </div>
 
-</div><p></p><hr><a id="method-subconcepts"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-subconcepts"></a><div class="section">
 <h3 id="method-subconcepts-">Method <code>subconcepts()</code><a class="anchor" aria-label="anchor" href="#method-subconcepts-"></a></h3>
 <p>Subconcepts of a Concept</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">subconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">subconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -357,11 +359,11 @@
 <p>A list with the subconcepts.</p>
 </div>
 
-</div><p></p><hr><a id="method-superconcepts"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-superconcepts"></a><div class="section">
 <h3 id="method-superconcepts-">Method <code>superconcepts()</code><a class="anchor" aria-label="anchor" href="#method-superconcepts-"></a></h3>
 <p>Superconcepts of a Concept</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">superconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">superconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -377,11 +379,11 @@
 <p>A list with the superconcepts.</p>
 </div>
 
-</div><p></p><hr><a id="method-lower_neighbours"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-lower_neighbours"></a><div class="section">
 <h3 id="method-lower-neighbours-">Method <code>lower_neighbours()</code><a class="anchor" aria-label="anchor" href="#method-lower-neighbours-"></a></h3>
 <p>Lower Neighbours of a Concept</p><div class="section">
 <h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">lower_neighbours</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">lower_neighbours</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -397,11 +399,11 @@
 <p>A list with the lower neighbours of <code>C</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-upper_neighbours"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-upper_neighbours"></a><div class="section">
 <h3 id="method-upper-neighbours-">Method <code>upper_neighbours()</code><a class="anchor" aria-label="anchor" href="#method-upper-neighbours-"></a></h3>
 <p>Upper Neighbours of a Concept</p><div class="section">
 <h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">upper_neighbours</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">upper_neighbours</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -417,11 +419,11 @@
 <p>A list with the upper neighbours of <code>C</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptLattice-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -439,21 +441,21 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Build a formal context</span></span>
-<span class="r-in"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Find the concepts</span></span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Find join- and meet- irreducible elements</span></span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Build a formal context</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Find the concepts</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Find join- and meet- irreducible elements</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of 5 concepts:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Earth}, {large, far, moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Mars}, {medium, far, moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3: ({Jupiter}, {small, far, moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4: ({Mercury}, {small, near, no_moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: ({Venus}, {small, near, moon})</span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of 7 concepts:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Venus, Earth, Mars, Jupiter}, {moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Earth, Mars, Jupiter}, {far, moon})</span>
@@ -462,32 +464,32 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: ({Mercury, Venus, Jupiter}, {small})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6: ({Mercury, Venus}, {small, near})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7: ({Mercury}, {small, near, no_moon})</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Get concept support</span></span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Get concept support</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `ConceptLattice$top`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">top</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `ConceptLattice$top`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">top</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ({Mercury, Venus, Earth, Mars, Jupiter}, {})</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `ConceptLattice$bottom`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">bottom</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `ConceptLattice$bottom`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">bottom</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ({}, {small, medium, large, near, far, moon, no_moon})</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -502,7 +504,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

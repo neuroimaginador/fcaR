@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -75,27 +75,32 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="va">set</span> <span class="op">%respects%</span> <span class="va">imps</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">set</span> <span class="op">%respects%</span> <span class="va">imps</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>set</dt>
 <dd><p>(list of <code>Set</code>s, or a <code>FormalContext</code>) The sets of attributes to check whether they respect the <code>ImplicationSet</code>.</p></dd>
+
+
 <dt>imps</dt>
 <dd><p>(<code>ImplicationSet</code>) The set of implications to check.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A logical matrix with as many rows as <code>Set</code>s and as many columns as implications in the <code>ImplicationSet</code>. A <code>TRUE</code> in element (i, j) of the result means that the i-th <code>Set</code> respects the j-th implication of the <code>ImplicationSet</code>.</p>
+    
+
+<p>A logical matrix with as many rows as <code>Set</code>s and as many columns as implications in the <code>ImplicationSet</code>. A <code>TRUE</code> in element (i, j) of the result means that the i-th <code>Set</code> respects the j-th implication of the <code>ImplicationSet</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">imps</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">%respects%</span> <span class="va">imps</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">imps</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">%respects%</span> <span class="va">imps</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9 x 10 Matrix of class "lgeMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       imp_01 imp_02 imp_03 imp_04 imp_05 imp_06 imp_07 imp_08 imp_09 imp_10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> set_1   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</span>
@@ -121,7 +126,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

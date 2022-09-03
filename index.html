@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -99,7 +99,6 @@
 <div class="page-header"><h1 id="fcar-tools-for-formal-concept-analysis">fcaR: Tools for Formal Concept Analysis<a class="anchor" aria-label="anchor" href="#fcar-tools-for-formal-concept-analysis"></a>
 </h1></div>
 <!-- badges: start -->
-
 <p>The aim of this package is to provide tools to perform fuzzy formal concept analysis (FCA) from within R. It provides functions to load and save a Formal Context, extract its concept lattice and implications. In addition, one can use the implications to compute semantic closures of fuzzy sets and, thus, build recommendation systems.</p>
 <div class="section level2">
 <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
@@ -129,219 +128,119 @@
 </div>
 <div class="section level2">
 <h2 id="example-of-use">Example of Use<a class="anchor" aria-label="anchor" href="#example-of-use"></a>
-</h2>
-Let us start with a fuzzy dataset (stored in a matrix I) as follows:
-<table class="table">
+</h2>Let us start with a fuzzy dataset (stored in a matrix I) as follows:<table class="table">
 <thead><tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-P1
-</th>
-<th style="text-align:right;">
-P2
-</th>
-<th style="text-align:right;">
-P3
-</th>
-<th style="text-align:right;">
-P4
-</th>
-<th style="text-align:right;">
-P5
-</th>
-<th style="text-align:right;">
-P6
-</th>
+<th style="text-align:left;"></th>
+<th style="text-align:right;">P1</th>
+<th style="text-align:right;">P2</th>
+<th style="text-align:right;">P3</th>
+<th style="text-align:right;">P4</th>
+<th style="text-align:right;">P5</th>
+<th style="text-align:right;">P6</th>
 </tr></thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
-O1
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-0.5
-</td>
-<td style="text-align:right;">
-0.5
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left;">O1</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">1.0</td>
+<td style="text-align:right;">0.5</td>
+<td style="text-align:right;">0.5</td>
+<td style="text-align:right;">1.0</td>
+<td style="text-align:right;">0</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-O2
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left;">O2</td>
+<td style="text-align:right;">1.0</td>
+<td style="text-align:right;">1.0</td>
+<td style="text-align:right;">1.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-O3
-</td>
-<td style="text-align:right;">
-0.5
-</td>
-<td style="text-align:right;">
-0.5
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-1
-</td>
+<td style="text-align:left;">O3</td>
+<td style="text-align:right;">0.5</td>
+<td style="text-align:right;">0.5</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">1</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-O4
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-0.5
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left;">O4</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">1.0</td>
+<td style="text-align:right;">0.5</td>
+<td style="text-align:right;">0</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-O5
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-0.5
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left;">O5</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">1.0</td>
+<td style="text-align:right;">0.5</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-O6
-</td>
-<td style="text-align:right;">
-0.5
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0.0
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left;">O6</td>
+<td style="text-align:right;">0.5</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0.0</td>
+<td style="text-align:right;">0</td>
 </tr>
 </tbody>
 </table>
-<p>Here, a value <em>x</em> in the intersection of a row and a column indicates that the object of the corresponding row possesses the attribute in the column in a degree of at least <em>x</em> (if <em>x</em> = 0, the attribute is absent in the object, and if <em>x</em> = 1, the attribute is fully present in the object).</p>
+<p>Here, a value <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;x" title="x" alt="x"> in the intersection of a row and a column indicates that the object of the corresponding row possesses the attribute in the column in a degree of at least <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;x" title="x" alt="x"> (if <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;x%20%3D%200" title="x = 0" alt="x = 0">, the attribute is absent in the object, and if <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;x%20%3D%201" title="x = 1" alt="x = 1">, the attribute is fully present in the object).</p>
 <p>We can build a FormalContext object:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span>
-<span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span>
-<span class="co">#&gt;      P1   P2   P3   P4   P5  P6  </span>
-<span class="co">#&gt;  O1  0    1   0.5  0.5   1    0  </span>
-<span class="co">#&gt;  O2  1    1    1    0    0    0  </span>
-<span class="co">#&gt;  O3 0.5  0.5   0    0    0    1  </span>
-<span class="co">#&gt;  O4  0    0    0    1   0.5   0  </span>
-<span class="co">#&gt;  O5  0    0    1   0.5   0    0  </span>
-<span class="co">#&gt;  O6 0.5   0    0    0    0    0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; FormalContext with 6 objects and 6 attributes.</span></span>
+<span><span class="co">#&gt;      P1   P2   P3   P4   P5  P6  </span></span>
+<span><span class="co">#&gt;  O1  0    1   0.5  0.5   1    0  </span></span>
+<span><span class="co">#&gt;  O2  1    1    1    0    0    0  </span></span>
+<span><span class="co">#&gt;  O3 0.5  0.5   0    0    0    1  </span></span>
+<span><span class="co">#&gt;  O4  0    0    0    1   0.5   0  </span></span>
+<span><span class="co">#&gt;  O5  0    0    1   0.5   0    0  </span></span>
+<span><span class="co">#&gt;  O6 0.5   0    0    0    0    0</span></span></code></pre></div>
 <p>With a single function, we can compute the set of concepts:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Compute all concepts</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># The first concept</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
-<span class="co">#&gt; A set of 1 concepts:</span>
-<span class="co">#&gt; 1: ({O1, O2, O3, O4, O5, O6}, {})</span>
-
-<span class="co"># And plot the concept lattice</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Compute all concepts</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># The first concept</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">sub</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ({O1, O2, O3, O4, O5, O6}, {})</span></span>
+<span></span>
+<span><span class="co"># And plot the concept lattice</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 <p>We can also extract implications from the formal context:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Extract implications</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># Which implications have been extracted</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
-<span class="co">#&gt; Implication set with 12 implications.</span>
-<span class="co">#&gt; Rule 1: {P6 [0.5]} -&gt; {P1 [0.5], P2 [0.5], P6}</span>
-<span class="co">#&gt; Rule 2: {P5 [0.5]} -&gt; {P4 [0.5]}</span>
-<span class="co">#&gt; Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -&gt; {P2, P5}</span>
-<span class="co">#&gt; Rule 4: {P3 [0.5], P4} -&gt; {P3}</span>
-<span class="co">#&gt; Rule 5: {P2 [0.5], P4 [0.5]} -&gt; {P2, P3 [0.5], P5}</span>
-<span class="co">#&gt; Rule 6: {P2 [0.5], P3 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule 7: {P2, P3, P4 [0.5], P5} -&gt; {P4}</span>
-<span class="co">#&gt; Rule 8: {P1 [0.5], P4 [0.5]} -&gt; {P1, P2, P3, P4, P5, P6}</span>
-<span class="co">#&gt; Rule 9: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span>
-<span class="co">#&gt; Rule 10: {P1 [0.5], P2} -&gt; {P1}</span>
-<span class="co">#&gt; Rule 11: {P1, P2 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Extract implications</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Which implications have been extracted</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
+<span><span class="co">#&gt; Implication set with 12 implications.</span></span>
+<span><span class="co">#&gt; Rule 1: {P6 [0.5]} -&gt; {P1 [0.5], P2 [0.5], P6}</span></span>
+<span><span class="co">#&gt; Rule 2: {P5 [0.5]} -&gt; {P4 [0.5]}</span></span>
+<span><span class="co">#&gt; Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -&gt; {P2, P5}</span></span>
+<span><span class="co">#&gt; Rule 4: {P3 [0.5], P4} -&gt; {P3}</span></span>
+<span><span class="co">#&gt; Rule 5: {P2 [0.5], P4 [0.5]} -&gt; {P2, P3 [0.5], P5}</span></span>
+<span><span class="co">#&gt; Rule 6: {P2 [0.5], P3 [0.5]} -&gt; {P2}</span></span>
+<span><span class="co">#&gt; Rule 7: {P2, P3, P4 [0.5], P5} -&gt; {P4}</span></span>
+<span><span class="co">#&gt; Rule 8: {P1 [0.5], P4 [0.5]} -&gt; {P1, P2, P3, P4, P5, P6}</span></span>
+<span><span class="co">#&gt; Rule 9: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span></span>
+<span><span class="co">#&gt; Rule 10: {P1 [0.5], P2} -&gt; {P1}</span></span>
+<span><span class="co">#&gt; Rule 11: {P1, P2 [0.5]} -&gt; {P2}</span></span>
+<span><span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></span></code></pre></div>
 <p>Some fundamental functionalities on the concept lattice associated to the formal context have been implemented:</p>
 <ul>
 <li>Computing a sublattice.</li>
@@ -350,41 +249,41 @@ O6
 </ul>
 <p>Also, one can compute the support of both implications and concepts:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000</span>
-<span class="co">#&gt;  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000</span>
-<span class="co">#&gt;  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333</span>
-<span class="co">#&gt; [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667</span>
-<span class="co">#&gt; [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000</span></span>
+<span><span class="co">#&gt;  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000</span></span>
+<span><span class="co">#&gt;  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333</span></span>
+<span><span class="co">#&gt; [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667</span></span>
+<span><span class="co">#&gt; [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000</span></span></code></pre></div>
 <p>In this package, we have implemented a logic to manage implications. This so-called Simplification Logic allows us to simplify the extracted rules by removing redundancies, as well as computing the closure of a given fuzzy attribute set.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Reduce the number of implications using two simple</span>
-<span class="co"># rules. The algorithm applies the specified rules</span>
-<span class="co"># in batches, if the number of rules is high.</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"composition"</span>,
-                                      <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Processing batch</span>
-<span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span>
-<span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.002 secs.</span>
-<span class="co">#&gt; Batch took 0.004 secs.</span>
-
-<span class="co"># Reduced set of implications</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
-<span class="co">#&gt; Implication set with 12 implications.</span>
-<span class="co">#&gt; Rule 1: {P6 [0.5]} -&gt; {P1 [0.5], P2 [0.5], P6}</span>
-<span class="co">#&gt; Rule 2: {P5 [0.5]} -&gt; {P4 [0.5]}</span>
-<span class="co">#&gt; Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -&gt; {P2, P5}</span>
-<span class="co">#&gt; Rule 4: {P3 [0.5], P4} -&gt; {P3}</span>
-<span class="co">#&gt; Rule 5: {P2 [0.5], P4 [0.5]} -&gt; {P2, P3 [0.5], P5}</span>
-<span class="co">#&gt; Rule 6: {P2 [0.5], P3 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule 7: {P2, P3, P4 [0.5], P5} -&gt; {P4}</span>
-<span class="co">#&gt; Rule 8: {P1 [0.5], P4 [0.5]} -&gt; {P1, P2, P3, P4, P5, P6}</span>
-<span class="co">#&gt; Rule 9: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span>
-<span class="co">#&gt; Rule 10: {P1 [0.5], P2} -&gt; {P1}</span>
-<span class="co">#&gt; Rule 11: {P1, P2 [0.5]} -&gt; {P2}</span>
-<span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Reduce the number of implications using two simple</span></span>
+<span><span class="co"># rules. The algorithm applies the specified rules</span></span>
+<span><span class="co"># in batches, if the number of rules is high.</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"composition"</span>,</span>
+<span>                                      <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Processing batch</span></span>
+<span><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
+<span><span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.002 secs.</span></span>
+<span><span class="co">#&gt; Batch took 0.004 secs.</span></span>
+<span></span>
+<span><span class="co"># Reduced set of implications</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
+<span><span class="co">#&gt; Implication set with 12 implications.</span></span>
+<span><span class="co">#&gt; Rule 1: {P6 [0.5]} -&gt; {P1 [0.5], P2 [0.5], P6}</span></span>
+<span><span class="co">#&gt; Rule 2: {P5 [0.5]} -&gt; {P4 [0.5]}</span></span>
+<span><span class="co">#&gt; Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -&gt; {P2, P5}</span></span>
+<span><span class="co">#&gt; Rule 4: {P3 [0.5], P4} -&gt; {P3}</span></span>
+<span><span class="co">#&gt; Rule 5: {P2 [0.5], P4 [0.5]} -&gt; {P2, P3 [0.5], P5}</span></span>
+<span><span class="co">#&gt; Rule 6: {P2 [0.5], P3 [0.5]} -&gt; {P2}</span></span>
+<span><span class="co">#&gt; Rule 7: {P2, P3, P4 [0.5], P5} -&gt; {P4}</span></span>
+<span><span class="co">#&gt; Rule 8: {P1 [0.5], P4 [0.5]} -&gt; {P1, P2, P3, P4, P5, P6}</span></span>
+<span><span class="co">#&gt; Rule 9: {P1 [0.5], P3 [0.5]} -&gt; {P1, P2, P3}</span></span>
+<span><span class="co">#&gt; Rule 10: {P1 [0.5], P2} -&gt; {P1}</span></span>
+<span><span class="co">#&gt; Rule 11: {P1, P2 [0.5]} -&gt; {P2}</span></span>
+<span><span class="co">#&gt; Rule 12: {P1, P2, P3, P6} -&gt; {P4, P5}</span></span></code></pre></div>
 <p>All these functions work natively with fuzzy and with binary datasets.</p>
 <p>For more details on the methods implemented and further examples, see the vignettes in this package.</p>
 </div>
@@ -396,17 +295,11 @@ O6
 <h3 id="fcar-111">fcaR 1.1.1<a class="anchor" aria-label="anchor" href="#fcar-111"></a>
 </h3>
 <p>Enhancements:</p>
-<ul>
-<li>The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.</li>
-</ul>
+<ul><li>The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.</li></ul>
 <p>New functionality:</p>
-<ul>
-<li>Now the package uses the <em>settings</em> package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.</li>
-</ul>
+<ul><li>Now the package uses the <em>settings</em> package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.</li></ul>
 <p>Bugfixes:</p>
-<ul>
-<li>Fixed exporting to latex with special characters such as $, _, etc.</li>
-</ul>
+<ul><li>Fixed exporting to latex with special characters such as $, _, etc.</li></ul>
 </div>
 </div>
 <div class="section level2">
@@ -446,6 +339,7 @@ O6
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+<li><a href="SUPPORT.html">Getting help</a></li>
 </ul>
 </div>
 
@@ -472,7 +366,7 @@ O6
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://cran.r-project.org/package=fcaR" class="external-link"><img src="https://www.r-pkg.org/badges/version/fcaR" alt="CRAN status"></a></li>
-<li><a href="https://codecov.io/gh/neuroimaginador/fcaR" class="external-link"><img src="https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI" alt="codecov"></a></li>
+<li><a href="https://app.codecov.io/gh/neuroimaginador/fcaR" class="external-link"><img src="https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI" alt="codecov"></a></li>
 <li><a href="https://github.com/neuroimaginador/fcaR/actions" class="external-link"><img src="https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://cran.r-project.org/package=fcaR" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/fcaR" alt="Downloads"></a></li>
 </ul>
@@ -489,7 +383,7 @@ O6
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
