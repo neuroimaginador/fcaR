@@ -1,3 +1,5 @@
+# fcaR 1.2.0
+
 # fcaR 1.1.1
 
 Enhancements:
