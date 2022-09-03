@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -105,30 +105,30 @@
 </h2>
 <p>One of the goals in the design of this package is to be able to integrate with the <code>arules</code> package. This means that any one using the <code>arules</code> functionalities can export to and import from <code>fcaR</code> objects, more precisely, <code>FormalContext</code> and <code>ImplicationSet</code> objects.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mhahsler/arules" class="external-link">arules</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: Matrix</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'arules'</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     abbreviate, write</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Malaga-FCA-group/fcaR" class="external-link">fcaR</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'fcaR'</span>
-<span class="co">#&gt; The following object is masked from 'package:Matrix':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     %&amp;%</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mhahsler/arules" class="external-link">arules</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: Matrix</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'arules'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     abbreviate, write</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Malaga-FCA-group/fcaR" class="external-link">fcaR</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'fcaR'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:Matrix':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     %&amp;%</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h2>
 <p>For these examples, we are using two binary datasets, <code>Mushroom</code> (from the <code>arules</code> package) and <code>planets</code> (from <code>fcaR</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Mushroom"</span>, package <span class="op">=</span> <span class="st">"arules"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Mushroom"</span>, package <span class="op">=</span> <span class="st">"arules"</span><span class="op">)</span></span></code></pre></div>
 <p>At the moment, in <code>arules</code> there is no support for fuzzy sets, so we must restrict ourselves to the binary case.</p>
 <p>Let us create a <code>FormalContext</code> object for the <code>planets</code> dataset:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="converting-between-formal-contexts-and-transactions-objects">Converting between formal contexts and transactions objects<a class="anchor" aria-label="anchor" href="#converting-between-formal-contexts-and-transactions-objects"></a>
@@ -139,22 +139,22 @@
 </h3>
 <p>It suffices to initialize a <code>FormalContext</code> object with the transactions dataset:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">Mushroom</span><span class="op">)</span>
-<span class="va">fc</span>
-<span class="co">#&gt; FormalContext with 8124 objects and 114 attributes.</span>
-<span class="co">#&gt;     Class=edible  Class=poisonous  CapShape=bell  CapShape=conical  CapShape=flat  </span>
-<span class="co">#&gt;   1                      X                                                         </span>
-<span class="co">#&gt;   2       X                                                                        </span>
-<span class="co">#&gt;   3       X                              X                                         </span>
-<span class="co">#&gt;   4                      X                                                         </span>
-<span class="co">#&gt;   5       X                                                                        </span>
-<span class="co">#&gt;   6       X                                                                        </span>
-<span class="co">#&gt;   7       X                              X                                         </span>
-<span class="co">#&gt;   8       X                              X                                         </span>
-<span class="co">#&gt;   9                      X                                                         </span>
-<span class="co">#&gt;  10       X                              X                                         </span>
-<span class="co">#&gt; Other attributes are: CapShape=knobbed, CapShape=sunken, CapShape=convex,</span>
-<span class="co">#&gt; CapSurf=fibrous, CapSurf=grooves, CapSurf=smooth, ...</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">Mushroom</span><span class="op">)</span></span>
+<span><span class="va">fc</span></span>
+<span><span class="co">#&gt; FormalContext with 8124 objects and 114 attributes.</span></span>
+<span><span class="co">#&gt;     Class=edible  Class=poisonous  CapShape=bell  CapShape=conical  CapShape=flat  </span></span>
+<span><span class="co">#&gt;   1                      X                                                         </span></span>
+<span><span class="co">#&gt;   2       X                                                                        </span></span>
+<span><span class="co">#&gt;   3       X                              X                                         </span></span>
+<span><span class="co">#&gt;   4                      X                                                         </span></span>
+<span><span class="co">#&gt;   5       X                                                                        </span></span>
+<span><span class="co">#&gt;   6       X                                                                        </span></span>
+<span><span class="co">#&gt;   7       X                              X                                         </span></span>
+<span><span class="co">#&gt;   8       X                              X                                         </span></span>
+<span><span class="co">#&gt;   9                      X                                                         </span></span>
+<span><span class="co">#&gt;  10       X                              X                                         </span></span>
+<span><span class="co">#&gt; Other attributes are: CapShape=knobbed, CapShape=sunken, CapShape=convex,</span></span>
+<span><span class="co">#&gt; CapSurf=fibrous, CapSurf=grooves, CapSurf=smooth, ...</span></span></code></pre></div>
 <p>From this point, we can use all the functionalities in the <code>fcaR</code> package regarding formal contexts, concept lattices and implication sets.</p>
 </div>
 <div class="section level3">
@@ -162,10 +162,10 @@
 </h3>
 <p>The <code>to_transactions()</code> function enables us to export a formal context to a format compatible with the <code>arules</code> package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">to_transactions</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; transactions in sparse format with</span>
-<span class="co">#&gt;  9 transactions (rows) and</span>
-<span class="co">#&gt;  7 items (columns)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">to_transactions</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; transactions in sparse format with</span></span>
+<span><span class="co">#&gt;  9 transactions (rows) and</span></span>
+<span><span class="co">#&gt;  7 items (columns)</span></span></code></pre></div>
 <p>and use the functionality in that package.</p>
 </div>
 </div>
@@ -178,10 +178,10 @@
 </h3>
 <p>Let us suppose that we have extracted implications from the <code>Mushroom</code> dataset using the <code><a href="https://rdrr.io/pkg/arules/man/apriori.html" class="external-link">apriori()</a></code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mushroom_rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/apriori.html" class="external-link">apriori</a></span><span class="op">(</span><span class="va">Mushroom</span>, parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>conf <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mushroom_rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/apriori.html" class="external-link">apriori</a></span><span class="op">(</span><span class="va">Mushroom</span>, parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>conf <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">mushroom_rules</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">mushroom_rules</span><span class="op">)</span></span></code></pre></div>
 <p>And we can use all the functionalities for the <code>ImplicationSet</code> class.</p>
 </div>
 <div class="section level3">
@@ -189,9 +189,9 @@
 </h3>
 <p>If we want to export the implications extracted for a binary formal context, we can use:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span>
-<span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">to_arules</span><span class="op">(</span>quality <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; set of 10 rules</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">to_arules</span><span class="op">(</span>quality <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; set of 10 rules</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -218,7 +218,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

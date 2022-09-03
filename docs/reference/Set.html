@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -81,21 +81,21 @@
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>Set$new()</code></a></p></li>
-<li><p><a href="#method-assign"><code>Set$assign()</code></a></p></li>
-<li><p><a href="#method-%5B"><code>Set$[()</code></a></p></li>
-<li><p><a href="#method-cardinal"><code>Set$cardinal()</code></a></p></li>
-<li><p><a href="#method-get_vector"><code>Set$get_vector()</code></a></p></li>
-<li><p><a href="#method-get_attributes"><code>Set$get_attributes()</code></a></p></li>
-<li><p><a href="#method-length"><code>Set$length()</code></a></p></li>
-<li><p><a href="#method-print"><code>Set$print()</code></a></p></li>
-<li><p><a href="#method-to_latex"><code>Set$to_latex()</code></a></p></li>
-<li><p><a href="#method-clone"><code>Set$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-Set-new"><code>Set$new()</code></a></p></li>
+<li><p><a href="#method-Set-assign"><code>Set$assign()</code></a></p></li>
+<li><p><a href="#method-Set-%5B"><code>Set$[()</code></a></p></li>
+<li><p><a href="#method-Set-cardinal"><code>Set$cardinal()</code></a></p></li>
+<li><p><a href="#method-Set-get_vector"><code>Set$get_vector()</code></a></p></li>
+<li><p><a href="#method-Set-get_attributes"><code>Set$get_attributes()</code></a></p></li>
+<li><p><a href="#method-Set-length"><code>Set$length()</code></a></p></li>
+<li><p><a href="#method-Set-print"><code>Set$print()</code></a></p></li>
+<li><p><a href="#method-Set-to_latex"><code>Set$to_latex()</code></a></p></li>
+<li><p><a href="#method-Set-clone"><code>Set$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-Set-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creator for objects of class <code>Set</code></p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">attributes</span>, M <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">attributes</span>, M <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -124,11 +124,11 @@
 <p>An object of class <code>Set</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-assign"></a><div class="section">
+</div><p></p><hr><a id="method-Set-assign"></a><div class="section">
 <h3 id="method-assign-">Method <code><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign()</a></code><a class="anchor" aria-label="anchor" href="#method-assign-"></a></h3>
 <p>Assign grades to attributes in the set</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Set</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Set</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -155,7 +155,7 @@
 </div>
 
 
-</div><p></p><hr><a id="method-["></a><div class="section">
+</div><p></p><hr><a id="method-Set-["></a><div class="section">
 <h3 id="method-">Method <code>[()</code><a class="anchor" aria-label="anchor" href="#method-"></a></h3>
 <p>Get elements by index</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -175,11 +175,11 @@
 <p>A <code>Set</code> but with only the required elements.</p>
 </div>
 
-</div><p></p><hr><a id="method-cardinal"></a><div class="section">
+</div><p></p><hr><a id="method-Set-cardinal"></a><div class="section">
 <h3 id="method-cardinal-">Method <code>cardinal()</code><a class="anchor" aria-label="anchor" href="#method-cardinal-"></a></h3>
 <p>Cardinal of the Set</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Set</span><span class="op">$</span><span class="fu">cardinal</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Set</span><span class="op">$</span><span class="fu">cardinal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -188,11 +188,11 @@
 as the sum of the degrees of each element.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_vector"></a><div class="section">
+</div><p></p><hr><a id="method-Set-get_vector"></a><div class="section">
 <h3 id="method-get-vector-">Method <code>get_vector()</code><a class="anchor" aria-label="anchor" href="#method-get-vector-"></a></h3>
 <p>Internal <code>Matrix</code></p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Set</span><span class="op">$</span><span class="fu">get_vector</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Set</span><span class="op">$</span><span class="fu">get_vector</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -200,11 +200,11 @@ as the sum of the degrees of each element.</p>
 <p>The internal sparse <code>Matrix</code> representation of the set.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_attributes"></a><div class="section">
+</div><p></p><hr><a id="method-Set-get_attributes"></a><div class="section">
 <h3 id="method-get-attributes-">Method <code>get_attributes()</code><a class="anchor" aria-label="anchor" href="#method-get-attributes-"></a></h3>
 <p>Attributes defined for the set</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Set</span><span class="op">$</span><span class="fu">get_attributes</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Set</span><span class="op">$</span><span class="fu">get_attributes</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -212,11 +212,11 @@ as the sum of the degrees of each element.</p>
 <p>A character vector with the names of the attributes.</p>
 </div>
 
-</div><p></p><hr><a id="method-length"></a><div class="section">
+</div><p></p><hr><a id="method-Set-length"></a><div class="section">
 <h3 id="method-length-">Method <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code><a class="anchor" aria-label="anchor" href="#method-length-"></a></h3>
 <p>Number of attributes</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Set</span><span class="op">$</span><span class="fu">length</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Set</span><span class="op">$</span><span class="fu">length</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -224,11 +224,11 @@ as the sum of the degrees of each element.</p>
 <p>The number of attributes that are defined for this fuzzy set.</p>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-Set-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Prints the set to console</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Set</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>eol <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Set</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span>eol <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -244,11 +244,11 @@ as the sum of the degrees of each element.</p>
 <p>A string with the elements of the set and their grades between brackets .</p>
 </div>
 
-</div><p></p><hr><a id="method-to_latex"></a><div class="section">
+</div><p></p><hr><a id="method-Set-to_latex"></a><div class="section">
 <h3 id="method-to-latex-">Method <code>to_latex()</code><a class="anchor" aria-label="anchor" href="#method-to-latex-"></a></h3>
 <p>Write the set in LaTeX format</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Set</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span>print <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Set</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span>print <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -264,11 +264,11 @@ as the sum of the degrees of each element.</p>
 <p>The fuzzy set in LaTeX.</p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-Set-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">Set</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">Set</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -286,17 +286,17 @@ as the sum of the degrees of each element.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">S</span> <span class="op">&lt;-</span> <span class="va">Set</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>A <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="va">Set</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>A <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {A}</span>
-<span class="r-in"><span class="va">S</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">S</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \left\{\mathrm{A}\right\}</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">S</span> <span class="op">&lt;-</span> <span class="va">Set</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>, C <span class="op">=</span> <span class="fl">1</span>, B <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">S</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="va">Set</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>, C <span class="op">=</span> <span class="fl">1</span>, B <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">S</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {B [0.5], C}</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -311,7 +311,7 @@ as the sum of the degrees of each element.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

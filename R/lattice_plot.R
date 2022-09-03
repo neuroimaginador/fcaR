@@ -266,7 +266,7 @@ obtain_reduced_labels <- function(subconcept_matrix,
   A <- as.matrix(subconcept_matrix)
   colnames(A) <- rownames(A) <- seq(nrow(subconcept_matrix))
   poset <- POSetR::poset_from_incidence(A)
-  nodes <- as.numeric(poset$firstLE())
+  nodes <- as.numeric(poset$pointer$firstLE())
   nodes <- rev(nodes)
 
   last_node <- .extract_column(intents, nodes[1])

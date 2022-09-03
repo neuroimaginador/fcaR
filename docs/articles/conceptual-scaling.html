@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -1691,9 +1691,9 @@ Score is A
 </h3>
 <p>The available scales are stored in a <code>registry</code> object called <code>scalingRegistry</code>, which keeps the functions to perform the different types of scaling:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">scalingRegistry</span><span class="op">$</span><span class="fu">get_entry_names</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Nominal"      "Ordinal"      "Interordinal" "Biordinal"    "Interval"    </span>
-<span class="co">#&gt; [6] "Implication"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">scalingRegistry</span><span class="op">$</span><span class="fu">get_entry_names</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Nominal"      "Ordinal"      "Interordinal" "Biordinal"    "Interval"    </span></span>
+<span><span class="co">#&gt; [6] "Implication"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="applying-scales">Applying scales<a class="anchor" aria-label="anchor" href="#applying-scales"></a>
@@ -1702,58 +1702,59 @@ Score is A
 <p>This method has two mandatory arguments: <code>attribute</code> (the attribute to scale) and <code>type</code> (the type of scaling). Additional arguments can be supplied for certain types of scaling, as we will se shortly.</p>
 <p>For instance, if we call <code>fc</code> the formal context of the example at the beginning of this document, we can replicate the above scales:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Grant"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span>
-<span class="va">fc</span>
-<span class="co">#&gt; FormalContext with 5 objects and 6 attributes.</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span>
-<span class="co">#&gt;   `Grant = no` `Grant = yes` Intern Agreement                  Attitude    Score</span>
-<span class="co">#&gt;          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>            0             1      7 agree                      working       2.7</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>            0             1     10 strongly agree             hard worki…   4.1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>            1             0      5 neither agree nor disagree working       3.6</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>            0             1      8 agree                      working       4  </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>            1             0      4 disagree                   lazy          3.6</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Grant"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span>
+<span><span class="va">fc</span></span>
+<span><span class="co">#&gt; FormalContext with 5 objects and 6 attributes.</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 6</span></span></span>
+<span><span class="co">#&gt;   `Grant = no` `Grant = yes` Intern Agreement                  Attitude    Score</span></span>
+<span><span class="co">#&gt;          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>            0             1      7 agree                      working       2.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>            0             1     10 strongly agree             hard worki…   4.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>            1             0      5 neither agree nor disagree working       3.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>            0             1      8 agree                      working       4  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>            1             0      4 disagree                   lazy          3.6</span></span></code></pre></div>
 <p>Note that the attribute <code>Grant</code> has been substituted by <code>Grant = yes</code> and <code>Grant = no</code>.</p>
 <p>In order to apply the <em>ordinal</em> scaling to the <code>Intern</code> attribute, we do:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Intern"</span>, type <span class="op">=</span> <span class="st">"ordinal"</span><span class="op">)</span>
-<span class="va">fc</span>
-<span class="co">#&gt; FormalContext with 5 objects and 10 attributes.</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 10</span></span>
-<span class="co">#&gt;   `Grant = no` `Grant = yes` `Intern &lt;= 4` `Intern &lt;= 5` `Intern &lt;= 7`</span>
-<span class="co">#&gt;          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>            0             1             0             0             1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>            0             1             0             0             0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>            1             0             0             1             1</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>            0             1             0             0             0</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span>            1             0             1             1             1</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 5 more variables: `Intern &lt;= 8` &lt;dbl&gt;, `Intern &lt;= 10` &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   Agreement &lt;chr&gt;, Attitude &lt;chr&gt;, Score &lt;dbl&gt;</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Intern"</span>, type <span class="op">=</span> <span class="st">"ordinal"</span><span class="op">)</span></span>
+<span><span class="va">fc</span></span>
+<span><span class="co">#&gt; FormalContext with 5 objects and 10 attributes.</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 10</span></span></span>
+<span><span class="co">#&gt;   Grant …¹ Grant…² Inter…³ Inter…⁴ Inter…⁵ Inter…⁶ Inter…⁷ Agree…⁸ Attit…⁹ Score</span></span>
+<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>        0       1       0       0       1       1       1 agree   working   2.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>        0       1       0       0       0       0       1 strong… hard w…   4.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>        1       0       0       1       1       1       1 neithe… working   3.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>        0       1       0       0       0       1       1 agree   working   4  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>        1       0       1       1       1       1       1 disagr… lazy      3.6</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​`Grant = no`, ²​`Grant = yes`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ³​`Intern &lt;= 4`, ⁴​`Intern &lt;= 5`, ⁵​`Intern &lt;= 7`, ⁶​`Intern &lt;= 8`,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁷​`Intern &lt;= 10`, ⁸​Agreement, ⁹​Attitude</span></span></span></code></pre></div>
 <p>Now, the <code>Agreement</code> attribute can be scaled using and interordinal scaling:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Agreement"</span>, 
-         type <span class="op">=</span> <span class="st">"interordinal"</span>,
-         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"strongly disagree"</span>,
-                    <span class="st">"disagree"</span>,
-                    <span class="st">"neither agree nor disagree"</span>,
-                    <span class="st">"agree"</span>,
-                    <span class="st">"strongly agree"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Agreement"</span>, </span>
+<span>         type <span class="op">=</span> <span class="st">"interordinal"</span>,</span>
+<span>         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"strongly disagree"</span>,</span>
+<span>                    <span class="st">"disagree"</span>,</span>
+<span>                    <span class="st">"neither agree nor disagree"</span>,</span>
+<span>                    <span class="st">"agree"</span>,</span>
+<span>                    <span class="st">"strongly agree"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The resulting formal context has 19 columns, thus it is difficult to print.</p>
 <p>Note that the call to <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale()</a></code> has an additional optional argument, <code>values</code>, that indicate, for character attributes, the order between the different attribute values. In this case, the order is “strongly disagree” &lt; “disagree” &lt; “neither agree nor disagree” &lt; “agree” &lt; “strongly agree”.</p>
 <p>The <code>Attitude</code> attribute can be scaled using a <em>biordinal</em> scale, since it represents two poles: the first is given by values “hard working” and “working” and the other is given by “very lazy” and “lazy”. Then, we can do:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Attitude"</span>, 
-         type <span class="op">=</span> <span class="st">"biordinal"</span>, 
-         values_le <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hard working"</span>, <span class="st">"working"</span><span class="op">)</span>,
-         values_ge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lazy"</span>, <span class="st">"very lazy"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Attitude"</span>, </span>
+<span>         type <span class="op">=</span> <span class="st">"biordinal"</span>, </span>
+<span>         values_le <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hard working"</span>, <span class="st">"working"</span><span class="op">)</span>,</span>
+<span>         values_ge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lazy"</span>, <span class="st">"very lazy"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The full order of attribute values is “hard working” &lt; “working” &lt; “lazy” &lt; “very lazy”.</p>
 <p>Note that we have listed the attribute values in two different arguments, <code>values_le</code> (for values that are compared using <code>&lt;=</code>) and <code>values_ge</code> (values compared using <code>&gt;=</code>). Also note that all attributes must appear ordered in the arguments, that is, in the same order as in the full order defined above.</p>
 <p>The last attribute was the <code>Score</code>, that can be grouped in intervals using:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Score"</span>, 
-         type <span class="op">=</span> <span class="st">"interval"</span>, 
-         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, 
-         interval_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Score"</span>, </span>
+<span>         type <span class="op">=</span> <span class="st">"interval"</span>, </span>
+<span>         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, </span>
+<span>         interval_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The additional arguments are <code>values</code> (the endpoints of the intervals) and <code>interval_names</code> (an optional name indicating how to call a given interval).</p>
 <p>Note that all of these scales can be applied to numerical and string attributes.</p>
 </div>
@@ -1762,20 +1763,20 @@ Score is A
 </h3>
 <p>In order to see the transformation (the <em>scale</em> context) used for any of the attributes, we use the <code>get_scales()</code> method of a <code>FormalContext</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Grant"</span>, <span class="st">"Score"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; $Grant</span>
-<span class="co">#&gt; FormalContext with 2 objects and 2 attributes.</span>
-<span class="co">#&gt;      Grant = no  Grant = yes  </span>
-<span class="co">#&gt;   no      X                   </span>
-<span class="co">#&gt;  yes                  X       </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $Score</span>
-<span class="co">#&gt; FormalContext with 4 objects and 3 attributes.</span>
-<span class="co">#&gt;      Score is C  Score is B  Score is A  </span>
-<span class="co">#&gt;  2.7      X                              </span>
-<span class="co">#&gt;  3.6                  X                  </span>
-<span class="co">#&gt;    4                  X                  </span>
-<span class="co">#&gt;  4.1                              X</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Grant"</span>, <span class="st">"Score"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $Grant</span></span>
+<span><span class="co">#&gt; FormalContext with 2 objects and 2 attributes.</span></span>
+<span><span class="co">#&gt;      Grant = no  Grant = yes  </span></span>
+<span><span class="co">#&gt;   no      X                   </span></span>
+<span><span class="co">#&gt;  yes                  X       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $Score</span></span>
+<span><span class="co">#&gt; FormalContext with 4 objects and 3 attributes.</span></span>
+<span><span class="co">#&gt;      Score is C  Score is B  Score is A  </span></span>
+<span><span class="co">#&gt;  2.7      X                              </span></span>
+<span><span class="co">#&gt;  3.6                  X                  </span></span>
+<span><span class="co">#&gt;    4                  X                  </span></span>
+<span><span class="co">#&gt;  4.1                              X</span></span></code></pre></div>
 <p>With no arguments, it prints all the scales that have been used in a <code>FormalContext</code>.</p>
 </div>
 <div class="section level3">
@@ -1784,34 +1785,34 @@ Score is A
 <p>Some scalings, particularly of the <em>ordinal</em> family, assume an implicit knowledge (e.g., if attribute <code>Intern</code> is lower than 5, then it is also lower than 7).</p>
 <p>This <em>background knowledge</em> is computed after each scaling is performed, and can be printed with:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Implication set with 20 implications.</span>
-<span class="co">#&gt; Rule 1: {} -&gt; {Agreement &lt;= strongly agree, Agreement &gt;= strongly disagree,</span>
-<span class="co">#&gt;   Intern &lt;= 10}</span>
-<span class="co">#&gt; Rule 2: {Intern &lt;= 7} -&gt; {Intern &lt;= 8}</span>
-<span class="co">#&gt; Rule 3: {Intern &lt;= 5} -&gt; {Intern &lt;= 7}</span>
-<span class="co">#&gt; Rule 4: {Intern &lt;= 4} -&gt; {Intern &lt;= 5}</span>
-<span class="co">#&gt; Rule 5: {Agreement &gt;= strongly agree} -&gt; {Agreement &gt;= agree}</span>
-<span class="co">#&gt; Rule 6: {Agreement &gt;= agree} -&gt; {Agreement &gt;= neither agree nor disagree}</span>
-<span class="co">#&gt; Rule 7: {Agreement &gt;= neither agree nor disagree} -&gt; {Agreement &gt;= disagree}</span>
-<span class="co">#&gt; Rule 8: {Agreement &lt;= agree, Agreement &gt;= strongly agree} -&gt; {Agreement &lt;=</span>
-<span class="co">#&gt;   strongly disagree}</span>
-<span class="co">#&gt; Rule 9: {Agreement &lt;= neither agree nor disagree} -&gt; {Agreement &lt;= agree}</span>
-<span class="co">#&gt; Rule 10: {Agreement &lt;= neither agree nor disagree, Agreement &gt;= agree} -&gt;</span>
-<span class="co">#&gt;   {Agreement &lt;= strongly disagree, Agreement &gt;= strongly agree}</span>
-<span class="co">#&gt; Rule 11: {Agreement &lt;= disagree} -&gt; {Agreement &lt;= neither agree nor disagree}</span>
-<span class="co">#&gt; Rule 12: {Agreement &lt;= disagree, Agreement &gt;= neither agree nor disagree} -&gt;</span>
-<span class="co">#&gt;   {Agreement &lt;= strongly disagree, Agreement &gt;= strongly agree}</span>
-<span class="co">#&gt; Rule 13: {Agreement &lt;= strongly disagree} -&gt; {Agreement &lt;= disagree}</span>
-<span class="co">#&gt; Rule 14: {Agreement &lt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Agreement</span>
-<span class="co">#&gt;   &gt;= strongly agree}</span>
-<span class="co">#&gt; Rule 15: {Attitude &gt;= very lazy} -&gt; {Attitude &gt;= lazy}</span>
-<span class="co">#&gt; Rule 16: {Attitude &lt;= working, Attitude &gt;= lazy} -&gt; {Attitude &lt;= hard working,</span>
-<span class="co">#&gt;   Attitude &gt;= very lazy}</span>
-<span class="co">#&gt; Rule 17: {Attitude &lt;= hard working} -&gt; {Attitude &lt;= working}</span>
-<span class="co">#&gt; Rule 18: {Score is A, Score is B} -&gt; {Score is C}</span>
-<span class="co">#&gt; Rule 19: {Score is A, Score is C} -&gt; {Score is B}</span>
-<span class="co">#&gt; Rule 20: {Score is B, Score is C} -&gt; {Score is A}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Implication set with 20 implications.</span></span>
+<span><span class="co">#&gt; Rule 1: {} -&gt; {Agreement &lt;= strongly agree, Agreement &gt;= strongly disagree,</span></span>
+<span><span class="co">#&gt;   Intern &lt;= 10}</span></span>
+<span><span class="co">#&gt; Rule 2: {Intern &lt;= 7} -&gt; {Intern &lt;= 8}</span></span>
+<span><span class="co">#&gt; Rule 3: {Intern &lt;= 5} -&gt; {Intern &lt;= 7}</span></span>
+<span><span class="co">#&gt; Rule 4: {Intern &lt;= 4} -&gt; {Intern &lt;= 5}</span></span>
+<span><span class="co">#&gt; Rule 5: {Agreement &gt;= strongly agree} -&gt; {Agreement &gt;= agree}</span></span>
+<span><span class="co">#&gt; Rule 6: {Agreement &gt;= agree} -&gt; {Agreement &gt;= neither agree nor disagree}</span></span>
+<span><span class="co">#&gt; Rule 7: {Agreement &gt;= neither agree nor disagree} -&gt; {Agreement &gt;= disagree}</span></span>
+<span><span class="co">#&gt; Rule 8: {Agreement &lt;= agree, Agreement &gt;= strongly agree} -&gt; {Agreement &lt;=</span></span>
+<span><span class="co">#&gt;   strongly disagree}</span></span>
+<span><span class="co">#&gt; Rule 9: {Agreement &lt;= neither agree nor disagree} -&gt; {Agreement &lt;= agree}</span></span>
+<span><span class="co">#&gt; Rule 10: {Agreement &lt;= neither agree nor disagree, Agreement &gt;= agree} -&gt;</span></span>
+<span><span class="co">#&gt;   {Agreement &lt;= strongly disagree, Agreement &gt;= strongly agree}</span></span>
+<span><span class="co">#&gt; Rule 11: {Agreement &lt;= disagree} -&gt; {Agreement &lt;= neither agree nor disagree}</span></span>
+<span><span class="co">#&gt; Rule 12: {Agreement &lt;= disagree, Agreement &gt;= neither agree nor disagree} -&gt;</span></span>
+<span><span class="co">#&gt;   {Agreement &lt;= strongly disagree, Agreement &gt;= strongly agree}</span></span>
+<span><span class="co">#&gt; Rule 13: {Agreement &lt;= strongly disagree} -&gt; {Agreement &lt;= disagree}</span></span>
+<span><span class="co">#&gt; Rule 14: {Agreement &lt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Agreement</span></span>
+<span><span class="co">#&gt;   &gt;= strongly agree}</span></span>
+<span><span class="co">#&gt; Rule 15: {Attitude &gt;= very lazy} -&gt; {Attitude &gt;= lazy}</span></span>
+<span><span class="co">#&gt; Rule 16: {Attitude &lt;= working, Attitude &gt;= lazy} -&gt; {Attitude &lt;= hard working,</span></span>
+<span><span class="co">#&gt;   Attitude &gt;= very lazy}</span></span>
+<span><span class="co">#&gt; Rule 17: {Attitude &lt;= hard working} -&gt; {Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 18: {Score is A, Score is B} -&gt; {Score is C}</span></span>
+<span><span class="co">#&gt; Rule 19: {Score is A, Score is C} -&gt; {Score is B}</span></span>
+<span><span class="co">#&gt; Rule 20: {Score is B, Score is C} -&gt; {Score is A}</span></span></code></pre></div>
 <p>It is a simple <code>ImplicationSet</code> that stores all the implications that can be derived from the scale contexts.</p>
 </div>
 <div class="section level3">
@@ -1822,59 +1823,59 @@ Score is A
 <p>In the case of the basis of implications, the NextClosure algorithm is used, as in the binary/fuzzy case, but the resulting implications have been post-processed to remove redundant information with respect to the <em>background knowledge</em>.</p>
 <p>In our example, the resulting implications are:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
-<span class="co">#&gt; Implication set with 26 implications.</span>
-<span class="co">#&gt; Rule 1: {} -&gt; {Agreement &gt;= disagree}</span>
-<span class="co">#&gt; Rule 2: {Agreement &gt;= disagree, Score is A} -&gt; {Grant = yes, Agreement &gt;=</span>
-<span class="co">#&gt;   strongly agree, Attitude &lt;= hard working}</span>
-<span class="co">#&gt; Rule 3: {Agreement &gt;= disagree, Score is B} -&gt; {Intern &lt;= 8, Agreement &lt;= agree}</span>
-<span class="co">#&gt; Rule 4: {Agreement &gt;= disagree, Score is C} -&gt; {Grant = yes, Intern &lt;= 7,</span>
-<span class="co">#&gt;   Agreement &lt;= agree, Agreement &gt;= agree, Attitude &lt;= working}</span>
-<span class="co">#&gt; Rule 5: {Agreement &gt;= disagree, Attitude &gt;= very lazy} -&gt; {Grant = no, Grant =</span>
-<span class="co">#&gt;   yes, Intern &lt;= 4, Agreement &lt;= strongly disagree, Attitude &lt;= hard working,</span>
-<span class="co">#&gt;   Score is B, Score is A}</span>
-<span class="co">#&gt; Rule 6: {Agreement &gt;= disagree, Attitude &gt;= lazy} -&gt; {Grant = no, Intern &lt;= 4,</span>
-<span class="co">#&gt;   Agreement &lt;= disagree, Score is B}</span>
-<span class="co">#&gt; Rule 7: {Agreement &gt;= disagree, Attitude &lt;= working} -&gt; {Agreement &gt;= neither</span>
-<span class="co">#&gt;   agree nor disagree}</span>
-<span class="co">#&gt; Rule 8: {Agreement &gt;= disagree, Attitude &lt;= hard working} -&gt; {Grant = yes,</span>
-<span class="co">#&gt;   Agreement &gt;= strongly agree, Score is A}</span>
-<span class="co">#&gt; Rule 9: {Agreement &gt;= strongly agree} -&gt; {Grant = yes, Attitude &lt;= hard working,</span>
-<span class="co">#&gt;   Score is A}</span>
-<span class="co">#&gt; Rule 10: {Agreement &gt;= agree} -&gt; {Grant = yes, Attitude &lt;= working}</span>
-<span class="co">#&gt; Rule 11: {Agreement &gt;= neither agree nor disagree} -&gt; {Attitude &lt;= working}</span>
-<span class="co">#&gt; Rule 12: {Agreement &lt;= agree, Agreement &gt;= disagree} -&gt; {Intern &lt;= 8}</span>
-<span class="co">#&gt; Rule 13: {Agreement &lt;= neither agree nor disagree, Agreement &gt;= disagree} -&gt;</span>
-<span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Score is B}</span>
-<span class="co">#&gt; Rule 14: {Agreement &lt;= disagree, Agreement &gt;= disagree} -&gt; {Grant = no, Intern</span>
-<span class="co">#&gt;   &lt;= 4, Attitude &gt;= lazy, Score is B}</span>
-<span class="co">#&gt; Rule 15: {Agreement &lt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Grant =</span>
-<span class="co">#&gt;   no, Grant = yes, Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy,</span>
-<span class="co">#&gt;   Score is B, Score is A}</span>
-<span class="co">#&gt; Rule 16: {Intern &lt;= 8, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span>
-<span class="co">#&gt; Rule 17: {Intern &lt;= 7, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span>
-<span class="co">#&gt; Rule 18: {Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= disagree, Score is B} -&gt;</span>
-<span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Agreement &lt;= neither agree nor disagree}</span>
-<span class="co">#&gt; Rule 19: {Intern &lt;= 5, Agreement &gt;= disagree} -&gt; {Grant = no, Agreement &lt;=</span>
-<span class="co">#&gt;   neither agree nor disagree, Score is B}</span>
-<span class="co">#&gt; Rule 20: {Intern &lt;= 4, Agreement &gt;= disagree} -&gt; {Grant = no, Agreement &lt;=</span>
-<span class="co">#&gt;   disagree, Attitude &gt;= lazy, Score is B}</span>
-<span class="co">#&gt; Rule 21: {Grant = yes, Agreement &gt;= disagree} -&gt; {Agreement &gt;= agree, Attitude</span>
-<span class="co">#&gt;   &lt;= working}</span>
-<span class="co">#&gt; Rule 22: {Grant = yes, Intern &lt;= 8, Agreement &lt;= agree, Agreement &gt;= strongly</span>
-<span class="co">#&gt;   agree, Attitude &lt;= hard working, Score is A} -&gt; {Grant = no, Intern &lt;= 4,</span>
-<span class="co">#&gt;   Attitude &gt;= very lazy, Score is B}</span>
-<span class="co">#&gt; Rule 23: {Grant = yes, Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= agree,</span>
-<span class="co">#&gt;   Attitude &lt;= working} -&gt; {Score is C}</span>
-<span class="co">#&gt; Rule 24: {Grant = no, Agreement &gt;= disagree} -&gt; {Intern &lt;= 5, Agreement &lt;=</span>
-<span class="co">#&gt;   neither agree nor disagree, Score is B}</span>
-<span class="co">#&gt; Rule 25: {Grant = no, Intern &lt;= 4, Agreement &lt;= disagree, Agreement &gt;= neither</span>
-<span class="co">#&gt;   agree nor disagree, Attitude &lt;= working, Attitude &gt;= lazy, Score is B} -&gt;</span>
-<span class="co">#&gt;   {Grant = yes, Score is A}</span>
-<span class="co">#&gt; Rule 26: {Grant = no, Grant = yes, Intern &lt;= 5, Agreement &lt;= neither agree nor</span>
-<span class="co">#&gt;   disagree, Agreement &gt;= agree, Attitude &lt;= working, Score is C, Score is B} -&gt;</span>
-<span class="co">#&gt;   {Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
+<span><span class="co">#&gt; Implication set with 26 implications.</span></span>
+<span><span class="co">#&gt; Rule 1: {} -&gt; {Agreement &gt;= disagree}</span></span>
+<span><span class="co">#&gt; Rule 2: {Agreement &gt;= disagree, Score is A} -&gt; {Grant = yes, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly agree, Attitude &lt;= hard working}</span></span>
+<span><span class="co">#&gt; Rule 3: {Agreement &gt;= disagree, Score is B} -&gt; {Intern &lt;= 8, Agreement &lt;= agree}</span></span>
+<span><span class="co">#&gt; Rule 4: {Agreement &gt;= disagree, Score is C} -&gt; {Grant = yes, Intern &lt;= 7,</span></span>
+<span><span class="co">#&gt;   Agreement &lt;= agree, Agreement &gt;= agree, Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 5: {Agreement &gt;= disagree, Attitude &gt;= very lazy} -&gt; {Grant = no, Grant =</span></span>
+<span><span class="co">#&gt;   yes, Intern &lt;= 4, Agreement &lt;= strongly disagree, Attitude &lt;= hard working,</span></span>
+<span><span class="co">#&gt;   Score is B, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 6: {Agreement &gt;= disagree, Attitude &gt;= lazy} -&gt; {Grant = no, Intern &lt;= 4,</span></span>
+<span><span class="co">#&gt;   Agreement &lt;= disagree, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 7: {Agreement &gt;= disagree, Attitude &lt;= working} -&gt; {Agreement &gt;= neither</span></span>
+<span><span class="co">#&gt;   agree nor disagree}</span></span>
+<span><span class="co">#&gt; Rule 8: {Agreement &gt;= disagree, Attitude &lt;= hard working} -&gt; {Grant = yes,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= strongly agree, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 9: {Agreement &gt;= strongly agree} -&gt; {Grant = yes, Attitude &lt;= hard working,</span></span>
+<span><span class="co">#&gt;   Score is A}</span></span>
+<span><span class="co">#&gt; Rule 10: {Agreement &gt;= agree} -&gt; {Grant = yes, Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 11: {Agreement &gt;= neither agree nor disagree} -&gt; {Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 12: {Agreement &lt;= agree, Agreement &gt;= disagree} -&gt; {Intern &lt;= 8}</span></span>
+<span><span class="co">#&gt; Rule 13: {Agreement &lt;= neither agree nor disagree, Agreement &gt;= disagree} -&gt;</span></span>
+<span><span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 14: {Agreement &lt;= disagree, Agreement &gt;= disagree} -&gt; {Grant = no, Intern</span></span>
+<span><span class="co">#&gt;   &lt;= 4, Attitude &gt;= lazy, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 15: {Agreement &lt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Grant =</span></span>
+<span><span class="co">#&gt;   no, Grant = yes, Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy,</span></span>
+<span><span class="co">#&gt;   Score is B, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 16: {Intern &lt;= 8, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span></span>
+<span><span class="co">#&gt; Rule 17: {Intern &lt;= 7, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span></span>
+<span><span class="co">#&gt; Rule 18: {Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= disagree, Score is B} -&gt;</span></span>
+<span><span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Agreement &lt;= neither agree nor disagree}</span></span>
+<span><span class="co">#&gt; Rule 19: {Intern &lt;= 5, Agreement &gt;= disagree} -&gt; {Grant = no, Agreement &lt;=</span></span>
+<span><span class="co">#&gt;   neither agree nor disagree, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 20: {Intern &lt;= 4, Agreement &gt;= disagree} -&gt; {Grant = no, Agreement &lt;=</span></span>
+<span><span class="co">#&gt;   disagree, Attitude &gt;= lazy, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 21: {Grant = yes, Agreement &gt;= disagree} -&gt; {Agreement &gt;= agree, Attitude</span></span>
+<span><span class="co">#&gt;   &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 22: {Grant = yes, Intern &lt;= 8, Agreement &lt;= agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   agree, Attitude &lt;= hard working, Score is A} -&gt; {Grant = no, Intern &lt;= 4,</span></span>
+<span><span class="co">#&gt;   Attitude &gt;= very lazy, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 23: {Grant = yes, Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= agree,</span></span>
+<span><span class="co">#&gt;   Attitude &lt;= working} -&gt; {Score is C}</span></span>
+<span><span class="co">#&gt; Rule 24: {Grant = no, Agreement &gt;= disagree} -&gt; {Intern &lt;= 5, Agreement &lt;=</span></span>
+<span><span class="co">#&gt;   neither agree nor disagree, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 25: {Grant = no, Intern &lt;= 4, Agreement &lt;= disagree, Agreement &gt;= neither</span></span>
+<span><span class="co">#&gt;   agree nor disagree, Attitude &lt;= working, Attitude &gt;= lazy, Score is B} -&gt;</span></span>
+<span><span class="co">#&gt;   {Grant = yes, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 26: {Grant = no, Grant = yes, Intern &lt;= 5, Agreement &lt;= neither agree nor</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= agree, Attitude &lt;= working, Score is C, Score is B} -&gt;</span></span>
+<span><span class="co">#&gt;   {Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy}</span></span></code></pre></div>
 <p>Note that, in this case, this is not the basis of implications, since the <em>background knowledge</em> has to be incorporated. That is, these implications are valid, but to be complete they need the implications derived from the scales.</p>
 </div>
 </div>
@@ -1883,15 +1884,15 @@ Score is A
 </h2>
 <p>Let us consider the following context of attributes of aromatic molecules:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>,
-                        <span class="st">"aromatic.csv"</span>,
-                        package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span>
-
-<span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>,</span>
+<span>                        <span class="st">"aromatic.csv"</span>,</span>
+<span>                        package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"html"</span>,
-               align <span class="op">=</span> <span class="st">"c"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>               align <span class="op">=</span> <span class="st">"c"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -2080,15 +2081,15 @@ hex
 </ul>
 <p>We can transform this context into a binary one by means of the following scalings:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"nitro"</span>, 
-         type <span class="op">=</span> <span class="st">"ordinal"</span>, 
-         comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, 
-         values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"OS"</span>, 
-         type <span class="op">=</span> <span class="st">"nominal"</span>, 
-         <span class="fu"><a href="https://rdrr.io/pkg/arules/man/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, 
-         type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"nitro"</span>, </span>
+<span>         type <span class="op">=</span> <span class="st">"ordinal"</span>, </span>
+<span>         comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, </span>
+<span>         values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"OS"</span>, </span>
+<span>         type <span class="op">=</span> <span class="st">"nominal"</span>, </span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, </span>
+<span>         type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span></code></pre></div>
 The final formal context is:
 <table class="table">
 <thead><tr>
@@ -2433,41 +2434,41 @@ Thiophene
 </table>
 <p>The implications derived from the scales are:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Implication set with 2 implications.</span>
-<span class="co">#&gt; Rule 1: {} -&gt; {nitro &gt;= 1}</span>
-<span class="co">#&gt; Rule 2: {nitro &gt;= 3} -&gt; {nitro &gt;= 2}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Implication set with 2 implications.</span></span>
+<span><span class="co">#&gt; Rule 1: {} -&gt; {nitro &gt;= 1}</span></span>
+<span><span class="co">#&gt; Rule 2: {nitro &gt;= 3} -&gt; {nitro &gt;= 2}</span></span></code></pre></div>
 <p>Also, we can compute the implications that are not represented by the <em>background knowledge</em>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="va">implications</span>
-<span class="co">#&gt; Implication set with 7 implications.</span>
-<span class="co">#&gt; Rule 1: {nitro &gt;= 3} -&gt; {ring = hex}</span>
-<span class="co">#&gt; Rule 2: {OS = S} -&gt; {ring = penta}</span>
-<span class="co">#&gt; Rule 3: {OS = O} -&gt; {ring = penta}</span>
-<span class="co">#&gt; Rule 4: {ring = penta, OS = S, nitro &gt;= 2} -&gt; {ring = hex, OS = O, nitro &gt;= 3}</span>
-<span class="co">#&gt; Rule 5: {ring = penta, OS = O, nitro &gt;= 2} -&gt; {ring = hex, OS = S, nitro &gt;= 3}</span>
-<span class="co">#&gt; Rule 6: {ring = penta, OS = O, OS = S} -&gt; {ring = hex, nitro &gt;= 3}</span>
-<span class="co">#&gt; Rule 7: {ring = hex, ring = penta} -&gt; {OS = O, OS = S, nitro &gt;= 3}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
+<span><span class="co">#&gt; Implication set with 7 implications.</span></span>
+<span><span class="co">#&gt; Rule 1: {nitro &gt;= 3} -&gt; {ring = hex}</span></span>
+<span><span class="co">#&gt; Rule 2: {OS = S} -&gt; {ring = penta}</span></span>
+<span><span class="co">#&gt; Rule 3: {OS = O} -&gt; {ring = penta}</span></span>
+<span><span class="co">#&gt; Rule 4: {ring = penta, OS = S, nitro &gt;= 2} -&gt; {ring = hex, OS = O, nitro &gt;= 3}</span></span>
+<span><span class="co">#&gt; Rule 5: {ring = penta, OS = O, nitro &gt;= 2} -&gt; {ring = hex, OS = S, nitro &gt;= 3}</span></span>
+<span><span class="co">#&gt; Rule 6: {ring = penta, OS = O, OS = S} -&gt; {ring = hex, nitro &gt;= 3}</span></span>
+<span><span class="co">#&gt; Rule 7: {ring = hex, ring = penta} -&gt; {OS = O, OS = S, nitro &gt;= 3}</span></span></code></pre></div>
 <p>and the concepts:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span>
-<span class="co">#&gt; A set of 15 concepts:</span>
-<span class="co">#&gt; 1: ({Benzene, Furan, Imidazole, 1-3-Oxazole, Pyrazine, Pyrazole, Pyridine, Pyrimidine, Pyrrole, Thiazole}, {})</span>
-<span class="co">#&gt; 2: ({Imidazole, 1-3-Oxazole, Pyrazine, Pyrazole, Pyridine, Pyrimidine, Thiazole}, {nitro &gt;= 1})</span>
-<span class="co">#&gt; 3: ({Imidazole, Pyrazine, Thiazole}, {nitro &gt;= 1, nitro &gt;= 2})</span>
-<span class="co">#&gt; 4: ({Furan, Imidazole, 1-3-Oxazole, Pyridine, Pyrimidine, Pyrrole}, {ring = penta})</span>
-<span class="co">#&gt; 5: ({Imidazole, 1-3-Oxazole, Pyridine, Pyrimidine}, {ring = penta, nitro &gt;= 1})</span>
-<span class="co">#&gt; 6: ({Imidazole}, {ring = penta, nitro &gt;= 1, nitro &gt;= 2})</span>
-<span class="co">#&gt; 7: ({Pyrimidine, Pyrrole}, {ring = penta, OS = S})</span>
-<span class="co">#&gt; 8: ({Pyrimidine}, {ring = penta, OS = S, nitro &gt;= 1})</span>
-<span class="co">#&gt; 9: ({Furan, 1-3-Oxazole}, {ring = penta, OS = O})</span>
-<span class="co">#&gt; 10: ({1-3-Oxazole}, {ring = penta, OS = O, nitro &gt;= 1})</span>
-<span class="co">#&gt; 11: ({Benzene, Pyrazine, Pyrazole, Thiazole}, {ring = hex})</span>
-<span class="co">#&gt; 12: ({Pyrazine, Pyrazole, Thiazole}, {ring = hex, nitro &gt;= 1})</span>
-<span class="co">#&gt; 13: ({Pyrazine, Thiazole}, {ring = hex, nitro &gt;= 1, nitro &gt;= 2})</span>
-<span class="co">#&gt; 14: ({Thiazole}, {ring = hex, nitro &gt;= 1, nitro &gt;= 2, nitro &gt;= 3})</span>
-<span class="co">#&gt; 15: ({}, {ring = hex, ring = penta, OS = O, OS = S, nitro &gt;= 1, nitro &gt;= 2, nitro &gt;= 3})</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span></span>
+<span><span class="co">#&gt; A set of 15 concepts:</span></span>
+<span><span class="co">#&gt; 1: ({Benzene, Furan, Imidazole, 1-3-Oxazole, Pyrazine, Pyrazole, Pyridine, Pyrimidine, Pyrrole, Thiazole}, {})</span></span>
+<span><span class="co">#&gt; 2: ({Imidazole, 1-3-Oxazole, Pyrazine, Pyrazole, Pyridine, Pyrimidine, Thiazole}, {nitro &gt;= 1})</span></span>
+<span><span class="co">#&gt; 3: ({Imidazole, Pyrazine, Thiazole}, {nitro &gt;= 1, nitro &gt;= 2})</span></span>
+<span><span class="co">#&gt; 4: ({Furan, Imidazole, 1-3-Oxazole, Pyridine, Pyrimidine, Pyrrole}, {ring = penta})</span></span>
+<span><span class="co">#&gt; 5: ({Imidazole, 1-3-Oxazole, Pyridine, Pyrimidine}, {ring = penta, nitro &gt;= 1})</span></span>
+<span><span class="co">#&gt; 6: ({Imidazole}, {ring = penta, nitro &gt;= 1, nitro &gt;= 2})</span></span>
+<span><span class="co">#&gt; 7: ({Pyrimidine, Pyrrole}, {ring = penta, OS = S})</span></span>
+<span><span class="co">#&gt; 8: ({Pyrimidine}, {ring = penta, OS = S, nitro &gt;= 1})</span></span>
+<span><span class="co">#&gt; 9: ({Furan, 1-3-Oxazole}, {ring = penta, OS = O})</span></span>
+<span><span class="co">#&gt; 10: ({1-3-Oxazole}, {ring = penta, OS = O, nitro &gt;= 1})</span></span>
+<span><span class="co">#&gt; 11: ({Benzene, Pyrazine, Pyrazole, Thiazole}, {ring = hex})</span></span>
+<span><span class="co">#&gt; 12: ({Pyrazine, Pyrazole, Thiazole}, {ring = hex, nitro &gt;= 1})</span></span>
+<span><span class="co">#&gt; 13: ({Pyrazine, Thiazole}, {ring = hex, nitro &gt;= 1, nitro &gt;= 2})</span></span>
+<span><span class="co">#&gt; 14: ({Thiazole}, {ring = hex, nitro &gt;= 1, nitro &gt;= 2, nitro &gt;= 3})</span></span>
+<span><span class="co">#&gt; 15: ({}, {ring = hex, ring = penta, OS = O, OS = S, nitro &gt;= 1, nitro &gt;= 2, nitro &gt;= 3})</span></span></code></pre></div>
 </div>
   </div>
 
@@ -2488,7 +2489,7 @@ Thiophene
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

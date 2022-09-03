@@ -174,3 +174,4 @@ test_that("fcaR decomposes concepts in its meet-irreducible elements", {
   expect_is(cl[[1]], "ConceptSet")
 
 })
+

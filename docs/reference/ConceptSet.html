@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -81,23 +81,23 @@
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>ConceptSet$new()</code></a></p></li>
-<li><p><a href="#method-size"><code>ConceptSet$size()</code></a></p></li>
-<li><p><a href="#method-is_empty"><code>ConceptSet$is_empty()</code></a></p></li>
-<li><p><a href="#method-extents"><code>ConceptSet$extents()</code></a></p></li>
-<li><p><a href="#method-intents"><code>ConceptSet$intents()</code></a></p></li>
-<li><p><a href="#method-print"><code>ConceptSet$print()</code></a></p></li>
-<li><p><a href="#method-to_latex"><code>ConceptSet$to_latex()</code></a></p></li>
-<li><p><a href="#method-to_list"><code>ConceptSet$to_list()</code></a></p></li>
-<li><p><a href="#method-%5B"><code>ConceptSet$[()</code></a></p></li>
-<li><p><a href="#method-sub"><code>ConceptSet$sub()</code></a></p></li>
-<li><p><a href="#method-support"><code>ConceptSet$support()</code></a></p></li>
-<li><p><a href="#method-clone"><code>ConceptSet$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-ConceptSet-new"><code>ConceptSet$new()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-size"><code>ConceptSet$size()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-is_empty"><code>ConceptSet$is_empty()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-extents"><code>ConceptSet$extents()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-intents"><code>ConceptSet$intents()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-print"><code>ConceptSet$print()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-to_latex"><code>ConceptSet$to_latex()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-to_list"><code>ConceptSet$to_list()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-%5B"><code>ConceptSet$[()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-sub"><code>ConceptSet$sub()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-support"><code>ConceptSet$support()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-clone"><code>ConceptSet$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-ConceptSet-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new <code>ConceptLattice</code> object.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/ConceptSet.html">ConceptSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">extents</span>, <span class="va">intents</span>, <span class="va">objects</span>, <span class="va">attributes</span>, I <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/ConceptSet.html">ConceptSet</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">extents</span>, <span class="va">intents</span>, <span class="va">objects</span>, <span class="va">attributes</span>, I <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -129,11 +129,11 @@
 <p>A new <code>ConceptLattice</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-size"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-size"></a><div class="section">
 <h3 id="method-size-">Method <code>size()</code><a class="anchor" aria-label="anchor" href="#method-size-"></a></h3>
 <p>Size of the Lattice</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">size</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -141,11 +141,11 @@
 <p>The number of concepts in the lattice.</p>
 </div>
 
-</div><p></p><hr><a id="method-is_empty"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-is_empty"></a><div class="section">
 <h3 id="method-is-empty-">Method <code>is_empty()</code><a class="anchor" aria-label="anchor" href="#method-is-empty-"></a></h3>
 <p>Is the lattice empty?</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">is_empty</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">is_empty</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -153,11 +153,11 @@
 <p><code>TRUE</code> if the lattice has no concepts.</p>
 </div>
 
-</div><p></p><hr><a id="method-extents"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-extents"></a><div class="section">
 <h3 id="method-extents-">Method <code>extents()</code><a class="anchor" aria-label="anchor" href="#method-extents-"></a></h3>
 <p>Concept Extents</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">extents</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">extents</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -165,11 +165,11 @@
 <p>The extents of all concepts, as a <code>dgCMatrix</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-intents"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-intents"></a><div class="section">
 <h3 id="method-intents-">Method <code>intents()</code><a class="anchor" aria-label="anchor" href="#method-intents-"></a></h3>
 <p>Concept Intents</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">intents</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">intents</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -177,11 +177,11 @@
 <p>The intents of all concepts, as a <code>dgCMatrix</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Print the Concept Set</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -189,11 +189,11 @@
 <p>Nothing, just prints the concepts</p>
 </div>
 
-</div><p></p><hr><a id="method-to_latex"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-to_latex"></a><div class="section">
 <h3 id="method-to-latex-">Method <code>to_latex()</code><a class="anchor" aria-label="anchor" href="#method-to-latex-"></a></h3>
 <p>Write in LaTeX</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span>print <span class="op">=</span> <span class="cn">TRUE</span>, ncols <span class="op">=</span> <span class="fl">1</span>, numbered <span class="op">=</span> <span class="cn">TRUE</span>, align <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span>print <span class="op">=</span> <span class="cn">TRUE</span>, ncols <span class="op">=</span> <span class="fl">1</span>, numbered <span class="op">=</span> <span class="cn">TRUE</span>, align <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -221,11 +221,11 @@
 <p>The <code>LaTeX</code> code to list all concepts.</p>
 </div>
 
-</div><p></p><hr><a id="method-to_list"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-to_list"></a><div class="section">
 <h3 id="method-to-list-">Method <code>to_list()</code><a class="anchor" aria-label="anchor" href="#method-to-list-"></a></h3>
 <p>Returns a list with all the concepts</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">to_list</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">to_list</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -233,7 +233,7 @@
 <p>A list of concepts.</p>
 </div>
 
-</div><p></p><hr><a id="method-["></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-["></a><div class="section">
 <h3 id="method-">Method <code>[()</code><a class="anchor" aria-label="anchor" href="#method-"></a></h3>
 <p>Subsets a ConceptSet</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
@@ -253,11 +253,11 @@
 <p>Another ConceptSet.</p>
 </div>
 
-</div><p></p><hr><a id="method-sub"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-sub"></a><div class="section">
 <h3 id="method-sub-">Method <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub()</a></code><a class="anchor" aria-label="anchor" href="#method-sub-"></a></h3>
 <p>Individual Concepts</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">sub</span><span class="op">(</span><span class="va">index</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">sub</span><span class="op">(</span><span class="va">index</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -273,11 +273,11 @@
 <p>The Concept.</p>
 </div>
 
-</div><p></p><hr><a id="method-support"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-support"></a><div class="section">
 <h3 id="method-support-">Method <code>support()</code><a class="anchor" aria-label="anchor" href="#method-support-"></a></h3>
 <p>Get support of each concept</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -285,11 +285,11 @@
 <p>A vector with the support of each concept.</p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -307,21 +307,21 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Build a formal context</span></span>
-<span class="r-in"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Find the concepts</span></span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Find join- and meet- irreducible elements</span></span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Build a formal context</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Find the concepts</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Find join- and meet- irreducible elements</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of 5 concepts:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Earth}, {large, far, moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Mars}, {medium, far, moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3: ({Jupiter}, {small, far, moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4: ({Mercury}, {small, near, no_moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: ({Venus}, {small, near, moon})</span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of 7 concepts:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Venus, Earth, Mars, Jupiter}, {moon})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Earth, Mars, Jupiter}, {far, moon})</span>
@@ -330,8 +330,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5: ({Mercury, Venus, Jupiter}, {small})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6: ({Mercury, Venus}, {small, near})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7: ({Mercury}, {small, near, no_moon})</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -346,7 +346,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

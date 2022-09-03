@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -97,7 +97,11 @@
 
 
 <dt><code>grades_set</code></dt>
-<dd><p>The set of degrees (in [0, 1]) the attribute can take.</p></dd>
+<dd><p>The set of degrees (in [0, 1]) the whole set of attributes can take.</p></dd>
+
+
+<dt><code>expanded_grades_set</code></dt>
+<dd><p>The set of degrees (in [0, 1]) each attribute can take.</p></dd>
 
 
 <dt><code>concepts</code></dt>
@@ -116,40 +120,40 @@
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>FormalContext$new()</code></a></p></li>
-<li><p><a href="#method-is_empty"><code>FormalContext$is_empty()</code></a></p></li>
-<li><p><a href="#method-scale"><code>FormalContext$scale()</code></a></p></li>
-<li><p><a href="#method-get_scales"><code>FormalContext$get_scales()</code></a></p></li>
-<li><p><a href="#method-background_knowledge"><code>FormalContext$background_knowledge()</code></a></p></li>
-<li><p><a href="#method-dual"><code>FormalContext$dual()</code></a></p></li>
-<li><p><a href="#method-intent"><code>FormalContext$intent()</code></a></p></li>
-<li><p><a href="#method-uparrow"><code>FormalContext$uparrow()</code></a></p></li>
-<li><p><a href="#method-extent"><code>FormalContext$extent()</code></a></p></li>
-<li><p><a href="#method-downarrow"><code>FormalContext$downarrow()</code></a></p></li>
-<li><p><a href="#method-closure"><code>FormalContext$closure()</code></a></p></li>
-<li><p><a href="#method-obj_concept"><code>FormalContext$obj_concept()</code></a></p></li>
-<li><p><a href="#method-att_concept"><code>FormalContext$att_concept()</code></a></p></li>
-<li><p><a href="#method-is_concept"><code>FormalContext$is_concept()</code></a></p></li>
-<li><p><a href="#method-is_closed"><code>FormalContext$is_closed()</code></a></p></li>
-<li><p><a href="#method-clarify"><code>FormalContext$clarify()</code></a></p></li>
-<li><p><a href="#method-reduce"><code>FormalContext$reduce()</code></a></p></li>
-<li><p><a href="#method-standardize"><code>FormalContext$standardize()</code></a></p></li>
-<li><p><a href="#method-find_concepts"><code>FormalContext$find_concepts()</code></a></p></li>
-<li><p><a href="#method-find_implications"><code>FormalContext$find_implications()</code></a></p></li>
-<li><p><a href="#method-to_transactions"><code>FormalContext$to_transactions()</code></a></p></li>
-<li><p><a href="#method-save"><code>FormalContext$save()</code></a></p></li>
-<li><p><a href="#method-load"><code>FormalContext$load()</code></a></p></li>
-<li><p><a href="#method-dim"><code>FormalContext$dim()</code></a></p></li>
-<li><p><a href="#method-print"><code>FormalContext$print()</code></a></p></li>
-<li><p><a href="#method-to_latex"><code>FormalContext$to_latex()</code></a></p></li>
-<li><p><a href="#method-incidence"><code>FormalContext$incidence()</code></a></p></li>
-<li><p><a href="#method-plot"><code>FormalContext$plot()</code></a></p></li>
-<li><p><a href="#method-clone"><code>FormalContext$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-FormalContext-new"><code>FormalContext$new()</code></a></p></li>
+<li><p><a href="#method-FormalContext-is_empty"><code>FormalContext$is_empty()</code></a></p></li>
+<li><p><a href="#method-FormalContext-scale"><code>FormalContext$scale()</code></a></p></li>
+<li><p><a href="#method-FormalContext-get_scales"><code>FormalContext$get_scales()</code></a></p></li>
+<li><p><a href="#method-FormalContext-background_knowledge"><code>FormalContext$background_knowledge()</code></a></p></li>
+<li><p><a href="#method-FormalContext-dual"><code>FormalContext$dual()</code></a></p></li>
+<li><p><a href="#method-FormalContext-intent"><code>FormalContext$intent()</code></a></p></li>
+<li><p><a href="#method-FormalContext-uparrow"><code>FormalContext$uparrow()</code></a></p></li>
+<li><p><a href="#method-FormalContext-extent"><code>FormalContext$extent()</code></a></p></li>
+<li><p><a href="#method-FormalContext-downarrow"><code>FormalContext$downarrow()</code></a></p></li>
+<li><p><a href="#method-FormalContext-closure"><code>FormalContext$closure()</code></a></p></li>
+<li><p><a href="#method-FormalContext-obj_concept"><code>FormalContext$obj_concept()</code></a></p></li>
+<li><p><a href="#method-FormalContext-att_concept"><code>FormalContext$att_concept()</code></a></p></li>
+<li><p><a href="#method-FormalContext-is_concept"><code>FormalContext$is_concept()</code></a></p></li>
+<li><p><a href="#method-FormalContext-is_closed"><code>FormalContext$is_closed()</code></a></p></li>
+<li><p><a href="#method-FormalContext-clarify"><code>FormalContext$clarify()</code></a></p></li>
+<li><p><a href="#method-FormalContext-reduce"><code>FormalContext$reduce()</code></a></p></li>
+<li><p><a href="#method-FormalContext-standardize"><code>FormalContext$standardize()</code></a></p></li>
+<li><p><a href="#method-FormalContext-find_concepts"><code>FormalContext$find_concepts()</code></a></p></li>
+<li><p><a href="#method-FormalContext-find_implications"><code>FormalContext$find_implications()</code></a></p></li>
+<li><p><a href="#method-FormalContext-to_transactions"><code>FormalContext$to_transactions()</code></a></p></li>
+<li><p><a href="#method-FormalContext-save"><code>FormalContext$save()</code></a></p></li>
+<li><p><a href="#method-FormalContext-load"><code>FormalContext$load()</code></a></p></li>
+<li><p><a href="#method-FormalContext-dim"><code>FormalContext$dim()</code></a></p></li>
+<li><p><a href="#method-FormalContext-print"><code>FormalContext$print()</code></a></p></li>
+<li><p><a href="#method-FormalContext-to_latex"><code>FormalContext$to_latex()</code></a></p></li>
+<li><p><a href="#method-FormalContext-incidence"><code>FormalContext$incidence()</code></a></p></li>
+<li><p><a href="#method-FormalContext-plot"><code>FormalContext$plot()</code></a></p></li>
+<li><p><a href="#method-FormalContext-clone"><code>FormalContext$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-FormalContext-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creator for the Formal Context class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span>, <span class="va">filename</span>, remove_const <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span>, <span class="va">filename</span>, remove_const <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -179,11 +183,11 @@
 <p>An object of the <code>FormalContext</code> class.</p>
 </div>
 
-</div><p></p><hr><a id="method-is_empty"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-is_empty"></a><div class="section">
 <h3 id="method-is-empty-">Method <code>is_empty()</code><a class="anchor" aria-label="anchor" href="#method-is-empty-"></a></h3>
 <p>Check if the <code>FormalContext</code> is empty</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_empty</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_empty</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -191,11 +195,11 @@
 <p><code>TRUE</code> if the <code>FormalContext</code> is empty, that is, has not been provided with a matrix, and <code>FALSE</code> otherwise.</p>
 </div>
 
-</div><p></p><hr><a id="method-scale"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-scale"></a><div class="section">
 <h3 id="method-scale-">Method <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale()</a></code><a class="anchor" aria-label="anchor" href="#method-scale-"></a></h3>
 <p>Scale the context</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="va">attributes</span>, <span class="va">type</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="va">attributes</span>, <span class="va">type</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -227,19 +231,19 @@ all types.</p>
 </div>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span>
-<span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
+<span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-get_scales"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-get_scales"></a><div class="section">
 <h3 id="method-get-scales-">Method <code>get_scales()</code><a class="anchor" aria-label="anchor" href="#method-get-scales-"></a></h3>
 <p>Scales applied to the formal context</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span>attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">private</span><span class="op">$</span><span class="va">scales</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span>attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">private</span><span class="op">$</span><span class="va">scales</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -259,20 +263,20 @@ then all applied scales are returned.</p>
 </div>
 <div class="section">
 <h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span>
-<span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
+<span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-background_knowledge"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-background_knowledge"></a><div class="section">
 <h3 id="method-background-knowledge-">Method <code>background_knowledge()</code><a class="anchor" aria-label="anchor" href="#method-background-knowledge-"></a></h3>
 <p>Background knowledge of a scaled formal context</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -282,20 +286,20 @@ extracted from the application of scales.</p>
 </div>
 <div class="section">
 <h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span>
-<span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
+<span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-dual"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-dual"></a><div class="section">
 <h3 id="method-dual-">Method <code>dual()</code><a class="anchor" aria-label="anchor" href="#method-dual-"></a></h3>
 <p>Get the dual formal context</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">dual</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">dual</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -303,11 +307,11 @@ extracted from the application of scales.</p>
 <p>A <code>FormalContext</code> where objects and attributes have interchanged their roles.</p>
 </div>
 
-</div><p></p><hr><a id="method-intent"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-intent"></a><div class="section">
 <h3 id="method-intent-">Method <code>intent()</code><a class="anchor" aria-label="anchor" href="#method-intent-"></a></h3>
 <p>Get the intent of a fuzzy set of objects</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">intent</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">intent</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -323,11 +327,11 @@ extracted from the application of scales.</p>
 <p>A <code>Set</code> with the intent.</p>
 </div>
 
-</div><p></p><hr><a id="method-uparrow"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-uparrow"></a><div class="section">
 <h3 id="method-uparrow-">Method <code>uparrow()</code><a class="anchor" aria-label="anchor" href="#method-uparrow-"></a></h3>
 <p>Get the intent of a fuzzy set of objects</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">uparrow</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">uparrow</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -343,11 +347,11 @@ extracted from the application of scales.</p>
 <p>A <code>Set</code> with the intent.</p>
 </div>
 
-</div><p></p><hr><a id="method-extent"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-extent"></a><div class="section">
 <h3 id="method-extent-">Method <code>extent()</code><a class="anchor" aria-label="anchor" href="#method-extent-"></a></h3>
 <p>Get the extent of a fuzzy set of attributes</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">extent</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">extent</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -363,11 +367,11 @@ extracted from the application of scales.</p>
 <p>A <code>Set</code> with the intent.</p>
 </div>
 
-</div><p></p><hr><a id="method-downarrow"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-downarrow"></a><div class="section">
 <h3 id="method-downarrow-">Method <code>downarrow()</code><a class="anchor" aria-label="anchor" href="#method-downarrow-"></a></h3>
 <p>Get the extent of a fuzzy set of attributes</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">downarrow</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">downarrow</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -383,11 +387,11 @@ extracted from the application of scales.</p>
 <p>A <code>Set</code> with the intent.</p>
 </div>
 
-</div><p></p><hr><a id="method-closure"></a><div class="section">
-<h3 id="method-closure-">Method <code><a href="https://rdrr.io/r/base/function.html" class="external-link">closure()</a></code><a class="anchor" aria-label="anchor" href="#method-closure-"></a></h3>
+</div><p></p><hr><a id="method-FormalContext-closure"></a><div class="section">
+<h3 id="method-closure-">Method <code>closure()</code><a class="anchor" aria-label="anchor" href="#method-closure-"></a></h3>
 <p>Get the closure of a fuzzy set of attributes</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">closure</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">closure</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -403,11 +407,11 @@ extracted from the application of scales.</p>
 <p>A <code>Set</code> with the closure.</p>
 </div>
 
-</div><p></p><hr><a id="method-obj_concept"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-obj_concept"></a><div class="section">
 <h3 id="method-obj-concept-">Method <code>obj_concept()</code><a class="anchor" aria-label="anchor" href="#method-obj-concept-"></a></h3>
 <p>Object Concept</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">obj_concept</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">obj_concept</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -423,11 +427,11 @@ extracted from the application of scales.</p>
 <p>The object concept associated to the object given.</p>
 </div>
 
-</div><p></p><hr><a id="method-att_concept"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-att_concept"></a><div class="section">
 <h3 id="method-att-concept-">Method <code>att_concept()</code><a class="anchor" aria-label="anchor" href="#method-att-concept-"></a></h3>
 <p>Attribute Concept</p><div class="section">
 <h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">att_concept</span><span class="op">(</span><span class="va">attribute</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">att_concept</span><span class="op">(</span><span class="va">attribute</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -443,11 +447,11 @@ extracted from the application of scales.</p>
 <p>The attribute concept associated to the attribute given.</p>
 </div>
 
-</div><p></p><hr><a id="method-is_concept"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-is_concept"></a><div class="section">
 <h3 id="method-is-concept-">Method <code>is_concept()</code><a class="anchor" aria-label="anchor" href="#method-is-concept-"></a></h3>
 <p>Is a Concept?</p><div class="section">
 <h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_concept</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_concept</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -463,11 +467,11 @@ extracted from the application of scales.</p>
 <p><code>TRUE</code> if <code>C</code> is a concept.</p>
 </div>
 
-</div><p></p><hr><a id="method-is_closed"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-is_closed"></a><div class="section">
 <h3 id="method-is-closed-">Method <code>is_closed()</code><a class="anchor" aria-label="anchor" href="#method-is-closed-"></a></h3>
 <p>Testing closure of attribute sets</p><div class="section">
 <h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_closed</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_closed</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -483,11 +487,11 @@ extracted from the application of scales.</p>
 <p><code>TRUE</code> if the set <code>S</code> is closed in this formal context.</p>
 </div>
 
-</div><p></p><hr><a id="method-clarify"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-clarify"></a><div class="section">
 <h3 id="method-clarify-">Method <code>clarify()</code><a class="anchor" aria-label="anchor" href="#method-clarify-"></a></h3>
 <p>Clarify a formal context</p><div class="section">
 <h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">clarify</span><span class="op">(</span>copy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">clarify</span><span class="op">(</span>copy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -503,11 +507,11 @@ extracted from the application of scales.</p>
 <p>The clarified <code>FormalContext</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-reduce"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-reduce"></a><div class="section">
 <h3 id="method-reduce-">Method <code>reduce()</code><a class="anchor" aria-label="anchor" href="#method-reduce-"></a></h3>
 <p>Reduce a formal context</p><div class="section">
 <h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span>copy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span>copy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -523,11 +527,11 @@ extracted from the application of scales.</p>
 <p>The clarified and reduced <code>FormalContext</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-standardize"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-standardize"></a><div class="section">
 <h3 id="method-standardize-">Method <code>standardize()</code><a class="anchor" aria-label="anchor" href="#method-standardize-"></a></h3>
 <p>Build the Standard Context</p><div class="section">
 <h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -540,11 +544,11 @@ extracted from the application of scales.</p>
 <p>The standard context using the join- and meet- irreducible elements.</p>
 </div>
 
-</div><p></p><hr><a id="method-find_concepts"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-find_concepts"></a><div class="section">
 <h3 id="method-find-concepts-">Method <code>find_concepts()</code><a class="anchor" aria-label="anchor" href="#method-find-concepts-"></a></h3>
 <p>Use Ganter Algorithm to compute concepts</p><div class="section">
 <h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -560,11 +564,11 @@ extracted from the application of scales.</p>
 <p>A list with all the concepts in the formal context.</p>
 </div>
 
-</div><p></p><hr><a id="method-find_implications"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-find_implications"></a><div class="section">
 <h3 id="method-find-implications-">Method <code>find_implications()</code><a class="anchor" aria-label="anchor" href="#method-find-implications-"></a></h3>
 <p>Use modified Ganter algorithm to compute both concepts and implications</p><div class="section">
 <h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span>save_concepts <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span>save_concepts <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -584,11 +588,11 @@ extracted from the application of scales.</p>
 <p>Nothing, just updates the internal fields <code>concepts</code> and <code>implications</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-to_transactions"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-to_transactions"></a><div class="section">
 <h3 id="method-to-transactions-">Method <code>to_transactions()</code><a class="anchor" aria-label="anchor" href="#method-to-transactions-"></a></h3>
 <p>Convert the formal context to object of class <code>transactions</code> from the <code>arules</code> package</p><div class="section">
 <h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">to_transactions</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">to_transactions</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -596,11 +600,11 @@ extracted from the application of scales.</p>
 <p>A <code>transactions</code> object.</p>
 </div>
 
-</div><p></p><hr><a id="method-save"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-save"></a><div class="section">
 <h3 id="method-save-">Method <code><a href="https://rdrr.io/r/base/save.html" class="external-link">save()</a></code><a class="anchor" aria-label="anchor" href="#method-save-"></a></h3>
 <p>Save a <code>FormalContext</code> to RDS or CXT format</p><div class="section">
 <h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">save</span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".rds"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -621,11 +625,11 @@ extracted from the application of scales.</p>
 <p>Invisibly the current <code>FormalContext</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-load"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-load"></a><div class="section">
 <h3 id="method-load-">Method <code><a href="https://rdrr.io/r/base/load.html" class="external-link">load()</a></code><a class="anchor" aria-label="anchor" href="#method-load-"></a></h3>
 <p>Load a <code>FormalContext</code> from a file</p><div class="section">
 <h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">load</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">load</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -646,11 +650,11 @@ extracted from the application of scales.</p>
 <p>The loaded <code>FormalContext</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-dim"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-dim"></a><div class="section">
 <h3 id="method-dim-">Method <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim()</a></code><a class="anchor" aria-label="anchor" href="#method-dim-"></a></h3>
 <p>Dimensions of the formal context</p><div class="section">
 <h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">dim</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">dim</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -658,11 +662,11 @@ extracted from the application of scales.</p>
 <p>A vector with (number of objects, number of attributes).</p>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Prints the formal context</p><div class="section">
 <h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -670,16 +674,16 @@ extracted from the application of scales.</p>
 <p>Prints information regarding the formal context.</p>
 </div>
 
-</div><p></p><hr><a id="method-to_latex"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-to_latex"></a><div class="section">
 <h3 id="method-to-latex-">Method <code>to_latex()</code><a class="anchor" aria-label="anchor" href="#method-to-latex-"></a></h3>
 <p>Write the context in LaTeX format</p><div class="section">
 <h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span>
-  table <span class="op">=</span> <span class="cn">TRUE</span>,
-  label <span class="op">=</span> <span class="st">""</span>,
-  caption <span class="op">=</span> <span class="st">""</span>,
-  fraction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"frac"</span>, <span class="st">"dfrac"</span>, <span class="st">"sfrac"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span></span>
+<span>  table <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  caption <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  fraction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"frac"</span>, <span class="st">"dfrac"</span>, <span class="st">"sfrac"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -707,11 +711,11 @@ extracted from the application of scales.</p>
 <p>A table environment in LaTeX.</p>
 </div>
 
-</div><p></p><hr><a id="method-incidence"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-incidence"></a><div class="section">
 <h3 id="method-incidence-">Method <code>incidence()</code><a class="anchor" aria-label="anchor" href="#method-incidence-"></a></h3>
 <p>Incidence matrix of the formal context</p><div class="section">
 <h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -720,16 +724,16 @@ extracted from the application of scales.</p>
 </div>
 <div class="section">
 <h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span>
-<span class="va">fc</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
+<span><span class="va">fc</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-plot"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-plot"></a><div class="section">
 <h3 id="method-plot-">Method <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code><a class="anchor" aria-label="anchor" href="#method-plot-"></a></h3>
 <p>Plot the formal context table</p><div class="section">
 <h4 id="usage-27">Usage<a class="anchor" aria-label="anchor" href="#usage-27"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>to_latex <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>to_latex <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -755,11 +759,11 @@ extracted from the application of scales.</p>
 <p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the formal context plot.</p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-FormalContext-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-28">Usage<a class="anchor" aria-label="anchor" href="#usage-28"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">FormalContext</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -777,9 +781,9 @@ extracted from the application of scales.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Build and print the formal context</span></span>
-<span class="r-in"><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc_planets</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Build and print the formal context</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc_planets</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FormalContext with 9 objects and 7 attributes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          small  medium  large  near  far  moon  no_moon  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Mercury   X                     X                 X     </span>
@@ -791,52 +795,52 @@ extracted from the application of scales.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Uranus           X                  X     X            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Neptune           X                  X     X            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Pluto   X                          X     X            </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Define a set of attributes</span></span>
-<span class="r-in"><span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>moon <span class="op">=</span> <span class="fl">1</span>, large <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Compute the closure of S</span></span>
-<span class="r-in"><span class="va">Sc</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="fu">closure</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Is Sc a closed set?</span></span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">is_closed</span><span class="op">(</span><span class="va">Sc</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Define a set of attributes</span></span></span>
+<span class="r-in"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>moon <span class="op">=</span> <span class="fl">1</span>, large <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Compute the closure of S</span></span></span>
+<span class="r-in"><span><span class="va">Sc</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="fu">closure</span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Is Sc a closed set?</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">is_closed</span><span class="op">(</span><span class="va">Sc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Clarify and reduce the formal context</span></span>
-<span class="r-in"><span class="va">fc2</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Find implications</span></span>
-<span class="r-in"><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Read a formal context from CSV</span></span>
-<span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"airlines.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Read a formal context from a CXT file</span></span>
-<span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"lives_in_water.cxt"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `FormalContext$scale`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `FormalContext$get_scales`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Clarify and reduce the formal context</span></span></span>
+<span class="r-in"><span><span class="va">fc2</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Find implications</span></span></span>
+<span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Read a formal context from CSV</span></span></span>
+<span class="r-in"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"airlines.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Read a formal context from a CXT file</span></span></span>
+<span class="r-in"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"lives_in_water.cxt"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `FormalContext$scale`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `FormalContext$get_scales`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $nitro</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FormalContext with 3 objects and 3 attributes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    nitro &gt;= 1  nitro &gt;= 2  nitro &gt;= 3  </span>
@@ -857,27 +861,27 @@ extracted from the application of scales.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    hex      X                    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  penta                   X       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `FormalContext$background_knowledge`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `FormalContext$background_knowledge`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>, <span class="st">"aromatic.csv"</span>, package <span class="op">=</span> <span class="st">"fcaR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"nitro"</span>, <span class="st">"ordinal"</span>, comparison <span class="op">=</span> <span class="va">`&gt;=`</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Implication set with 2 implications.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rule 1: {} -&gt; {nitro &gt;= 1}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rule 2: {nitro &gt;= 3} -&gt; {nitro &gt;= 2}</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `FormalContext$incidence`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fc</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `FormalContext$incidence`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va">FormalContext</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         small medium large near far moon no_moon</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mercury     1      0     0    1   0    0       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Venus       1      0     0    1   0    0       1</span>
@@ -902,7 +906,7 @@ extracted from the application of scales.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
