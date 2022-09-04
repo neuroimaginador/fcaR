@@ -233,17 +233,11 @@ O6
 </tbody>
 </table>
 
-Here, a value
-![x](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;x "x")
-in the intersection of a row and a column indicates that the object of
-the corresponding row possesses the attribute in the column in a degree
-of at least
-![x](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;x "x")
-(if
-![x = 0](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;x%20%3D%200 "x = 0"),
-the attribute is absent in the object, and if
-![x = 1](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;x%20%3D%201 "x = 1"),
-the attribute is fully present in the object).
+Here, a value $x$ in the intersection of a row and a column indicates
+that the object of the corresponding row possesses the attribute in the
+column in a degree of at least $x$ (if $x = 0$, the attribute is absent
+in the object, and if $x = 1$, the attribute is fully present in the
+object).
 
 We can build a FormalContext object:
 
@@ -334,8 +328,8 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
 #> --> Composition: from 12 to 12 in 0.001 secs.
-#> --> Generalization: from 12 to 12 in 0.002 secs.
-#> Batch took 0.004 secs.
+#> --> Generalization: from 12 to 12 in 0.001 secs.
+#> Batch took 0.005 secs.
 
 # Reduced set of implications
 fc$implications
@@ -364,6 +358,13 @@ the vignettes in this package.
 With respect to the CRAN version, the development version has the
 following changes.
 
+### fcaR 1.2.0
+
+Bugfixes:
+
+-   Fixes required by the new version of Matrix and the new use of HTML
+    Tidy in R 4.2.
+
 ### fcaR 1.1.1
 
 Enhancements:
@@ -381,7 +382,8 @@ New functionality:
 
 Bugfixes:
 
--   Fixed exporting to latex with special characters such as $, \_, etc.
+-   Fixed exporting to latex with special characters such as \$, \_,
+    etc.
 
 ## References
 
