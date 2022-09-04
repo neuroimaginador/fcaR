@@ -195,7 +195,7 @@
 </tr>
 </tbody>
 </table>
-<p>Here, a value <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;x" title="x" alt="x"> in the intersection of a row and a column indicates that the object of the corresponding row possesses the attribute in the column in a degree of at least <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;x" title="x" alt="x"> (if <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;x%20%3D%200" title="x = 0" alt="x = 0">, the attribute is absent in the object, and if <img src="https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&amp;space;%5Cbg_white&amp;space;x%20%3D%201" title="x = 1" alt="x = 1">, the attribute is fully present in the object).</p>
+<p>Here, a value <span class="math inline"><em>x</em></span> in the intersection of a row and a column indicates that the object of the corresponding row possesses the attribute in the column in a degree of at least <span class="math inline"><em>x</em></span> (if <span class="math inline"><em>x</em> = 0</span>, the attribute is absent in the object, and if <span class="math inline"><em>x</em> = 1</span>, the attribute is fully present in the object).</p>
 <p>We can build a FormalContext object:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span></span>
@@ -266,8 +266,8 @@
 <span>                                      <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Processing batch</span></span>
 <span><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
-<span><span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.002 secs.</span></span>
-<span><span class="co">#&gt; Batch took 0.004 secs.</span></span>
+<span><span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.001 secs.</span></span>
+<span><span class="co">#&gt; Batch took 0.005 secs.</span></span>
 <span></span>
 <span><span class="co"># Reduced set of implications</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
@@ -291,6 +291,12 @@
 <h2 id="changelog">Changelog<a class="anchor" aria-label="anchor" href="#changelog"></a>
 </h2>
 <p>With respect to the CRAN version, the development version has the following changes.</p>
+<div class="section level3">
+<h3 id="fcar-120">fcaR 1.2.0<a class="anchor" aria-label="anchor" href="#fcar-120"></a>
+</h3>
+<p>Bugfixes:</p>
+<ul><li>Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.</li></ul>
+</div>
 <div class="section level3">
 <h3 id="fcar-111">fcaR 1.1.1<a class="anchor" aria-label="anchor" href="#fcar-111"></a>
 </h3>
