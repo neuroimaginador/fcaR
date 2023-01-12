@@ -819,7 +819,19 @@ FormalContext <- R6::R6Class(
       new_att <- Z$get_attributes()[Matrix::which(Z$get_vector() > 0)]
 
       idx <- match(new_att, att)
-      my_I <- my_I[, idx]
+
+      # if (length(idx) == 1) {
+      #
+      #   my_I <- .extract_column(my_I, idx)
+      #
+      # } else {
+      #
+      #   my_I <- my_I[, idx]
+      #
+      # }
+
+      my_I <- matrix(my_I[, idx], ncol = length(idx))
+
       colnames(my_I) <- new_att
       rownames(my_I) <- fc2$objects
 
@@ -898,7 +910,7 @@ FormalContext <- R6::R6Class(
       if (private$is_many_valued) error_many_valued()
 
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
-      my_I <- unique(my_I)
+      # my_I <- unique(my_I)
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes

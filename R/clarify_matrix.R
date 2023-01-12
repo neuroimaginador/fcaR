@@ -25,7 +25,22 @@
   }
 
   my_I <- I
-  my_I <- my_I[, keep]
+  if (length(keep) == 1) {
+
+    my_I <- .extract_column(my_I, keep)
+
+  } else {
+
+    my_I <- my_I[, keep]
+
+  }
+
+  if (is.vector(my_I)) {
+
+    my_I <- Matrix::Matrix(my_I, nrow = 1, ncol = length(keep), sparse = TRUE)
+
+  }
+
   colnames(my_I) <- new_att
   rownames(my_I) <- rows
 

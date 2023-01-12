@@ -565,7 +565,9 @@ void compute_next_intent(SparseVector* candB,
                          int i,
                          int imax,
                          ListOf<NumericVector> grades_set,
-                         double* closure_count) {
+                         double* closure_count,
+                         StringVector attrs,
+                         bool verbose = false) {
 
 
   // SparseVector candB;
@@ -672,7 +674,9 @@ List next_closure_concepts(NumericMatrix I,
                         n_attributes,
                         n_attributes,
                         grades_set,
-                        &closure_count);
+                        &closure_count,
+                        attrs,
+                        true);
 
     // A2 = compute_next_intent(A, I,
     //                          n_attributes,
