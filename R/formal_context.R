@@ -438,8 +438,11 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$objects)) {
 
-        R <- compute_intent(S,
-                            Matrix::as.matrix(Matrix::t(self$I)))
+        R <- compute_intent(
+          S,
+          Matrix::as.matrix(Matrix::t(self$I)),
+          connection = private$connection,
+          name = private$logic)
 
         if (length(R@i) > 0) {
 
@@ -520,8 +523,11 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$attributes)) {
 
-        R <- compute_extent(S,
-                            Matrix::as.matrix(Matrix::t(self$I)))
+        R <- compute_extent(
+          S,
+          Matrix::as.matrix(Matrix::t(self$I)),
+          connection = private$connection,
+          name = private$logic)
 
         if (length(R@i) > 0) {
 
@@ -601,8 +607,11 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$attributes)) {
 
-        R <- compute_closure(S,
-                             Matrix::as.matrix(Matrix::t(self$I)))
+        R <- compute_closure(
+          S,
+          Matrix::as.matrix(Matrix::t(self$I)),
+          connection = private$connection,
+          name = private$logic)
 
         if (length(R@i) > 0) {
 
@@ -915,10 +924,13 @@ FormalContext <- R6::R6Class(
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
 
-      L <- next_closure_concepts(I = my_I,
-                                 grades_set = grades_set,
-                                 attrs = attrs,
-                                 verbose = verbose)
+      L <- next_closure_concepts(
+        I = my_I,
+        grades_set = grades_set,
+        attrs = attrs,
+        connection = private$connection,
+        name = private$logic,
+        verbose = verbose)
 
       # Since the previous function gives the list of intents of
       # the computed concepts, now we will compute the corresponding
@@ -940,11 +952,12 @@ FormalContext <- R6::R6Class(
       }
 
 
-      self$concepts <- ConceptLattice$new(extents = my_extents,
-                                          intents = my_intents,
-                                          objects = self$objects,
-                                          attributes = self$attributes,
-                                          I = self$I)
+      self$concepts <- ConceptLattice$new(
+        extents = my_extents,
+        intents = my_intents,
+        objects = self$objects,
+        attributes = self$attributes,
+        I = self$I)
 
       if (verbose) {
 
@@ -982,11 +995,14 @@ FormalContext <- R6::R6Class(
 
       # if (is.null(private$bg_implications)) {
 
-        L <- next_closure_implications(I = my_I,
-                                       grades_set = grades_set,
-                                       attrs = attrs,
-                                       save_concepts = save_concepts,
-                                       verbose = verbose)
+        L <- next_closure_implications(
+          I = my_I,
+          grades_set = grades_set,
+          attrs = attrs,
+          save_concepts = save_concepts,
+          connection = private$connection,
+          name = private$logic,
+          verbose = verbose)
 
       # }
 
@@ -1044,11 +1060,12 @@ FormalContext <- R6::R6Class(
 
       if (save_concepts) {
 
-        self$concepts <- ConceptLattice$new(extents = my_extents,
-                                            intents = my_intents,
-                                            objects = self$objects,
-                                            attributes = self$attributes,
-                                            I = self$I)
+        self$concepts <- ConceptLattice$new(
+          extents = my_extents,
+          intents = my_intents,
+          objects = self$objects,
+          attributes = self$attributes,
+          I = self$I)
 
       }
 
@@ -1061,15 +1078,17 @@ FormalContext <- R6::R6Class(
         my_LHS <- convert_to_sparse(L$LHS)
         my_RHS <- convert_to_sparse(L$RHS)
 
-        extracted_implications <- ImplicationSet$new(attributes = self$attributes,
-                                                     lhs = my_LHS,
-                                                     rhs = my_RHS,
-                                                     I = self$I)
+        extracted_implications <- ImplicationSet$new(
+          attributes = self$attributes,
+          lhs = my_LHS,
+          rhs = my_RHS,
+          I = self$I)
 
       } else {
 
-        extracted_implications <- ImplicationSet$new(attributes = self$attributes,
-                                                     I = self$I)
+        extracted_implications <- ImplicationSet$new(
+          attributes = self$attributes,
+          I = self$I)
 
       }
 
@@ -1521,12 +1540,71 @@ FormalContext <- R6::R6Class(
 
       plot_context(self$I, to_latex, ...)
 
+    },
+
+    #' @description
+    #' Sets the logic to use
+    #'
+    #'
+    #' @param name The name of the logic to use. Available: "Zadeh", "Lukasiewicz"
+    #'
+    #' @export
+    use_logic = function(name) {
+
+      if (name %in% c("Zadeh", "Lukasiewicz")) {
+
+        private$logic <- name
+
+      }
+
+    },
+
+    #' @description
+    #' Gets the logic used
+    #'
+    #' @return A string with the name of the logic.
+    #'
+    #' @export
+    get_logic = function() {
+
+      private$logic
+
+    },
+
+    #' @description
+    #' Sets the name of the Galois connection to use
+    #'
+    #' @param connection The name of the Galois connection. Available connections are "standard" (antitone), "benevolent1" and "benevolent2" (isotone)
+    #'
+    #' @export
+    use_connection = function(connection) {
+
+      if (connection %in% c("standard", "benevolent1", "benevolent2")) {
+
+        private$connection <- connection
+
+      }
+
+    },
+
+    #' @description
+    #' Gets the name of the Galois connection
+    #'
+    #' @return A string with the name of the Galois connection
+    #'
+    #' @export
+    get_connection = function() {
+
+      private$connection
+
     }
 
   ),
 
   private = list(
 
+    logic = "Zadeh",
+    connection = "standard",
     is_binary = FALSE,
     is_many_valued = FALSE,
     can_plot = TRUE,

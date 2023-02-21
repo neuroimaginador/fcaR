@@ -133,6 +133,10 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-FormalContext-to_latex}{\code{FormalContext$to_latex()}}
 \item \href{#method-FormalContext-incidence}{\code{FormalContext$incidence()}}
 \item \href{#method-FormalContext-plot}{\code{FormalContext$plot()}}
+\item \href{#method-FormalContext-use_logic}{\code{FormalContext$use_logic()}}
+\item \href{#method-FormalContext-get_logic}{\code{FormalContext$get_logic()}}
+\item \href{#method-FormalContext-use_connection}{\code{FormalContext$use_connection()}}
+\item \href{#method-FormalContext-get_connection}{\code{FormalContext$get_connection()}}
 \item \href{#method-FormalContext-clone}{\code{FormalContext$clone()}}
 }
 }
@@ -742,6 +746,66 @@ If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped b
 
 \subsection{Returns}{
 If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the \code{LaTeX} code to reproduce the formal context plot.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-use_logic"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-use_logic}{}}}
+\subsection{Method \code{use_logic()}}{
+Sets the logic to use
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$use_logic(name)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The name of the logic to use. Available: "Zadeh", "Lukasiewicz"}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-get_logic"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-get_logic}{}}}
+\subsection{Method \code{get_logic()}}{
+Gets the logic used
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_logic()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string with the name of the logic.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-use_connection"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-use_connection}{}}}
+\subsection{Method \code{use_connection()}}{
+Sets the name of the Galois connection to use
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$use_connection(connection)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{connection}}{The name of the Galois connection. Available connections are "standard" (antitone), "benevolent1" and "benevolent2" (isotone)}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-get_connection"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-get_connection}{}}}
+\subsection{Method \code{get_connection()}}{
+Gets the name of the Galois connection
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_connection()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string with the name of the Galois connection
 }
 }
 \if{html}{\out{<hr>}}

@@ -10,6 +10,54 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// tnorm_Zadeh
+double tnorm_Zadeh(double x, double y);
+RcppExport SEXP _fcaR_tnorm_Zadeh(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(tnorm_Zadeh(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// implication_Zadeh
+double implication_Zadeh(double x, double y);
+RcppExport SEXP _fcaR_implication_Zadeh(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(implication_Zadeh(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// tnorm_Lukasiewicz
+double tnorm_Lukasiewicz(double x, double y);
+RcppExport SEXP _fcaR_tnorm_Lukasiewicz(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(tnorm_Lukasiewicz(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// implication_Lukasiewicz
+double implication_Lukasiewicz(double x, double y);
+RcppExport SEXP _fcaR_implication_Lukasiewicz(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(implication_Lukasiewicz(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
 // print_matrix
 void print_matrix(NumericMatrix I);
 RcppExport SEXP _fcaR_print_matrix(SEXP ISEXP) {
@@ -45,69 +93,169 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// upright_p
+NumericMatrix upright_p(NumericMatrix r1, NumericMatrix r2, NumericMatrix p, String name);
+RcppExport SEXP _fcaR_upright_p(SEXP r1SEXP, SEXP r2SEXP, SEXP pSEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type r1(r1SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type r2(r2SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type p(pSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(upright_p(r1, r2, p, name));
+    return rcpp_result_gen;
+END_RCPP
+}
+// up_p
+NumericMatrix up_p(NumericMatrix r1, NumericMatrix r2, NumericMatrix p, String name);
+RcppExport SEXP _fcaR_up_p(SEXP r1SEXP, SEXP r2SEXP, SEXP pSEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type r1(r1SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type r2(r2SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type p(pSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(up_p(r1, r2, p, name));
+    return rcpp_result_gen;
+END_RCPP
+}
+// test_FP
+int test_FP();
+RcppExport SEXP _fcaR_test_FP() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(test_FP());
+    return rcpp_result_gen;
+END_RCPP
+}
 // next_closure_implications
-List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, bool save_concepts, bool verbose);
-RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
+List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, String connection, String name, bool save_concepts, bool verbose);
+RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
     Rcpp::traits::input_parameter< List >::type grades_set(grades_setSEXP);
     Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
     Rcpp::traits::input_parameter< bool >::type save_concepts(save_conceptsSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(next_closure_implications(I, grades_set, attrs, save_concepts, verbose));
+    rcpp_result_gen = Rcpp::wrap(next_closure_implications(I, grades_set, attrs, connection, name, save_concepts, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
 // next_closure_concepts
-List next_closure_concepts(NumericMatrix I, ListOf<NumericVector> grades_set, StringVector attrs, bool verbose, bool ret);
-RcppExport SEXP _fcaR_next_closure_concepts(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP verboseSEXP, SEXP retSEXP) {
+List next_closure_concepts(NumericMatrix I, ListOf<NumericVector> grades_set, StringVector attrs, String connection, String name, bool verbose, bool ret);
+RcppExport SEXP _fcaR_next_closure_concepts(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP, SEXP retSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
     Rcpp::traits::input_parameter< ListOf<NumericVector> >::type grades_set(grades_setSEXP);
     Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
     Rcpp::traits::input_parameter< bool >::type ret(retSEXP);
-    rcpp_result_gen = Rcpp::wrap(next_closure_concepts(I, grades_set, attrs, verbose, ret));
+    rcpp_result_gen = Rcpp::wrap(next_closure_concepts(I, grades_set, attrs, connection, name, verbose, ret));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_upright_arrow
+S4 compute_upright_arrow(S4 V, NumericMatrix I, String name);
+RcppExport SEXP _fcaR_compute_upright_arrow(SEXP VSEXP, SEXP ISEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_upright_arrow(V, I, name));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_downleft_arrow
+S4 compute_downleft_arrow(S4 V, NumericMatrix I, String name);
+RcppExport SEXP _fcaR_compute_downleft_arrow(SEXP VSEXP, SEXP ISEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_downleft_arrow(V, I, name));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_upleft_arrow
+S4 compute_upleft_arrow(S4 V, NumericMatrix I, String name);
+RcppExport SEXP _fcaR_compute_upleft_arrow(SEXP VSEXP, SEXP ISEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_upleft_arrow(V, I, name));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_downright_arrow
+S4 compute_downright_arrow(S4 V, NumericMatrix I, String name);
+RcppExport SEXP _fcaR_compute_downright_arrow(SEXP VSEXP, SEXP ISEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_downright_arrow(V, I, name));
     return rcpp_result_gen;
 END_RCPP
 }
 // compute_intent
-S4 compute_intent(S4 V, NumericMatrix I);
-RcppExport SEXP _fcaR_compute_intent(SEXP VSEXP, SEXP ISEXP) {
+S4 compute_intent(S4 V, NumericMatrix I, String connection, String name);
+RcppExport SEXP _fcaR_compute_intent(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_intent(V, I));
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_intent(V, I, connection, name));
     return rcpp_result_gen;
 END_RCPP
 }
 // compute_extent
-S4 compute_extent(S4 V, NumericMatrix I);
-RcppExport SEXP _fcaR_compute_extent(SEXP VSEXP, SEXP ISEXP) {
+S4 compute_extent(S4 V, NumericMatrix I, String connection, String name);
+RcppExport SEXP _fcaR_compute_extent(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_extent(V, I));
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_extent(V, I, connection, name));
     return rcpp_result_gen;
 END_RCPP
 }
 // compute_closure
-S4 compute_closure(S4 V, NumericMatrix I);
-RcppExport SEXP _fcaR_compute_closure(SEXP VSEXP, SEXP ISEXP) {
+S4 compute_closure(S4 V, NumericMatrix I, String connection, String name);
+RcppExport SEXP _fcaR_compute_closure(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_closure(V, I));
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_closure(V, I, connection, name));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -262,14 +410,25 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_fcaR_tnorm_Zadeh", (DL_FUNC) &_fcaR_tnorm_Zadeh, 2},
+    {"_fcaR_implication_Zadeh", (DL_FUNC) &_fcaR_implication_Zadeh, 2},
+    {"_fcaR_tnorm_Lukasiewicz", (DL_FUNC) &_fcaR_tnorm_Lukasiewicz, 2},
+    {"_fcaR_implication_Lukasiewicz", (DL_FUNC) &_fcaR_implication_Lukasiewicz, 2},
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
-    {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 5},
-    {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 5},
-    {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 2},
-    {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 2},
-    {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 2},
+    {"_fcaR_upright_p", (DL_FUNC) &_fcaR_upright_p, 4},
+    {"_fcaR_up_p", (DL_FUNC) &_fcaR_up_p, 4},
+    {"_fcaR_test_FP", (DL_FUNC) &_fcaR_test_FP, 0},
+    {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 7},
+    {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 7},
+    {"_fcaR_compute_upright_arrow", (DL_FUNC) &_fcaR_compute_upright_arrow, 3},
+    {"_fcaR_compute_downleft_arrow", (DL_FUNC) &_fcaR_compute_downleft_arrow, 3},
+    {"_fcaR_compute_upleft_arrow", (DL_FUNC) &_fcaR_compute_upleft_arrow, 3},
+    {"_fcaR_compute_downright_arrow", (DL_FUNC) &_fcaR_compute_downright_arrow, 3},
+    {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 4},
+    {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 4},
+    {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 4},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},

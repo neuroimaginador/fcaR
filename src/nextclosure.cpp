@@ -1,5 +1,6 @@
 #include <Rcpp.h>
 #include "set_operations_galois.h"
+#include "Logics.h"
 using namespace Rcpp;
 
 static void chkIntFn(void *dummy) {
@@ -291,8 +292,15 @@ void compute_next_closure(SparseVector A, int i,
 List next_closure_implications(NumericMatrix I,
                                List grades_set,
                                StringVector attrs,
+                               String connection = "standard",
+                               String name = "Zadeh",
                                bool save_concepts = true,
                                bool verbose = false) {
+
+  LogicOperator implication = get_implication(name);
+  LogicOperator tnorm = get_tnorm(name);
+  GaloisOperator intent_f = get_intent_function(connection);
+  GaloisOperator extent_f = get_extent_function(connection);
 
   int n_attributes = attrs.size();
   int n_objects = I.nrow();
@@ -320,11 +328,11 @@ List next_closure_implications(NumericMatrix I,
 
   SparseVector A;
   initVector(&A, n_attributes);
-  compute_closure(&A, empty, I.begin(), n_objects, n_attributes);
+  compute_closure(&A, empty, I.begin(), n_objects, n_attributes,
+                  extent_f, intent_f, tnorm, implication);
 
   SparseVector this_extent;
   initVector(&this_extent, n_objects);
-
 
   if (cardinal(A) > 0) {
 
@@ -349,8 +357,10 @@ List next_closure_implications(NumericMatrix I,
   if (save_concepts) {
 
     reinitVector(&this_extent);
-    compute_extent(&this_extent, A, I.begin(),
-                   n_objects, n_attributes);
+    extent_f(&this_extent, A, I.begin(),
+             n_objects, n_attributes,
+             tnorm,
+             implication);
     add_column(&concepts, A);
     add_column(&extents, this_extent);
 
@@ -404,7 +414,8 @@ List next_closure_implications(NumericMatrix I,
     }
 
     reinitVector(&B);
-    compute_closure(&B, A, I.begin(), n_objects, n_attributes);
+    compute_closure(&B, A, I.begin(), n_objects, n_attributes,
+                    extent_f, intent_f, tnorm, implication);
 
     setdifference(B, A, &rhs);
 
@@ -414,8 +425,9 @@ List next_closure_implications(NumericMatrix I,
       if (save_concepts) {
 
         reinitVector(&this_extent);
-        compute_extent(&this_extent, A, I.begin(),
-                       n_objects, n_attributes);
+        extent_f(&this_extent, A, I.begin(),
+                 n_objects, n_attributes,
+                 tnorm, implication);
 
         add_column(&concepts, A);
         add_column(&extents, this_extent);
@@ -455,7 +467,6 @@ List next_closure_implications(NumericMatrix I,
     }
 
     if (checkInterrupt()) { // user interrupted ...
-
 
       freeVector(&A);
       freeVector(&empty);
@@ -515,49 +526,49 @@ List next_closure_implications(NumericMatrix I,
 
 }
 
-SparseVector compute_next_intent(SparseVector A,
-                                 NumericMatrix I,
-                                 int i,
-                                 int imax,
-                                 ListOf<NumericVector> grades_set,
-                                 int* closure_count) {
-
-
-  SparseVector candB;
-  initVector(&candB, A.length);
-
-  int n_grades = grades_set.size();
-  SparseVector candB2;
-  initVector(&candB2, A.length);
-
-  for (int a_i = i - 1; a_i >= 0; a_i--) {
-
-    n_grades = grades_set[a_i].size();
-
-    for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
-
-      compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
-
-      candB2 = compute_closure(candB, I);
-      cloneVector(&candB, candB2);
-      freeVector(&candB2);
-      (*closure_count)++;
-
-      if (is_set_preceding(A, candB, a_i, grades_set[a_i][grade_idx])) {
-
-        return candB;
-
-      }
-
-    }
-
-  }
-
-  Rprintf("Something went wrong...\n");
-
-  return candB;
-
-}
+// SparseVector compute_next_intent(SparseVector A,
+//                                  NumericMatrix I,
+//                                  int i,
+//                                  int imax,
+//                                  ListOf<NumericVector> grades_set,
+//                                  int* closure_count) {
+//
+//
+//   SparseVector candB;
+//   initVector(&candB, A.length);
+//
+//   int n_grades = grades_set.size();
+//   SparseVector candB2;
+//   initVector(&candB2, A.length);
+//
+//   for (int a_i = i - 1; a_i >= 0; a_i--) {
+//
+//     n_grades = grades_set[a_i].size();
+//
+//     for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
+//
+//       compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
+//
+//       candB2 = compute_closure(candB, I);
+//       cloneVector(&candB, candB2);
+//       freeVector(&candB2);
+//       (*closure_count)++;
+//
+//       if (is_set_preceding(A, candB, a_i, grades_set[a_i][grade_idx])) {
+//
+//         return candB;
+//
+//       }
+//
+//     }
+//
+//   }
+//
+//   Rprintf("Something went wrong...\n");
+//
+//   return candB;
+//
+// }
 
 void compute_next_intent(SparseVector* candB,
                          SparseVector A,
@@ -567,6 +578,10 @@ void compute_next_intent(SparseVector* candB,
                          ListOf<NumericVector> grades_set,
                          double* closure_count,
                          StringVector attrs,
+                         GaloisOperator extent_f,
+                         GaloisOperator intent_f,
+                         LogicOperator tnorm,
+                         LogicOperator implication,
                          bool verbose = false) {
 
 
@@ -589,7 +604,8 @@ void compute_next_intent(SparseVector* candB,
       compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
 
       reinitVector(&candB2);
-      compute_closure(&candB2, *candB, I.begin(), n_objects, n_attributes);
+      compute_closure(&candB2, *candB, I.begin(), n_objects, n_attributes,
+                      extent_f, intent_f, tnorm, implication);
 
       (*closure_count) = (*closure_count) + 1;
 
@@ -616,6 +632,8 @@ void compute_next_intent(SparseVector* candB,
 List next_closure_concepts(NumericMatrix I,
                            ListOf<NumericVector> grades_set,
                            StringVector attrs,
+                           String connection = "standard",
+                           String name = "Zadeh",
                            bool verbose = false,
                            bool ret = true) {
 
@@ -624,6 +642,11 @@ List next_closure_concepts(NumericMatrix I,
   int n_grades = grades_set[0].size();
 
   double closure_count = 0.0;
+
+  LogicOperator implication = get_implication(name);
+  LogicOperator tnorm = get_tnorm(name);
+  GaloisOperator intent_f = get_intent_function(connection);
+  GaloisOperator extent_f = get_extent_function(connection);
 
   SparseVector concepts;
   SparseVector extents;
@@ -635,34 +658,36 @@ List next_closure_concepts(NumericMatrix I,
   initVector(&empty, n_attributes);
   initVector(&B, n_attributes);
 
-
-  SparseVector A = compute_closure(empty, I);
+  SparseVector A;
+  initVector(&A, n_attributes);
+  compute_closure(&A, empty, I.begin(), n_objects, n_attributes,
+                  extent_f, intent_f, tnorm, implication);
   SparseVector A2;
   initVector(&A2, n_attributes);
 
   closure_count = closure_count + 1;
 
-  compute_extent(&B, A, I.begin(), n_objects, n_attributes);
+  extent_f(&B, A, I.begin(), n_objects, n_attributes, tnorm, implication);
   add_column(&concepts, A);
   add_column(&extents, B);
 
-  // if (verbose) {
-  //
-  //   Rprintf("Added concept:\n");
-  //
-  //   if (cardinal(A) > 0) {
-  //
-  //     printVector(A, attrs);
-  //
-  //   } else {
-  //
-  //     Rprintf("{}");
-  //
-  //   }
-  //
-  //   Rprintf("\n");
-  //
-  // }
+  if (verbose) {
+
+    Rprintf("Added initial concept:\n");
+
+    if (cardinal(A) > 0) {
+
+      printVector(A, attrs);
+
+    } else {
+
+      Rprintf("{}");
+
+    }
+
+    Rprintf("\n");
+
+  }
 
   // double pctg, old_pctg = 0;
 
@@ -676,6 +701,8 @@ List next_closure_concepts(NumericMatrix I,
                         grades_set,
                         &closure_count,
                         attrs,
+                        extent_f, intent_f,
+                        tnorm, implication,
                         true);
 
     // A2 = compute_next_intent(A, I,
@@ -699,17 +726,17 @@ List next_closure_concepts(NumericMatrix I,
 
     // Concept
     add_column(&concepts, A2);
-    compute_extent(&B, A2, I.begin(), n_objects, n_attributes);
+    extent_f(&B, A2, I.begin(), n_objects, n_attributes, tnorm, implication);
     // B = compute_extent(A2, I);
     add_column(&extents, B);
 
-    // if (verbose) {
-    //
-    //   Rprintf("Added concept:\n");
-    //   printVector(A, attrs);
-    //   Rprintf("\n");
-    //
-    // }
+    if (verbose) {
+
+      Rprintf("Added concept:\n");
+      printVector(A, attrs);
+      Rprintf("\n");
+
+    }
 
     if (checkInterrupt()) { // user interrupted ...
 

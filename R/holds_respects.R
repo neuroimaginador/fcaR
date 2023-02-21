@@ -28,7 +28,10 @@
                      function(i) {
 
                        p <- .extract_column(premises, i)
-                       p <- compute_closure(p, I)
+                       p <- compute_closure(
+                         p, I,
+                         fc$get_connection(),
+                         fc$get_logic())
                        .subset(.extract_column(conclusions, i),
                                p)
 
