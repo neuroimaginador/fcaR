@@ -1546,12 +1546,13 @@ FormalContext <- R6::R6Class(
     #' Sets the logic to use
     #'
     #'
-    #' @param name The name of the logic to use. Available: "Zadeh", "Lukasiewicz"
+    #' @param name The name of the logic to use. To see the available names, run \code{available_logics()}.
     #'
     #' @export
-    use_logic = function(name) {
+    use_logic = function(name = available_logics()) {
 
-      if (name %in% c("Zadeh", "Lukasiewicz")) {
+      name <- match.arg(name)
+      if (name %in% available_logics()) {
 
         private$logic <- name
 

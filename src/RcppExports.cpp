@@ -58,6 +58,64 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// tnorm_Godel
+double tnorm_Godel(double x, double y);
+RcppExport SEXP _fcaR_tnorm_Godel(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(tnorm_Godel(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// implication_Godel
+double implication_Godel(double x, double y);
+RcppExport SEXP _fcaR_implication_Godel(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(implication_Godel(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// tnorm_Product
+double tnorm_Product(double x, double y);
+RcppExport SEXP _fcaR_tnorm_Product(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(tnorm_Product(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// implication_Product
+double implication_Product(double x, double y);
+RcppExport SEXP _fcaR_implication_Product(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(implication_Product(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// available_logics
+StringVector available_logics();
+RcppExport SEXP _fcaR_available_logics() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(available_logics());
+    return rcpp_result_gen;
+END_RCPP
+}
 // print_matrix
 void print_matrix(NumericMatrix I);
 RcppExport SEXP _fcaR_print_matrix(SEXP ISEXP) {
@@ -118,16 +176,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type p(pSEXP);
     Rcpp::traits::input_parameter< String >::type name(nameSEXP);
     rcpp_result_gen = Rcpp::wrap(up_p(r1, r2, p, name));
-    return rcpp_result_gen;
-END_RCPP
-}
-// test_FP
-int test_FP();
-RcppExport SEXP _fcaR_test_FP() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(test_FP());
     return rcpp_result_gen;
 END_RCPP
 }
@@ -414,12 +462,16 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_implication_Zadeh", (DL_FUNC) &_fcaR_implication_Zadeh, 2},
     {"_fcaR_tnorm_Lukasiewicz", (DL_FUNC) &_fcaR_tnorm_Lukasiewicz, 2},
     {"_fcaR_implication_Lukasiewicz", (DL_FUNC) &_fcaR_implication_Lukasiewicz, 2},
+    {"_fcaR_tnorm_Godel", (DL_FUNC) &_fcaR_tnorm_Godel, 2},
+    {"_fcaR_implication_Godel", (DL_FUNC) &_fcaR_implication_Godel, 2},
+    {"_fcaR_tnorm_Product", (DL_FUNC) &_fcaR_tnorm_Product, 2},
+    {"_fcaR_implication_Product", (DL_FUNC) &_fcaR_implication_Product, 2},
+    {"_fcaR_available_logics", (DL_FUNC) &_fcaR_available_logics, 0},
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
     {"_fcaR_upright_p", (DL_FUNC) &_fcaR_upright_p, 4},
     {"_fcaR_up_p", (DL_FUNC) &_fcaR_up_p, 4},
-    {"_fcaR_test_FP", (DL_FUNC) &_fcaR_test_FP, 0},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 7},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 7},
     {"_fcaR_compute_upright_arrow", (DL_FUNC) &_fcaR_compute_upright_arrow, 3},

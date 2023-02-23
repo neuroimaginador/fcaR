@@ -754,7 +754,7 @@ If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of 
 \subsection{Method \code{use_logic()}}{
 Sets the logic to use
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$use_logic(name)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$use_logic(name = available_logics())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

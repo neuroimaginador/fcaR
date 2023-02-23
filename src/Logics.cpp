@@ -34,23 +34,63 @@ double implication_Lukasiewicz(double x, double y) {
 
 }
 
+
+// Godel
+// [[Rcpp::export]]
+double tnorm_Godel(double x, double y) {
+
+  return (x <= y) ? x : y;
+
+}
+
+// [[Rcpp::export]]
+double implication_Godel(double x, double y) {
+
+  return (x <= y) ? 1 : y;
+
+}
+
+// Product
+// [[Rcpp::export]]
+double tnorm_Product(double x, double y) {
+
+  return x * y;
+
+}
+
+// [[Rcpp::export]]
+double implication_Product(double x, double y) {
+
+  return (x <= y) ? 1: y / x;
+
+}
+
 LogicOperator get_implication(String name) {
 
   if (name == "Zadeh") {
 
     return implication_Zadeh;
 
-  } else if (name == "Lukasiewicz") {
+  }
+  if (name == "Lukasiewicz") {
 
     return implication_Lukasiewicz;
 
-  } else {
+  }
 
-    // error handling
-    return NULL;
+  if (name == "Godel") {
+
+    return implication_Godel;
 
   }
 
+  if (name == "Product") {
+
+    return implication_Product;
+
+  }
+
+  return NULL;
 }
 
 LogicOperator get_tnorm(String name) {
@@ -59,15 +99,39 @@ LogicOperator get_tnorm(String name) {
 
     return tnorm_Zadeh;
 
-  } else if (name == "Lukasiewicz") {
+  }
+  if (name == "Lukasiewicz") {
 
     return tnorm_Lukasiewicz;
 
-  } else {
+  }
 
-    // error handling
-    return NULL;
+  if (name == "Godel") {
+
+    return tnorm_Godel;
 
   }
+
+  if (name == "Product") {
+
+    return tnorm_Product;
+
+  }
+
+  // error handling
+  return NULL;
+
+}
+
+// [[Rcpp::export]]
+StringVector available_logics() {
+
+  StringVector res(4);
+  res[0] = "Lukasiewicz";
+  res[1] = "Zadeh";
+  res[2] = "Godel";
+  res[3] = "Product";
+
+  return res;
 
 }

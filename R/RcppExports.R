@@ -17,6 +17,26 @@ implication_Lukasiewicz <- function(x, y) {
     .Call(`_fcaR_implication_Lukasiewicz`, x, y)
 }
 
+tnorm_Godel <- function(x, y) {
+    .Call(`_fcaR_tnorm_Godel`, x, y)
+}
+
+implication_Godel <- function(x, y) {
+    .Call(`_fcaR_implication_Godel`, x, y)
+}
+
+tnorm_Product <- function(x, y) {
+    .Call(`_fcaR_tnorm_Product`, x, y)
+}
+
+implication_Product <- function(x, y) {
+    .Call(`_fcaR_implication_Product`, x, y)
+}
+
+available_logics <- function() {
+    .Call(`_fcaR_available_logics`)
+}
+
 print_matrix <- function(I) {
     invisible(.Call(`_fcaR_print_matrix`, I))
 }
@@ -35,10 +55,6 @@ upright_p <- function(r1, r2, p, name) {
 
 up_p <- function(r1, r2, p, name) {
     .Call(`_fcaR_up_p`, r1, r2, p, name)
-}
-
-test_FP <- function() {
-    .Call(`_fcaR_test_FP`)
 }
 
 next_closure_implications <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", save_concepts = TRUE, verbose = FALSE) {
