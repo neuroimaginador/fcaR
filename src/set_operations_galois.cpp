@@ -23,10 +23,14 @@ void compute_intent (SparseVector *R,
 
       double val = 0;
 
-      if (V.i.array[i] == r) {
+      if (i < V.i.used) {
 
-        val = V.x.array[i];
-        i++;
+        if (V.i.array[i] == r) {
+
+          val = V.x.array[i];
+          i++;
+
+        }
 
       }
 
@@ -95,10 +99,14 @@ void compute_extent (SparseVector *R,
 
       double val = 0;
 
-      if (V.i.array[i] == c) {
+      if (i < V.i.used) {
 
-        val = V.x.array[i];
-        i++;
+        if (V.i.array[i] == c) {
+
+          val = V.x.array[i];
+          i++;
+
+        }
 
       }
 
@@ -166,10 +174,14 @@ void compute_upright_arrow (SparseVector *R,
 
       double val = 0;
 
-      if (V.i.array[i] == r) {
+      if (i < V.i.used) {
 
-        val = V.x.array[i];
-        i++;
+        if (V.i.array[i] == r) {
+
+          val = V.x.array[i];
+          i++;
+
+        }
 
       }
 
@@ -237,12 +249,17 @@ void compute_downleft_arrow (SparseVector *R,
 
       double val = 0;
 
-      if (V.i.array[i] == c) {
+      if (i < V.i.used) {
 
-        val = V.x.array[i];
-        i++;
+        if (V.i.array[i] == c) {
+
+          val = V.x.array[i];
+          i++;
+
+        }
 
       }
+
       double tmp = implication(I[c * n_objects + r], val);
 
       if (tmp < ms) ms = tmp;
@@ -311,10 +328,14 @@ void compute_upleft_arrow (SparseVector *R,
 
       double val = 0;
 
-      if (V.i.array[i] == r) {
+      if (i < V.i.used) {
 
-        val = V.x.array[i];
-        i++;
+        if (V.i.array[i] == r) {
+
+          val = V.x.array[i];
+          i++;
+
+        }
 
       }
 
@@ -388,12 +409,17 @@ void compute_downright_arrow (SparseVector *R,
 
       double val = 0;
 
-      if (V.i.array[i] == c) {
+      if (i < V.i.used) {
 
-        val = V.x.array[i];
-        i++;
+        if (V.i.array[i] == c) {
+
+          val = V.x.array[i];
+          i++;
+
+        }
 
       }
+
       double tmp = tnorm(I[c * n_objects + r], val);
 
       if (tmp > ms) ms = tmp;

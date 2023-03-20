@@ -590,6 +590,7 @@ void compute_next_intent(SparseVector* candB,
   int n_objects = I.nrow();
   int n_attributes = I.ncol();
 
+  // Rcout << "** Compute next intent" << std::endl;
 
   int n_grades = grades_set.size();
   SparseVector candB2;
@@ -602,10 +603,17 @@ void compute_next_intent(SparseVector* candB,
     for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
 
       compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
+      // Rcout << "candB" << std::endl;
+      // printArray(candB->i);
+      // printArray(candB->x);
+
 
       reinitVector(&candB2);
       compute_closure(&candB2, *candB, I.begin(), n_objects, n_attributes,
                       extent_f, intent_f, tnorm, implication);
+      // Rcout << "candB2" << std::endl;
+      // printArray(candB2.i);
+      // printArray(candB2.x);
 
       (*closure_count) = (*closure_count) + 1;
 
@@ -643,6 +651,8 @@ List next_closure_concepts(NumericMatrix I,
 
   double closure_count = 0.0;
 
+  // Rcout << "Entramos" << std::endl;
+
   LogicOperator implication = get_implication(name);
   LogicOperator tnorm = get_tnorm(name);
   GaloisOperator intent_f = get_intent_function(connection);
@@ -677,7 +687,7 @@ List next_closure_concepts(NumericMatrix I,
 
     if (cardinal(A) > 0) {
 
-      printVector(A, attrs);
+      //printVector(A, attrs);
 
     } else {
 
@@ -693,6 +703,7 @@ List next_closure_concepts(NumericMatrix I,
 
   while ((cardinal(A) < n_attributes)){
 
+    // Rcout << "Starting iterations: " << std::endl;
     reinitVector(&A2);
     reinitVector(&B);
     compute_next_intent(&A2, A, I,
@@ -733,7 +744,10 @@ List next_closure_concepts(NumericMatrix I,
     if (verbose) {
 
       Rprintf("Added concept:\n");
-      printVector(A, attrs);
+      // Rcout << A2.i.used << std::endl;
+      printArray(A2.i);
+      printArray(A2.x);
+      //printVector(A2, attrs);
       Rprintf("\n");
 
     }
