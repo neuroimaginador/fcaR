@@ -1516,6 +1516,111 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
+    #' Subcontext of the formal context
+    #'
+    #' @param objects (character array) Name of the objects to
+    #' keep.
+    #' @param attributes (character array) Names of the attributes
+    #' to keep.
+    #'
+    #' @details
+    #' A warning will be issued if any of the names is not present
+    #' in the list of objects or attributes of the formal context.
+    #'
+    #' If \code{objects} or \code{attributes} is empty, then it is
+    #' assumed to represent the whole set of objects or attributes
+    #' of the original formal context.
+    #'
+    #' @return Another \code{FormalContext} that is a subcontext
+    #' of the original one, with only the objects and attributes
+    #' selected.
+    #' @export
+    #'
+    #' @examples
+    #' fc <- FormalContext$new(planets)
+    #' fc$subcontext(attributes = c("moon", "no_moon"))
+    subcontext = function(objects,
+                          attributes) {
+
+      if (missing(objects)) objects <- self$objects
+      if (missing(attributes)) attributes <- self$attributes
+
+      if (is.numeric(objects)) {
+
+        final_objects <- self$objects[objects[objects > 0 & objects < length(self$objects)]]
+
+      } else {
+
+        final_objects <- intersect(objects, self$objects)
+
+      }
+
+      if (is.numeric(attributes)) {
+
+        final_attributes <- self$attributes[attributes[attributes > 0 & attributes < length(self$attributes)]]
+
+      } else {
+
+        final_attributes <- intersect(attributes, self$attributes)
+
+      }
+
+      if (length(objects) > length(final_objects)) {
+
+        warning("An object you provided was not found in this context.", call. = FALSE, immediate. = TRUE)
+
+      }
+
+      if (length(attributes) > length(final_attributes)) {
+
+        warning("An attribute you provided was not found in this context.", call. = FALSE, immediate. = TRUE)
+
+      }
+
+      if (length(objects) == 0) objects <- self$objects
+      if (length(attributes) == 0) attributes <- self$attributes
+
+      I <- self$incidence()[final_objects, final_attributes]
+      I <- matrix(I, nrow = length(final_objects),
+                  ncol = length(final_attributes))
+      rownames(I) <- final_objects
+      colnames(I) <- final_attributes
+
+      return(FormalContext$new(I))
+
+    },
+
+    #' @description
+    #' Subcontext of the formal context
+    #'
+    #' @param objects (character array) Name of the objects to
+    #' keep.
+    #' @param attributes (character array) Names of the attributes
+    #' to keep.
+    #'
+    #' @details
+    #' A warning will be issued if any of the names is not present
+    #' in the list of objects or attributes of the formal context.
+    #'
+    #' If \code{objects} or \code{attributes} is empty, then it is
+    #' assumed to represent the whole set of objects or attributes
+    #' of the original formal context.
+    #'
+    #' @return Another \code{FormalContext} that is a subcontext
+    #' of the original one, with only the objects and attributes
+    #' selected.
+    #' @export
+    #'
+    #' @examples
+    #' fc <- FormalContext$new(planets)
+    #' fc[, c("moon", "no_moon")]
+    `[` = function(objects, attributes) {
+
+      self$subcontext(objects, attributes)
+
+    },
+
+    #' @description
     #' Plot the formal context table
     #'
     #' @param to_latex      (logical) If \code{TRUE}, export the plot as a \code{tikzpicture} environment that can be included in a \code{LaTeX} file.

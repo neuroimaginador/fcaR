@@ -73,6 +73,20 @@ fc$background_knowledge()
 
 fc <- FormalContext$new(planets)
 fc$incidence()
+
+## ------------------------------------------------
+## Method `FormalContext$subcontext`
+## ------------------------------------------------
+
+fc <- FormalContext$new(planets)
+fc$subcontext(attributes = c("moon", "no_moon"))
+
+## ------------------------------------------------
+## Method `FormalContext$[`
+## ------------------------------------------------
+
+fc <- FormalContext$new(planets)
+fc[, c("moon", "no_moon")]
 }
 \references{
 Guigues J, Duquenne V (1986). “Familles minimales d'implications informatives résultant d'un tableau de données binaires.” \emph{Mathématiques et Sciences humaines}, \emph{95}, 5-18.
@@ -132,6 +146,8 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-FormalContext-print}{\code{FormalContext$print()}}
 \item \href{#method-FormalContext-to_latex}{\code{FormalContext$to_latex()}}
 \item \href{#method-FormalContext-incidence}{\code{FormalContext$incidence()}}
+\item \href{#method-FormalContext-subcontext}{\code{FormalContext$subcontext()}}
+\item \href{#method-FormalContext-[}{\code{FormalContext$[()}}
 \item \href{#method-FormalContext-plot}{\code{FormalContext$plot()}}
 \item \href{#method-FormalContext-use_logic}{\code{FormalContext$use_logic()}}
 \item \href{#method-FormalContext-get_logic}{\code{FormalContext$get_logic()}}
@@ -673,12 +689,7 @@ Prints information regarding the formal context.
 \subsection{Method \code{to_latex()}}{
 Write the context in LaTeX format
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex(
-  table = TRUE,
-  label = "",
-  caption = "",
-  fraction = c("none", "frac", "dfrac", "sfrac")
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_latex(table = TRUE, label = "", caption = "")}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -714,6 +725,94 @@ The incidence matrix of the formal context
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{fc <- FormalContext$new(planets)
 fc$incidence()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-subcontext"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-subcontext}{}}}
+\subsection{Method \code{subcontext()}}{
+Subcontext of the formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$subcontext(objects, attributes)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{objects}}{(character array) Name of the objects to
+keep.}
+
+\item{\code{attributes}}{(character array) Names of the attributes
+to keep.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+A warning will be issued if any of the names is not present
+in the list of objects or attributes of the formal context.
+
+If \code{objects} or \code{attributes} is empty, then it is
+assumed to represent the whole set of objects or attributes
+of the original formal context.
+}
+
+\subsection{Returns}{
+Another \code{FormalContext} that is a subcontext
+of the original one, with only the objects and attributes
+selected.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{fc <- FormalContext$new(planets)
+fc$subcontext(attributes = c("moon", "no_moon"))
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-["></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-[}{}}}
+\subsection{Method \code{[()}}{
+Subcontext of the formal context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$[(objects, attributes)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{objects}}{(character array) Name of the objects to
+keep.}
+
+\item{\code{attributes}}{(character array) Names of the attributes
+to keep.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+A warning will be issued if any of the names is not present
+in the list of objects or attributes of the formal context.
+
+If \code{objects} or \code{attributes} is empty, then it is
+assumed to represent the whole set of objects or attributes
+of the original formal context.
+}
+
+\subsection{Returns}{
+Another \code{FormalContext} that is a subcontext
+of the original one, with only the objects and attributes
+selected.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{fc <- FormalContext$new(planets)
+fc[, c("moon", "no_moon")]
 }
 \if{html}{\out{</div>}}
 
@@ -760,7 +859,7 @@ Sets the logic to use
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{The name of the logic to use. Available: "Zadeh", "Lukasiewicz"}
+\item{\code{name}}{The name of the logic to use. To see the available names, run \code{available_logics()}.}
 }
 \if{html}{\out{</div>}}
 }

@@ -7,6 +7,9 @@
 #' @export
 #' @noRd
 `[.Set` <- function(x, ...) x$`[`(...)
+#' @export
+#' @noRd
+`[.FormalContext` <- function(x, ...) x$`[`(...)
 
 #' @export
 #' @method as.list ConceptSet
