@@ -9,7 +9,10 @@ MYPKGOPTIONS <- settings::options_manager(
   use_mathrm = TRUE,
   use_ensuremath = FALSE,
   use_tabulary = FALSE,
+  escape_ = TRUE,
+  latex_fraction = "none",
   .allowed = list(
+    latex_fraction = settings::inlist("none", "frac", "dfrac", "sfrac", "nicefrac"),
     logic = settings::inlist("Zadeh", "Lukasiewicz"),
     Galois_connection = settings::inlist("standard", "benevolent1", "benevolent2"),
     latex_size = settings::inlist("tiny",

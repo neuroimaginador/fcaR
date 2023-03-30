@@ -179,7 +179,10 @@ lattice_plot <- function(extents, intents,
       "\\setlength\\PreviewBorder{0pt}",
       "\\usepackage{amssymb}",
       "\\usepackage{amsmath}",
-      ""
+      "\\usepackage{booktabs}",
+      "\\usepackage{xfrac}",
+      "\\usepackage{xcolor}",
+      "\\newcommand{\\el}[2]{\\ensuremath{^{#2\\!\\!}/{#1}}}"
     ))
 
     args[names(dots)] <- dots[names(dots)]

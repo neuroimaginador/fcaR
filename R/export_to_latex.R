@@ -37,6 +37,20 @@ set_to_latex <- function(S, attributes) {
 #' @importFrom glue glue
 element_to_latex <- function(nm, val) {
 
+
+  first_time_message(
+    option = "fcaR.el_message",
+    txt = paste0(
+      "Note: You must include the following commands in you LaTeX document:\n",
+      "\\usepackage{amsmath}",
+      "\\newcommand{\\el}[2]{\\ensuremath{^{#2\\!\\!}/{#1}}}"
+    ))
+
+  if (!fcaR_options("escape_")) {
+
+    fcaR_options("use_mathrm" = FALSE)
+  }
+
   if (fcaR_options("use_mathrm")) {
 
     nm <- glue::glue("\\mathrm{{{nm}}}")
@@ -50,7 +64,8 @@ element_to_latex <- function(nm, val) {
   } else {
 
     str <- glue::glue(
-      "{^{[val]}}\\!/[nm]",
+      "\\el{[nm]}{[val]}",
+      # "{^{[val]}}\\!/[nm]",
       .open = "[", .close = "]"
     )
 

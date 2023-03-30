@@ -1423,16 +1423,16 @@ FormalContext <- R6::R6Class(
     #' A table environment in LaTeX.
     #'
     #' @export
+    #' @importFrom glue glue
     #'
     to_latex = function(table = TRUE,
                         label = "",
-                        caption = "",
-                        fraction = c("none", "frac", "dfrac", "sfrac")) {
+                        caption = "") {
 
       # TODO: export a many-valued context to LaTeX
       if (private$is_many_valued) error_many_valued()
 
-      fraction <- match.arg(fraction)
+      fraction <- fcaR_options("latex_fraction")
 
       I <- Matrix::as.matrix(Matrix::t(self$I))
 
@@ -1460,21 +1460,26 @@ FormalContext <- R6::R6Class(
 
       }
 
-      str <- context_to_latex(I,
-                              objects = self$objects,
-                              attributes = self$attributes)
+      str <- context_to_latex(
+        I,
+        objects = self$objects,
+        attributes = self$attributes)
 
       if (table) {
 
+        my_caption <- glue::glue(
+          "\\caption{{{caption}}}\\label{{{label}}}"
+        )
+        # my_caption <- paste0("\\caption{,
+        #                      \\label{",
+        #                      label, "}",
+        #                      caption, "}")
+
         str <- c("\\begin{table}",
+                 my_caption,
                  "\\centering",
-                 str)
-
-        my_caption <- paste0("\\caption{\\label{",
-                             label, "}",
-                             caption, "}")
-
-        str <- c(str, my_caption, "\\end{table}")
+                 str,
+                 "\\end{table}")
 
       }
 
