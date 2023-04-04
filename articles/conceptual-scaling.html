@@ -101,9 +101,9 @@
     
     
 <pre><code><span><span class="co">#&gt; Warning in doTryCatch(return(expr), name, parentenv, handler): unable to load shared object '/Library/Frameworks/R.framework/Resources/modules//R_X11.so':</span></span>
-<span><span class="co">#&gt;   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libSM.6.dylib</span></span>
-<span><span class="co">#&gt;   Referenced from: /Library/Frameworks/R.framework/Versions/4.2/Resources/modules/R_X11.so</span></span>
-<span><span class="co">#&gt;   Reason: image not found</span></span></code></pre>
+<span><span class="co">#&gt;   dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 0x0006): Library not loaded: '/opt/X11/lib/libSM.6.dylib'</span></span>
+<span><span class="co">#&gt;   Referenced from: '/Library/Frameworks/R.framework/Versions/4.2/Resources/modules/R_X11.so'</span></span>
+<span><span class="co">#&gt;   Reason: tried: '/opt/X11/lib/libSM.6.dylib' (no such file), '/Library/Frameworks/R.framework/Resources/lib/libSM.6.dylib' (no such file), '/Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.362-9/x64/Contents/Home//lib/server/libSM.6.dylib' (no such file)</span></span></code></pre>
 <div class="section level2">
 <h2 id="introduction-and-motivation">Introduction and Motivation<a class="anchor" aria-label="anchor" href="#introduction-and-motivation"></a>
 </h2>
@@ -1724,16 +1724,15 @@ Score is A
 <span><span class="va">fc</span></span>
 <span><span class="co">#&gt; FormalContext with 5 objects and 10 attributes.</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 10</span></span></span>
-<span><span class="co">#&gt;   Grant …¹ Grant…² Inter…³ Inter…⁴ Inter…⁵ Inter…⁶ Inter…⁷ Agree…⁸ Attit…⁹ Score</span></span>
-<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>        0       1       0       0       1       1       1 agree   working   2.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>        0       1       0       0       0       0       1 strong… hard w…   4.1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>        1       0       0       1       1       1       1 neithe… working   3.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>        0       1       0       0       0       1       1 agree   working   4  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>        1       0       1       1       1       1       1 disagr… lazy      3.6</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​`Grant = no`, ²​`Grant = yes`,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ³​`Intern &lt;= 4`, ⁴​`Intern &lt;= 5`, ⁵​`Intern &lt;= 7`, ⁶​`Intern &lt;= 8`,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ⁷​`Intern &lt;= 10`, ⁸​Agreement, ⁹​Attitude</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   `Grant = no` `Grant = yes` `Intern &lt;= 4` `Intern &lt;= 5` `Intern &lt;= 7`</span></span>
+<span><span class="co">#&gt;          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>            0             1             0             0             1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>            0             1             0             0             0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>            1             0             0             1             1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>            0             1             0             0             0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>            1             0             1             1             1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: `Intern &lt;= 8` &lt;dbl&gt;, `Intern &lt;= 10` &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Agreement &lt;chr&gt;, Attitude &lt;chr&gt;, Score &lt;dbl&gt;</span></span></span></code></pre></div>
 <p>Now, the <code>Agreement</code> attribute can be scaled using and interordinal scaling:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Agreement"</span>, </span>
@@ -2493,7 +2492,7 @@ Thiophene
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -450,20 +450,20 @@
 <span class="r-in"><span><span class="co"># Find join- and meet- irreducible elements</span></span></span>
 <span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of 5 concepts:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Earth}, {large, far, moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Mars}, {medium, far, moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: ({Jupiter}, {small, far, moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: ({Mercury}, {small, near, no_moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: ({Venus}, {small, near, moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: ({Pluto}, {small, far, moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: ({Mercury, Venus}, {small, near, no_moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: ({Earth, Mars}, {small, near, moon})</span>
 <span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of 7 concepts:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Venus, Earth, Mars, Jupiter}, {moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Earth, Mars, Jupiter}, {far, moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: ({Earth}, {large, far, moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4: ({Mars}, {medium, far, moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5: ({Mercury, Venus, Jupiter}, {small})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6: ({Mercury, Venus}, {small, near})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7: ({Mercury}, {small, near, no_moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: ({Jupiter, Saturn}, {large, far, moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: ({Uranus, Neptune}, {medium, far, moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: ({Mercury, Venus, Earth, Mars, Pluto}, {small})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: ({Mercury, Venus, Earth, Mars}, {small, near})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7: ({Mercury, Venus}, {small, near, no_moon})</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get concept support</span></span></span>
 <span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -478,7 +478,7 @@
 <span class="r-in"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">top</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ({Mercury, Venus, Earth, Mars, Jupiter}, {})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
@@ -504,7 +504,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

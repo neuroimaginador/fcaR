@@ -593,21 +593,20 @@ O6
 <p>Also, we can export the formal context as a LaTeX table:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; \begin{table} \centering \begin{tabular}{lccccccc}</span></span>
-<span><span class="co">#&gt; \toprule</span></span>
-<span><span class="co">#&gt;  &amp; small &amp; medium &amp; large &amp; near &amp; far &amp; moon &amp; no\_moon\\</span></span>
-<span><span class="co">#&gt; \midrule</span></span>
-<span><span class="co">#&gt; Mercury &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp;   &amp;   &amp; $\times$\\ </span></span>
-<span><span class="co">#&gt; Venus &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp;   &amp;   &amp; $\times$\\ </span></span>
-<span><span class="co">#&gt; Earth &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp;   &amp; $\times$ &amp;  \\ </span></span>
-<span><span class="co">#&gt; Mars &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp;   &amp; $\times$ &amp;  \\ </span></span>
-<span><span class="co">#&gt; Jupiter &amp;   &amp;   &amp; $\times$ &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\ </span></span>
-<span><span class="co">#&gt; Saturn &amp;   &amp;   &amp; $\times$ &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\ </span></span>
-<span><span class="co">#&gt; Uranus &amp;   &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\ </span></span>
-<span><span class="co">#&gt; Neptune &amp;   &amp; $\times$ &amp;   &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\ </span></span>
-<span><span class="co">#&gt; Pluto &amp; $\times$ &amp;   &amp;   &amp;   &amp; $\times$ &amp; $\times$ &amp;  \\</span></span>
-<span><span class="co">#&gt; \bottomrule</span></span>
-<span><span class="co">#&gt; \end{tabular} \caption{\label{}} \end{table}</span></span></code></pre></div>
+<span><span class="co">#&gt; \begin{table} \caption{}\label{} \centering \begin{tabular}{r|ccccccc}</span></span>
+<span><span class="co">#&gt;   &amp; $small$ &amp; $medium$ &amp; $large$ &amp; $near$ &amp; $far$ &amp; $moon$ &amp; $no\_moon$\\ </span></span>
+<span><span class="co">#&gt;  \hline </span></span>
+<span><span class="co">#&gt;  $Mercury$ &amp; $\times$ &amp;  &amp;  &amp; $\times$ &amp;  &amp;  &amp; $\times$ \\</span></span>
+<span><span class="co">#&gt; $Venus$ &amp; $\times$ &amp;  &amp;  &amp; $\times$ &amp;  &amp;  &amp; $\times$ \\</span></span>
+<span><span class="co">#&gt; $Earth$ &amp; $\times$ &amp;  &amp;  &amp; $\times$ &amp;  &amp; $\times$ &amp;  \\</span></span>
+<span><span class="co">#&gt; $Mars$ &amp; $\times$ &amp;  &amp;  &amp; $\times$ &amp;  &amp; $\times$ &amp;  \\</span></span>
+<span><span class="co">#&gt; $Jupiter$ &amp;  &amp;  &amp; $\times$ &amp;  &amp; $\times$ &amp; $\times$ &amp;  \\</span></span>
+<span><span class="co">#&gt; $Saturn$ &amp;  &amp;  &amp; $\times$ &amp;  &amp; $\times$ &amp; $\times$ &amp;  \\</span></span>
+<span><span class="co">#&gt; $Uranus$ &amp;  &amp; $\times$ &amp;  &amp;  &amp; $\times$ &amp; $\times$ &amp;  \\</span></span>
+<span><span class="co">#&gt; $Neptune$ &amp;  &amp; $\times$ &amp;  &amp;  &amp; $\times$ &amp; $\times$ &amp;  \\</span></span>
+<span><span class="co">#&gt; $Pluto$ &amp; $\times$ &amp;  &amp;  &amp;  &amp; $\times$ &amp; $\times$ &amp;  </span></span>
+<span><span class="co">#&gt;  \end{tabular}</span></span>
+<span><span class="co">#&gt;  \end{table}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="importing-a-formal-context-from-file">Importing a Formal Context from File<a class="anchor" aria-label="anchor" href="#importing-a-formal-context-from-file"></a>
@@ -845,6 +844,8 @@ O6
 <span></span>
 <span><span class="co"># LaTeX</span></span>
 <span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Note: You must include the following commands in you LaTeX document:</span></span>
+<span><span class="co">#&gt; \usepackage{amsmath}\newcommand{\el}[2]{\ensuremath{^{#2\!\!}/{#1}}}</span></span>
 <span><span class="co">#&gt; \begin{longtable*}{lll}</span></span>
 <span><span class="co">#&gt; 1: &amp;$\left(\,\left\{\mathrm{Mercury}, \mathrm{Venus}, \mathrm{Earth}, \mathrm{Mars}, \mathrm{Jupiter}\right\},\right.$&amp;$\left.\ensuremath{\varnothing}\,\right)$\\</span></span>
 <span><span class="co">#&gt; 2: &amp;$\left(\,\left\{\mathrm{Venus}, \mathrm{Earth}, \mathrm{Mars}, \mathrm{Jupiter}\right\},\right.$&amp;$\left.\left\{\mathrm{moon}\right\}\,\right)$\\</span></span>
@@ -995,7 +996,7 @@ O6
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
