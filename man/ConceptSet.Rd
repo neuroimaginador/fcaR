@@ -30,7 +30,7 @@ fc_planets$concepts$meet_irreducibles()
 \item \href{#method-ConceptSet-print}{\code{ConceptSet$print()}}
 \item \href{#method-ConceptSet-to_latex}{\code{ConceptSet$to_latex()}}
 \item \href{#method-ConceptSet-to_list}{\code{ConceptSet$to_list()}}
-\item \href{#method-ConceptSet-bracket}{\code{ConceptSet$[()}}
+\item \href{#method-ConceptSet-[}{\code{ConceptSet$[()}}
 \item \href{#method-ConceptSet-sub}{\code{ConceptSet$sub()}}
 \item \href{#method-ConceptSet-support}{\code{ConceptSet$support()}}
 \item \href{#method-ConceptSet-clone}{\code{ConceptSet$clone()}}
@@ -169,8 +169,8 @@ A list of concepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ConceptSet-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-ConceptSet-bracket}{}}}
+\if{html}{\out{<a id="method-ConceptSet-["></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-[}{}}}
 \subsection{Method \code{[()}}{
 Subsets a ConceptSet
 \subsection{Usage}{

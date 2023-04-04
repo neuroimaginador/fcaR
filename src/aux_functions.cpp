@@ -138,4 +138,3 @@ void intersect(SparseVector *A, SparseVector B) {
     A->p.array[1] = to_write;
 
 }
-

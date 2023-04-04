@@ -224,6 +224,45 @@ void printVector(SparseVector A, Rcpp::StringVector attrs) {
 
 }
 
+
+// void printVector(SparseVector A) {
+//
+//   Rprintf("{");
+//
+//   for (size_t i = 0; i < A.i.used - 1; i++) {
+//
+//     if (A.x.array[i] < 1) {
+//
+//       Rcout << attrs[A.i.array[i]] << " [" << A.x.array[i] << "], ";
+//
+//     } else {
+//
+//       Rcout << attrs[A.i.array[i]] << ", ";
+//
+//     }
+//
+//   }
+//
+//   int end = A.i.used - 1;
+//
+//   if (end >= 0) {
+//
+//     if (A.x.array[end] < 1) {
+//
+//       Rcout << attrs[A.i.array[end]] << " [" << A.x.array[end] << "]";
+//
+//     } else {
+//
+//       Rcout << attrs[A.i.array[end]];
+//
+//     }
+//
+//   }
+//
+//   Rprintf("}");
+//
+// }
+
 void printImpl(SparseVector A,
                SparseVector B,
                Rcpp::StringVector attrs) {

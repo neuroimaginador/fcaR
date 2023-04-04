@@ -438,8 +438,11 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$objects)) {
 
-        R <- compute_intent(S,
-                            Matrix::as.matrix(Matrix::t(self$I)))
+        R <- compute_intent(
+          S,
+          Matrix::as.matrix(Matrix::t(self$I)),
+          connection = private$connection,
+          name = private$logic)
 
         if (length(R@i) > 0) {
 
@@ -520,8 +523,11 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$attributes)) {
 
-        R <- compute_extent(S,
-                            Matrix::as.matrix(Matrix::t(self$I)))
+        R <- compute_extent(
+          S,
+          Matrix::as.matrix(Matrix::t(self$I)),
+          connection = private$connection,
+          name = private$logic)
 
         if (length(R@i) > 0) {
 
@@ -601,8 +607,11 @@ FormalContext <- R6::R6Class(
 
       if (length(S) == length(self$attributes)) {
 
-        R <- compute_closure(S,
-                             Matrix::as.matrix(Matrix::t(self$I)))
+        R <- compute_closure(
+          S,
+          Matrix::as.matrix(Matrix::t(self$I)),
+          connection = private$connection,
+          name = private$logic)
 
         if (length(R@i) > 0) {
 
@@ -819,7 +828,19 @@ FormalContext <- R6::R6Class(
       new_att <- Z$get_attributes()[Matrix::which(Z$get_vector() > 0)]
 
       idx <- match(new_att, att)
-      my_I <- my_I[, idx]
+
+      # if (length(idx) == 1) {
+      #
+      #   my_I <- .extract_column(my_I, idx)
+      #
+      # } else {
+      #
+      #   my_I <- my_I[, idx]
+      #
+      # }
+
+      my_I <- matrix(my_I[, idx], ncol = length(idx))
+
       colnames(my_I) <- new_att
       rownames(my_I) <- fc2$objects
 
@@ -898,15 +919,18 @@ FormalContext <- R6::R6Class(
       if (private$is_many_valued) error_many_valued()
 
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
-      my_I <- unique(my_I)
+      # my_I <- unique(my_I)
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
 
-      L <- next_closure_concepts(I = my_I,
-                                 grades_set = grades_set,
-                                 attrs = attrs,
-                                 verbose = verbose)
+      L <- next_closure_concepts(
+        I = my_I,
+        grades_set = grades_set,
+        attrs = attrs,
+        connection = private$connection,
+        name = private$logic,
+        verbose = verbose)
 
       # Since the previous function gives the list of intents of
       # the computed concepts, now we will compute the corresponding
@@ -928,11 +952,12 @@ FormalContext <- R6::R6Class(
       }
 
 
-      self$concepts <- ConceptLattice$new(extents = my_extents,
-                                          intents = my_intents,
-                                          objects = self$objects,
-                                          attributes = self$attributes,
-                                          I = self$I)
+      self$concepts <- ConceptLattice$new(
+        extents = my_extents,
+        intents = my_intents,
+        objects = self$objects,
+        attributes = self$attributes,
+        I = self$I)
 
       if (verbose) {
 
@@ -970,11 +995,14 @@ FormalContext <- R6::R6Class(
 
       # if (is.null(private$bg_implications)) {
 
-        L <- next_closure_implications(I = my_I,
-                                       grades_set = grades_set,
-                                       attrs = attrs,
-                                       save_concepts = save_concepts,
-                                       verbose = verbose)
+        L <- next_closure_implications(
+          I = my_I,
+          grades_set = grades_set,
+          attrs = attrs,
+          save_concepts = save_concepts,
+          connection = private$connection,
+          name = private$logic,
+          verbose = verbose)
 
       # }
 
@@ -1032,11 +1060,12 @@ FormalContext <- R6::R6Class(
 
       if (save_concepts) {
 
-        self$concepts <- ConceptLattice$new(extents = my_extents,
-                                            intents = my_intents,
-                                            objects = self$objects,
-                                            attributes = self$attributes,
-                                            I = self$I)
+        self$concepts <- ConceptLattice$new(
+          extents = my_extents,
+          intents = my_intents,
+          objects = self$objects,
+          attributes = self$attributes,
+          I = self$I)
 
       }
 
@@ -1049,15 +1078,17 @@ FormalContext <- R6::R6Class(
         my_LHS <- convert_to_sparse(L$LHS)
         my_RHS <- convert_to_sparse(L$RHS)
 
-        extracted_implications <- ImplicationSet$new(attributes = self$attributes,
-                                                     lhs = my_LHS,
-                                                     rhs = my_RHS,
-                                                     I = self$I)
+        extracted_implications <- ImplicationSet$new(
+          attributes = self$attributes,
+          lhs = my_LHS,
+          rhs = my_RHS,
+          I = self$I)
 
       } else {
 
-        extracted_implications <- ImplicationSet$new(attributes = self$attributes,
-                                                     I = self$I)
+        extracted_implications <- ImplicationSet$new(
+          attributes = self$attributes,
+          I = self$I)
 
       }
 
@@ -1392,16 +1423,16 @@ FormalContext <- R6::R6Class(
     #' A table environment in LaTeX.
     #'
     #' @export
+    #' @importFrom glue glue
     #'
     to_latex = function(table = TRUE,
                         label = "",
-                        caption = "",
-                        fraction = c("none", "frac", "dfrac", "sfrac")) {
+                        caption = "") {
 
       # TODO: export a many-valued context to LaTeX
       if (private$is_many_valued) error_many_valued()
 
-      fraction <- match.arg(fraction)
+      fraction <- fcaR_options("latex_fraction")
 
       I <- Matrix::as.matrix(Matrix::t(self$I))
 
@@ -1429,21 +1460,26 @@ FormalContext <- R6::R6Class(
 
       }
 
-      str <- context_to_latex(I,
-                              objects = self$objects,
-                              attributes = self$attributes)
+      str <- context_to_latex(
+        I,
+        objects = self$objects,
+        attributes = self$attributes)
 
       if (table) {
 
+        my_caption <- glue::glue(
+          "\\caption{{{caption}}}\\label{{{label}}}"
+        )
+        # my_caption <- paste0("\\caption{,
+        #                      \\label{",
+        #                      label, "}",
+        #                      caption, "}")
+
         str <- c("\\begin{table}",
+                 my_caption,
                  "\\centering",
-                 str)
-
-        my_caption <- paste0("\\caption{\\label{",
-                             label, "}",
-                             caption, "}")
-
-        str <- c(str, my_caption, "\\end{table}")
+                 str,
+                 "\\end{table}")
 
       }
 
@@ -1480,6 +1516,111 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
+    #' Subcontext of the formal context
+    #'
+    #' @param objects (character array) Name of the objects to
+    #' keep.
+    #' @param attributes (character array) Names of the attributes
+    #' to keep.
+    #'
+    #' @details
+    #' A warning will be issued if any of the names is not present
+    #' in the list of objects or attributes of the formal context.
+    #'
+    #' If \code{objects} or \code{attributes} is empty, then it is
+    #' assumed to represent the whole set of objects or attributes
+    #' of the original formal context.
+    #'
+    #' @return Another \code{FormalContext} that is a subcontext
+    #' of the original one, with only the objects and attributes
+    #' selected.
+    #' @export
+    #'
+    #' @examples
+    #' fc <- FormalContext$new(planets)
+    #' fc$subcontext(attributes = c("moon", "no_moon"))
+    subcontext = function(objects,
+                          attributes) {
+
+      if (missing(objects)) objects <- self$objects
+      if (missing(attributes)) attributes <- self$attributes
+
+      if (is.numeric(objects)) {
+
+        final_objects <- self$objects[objects[objects > 0 & objects < length(self$objects)]]
+
+      } else {
+
+        final_objects <- intersect(objects, self$objects)
+
+      }
+
+      if (is.numeric(attributes)) {
+
+        final_attributes <- self$attributes[attributes[attributes > 0 & attributes < length(self$attributes)]]
+
+      } else {
+
+        final_attributes <- intersect(attributes, self$attributes)
+
+      }
+
+      if (length(objects) > length(final_objects)) {
+
+        warning("An object you provided was not found in this context.", call. = FALSE, immediate. = TRUE)
+
+      }
+
+      if (length(attributes) > length(final_attributes)) {
+
+        warning("An attribute you provided was not found in this context.", call. = FALSE, immediate. = TRUE)
+
+      }
+
+      if (length(objects) == 0) objects <- self$objects
+      if (length(attributes) == 0) attributes <- self$attributes
+
+      I <- self$incidence()[final_objects, final_attributes]
+      I <- matrix(I, nrow = length(final_objects),
+                  ncol = length(final_attributes))
+      rownames(I) <- final_objects
+      colnames(I) <- final_attributes
+
+      return(FormalContext$new(I))
+
+    },
+
+    #' @description
+    #' Subcontext of the formal context
+    #'
+    #' @param objects (character array) Name of the objects to
+    #' keep.
+    #' @param attributes (character array) Names of the attributes
+    #' to keep.
+    #'
+    #' @details
+    #' A warning will be issued if any of the names is not present
+    #' in the list of objects or attributes of the formal context.
+    #'
+    #' If \code{objects} or \code{attributes} is empty, then it is
+    #' assumed to represent the whole set of objects or attributes
+    #' of the original formal context.
+    #'
+    #' @return Another \code{FormalContext} that is a subcontext
+    #' of the original one, with only the objects and attributes
+    #' selected.
+    #' @export
+    #'
+    #' @examples
+    #' fc <- FormalContext$new(planets)
+    #' fc[, c("moon", "no_moon")]
+    `[` = function(objects, attributes) {
+
+      self$subcontext(objects, attributes)
+
+    },
+
+    #' @description
     #' Plot the formal context table
     #'
     #' @param to_latex      (logical) If \code{TRUE}, export the plot as a \code{tikzpicture} environment that can be included in a \code{LaTeX} file.
@@ -1509,12 +1650,72 @@ FormalContext <- R6::R6Class(
 
       plot_context(self$I, to_latex, ...)
 
+    },
+
+    #' @description
+    #' Sets the logic to use
+    #'
+    #'
+    #' @param name The name of the logic to use. To see the available names, run \code{available_logics()}.
+    #'
+    #' @export
+    use_logic = function(name = available_logics()) {
+
+      name <- match.arg(name)
+      if (name %in% available_logics()) {
+
+        private$logic <- name
+
+      }
+
+    },
+
+    #' @description
+    #' Gets the logic used
+    #'
+    #' @return A string with the name of the logic.
+    #'
+    #' @export
+    get_logic = function() {
+
+      private$logic
+
+    },
+
+    #' @description
+    #' Sets the name of the Galois connection to use
+    #'
+    #' @param connection The name of the Galois connection. Available connections are "standard" (antitone), "benevolent1" and "benevolent2" (isotone)
+    #'
+    #' @export
+    use_connection = function(connection) {
+
+      if (connection %in% c("standard", "benevolent1", "benevolent2")) {
+
+        private$connection <- connection
+
+      }
+
+    },
+
+    #' @description
+    #' Gets the name of the Galois connection
+    #'
+    #' @return A string with the name of the Galois connection
+    #'
+    #' @export
+    get_connection = function() {
+
+      private$connection
+
     }
 
   ),
 
   private = list(
 
+    logic = "Zadeh",
+    connection = "standard",
     is_binary = FALSE,
     is_many_valued = FALSE,
     can_plot = TRUE,

@@ -15,3 +15,4 @@
 ^Meta$
 ^appveyor\.yml$
 ^CRAN-RELEASE$
+^CRAN-SUBMISSION$

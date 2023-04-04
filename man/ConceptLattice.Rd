@@ -65,7 +65,7 @@ fc$concepts$bottom()
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-bracket'><code>fcaR::ConceptSet$[()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-['><code>fcaR::ConceptSet$[()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-extents'><code>fcaR::ConceptSet$extents()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-intents'><code>fcaR::ConceptSet$intents()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-is_empty'><code>fcaR::ConceptSet$is_empty()</code></a></span></li>

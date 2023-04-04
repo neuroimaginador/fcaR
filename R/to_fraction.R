@@ -6,7 +6,9 @@
 #
 # @return A character string representing the matrix. It can be \code{cat}ed.
 #
-.to_fraction <- function(A, latex = FALSE, type = "frac") {
+.to_fraction <- function(A,
+                         latex = FALSE,
+                         type = fcaR_options("latex_fraction")) {
 
   if (is.character(A)) return(A)
 
@@ -17,6 +19,25 @@
     A[] <- fractional::vfractional(A)
 
     return(A)
+
+  }
+
+  if (type == "sfrac") {
+
+    first_time_message(
+      option = "fcaR.sfrac_message",
+      txt = paste0(
+        "You need to add this command to your LaTeX file:\n",
+        "\\usepackage{xfrac}"))
+
+  }
+
+  if (type == "nicefrac") {
+
+    first_time_message(
+      option = "fcaR.nicefrac_message",
+      txt = paste0("You need to add this command to your LaTeX file:\n",
+                   "\\usepackage{nicefrac}"))
 
   }
 
