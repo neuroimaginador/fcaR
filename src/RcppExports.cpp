@@ -151,34 +151,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// upright_p
-NumericMatrix upright_p(NumericMatrix r1, NumericMatrix r2, NumericMatrix p, String name);
-RcppExport SEXP _fcaR_upright_p(SEXP r1SEXP, SEXP r2SEXP, SEXP pSEXP, SEXP nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type r1(r1SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type r2(r2SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type p(pSEXP);
-    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(upright_p(r1, r2, p, name));
-    return rcpp_result_gen;
-END_RCPP
-}
-// up_p
-NumericMatrix up_p(NumericMatrix r1, NumericMatrix r2, NumericMatrix p, String name);
-RcppExport SEXP _fcaR_up_p(SEXP r1SEXP, SEXP r2SEXP, SEXP pSEXP, SEXP nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type r1(r1SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type r2(r2SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type p(pSEXP);
-    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(up_p(r1, r2, p, name));
-    return rcpp_result_gen;
-END_RCPP
-}
 // next_closure_implications
 List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, String connection, String name, bool save_concepts, bool verbose);
 RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
@@ -470,8 +442,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
-    {"_fcaR_upright_p", (DL_FUNC) &_fcaR_upright_p, 4},
-    {"_fcaR_up_p", (DL_FUNC) &_fcaR_up_p, 4},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 7},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 7},
     {"_fcaR_compute_upright_arrow", (DL_FUNC) &_fcaR_compute_upright_arrow, 3},

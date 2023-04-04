@@ -49,14 +49,6 @@ get_element_array <- function(I, i, j, k) {
     .Call(`_fcaR_get_element_array`, I, i, j, k)
 }
 
-upright_p <- function(r1, r2, p, name) {
-    .Call(`_fcaR_upright_p`, r1, r2, p, name)
-}
-
-up_p <- function(r1, r2, p, name) {
-    .Call(`_fcaR_up_p`, r1, r2, p, name)
-}
-
 next_closure_implications <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", save_concepts = TRUE, verbose = FALSE) {
     .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, connection, name, save_concepts, verbose)
 }
