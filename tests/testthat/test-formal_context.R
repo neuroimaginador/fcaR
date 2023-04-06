@@ -159,7 +159,7 @@ test_that("fcaR exports FormalContexts to LaTeX", {
 
   fc <- FormalContext$new(I)
 
-  expect_error(fc$to_latex(fraction = "frac"), NA)
+  expect_error(fc$to_latex(), NA)
 
   fc2 <- FormalContext$new(planets)
 
