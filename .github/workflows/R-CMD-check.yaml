@@ -29,7 +29,7 @@ jobs:
           - {os: macOS-latest,   r: 'release', bioc: '3.15'}
           - {os: windows-latest, r: 'release', bioc: '3.15'}
           # - {os: ubuntu-16.04, bioc: '3.13', cont: "bioconductor/bioconductor_docker:devel",   r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest", http-user-agent: "R/4.0.0 (ubuntu-16.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
-          - {os: ubuntu-18.04,   r: 'release', bioc: '3.15', rspm: "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"}
+          - {os: ubuntu-22.04,   r: 'release', bioc: '3.15', rspm: "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
