@@ -116,6 +116,70 @@ void semantic_closure(SparseVector A,
 
 }
 
+bool is_set_preceding2(SparseVector B,
+                      SparseVector C,
+                      int a_i,
+                      double grade_i) {
+
+  if (grade_i == 0 || grade_i == -1) {
+    return false;
+  }
+
+  size_t bi_lt_a_i_size = 0, ci_lt_a_i_size = 0;
+  size_t bi_idx = 0, ci_idx = 0;
+  double bx_at_a_i = 0.0, cx_at_a_i = 0.0;
+
+  // Find elements in B and C that are less than a_i
+  for (size_t i = 0; i < B.i.used && bi_idx < B.i.used; i++) {
+    if (B.i.array[i] < a_i) {
+      bi_lt_a_i_size++;
+    } else if (B.i.array[i] == a_i) {
+      bx_at_a_i = B.x.array[i];
+    } else {
+      break;
+    }
+    bi_idx++;
+  }
+
+  for (size_t i = 0; i < C.i.used && ci_idx < C.i.used; i++) {
+    if (C.i.array[i] < a_i) {
+      ci_lt_a_i_size++;
+    } else if (C.i.array[i] == a_i) {
+      cx_at_a_i = C.x.array[i];
+    } else {
+      break;
+    }
+    ci_idx++;
+  }
+
+  if (cx_at_a_i != grade_i) {
+    return false;
+  }
+
+  if (grade_i == 1 && bx_at_a_i == 1) {
+    return false;
+  }
+
+  if (grade_i == -1 && bx_at_a_i != -1) {
+    return false;
+  }
+
+  if (ci_lt_a_i_size != bi_lt_a_i_size) {
+    return false;
+  }
+
+  // Check that the elements less than a_i in B and C are the same
+  for (size_t i = 0; i < ci_lt_a_i_size; i++) {
+    if (C.i.array[i] != B.i.array[i] || C.x.array[i] != B.x.array[i]) {
+      return false;
+    }
+  }
+
+  return true;
+
+}
+
+
 bool is_set_preceding(SparseVector B,
                       SparseVector C,
                       int a_i,
@@ -166,12 +230,14 @@ bool is_set_preceding(SparseVector B,
 
   }
 
-  if (cx_at_a_i != grade_i) {
+  if (abs(cx_at_a_i - grade_i) > 1.e-3) {
 
     freeArray(&cx_lt_a_i);
     freeArray(&bx_lt_a_i);
     freeArray(&ci_lt_a_i);
     freeArray(&bi_lt_a_i);
+
+    // Rcout << "  -> Reason 1: " << cx_at_a_i << " != " << grade_i << "\n";
 
     return false;
 
@@ -184,6 +250,7 @@ bool is_set_preceding(SparseVector B,
     freeArray(&ci_lt_a_i);
     freeArray(&bi_lt_a_i);
 
+    // Rcout << "  -> Reason 2\n";
     return false;
 
   }
@@ -195,6 +262,7 @@ bool is_set_preceding(SparseVector B,
     freeArray(&ci_lt_a_i);
     freeArray(&bi_lt_a_i);
 
+    // Rcout << "  -> Reason 3\n";
     return false;
 
   }
@@ -208,16 +276,18 @@ bool is_set_preceding(SparseVector B,
       freeArray(&ci_lt_a_i);
       freeArray(&bi_lt_a_i);
 
+      // Rcout << "  -> Reason 4\n";
       return false;
 
     }
-    if (cx_lt_a_i.array[i] != bx_lt_a_i.array[i]) {
+    if (abs(cx_lt_a_i.array[i] - bx_lt_a_i.array[i]) > 1.e-3) {
 
       freeArray(&cx_lt_a_i);
       freeArray(&bx_lt_a_i);
       freeArray(&ci_lt_a_i);
       freeArray(&bi_lt_a_i);
 
+      // Rcout << "  -> Reason 5\n";
       return false;
 
     }
@@ -606,23 +676,51 @@ void compute_next_intent(SparseVector* candB,
       // Rcout << "candB" << std::endl;
       // printArray(candB->i);
       // printArray(candB->x);
+      if (verbose) {
 
+        Rcout << "-> Testing: ";
+        printVector(*candB, attrs);
+        Rcout << "\n";
+
+      }
 
       reinitVector(&candB2);
-      compute_closure(&candB2, *candB, I.begin(), n_objects, n_attributes,
-                      extent_f, intent_f, tnorm, implication);
-      // Rcout << "candB2" << std::endl;
-      // printArray(candB2.i);
-      // printArray(candB2.x);
+      compute_closure(&candB2, *candB, I.begin(),
+                      n_objects, n_attributes,
+                      extent_f, intent_f,
+                      tnorm, implication);
+
+      if (verbose) {
+
+        Rcout << "-> Its closure is: ";
+        printVector(candB2, attrs);
+        Rcout << "\n";
+
+      }
 
       (*closure_count) = (*closure_count) + 1;
 
       if (is_set_preceding(A, candB2, a_i, grades_set[a_i][grade_idx])) {
 
+        if (verbose) {
+
+          Rcout << "-> It is valid!\n";
+
+        }
         // return candB;
         cloneVector(candB, candB2);
         freeVector(&candB2);
         return;
+
+      } else {
+
+        if (verbose) {
+
+          Rcout << "-> It is NOT valid!: A = ";
+          printVector(A, attrs);
+          Rcout << ", a_i = " << a_i << ", g = " << grades_set[a_i][grade_idx] << "\n";
+
+        }
 
       }
 
@@ -687,7 +785,7 @@ List next_closure_concepts(NumericMatrix I,
 
     if (cardinal(A) > 0) {
 
-      //printVector(A, attrs);
+      printVector(A, attrs);
 
     } else {
 
@@ -714,7 +812,7 @@ List next_closure_concepts(NumericMatrix I,
                         attrs,
                         extent_f, intent_f,
                         tnorm, implication,
-                        true);
+                        verbose);
 
     // A2 = compute_next_intent(A, I,
     //                          n_attributes,
@@ -745,9 +843,9 @@ List next_closure_concepts(NumericMatrix I,
 
       Rprintf("Added concept:\n");
       // Rcout << A2.i.used << std::endl;
-      printArray(A2.i);
-      printArray(A2.x);
-      //printVector(A2, attrs);
+      // printArray(A2.i);
+      // printArray(A2.x);
+      printVector(A2, attrs);
       Rprintf("\n");
 
     }

@@ -28,7 +28,7 @@ set_to_latex <- function(S, attributes) {
 
   } else {
 
-    return("\\\\varnothing")
+    return("\\varnothing")
 
   }
 
