@@ -83,7 +83,7 @@
 
 <ul><li><p><a href="#method-Set-new"><code>Set$new()</code></a></p></li>
 <li><p><a href="#method-Set-assign"><code>Set$assign()</code></a></p></li>
-<li><p><a href="#method-Set-bracket"><code>Set$[()</code></a></p></li>
+<li><p><a href="#method-Set-%5B"><code>Set$[()</code></a></p></li>
 <li><p><a href="#method-Set-cardinal"><code>Set$cardinal()</code></a></p></li>
 <li><p><a href="#method-Set-get_vector"><code>Set$get_vector()</code></a></p></li>
 <li><p><a href="#method-Set-get_attributes"><code>Set$get_attributes()</code></a></p></li>
@@ -155,7 +155,7 @@
 </div>
 
 
-</div><p></p><hr><a id="method-Set-bracket"></a><div class="section">
+</div><p></p><hr><a id="method-Set-["></a><div class="section">
 <h3 id="method-">Method <code>[()</code><a class="anchor" aria-label="anchor" href="#method-"></a></h3>
 <p>Get elements by index</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -291,6 +291,8 @@ as the sum of the degrees of each element.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">S</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {A}</span>
 <span class="r-in"><span><span class="va">S</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Note: You must include the following commands in you LaTeX document:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> \usepackage{amsmath}\newcommand{\el}[2]{\ensuremath{^{#2\!\!}/{#1}}}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \left\{\mathrm{A}\right\}</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="va">Set</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>, C <span class="op">=</span> <span class="fl">1</span>, B <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>

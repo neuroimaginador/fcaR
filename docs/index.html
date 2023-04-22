@@ -99,6 +99,7 @@
 <div class="page-header"><h1 id="fcar-tools-for-formal-concept-analysis">fcaR: Tools for Formal Concept Analysis<a class="anchor" aria-label="anchor" href="#fcar-tools-for-formal-concept-analysis"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p>The aim of this package is to provide tools to perform fuzzy formal concept analysis (FCA) from within R. It provides functions to load and save a Formal Context, extract its concept lattice and implications. In addition, one can use the implications to compute semantic closures of fuzzy sets and, thus, build recommendation systems.</p>
 <div class="section level2">
 <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a>
@@ -128,70 +129,169 @@
 </div>
 <div class="section level2">
 <h2 id="example-of-use">Example of Use<a class="anchor" aria-label="anchor" href="#example-of-use"></a>
-</h2>Let us start with a fuzzy dataset (stored in a matrix I) as follows:<table class="table">
+</h2>
+Let us start with a fuzzy dataset (stored in a matrix I) as follows:
+<table class="table">
 <thead><tr>
-<th style="text-align:left;"></th>
-<th style="text-align:right;">P1</th>
-<th style="text-align:right;">P2</th>
-<th style="text-align:right;">P3</th>
-<th style="text-align:right;">P4</th>
-<th style="text-align:right;">P5</th>
-<th style="text-align:right;">P6</th>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+P1
+</th>
+<th style="text-align:right;">
+P2
+</th>
+<th style="text-align:right;">
+P3
+</th>
+<th style="text-align:right;">
+P4
+</th>
+<th style="text-align:right;">
+P5
+</th>
+<th style="text-align:right;">
+P6
+</th>
 </tr></thead>
 <tbody>
 <tr>
-<td style="text-align:left;">O1</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">1.0</td>
-<td style="text-align:right;">0.5</td>
-<td style="text-align:right;">0.5</td>
-<td style="text-align:right;">1.0</td>
-<td style="text-align:right;">0</td>
+<td style="text-align:left;">
+O1
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
-<td style="text-align:left;">O2</td>
-<td style="text-align:right;">1.0</td>
-<td style="text-align:right;">1.0</td>
-<td style="text-align:right;">1.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0</td>
+<td style="text-align:left;">
+O2
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
-<td style="text-align:left;">O3</td>
-<td style="text-align:right;">0.5</td>
-<td style="text-align:right;">0.5</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">1</td>
+<td style="text-align:left;">
+O3
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
 <tr>
-<td style="text-align:left;">O4</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">1.0</td>
-<td style="text-align:right;">0.5</td>
-<td style="text-align:right;">0</td>
+<td style="text-align:left;">
+O4
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
-<td style="text-align:left;">O5</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">1.0</td>
-<td style="text-align:right;">0.5</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0</td>
+<td style="text-align:left;">
+O5
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 <tr>
-<td style="text-align:left;">O6</td>
-<td style="text-align:right;">0.5</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0.0</td>
-<td style="text-align:right;">0</td>
+<td style="text-align:left;">
+O6
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0.0
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
@@ -265,9 +365,9 @@
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"composition"</span>,</span>
 <span>                                      <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Processing batch</span></span>
-<span><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
-<span><span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.001 secs.</span></span>
-<span><span class="co">#&gt; Batch took 0.005 secs.</span></span>
+<span><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.002 secs.</span></span>
+<span><span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.002 secs.</span></span>
+<span><span class="co">#&gt; Batch took 0.004 secs.</span></span>
 <span></span>
 <span><span class="co"># Reduced set of implications</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
@@ -292,14 +392,28 @@
 </h2>
 <p>With respect to the CRAN version, the development version has the following changes.</p>
 <div class="section level3">
+<h3 id="fcar-120">fcaR 1.2.0<a class="anchor" aria-label="anchor" href="#fcar-120"></a>
+</h3>
+<p>Bugfixes:</p>
+<ul>
+<li>Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.</li>
+</ul>
+</div>
+<div class="section level3">
 <h3 id="fcar-111">fcaR 1.1.1<a class="anchor" aria-label="anchor" href="#fcar-111"></a>
 </h3>
 <p>Enhancements:</p>
-<ul><li>The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.</li></ul>
+<ul>
+<li>The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.</li>
+</ul>
 <p>New functionality:</p>
-<ul><li>Now the package uses the <em>settings</em> package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.</li></ul>
+<ul>
+<li>Now the package uses the <em>settings</em> package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.</li>
+</ul>
 <p>Bugfixes:</p>
-<ul><li>Fixed exporting to latex with special characters such as $, _, etc.</li></ul>
+<ul>
+<li>Fixed exporting to latex with special characters such as $, _, etc.</li>
+</ul>
 </div>
 </div>
 <div class="section level2">

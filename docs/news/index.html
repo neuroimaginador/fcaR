@@ -70,15 +70,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.0" id="fcar-120">fcaR 1.2.0<a class="anchor" aria-label="anchor" href="#fcar-120"></a></h2>
-<p>Bugfixes:</p>
-<ul><li>Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.</li></ul></div>
+<h2 class="page-header" data-toc-text="1.2.0" id="fcar-120">fcaR 1.2.0<small>2022-09-04</small><a class="anchor" aria-label="anchor" href="#fcar-120"></a></h2>
+<p>Enhancements:</p>
+<ul><li>Other logics have been implemented. Now, we can use <code>fc$use_logic()</code> to select one of the <code>available_logics()</code>.</li>
+<li>Improved export to LaTeX.</li>
+</ul><p>Bugfixes:</p>
+<ul><li>Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.</li>
+<li>Some rounding errors might induce errors in the computations. These has been fixed.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.1" id="fcar-111">fcaR 1.1.1<small>2021-06-28</small><a class="anchor" aria-label="anchor" href="#fcar-111"></a></h2>
 <p>Enhancements:</p>
-<ul><li>The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.</li></ul><p>New functionality:</p>
-<ul><li>Now the package uses the <em>settings</em> package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.</li></ul><p>Bugfixes:</p>
-<ul><li>Fixed exporting to latex with special characters such as $, _, etc.</li></ul></div>
+<ul><li>The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.</li>
+</ul><p>New functionality:</p>
+<ul><li>Now the package uses the <em>settings</em> package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.</li>
+</ul><p>Bugfixes:</p>
+<ul><li>Fixed exporting to latex with special characters such as $, _, etc.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.0" id="fcar-110">fcaR 1.1.0<small>2021-06-16</small><a class="anchor" aria-label="anchor" href="#fcar-110"></a></h2>
 <p>Enhancements:</p>
@@ -98,8 +106,10 @@
 <li>
 <strong>Conceptual scaling</strong>, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.</li>
 </ul><p><em>Breaking changes</em>:</p>
-<ul><li>The former SparseSet and SparseConcept classes are now named Set and Concept. Thus, to create an object of these types, just use Set$new(…) or Concept$new(…). Analogously, the former function as_SparseSet() is now as_Set().</li></ul><p>Bugfixes:</p>
-<ul><li>Minor bugfixes in several functions.</li></ul></div>
+<ul><li>The former SparseSet and SparseConcept classes are now named Set and Concept. Thus, to create an object of these types, just use Set$new(…) or Concept$new(…). Analogously, the former function as_SparseSet() is now as_Set().</li>
+</ul><p>Bugfixes:</p>
+<ul><li>Minor bugfixes in several functions.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.7" id="fcar-107">fcaR 1.0.7<small>2020-12-02</small><a class="anchor" aria-label="anchor" href="#fcar-107"></a></h2>
 <p>Bugfixes:</p>
@@ -112,11 +122,13 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.6" id="fcar-106">fcaR 1.0.6<small>2020-11-18</small><a class="anchor" aria-label="anchor" href="#fcar-106"></a></h2>
 <p>Bugfixes:</p>
-<ul><li>Detect if R has been built with no long double capabilities and warn the user if she tries to plot FormalContexts and ConceptLattices.</li></ul></div>
+<ul><li>Detect if R has been built with no long double capabilities and warn the user if she tries to plot FormalContexts and ConceptLattices.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.5" id="fcar-105">fcaR 1.0.5<a class="anchor" aria-label="anchor" href="#fcar-105"></a></h2>
 <p>Bugfixes:</p>
-<ul><li>Fixes <a href="https://github.com/Malaga-FCA-group/fcaR/issues/17" class="external-link">#17</a>. The reduced set of implications after performing closure with reduce == TRUE now stores the matrix I, so it can be re-exported to the arules format.</li></ul><p>Enhancements:</p>
+<ul><li>Fixes <a href="https://github.com/Malaga-FCA-group/fcaR/issues/17" class="external-link">#17</a>. The reduced set of implications after performing closure with reduce == TRUE now stores the matrix I, so it can be re-exported to the arules format.</li>
+</ul><p>Enhancements:</p>
 <ul><li>More efficient version of the simplification rule. Now it performs linearly on the number of implications.</li>
 <li>Added a way to extend the equivalence rules by means of the registry package. This has been used to introduce the “Right Simplification” and the “Reorder” rules.</li>
 <li>New vignette to show how to extend equivalence rules in the package.</li>
@@ -136,10 +148,12 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.3" id="fcar-103">fcaR 1.0.3<small>2020-01-19</small><a class="anchor" aria-label="anchor" href="#fcar-103"></a></h2>
-<ul><li>Changes to some C functions since they could potentially give a segfault.</li></ul></div>
+<ul><li>Changes to some C functions since they could potentially give a segfault.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.2" id="fcar-102">fcaR 1.0.2<small>2020-01-12</small><a class="anchor" aria-label="anchor" href="#fcar-102"></a></h2>
-<ul><li>Made minor changes in the DESCRIPTION.</li></ul></div>
+<ul><li>Made minor changes in the DESCRIPTION.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.1" id="fcar-101">fcaR 1.0.1<a class="anchor" aria-label="anchor" href="#fcar-101"></a></h2>
 <ul><li>
@@ -152,7 +166,8 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0" id="fcar-100">fcaR 1.0.0<a class="anchor" aria-label="anchor" href="#fcar-100"></a></h2>
-<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li></ul></div>
+<ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+</ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

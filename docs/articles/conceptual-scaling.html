@@ -230,28 +230,41 @@ lazy
 <p>The attributes are:</p>
 <ul>
 <li>
-<em>Grant</em>: a binary attribute that expresses whether the candidate is has received a grant.</li>
+<em>Grant</em>: a binary attribute that expresses whether the
+candidate is has received a grant.</li>
 <li>
 <em>Intern</em>: elapsed time as intern.</li>
 <li>
-<em>Agreement</em>: 1:strongly disagree, 2:disagree, 3:neither agree nor disagree, 4:agree and 5:strongly agree, with the work dynamics in the internship.</li>
+<em>Agreement</em>: 1:strongly disagree, 2:disagree, 3:neither agree
+nor disagree, 4:agree and 5:strongly agree, with the work dynamics in
+the internship.</li>
 <li>
-<em>Attitude</em>: 1:hard working, 2:working, 3:lazy, 4:very lazy.</li>
+<em>Attitude</em>: 1:hard working, 2:working, 3:lazy, 4:very
+lazy.</li>
 <li>
-<em>Score</em>: the score obtained in the internship procedure, with a maximum of 5.</li>
+<em>Score</em>: the score obtained in the internship procedure, with
+a maximum of 5.</li>
 </ul>
-<p>This is a <em>many-valued context</em>, where we have mixed categorical and numerical attributes.</p>
-<p>In such formal context, we cannot derive concepts and implications directly, we need to transform the formal context into one where each attribute is in the interval <span class="math inline">\([0, 1]\)</span>.</p>
+<p>This is a <em>many-valued context</em>, where we have mixed
+categorical and numerical attributes.</p>
+<p>In such formal context, we cannot derive concepts and implications
+directly, we need to transform the formal context into one where each
+attribute is in the interval <span class="math inline">\([0,
+1]\)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="types-of-scaling">Types of Scaling<a class="anchor" aria-label="anchor" href="#types-of-scaling"></a>
 </h2>
-<p>The <em>transformations</em> to the attributes of a many-valued formal context are called <em>scaling</em>. Depending on the meaning of each attribute, different types of scaling can be applied.</p>
+<p>The <em>transformations</em> to the attributes of a many-valued
+formal context are called <em>scaling</em>. Depending on the meaning of
+each attribute, different types of scaling can be applied.</p>
 <div class="section level3">
 <h3 id="nominal-scaling">Nominal scaling<a class="anchor" aria-label="anchor" href="#nominal-scaling"></a>
 </h3>
-<p><strong>Nominal</strong> scales are used for scaling attributes whose values exclude each other.</p>
-For instance, in the example above, the attribute <code>Grant</code> is categorical:
+<p><strong>Nominal</strong> scales are used for scaling attributes whose
+values exclude each other.</p>
+For instance, in the example above, the attribute <code>Grant</code> is
+categorical:
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -373,7 +386,8 @@ Student 5
 </tr>
 </tbody>
 </table>
-The mapping from the previous attribute values to the derived context is:
+The mapping from the previous attribute values to the derived context
+is:
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -414,7 +428,9 @@ yes
 <div class="section level3">
 <h3 id="ordinal-scaling">Ordinal scaling<a class="anchor" aria-label="anchor" href="#ordinal-scaling"></a>
 </h3>
-<p><strong>Ordinal</strong> scales are used for attributes with ordered values, where each value implies the smaller values (e.g. the number of children of an individual).</p>
+<p><strong>Ordinal</strong> scales are used for attributes with ordered
+values, where each value implies the smaller values (e.g. the number of
+children of an individual).</p>
 In our example, the attribute <code>Intern</code> is ordinal:
 <table class="table">
 <thead><tr>
@@ -719,7 +735,10 @@ Intern &lt;= 10
 <div class="section level3">
 <h3 id="interordinal-scaling">Interordinal scaling<a class="anchor" aria-label="anchor" href="#interordinal-scaling"></a>
 </h3>
-<p><strong>Interordinal</strong> scales are used in attributes that express different degrees (for instance, the Likert scale: <em>strongly disagree</em>, <em>disagree</em>, <em>neither agree nor disagree</em>, <em>agree</em> and <em>strongly agree</em>).</p>
+<p><strong>Interordinal</strong> scales are used in attributes that
+express different degrees (for instance, the Likert scale: <em>strongly
+disagree</em>, <em>disagree</em>, <em>neither agree nor disagree</em>,
+<em>agree</em> and <em>strongly agree</em>).</p>
 In our example, the attribute <code>Agreement</code> is interordinal:
 <table class="table">
 <thead><tr>
@@ -1204,7 +1223,12 @@ strongly agree
 <div class="section level3">
 <h3 id="biordinal-scaling">Biordinal scaling<a class="anchor" aria-label="anchor" href="#biordinal-scaling"></a>
 </h3>
-<p><strong>Biordinal</strong> scales are used when the attribute values express a degree in one of two poles (for instance, <em>1:very silent</em>, <em>2:silent</em>, <em>3:loud</em>, <em>4:very loud</em>, where <em>1:very silent</em> implies <em>2:silent</em>, and <em>4:very loud</em> implies <em>3:loud</em>, but neither <em>silent</em> implies <em>loud</em> nor <em>loud</em> implies <em>silent</em>).</p>
+<p><strong>Biordinal</strong> scales are used when the attribute values
+express a degree in one of two poles (for instance, <em>1:very
+silent</em>, <em>2:silent</em>, <em>3:loud</em>, <em>4:very loud</em>,
+where <em>1:very silent</em> implies <em>2:silent</em>, and <em>4:very
+loud</em> implies <em>3:loud</em>, but neither <em>silent</em> implies
+<em>loud</em> nor <em>loud</em> implies <em>silent</em>).</p>
 In our example, the attribute <code>Attitude</code> is biordinal:
 <table class="table">
 <thead><tr>
@@ -1456,7 +1480,8 @@ very lazy
 <div class="section level3">
 <h3 id="interval-scaling">Interval scaling<a class="anchor" aria-label="anchor" href="#interval-scaling"></a>
 </h3>
-<p><strong>Interval</strong> scales group continuous attributes in intervals or bins.</p>
+<p><strong>Interval</strong> scales group continuous attributes in
+intervals or bins.</p>
 In our example, the attribute <code>Score</code> is continuous:
 <table class="table">
 <thead><tr>
@@ -1509,14 +1534,18 @@ Student 5
 </tr>
 </tbody>
 </table>
-<p>and can be categorized into intervals corresponding to the following marks:</p>
+<p>and can be categorized into intervals corresponding to the following
+marks:</p>
 <ul>
 <li>
-<em>A</em>: score in the interval <span class="math inline">\((4, 5]\)</span>.</li>
+<em>A</em>: score in the interval <span class="math inline">\((4,
+5]\)</span>.</li>
 <li>
-<em>B</em>: score in the interval <span class="math inline">\((3, 4]\)</span>.</li>
+<em>B</em>: score in the interval <span class="math inline">\((3,
+4]\)</span>.</li>
 <li>
-<em>C</em>: score in the interval <span class="math inline">\((2, 3]\)</span>.
+<em>C</em>: score in the interval <span class="math inline">\((2,
+3]\)</span>.
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
@@ -1689,7 +1718,9 @@ Score is A
 <div class="section level3">
 <h3 id="available-scales">Available scales<a class="anchor" aria-label="anchor" href="#available-scales"></a>
 </h3>
-<p>The available scales are stored in a <code>registry</code> object called <code>scalingRegistry</code>, which keeps the functions to perform the different types of scaling:</p>
+<p>The available scales are stored in a <code>registry</code> object
+called <code>scalingRegistry</code>, which keeps the functions to
+perform the different types of scaling:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scalingRegistry</span><span class="op">$</span><span class="fu">get_entry_names</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Nominal"      "Ordinal"      "Interordinal" "Biordinal"    "Interval"    </span></span>
@@ -1698,9 +1729,15 @@ Score is A
 <div class="section level3">
 <h3 id="applying-scales">Applying scales<a class="anchor" aria-label="anchor" href="#applying-scales"></a>
 </h3>
-<p>In order to scale an attribute of a <code>FormalContext</code>, we use the method <code>scale</code>.</p>
-<p>This method has two mandatory arguments: <code>attribute</code> (the attribute to scale) and <code>type</code> (the type of scaling). Additional arguments can be supplied for certain types of scaling, as we will se shortly.</p>
-<p>For instance, if we call <code>fc</code> the formal context of the example at the beginning of this document, we can replicate the above scales:</p>
+<p>In order to scale an attribute of a <code>FormalContext</code>, we
+use the method <code>scale</code>.</p>
+<p>This method has two mandatory arguments: <code>attribute</code> (the
+attribute to scale) and <code>type</code> (the type of scaling).
+Additional arguments can be supplied for certain types of scaling, as we
+will se shortly.</p>
+<p>For instance, if we call <code>fc</code> the formal context of the
+example at the beginning of this document, we can replicate the above
+scales:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Grant"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span>
 <span><span class="va">fc</span></span>
@@ -1713,8 +1750,10 @@ Score is A
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>            1             0      5 neither agree nor disagree working       3.6</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>            0             1      8 agree                      working       4  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>            1             0      4 disagree                   lazy          3.6</span></span></code></pre></div>
-<p>Note that the attribute <code>Grant</code> has been substituted by <code>Grant = yes</code> and <code>Grant = no</code>.</p>
-<p>In order to apply the <em>ordinal</em> scaling to the <code>Intern</code> attribute, we do:</p>
+<p>Note that the attribute <code>Grant</code> has been substituted by
+<code>Grant = yes</code> and <code>Grant = no</code>.</p>
+<p>In order to apply the <em>ordinal</em> scaling to the
+<code>Intern</code> attribute, we do:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Intern"</span>, type <span class="op">=</span> <span class="st">"ordinal"</span><span class="op">)</span></span>
 <span><span class="va">fc</span></span>
@@ -1730,7 +1769,8 @@ Score is A
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​`Grant = no`, ²​`Grant = yes`,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ³​`Intern &lt;= 4`, ⁴​`Intern &lt;= 5`, ⁵​`Intern &lt;= 7`, ⁶​`Intern &lt;= 8`,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ⁷​`Intern &lt;= 10`, ⁸​Agreement, ⁹​Attitude</span></span></span></code></pre></div>
-<p>Now, the <code>Agreement</code> attribute can be scaled using and interordinal scaling:</p>
+<p>Now, the <code>Agreement</code> attribute can be scaled using and
+interordinal scaling:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Agreement"</span>, </span>
 <span>         type <span class="op">=</span> <span class="st">"interordinal"</span>,</span>
@@ -1739,29 +1779,49 @@ Score is A
 <span>                    <span class="st">"neither agree nor disagree"</span>,</span>
 <span>                    <span class="st">"agree"</span>,</span>
 <span>                    <span class="st">"strongly agree"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The resulting formal context has 19 columns, thus it is difficult to print.</p>
-<p>Note that the call to <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale()</a></code> has an additional optional argument, <code>values</code>, that indicate, for character attributes, the order between the different attribute values. In this case, the order is “strongly disagree” &lt; “disagree” &lt; “neither agree nor disagree” &lt; “agree” &lt; “strongly agree”.</p>
-<p>The <code>Attitude</code> attribute can be scaled using a <em>biordinal</em> scale, since it represents two poles: the first is given by values “hard working” and “working” and the other is given by “very lazy” and “lazy”. Then, we can do:</p>
+<p>The resulting formal context has 19 columns, thus it is difficult to
+print.</p>
+<p>Note that the call to <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale()</a></code> has an additional optional
+argument, <code>values</code>, that indicate, for character attributes,
+the order between the different attribute values. In this case, the
+order is “strongly disagree” &lt; “disagree” &lt; “neither agree nor
+disagree” &lt; “agree” &lt; “strongly agree”.</p>
+<p>The <code>Attitude</code> attribute can be scaled using a
+<em>biordinal</em> scale, since it represents two poles: the first is
+given by values “hard working” and “working” and the other is given by
+“very lazy” and “lazy”. Then, we can do:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Attitude"</span>, </span>
 <span>         type <span class="op">=</span> <span class="st">"biordinal"</span>, </span>
 <span>         values_le <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hard working"</span>, <span class="st">"working"</span><span class="op">)</span>,</span>
 <span>         values_ge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lazy"</span>, <span class="st">"very lazy"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The full order of attribute values is “hard working” &lt; “working” &lt; “lazy” &lt; “very lazy”.</p>
-<p>Note that we have listed the attribute values in two different arguments, <code>values_le</code> (for values that are compared using <code>&lt;=</code>) and <code>values_ge</code> (values compared using <code>&gt;=</code>). Also note that all attributes must appear ordered in the arguments, that is, in the same order as in the full order defined above.</p>
-<p>The last attribute was the <code>Score</code>, that can be grouped in intervals using:</p>
+<p>The full order of attribute values is “hard working” &lt; “working”
+&lt; “lazy” &lt; “very lazy”.</p>
+<p>Note that we have listed the attribute values in two different
+arguments, <code>values_le</code> (for values that are compared using
+<code>&lt;=</code>) and <code>values_ge</code> (values compared using
+<code>&gt;=</code>). Also note that all attributes must appear ordered
+in the arguments, that is, in the same order as in the full order
+defined above.</p>
+<p>The last attribute was the <code>Score</code>, that can be grouped in
+intervals using:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"Score"</span>, </span>
 <span>         type <span class="op">=</span> <span class="st">"interval"</span>, </span>
 <span>         values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>, </span>
 <span>         interval_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The additional arguments are <code>values</code> (the endpoints of the intervals) and <code>interval_names</code> (an optional name indicating how to call a given interval).</p>
-<p>Note that all of these scales can be applied to numerical and string attributes.</p>
+<p>The additional arguments are <code>values</code> (the endpoints of
+the intervals) and <code>interval_names</code> (an optional name
+indicating how to call a given interval).</p>
+<p>Note that all of these scales can be applied to numerical and string
+attributes.</p>
 </div>
 <div class="section level3">
 <h3 id="scale-contexts">Scale contexts<a class="anchor" aria-label="anchor" href="#scale-contexts"></a>
 </h3>
-<p>In order to see the transformation (the <em>scale</em> context) used for any of the attributes, we use the <code>get_scales()</code> method of a <code>FormalContext</code>:</p>
+<p>In order to see the transformation (the <em>scale</em> context) used
+for any of the attributes, we use the <code>get_scales()</code> method
+of a <code>FormalContext</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">get_scales</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Grant"</span>, <span class="st">"Score"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $Grant</span></span>
@@ -1777,13 +1837,17 @@ Score is A
 <span><span class="co">#&gt;  3.6                  X                  </span></span>
 <span><span class="co">#&gt;    4                  X                  </span></span>
 <span><span class="co">#&gt;  4.1                              X</span></span></code></pre></div>
-<p>With no arguments, it prints all the scales that have been used in a <code>FormalContext</code>.</p>
+<p>With no arguments, it prints all the scales that have been used in a
+<code>FormalContext</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="background-knowledge">Background knowledge<a class="anchor" aria-label="anchor" href="#background-knowledge"></a>
 </h3>
-<p>Some scalings, particularly of the <em>ordinal</em> family, assume an implicit knowledge (e.g., if attribute <code>Intern</code> is lower than 5, then it is also lower than 7).</p>
-<p>This <em>background knowledge</em> is computed after each scaling is performed, and can be printed with:</p>
+<p>Some scalings, particularly of the <em>ordinal</em> family, assume an
+implicit knowledge (e.g., if attribute <code>Intern</code> is lower than
+5, then it is also lower than 7).</p>
+<p>This <em>background knowledge</em> is computed after each scaling is
+performed, and can be printed with:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Implication set with 20 implications.</span></span>
@@ -1813,14 +1877,24 @@ Score is A
 <span><span class="co">#&gt; Rule 18: {Score is A, Score is B} -&gt; {Score is C}</span></span>
 <span><span class="co">#&gt; Rule 19: {Score is A, Score is C} -&gt; {Score is B}</span></span>
 <span><span class="co">#&gt; Rule 20: {Score is B, Score is C} -&gt; {Score is A}</span></span></code></pre></div>
-<p>It is a simple <code>ImplicationSet</code> that stores all the implications that can be derived from the scale contexts.</p>
+<p>It is a simple <code>ImplicationSet</code> that stores all the
+implications that can be derived from the scale contexts.</p>
 </div>
 <div class="section level3">
 <h3 id="concepts-and-implications">Concepts and implications<a class="anchor" aria-label="anchor" href="#concepts-and-implications"></a>
 </h3>
-<p>As usual, for a given <code>FormalContext</code>, binary or fuzzy, one can compute its concept lattice and its basis of implications. In the case of <em>many-valued</em> contexts, one has first to scale all necessary attributes, such that the resulting context is binary or fuzzy.</p>
-<p>Once scaled, the same <code>find_concepts()</code> and <code>find_implications()</code> methods can be used to compute the lattice and the basis.</p>
-<p>In the case of the basis of implications, the NextClosure algorithm is used, as in the binary/fuzzy case, but the resulting implications have been post-processed to remove redundant information with respect to the <em>background knowledge</em>.</p>
+<p>As usual, for a given <code>FormalContext</code>, binary or fuzzy,
+one can compute its concept lattice and its basis of implications. In
+the case of <em>many-valued</em> contexts, one has first to scale all
+necessary attributes, such that the resulting context is binary or
+fuzzy.</p>
+<p>Once scaled, the same <code>find_concepts()</code> and
+<code>find_implications()</code> methods can be used to compute the
+lattice and the basis.</p>
+<p>In the case of the basis of implications, the NextClosure algorithm
+is used, as in the binary/fuzzy case, but the resulting implications
+have been post-processed to remove redundant information with respect to
+the <em>background knowledge</em>.</p>
 <p>In our example, the resulting implications are:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
@@ -1876,13 +1950,17 @@ Score is A
 <span><span class="co">#&gt; Rule 26: {Grant = no, Grant = yes, Intern &lt;= 5, Agreement &lt;= neither agree nor</span></span>
 <span><span class="co">#&gt;   disagree, Agreement &gt;= agree, Attitude &lt;= working, Score is C, Score is B} -&gt;</span></span>
 <span><span class="co">#&gt;   {Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy}</span></span></code></pre></div>
-<p>Note that, in this case, this is not the basis of implications, since the <em>background knowledge</em> has to be incorporated. That is, these implications are valid, but to be complete they need the implications derived from the scales.</p>
+<p>Note that, in this case, this is not the basis of implications, since
+the <em>background knowledge</em> has to be incorporated. That is, these
+implications are valid, but to be complete they need the implications
+derived from the scales.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="another-example">Another example<a class="anchor" aria-label="anchor" href="#another-example"></a>
 </h2>
-<p>Let us consider the following context of attributes of aromatic molecules:</p>
+<p>Let us consider the following context of attributes of aromatic
+molecules:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"contexts"</span>,</span>
 <span>                        <span class="st">"aromatic.csv"</span>,</span>
@@ -2073,13 +2151,16 @@ hex
 <p>The meaning of the attributes is as follows:</p>
 <ul>
 <li>
-<code>ring</code> represents the shape (pentagon or hexagon) of the molecule ring.</li>
+<code>ring</code> represents the shape (pentagon or hexagon) of the
+molecule ring.</li>
 <li>
-<code>OS</code> means the presence of oxygen (O) or sulfur (S) atoms.</li>
+<code>OS</code> means the presence of oxygen (O) or sulfur (S)
+atoms.</li>
 <li>
 <code>nitro</code> represents the number of nitrogen atoms.</li>
 </ul>
-<p>We can transform this context into a binary one by means of the following scalings:</p>
+<p>We can transform this context into a binary one by means of the
+following scalings:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"nitro"</span>, </span>
 <span>         type <span class="op">=</span> <span class="st">"ordinal"</span>, </span>
@@ -2438,7 +2519,8 @@ Thiophene
 <span><span class="co">#&gt; Implication set with 2 implications.</span></span>
 <span><span class="co">#&gt; Rule 1: {} -&gt; {nitro &gt;= 1}</span></span>
 <span><span class="co">#&gt; Rule 2: {nitro &gt;= 3} -&gt; {nitro &gt;= 2}</span></span></code></pre></div>
-<p>Also, we can compute the implications that are not represented by the <em>background knowledge</em>:</p>
+<p>Also, we can compute the implications that are not represented by the
+<em>background knowledge</em>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>

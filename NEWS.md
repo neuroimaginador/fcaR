@@ -1,8 +1,14 @@
 # fcaR 1.2.0
 
+Enhancements:
+
+* Other logics have been implemented. Now, we can use `fc$use_logic()` to select one of the `available_logics()`.
+* Improved export to LaTeX.
+
 Bugfixes:
 
 * Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.
+* Some rounding errors might induce errors in the computations. These has been fixed.
 
 # fcaR 1.1.1
 

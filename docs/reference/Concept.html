@@ -196,16 +196,16 @@
 <span class="r-in"><span><span class="co"># Print the first three concepts</span></span></span>
 <span class="r-in"><span><span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A set of 3 concepts:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Mercury, Venus, Earth, Mars, Jupiter}, {})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Venus, Earth, Mars, Jupiter}, {moon})</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3: ({Earth, Mars, Jupiter}, {far, moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: ({Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: ({Jupiter, Saturn, Uranus, Neptune, Pluto}, {far, moon})</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Select the first concept:</span></span></span>
 <span class="r-in"><span><span class="va">C</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">sub</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get its extent and intent</span></span></span>
 <span class="r-in"><span><span class="va">C</span><span class="op">$</span><span class="fu">get_extent</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> {Mercury, Venus, Earth, Mars, Jupiter}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> {Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}</span>
 <span class="r-in"><span><span class="va">C</span><span class="op">$</span><span class="fu">get_intent</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {}</span>
 <span class="r-in"><span></span></span>
