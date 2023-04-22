@@ -18,7 +18,7 @@ bool checkInterrupt() {
 
 // Functions to compute the next pseudo-closed set
 
-void compute_direct_sum(SparseVector A,
+bool compute_direct_sum(SparseVector A,
                         int a_i,
                         double grade_i,
                         int imax,
@@ -27,10 +27,27 @@ void compute_direct_sum(SparseVector A,
   reinitVector(res);
 
   cloneVector(res, A);
+  bool can = true;
 
   int resp = res->i.used;
 
   for (size_t i = 0; i < A.i.used; i++) {
+
+    if (A.i.array[i] == a_i) {
+
+      if ((A.x.array[i] - grade_i) >= -1.e-3) {
+
+        // Rcout << "    -> NO: " << A.x.array[i] << " >= " << grade_i << "\n";
+
+        can = false;
+
+      } else {
+
+        // Rcout << "    -> SI: " << A.x.array[i] << " < " << grade_i << "\n";
+
+      }
+
+    }
 
     if (A.i.array[i] >= a_i) {
 
@@ -46,6 +63,8 @@ void compute_direct_sum(SparseVector A,
 
   insertArray(&(res->i), a_i);
   insertArray(&(res->x), grade_i);
+
+  return can;
 
 }
 
@@ -328,7 +347,8 @@ void compute_next_closure(SparseVector A, int i,
 
     for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
 
-      compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
+      bool can = compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
+      if (!can) continue;
 
       semantic_closure(*candB, t, LHS, RHS, &candB2);
 
@@ -672,7 +692,8 @@ void compute_next_intent(SparseVector* candB,
 
     for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
 
-      compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
+      bool can = compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
+      if (!can) continue;
       // Rcout << "candB" << std::endl;
       // printArray(candB->i);
       // printArray(candB->x);
