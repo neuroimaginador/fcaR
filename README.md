@@ -28,21 +28,21 @@ seamlessly with formal contexts and sets of implications. More
 explicitly, three main classes are implemented, using the
 object-oriented-programming paradigm in R:
 
--   FormalContext encapsulates the definition of a formal context (G, M,
-    I), being G the set of objects, M the set of attributes and I the
-    (fuzzy) relationship matrix, and provides methods to operate on the
-    context using FCA tools.
--   ImplicationSet represents a set of implications over a specific
-    formal context.
--   ConceptLattice represents the set of concepts and their
-    relationships, including methods to operate on the lattice.
+- FormalContext encapsulates the definition of a formal context (G, M,
+  I), being G the set of objects, M the set of attributes and I the
+  (fuzzy) relationship matrix, and provides methods to operate on the
+  context using FCA tools.
+- ImplicationSet represents a set of implications over a specific formal
+  context.
+- ConceptLattice represents the set of concepts and their relationships,
+  including methods to operate on the lattice.
 
 Two additional helper classes are implemented:
 
--   Set is a class solely used for visualization purposes, since it
-    encapsulates in sparse format a (fuzzy) set.
--   Concept encapsulates internally both extent and intent of a formal
-    concept as Set.
+- Set is a class solely used for visualization purposes, since it
+  encapsulates in sparse format a (fuzzy) set.
+- Concept encapsulates internally both extent and intent of a formal
+  concept as Set.
 
 Since fcaR is an extension of the data model in the arules package, most
 of the methods and classes implemented interoperates with the main S4
@@ -297,10 +297,10 @@ fc$implications
 Some fundamental functionalities on the concept lattice associated to
 the formal context have been implemented:
 
--   Computing a sublattice.
--   Calculating the subconcepts and superconcepts of a given concept.
--   Finding the join- and meet- irreducible elements, which allows to
-    reduce the context and find the *standard context*.
+- Computing a sublattice.
+- Calculating the subconcepts and superconcepts of a given concept.
+- Finding the join- and meet- irreducible elements, which allows to
+  reduce the context and find the *standard context*.
 
 Also, one can compute the support of both implications and concepts:
 
@@ -328,8 +328,8 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
 #> --> Composition: from 12 to 12 in 0.001 secs.
-#> --> Generalization: from 12 to 12 in 0.001 secs.
-#> Batch took 0.005 secs.
+#> --> Generalization: from 12 to 12 in 0.002 secs.
+#> Batch took 0.004 secs.
 
 # Reduced set of implications
 fc$implications
@@ -358,32 +358,44 @@ the vignettes in this package.
 With respect to the CRAN version, the development version has the
 following changes.
 
+# fcaR 1.2.1
+
+Enhancements:
+
+- Other logics have been implemented. Now, we can use `fc$use_logic()`
+  to select one of the `available_logics()`.
+- Improved export to LaTeX.
+
+Bugfixes:
+
+- Some rounding errors might induce errors in the computations. These
+  has been fixed.
+
 ### fcaR 1.2.0
 
 Bugfixes:
 
--   Fixes required by the new version of Matrix and the new use of HTML
-    Tidy in R 4.2.
+- Fixes required by the new version of Matrix and the new use of HTML
+  Tidy in R 4.2.
 
 ### fcaR 1.1.1
 
 Enhancements:
 
--   The user can control the number of decimal digits when exporting to
-    LaTeX or when printing formal contexts, concept lattices and
-    implications. Just use fcaR_options(decimal_places = n), where n is
-    the number of desired decimal digits.
+- The user can control the number of decimal digits when exporting to
+  LaTeX or when printing formal contexts, concept lattices and
+  implications. Just use fcaR_options(decimal_places = n), where n is
+  the number of desired decimal digits.
 
 New functionality:
 
--   Now the package uses the *settings* package to manage several
-    options. Currently, the only option is the number of decimal digits
-    to use when printing or exporting to LaTeX.
+- Now the package uses the *settings* package to manage several options.
+  Currently, the only option is the number of decimal digits to use when
+  printing or exporting to LaTeX.
 
 Bugfixes:
 
--   Fixed exporting to latex with special characters such as \$, \_,
-    etc.
+- Fixed exporting to latex with special characters such as \$, \_, etc.
 
 ## References
 

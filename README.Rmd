@@ -152,6 +152,17 @@ For more details on the methods implemented and further examples, see the vignet
 
 With respect to the CRAN version, the development version has the following changes.
 
+# fcaR 1.2.1
+
+Enhancements:
+
+* Other logics have been implemented. Now, we can use `fc$use_logic()` to select one of the `available_logics()`.
+* Improved export to LaTeX.
+
+Bugfixes:
+
+* Some rounding errors might induce errors in the computations. These has been fixed.
+
 ### fcaR 1.2.0
 
 Bugfixes:

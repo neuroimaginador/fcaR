@@ -1,4 +1,4 @@
-# fcaR 1.2.0
+# fcaR 1.2.1
 
 Enhancements:
 
@@ -9,6 +9,11 @@ Bugfixes:
 
 * Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.
 * Some rounding errors might induce errors in the computations. These has been fixed.
+
+# fcaR 1.2.0
+
+* Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.
+
 
 # fcaR 1.1.1
 
