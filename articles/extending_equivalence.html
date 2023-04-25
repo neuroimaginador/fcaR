@@ -87,10 +87,11 @@
 
       
 
-      </header><script src="extending_equivalence_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Extending fcaR: Equivalence Rules for Implications</h1>
+      <h1 data-toc-skip>Extending fcaR: Equivalence Rules for
+Implications</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/Malaga-FCA-group/fcaR/blob/HEAD/vignettes/extending_equivalence.Rmd" class="external-link"><code>vignettes/extending_equivalence.Rmd</code></a></small>
@@ -103,11 +104,14 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this vignette, we present a way to extend the functionalities provided in the <code>fcaR</code> package: define new operations on an <code>ImplicationSet</code>.</p>
+<p>In this vignette, we present a way to extend the functionalities
+provided in the <code>fcaR</code> package: define new operations on an
+<code>ImplicationSet</code>.</p>
 <p>First, we load the <code>fcaR</code> package by:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Malaga-FCA-group/fcaR" class="external-link">fcaR</a></span><span class="op">)</span></span></code></pre></div>
-<p>Let us use the <code>planets</code> dataset included in the package:</p>
+<p>Let us use the <code>planets</code> dataset included in the
+package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -115,13 +119,20 @@
 <div class="section level2">
 <h2 id="the-registry">The Registry<a class="anchor" aria-label="anchor" href="#the-registry"></a>
 </h2>
-<p>In <code>fcaR</code>, we have decided to use a <code>registry</code> from the <code>registry</code> package to store the operations that can be performed on an <code>ImplicationSet</code>. Currently, its purpose is to store equivalence rules, that is, methods that obtain equivalent <code>ImplicationSet</code>s from one given.</p>
-<p>This registry is called <code>equivalencesRegistry</code> and one can inspect its contents by:</p>
+<p>In <code>fcaR</code>, we have decided to use a <code>registry</code>
+from the <code>registry</code> package to store the operations that can
+be performed on an <code>ImplicationSet</code>. Currently, its purpose
+is to store equivalence rules, that is, methods that obtain equivalent
+<code>ImplicationSet</code>s from one given.</p>
+<p>This registry is called <code>equivalencesRegistry</code> and one can
+inspect its contents by:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">equivalencesRegistry</span><span class="op">$</span><span class="fu">get_entry_names</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Composition"          "Generalization"       "Reduction"           </span></span>
 <span><span class="co">#&gt; [4] "Simplification"       "Right Simplification" "Reorder"</span></span></code></pre></div>
-<p>These names correspond to the methods that are added to the registry by default, and are used to index those methods. Every method is accompanied by a description, so we can see its definition:</p>
+<p>These names correspond to the methods that are added to the registry
+by default, and are used to index those methods. Every method is
+accompanied by a description, so we can see its definition:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">equivalencesRegistry</span><span class="op">$</span><span class="fu">get_entry</span><span class="op">(</span><span class="st">"Composition"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      method Composition</span></span>
@@ -137,20 +148,25 @@
 <div class="section level2">
 <h2 id="use-of-the-rules">Use of the Rules<a class="anchor" aria-label="anchor" href="#use-of-the-rules"></a>
 </h2>
-<p>As explained in the vignette corresponding to <code>ImplicationSet</code>s, we can use any of these methods by using the <code>apply_rules()</code> method in the <code>ImplicationSet</code>:</p>
+<p>As explained in the vignette corresponding to
+<code>ImplicationSet</code>s, we can use any of these methods by using
+the <code>apply_rules()</code> method in the
+<code>ImplicationSet</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"comp"</span>, <span class="st">"simp"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="definition-of-new-equivalence-rules">Definition of New Equivalence Rules<a class="anchor" aria-label="anchor" href="#definition-of-new-equivalence-rules"></a>
 </h2>
-<p>The way to extend the functionality in <code>fcaR</code> is to define new equivalence operators and include them in the registry.</p>
+<p>The way to extend the functionality in <code>fcaR</code> is to define
+new equivalence operators and include them in the registry.</p>
 <p>In order to add a new method, we use:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">equivalencesRegistry</span><span class="op">$</span><span class="fu">set_entry</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"Method name"</span>,</span>
 <span>                               fun <span class="op">=</span> <span class="va">method_function</span>,</span>
 <span>                               description <span class="op">=</span> <span class="st">"Method description"</span><span class="op">)</span></span></code></pre></div>
-<p>where <code>method_function()</code> must be a function with the following scheme:</p>
+<p>where <code>method_function()</code> must be a function with the
+following scheme:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">method_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">LHS</span>, <span class="va">RHS</span>, <span class="va">attributes</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
@@ -167,12 +183,17 @@
 <span>              rhs <span class="op">=</span> <span class="va">RHS</span><span class="op">)</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>The <code>method_function()</code> function must be defined before adding the method to the registry. Once the method is added, it can be executed by using the corresponding call to <code>apply_rules()</code>.</p>
+<p>The <code>method_function()</code> function must be defined before
+adding the method to the registry. Once the method is added, it can be
+executed by using the corresponding call to
+<code>apply_rules()</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="an-example">An Example<a class="anchor" aria-label="anchor" href="#an-example"></a>
 </h2>
-<p>Let us define an operator which randomly reorders the implications. Evidently, this operation provides an equivalent <code>ImplicationSet</code>.</p>
+<p>Let us define an operator which randomly reorders the implications.
+Evidently, this operation provides an equivalent
+<code>ImplicationSet</code>.</p>
 <p>In this case, we begin by defining the method function:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">random_reorder</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">LHS</span>, <span class="va">RHS</span>, <span class="va">attributes</span><span class="op">)</span> <span class="op">{</span></span>
@@ -187,12 +208,14 @@
 <span>              rhs <span class="op">=</span> <span class="va">RHS</span><span class="op">[</span>, <span class="va">o</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>Once we have defined the function, we add the method to the registry:</p>
+<p>Once we have defined the function, we add the method to the
+registry:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">equivalencesRegistry</span><span class="op">$</span><span class="fu">set_entry</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"Randomize"</span>,</span>
 <span>                               fun <span class="op">=</span> <span class="va">random_reorder</span>,</span>
 <span>                               description <span class="op">=</span> <span class="st">"Randomize the order of the implications."</span><span class="op">)</span></span></code></pre></div>
-<p>If we inspect the registry, we obtain the list of the methods, including the one we have just inserted:</p>
+<p>If we inspect the registry, we obtain the list of the methods,
+including the one we have just inserted:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">equivalencesRegistry</span><span class="op">$</span><span class="fu">get_entry_names</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Composition"          "Generalization"       "Reduction"           </span></span>
@@ -223,16 +246,16 @@
 <code class="sourceCode R"><span><span class="co"># Reordered implications</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
 <span><span class="co">#&gt; Implication set with 10 implications.</span></span>
-<span><span class="co">#&gt; Rule 1: {no_moon} -&gt; {small, near}</span></span>
-<span><span class="co">#&gt; Rule 2: {near} -&gt; {small}</span></span>
-<span><span class="co">#&gt; Rule 3: {small, large, far, moon} -&gt; {medium, near, no_moon}</span></span>
-<span><span class="co">#&gt; Rule 4: {medium} -&gt; {far, moon}</span></span>
-<span><span class="co">#&gt; Rule 5: {small, medium, far, moon} -&gt; {large, near, no_moon}</span></span>
-<span><span class="co">#&gt; Rule 6: {small, near, far, moon} -&gt; {medium, large, no_moon}</span></span>
-<span><span class="co">#&gt; Rule 7: {medium, large, far, moon} -&gt; {small, near, no_moon}</span></span>
-<span><span class="co">#&gt; Rule 8: {large} -&gt; {far, moon}</span></span>
-<span><span class="co">#&gt; Rule 9: {small, near, moon, no_moon} -&gt; {medium, large, far}</span></span>
-<span><span class="co">#&gt; Rule 10: {far} -&gt; {moon}</span></span></code></pre></div>
+<span><span class="co">#&gt; Rule 1: {small, large, far, moon} -&gt; {medium, near, no_moon}</span></span>
+<span><span class="co">#&gt; Rule 2: {far} -&gt; {moon}</span></span>
+<span><span class="co">#&gt; Rule 3: {no_moon} -&gt; {small, near}</span></span>
+<span><span class="co">#&gt; Rule 4: {large} -&gt; {far, moon}</span></span>
+<span><span class="co">#&gt; Rule 5: {medium, large, far, moon} -&gt; {small, near, no_moon}</span></span>
+<span><span class="co">#&gt; Rule 6: {small, medium, far, moon} -&gt; {large, near, no_moon}</span></span>
+<span><span class="co">#&gt; Rule 7: {small, near, moon, no_moon} -&gt; {medium, large, far}</span></span>
+<span><span class="co">#&gt; Rule 8: {medium} -&gt; {far, moon}</span></span>
+<span><span class="co">#&gt; Rule 9: {small, near, far, moon} -&gt; {medium, large, no_moon}</span></span>
+<span><span class="co">#&gt; Rule 10: {near} -&gt; {small}</span></span></code></pre></div>
 </div>
   </div>
 

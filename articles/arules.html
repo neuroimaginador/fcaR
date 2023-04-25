@@ -87,7 +87,7 @@
 
       
 
-      </header><script src="arules_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Integration with the arules package</h1>
@@ -103,7 +103,11 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>One of the goals in the design of this package is to be able to integrate with the <code>arules</code> package. This means that any one using the <code>arules</code> functionalities can export to and import from <code>fcaR</code> objects, more precisely, <code>FormalContext</code> and <code>ImplicationSet</code> objects.</p>
+<p>One of the goals in the design of this package is to be able to
+integrate with the <code>arules</code> package. This means that any one
+using the <code>arules</code> functionalities can export to and import
+from <code>fcaR</code> objects, more precisely,
+<code>FormalContext</code> and <code>ImplicationSet</code> objects.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mhahsler/arules" class="external-link">arules</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: Matrix</span></span>
@@ -122,22 +126,28 @@
 <div class="section level2">
 <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h2>
-<p>For these examples, we are using two binary datasets, <code>Mushroom</code> (from the <code>arules</code> package) and <code>planets</code> (from <code>fcaR</code>).</p>
+<p>For these examples, we are using two binary datasets,
+<code>Mushroom</code> (from the <code>arules</code> package) and
+<code>planets</code> (from <code>fcaR</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Mushroom"</span>, package <span class="op">=</span> <span class="st">"arules"</span><span class="op">)</span></span></code></pre></div>
-<p>At the moment, in <code>arules</code> there is no support for fuzzy sets, so we must restrict ourselves to the binary case.</p>
-<p>Let us create a <code>FormalContext</code> object for the <code>planets</code> dataset:</p>
+<p>At the moment, in <code>arules</code> there is no support for fuzzy
+sets, so we must restrict ourselves to the binary case.</p>
+<p>Let us create a <code>FormalContext</code> object for the
+<code>planets</code> dataset:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc_planets</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="converting-between-formal-contexts-and-transactions-objects">Converting between formal contexts and transactions objects<a class="anchor" aria-label="anchor" href="#converting-between-formal-contexts-and-transactions-objects"></a>
 </h2>
-<p>We begin by converting between the objects which store the datasets.</p>
+<p>We begin by converting between the objects which store the
+datasets.</p>
 <div class="section level3">
 <h3 id="importing-a-transactions-object">Importing a transactions object<a class="anchor" aria-label="anchor" href="#importing-a-transactions-object"></a>
 </h3>
-<p>It suffices to initialize a <code>FormalContext</code> object with the transactions dataset:</p>
+<p>It suffices to initialize a <code>FormalContext</code> object with
+the transactions dataset:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">Mushroom</span><span class="op">)</span></span>
 <span><span class="va">fc</span></span>
@@ -155,12 +165,16 @@
 <span><span class="co">#&gt;  10       X                              X                                         </span></span>
 <span><span class="co">#&gt; Other attributes are: CapShape=knobbed, CapShape=sunken, CapShape=convex,</span></span>
 <span><span class="co">#&gt; CapSurf=fibrous, CapSurf=grooves, CapSurf=smooth, ...</span></span></code></pre></div>
-<p>From this point, we can use all the functionalities in the <code>fcaR</code> package regarding formal contexts, concept lattices and implication sets.</p>
+<p>From this point, we can use all the functionalities in the
+<code>fcaR</code> package regarding formal contexts, concept lattices
+and implication sets.</p>
 </div>
 <div class="section level3">
 <h3 id="exporting-a-formalcontext">Exporting a FormalContext<a class="anchor" aria-label="anchor" href="#exporting-a-formalcontext"></a>
 </h3>
-<p>The <code>to_transactions()</code> function enables us to export a formal context to a format compatible with the <code>arules</code> package:</p>
+<p>The <code>to_transactions()</code> function enables us to export a
+formal context to a format compatible with the <code>arules</code>
+package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">to_transactions</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; transactions in sparse format with</span></span>
@@ -172,22 +186,31 @@
 <div class="section level2">
 <h2 id="converting-between-implication-sets-and-rules-objects">Converting between implication sets and rules objects<a class="anchor" aria-label="anchor" href="#converting-between-implication-sets-and-rules-objects"></a>
 </h2>
-<p>Other point of integration between the two packages is the ability to import rules from the <code>arules</code> package, operate on them to compute closures, recommendations or to remove redundancies, or to export an implication set as a <code>rules</code> object.</p>
+<p>Other point of integration between the two packages is the ability to
+import rules from the <code>arules</code> package, operate on them to
+compute closures, recommendations or to remove redundancies, or to
+export an implication set as a <code>rules</code> object.</p>
 <div class="section level3">
 <h3 id="importing-rules-as-an-implication-set">Importing rules as an implication set<a class="anchor" aria-label="anchor" href="#importing-rules-as-an-implication-set"></a>
 </h3>
-<p>Let us suppose that we have extracted implications from the <code>Mushroom</code> dataset using the <code><a href="https://rdrr.io/pkg/arules/man/apriori.html" class="external-link">apriori()</a></code> function:</p>
+<p>Let us suppose that we have extracted implications from the
+<code>Mushroom</code> dataset using the <code><a href="https://rdrr.io/pkg/arules/man/apriori.html" class="external-link">apriori()</a></code>
+function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mushroom_rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/arules/man/apriori.html" class="external-link">apriori</a></span><span class="op">(</span><span class="va">Mushroom</span>, parameter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>conf <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Once we have created the <code>fc</code> object storing the <code>Mushroom</code> dataset, we simply add the implications to it as:</p>
+<p>Once we have created the <code>fc</code> object storing the
+<code>Mushroom</code> dataset, we simply add the implications to it
+as:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="va">mushroom_rules</span><span class="op">)</span></span></code></pre></div>
-<p>And we can use all the functionalities for the <code>ImplicationSet</code> class.</p>
+<p>And we can use all the functionalities for the
+<code>ImplicationSet</code> class.</p>
 </div>
 <div class="section level3">
 <h3 id="exporting-implicationsets-to-rules-format">Exporting ImplicationSets to rules format<a class="anchor" aria-label="anchor" href="#exporting-implicationsets-to-rules-format"></a>
 </h3>
-<p>If we want to export the implications extracted for a binary formal context, we can use:</p>
+<p>If we want to export the implications extracted for a binary formal
+context, we can use:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">to_arules</span><span class="op">(</span>quality <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -197,7 +220,11 @@
 <div class="section level2">
 <h2 id="final-considerations">Final considerations<a class="anchor" aria-label="anchor" href="#final-considerations"></a>
 </h2>
-<p>An example of use may be to extract rules in the <code>arules</code> package by using <code><a href="https://rdrr.io/pkg/arules/man/apriori.html" class="external-link">apriori()</a></code> or <code><a href="https://rdrr.io/pkg/arules/man/eclat.html" class="external-link">eclat()</a></code>, then importing everything into <code>fcaR</code> as described above, and use the functionalities to simplify, remove redundancies, compute closures, etc., as needed, and then re-export back to <code>arules</code>.</p>
+<p>An example of use may be to extract rules in the <code>arules</code>
+package by using <code><a href="https://rdrr.io/pkg/arules/man/apriori.html" class="external-link">apriori()</a></code> or <code><a href="https://rdrr.io/pkg/arules/man/eclat.html" class="external-link">eclat()</a></code>, then
+importing everything into <code>fcaR</code> as described above, and use
+the functionalities to simplify, remove redundancies, compute closures,
+etc., as needed, and then re-export back to <code>arules</code>.</p>
 </div>
   </div>
 
