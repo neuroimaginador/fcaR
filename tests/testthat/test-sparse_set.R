@@ -63,7 +63,7 @@ test_that("fcaR uses class Set", {
 
 })
 
-test_that("fcaR computes differences of Sets", {
+test_that("fcaR computes operations of Sets", {
 
   attributes <- paste0("P", 1:6)
 
@@ -75,5 +75,23 @@ test_that("fcaR computes differences of Sets", {
 
   expect_error(A %-% B, NA)
   expect_error(B %-% A, NA)
+
+  # Build two sparse sets
+  S <- Set$new(attributes = c("A", "B", "C"))
+  S$assign(A = 1, B = 1)
+  T <- Set$new(attributes = c("A", "B", "C"))
+  T$assign(A = 1, C = 1)
+
+  # Intersection
+  expect_error(S %&% T, NA)
+
+  # Build two sparse sets
+  S <- Set$new(attributes = c("A", "B", "C"))
+  S$assign(A = 1, B = 1)
+  T <- Set$new(attributes = c("A", "B", "C"))
+  T$assign(C = 1)
+
+  # Union
+  expect_error(S %|% T, NA)
 
 })

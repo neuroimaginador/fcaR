@@ -40,7 +40,13 @@ test_that("fcaR plots a ConceptLattice", {
   skip_on_cran()
   skip_if_not_installed("hasseDiagram")
   expect_error(fc$concepts$plot(), NA)
+  fcaR_options("escape_" = FALSE)
   expect_error(fc$concepts$plot(object_names = FALSE), NA)
+
+  fcaR_options("reduced_lattice" = FALSE)
+  expect_error(fc$concepts$plot(), NA)
+  expect_error(fc$concepts$plot(object_names = FALSE), NA)
+
 
   # expect_error(fc$concepts$plot(to_latex = TRUE), NA)
   # expect_error(fc$concepts$plot(to_latex = TRUE,
@@ -83,6 +89,8 @@ test_that("fcaR extracts concepts from a ConceptLattice", {
   expect_is(L, "ConceptSet")
   expect_is(L$to_list()[[1]], "Concept")
   expect_error(fc$concepts[fc$concepts$support() > 0.5], NA)
+  expect_error(fc$concepts$top(), NA)
+  expect_error(fc$concepts$bottom(), NA)
 
 })
 
@@ -109,6 +117,8 @@ test_that("fcaR computes the sublattice of a ConceptLattice", {
 
   expect_error(cl <- fc$concepts$sublattice(fc$concepts$support() > 0.1), NA)
   expect_is(cl, "ConceptLattice")
+
+  expect_error(fc$concepts$sublattice(as.list(fc$concepts)), NA)
 
 })
 

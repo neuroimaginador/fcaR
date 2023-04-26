@@ -160,7 +160,10 @@ test_that("fcaR exports FormalContexts to LaTeX", {
   fc <- FormalContext$new(I)
 
   expect_error(fc$to_latex(), NA)
+  expect_error(context_to_latex(fc$incidence()), NA)
 
+  fcaR_options("use_tabulary" = TRUE)
+  expect_error(context_to_latex(fc$incidence(), rotated = TRUE), NA)
   fc2 <- FormalContext$new(planets)
 
   expect_error(fc2$to_latex(), NA)
@@ -189,9 +192,23 @@ test_that("fcaR extracts concepts", {
   rownames(I) <- objects
 
   fc <- FormalContext$new(I = I)
+  fc$use_logic("Product")
 
   fc$find_concepts(verbose = FALSE)
 
+  expect_is(fc$concepts, "ConceptLattice")
+
+  # Different Galois connections and logics
+  fc <- FormalContext$new(I = I[1:3, 1:3])
+  # fc$use_connection("benevolent1")
+  fc$use_logic("Godel")
+  fc$find_concepts(verbose = FALSE)
+  expect_is(fc$concepts, "ConceptLattice")
+
+  fc <- FormalContext$new(I = I)
+  fc$use_connection("benevolent2")
+  fc$use_connection("Lukasiewicz")
+  fc$find_concepts(verbose = FALSE)
   expect_is(fc$concepts, "ConceptLattice")
 
 })
@@ -220,6 +237,19 @@ test_that("fcaR extracts implications", {
 
   fc$find_implications(verbose = TRUE)
 
+  expect_is(fc$implications, "ImplicationSet")
+
+  # Different Galois connections and logics
+  fc <- FormalContext$new(I = I)
+  fc$use_connection("benevolent1")
+  fc$use_logic("Product")
+  fc$find_implications(verbose = TRUE)
+  expect_is(fc$implications, "ImplicationSet")
+
+  fc <- FormalContext$new(I = I)
+  fc$use_connection("benevolent2")
+  fc$use_connection("Lukasiewicz")
+  fc$find_implications(verbose = TRUE)
   expect_is(fc$implications, "ImplicationSet")
 
 })
@@ -262,6 +292,16 @@ test_that("fcaR generate plots", {
 
   expect_error(fc$plot())
 
+
+})
+
+test_that("fcaR subsets formal contexts", {
+
+  fc <- FormalContext$new(planets)
+  expect_is(fc[, c("large", "moon")], "FormalContext")
+  expect_is(fc[c("Earth", "Mars"), ], "FormalContext")
+
+  expect_is(fc[c("Earth", "Mars"), c("large", "moon")], "FormalContext")
 
 })
 
@@ -321,6 +361,20 @@ test_that("fcaR saves and loads formal contexts", {
 
   colnames(I) <- attributes
   rownames(I) <- objects
+
+  fc <- FormalContext$new(I = I)
+
+  expect_error(fc$save(filename = filename), NA)
+  fc$find_implications()
+
+  expect_error(fc$save(filename = filename), NA)
+
+  expect_error(fc2 <- FormalContext$new(), NA)
+  expect_error(fc2$load(filename), NA)
+
+  expect_error(fc2 <- FormalContext$new(filename), NA)
+
+  filename <- tempfile(fileext = ".CXT")
 
   fc <- FormalContext$new(I = I)
 

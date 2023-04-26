@@ -667,3 +667,34 @@ test_that(desc = "fcaR can use equivalence rules", {
   }
 
 })
+
+test_that("fcaR combines implications", {
+
+  objects <- paste0("O", 1:6)
+  n_objects <- length(objects)
+
+  attributes <- paste0("P", 1:6)
+  n_attributes <- length(attributes)
+
+  I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
+                       1, 1, 0.5, 0, 0, 0,
+                       0.5, 1, 0, 0, 1, 0,
+                       0.5, 0, 0, 1, 0.5, 0,
+                       1, 0, 0, 0.5, 0, 0,
+                       0, 0, 1, 0, 0, 0),
+              nrow = n_objects,
+              byrow = FALSE)
+
+  colnames(I) <- attributes
+  rownames(I) <- objects
+
+  fc <- FormalContext$new(I = I)
+
+  fc$find_implications()
+  expect_error(new_imps <- combine_implications(fc$implications[1:3], fc$implications[4:7]), NA)
+  expect_equal(new_imps$cardinality(), 7)
+  expect_error(new_imps <- combine_implications(fc$implications[0], fc$implications[0]), NA)
+  expect_equal(new_imps$cardinality(), 0)
+
+
+})
