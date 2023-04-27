@@ -7,7 +7,7 @@
 * Default platforms using devtools::check_rhub().
 
 ## Comments
-This version is just a fix required by the new version of the Matrix package and the new use of HTML Tidy.
+New version with some improvements.
 
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs. 
