@@ -249,7 +249,7 @@ bool is_set_preceding(SparseVector B,
 
   }
 
-  if (abs(cx_at_a_i - grade_i) > 1.e-3) {
+  if (fabs(cx_at_a_i - grade_i) > 1.e-3) {
 
     freeArray(&cx_lt_a_i);
     freeArray(&bx_lt_a_i);
@@ -299,7 +299,7 @@ bool is_set_preceding(SparseVector B,
       return false;
 
     }
-    if (abs(cx_lt_a_i.array[i] - bx_lt_a_i.array[i]) > 1.e-3) {
+    if (fabs(cx_lt_a_i.array[i] - bx_lt_a_i.array[i]) > 1.e-3) {
 
       freeArray(&cx_lt_a_i);
       freeArray(&bx_lt_a_i);
