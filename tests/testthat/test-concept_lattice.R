@@ -42,25 +42,53 @@ test_that("fcaR plots a ConceptLattice", {
   expect_error(fc$concepts$plot(), NA)
   fcaR_options("escape_" = FALSE)
   expect_error(fc$concepts$plot(object_names = FALSE), NA)
+  expect_error(fc$concepts$plot(object_names = TRUE), NA)
 
   fcaR_options("reduced_lattice" = FALSE)
   expect_error(fc$concepts$plot(), NA)
   expect_error(fc$concepts$plot(object_names = FALSE), NA)
 
+})
 
-  # expect_error(fc$concepts$plot(to_latex = TRUE), NA)
-  # expect_error(fc$concepts$plot(to_latex = TRUE,
-  #                               filename = "./test.tex",
-  #                               caption = "Test",
-  #                               label = "fig:test",
-  #                               pointsize = 12), NA)
-  #
-  # expect_error(fc$concepts$plot(to_latex = TRUE,
-  #                               object_names = TRUE,
-  #                               filename = "./test2.tex",
-  #                               caption = "Test",
-  #                               label = "fig:test",
-  #                               pointsize = 12), NA)
+
+test_that("fcaR plots concept lattices in LaTeX", {
+
+  skip_on_cran()
+  skip_if_not_installed("tinytex")
+  expect_error(fc$concepts$plot(to_latex = TRUE), NA)
+  myfile <- tempfile(fileext = ".tex")
+  expect_error(file2 <- fc$concepts$plot(to_latex = TRUE,
+                                         filename = myfile,
+                                         caption = "Test",
+                                         label = "fig:test",
+                                         pointsize = 12), NA)
+  expect_equal(file2, myfile)
+
+  expect_error(file2 <- fc$concepts$plot(to_latex = TRUE,
+                                         object_names = TRUE,
+                                         filename = myfile,
+                                         caption = "Test",
+                                         label = "fig:test",
+                                         pointsize = 12), NA)
+  expect_equal(file2, myfile)
+
+  fcaR_options("reduced_lattice" = FALSE)
+  expect_error(fc$concepts$plot(to_latex = TRUE), NA)
+  myfile <- tempfile(fileext = ".tex")
+  expect_error(file2 <- fc$concepts$plot(to_latex = TRUE,
+                                         filename = myfile,
+                                         caption = "Test",
+                                         label = "fig:test",
+                                         pointsize = 12), NA)
+  expect_equal(file2, myfile)
+
+  expect_error(file2 <- fc$concepts$plot(to_latex = TRUE,
+                                         object_names = TRUE,
+                                         filename = myfile,
+                                         caption = "Test",
+                                         label = "fig:test",
+                                         pointsize = 12), NA)
+  expect_equal(file2, myfile)
 
 
 })

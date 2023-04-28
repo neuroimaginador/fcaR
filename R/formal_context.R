@@ -65,10 +65,10 @@ FormalContext <- R6::R6Class(
     expanded_grades_set = NULL,
 
     #' @field concepts The concept lattice associated to the formal context as a \code{\link{ConceptLattice}}.
-    concepts = NULL,
+    concepts = "Not computed yet",
 
     #' @field implications A set of implications on the formal context as an \code{\link{ImplicationSet}}.
-    implications = NULL,
+    implications = "Not computed yet",
 
     #' @description
     #' Creator for the Formal Context class
@@ -1562,18 +1562,6 @@ FormalContext <- R6::R6Class(
       } else {
 
         final_attributes <- intersect(attributes, self$attributes)
-
-      }
-
-      if (length(objects) > length(final_objects)) {
-
-        warning("An object you provided was not found in this context.", call. = FALSE, immediate. = TRUE)
-
-      }
-
-      if (length(attributes) > length(final_attributes)) {
-
-        warning("An attribute you provided was not found in this context.", call. = FALSE, immediate. = TRUE)
 
       }
 

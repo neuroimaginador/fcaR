@@ -697,11 +697,11 @@ ImplicationSet <- R6::R6Class(
 
         if (length(idx_attr) > 1) {
 
-          idx_not_rhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
+          idx_not_rhs <- Matrix::which(Matrix::colSums(RHS[idx_attr, ]) > 0)
 
         } else {
 
-          idx_not_rhs <- which(LHS[idx_attr, ] > 0)
+          idx_not_rhs <- which(RHS[idx_attr, ] > 0)
 
         }
 

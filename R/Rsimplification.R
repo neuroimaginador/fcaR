@@ -45,15 +45,19 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
     if (trace) {
 
-      original_rule <- ImplicationSet$new(name = "original",
-                                          attributes = attributes,
-                                          lhs = Matrix::Matrix(LHS[, this_row], sparse = TRUE),
-                                          rhs = Matrix::Matrix(RHS[, this_row], sparse = TRUE))
+      # EXCLUDE COVERAGE START
+      original_rule <- ImplicationSet$new(
+        name = "original",
+        attributes = attributes,
+        lhs = Matrix::Matrix(LHS[, this_row], sparse = TRUE),
+        rhs = Matrix::Matrix(RHS[, this_row], sparse = TRUE))
 
-      original_set <- ImplicationSet$new(name = "set",
-                                         attributes = attributes,
-                                         lhs = Matrix::Matrix(LHS[, my_idx], sparse = TRUE),
-                                         rhs = Matrix::Matrix(RHS[, my_idx], sparse = TRUE))
+      original_set <- ImplicationSet$new(
+        name = "set",
+        attributes = attributes,
+        lhs = Matrix::Matrix(LHS[, my_idx], sparse = TRUE),
+        rhs = Matrix::Matrix(RHS[, my_idx], sparse = TRUE))
+      # EXCLUDE COVERAGE END
 
     }
 
@@ -78,10 +82,13 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
 
     if (trace) {
 
-      transformed_set <- ImplicationSet$new(name = "set",
-                                            attributes = attributes,
-                                            lhs = Matrix::Matrix(C, sparse = TRUE),
-                                            rhs = Matrix::Matrix(newRHS, sparse = TRUE))
+      # EXCLUDE COVERAGE START
+
+      transformed_set <- ImplicationSet$new(
+        name = "set",
+        attributes = attributes,
+        lhs = Matrix::Matrix(C, sparse = TRUE),
+        rhs = Matrix::Matrix(newRHS, sparse = TRUE))
 
       message("Iteration", count, "\n")
       message("=================\n")
@@ -97,21 +104,29 @@ Rsimplification <- function(LHS, RHS, attributes, trace = FALSE) {
       message("** C-B -> D-B\n")
       print(transformed_set)
 
+      # EXCLUDE COVERAGE END
+
     }
 
     RHS[, my_idx] <- newRHS
 
     if (trace) {
 
-      final_set <- ImplicationSet$new(name = "set",
-                                      attributes = attributes,
-                                      lhs = Matrix::Matrix(LHS, sparse = TRUE),
-                                      rhs = Matrix::Matrix(RHS, sparse = TRUE))
+      # EXCLUDE COVERAGE START
+
+      final_set <- ImplicationSet$new(
+        name = "set",
+        attributes = attributes,
+        lhs = Matrix::Matrix(LHS, sparse = TRUE),
+        rhs = Matrix::Matrix(RHS, sparse = TRUE))
 
       message("** Resulting set\n")
       print(final_set)
 
+      # EXCLUDE COVERAGE END
+
     }
+
     intersections[my_idx] <- .self_intersection(C, newRHS)
     id_inter <- Matrix::which(intersections == 0)
 

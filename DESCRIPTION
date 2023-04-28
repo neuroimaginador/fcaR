@@ -59,6 +59,7 @@ Suggests:
     rmarkdown,
     testthat (>= 2.1.0),
     tictoc,
+    tinytex,
     parallel
 LinkingTo: 
     Rcpp

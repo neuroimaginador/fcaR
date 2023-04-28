@@ -160,6 +160,8 @@ test_that("fcaR exports FormalContexts to LaTeX", {
   fc <- FormalContext$new(I)
 
   expect_error(fc$to_latex(), NA)
+  fcaR_options("latex_fraction" = "sfrac")
+  expect_error(fc$to_latex(), NA)
   expect_error(context_to_latex(fc$incidence()), NA)
 
   fcaR_options("use_tabulary" = TRUE)
@@ -281,12 +283,14 @@ test_that("fcaR generate plots", {
   fc$find_implications()
 
   expect_error(fc$plot(), NA)
-  # expect_error(fc$plot(to_latex = TRUE), NA)
-  # expect_error(fc$plot(to_latex = TRUE,
-  #                      filename = "./test.tex",
-  #                      caption = "Test",
-  #                      label = "fig:test",
-  #                      pointsize = 12), NA)
+
+  skip_if_not_installed("tinytex")
+  expect_error(fc$plot(to_latex = TRUE), NA)
+  expect_error(fc$plot(to_latex = TRUE,
+                       filename = "./test.tex",
+                       caption = "Test",
+                       label = "fig:test",
+                       pointsize = 12), NA)
 
   fc <- FormalContext$new()
 
@@ -300,8 +304,11 @@ test_that("fcaR subsets formal contexts", {
   fc <- FormalContext$new(planets)
   expect_is(fc[, c("large", "moon")], "FormalContext")
   expect_is(fc[c("Earth", "Mars"), ], "FormalContext")
-
   expect_is(fc[c("Earth", "Mars"), c("large", "moon")], "FormalContext")
+
+  expect_is(fc[, 5:6], "FormalContext")
+  expect_is(fc[3:4, ], "FormalContext")
+  expect_is(fc[3:4, 5:6], "FormalContext")
 
 })
 
@@ -449,6 +456,8 @@ test_that("fcaR computes intents, extents and closures of Sets", {
   c1 <- fc$concepts[2]$to_list()[[1]]
   expect_error(fc$extent(c1$get_intent()), NA)
   expect_error(fc$intent(c1$get_extent()), NA)
+  expect_error(fc$downarrow(c1$get_intent()), NA)
+  expect_error(fc$uparrow(c1$get_extent()), NA)
   expect_error(fc$closure(c1$get_intent()), NA)
 
   expect_warning(fc$intent(c1$get_intent()))
@@ -600,5 +609,67 @@ test_that("fcaR computes object and attribute concepts", {
 
   expect_error(fc$att_concept("P1"), NA)
   expect_error(fc$obj_concept("O3"), NA)
+
+})
+
+test_that("fcaR produce errors for some functionalities over many-valued contexts", {
+
+  to_nominal <- sample(0:3, size = 10, replace = TRUE)
+  to_ordinal <- sample(1:4, size = 10, replace = TRUE)
+  to_interordinal <- sample(1:4, size = 10, replace = TRUE)
+  to_interval <- runif(10)
+
+  I <- cbind(nom = to_nominal,
+             ord = to_ordinal,
+             inter = to_interordinal,
+             int = to_interval)
+
+  fc <- FormalContext$new(I)
+
+  expect_error(fc$plot())
+  expect_error(fc$find_concepts())
+  expect_error(fc$find_implications())
+  expect_error(fc$intent(Set$new()))
+  expect_error(fc$extent(Set$new()))
+  expect_error(fc$closure(Set$new()))
+  expect_error(fc$att_concept("nom"))
+  expect_error(fc$obj_concept("1"))
+  expect_error(fc$clarify())
+  expect_error(fc$standardize())
+  expect_error(fc$to_transactions())
+  expect_error(fc$to_latex())
+  expect_error(fc$dual(), NA)
+
+})
+
+test_that("fcaR works with contexts with one attribute or one object", {
+
+  # One object
+  m <- matrix(c(0.2, 0.7), ncol = 2)
+  colnames(m) <- c("m1", "m3")
+  rownames(m) <- "g"
+
+  fc <- FormalContext$new(m)
+  expect_error(fc$find_concepts(), NA)
+  expect_error(fc$find_implications(), NA)
+
+  expect_is(fc$concepts$intents(), "dgCMatrix")
+  expect_is(fc$concepts$extents(), "dgCMatrix")
+
+  expect_equal(dim(fc$concepts$intents()), c(2, 3))
+  expect_equal(dim(fc$concepts$extents()), c(1, 3))
+
+  # One attribute
+  m <- t(m)
+
+  fc <- FormalContext$new(m)
+  expect_error(fc$find_concepts(), NA)
+  expect_error(fc$find_implications(), NA)
+
+  expect_is(fc$concepts$intents(), "dgCMatrix")
+  expect_is(fc$concepts$extents(), "dgCMatrix")
+
+  expect_equal(dim(fc$concepts$intents()), c(1, 3))
+  expect_equal(dim(fc$concepts$extents()), c(2, 3))
 
 })

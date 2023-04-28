@@ -1,5 +1,7 @@
 # fcaR (development version)
 
+* Added more unit tests.
+
 # fcaR 1.2.1
 
 Enhancements:
