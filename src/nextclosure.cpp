@@ -490,19 +490,6 @@ List next_closure_implications(NumericMatrix I,
 
     cloneVector(&A, B);
 
-    if (verbose) {
-
-      pctg = (100 * (n_attributes - A.i.array[0])) / n_attributes;
-
-      if (pctg != old_pctg) {
-
-        Rprintf("Completed = %.2f\n %", pctg);
-        old_pctg = pctg;
-
-      }
-
-    }
-
     reinitVector(&B);
     compute_closure(&B, A, I.begin(), n_objects, n_attributes,
                     extent_f, intent_f, tnorm, implication);

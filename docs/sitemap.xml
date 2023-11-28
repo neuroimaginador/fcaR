@@ -31,16 +31,10 @@
     <loc>/articles/extending_equivalence.html</loc>
   </url>
   <url>
-    <loc>/articles/fuzzy_crisp.html</loc>
-  </url>
-  <url>
     <loc>/articles/implications.html</loc>
   </url>
   <url>
     <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/mushroom.html</loc>
   </url>
   <url>
     <loc>/authors.html</loc>
@@ -70,16 +64,7 @@
     <loc>/reference/Set.html</loc>
   </url>
   <url>
-    <loc>/reference/SparseConcept.html</loc>
-  </url>
-  <url>
-    <loc>/reference/SparseSet.html</loc>
-  </url>
-  <url>
     <loc>/reference/as_Set.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as_SparseSet.html</loc>
   </url>
   <url>
     <loc>/reference/as_vector.html</loc>
@@ -91,12 +76,6 @@
     <loc>/reference/cobre61.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-compute_closure.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dot-to_fraction.html</loc>
-  </url>
-  <url>
     <loc>/reference/equivalencesRegistry.html</loc>
   </url>
   <url>
@@ -104,9 +83,6 @@
   </url>
   <url>
     <loc>/reference/fcaR_options.html</loc>
-  </url>
-  <url>
-    <loc>/reference/formal_context.html</loc>
   </url>
   <url>
     <loc>/reference/grapes-and-grapes.html</loc>
@@ -119,9 +95,6 @@
   </url>
   <url>
     <loc>/reference/grapes-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-holds-grapes.html</loc>
   </url>
   <url>
     <loc>/reference/grapes-holds_in-grapes.html</loc>
@@ -139,9 +112,6 @@
     <loc>/reference/grapes-twiddle-grapes.html</loc>
   </url>
   <url>
-    <loc>/reference/implication_set.html</loc>
-  </url>
-  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -157,25 +127,7 @@
     <loc>/reference/planets.html</loc>
   </url>
   <url>
-    <loc>/reference/print.html</loc>
-  </url>
-  <url>
-    <loc>/reference/remove_columns.html</loc>
-  </url>
-  <url>
     <loc>/reference/scalingRegistry.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sparse_concept.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sparse_set.html</loc>
-  </url>
-  <url>
-    <loc>/reference/to_cxt.html</loc>
-  </url>
-  <url>
-    <loc>/reference/to_latex.html</loc>
   </url>
   <url>
     <loc>/reference/vegas.html</loc>

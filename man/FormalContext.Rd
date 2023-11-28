@@ -223,6 +223,8 @@ Scale the context
 The types of scaling are implemented in a registry,
 so that \code{scalingRegistry$get_entries()} returns
 all types.
+
+In the dots argument, the user can supply the value for \code{bg} (logical), which, if set to \code{TRUE}, indicates to compute background knowledge as implications on the scales; if \code{FALSE}, no implications will be computed on the scales.
 }
 
 \subsection{Returns}{

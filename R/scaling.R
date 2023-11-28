@@ -202,14 +202,20 @@ implication_scaling <- function(V, col_name,
 
 }
 
-scale_context <- function(I, column, type, ...) {
+scale_context <- function(I, column, type, bg, ...) {
 
   idx <- which(colnames(I) == column)
   prev <- seq_len(idx - 1)
   post <- seq(idx, ncol(I))[-1]
   V <- I[, idx]
   fun <- scalingRegistry$get_entry(type)$fun
-  scale_matrix <- fun(as.matrix(V), col_name = column, ...)
+  args <- as.list(...)
+  args$col_name <- column
+  args$V <- as.matrix(V)
+  # scale_matrix <- fun(as.matrix(V), col_name = column, ...)
+  id_nok <- sapply(args, purrr::is_empty)
+  args[id_nok] <- NULL
+  scale_matrix <- do.call(fun, args)
 
   # The scale
   scale <- FormalContext$new(scale_matrix)
@@ -222,9 +228,19 @@ scale_context <- function(I, column, type, ...) {
                      colnames(M),
                      colnames(I)[post])
 
-  # Scale background implications
-  scale$find_implications(save_concepts = FALSE)
-  imps <- scale$implications$clone()
+  if (bg) {
+
+    # Scale background implications
+    scale$find_implications(save_concepts = FALSE)
+    imps <- scale$implications$clone()
+
+  } else {
+
+    imps <- ImplicationSet$new(
+      attributes = scale$attributes,
+      I = scale$I)
+
+  }
 
   return(list(derived = res,
               scale = scale,

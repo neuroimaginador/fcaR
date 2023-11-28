@@ -244,12 +244,15 @@ FormalContext <- R6::R6Class(
     #'
     #' @param attributes  The attributes to scale
     #' @param type        Type of scaling.
+    #'
     #' @param ...
     #'
     #' @details
     #' The types of scaling are implemented in a registry,
     #' so that \code{scalingRegistry$get_entries()} returns
     #' all types.
+    #'
+    #' In the dots argument, the user can supply the value for \code{bg} (logical), which, if set to \code{TRUE}, indicates to compute background knowledge as implications on the scales; if \code{FALSE}, no implications will be computed on the scales.
     #'
     #' @return The scaled formal context
     #' @export
@@ -263,29 +266,43 @@ FormalContext <- R6::R6Class(
 
       # TODO: Check that the attributes are in self$attributes
 
+      bg <- FALSE
+      dots <- list(...)
+      if ("bg" %in% names(dots)) {
+
+        bg <- dots$bg
+        dots$bg <- NULL
+
+      }
+
       I <- self$incidence()
       for (att in attributes) {
 
         scaled <-
           scale_context(I, column = att,
                         type = type,
-                        ...)
+                        bg = bg,
+                        dots)
 
         I <- scaled$derived
         private$scales <- c(private$scales,
                             scaled$scale)
         names(private$scales)[length(private$scales)] <- att
 
-        # Add implications to the bg_implications
-        private$bg_implications <- combine_implications(
-          private$bg_implications,
-          scaled$bg_implications)
+        if (bg) {
 
-        # if (scaled$bg_implications$cardinality() > 0) {
-        #
-        #   private$bg_implications$to_basis()
-        #
-        # }
+          # Add implications to the bg_implications
+          private$bg_implications <- combine_implications(
+            private$bg_implications,
+            scaled$bg_implications)
+
+          # if (scaled$bg_implications$cardinality() > 0) {
+          #
+          #   private$bg_implications$to_basis()
+          #
+          # }
+
+        }
 
       }
 

@@ -431,14 +431,18 @@ test_that("fcaR filters and removes implications", {
   fc$find_implications()
 
   # TODO: FALLA el filtrado
-  expect_error(fc$implications$filter(lhs = fc$attributes[1], rhs = fc$attributes[1:2]), NA)
+  expect_error(fc$implications$filter(lhs = fc$attributes[1],
+                                      rhs = fc$attributes[1:2]), NA)
 
-  expect_warning(fc$implications$filter(lhs = fc$attributes[6], rhs = fc$attributes[3]))
+  expect_warning(fc$implications$filter(lhs = fc$attributes[6],
+                                        rhs = fc$attributes[3]))
 
   expect_error(fc$implications$filter(rhs = fc$attributes[1]), NA)
   expect_error(fc$implications$filter(lhs = fc$attributes[1:2]), NA)
   expect_error(fc$implications$filter(rhs = fc$attributes[1],
                                              drop = TRUE), NA)
+
+  expect_error(fc$implications$filter(not_rhs = fc$attributes[2]), NA)
 
   n <- fc$implications$cardinality()
 

@@ -1,3 +1,4 @@
+#' @importFrom rlang .data
 plot_context <- function(I, to_latex, ...) {
 
   if (to_latex) {
@@ -85,9 +86,44 @@ plot_context <- function(I, to_latex, ...) {
     grDevices::rgb(red = 1 - s,
                    green = 1 - s,
                    blue = 1 - s)
-  stats::heatmap(t(Matrix::as.matrix(I)), Rowv = NA, Colv = NA,
-          col = color_function(seq(0, 1, 0.01)),
-          scale = "none")
+  # stats::heatmap(t(Matrix::as.matrix(I)), Rowv = NA, Colv = NA,
+  #         col = color_function(seq(0, 1, 0.01)),
+  #         scale = "none")
+
+  # Heatmap
+  p <- I |>
+    Matrix::as.matrix() |>
+    # Data wrangling
+    as.data.frame() |>
+    tibble::rownames_to_column(var = "object") |>
+    tidyr::pivot_longer(cols = colnames(I)) |>
+    dplyr::mutate(text = glue::glue(
+      "{object}, {name} is {value}"
+    )) |>
+    # Viz
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = .data$name,
+        y = .data$object,
+        fill = .data$value)) +
+    ggplot2::geom_tile() +
+    ggplot2::scale_fill_gradient(
+      low = "white",
+      high = "black") +
+    ggplot2::theme_minimal() +
+    ggplot2::xlab("") +
+    ggplot2::ylab("") +
+    ggplot2::theme(legend.position = "none") +
+    ggplot2::scale_y_discrete(
+      limits = rev
+    ) +
+    ggplot2::scale_x_discrete(
+      position = "top"
+    )
+
+  print(p)
+
+  # plotly::ggplotly(p, tooltip = "text")
 
   if (to_latex) {
 

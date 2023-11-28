@@ -328,7 +328,7 @@ fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
 #> --> Composition: from 12 to 12 in 0.001 secs.
-#> --> Generalization: from 12 to 12 in 0.002 secs.
+#> --> Generalization: from 12 to 12 in 0.001 secs.
 #> Batch took 0.004 secs.
 
 # Reduced set of implications
@@ -357,6 +357,16 @@ the vignettes in this package.
 
 With respect to the CRAN version, the development version has the
 following changes.
+
+# fcaR 1.2.2
+
+Enhancements:
+
+- Added more unit tests.
+- Minor changes to the plotting of formal contexts.
+- Now the `fc$scale()` function admits a new argument `bg` (default:
+  FALSE) which, if set to TRUE, avoids computing the background
+  knowledge of the scales.
 
 # fcaR 1.2.1
 

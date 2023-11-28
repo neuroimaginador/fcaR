@@ -1,6 +1,10 @@
-# fcaR (development version)
+# fcaR 1.2.2
+
+Enhancements:
 
 * Added more unit tests.
+* Minor changes to the plotting of formal contexts.
+* Now the `fc$scale()` function admits a new argument `bg` (default: FALSE) which, if set to TRUE, avoids computing the background knowledge of the scales.
 
 # fcaR 1.2.1
 

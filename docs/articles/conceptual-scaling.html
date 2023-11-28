@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.2</span>
       </span>
     </div>
 
@@ -1633,6 +1633,8 @@ Student 5
 </tr>
 </tbody>
 </table>
+</li>
+</ul>
 using the following scale:
 <table class="table">
 <thead><tr>
@@ -1707,8 +1709,6 @@ Score is A
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
 </div>
 </div>
 <div class="section level2">
@@ -1849,33 +1849,7 @@ implicit knowledge (e.g., if attribute <code>Intern</code> is lower than
 performed, and can be printed with:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Implication set with 20 implications.</span></span>
-<span><span class="co">#&gt; Rule 1: {} -&gt; {Agreement &lt;= strongly agree, Agreement &gt;= strongly disagree,</span></span>
-<span><span class="co">#&gt;   Intern &lt;= 10}</span></span>
-<span><span class="co">#&gt; Rule 2: {Intern &lt;= 7} -&gt; {Intern &lt;= 8}</span></span>
-<span><span class="co">#&gt; Rule 3: {Intern &lt;= 5} -&gt; {Intern &lt;= 7}</span></span>
-<span><span class="co">#&gt; Rule 4: {Intern &lt;= 4} -&gt; {Intern &lt;= 5}</span></span>
-<span><span class="co">#&gt; Rule 5: {Agreement &gt;= strongly agree} -&gt; {Agreement &gt;= agree}</span></span>
-<span><span class="co">#&gt; Rule 6: {Agreement &gt;= agree} -&gt; {Agreement &gt;= neither agree nor disagree}</span></span>
-<span><span class="co">#&gt; Rule 7: {Agreement &gt;= neither agree nor disagree} -&gt; {Agreement &gt;= disagree}</span></span>
-<span><span class="co">#&gt; Rule 8: {Agreement &lt;= agree, Agreement &gt;= strongly agree} -&gt; {Agreement &lt;=</span></span>
-<span><span class="co">#&gt;   strongly disagree}</span></span>
-<span><span class="co">#&gt; Rule 9: {Agreement &lt;= neither agree nor disagree} -&gt; {Agreement &lt;= agree}</span></span>
-<span><span class="co">#&gt; Rule 10: {Agreement &lt;= neither agree nor disagree, Agreement &gt;= agree} -&gt;</span></span>
-<span><span class="co">#&gt;   {Agreement &lt;= strongly disagree, Agreement &gt;= strongly agree}</span></span>
-<span><span class="co">#&gt; Rule 11: {Agreement &lt;= disagree} -&gt; {Agreement &lt;= neither agree nor disagree}</span></span>
-<span><span class="co">#&gt; Rule 12: {Agreement &lt;= disagree, Agreement &gt;= neither agree nor disagree} -&gt;</span></span>
-<span><span class="co">#&gt;   {Agreement &lt;= strongly disagree, Agreement &gt;= strongly agree}</span></span>
-<span><span class="co">#&gt; Rule 13: {Agreement &lt;= strongly disagree} -&gt; {Agreement &lt;= disagree}</span></span>
-<span><span class="co">#&gt; Rule 14: {Agreement &lt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Agreement</span></span>
-<span><span class="co">#&gt;   &gt;= strongly agree}</span></span>
-<span><span class="co">#&gt; Rule 15: {Attitude &gt;= very lazy} -&gt; {Attitude &gt;= lazy}</span></span>
-<span><span class="co">#&gt; Rule 16: {Attitude &lt;= working, Attitude &gt;= lazy} -&gt; {Attitude &lt;= hard working,</span></span>
-<span><span class="co">#&gt;   Attitude &gt;= very lazy}</span></span>
-<span><span class="co">#&gt; Rule 17: {Attitude &lt;= hard working} -&gt; {Attitude &lt;= working}</span></span>
-<span><span class="co">#&gt; Rule 18: {Score is A, Score is B} -&gt; {Score is C}</span></span>
-<span><span class="co">#&gt; Rule 19: {Score is A, Score is C} -&gt; {Score is B}</span></span>
-<span><span class="co">#&gt; Rule 20: {Score is B, Score is C} -&gt; {Score is A}</span></span></code></pre></div>
+<span><span class="co">#&gt; Implication set with 0 implications.</span></span></code></pre></div>
 <p>It is a simple <code>ImplicationSet</code> that stores all the
 implications that can be derived from the scale contexts.</p>
 </div>
@@ -1899,56 +1873,110 @@ the <em>background knowledge</em>.</p>
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
 <span><span class="co">#&gt; Implication set with 26 implications.</span></span>
-<span><span class="co">#&gt; Rule 1: {} -&gt; {Agreement &gt;= disagree}</span></span>
-<span><span class="co">#&gt; Rule 2: {Agreement &gt;= disagree, Score is A} -&gt; {Grant = yes, Agreement &gt;=</span></span>
-<span><span class="co">#&gt;   strongly agree, Attitude &lt;= hard working}</span></span>
-<span><span class="co">#&gt; Rule 3: {Agreement &gt;= disagree, Score is B} -&gt; {Intern &lt;= 8, Agreement &lt;= agree}</span></span>
-<span><span class="co">#&gt; Rule 4: {Agreement &gt;= disagree, Score is C} -&gt; {Grant = yes, Intern &lt;= 7,</span></span>
-<span><span class="co">#&gt;   Agreement &lt;= agree, Agreement &gt;= agree, Attitude &lt;= working}</span></span>
-<span><span class="co">#&gt; Rule 5: {Agreement &gt;= disagree, Attitude &gt;= very lazy} -&gt; {Grant = no, Grant =</span></span>
-<span><span class="co">#&gt;   yes, Intern &lt;= 4, Agreement &lt;= strongly disagree, Attitude &lt;= hard working,</span></span>
-<span><span class="co">#&gt;   Score is B, Score is A}</span></span>
-<span><span class="co">#&gt; Rule 6: {Agreement &gt;= disagree, Attitude &gt;= lazy} -&gt; {Grant = no, Intern &lt;= 4,</span></span>
-<span><span class="co">#&gt;   Agreement &lt;= disagree, Score is B}</span></span>
-<span><span class="co">#&gt; Rule 7: {Agreement &gt;= disagree, Attitude &lt;= working} -&gt; {Agreement &gt;= neither</span></span>
+<span><span class="co">#&gt; Rule 1: {} -&gt; {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree}</span></span>
+<span><span class="co">#&gt; Rule 2: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Score is A} -&gt; {Grant = yes, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   neither agree nor disagree, Agreement &gt;= agree, Agreement &gt;= strongly agree,</span></span>
+<span><span class="co">#&gt;   Attitude &lt;= hard working, Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 3: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Score is B} -&gt; {Intern &lt;= 8, Agreement &lt;=</span></span>
+<span><span class="co">#&gt;   agree}</span></span>
+<span><span class="co">#&gt; Rule 4: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Score is C} -&gt; {Grant = yes, Intern &lt;= 7,</span></span>
+<span><span class="co">#&gt;   Intern &lt;= 8, Agreement &lt;= agree, Agreement &gt;= neither agree nor disagree,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= agree, Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 5: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Attitude &gt;= very lazy} -&gt; {Grant = no,</span></span>
+<span><span class="co">#&gt;   Grant = yes, Intern &lt;= 4, Intern &lt;= 5, Intern &lt;= 7, Intern &lt;= 8, Agreement</span></span>
+<span><span class="co">#&gt;   &lt;= strongly disagree, Agreement &lt;= disagree, Agreement &lt;= neither agree</span></span>
+<span><span class="co">#&gt;   nor disagree, Agreement &lt;= agree, Agreement &gt;= neither agree nor disagree,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= agree, Agreement &gt;= strongly agree, Attitude &lt;= hard working,</span></span>
+<span><span class="co">#&gt;   Attitude &lt;= working, Attitude &gt;= lazy, Score is C, Score is B, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 6: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Attitude &gt;= lazy} -&gt; {Grant = no, Intern &lt;=</span></span>
+<span><span class="co">#&gt;   4, Intern &lt;= 5, Intern &lt;= 7, Intern &lt;= 8, Agreement &lt;= disagree, Agreement &lt;=</span></span>
+<span><span class="co">#&gt;   neither agree nor disagree, Agreement &lt;= agree, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 7: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Attitude &lt;= working} -&gt; {Agreement &gt;= neither</span></span>
 <span><span class="co">#&gt;   agree nor disagree}</span></span>
-<span><span class="co">#&gt; Rule 8: {Agreement &gt;= disagree, Attitude &lt;= hard working} -&gt; {Grant = yes,</span></span>
-<span><span class="co">#&gt;   Agreement &gt;= strongly agree, Score is A}</span></span>
-<span><span class="co">#&gt; Rule 9: {Agreement &gt;= strongly agree} -&gt; {Grant = yes, Attitude &lt;= hard working,</span></span>
-<span><span class="co">#&gt;   Score is A}</span></span>
-<span><span class="co">#&gt; Rule 10: {Agreement &gt;= agree} -&gt; {Grant = yes, Attitude &lt;= working}</span></span>
-<span><span class="co">#&gt; Rule 11: {Agreement &gt;= neither agree nor disagree} -&gt; {Attitude &lt;= working}</span></span>
-<span><span class="co">#&gt; Rule 12: {Agreement &lt;= agree, Agreement &gt;= disagree} -&gt; {Intern &lt;= 8}</span></span>
-<span><span class="co">#&gt; Rule 13: {Agreement &lt;= neither agree nor disagree, Agreement &gt;= disagree} -&gt;</span></span>
-<span><span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Score is B}</span></span>
-<span><span class="co">#&gt; Rule 14: {Agreement &lt;= disagree, Agreement &gt;= disagree} -&gt; {Grant = no, Intern</span></span>
-<span><span class="co">#&gt;   &lt;= 4, Attitude &gt;= lazy, Score is B}</span></span>
-<span><span class="co">#&gt; Rule 15: {Agreement &lt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Grant =</span></span>
-<span><span class="co">#&gt;   no, Grant = yes, Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy,</span></span>
-<span><span class="co">#&gt;   Score is B, Score is A}</span></span>
-<span><span class="co">#&gt; Rule 16: {Intern &lt;= 8, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span></span>
-<span><span class="co">#&gt; Rule 17: {Intern &lt;= 7, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span></span>
-<span><span class="co">#&gt; Rule 18: {Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= disagree, Score is B} -&gt;</span></span>
-<span><span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Agreement &lt;= neither agree nor disagree}</span></span>
-<span><span class="co">#&gt; Rule 19: {Intern &lt;= 5, Agreement &gt;= disagree} -&gt; {Grant = no, Agreement &lt;=</span></span>
-<span><span class="co">#&gt;   neither agree nor disagree, Score is B}</span></span>
-<span><span class="co">#&gt; Rule 20: {Intern &lt;= 4, Agreement &gt;= disagree} -&gt; {Grant = no, Agreement &lt;=</span></span>
-<span><span class="co">#&gt;   disagree, Attitude &gt;= lazy, Score is B}</span></span>
-<span><span class="co">#&gt; Rule 21: {Grant = yes, Agreement &gt;= disagree} -&gt; {Agreement &gt;= agree, Attitude</span></span>
-<span><span class="co">#&gt;   &lt;= working}</span></span>
-<span><span class="co">#&gt; Rule 22: {Grant = yes, Intern &lt;= 8, Agreement &lt;= agree, Agreement &gt;= strongly</span></span>
-<span><span class="co">#&gt;   agree, Attitude &lt;= hard working, Score is A} -&gt; {Grant = no, Intern &lt;= 4,</span></span>
-<span><span class="co">#&gt;   Attitude &gt;= very lazy, Score is B}</span></span>
-<span><span class="co">#&gt; Rule 23: {Grant = yes, Intern &lt;= 7, Agreement &lt;= agree, Agreement &gt;= agree,</span></span>
+<span><span class="co">#&gt; Rule 8: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Attitude &lt;= hard working} -&gt; {Grant = yes,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= neither agree nor disagree, Agreement &gt;= agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly agree, Attitude &lt;= working, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 9: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Agreement &gt;= strongly agree} -&gt; {Grant = yes,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= neither agree nor disagree, Agreement &gt;= agree, Attitude &lt;= hard</span></span>
+<span><span class="co">#&gt;   working, Attitude &lt;= working, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 10: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Agreement &gt;= agree} -&gt; {Grant = yes,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= neither agree nor disagree, Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 11: {Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Agreement &gt;= neither agree nor disagree} -&gt;</span></span>
+<span><span class="co">#&gt;   {Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 12: {Intern &lt;= 10, Agreement &lt;= agree, Agreement &lt;= strongly agree,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Intern &lt;= 8}</span></span>
+<span><span class="co">#&gt; Rule 13: {Intern &lt;= 10, Agreement &lt;= neither agree nor disagree, Agreement &lt;=</span></span>
+<span><span class="co">#&gt;   strongly agree, Agreement &gt;= strongly disagree, Agreement &gt;= disagree} -&gt;</span></span>
+<span><span class="co">#&gt;   {Grant = no, Intern &lt;= 5, Intern &lt;= 7, Intern &lt;= 8, Agreement &lt;= agree, Score</span></span>
+<span><span class="co">#&gt;   is B}</span></span>
+<span><span class="co">#&gt; Rule 14: {Intern &lt;= 10, Agreement &lt;= disagree, Agreement &lt;= strongly agree,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Grant = no, Intern</span></span>
+<span><span class="co">#&gt;   &lt;= 4, Intern &lt;= 5, Intern &lt;= 7, Intern &lt;= 8, Agreement &lt;= neither agree nor</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &lt;= agree, Attitude &gt;= lazy, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 15: {Intern &lt;= 10, Agreement &lt;= strongly disagree, Agreement &lt;= strongly</span></span>
+<span><span class="co">#&gt;   agree, Agreement &gt;= strongly disagree, Agreement &gt;= disagree} -&gt; {Grant = no,</span></span>
+<span><span class="co">#&gt;   Grant = yes, Intern &lt;= 4, Intern &lt;= 5, Intern &lt;= 7, Intern &lt;= 8, Agreement</span></span>
+<span><span class="co">#&gt;   &lt;= disagree, Agreement &lt;= neither agree nor disagree, Agreement &lt;= agree,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= neither agree nor disagree, Agreement &gt;= agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly agree, Attitude &lt;= hard working, Attitude &lt;= working, Attitude &gt;=</span></span>
+<span><span class="co">#&gt;   lazy, Attitude &gt;= very lazy, Score is C, Score is B, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 16: {Intern &lt;= 8, Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly disagree, Agreement &gt;= disagree} -&gt; {Agreement &lt;= agree}</span></span>
+<span><span class="co">#&gt; Rule 17: {Intern &lt;= 7, Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly disagree, Agreement &gt;= disagree} -&gt; {Intern &lt;= 8, Agreement &lt;= agree}</span></span>
+<span><span class="co">#&gt; Rule 18: {Intern &lt;= 7, Intern &lt;= 8, Intern &lt;= 10, Agreement &lt;= agree, Agreement</span></span>
+<span><span class="co">#&gt;   &lt;= strongly agree, Agreement &gt;= strongly disagree, Agreement &gt;= disagree,</span></span>
+<span><span class="co">#&gt;   Score is B} -&gt; {Grant = no, Intern &lt;= 5, Agreement &lt;= neither agree nor</span></span>
+<span><span class="co">#&gt;   disagree}</span></span>
+<span><span class="co">#&gt; Rule 19: {Intern &lt;= 5, Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly disagree, Agreement &gt;= disagree} -&gt; {Grant = no, Intern &lt;= 7, Intern</span></span>
+<span><span class="co">#&gt;   &lt;= 8, Agreement &lt;= neither agree nor disagree, Agreement &lt;= agree, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 20: {Intern &lt;= 4, Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly disagree, Agreement &gt;= disagree} -&gt; {Grant = no, Intern &lt;= 5, Intern</span></span>
+<span><span class="co">#&gt;   &lt;= 7, Intern &lt;= 8, Agreement &lt;= disagree, Agreement &lt;= neither agree nor</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &lt;= agree, Attitude &gt;= lazy, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 21: {Grant = yes, Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly disagree, Agreement &gt;= disagree} -&gt; {Agreement &gt;= neither agree nor</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= agree, Attitude &lt;= working}</span></span>
+<span><span class="co">#&gt; Rule 22: {Grant = yes, Intern &lt;= 8, Intern &lt;= 10, Agreement &lt;= agree, Agreement</span></span>
+<span><span class="co">#&gt;   &lt;= strongly agree, Agreement &gt;= strongly disagree, Agreement &gt;= disagree,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= neither agree nor disagree, Agreement &gt;= agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly agree, Attitude &lt;= hard working, Attitude &lt;= working, Score is A}</span></span>
+<span><span class="co">#&gt;   -&gt; {Grant = no, Intern &lt;= 4, Intern &lt;= 5, Intern &lt;= 7, Agreement &lt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &lt;= disagree, Agreement &lt;= neither agree nor disagree,</span></span>
+<span><span class="co">#&gt;   Attitude &gt;= lazy, Attitude &gt;= very lazy, Score is C, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 23: {Grant = yes, Intern &lt;= 7, Intern &lt;= 8, Intern &lt;= 10, Agreement &lt;=</span></span>
+<span><span class="co">#&gt;   agree, Agreement &lt;= strongly agree, Agreement &gt;= strongly disagree, Agreement</span></span>
+<span><span class="co">#&gt;   &gt;= disagree, Agreement &gt;= neither agree nor disagree, Agreement &gt;= agree,</span></span>
 <span><span class="co">#&gt;   Attitude &lt;= working} -&gt; {Score is C}</span></span>
-<span><span class="co">#&gt; Rule 24: {Grant = no, Agreement &gt;= disagree} -&gt; {Intern &lt;= 5, Agreement &lt;=</span></span>
-<span><span class="co">#&gt;   neither agree nor disagree, Score is B}</span></span>
-<span><span class="co">#&gt; Rule 25: {Grant = no, Intern &lt;= 4, Agreement &lt;= disagree, Agreement &gt;= neither</span></span>
-<span><span class="co">#&gt;   agree nor disagree, Attitude &lt;= working, Attitude &gt;= lazy, Score is B} -&gt;</span></span>
-<span><span class="co">#&gt;   {Grant = yes, Score is A}</span></span>
-<span><span class="co">#&gt; Rule 26: {Grant = no, Grant = yes, Intern &lt;= 5, Agreement &lt;= neither agree nor</span></span>
-<span><span class="co">#&gt;   disagree, Agreement &gt;= agree, Attitude &lt;= working, Score is C, Score is B} -&gt;</span></span>
-<span><span class="co">#&gt;   {Intern &lt;= 4, Attitude &lt;= hard working, Attitude &gt;= very lazy}</span></span></code></pre></div>
+<span><span class="co">#&gt; Rule 24: {Grant = no, Intern &lt;= 10, Agreement &lt;= strongly agree, Agreement &gt;=</span></span>
+<span><span class="co">#&gt;   strongly disagree, Agreement &gt;= disagree} -&gt; {Intern &lt;= 5, Intern &lt;= 7, Intern</span></span>
+<span><span class="co">#&gt;   &lt;= 8, Agreement &lt;= neither agree nor disagree, Agreement &lt;= agree, Score is B}</span></span>
+<span><span class="co">#&gt; Rule 25: {Grant = no, Intern &lt;= 4, Intern &lt;= 5, Intern &lt;= 7, Intern &lt;= 8,</span></span>
+<span><span class="co">#&gt;   Intern &lt;= 10, Agreement &lt;= disagree, Agreement &lt;= neither agree nor disagree,</span></span>
+<span><span class="co">#&gt;   Agreement &lt;= agree, Agreement &lt;= strongly agree, Agreement &gt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &gt;= disagree, Agreement &gt;= neither agree nor disagree,</span></span>
+<span><span class="co">#&gt;   Attitude &lt;= working, Attitude &gt;= lazy, Score is B} -&gt; {Grant = yes, Agreement</span></span>
+<span><span class="co">#&gt;   &lt;= strongly disagree, Agreement &gt;= agree, Agreement &gt;= strongly agree,</span></span>
+<span><span class="co">#&gt;   Attitude &lt;= hard working, Attitude &gt;= very lazy, Score is C, Score is A}</span></span>
+<span><span class="co">#&gt; Rule 26: {Grant = no, Grant = yes, Intern &lt;= 5, Intern &lt;= 7, Intern &lt;= 8, Intern</span></span>
+<span><span class="co">#&gt;   &lt;= 10, Agreement &lt;= neither agree nor disagree, Agreement &lt;= agree, Agreement</span></span>
+<span><span class="co">#&gt;   &lt;= strongly agree, Agreement &gt;= strongly disagree, Agreement &gt;= disagree,</span></span>
+<span><span class="co">#&gt;   Agreement &gt;= neither agree nor disagree, Agreement &gt;= agree, Attitude &lt;=</span></span>
+<span><span class="co">#&gt;   working, Score is C, Score is B} -&gt; {Intern &lt;= 4, Agreement &lt;= strongly</span></span>
+<span><span class="co">#&gt;   disagree, Agreement &lt;= disagree, Agreement &gt;= strongly agree, Attitude &lt;= hard</span></span>
+<span><span class="co">#&gt;   working, Attitude &gt;= lazy, Attitude &gt;= very lazy, Score is A}</span></span></code></pre></div>
 <p>Note that, in this case, this is not the basis of implications, since
 the <em>background knowledge</em> has to be incorporated. That is, these
 implications are valid, but to be complete they need the implications
@@ -2515,22 +2543,25 @@ Thiophene
 <p>The implications derived from the scales are:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Implication set with 2 implications.</span></span>
-<span><span class="co">#&gt; Rule 1: {} -&gt; {nitro &gt;= 1}</span></span>
-<span><span class="co">#&gt; Rule 2: {nitro &gt;= 3} -&gt; {nitro &gt;= 2}</span></span></code></pre></div>
+<span><span class="co">#&gt; Implication set with 0 implications.</span></span></code></pre></div>
 <p>Also, we can compute the implications that are not represented by the
 <em>background knowledge</em>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_implications</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
-<span><span class="co">#&gt; Implication set with 7 implications.</span></span>
-<span><span class="co">#&gt; Rule 1: {nitro &gt;= 3} -&gt; {ring = hex}</span></span>
-<span><span class="co">#&gt; Rule 2: {OS = S} -&gt; {ring = penta}</span></span>
-<span><span class="co">#&gt; Rule 3: {OS = O} -&gt; {ring = penta}</span></span>
-<span><span class="co">#&gt; Rule 4: {ring = penta, OS = S, nitro &gt;= 2} -&gt; {ring = hex, OS = O, nitro &gt;= 3}</span></span>
-<span><span class="co">#&gt; Rule 5: {ring = penta, OS = O, nitro &gt;= 2} -&gt; {ring = hex, OS = S, nitro &gt;= 3}</span></span>
-<span><span class="co">#&gt; Rule 6: {ring = penta, OS = O, OS = S} -&gt; {ring = hex, nitro &gt;= 3}</span></span>
-<span><span class="co">#&gt; Rule 7: {ring = hex, ring = penta} -&gt; {OS = O, OS = S, nitro &gt;= 3}</span></span></code></pre></div>
+<span><span class="co">#&gt; Implication set with 8 implications.</span></span>
+<span><span class="co">#&gt; Rule 1: {nitro &gt;= 3} -&gt; {ring = hex, nitro &gt;= 1, nitro &gt;= 2}</span></span>
+<span><span class="co">#&gt; Rule 2: {nitro &gt;= 2} -&gt; {nitro &gt;= 1}</span></span>
+<span><span class="co">#&gt; Rule 3: {OS = S} -&gt; {ring = penta}</span></span>
+<span><span class="co">#&gt; Rule 4: {OS = O} -&gt; {ring = penta}</span></span>
+<span><span class="co">#&gt; Rule 5: {ring = penta, OS = S, nitro &gt;= 1, nitro &gt;= 2} -&gt; {ring = hex, OS = O,</span></span>
+<span><span class="co">#&gt;   nitro &gt;= 3}</span></span>
+<span><span class="co">#&gt; Rule 6: {ring = penta, OS = O, nitro &gt;= 1, nitro &gt;= 2} -&gt; {ring = hex, OS = S,</span></span>
+<span><span class="co">#&gt;   nitro &gt;= 3}</span></span>
+<span><span class="co">#&gt; Rule 7: {ring = penta, OS = O, OS = S} -&gt; {ring = hex, nitro &gt;= 1, nitro &gt;= 2,</span></span>
+<span><span class="co">#&gt;   nitro &gt;= 3}</span></span>
+<span><span class="co">#&gt; Rule 8: {ring = hex, ring = penta} -&gt; {OS = O, OS = S, nitro &gt;= 1, nitro &gt;= 2,</span></span>
+<span><span class="co">#&gt;   nitro &gt;= 3}</span></span></code></pre></div>
 <p>and the concepts:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span></span>

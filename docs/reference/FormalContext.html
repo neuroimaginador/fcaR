@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fcaR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.2</span>
       </span>
     </div>
 
@@ -229,6 +229,7 @@
 <p>The types of scaling are implemented in a registry,
 so that <code>scalingRegistry$get_entries()</code> returns
 all types.</p>
+<p>In the dots argument, the user can supply the value for <code>bg</code> (logical), which, if set to <code>TRUE</code>, indicates to compute background knowledge as implications on the scales; if <code>FALSE</code>, no implications will be computed on the scales.</p>
 </div>
 
 <div class="section">
@@ -1015,9 +1016,7 @@ selected.</p>
 <span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span><span class="st">"OS"</span>, <span class="st">"nominal"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">scale</span><span class="op">(</span>attributes <span class="op">=</span> <span class="st">"ring"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fc</span><span class="op">$</span><span class="fu">background_knowledge</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Implication set with 2 implications.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rule 1: {} -&gt; {nitro &gt;= 1}</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rule 2: {nitro &gt;= 3} -&gt; {nitro &gt;= 2}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Implication set with 0 implications.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Method `FormalContext$incidence`</span></span></span>

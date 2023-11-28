@@ -842,7 +842,7 @@ implications:</p>
 the rules). We can get these (sparse) matrices as:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fc_planets<span class="sc">$</span>implications<span class="sc">$</span><span class="fu">get_LHS_matrix</span>()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 x 10 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    [[ suppressing 10 column names &#39;1&#39;, &#39;2&#39;, &#39;3&#39; ... ]]</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [[ suppressing 10 column names &#39;1&#39;, &#39;2&#39;, &#39;3&#39; ... ]]</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                            </span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; small   . . . . . . 1 1 1 1</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; medium  . . . . 1 1 . . . 1</span></span>
@@ -853,7 +853,7 @@ the rules). We can get these (sparse) matrices as:</p>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; no_moon 1 . . . . . 1 . . .</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>fc_planets<span class="sc">$</span>implications<span class="sc">$</span><span class="fu">get_RHS_matrix</span>()</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7 x 10 sparse Matrix of class &quot;dgCMatrix&quot;</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    [[ suppressing 10 column names &#39;1&#39;, &#39;2&#39;, &#39;3&#39; ... ]]</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [[ suppressing 10 column names &#39;1&#39;, &#39;2&#39;, &#39;3&#39; ... ]]</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                            </span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; small   1 . 1 . . 1 . . . .</span></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; medium  . . . . . . 1 1 1 .</span></span>
@@ -892,7 +892,7 @@ context) respects an <code>ImplicationSet</code>, via the
 <code>%respects%</code> operator:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fc_planets <span class="sc">%respects%</span> imps</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9 x 10 sparse Matrix of class &quot;lgCMatrix&quot;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    [[ suppressing 10 column names &#39;imp_01&#39;, &#39;imp_02&#39;, &#39;imp_03&#39; ... ]]</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [[ suppressing 10 column names &#39;imp_01&#39;, &#39;imp_02&#39;, &#39;imp_03&#39; ... ]]</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          </span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; set_1 | | | | | | | | | |</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; set_2 | | | | | | | | | |</span></span>
@@ -975,9 +975,9 @@ implications.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fc_I<span class="sc">$</span>implications<span class="sc">$</span><span class="fu">apply_rules</span>(<span class="at">rules =</span> <span class="fu">c</span>(<span class="st">&quot;composition&quot;</span>,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">&quot;simplification&quot;</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Processing batch</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0 secs.</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.008 secs.</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.009 secs.</span></span></code></pre></div>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.03 secs.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.032 secs.</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the
 <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be
@@ -1011,9 +1011,9 @@ another one:</p>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># where we have removed redundancies</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>imps2<span class="sc">$</span><span class="fu">apply_rules</span>(<span class="fu">c</span>(<span class="st">&quot;simp&quot;</span>, <span class="st">&quot;rsimp&quot;</span>))</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Processing batch</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.009 secs.</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.018 secs.</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.028 secs.</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.005 secs.</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.024 secs.</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Batch took 0.029 secs.</span></span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Any implication in imps2 follows from imps</span></span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>imps <span class="sc">%entails%</span> imps2</span>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span></span>
