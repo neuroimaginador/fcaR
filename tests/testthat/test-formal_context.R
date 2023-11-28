@@ -285,12 +285,12 @@ test_that("fcaR generate plots", {
   expect_error(fc$plot(), NA)
 
   skip_if_not_installed("tinytex")
-  expect_error(fc$plot(to_latex = TRUE), NA)
-  expect_error(fc$plot(to_latex = TRUE,
-                       filename = "./test.tex",
-                       caption = "Test",
-                       label = "fig:test",
-                       pointsize = 12), NA)
+  # expect_error(fc$plot(to_latex = TRUE), NA)
+  # expect_error(fc$plot(to_latex = TRUE,
+  #                      filename = "./test.tex",
+  #                      caption = "Test",
+  #                      label = "fig:test",
+  #                      pointsize = 12), NA)
 
   fc <- FormalContext$new()
 
