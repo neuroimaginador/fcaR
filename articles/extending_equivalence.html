@@ -240,22 +240,22 @@ including the one we have just inserted:</p>
 <code class="sourceCode R"><span><span class="co"># Apply the randomize method</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="st">"randomize"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Processing batch</span></span>
-<span><span class="co">#&gt; --&gt; Randomize: from 10 to 10 in 0.001 secs.</span></span>
-<span><span class="co">#&gt; Batch took 0.002 secs.</span></span></code></pre></div>
+<span><span class="co">#&gt; --&gt; Randomize: from 10 to 10 in 0 secs.</span></span>
+<span><span class="co">#&gt; Batch took 0.003 secs.</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Reordered implications</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
 <span><span class="co">#&gt; Implication set with 10 implications.</span></span>
-<span><span class="co">#&gt; Rule 1: {far} -&gt; {moon}</span></span>
-<span><span class="co">#&gt; Rule 2: {medium} -&gt; {far, moon}</span></span>
-<span><span class="co">#&gt; Rule 3: {small, large, far, moon} -&gt; {medium, near, no_moon}</span></span>
-<span><span class="co">#&gt; Rule 4: {small, near, moon, no_moon} -&gt; {medium, large, far}</span></span>
-<span><span class="co">#&gt; Rule 5: {small, medium, far, moon} -&gt; {large, near, no_moon}</span></span>
-<span><span class="co">#&gt; Rule 6: {near} -&gt; {small}</span></span>
-<span><span class="co">#&gt; Rule 7: {no_moon} -&gt; {small, near}</span></span>
-<span><span class="co">#&gt; Rule 8: {large} -&gt; {far, moon}</span></span>
-<span><span class="co">#&gt; Rule 9: {small, near, far, moon} -&gt; {medium, large, no_moon}</span></span>
-<span><span class="co">#&gt; Rule 10: {medium, large, far, moon} -&gt; {small, near, no_moon}</span></span></code></pre></div>
+<span><span class="co">#&gt; Rule 1: {no_moon} -&gt; {small, near}</span></span>
+<span><span class="co">#&gt; Rule 2: {small, medium, far, moon} -&gt; {large, near, no_moon}</span></span>
+<span><span class="co">#&gt; Rule 3: {far} -&gt; {moon}</span></span>
+<span><span class="co">#&gt; Rule 4: {near} -&gt; {small}</span></span>
+<span><span class="co">#&gt; Rule 5: {medium, large, far, moon} -&gt; {small, near, no_moon}</span></span>
+<span><span class="co">#&gt; Rule 6: {small, near, far, moon} -&gt; {medium, large, no_moon}</span></span>
+<span><span class="co">#&gt; Rule 7: {large} -&gt; {far, moon}</span></span>
+<span><span class="co">#&gt; Rule 8: {small, large, far, moon} -&gt; {medium, near, no_moon}</span></span>
+<span><span class="co">#&gt; Rule 9: {small, near, moon, no_moon} -&gt; {medium, large, far}</span></span>
+<span><span class="co">#&gt; Rule 10: {medium} -&gt; {far, moon}</span></span></code></pre></div>
 </div>
   </div>
 
