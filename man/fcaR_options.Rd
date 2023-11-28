@@ -15,7 +15,7 @@ Set or get options for fcaR
 \section{Supported options}{
 
 The following options are supported
-\itemize{
+\describe{
 \item{\code{decimal_places}}{(\code{numeric};2) The number of decimal places to show when printing or exporting to \LaTeX sets, implications, concepts, etc.}
 \item{\code{latex_size}}{(\code{character};"normalsize") Size to use when exporting to LaTeX.}
 \item{\code{reduced\_lattice}}{(\code{logical};TRUE) Plot the reduced concept lattice?}
