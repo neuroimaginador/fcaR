@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release', bioc: '3.17'}
+          - {os: macOS-latest,   r: 'release', bioc: '3.18'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
