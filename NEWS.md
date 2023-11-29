@@ -6,6 +6,10 @@ Enhancements:
 * Minor changes to the plotting of formal contexts.
 * Now the `fc$scale()` function admits a new argument `bg` (default: FALSE) which, if set to TRUE, avoids computing the background knowledge of the scales.
 
+Fixes:
+
+* Changed the package documentation format to comply with the new roxygen2 _PACKAGE sentinel.
+
 # fcaR 1.2.1
 
 Enhancements:

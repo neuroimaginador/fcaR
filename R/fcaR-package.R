@@ -1,3 +1,5 @@
+
+
 ## usethis namespace: start
 #' @useDynLib fcaR, .registration = TRUE
 ## usethis namespace: end
@@ -50,6 +52,6 @@ NULL
 #' Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” _International Journal of Computer Mathematics_, *89*(4), 510-526.
 #' Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” _International Journal of Approximate Reasoning_, *70*, 51-67.
 #'
-#' @docType package
-#' @name fcaR
-NULL
+# @docType package
+#' @keywords internal
+"_PACKAGE"
