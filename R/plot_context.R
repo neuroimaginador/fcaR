@@ -92,11 +92,11 @@ plot_context <- function(I, to_latex, ...) {
 
   # Heatmap
   p <- I |>
-    Matrix::as.matrix() |>
+    Matrix::as.matrix() |> t() |>
     # Data wrangling
     as.data.frame() |>
     tibble::rownames_to_column(var = "object") |>
-    tidyr::pivot_longer(cols = colnames(I)) |>
+    tidyr::pivot_longer(cols = rownames(I)) |>
     dplyr::mutate(text = glue::glue(
       "{object}, {name} is {value}"
     )) |>
@@ -115,9 +115,10 @@ plot_context <- function(I, to_latex, ...) {
     ggplot2::ylab("") +
     ggplot2::theme(legend.position = "none") +
     ggplot2::scale_y_discrete(
-      limits = rev
+      limits = rev(colnames(I))
     ) +
     ggplot2::scale_x_discrete(
+      limits = rownames(I),
       position = "top"
     )
 
