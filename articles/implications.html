@@ -758,9 +758,9 @@ implications.</p>
 <code class="sourceCode R"><span><span class="va">fc_I</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"composition"</span>,</span>
 <span>                                        <span class="st">"simplification"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Processing batch</span></span>
-<span><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.005 secs.</span></span>
-<span><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.043 secs.</span></span>
-<span><span class="co">#&gt; Batch took 0.049 secs.</span></span></code></pre></div>
+<span><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.004 secs.</span></span>
+<span><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.032 secs.</span></span>
+<span><span class="co">#&gt; Batch took 0.037 secs.</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the
 <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be
@@ -797,9 +797,9 @@ another one:</p>
 <span><span class="co"># where we have removed redundancies</span></span>
 <span><span class="va">imps2</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"simp"</span>, <span class="st">"rsimp"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Processing batch</span></span>
-<span><span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.018 secs.</span></span>
-<span><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.07 secs.</span></span>
-<span><span class="co">#&gt; Batch took 0.09 secs.</span></span>
+<span><span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.013 secs.</span></span>
+<span><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.037 secs.</span></span>
+<span><span class="co">#&gt; Batch took 0.05 secs.</span></span>
 <span><span class="co"># Any implication in imps2 follows from imps</span></span>
 <span><span class="va">imps</span> <span class="op"><a href="../reference/grapes-entails-grapes.html">%entails%</a></span> <span class="va">imps2</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span></span>
