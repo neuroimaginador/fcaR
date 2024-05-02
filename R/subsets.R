@@ -1,12 +1,21 @@
 .subset <- function(x, y = NULL, proper = FALSE) {
 
-  x <- convert_to_sparse(x)
-  if (is.null(y)) y <- x
-  y <- convert_to_sparse(y)
+  if (!inherits(x, "CsparseMatrix"))
+    x <- convert_to_sparse(x)
 
-  stopifnot("x" %in% methods::slotNames(x))
+  if (is.null(y)) {
 
-  stopifnot("x" %in% methods::slotNames(y))
+    y <- x
+
+  } else {
+
+    if (!inherits(y, "CsparseMatrix"))
+      y <- convert_to_sparse(y)
+
+  }
+
+  # stopifnot("x" %in% methods::slotNames(x))
+  # stopifnot("x" %in% methods::slotNames(y))
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
 
@@ -33,13 +42,22 @@
 
 .equal_sets <- function(x, y = NULL, proper = FALSE) {
 
-  x <- convert_to_sparse(x)
-  if (is.null(y)) y <- x
-  y <- convert_to_sparse(y)
+  if (!inherits(x, "CsparseMatrix"))
+    x <- convert_to_sparse(x)
 
-  stopifnot("x" %in% methods::slotNames(x))
-  stopifnot("x" %in% methods::slotNames(y))
+  if (is.null(y)) {
 
+    y <- x
+
+  } else {
+
+    if (!inherits(y, "CsparseMatrix"))
+      y <- convert_to_sparse(y)
+
+  }
+
+  # stopifnot("x" %in% methods::slotNames(x))
+  # stopifnot("x" %in% methods::slotNames(y))
 
   p <- as.integer(rep(0, x@Dim[2] + 1))
   i <- is_equal_set_C(x@p, x@i, x@Dim, x@x,

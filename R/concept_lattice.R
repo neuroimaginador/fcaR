@@ -393,7 +393,27 @@ ConceptLattice <- R6::R6Class(
       M <- Matrix::t(private$subconcept_matrix)[idx, ]
       candidates <- Matrix::which(M > 0)
 
-      self[candidates]
+      if (length(candidates) > 1) {
+
+        return(
+          ConceptLattice$new(
+            attributes = private$attributes,
+            objects = private$objects,
+            extents = private$pr_extents[, candidates],
+            intents = private$pr_intents[, candidates])
+        )
+
+      }
+
+      return(
+        ConceptLattice$new(
+          attributes = private$attributes,
+          objects = private$objects,
+          extents = .extract_column(private$pr_extents,
+                                    candidates),
+          intents = .extract_column(private$pr_intents,
+                                    candidates))
+      )
 
     },
 
@@ -419,8 +439,27 @@ ConceptLattice <- R6::R6Class(
       M <- private$subconcept_matrix[idx, ]
       candidates <- which(M > 0)
 
-      self[candidates]
+      if (length(candidates) > 1) {
 
+        return(
+          ConceptLattice$new(
+            attributes = private$attributes,
+            objects = private$objects,
+            extents = private$pr_extents[, candidates],
+            intents = private$pr_intents[, candidates])
+        )
+
+      }
+
+      return(
+        ConceptLattice$new(
+          attributes = private$attributes,
+          objects = private$objects,
+          extents = .extract_column(private$pr_extents,
+                                    candidates),
+          intents = .extract_column(private$pr_intents,
+                                    candidates))
+      )
     },
 
     #' @description
