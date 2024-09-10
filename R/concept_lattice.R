@@ -400,7 +400,9 @@ ConceptLattice <- R6::R6Class(
             attributes = private$attributes,
             objects = private$objects,
             extents = private$pr_extents[, candidates],
-            intents = private$pr_intents[, candidates])
+            intents = private$pr_intents[, candidates],
+            I = private$I
+          )
         )
 
       }
@@ -412,7 +414,9 @@ ConceptLattice <- R6::R6Class(
           extents = .extract_column(private$pr_extents,
                                     candidates),
           intents = .extract_column(private$pr_intents,
-                                    candidates))
+                                    candidates),
+          I = private$I
+        )
       )
 
     },
@@ -446,7 +450,9 @@ ConceptLattice <- R6::R6Class(
             attributes = private$attributes,
             objects = private$objects,
             extents = private$pr_extents[, candidates],
-            intents = private$pr_intents[, candidates])
+            intents = private$pr_intents[, candidates],
+            I = private$I
+          )
         )
 
       }
@@ -458,7 +464,8 @@ ConceptLattice <- R6::R6Class(
           extents = .extract_column(private$pr_extents,
                                     candidates),
           intents = .extract_column(private$pr_intents,
-                                    candidates))
+                                    candidates),
+          I = private$I)
       )
     },
 

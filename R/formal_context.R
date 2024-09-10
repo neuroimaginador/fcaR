@@ -82,6 +82,8 @@ FormalContext <- R6::R6Class(
     #'
     #' If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one. In this case, one can provide a \code{filename} to import. Only RDS, CSV and CXT files are currently supported.
     #'
+    #' If the file is not present, the fcarepository.org is looked for coincidences. If so, the corresponding context is loaded.
+    #'
     #' @return An object of the \code{FormalContext} class.
     #' @export
     #'
@@ -108,7 +110,51 @@ FormalContext <- R6::R6Class(
 
       }
 
-      version
+      if ((length(I) == 1) && is.character(I) && !file.exists(I)) {
+
+        warning("The file does not exist, trying to find it at fcarepository.org",
+                call. = FALSE,
+                immediate. = TRUE)
+
+        URL <- glue::glue("https://github.com/fcatools/contexts/raw/main/contexts/{I}")
+
+        file <- tempfile(fileext = ".cxt")
+
+        err <- try(
+          download.file(URL,
+                        destfile = file,
+                        quiet = TRUE)
+        )
+
+        if (inherits(err, "try-error")) {
+
+          stop("No such context.")
+
+        } else {
+
+          message("Found context.")
+
+          meta <- get_metadata(I)
+
+          if (!is.null(meta)) {
+
+            glue::glue("- {cli::style_underline('Title')}: {meta$title}\n- {cli::style_underline('Description')}: {stringr::str_to_sentence(meta$description)}\n- {cli::style_underline('Source')}: {meta$source}\n\n",
+                       .trim = FALSE) |>
+              cat()
+
+          }
+
+        }
+
+        self$load(file)
+
+        unlink(file)
+
+        return(invisible(self))
+
+      }
+
+      # version
 
       if (!capabilities()["long.double"] & getRversion() < "4.1.0") {
 

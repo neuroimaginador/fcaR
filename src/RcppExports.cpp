@@ -151,6 +151,51 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// test_new
+void test_new(S4 A);
+RcppExport SEXP _fcaR_test_new(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    test_new(A);
+    return R_NilValue;
+END_RCPP
+}
+// test_export_new
+S4 test_export_new(S4 A);
+RcppExport SEXP _fcaR_test_export_new(SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(test_export_new(A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// test_extent_new
+S4 test_extent_new(S4 A, NumericMatrix I);
+RcppExport SEXP _fcaR_test_extent_new(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(test_extent_new(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// test_intent_new
+S4 test_intent_new(S4 A, NumericMatrix I);
+RcppExport SEXP _fcaR_test_intent_new(SEXP ASEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type A(ASEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(test_intent_new(A, I));
+    return rcpp_result_gen;
+END_RCPP
+}
 // next_closure_implications
 List next_closure_implications(NumericMatrix I, List grades_set, StringVector attrs, String connection, String name, bool save_concepts, bool verbose);
 RcppExport SEXP _fcaR_next_closure_implications(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP save_conceptsSEXP, SEXP verboseSEXP) {
@@ -442,6 +487,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
+    {"_fcaR_test_new", (DL_FUNC) &_fcaR_test_new, 1},
+    {"_fcaR_test_export_new", (DL_FUNC) &_fcaR_test_export_new, 1},
+    {"_fcaR_test_extent_new", (DL_FUNC) &_fcaR_test_extent_new, 2},
+    {"_fcaR_test_intent_new", (DL_FUNC) &_fcaR_test_intent_new, 2},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 7},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 7},
     {"_fcaR_compute_upright_arrow", (DL_FUNC) &_fcaR_compute_upright_arrow, 3},

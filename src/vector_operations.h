@@ -23,6 +23,14 @@ typedef struct {
   size_t size;
 } DoubleArray;
 
+typedef struct {
+  IntArray p;
+  IntArray i;
+  DoubleArray x;
+  size_t length;
+} SparseVector;
+
+
 void initArray(DoubleArray *a, size_t initialSize);
 void reinitArray(DoubleArray *a);
 void reinitArray(IntArray *a);
@@ -31,12 +39,6 @@ void insertArray(DoubleArray *a, double element);
 void freeArray(DoubleArray *a);
 void printArray(DoubleArray a);
 
-typedef struct {
-  IntArray p;
-  IntArray i;
-  DoubleArray x;
-  size_t length;
-} SparseVector;
 
 void initVector(SparseVector *a, size_t initialSize);
 void initMatrix(SparseVector *a, size_t nrow);

@@ -180,6 +180,8 @@ Creator for the Formal Context class
 Columns of \code{I} should be named, since they are the names of the attributes of the formal context.
 
 If no \code{I} is used, the resulting \code{FormalContext} will be empty and not usable unless for loading a previously saved one. In this case, one can provide a \code{filename} to import. Only RDS, CSV and CXT files are currently supported.
+
+If the file is not present, the fcarepository.org is looked for coincidences. If so, the corresponding context is loaded.
 }
 
 \subsection{Returns}{
