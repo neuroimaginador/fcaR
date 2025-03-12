@@ -49,6 +49,22 @@ get_element_array <- function(I, i, j, k) {
     .Call(`_fcaR_get_element_array`, I, i, j, k)
 }
 
+test_new <- function(A) {
+    invisible(.Call(`_fcaR_test_new`, A))
+}
+
+test_export_new <- function(A) {
+    .Call(`_fcaR_test_export_new`, A)
+}
+
+test_extent_new <- function(A, I) {
+    .Call(`_fcaR_test_extent_new`, A, I)
+}
+
+test_intent_new <- function(A, I) {
+    .Call(`_fcaR_test_intent_new`, A, I)
+}
+
 next_closure_implications <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", save_concepts = TRUE, verbose = FALSE) {
     .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, connection, name, save_concepts, verbose)
 }

@@ -55,6 +55,8 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \item \href{#method-ImplicationSet-get_RHS_matrix}{\code{ImplicationSet$get_RHS_matrix()}}
 \item \href{#method-ImplicationSet-filter}{\code{ImplicationSet$filter()}}
 \item \href{#method-ImplicationSet-support}{\code{ImplicationSet$support()}}
+\item \href{#method-ImplicationSet-use_logic}{\code{ImplicationSet$use_logic()}}
+\item \href{#method-ImplicationSet-get_logic}{\code{ImplicationSet$get_logic()}}
 \item \href{#method-ImplicationSet-clone}{\code{ImplicationSet$clone()}}
 }
 }
@@ -409,6 +411,36 @@ Compute support of each implication
 
 \subsection{Returns}{
 A vector with the support of each implication
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ImplicationSet-use_logic"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-use_logic}{}}}
+\subsection{Method \code{use_logic()}}{
+Sets the logic to use
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$use_logic(name = available_logics())}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The name of the logic to use. To see the available names, run \code{available_logics()}.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ImplicationSet-get_logic"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-get_logic}{}}}
+\subsection{Method \code{get_logic()}}{
+Gets the logic used
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$get_logic()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string with the name of the logic.
 }
 }
 \if{html}{\out{<hr>}}

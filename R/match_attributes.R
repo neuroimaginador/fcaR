@@ -25,3 +25,49 @@ match_attributes <- function(origin, target_attributes) {
   return(target)
 
 }
+
+match_implications <- function(origin, target_attributes) {
+
+  origin_attributes <- origin$get_attributes()
+
+  # if (all(origin_attributes == target_attributes))
+  #   return(origin)
+
+  idx <- match(origin_attributes, target_attributes)
+  ii <- which(!is.na(idx))
+
+  # cat("Matching:\n")
+  # cat("\t", origin_attributes, "\n")
+  # cat("to:\n")
+  # cat("\t", target_attributes, "\n")
+  # cat("Coinciding:\n")
+  # cat("\t", idx[ii], "\n")
+
+  newLHS <- Matrix::Matrix(0,
+                           nrow = length(target_attributes),
+                           ncol = origin$cardinality())
+  rownames(newLHS) <- target_attributes
+
+  for (i in ii) {
+
+    newLHS[idx[i], ] <- origin$get_LHS_matrix()[i, ]
+
+  }
+
+  newRHS <- Matrix::Matrix(0,
+                           nrow = length(target_attributes),
+                           ncol = origin$cardinality())
+  rownames(newRHS) <- target_attributes
+
+  for (i in ii) {
+
+    newRHS[idx[i], ] <- origin$get_RHS_matrix()[i, ]
+
+  }
+
+  ImplicationSet$new(
+    attributes = target_attributes,
+    lhs = newLHS, rhs = newRHS
+  )
+
+}

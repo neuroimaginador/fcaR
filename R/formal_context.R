@@ -312,6 +312,16 @@ FormalContext <- R6::R6Class(
 
       # TODO: Check that the attributes are in self$attributes
 
+      if (missing(attributes)) attributes <- self$attributes
+      if (is.function(attributes)) {
+
+        I <- self$incidence()
+
+        attributes <- sapply(self$attributes, \(n) attributes(I[, n])) |>
+          which() |> names()
+
+      }
+
       bg <- FALSE
       dots <- list(...)
       if ("bg" %in% names(dots)) {
@@ -1051,7 +1061,7 @@ FormalContext <- R6::R6Class(
       if (private$is_many_valued) error_many_valued()
 
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
-      my_I <- unique(my_I)
+      # my_I <- unique(my_I)
       grades_set <- rep(list(self$grades_set), length(self$attributes))
       # grades_set <- self$expanded_grades_set
       attrs <- self$attributes
@@ -1156,6 +1166,7 @@ FormalContext <- R6::R6Class(
       }
 
       self$implications <- extracted_implications
+      self$implications$use_logic(self$get_logic())
 
       return(invisible(self))
 

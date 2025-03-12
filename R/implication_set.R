@@ -323,13 +323,14 @@ ImplicationSet <- R6::R6Class(
 
       }
 
-      cl <- .compute_closure(S,
+      cl <- .compute_closure_fuzzy(S,
                              LHS = private$lhs_matrix,
                              RHS = private$rhs_matrix,
                              attributes = private$attributes,
                              reduce = reduce,
                              verbose = verbose,
-                             is_direct = private$directness)
+                             is_direct = private$directness,
+                             logic = private$logic)
 
       if (!reduce) {
 
@@ -782,6 +783,36 @@ ImplicationSet <- R6::R6Class(
 
       return(private$implication_support)
 
+    },
+
+    #' @description
+    #' Sets the logic to use
+    #'
+    #'
+    #' @param name The name of the logic to use. To see the available names, run \code{available_logics()}.
+    #'
+    #' @export
+    use_logic = function(name = available_logics()) {
+
+      name <- match.arg(name)
+      if (name %in% available_logics()) {
+
+        private$logic <- name
+
+      }
+
+    },
+
+    #' @description
+    #' Gets the logic used
+    #'
+    #' @return A string with the name of the logic.
+    #'
+    #' @export
+    get_logic = function() {
+
+      private$logic
+
     }
 
   ),
@@ -799,6 +830,7 @@ ImplicationSet <- R6::R6Class(
     implication_support = NULL,
     binary = NULL,
     directness = FALSE,
+    logic = "Godel",
 
     is_binary = function() {
 
@@ -835,8 +867,13 @@ ImplicationSet <- R6::R6Class(
 
     append_implications = function(implications) {
 
-      LHS <- implications$get_LHS_matrix()
-      RHS <- implications$get_RHS_matrix()
+      imps <- match_implications(
+        implications,
+        private$attributes
+      )
+
+      LHS <- imps$get_LHS_matrix()
+      RHS <- imps$get_RHS_matrix()
 
       if (length(private$attributes) == nrow(LHS)) {
 

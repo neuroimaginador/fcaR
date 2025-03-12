@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 #include "set_operations_galois.h"
 #include "Logics.h"
+#include <chrono>
 using namespace Rcpp;
 
 static void chkIntFn(void *dummy) {
@@ -387,6 +388,8 @@ List next_closure_implications(NumericMatrix I,
                                bool save_concepts = true,
                                bool verbose = false) {
 
+  auto start = std::chrono::high_resolution_clock::now(); // Marca de inicio
+
   LogicOperator implication = get_implication(name);
   LogicOperator tnorm = get_tnorm(name);
   GaloisOperator intent_f = get_intent_function(connection);
@@ -562,10 +565,16 @@ List next_closure_implications(NumericMatrix I,
       freeVector(&RHS);
       freeImplicationTree(&tree);
 
+      auto end = std::chrono::high_resolution_clock::now(); // Marca de fin
+
+      // Calcula la duración en segundos
+      std::chrono::duration<double> elapsed = end - start;
+
       List res = List::create(_["concepts"] = intents_S4,
                               _["extents"] = extents_S4,
                               _["LHS"] = lhs_S4,
-                              _["RHS"] = rhs_S4);
+                              _["RHS"] = rhs_S4,
+                              _["elapsed"] = elapsed.count());
 
       Rprintf("User interrupted.\n");
       return res;
@@ -584,10 +593,16 @@ List next_closure_implications(NumericMatrix I,
   freeVector(&LHS);
   freeVector(&RHS);
 
+  auto end = std::chrono::high_resolution_clock::now(); // Marca de fin
+
+  // Calcula la duración en segundos
+  std::chrono::duration<double> elapsed = end - start;
+
   List res = List::create(_["concepts"] = intents_S4,
                           _["extents"] = extents_S4,
                           _["LHS"] = lhs_S4,
-                          _["RHS"] = rhs_S4);
+                          _["RHS"] = rhs_S4,
+                          _["elapsed"] = elapsed.count());
 
   if (verbose)
     Rprintf("Finished.\n");

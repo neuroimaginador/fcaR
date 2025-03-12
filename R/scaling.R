@@ -1,5 +1,8 @@
 nominal_scaling <- function(V, col_name,
-                            values = sort(unique(V))) {
+                            values) {
+
+  if (missing(values)) values <- sort(unique(V))
+  if (is.function(values)) values <- values(V)
 
   # Scale (context)
   vals <- sort(unique(V))
@@ -14,10 +17,13 @@ nominal_scaling <- function(V, col_name,
 }
 
 ordinal_scaling <- function(V, col_name,
-                            values = sort(unique(V)),
+                            values,
                             comparison = `<=`) {
 
   # browser()
+  if (missing(values)) values <- sort(unique(V))
+  if (is.function(values)) values <- values(V)
+
 
   if (comparison(0, 1)) {
 
@@ -60,8 +66,11 @@ ordinal_scaling <- function(V, col_name,
 }
 
 interordinal_scaling <- function(V, col_name,
-                                 values = sort(unique(V)),
+                                 values,
                                  comparison = `<=`) {
+
+  if (missing(values)) values <- sort(unique(V))
+  if (is.function(values)) values <- values(V)
 
   if (comparison(0, 1)) {
 
@@ -162,7 +171,10 @@ biordinal_scaling <- function(V, col_name,
 }
 
 interval_scaling <- function(V, col_name, interval_names,
-                             values = sort(unique(V))) {
+                             values) {
+
+  if (missing(values)) values <- sort(unique(V))
+  if (is.function(values)) values <- values(V)
 
   if (missing(interval_names)) {
 
@@ -186,9 +198,12 @@ interval_scaling <- function(V, col_name, interval_names,
 }
 
 implication_scaling <- function(V, col_name,
-                             values = sort(unique(c(0, V, 1)))) {
+                             values) {
 
   I <- function(a, b) ifelse(a >= b, 1, a)
+
+  if (missing(values)) values <- sort(unique(c(0, V, 1)))
+  if (is.function(values)) values <- values(V)
 
   # Scale (context)
   vals <- sort(unique(c(0, V, 1)))

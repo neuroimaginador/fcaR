@@ -3,173 +3,179 @@ lattice_plot <- function(extents, intents,
                          objects, attributes,
                          object_names,
                          to_latex, ...) {
-
   # Number of concepts
   n <- ncol(extents)
 
-  if (fcaR_options("reduced_lattice")) {
+  if (missing(subconcept_matrix)) {
+    subconcept_matrix <- .subset(extents)
+  }
 
+  if (fcaR_options("reduced_lattice")) {
     labels <- obtain_reduced_labels(
       subconcept_matrix,
       intents = intents,
       attributes = attributes,
       latex = to_latex
     )
-
   } else {
-
     if (to_latex) {
-
       if (object_names) {
+        labels <- sapply(
+          seq(n),
+          function(i) {
+            vA <- Matrix::Matrix(extents[, i],
+              sparse = TRUE
+            )
+            vB <- Matrix::Matrix(intents[, i],
+              sparse = TRUE
+            )
 
-        labels <- sapply(seq(n),
-                         function(i) {
+            vA <- Set$new(
+              attributes = objects,
+              M = vA
+            )
+            vB <- Set$new(
+              attributes = attributes,
+              M = vB
+            )
 
-                           vA <- Matrix::Matrix(extents[, i],
-                                                sparse = TRUE)
-                           vB <- Matrix::Matrix(intents[, i],
-                                                sparse = TRUE)
-
-                           vA <- Set$new(attributes = objects,
-                                         M = vA)
-                           vB <- Set$new(attributes = attributes,
-                                         M = vB)
-
-                           paste0("$\\left(\\,",
-                                  vA$to_latex(print = FALSE),
-                                  ",\\right.",
-                                  "\\left.",
-                                  vB$to_latex(print = FALSE),
-                                  "\\,\\right)$") %>%
-                             stringr::str_replace_all(pattern = "\n",
-                                                      replacement = "")
-
-                         })
-
+            paste0(
+              "$\\left(\\,",
+              vA$to_latex(print = FALSE),
+              ",\\right.",
+              "\\left.",
+              vB$to_latex(print = FALSE),
+              "\\,\\right)$"
+            ) %>%
+              stringr::str_replace_all(
+                pattern = "\n",
+                replacement = ""
+              )
+          }
+        )
       } else {
+        labels <- sapply(
+          seq(n),
+          function(i) {
+            vB <- Matrix::Matrix(intents[, i],
+              sparse = TRUE
+            )
 
-        labels <- sapply(seq(n),
-                         function(i) {
+            vB <- Set$new(
+              attributes = attributes,
+              M = vB
+            )
 
-                           vB <- Matrix::Matrix(intents[, i],
-                                                sparse = TRUE)
-
-                           vB <- Set$new(attributes = attributes,
-                                         M = vB)
-
-                           vB$to_latex(print = FALSE) %>%
-                             stringr::str_replace_all(pattern = "\n",
-                                                      replacement = "")
-
-                         })
-
+            vB$to_latex(print = FALSE) %>%
+              stringr::str_replace_all(
+                pattern = "\n",
+                replacement = ""
+              )
+          }
+        )
       }
 
       labels <- labels %>%
-        stringr::str_replace_all(pattern = stringr::fixed(" "),
-                                 replacement = "\\,")
-
+        stringr::str_replace_all(
+          pattern = stringr::fixed(" "),
+          replacement = "\\,"
+        )
     } else {
-
       if (object_names) {
+        labels <- sapply(
+          seq(n),
+          function(i) {
+            vA <- Matrix::Matrix(extents[, i],
+              sparse = TRUE
+            )
+            vB <- Matrix::Matrix(intents[, i],
+              sparse = TRUE
+            )
 
-        labels <- sapply(seq(n),
-                         function(i) {
-
-                           vA <- Matrix::Matrix(extents[, i],
-                                                sparse = TRUE)
-                           vB <- Matrix::Matrix(intents[, i],
-                                                sparse = TRUE)
-
-                           .concept_to_string(vA, vB,
-                                              objects,
-                                              attributes)
-
-                         })
-
+            .concept_to_string(
+              vA, vB,
+              objects,
+              attributes
+            )
+          }
+        )
       } else {
+        labels <- sapply(
+          seq(n),
+          function(i) {
+            vB <- Matrix::Matrix(intents[, i],
+              sparse = TRUE
+            )
 
-        labels <- sapply(seq(n),
-                         function(i) {
-
-                           vB <- Matrix::Matrix(intents[, i],
-                                                sparse = TRUE)
-
-                           .set_to_string(vB,
-                                          attributes)
-
-                         })
-
+            .set_to_string(
+              vB,
+              attributes
+            )
+          }
+        )
       }
-
     }
-
   }
 
   if (to_latex) {
-
     tmp_file <- tempfile(fileext = ".tex")
     dots <- list(...)
-    args <- list(file = tmp_file,
-                 standAlone = FALSE,
-                 sanitize = FALSE,
-                 width = 6,
-                 height = 4)
+    args <- list(
+      file = tmp_file,
+      standAlone = FALSE,
+      sanitize = FALSE,
+      width = 6,
+      height = 4
+    )
 
     if ("filename" %in% names(dots)) {
-
       filename <- dots$filename
       dots$filename <- NULL
-
     } else {
-
       filename <- tempfile(fileext = ".tex")
-
     }
 
     if ("caption" %in% names(dots)) {
-
       caption <- dots$caption
       dots["caption"] <- NULL
       label <- dots$label
       if (is.null(label)) {
-
         label <- "fig:"
-
       } else {
-
         dots["label"] <- NULL
-
       }
 
-      caption <- paste0("\\label{",
-                        label,
-                        "}",
-                        caption)
+      caption <- paste0(
+        "\\label{",
+        label,
+        "}",
+        caption
+      )
 
-      tex_prefix <- c("\\begin{figure}",
-                      "\\centering",
-                      "")
+      tex_prefix <- c(
+        "\\begin{figure}",
+        "\\centering",
+        ""
+      )
 
-      tex_suffix <- c("",
-                      paste0("\\caption{", caption, "}"),
-                      "",
-                      "\\end{figure}")
-
+      tex_suffix <- c(
+        "",
+        paste0("\\caption{", caption, "}"),
+        "",
+        "\\end{figure}"
+      )
     } else {
-
       tex_prefix <- c()
       tex_suffix <- c()
-
     }
 
     old_opt <- getOption("tikzDocumentDeclaration")
 
     if ("pointsize" %in% names(dots)) {
-
-      options("tikzDocumentDeclaration" = paste0("\\documentclass[", dots$pointsize,
-                                                 "pt]{article}\n"))
-
+      options("tikzDocumentDeclaration" = paste0(
+        "\\documentclass[", dots$pointsize,
+        "pt]{article}\n"
+      ))
     }
 
     options(tikzLatexPackages = c(
@@ -188,11 +194,11 @@ lattice_plot <- function(extents, intents,
     args[names(dots)] <- dots[names(dots)]
 
     on.exit({
-      if (!is.null(grDevices::dev.list()))
+      if (!is.null(grDevices::dev.list())) {
         grDevices::dev.off()
+      }
     })
     do.call(tikzDevice::tikz, args = args)
-
   }
 
   # MM <- private$subconcept_matrix %>%
@@ -217,50 +223,81 @@ lattice_plot <- function(extents, intents,
   #
   # print(p)
 
-  hasseDiagram::hasse(data = Matrix::as.matrix(Matrix::t(subconcept_matrix)),
-                      labels = labels,
-                      parameters = list(arrows = "backward"))
+  hasseDiagram::hasse(
+    data = Matrix::as.matrix(Matrix::t(subconcept_matrix)),
+    labels = labels,
+    parameters = list(arrows = "backward")
+  )
+
+  # M <- Matrix::as.matrix(subconcept_matrix) |> t()
+  #
+  # colnames(M) <- rownames(M) <- labels
+  # y <- parsec::incidence2cover.incidence(M)
+  #
+  # g2 <- igraph::graph_from_adjacency_matrix(t(y))
+  # ly <- igraph::layout_with_sugiyama(g2, maxiter = 100)$layout
+  #
+  # vertices <- ly
+  # colnames(vertices) <- c("x", "y")
+  #
+  # vertices[, "y"] <- 0.8 * vertices[, "y"]
+  #
+  # g2$layout <- as.matrix(vertices)
+  #
+  # pl <- ggraph::autograph(g2,
+  #   node_label = name
+  # ) +
+  #   ggraph::theme_graph(
+  #     plot_margin = ggplot2::margin(5, 5, 5, 5),
+  #     caption_margin = ggplot2::margin(5, 5, 5, 5)
+  #   )
+  #
+  # print(pl)
+
+  # ord <- Matrix::as.matrix(Matrix::t(subconcept_matrix))
+  # hasse <- igraph::graph.adjacency(agop::rel_reduction_transitive(ord))
+  # plot(hasse, layout = igraph::layout.fruchterman.reingold(hasse, dim = 2))
 
   if (to_latex) {
-
     grDevices::dev.off()
 
     tex <- readLines(tmp_file)
     unlink(tmp_file)
 
-    tex <- c(tex_prefix,
-             tex,
-             tex_suffix)
+    tex <- c(
+      tex_prefix,
+      tex,
+      tex_suffix
+    )
 
     options("tikzDocumentDeclaration" = old_opt)
     my_tex <- paste0(tex, collapse = "\n")
     cat(my_tex, file = filename)
 
     return(filename)
-
   }
-
 }
 
 obtain_reduced_labels <- function(subconcept_matrix,
                                   intents,
                                   attributes,
                                   latex = FALSE) {
-
   if (latex) {
-
     attr <- format_label(attributes)
 
-    s2t <- function(set)
-      set_to_latex(S = set,
-                   attributes = attr)
-
+    s2t <- function(set) {
+      set_to_latex(
+        S = set,
+        attributes = attr
+      )
+    }
   } else {
-
-    s2t <- function(set)
-      .set_to_string(S = set,
-                     attributes = attributes)
-
+    s2t <- function(set) {
+      .set_to_string(
+        S = set,
+        attributes = attributes
+      )
+    }
   }
 
   cardinality <- Matrix::colSums(intents)
@@ -276,29 +313,21 @@ obtain_reduced_labels <- function(subconcept_matrix,
   accumulated <- last_node
   reduced <- list(last_node)
   for (i in nodes[-1]) {
-
     node <- .extract_column(intents, i)
     accumulated <- .union(accumulated, last_node)
     reduced[[i]] <- .difference2(node, accumulated)
     last_node <- node
-
   }
 
   reduced_labels <- sapply(reduced, s2t)
 
   if (latex) {
-
     reduced_labels <- reduced_labels %>%
       stringr::str_remove_all(pattern = stringr::fixed("\\\\varnothing"))
-
   } else {
-
     reduced_labels <- reduced_labels %>%
       stringr::str_remove_all(pattern = stringr::fixed("{}"))
-
   }
 
   return(reduced_labels)
-
 }
-
