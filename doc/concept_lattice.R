@@ -20,14 +20,18 @@ n_objects <- length(objects)
 attributes <- paste0("P", 1:6)
 n_attributes <- length(attributes)
 
-I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
-                     0, 1, 0.5, 0, 0, 0.5,
-                     0.5, 1, 0, 0, 1, 0,
-                     0.5, 0, 0, 1, 0.5, 0,
-                     1, 0, 0, 0.5, 0, 0,
-                     0, 0, 1, 0, 0, 1),
-            nrow = n_objects,
-            byrow = FALSE)
+I <- matrix(
+  data = c(
+    0, 1, 0.5, 0, 0, 0.5,
+    0, 1, 0.5, 0, 0, 0.5,
+    0.5, 1, 0, 0, 1, 0,
+    0.5, 0, 0, 1, 0.5, 0,
+    1, 0, 0, 0.5, 0, 0,
+    0, 0, 1, 0, 0, 1
+  ),
+  nrow = n_objects,
+  byrow = FALSE
+)
 
 colnames(I) <- attributes
 rownames(I) <- objects
@@ -53,14 +57,16 @@ fc_planets$to_latex()
 ## -----------------------------------------------------------------------------
 # Read CSV
 filename <- system.file("contexts", "airlines.csv",
-                        package = "fcaR")
+  package = "fcaR"
+)
 
 fc1 <- FormalContext$new(filename)
 fc1
 
 # Read CXT
 filename <- system.file("contexts", "lives_in_water.cxt",
-                        package = "fcaR")
+  package = "fcaR"
+)
 
 fc2 <- FormalContext$new(filename)
 fc2
@@ -118,10 +124,10 @@ fc_planets$standardize()
 fc_I$standardize()
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  fc$save(filename = "./fc.rds")
+# fc$save(filename = "./fc.rds")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  fc2 <- FormalContext$new("./fc.rds")
+# fc2 <- FormalContext$new("./fc.rds")
 
 ## -----------------------------------------------------------------------------
 fc_planets$concepts$plot()
@@ -138,14 +144,14 @@ fc_planets$concepts$to_latex()
 fc_planets$concepts[2:3]
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  fc_planets$concepts$extents()
-#  fc_planets$concepts$intents()
+# fc_planets$concepts$extents()
+# fc_planets$concepts$intents()
 
 ## -----------------------------------------------------------------------------
 fc_planets$concepts$support()
 
 ## -----------------------------------------------------------------------------
-# Get the index of those concepts with support 
+# Get the index of those concepts with support
 # greater than the threshold
 idx <- which(fc_I$concepts$support() > 0.2)
 # Build the sublattice

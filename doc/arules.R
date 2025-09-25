@@ -27,8 +27,8 @@ fc_planets$to_transactions()
 ## -----------------------------------------------------------------------------
 mushroom_rules <- apriori(Mushroom, parameter = list(conf = 1), control = list(verbose = FALSE))
 
-## -----------------------------------------------------------------------------
-fc$implications$add(mushroom_rules)
+## ----eval=FALSE---------------------------------------------------------------
+# fc$implications$add(mushroom_rules)
 
 ## -----------------------------------------------------------------------------
 fc_planets$find_implications()
