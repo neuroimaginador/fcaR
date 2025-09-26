@@ -3,21 +3,56 @@
 
 using namespace Rcpp;
 
+// void get_column(SparseVector* A,
+//                 SparseVector qA,
+//                 int id_col) {
+//
+//   int cont = 0;
+//   for (int i = qA.p.array[id_col]; i < qA.p.array[id_col + 1]; i++) {
+//
+//     insertArray(&(A->i), qA.i.array[i]);
+//     insertArray(&(A->x), qA.x.array[i]);
+//     cont++;
+//
+//   }
+//
+//   insertArray(&(A->p), 0);
+//   insertArray(&(A->p), cont);
+//
+// }
+
 void get_column(SparseVector* A,
-                SparseVector qA,
+                const SparseVector& qA, // <-- Optimización menor: pasar por referencia
                 int id_col) {
 
-  int cont = 0;
-  for (int i = qA.p.array[id_col]; i < qA.p.array[id_col + 1]; i++) {
+  // --- PASO 1: REINICIAR EL VECTOR DE DESTINO ---
+  // Esta es la línea clave. Borra los datos anteriores de A
+  // antes de llenarlo con la nueva columna.
+  reinitVector(A);
 
-    insertArray(&(A->i), qA.i.array[i]);
-    insertArray(&(A->x), qA.x.array[i]);
-    cont++;
+  // --- PASO 2: COPIAR LOS NUEVOS DATOS ---
+  // El resto de la lógica es para copiar los datos de la columna
+  // id_col de qA hacia el ahora vacío vector A.
 
+  // Comprobación de seguridad para evitar accesos fuera de límites
+  if (id_col + 1 >= qA.p.used) {
+    // Si id_col no es válido, A se queda vacío, lo cual es seguro.
+    return;
   }
 
-  insertArray(&(A->p), 0);
-  insertArray(&(A->p), cont);
+  int start_idx = qA.p.array[id_col];
+  int end_idx = qA.p.array[id_col + 1];
+  int count = end_idx - start_idx;
+
+  if (count > 0) {
+    // Usar memcpy para una copia de memoria masiva y rápida
+    memcpy(A->i.array, &qA.i.array[start_idx], count * sizeof(int));
+    memcpy(A->x.array, &qA.x.array[start_idx], count * sizeof(double));
+  }
+
+  // Actualizar los contadores de elementos usados
+  A->i.used = count;
+  A->x.used = count;
 
 }
 

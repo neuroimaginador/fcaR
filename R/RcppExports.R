@@ -81,6 +81,10 @@ next_closure_concepts <- function(I, grades_set, attrs, connection = "standard",
     .Call(`_fcaR_next_closure_concepts`, I, grades_set, attrs, connection, name, verbose, ret)
 }
 
+binary_next_closure_concepts <- function(I, verbose = FALSE) {
+    .Call(`_fcaR_binary_next_closure_concepts`, I, verbose)
+}
+
 compute_intent <- function(V, I, connection, name) {
     .Call(`_fcaR_compute_intent`, V, I, connection, name)
 }

@@ -7,8 +7,12 @@
 
 using namespace Rcpp;
 
+// void get_column(SparseVector* A,
+//                 SparseVector qA,
+//                 int id_col);
+
 void get_column(SparseVector* A,
-                SparseVector qA,
+                const SparseVector& qA,
                 int id_col);
 
 void print_matrix(NumericMatrix I);
