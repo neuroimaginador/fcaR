@@ -151,6 +151,38 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// FuzzyFCbO
+List FuzzyFCbO(NumericMatrix I, NumericVector grades_set, StringVector attrs, String connection, String name, bool verbose);
+RcppExport SEXP _fcaR_FuzzyFCbO(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(FuzzyFCbO(I, grades_set, attrs, connection, name, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
+// InClose
+List InClose(NumericMatrix I, NumericVector grades_set, StringVector attrs, String connection, String name, bool verbose);
+RcppExport SEXP _fcaR_InClose(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type grades_set(grades_setSEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(InClose(I, grades_set, attrs, connection, name, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // test_new
 void test_new(S4 A);
 RcppExport SEXP _fcaR_test_new(SEXP ASEXP) {
@@ -230,6 +262,48 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// compute_intent
+S4 compute_intent(S4 V, NumericMatrix I, String connection, String name);
+RcppExport SEXP _fcaR_compute_intent(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_intent(V, I, connection, name));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_extent
+S4 compute_extent(S4 V, NumericMatrix I, String connection, String name);
+RcppExport SEXP _fcaR_compute_extent(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_extent(V, I, connection, name));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_closure
+S4 compute_closure(S4 V, NumericMatrix I, String connection, String name);
+RcppExport SEXP _fcaR_compute_closure(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
+    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_closure(V, I, connection, name));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compute_upright_arrow
 S4 compute_upright_arrow(S4 V, NumericMatrix I, String name);
 RcppExport SEXP _fcaR_compute_upright_arrow(SEXP VSEXP, SEXP ISEXP, SEXP nameSEXP) {
@@ -279,48 +353,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
     Rcpp::traits::input_parameter< String >::type name(nameSEXP);
     rcpp_result_gen = Rcpp::wrap(compute_downright_arrow(V, I, name));
-    return rcpp_result_gen;
-END_RCPP
-}
-// compute_intent
-S4 compute_intent(S4 V, NumericMatrix I, String connection, String name);
-RcppExport SEXP _fcaR_compute_intent(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
-    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_intent(V, I, connection, name));
-    return rcpp_result_gen;
-END_RCPP
-}
-// compute_extent
-S4 compute_extent(S4 V, NumericMatrix I, String connection, String name);
-RcppExport SEXP _fcaR_compute_extent(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
-    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_extent(V, I, connection, name));
-    return rcpp_result_gen;
-END_RCPP
-}
-// compute_closure
-S4 compute_closure(S4 V, NumericMatrix I, String connection, String name);
-RcppExport SEXP _fcaR_compute_closure(SEXP VSEXP, SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type V(VSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
-    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(compute_closure(V, I, connection, name));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -487,19 +519,21 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
+    {"_fcaR_FuzzyFCbO", (DL_FUNC) &_fcaR_FuzzyFCbO, 6},
+    {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
     {"_fcaR_test_new", (DL_FUNC) &_fcaR_test_new, 1},
     {"_fcaR_test_export_new", (DL_FUNC) &_fcaR_test_export_new, 1},
     {"_fcaR_test_extent_new", (DL_FUNC) &_fcaR_test_extent_new, 2},
     {"_fcaR_test_intent_new", (DL_FUNC) &_fcaR_test_intent_new, 2},
     {"_fcaR_next_closure_implications", (DL_FUNC) &_fcaR_next_closure_implications, 7},
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 7},
+    {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 4},
+    {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 4},
+    {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 4},
     {"_fcaR_compute_upright_arrow", (DL_FUNC) &_fcaR_compute_upright_arrow, 3},
     {"_fcaR_compute_downleft_arrow", (DL_FUNC) &_fcaR_compute_downleft_arrow, 3},
     {"_fcaR_compute_upleft_arrow", (DL_FUNC) &_fcaR_compute_upleft_arrow, 3},
     {"_fcaR_compute_downright_arrow", (DL_FUNC) &_fcaR_compute_downright_arrow, 3},
-    {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 4},
-    {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 4},
-    {"_fcaR_compute_closure", (DL_FUNC) &_fcaR_compute_closure, 4},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},
     {"_fcaR_intersects_C", (DL_FUNC) &_fcaR_intersects_C, 7},

@@ -856,23 +856,49 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Use Ganter Algorithm to compute concepts
     #'
+    #' @param method (string) The name of a method for the computation of concepts. Available options can be listed with \code{conceptRegistry$get_entries()}.
     #' @param verbose   (logical) TRUE will provide a verbose output.
     #'
     #' @return A list with all the concepts in the formal context.
     #'
     #' @export
-    find_concepts = function(verbose = FALSE) {
+    find_concepts = function(method = "inclose",
+                             verbose = FALSE) {
+
       private$check_empty()
 
       if (private$is_many_valued) error_many_valued()
 
+      method <- conceptRegistry$get_entry(method[1])
+      if (is.null(method)) {
+
+        avail_methods <- conceptRegistry$get_entry_names()
+
+        stop("Unrecognized method.")
+
+      }
+
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
-      # my_I <- unique(my_I)
-      grades_set <- rep(list(self$grades_set), length(self$attributes))
-      # grades_set <- self$expanded_grades_set
+
+      if (method$method == "NextClosure") {
+
+        grades_set <- rep(list(self$grades_set), length(self$attributes))
+
+      } else {
+
+        grades_set <- self$grades_set
+      }
       attrs <- self$attributes
 
-      L <- next_closure_concepts(
+      if (verbose) {
+
+        glue::glue("You have chosen {method$method}\n") |>
+          cli::cat_line()
+
+      }
+
+      # L <- next_closure_concepts(
+      L <- method$fun(
         I = my_I,
         grades_set = grades_set,
         attrs = attrs,

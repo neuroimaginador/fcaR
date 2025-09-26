@@ -1,4 +1,8 @@
+#ifndef AUX_FUNCTIONS_H
+#define AUX_FUNCTIONS_H
+
 #include <Rcpp.h>
+// #include "vector_operations.h"
 #include "set_operations_galois.h"
 
 using namespace Rcpp;
@@ -24,3 +28,6 @@ double tnorm_Zadeh(double x, double y);
 double implication_Zadeh(double x, double y);
 double tnorm_Lukasiewicz(double x, double y);
 double implication_Lukasiewicz(double x, double y);
+
+S4 DenseArrayToS4(const DoubleArray& data, int nrow);
+#endif // AUX_FUNCTIONS_H

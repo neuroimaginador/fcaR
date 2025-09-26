@@ -138,3 +138,57 @@ void intersect(SparseVector *A, SparseVector B) {
     A->p.array[1] = to_write;
 
 }
+
+
+/**
+ * @name DenseArrayToS4
+ * @description Convierte un array denso (almacenado en un DoubleArray)
+ * a una matriz dispersa S4 de clase "dgCMatrix", calculando
+ * automáticamente el número de columnas.
+ *
+ * @param data El DoubleArray que contiene los datos de la matriz en
+ * formato "column-major".
+ * @param nrow El número de filas de la matriz.
+ * @returns Un objeto S4 de clase "dgCMatrix".
+ */
+S4 DenseArrayToS4(const DoubleArray& data, int nrow) {
+
+  if (nrow <= 0) {
+    Rcpp::stop("El número de filas (nrow) debe ser positivo.");
+  }
+  if (data.used % nrow != 0) {
+    Rcpp::stop("El número total de elementos no es un múltiplo de nrow.");
+  }
+  int ncol = data.used / nrow;
+
+  std::vector<int> i_indices;
+  std::vector<double> x_values;
+  Rcpp::IntegerVector p_pointers(ncol + 1);
+  p_pointers[0] = 0;
+
+  for (int j = 0; j < ncol; ++j) { // Bucle por columnas
+    int non_zero_count_in_col = 0;
+    for (int i = 0; i < nrow; ++i) { // Bucle por filas
+      long long current_index = (long long)j * nrow + i;
+      double val = data.array[current_index];
+
+      if (val != 0.0) {
+        x_values.push_back(val);
+        i_indices.push_back(i);
+        non_zero_count_in_col++;
+      }
+    }
+    // Correctamente actualiza el puntero de la columna
+    p_pointers[j + 1] = p_pointers[j] + non_zero_count_in_col;
+  }
+
+  S4 s4_matrix("dgCMatrix");
+  s4_matrix.slot("i") = Rcpp::wrap(i_indices);
+  s4_matrix.slot("p") = p_pointers;
+  s4_matrix.slot("x") = Rcpp::wrap(x_values);
+  s4_matrix.slot("Dim") = Rcpp::IntegerVector::create(nrow, ncol);
+  s4_matrix.slot("Dimnames") = Rcpp::List::create(R_NilValue, R_NilValue);
+  s4_matrix.slot("factors") = Rcpp::List();
+
+  return s4_matrix;
+}
