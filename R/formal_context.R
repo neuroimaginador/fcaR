@@ -862,50 +862,69 @@ FormalContext <- R6::R6Class(
     #' @return A list with all the concepts in the formal context.
     #'
     #' @export
-    find_concepts = function(method = "inclose",
-                             verbose = FALSE) {
+    find_concepts = function(
+    method = "inclose",
+    verbose = FALSE) {
 
       private$check_empty()
 
       if (private$is_many_valued) error_many_valued()
 
-      method <- conceptRegistry$get_entry(method[1])
-      if (is.null(method)) {
-
-        avail_methods <- conceptRegistry$get_entry_names()
-
-        stop("Unrecognized method.")
-
-      }
-
       my_I <- Matrix::as.matrix(Matrix::t(self$I))
 
-      if (method$method == "NextClosure") {
+      if (all(self$I@x == 1) && method == "InClose") {
 
-        grades_set <- rep(list(self$grades_set), length(self$attributes))
+        L <- InClose_binary(
+          I = my_I,
+          attrs = self$attributes,
+          verbose = verbose
+        )
+
 
       } else {
 
-        grades_set <- self$grades_set
+        method <- conceptRegistry$get_entry(method[1])
+        if (is.null(method)) {
+
+          avail_methods <- conceptRegistry$get_entry_names()
+
+          stop("Unrecognized method.")
+
+        }
+
+        fun <- method$fun
+
+        if (method$method == "NextClosure") {
+
+          grades_set <- rep(list(self$grades_set), length(self$attributes))
+
+        } else {
+
+          grades_set <- self$grades_set
+        }
+
+        attrs <- self$attributes
+
+        if (verbose) {
+
+          glue::glue("You have chosen {method$method}\n") |>
+            cli::cat_line()
+
+        }
+
+        # L <- next_closure_concepts(
+        L <- method$fun(
+          I = my_I,
+          grades_set = grades_set,
+          attrs = attrs,
+          connection = private$connection,
+          name = private$logic,
+          verbose = verbose
+        )
+
       }
-      attrs <- self$attributes
 
-      if (verbose) {
 
-        glue::glue("You have chosen {method$method}\n") |>
-          cli::cat_line()
-
-      }
-
-      # L <- next_closure_concepts(
-      L <- method$fun(
-        I = my_I,
-        grades_set = grades_set,
-        attrs = attrs,
-        connection = private$connection,
-        name = private$logic,
-        verbose = verbose
-      )
 
       # Since the previous function gives the list of intents of
       # the computed concepts, now we will compute the corresponding

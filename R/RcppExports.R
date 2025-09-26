@@ -57,6 +57,10 @@ InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }
 
+InClose_binary <- function(I, attrs, verbose = FALSE) {
+    .Call(`_fcaR_InClose_binary`, I, attrs, verbose)
+}
+
 test_new <- function(A) {
     invisible(.Call(`_fcaR_test_new`, A))
 }

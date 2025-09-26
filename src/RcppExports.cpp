@@ -183,6 +183,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// InClose_binary
+List InClose_binary(NumericMatrix I, StringVector attrs, bool verbose);
+RcppExport SEXP _fcaR_InClose_binary(SEXP ISEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(InClose_binary(I, attrs, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // test_new
 void test_new(S4 A);
 RcppExport SEXP _fcaR_test_new(SEXP ASEXP) {
@@ -533,6 +546,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
     {"_fcaR_FuzzyFCbO", (DL_FUNC) &_fcaR_FuzzyFCbO, 6},
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
+    {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
     {"_fcaR_test_new", (DL_FUNC) &_fcaR_test_new, 1},
     {"_fcaR_test_export_new", (DL_FUNC) &_fcaR_test_export_new, 1},
     {"_fcaR_test_extent_new", (DL_FUNC) &_fcaR_test_extent_new, 2},
