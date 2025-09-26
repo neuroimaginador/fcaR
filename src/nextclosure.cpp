@@ -2,6 +2,8 @@
 #include "set_operations_galois.h"
 #include "Logics.h"
 #include <chrono>
+#include "binary_operations.h"
+
 using namespace Rcpp;
 
 static void chkIntFn(void *dummy) {
@@ -68,6 +70,21 @@ bool compute_direct_sum(SparseVector A,
   return can;
 
 }
+
+bool binary_compute_direct_sum(BinarySparseVector A,
+                               int a_i,
+                               int imax,
+                               BinarySparseVector *res) {
+    reinitArray(&(res->i));
+    for (size_t i = 0; i < A.i.used; ++i) {
+        if (A.i.array[i] < a_i) {
+            insertArray(&(res->i), A.i.array[i]);
+        }
+    }
+    insertArray(&(res->i), a_i);
+    return true; // In binary case, we can always add an attribute
+}
+
 
 void semantic_closure(SparseVector A,
                       ImplicationTree t,
@@ -322,6 +339,47 @@ bool is_set_preceding(SparseVector B,
   return true;
 
 }
+
+bool binary_is_set_preceding(const BinarySparseVector& B,
+                             const BinarySparseVector& C,
+                             int a_i) {
+    size_t b_idx = 0;
+    size_t c_idx = 0;
+
+    // Check if C restricted to elements smaller than a_i is the same as B 
+    while (b_idx < B.i.used && B.i.array[b_idx] < a_i && c_idx < C.i.used && C.i.array[c_idx] < a_i) {
+        if (B.i.array[b_idx] != C.i.array[c_idx]) {
+            return false;
+        }
+        b_idx++;
+        c_idx++;
+    }
+
+    // Check if there are remaining elements in B or C that are smaller than a_i
+    if ((b_idx < B.i.used && B.i.array[b_idx] < a_i) || (c_idx < C.i.used && C.i.array[c_idx] < a_i)) {
+        return false;
+    }
+
+    // Check if a_i is in C but not in B
+    bool c_has_ai = false;
+    while(c_idx < C.i.used) {
+      if (C.i.array[c_idx] == a_i) {
+        c_has_ai = true;
+        break;
+      }
+      c_idx++;
+    }
+    
+    if (!c_has_ai) return false;
+
+    while(b_idx < B.i.used) {
+      if (B.i.array[b_idx] == a_i) return false;
+      b_idx++;
+    }
+    
+    return true;
+}
+
 
 void compute_next_closure(SparseVector A, int i,
                                   int imax,
@@ -930,4 +988,70 @@ List next_closure_concepts(NumericMatrix I,
 
   return res;
 
+}
+
+
+// [[Rcpp::export]]
+List binary_next_closure_concepts(IntegerMatrix I,
+                                  bool verbose = false) {
+
+  int n_attributes = I.ncol();
+
+  BinarySparseVector A;
+  initVector(&A, n_attributes);
+
+  BinarySparseVector empty;
+  initVector(&empty, n_attributes);
+
+  binary_compute_closure(&A, &empty, I);
+
+  List concepts;
+  
+  IntegerVector concept_to_add(A.i.used);
+  for(size_t i = 0; i < A.i.used; ++i) {
+    concept_to_add[i] = A.i.array[i];
+  }
+  concepts.push_back(concept_to_add);
+
+  BinarySparseVector candB;
+  initVector(&candB, n_attributes);
+  
+  BinarySparseVector B;
+  initVector(&B, n_attributes);
+
+  while(A.i.used < n_attributes) {
+    for (int i = n_attributes - 1; i >= 0; --i) {
+      
+      bool inA = false;
+      for (size_t j = 0; j < A.i.used; ++j) {
+        if (A.i.array[j] == i) {
+          inA = true;
+          break;
+        }
+      }
+      if (inA) continue;
+      
+      cloneVector(&B, &A);
+      insertArray(&(B.i), i);
+      
+      binary_compute_closure(&candB, &B, I);
+
+      if (binary_is_set_preceding(A, candB, i)) {
+        cloneVector(&A, &candB);
+        IntegerVector concept_to_add(A.i.used);
+        for(size_t k = 0; k < A.i.used; ++k) {
+          concept_to_add[k] = A.i.array[k];
+        }
+        concepts.push_back(concept_to_add);
+        break;
+      }
+    }
+  }
+
+  freeVector(&A);
+  freeVector(&candB);
+  freeVector(&empty);
+  freeVector(&B);
+
+  return concepts;
 }

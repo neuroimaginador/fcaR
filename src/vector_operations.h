@@ -1,3 +1,7 @@
+
+#ifndef __VECTOR_OPERATIONS_H
+#define __VECTOR_OPERATIONS_H
+
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -72,3 +76,4 @@ void as_sparse(SparseVector *res,
                int j);
 
 double get_element(SparseVector v, int n);
+#endif
