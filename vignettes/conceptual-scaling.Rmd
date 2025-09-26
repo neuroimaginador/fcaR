@@ -53,9 +53,11 @@ fc <- FormalContext$new(A)
 
 Let us consider the following formal context about intern students:
 ```{r echo = FALSE}
-fc$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "rcccc")
+fc$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "rcccc"
+  )
 ```
 
 The attributes are:
@@ -81,22 +83,28 @@ __Nominal__ scales are used for scaling attributes whose values exclude each oth
 For instance, in the example above, the attribute `Grant` is categorical:
 ```{r echo = FALSE}
 fc_nom <- FormalContext$new(A_nom)
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "r")
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "r"
+  )
 ```
 and can be transformed into the following one:
 ```{r echo = FALSE}
 fc_nom$scale("Grant", type = "nominal")
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 The mapping from the previous attribute values to the derived context is:
 ```{r echo = FALSE}
-fc_nom$get_scales("Grant")$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$get_scales("Grant")$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 
 ## Ordinal scaling
@@ -106,22 +114,28 @@ __Ordinal__ scales are used for attributes with ordered values, where each value
 In our example, the attribute `Intern` is ordinal:
 ```{r echo = FALSE}
 fc_nom <- FormalContext$new(A_ord)
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "c")
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "c"
+  )
 ```
 and can be transformed into:
 ```{r echo = FALSE}
 fc_nom$scale("Intern", type = "ordinal")
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 using the following scale:
 ```{r echo = FALSE}
-fc_nom$get_scales("Intern")$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$get_scales("Intern")$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 
 
@@ -131,28 +145,37 @@ __Interordinal__ scales are used in attributes that express different degrees (f
 In our example, the attribute `Agreement` is interordinal:
 ```{r echo = FALSE}
 fc_nom <- FormalContext$new(A_int)
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "c")
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "c"
+  )
 ```
 and can be transformed into:
 ```{r echo = FALSE}
-fc_nom$scale("Agreement", 
-             type = "interordinal",
-             values = c("strongly disagree",
-                        "disagree",
-                        "neither agree nor disagree",
-                        "agree",
-                        "strongly agree"))
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$scale("Agreement",
+  type = "interordinal",
+  values = c(
+    "strongly disagree",
+    "disagree",
+    "neither agree nor disagree",
+    "agree",
+    "strongly agree"
+  )
+)
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 using the following scale:
 ```{r echo = FALSE}
-fc_nom$get_scales("Agreement")$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$get_scales("Agreement")$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 
 ## Biordinal scaling
@@ -161,25 +184,32 @@ __Biordinal__ scales are used when the attribute values express a degree in one 
 In our example, the attribute `Attitude` is biordinal:
 ```{r echo = FALSE}
 fc_nom <- FormalContext$new(A_bi)
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "c")
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "c"
+  )
 ```
 and can be transformed into:
 ```{r echo = FALSE}
-fc_nom$scale("Attitude", 
-             type = "biordinal", 
-             values_le = c("hard working", "working"),
-             values_ge = c("lazy", "very lazy"))
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$scale("Attitude",
+  type = "biordinal",
+  values_le = c("hard working", "working"),
+  values_ge = c("lazy", "very lazy")
+)
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 using the following scale:
 ```{r echo = FALSE}
-fc_nom$get_scales("Attitude")$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$get_scales("Attitude")$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 
 ## Interval scaling
@@ -188,9 +218,11 @@ __Interval__ scales group continuous attributes in intervals or bins.
 In our example, the attribute `Score` is continuous:
 ```{r echo = FALSE}
 fc_nom <- FormalContext$new(A_interv)
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "c")
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "c"
+  )
 ```
 and can be categorized into intervals corresponding to the following marks:
 
@@ -198,18 +230,23 @@ and can be categorized into intervals corresponding to the following marks:
 - _B_: score in the interval $(3, 4]$.
 - _C_: score in the interval $(2, 3]$.
 ```{r echo = FALSE}
-fc_nom$scale("Score", 
-             type = "interval", 
-             values = c(2, 3, 4, 5), interval_names = c("C", "B", "A"))
-fc_nom$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$scale("Score",
+  type = "interval",
+  values = c(2, 3, 4, 5), interval_names = c("C", "B", "A")
+)
+fc_nom$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 using the following scale:
 ```{r echo = FALSE}
-fc_nom$get_scales("Score")$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "cc")
+fc_nom$get_scales("Score")$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "cc"
+  )
 ```
 
 # Scaling in `fcaR`
@@ -245,13 +282,16 @@ fc
 
 Now, the `Agreement` attribute can be scaled using and interordinal scaling:
 ```{r}
-fc$scale("Agreement", 
-         type = "interordinal",
-         values = c("strongly disagree",
-                    "disagree",
-                    "neither agree nor disagree",
-                    "agree",
-                    "strongly agree"))
+fc$scale("Agreement",
+  type = "interordinal",
+  values = c(
+    "strongly disagree",
+    "disagree",
+    "neither agree nor disagree",
+    "agree",
+    "strongly agree"
+  )
+)
 ```
 
 The resulting formal context has `r fc$dim()[2]` columns, thus it is difficult to print.
@@ -260,10 +300,11 @@ Note that the call to `scale()` has an additional optional argument, `values`, t
 
 The `Attitude` attribute can be scaled using a _biordinal_ scale, since it represents two poles: the first is given by values "hard working" and "working" and the other is given by "very lazy" and "lazy". Then, we can do:
 ```{r}
-fc$scale("Attitude", 
-         type = "biordinal", 
-         values_le = c("hard working", "working"),
-         values_ge = c("lazy", "very lazy"))
+fc$scale("Attitude",
+  type = "biordinal",
+  values_le = c("hard working", "working"),
+  values_ge = c("lazy", "very lazy")
+)
 ```
 
 The full order of attribute values is "hard working" < "working" < "lazy" < "very lazy".
@@ -272,10 +313,11 @@ Note that we have listed the attribute values in two different arguments, `value
 
 The last attribute was the `Score`, that can be grouped in intervals using:
 ```{r}
-fc$scale("Score", 
-         type = "interval", 
-         values = c(2, 3, 4, 5), 
-         interval_names = c("C", "B", "A"))
+fc$scale("Score",
+  type = "interval",
+  values = c(2, 3, 4, 5),
+  interval_names = c("C", "B", "A")
+)
 ```
 
 The additional arguments are `values` (the endpoints of the intervals) and `interval_names` (an optional name indicating how to call a given interval).
@@ -321,8 +363,9 @@ Note that, in this case, this is not the basis of implications, since the _backg
 
 ```{r echo = FALSE}
 filename <- system.file("contexts",
-                        "aromatic.csv",
-                        package = "fcaR")
+  "aromatic.csv",
+  package = "fcaR"
+)
 
 fc_orig <- FormalContext$new(filename)
 ```
@@ -330,16 +373,19 @@ fc_orig <- FormalContext$new(filename)
 Let us consider the following context of attributes of aromatic molecules:
 ```{r}
 filename <- system.file("contexts",
-                        "aromatic.csv",
-                        package = "fcaR")
+  "aromatic.csv",
+  package = "fcaR"
+)
 
 fc <- FormalContext$new(filename)
 ```
 
 ```{r}
-fc$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "c")
+fc$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "c"
+  )
 ```
 
 The meaning of the attributes is as follows:
@@ -350,22 +396,30 @@ The meaning of the attributes is as follows:
 
 We can transform this context into a binary one by means of the following scalings:
 ```{r}
-fc$scale(attributes = "nitro", 
-         type = "ordinal", 
-         comparison = `>=`, 
-         values = 1:3)
-fc$scale(attributes = "OS", 
-         type = "nominal", 
-         c("O", "S"))
-fc$scale(attributes = "ring", 
-         type = "nominal")
+fc$scale(
+  attributes = "nitro",
+  type = "ordinal",
+  comparison = `>=`,
+  values = 1:3
+)
+fc$scale(
+  attributes = "OS",
+  type = "nominal",
+  c("O", "S")
+)
+fc$scale(
+  attributes = "ring",
+  type = "nominal"
+)
 ```
 
 The final formal context is:
 ```{r echo = FALSE}
-fc$incidence() %>% 
-  knitr::kable(format = "html",
-               align = "c")
+fc$incidence() %>%
+  knitr::kable(
+    format = "html",
+    align = "c"
+  )
 ```
 
 The implications derived from the scales are:

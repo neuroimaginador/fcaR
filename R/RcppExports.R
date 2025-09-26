@@ -49,6 +49,14 @@ get_element_array <- function(I, i, j, k) {
     .Call(`_fcaR_get_element_array`, I, i, j, k)
 }
 
+FuzzyFCbO <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
+    .Call(`_fcaR_FuzzyFCbO`, I, grades_set, attrs, connection, name, verbose)
+}
+
+InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
+    .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
+}
+
 test_new <- function(A) {
     invisible(.Call(`_fcaR_test_new`, A))
 }
@@ -73,6 +81,18 @@ next_closure_concepts <- function(I, grades_set, attrs, connection = "standard",
     .Call(`_fcaR_next_closure_concepts`, I, grades_set, attrs, connection, name, verbose, ret)
 }
 
+compute_intent <- function(V, I, connection, name) {
+    .Call(`_fcaR_compute_intent`, V, I, connection, name)
+}
+
+compute_extent <- function(V, I, connection, name) {
+    .Call(`_fcaR_compute_extent`, V, I, connection, name)
+}
+
+compute_closure <- function(V, I, connection, name) {
+    .Call(`_fcaR_compute_closure`, V, I, connection, name)
+}
+
 compute_upright_arrow <- function(V, I, name) {
     .Call(`_fcaR_compute_upright_arrow`, V, I, name)
 }
@@ -87,18 +107,6 @@ compute_upleft_arrow <- function(V, I, name) {
 
 compute_downright_arrow <- function(V, I, name) {
     .Call(`_fcaR_compute_downright_arrow`, V, I, name)
-}
-
-compute_intent <- function(V, I, connection, name) {
-    .Call(`_fcaR_compute_intent`, V, I, connection, name)
-}
-
-compute_extent <- function(V, I, connection, name) {
-    .Call(`_fcaR_compute_extent`, V, I, connection, name)
-}
-
-compute_closure <- function(V, I, connection, name) {
-    .Call(`_fcaR_compute_closure`, V, I, connection, name)
 }
 
 self_intersection_C <- function(x_i, x_p, y_i, y_p) {

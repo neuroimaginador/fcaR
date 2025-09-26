@@ -39,7 +39,7 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \itemize{
 \item \href{#method-ImplicationSet-new}{\code{ImplicationSet$new()}}
 \item \href{#method-ImplicationSet-get_attributes}{\code{ImplicationSet$get_attributes()}}
-\item \href{#method-ImplicationSet-bracket}{\code{ImplicationSet$[()}}
+\item \href{#method-ImplicationSet-[}{\code{ImplicationSet$[()}}
 \item \href{#method-ImplicationSet-to_arules}{\code{ImplicationSet$to_arules()}}
 \item \href{#method-ImplicationSet-add}{\code{ImplicationSet$add()}}
 \item \href{#method-ImplicationSet-cardinality}{\code{ImplicationSet$cardinality()}}
@@ -104,8 +104,8 @@ A character vector with the names of the attributes used in the implications.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-bracket}{}}}
+\if{html}{\out{<a id="method-ImplicationSet-["></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-[}{}}}
 \subsection{Method \code{[()}}{
 Get a subset of the implication set
 \subsection{Usage}{

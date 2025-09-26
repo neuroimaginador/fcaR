@@ -432,7 +432,6 @@ S4 SparseToS4_fast(SparseVector V) {
   IntegerVector i(V.i.used);
   NumericVector x(V.x.used);
   IntegerVector dims(2);
-  IntegerVector p(V.p.used);
 
   if (V.i.used > 0) {
 
@@ -441,14 +440,31 @@ S4 SparseToS4_fast(SparseVector V) {
 
   }
 
-  if (V.p.used > 0) {
+  size_t tocopy = V.p.used;
+  // if (V.p.used > 0) {
+  //
+  //   Rcout << tocopy << std::endl;
+  //   Rcout << V.p.array[V.p.used] << std::endl;
+  //
+  //   if (V.p.array[V.p.used] == 0) {
+  //
+  //     tocopy--;
+  //
+  //   }
+  //
+  //   Rcout << tocopy << std::endl;
+  //
+  // }
 
-    memcpy(&(p[0]), V.p.array, V.p.used * sizeof(int));
+  IntegerVector p(tocopy);
 
+  if (tocopy > 0) {
+    memcpy(&(p[0]), V.p.array, tocopy * sizeof(int));
   }
 
+
   dims[0] = V.length;
-  dims[1] = V.p.used - 1;
+  dims[1] = tocopy - 1;
 
   res.slot("x") = x;
   res.slot("i") = i;

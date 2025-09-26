@@ -65,26 +65,28 @@ The way to extend the functionality in `fcaR` is to define new equivalence opera
 
 In order to add a new method, we use:
 ```{r eval = FALSE}
-equivalencesRegistry$set_entry(method = "Method name",
-                               fun = method_function,
-                               description = "Method description")
+equivalencesRegistry$set_entry(
+  method = "Method name",
+  fun = method_function,
+  description = "Method description"
+)
 ```
 where `method_function()` must be a function with the following scheme:
 ```{r eval = FALSE}
 method_function <- function(LHS, RHS, attributes) {
-  
   # LHS and RHS are the sparse matrices of the left-hand and
   # right-hand sides of the implications
   # attributes is the vector of attribute names
   # The three arguments are mandatory
-  
+
   # Perform operations on LHS and RHS
   # ...
-  
+
   # Must return a list with two components: lhs and rhs
-  return(list(lhs = LHS,
-              rhs = RHS))
-  
+  return(list(
+    lhs = LHS,
+    rhs = RHS
+  ))
 }
 ```
 
@@ -96,24 +98,26 @@ Let us define an operator which randomly reorders the implications. Evidently, t
 In this case, we begin by defining the method function:
 ```{r}
 random_reorder <- function(LHS, RHS, attributes) {
-  
   # Remember: attributes are in rows, implications are
   # in columns.
   # Random order for columns:
   o <- sample(ncol(LHS), ncol(LHS))
-  
+
   # Return the reordered implications
-  return(list(lhs = LHS[, o],
-              rhs = RHS[, o]))
-  
+  return(list(
+    lhs = LHS[, o],
+    rhs = RHS[, o]
+  ))
 }
 ```
 
 Once we have defined the function, we add the method to the registry:
 ```{r}
-equivalencesRegistry$set_entry(method = "Randomize",
-                               fun = random_reorder,
-                               description = "Randomize the order of the implications.")
+equivalencesRegistry$set_entry(
+  method = "Randomize",
+  fun = random_reorder,
+  description = "Randomize the order of the implications."
+)
 ```
 
 If we inspect the registry, we obtain the list of the methods, including the one we have just inserted:
@@ -133,5 +137,9 @@ fc$implications$apply_rules("randomize")
 ```{r}
 # Reordered implications
 fc$implications
+```
+
+```{r echo=FALSE}
+equivalencesRegistry$delete_entry("Randomize")
 ```
 

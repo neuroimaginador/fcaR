@@ -20,14 +20,18 @@ n_objects <- length(objects)
 attributes <- paste0("P", 1:6)
 n_attributes <- length(attributes)
 
-I <- matrix(data = c(0, 1, 0.5, 0, 0, 0.5,
-                     0, 1, 0.5, 0, 0, 0.5,
-                     0.5, 1, 0, 0, 1, 0,
-                     0.5, 0, 0, 1, 0.5, 0,
-                     1, 0, 0, 0.5, 0, 0,
-                     0, 0, 1, 0, 0, 1),
-            nrow = n_objects,
-            byrow = FALSE)
+I <- matrix(
+  data = c(
+    0, 1, 0.5, 0, 0, 0.5,
+    0, 1, 0.5, 0, 0, 0.5,
+    0.5, 1, 0, 0, 1, 0,
+    0.5, 0, 0, 1, 0.5, 0,
+    1, 0, 0, 0.5, 0, 0,
+    0, 0, 1, 0, 0, 1
+  ),
+  nrow = n_objects,
+  byrow = FALSE
+)
 
 colnames(I) <- attributes
 rownames(I) <- objects
@@ -83,12 +87,16 @@ fc_planets$implications$to_latex()
 
 ## -----------------------------------------------------------------------------
 # Implications with P1 and P2 in the LHS and P5 in the RHS
-fc_I$implications$filter(lhs = c("P1", "P2"), 
-                         rhs = "P5")
+fc_I$implications$filter(
+  lhs = c("P1", "P2"),
+  rhs = "P5"
+)
 
 ## -----------------------------------------------------------------------------
-fc_I$implications$apply_rules(rules = c("composition",
-                                        "simplification"))
+fc_I$implications$apply_rules(rules = c(
+  "composition",
+  "simplification"
+))
 
 ## -----------------------------------------------------------------------------
 # Let us build a set of attributes
