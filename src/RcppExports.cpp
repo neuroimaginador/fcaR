@@ -151,6 +151,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// FastCbO_binary
+List FastCbO_binary(NumericMatrix I, StringVector attrs, bool verbose);
+RcppExport SEXP _fcaR_FastCbO_binary(SEXP ISEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(FastCbO_binary(I, attrs, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // FuzzyFCbO
 List FuzzyFCbO(NumericMatrix I, NumericVector grades_set, StringVector attrs, String connection, String name, bool verbose);
 RcppExport SEXP _fcaR_FuzzyFCbO(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
@@ -180,6 +193,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< String >::type name(nameSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
     rcpp_result_gen = Rcpp::wrap(InClose(I, grades_set, attrs, connection, name, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
+// InClose_Reorder
+List InClose_Reorder(NumericMatrix I, StringVector attrs, bool verbose);
+RcppExport SEXP _fcaR_InClose_Reorder(SEXP ISEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(InClose_Reorder(I, attrs, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -544,8 +570,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
+    {"_fcaR_FastCbO_binary", (DL_FUNC) &_fcaR_FastCbO_binary, 3},
     {"_fcaR_FuzzyFCbO", (DL_FUNC) &_fcaR_FuzzyFCbO, 6},
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
+    {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 3},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
     {"_fcaR_test_new", (DL_FUNC) &_fcaR_test_new, 1},
     {"_fcaR_test_export_new", (DL_FUNC) &_fcaR_test_export_new, 1},

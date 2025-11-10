@@ -49,12 +49,20 @@ get_element_array <- function(I, i, j, k) {
     .Call(`_fcaR_get_element_array`, I, i, j, k)
 }
 
+FastCbO_binary <- function(I, attrs, verbose = FALSE) {
+    .Call(`_fcaR_FastCbO_binary`, I, attrs, verbose)
+}
+
 FuzzyFCbO <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
     .Call(`_fcaR_FuzzyFCbO`, I, grades_set, attrs, connection, name, verbose)
 }
 
 InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
+}
+
+InClose_Reorder <- function(I, attrs, verbose = FALSE) {
+    .Call(`_fcaR_InClose_Reorder`, I, attrs, verbose)
 }
 
 InClose_binary <- function(I, attrs, verbose = FALSE) {
