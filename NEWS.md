@@ -1,5 +1,10 @@
 # fcaR 1.3.0
 
+* Now the InClose algorithm is perfectly integrated to compute the concept lattice for binary contexts.
+* In fuzzy contexts, the user can select, via the `method` argument to `find_concepts()`, the algorithm to use: "InClose", "FastCbO" or "NextClosure". Our advice is to use (the default) "InClose".
+* Some C functions have been optimized for efficiency. Maybe the user will notice a big speedup in some computations.
+* The computation of concept support is now faster.
+
 # fcaR 1.2.2
 
 Enhancements:

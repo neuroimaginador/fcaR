@@ -222,9 +222,11 @@ lattice_plot <- function(extents, intents,
   #   theme_void()
   #
   # print(p)
+  #
+  lattice_data <- Matrix::as.matrix(Matrix::t(subconcept_matrix))
 
   hasseDiagram::hasse(
-    data = Matrix::as.matrix(Matrix::t(subconcept_matrix)),
+    data = lattice_data,
     labels = labels,
     parameters = list(arrows = "backward")
   )

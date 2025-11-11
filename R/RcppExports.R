@@ -125,6 +125,10 @@ compute_downright_arrow <- function(V, I, name) {
     .Call(`_fcaR_compute_downright_arrow`, V, I, name)
 }
 
+sparse_subset_dispatch <- function(X_p, X_i, X_x, Y_p, Y_i, Y_x, num_rows, proper_code, is_binary) {
+    .Call(`_fcaR_sparse_subset_dispatch`, X_p, X_i, X_x, Y_p, Y_i, Y_x, num_rows, proper_code, is_binary)
+}
+
 self_intersection_C <- function(x_i, x_p, y_i, y_p) {
     .Call(`_fcaR_self_intersection_C`, x_i, x_p, y_i, y_p)
 }

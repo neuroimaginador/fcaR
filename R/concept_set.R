@@ -15,16 +15,12 @@
 #' fc_planets$concepts$join_irreducibles()
 #' fc_planets$concepts$meet_irreducibles()
 #'
-#'
 #' @export
 #' @import R6
 #'
 ConceptSet <- R6::R6Class(
-
   classname = "ConceptSet",
-
   public = list(
-
     #' @description
     #' Create a new \code{ConceptLattice} object.
     #'
@@ -41,14 +37,12 @@ ConceptSet <- R6::R6Class(
     initialize = function(extents, intents,
                           objects, attributes,
                           I = NULL) {
-
       private$objects <- objects
       private$attributes <- attributes
       private$pr_extents <- extents
       private$pr_intents <- intents
 
       private$I <- I
-
     },
 
     #' @description
@@ -59,15 +53,11 @@ ConceptSet <- R6::R6Class(
     #'
     #' @export
     size = function() {
-
       if (self$is_empty()) {
-
         return(0)
-
       }
 
       return(ncol(private$pr_extents))
-
     },
 
     #' @description
@@ -77,9 +67,7 @@ ConceptSet <- R6::R6Class(
     #' \code{TRUE} if the lattice has no concepts.
     #' @export
     is_empty = function() {
-
       return(is.null(private$pr_extents))
-
     },
 
     #' @description
@@ -90,9 +78,7 @@ ConceptSet <- R6::R6Class(
     #'
     #' @export
     extents = function() {
-
       return(private$pr_extents)
-
     },
 
     #' @description
@@ -103,9 +89,7 @@ ConceptSet <- R6::R6Class(
     #'
     #' @export
     intents = function() {
-
       return(private$pr_intents)
-
     },
 
     #' @description
@@ -116,33 +100,28 @@ ConceptSet <- R6::R6Class(
     #'
     #' @export
     print = function() {
-
       if (self$is_empty()) {
-
         cat("An empty set of concepts.\n")
-
       } else {
-
         n <- ncol(private$pr_extents)
 
         cat("A set of", n, "concepts:\n")
 
         str <- sapply(seq(n), function(i) {
-
           vA <- Matrix::Matrix(private$pr_extents[, i], sparse = TRUE)
           vB <- Matrix::Matrix(private$pr_intents[, i], sparse = TRUE)
 
-          paste0(i, ": ",
-                 .concept_to_string(vA, vB,
-                                    objects = private$objects,
-                                    attributes = private$attributes))
-
+          paste0(
+            i, ": ",
+            .concept_to_string(vA, vB,
+              objects = private$objects,
+              attributes = private$attributes
+            )
+          )
         })
 
         cat(str, sep = "\n")
-
       }
-
     },
 
     #' @description
@@ -161,27 +140,22 @@ ConceptSet <- R6::R6Class(
                         ncols = 1,
                         numbered = TRUE,
                         align = TRUE) {
-
       if (!self$is_empty()) {
-
         output <- concepts_to_latex(private$pr_extents,
-                                    private$pr_intents,
-                                    private$objects,
-                                    private$attributes,
-                                    ncols = ncols,
-                                    align = align,
-                                    numbered = numbered)
+          private$pr_intents,
+          private$objects,
+          private$attributes,
+          ncols = ncols,
+          align = align,
+          numbered = numbered
+        )
 
         if (print) {
-
           cat(output)
-
         }
 
         return(invisible(output))
-
       }
-
     },
 
     #' @description
@@ -190,23 +164,20 @@ ConceptSet <- R6::R6Class(
     #' @return A list of concepts.
     #' @export
     to_list = function() {
-
       if (self$is_empty()) {
-
         return(list())
-
       }
 
       elements <- .matrix_to_concepts(
         M_ext = private$pr_extents,
         M_int = private$pr_intents,
         objects = private$objects,
-        attributes = private$attributes)
+        attributes = private$attributes
+      )
 
       class(elements) <- c("list")
 
       return(elements)
-
     },
 
     #' @description
@@ -218,34 +189,33 @@ ConceptSet <- R6::R6Class(
     #'
     #' @export
     `[` = function(indices) {
-
       if (!self$is_empty()) {
-
         if (is.logical(indices)) {
-
           indices <- which(indices)
-
         }
 
         indices <- indices[indices <= ncol(private$pr_extents)]
 
         return(ConceptSet$new(
           extents = Matrix::Matrix(private$pr_extents[, indices],
-                                   sparse = TRUE),
+            sparse = TRUE
+          ),
           intents = Matrix::Matrix(private$pr_intents[, indices],
-                                   sparse = TRUE),
+            sparse = TRUE
+          ),
           objects = private$objects,
           attributes = private$attributes,
-          I = private$I))
-
+          I = private$I
+        ))
       }
 
-      return(ConceptSet$new(extents = NULL,
-                            intents = NULL,
-                            objects = private$objects,
-                            attributes = private$attributes,
-                            I = private$I))
-
+      return(ConceptSet$new(
+        extents = NULL,
+        intents = NULL,
+        objects = private$objects,
+        attributes = private$attributes,
+        I = private$I
+      ))
     },
 
     #' @description
@@ -257,21 +227,15 @@ ConceptSet <- R6::R6Class(
     #'
     #' @export
     sub = function(index) {
-
       if (!self$is_empty()) {
-
         index <- index[index <= ncol(private$pr_extents)]
 
         if (length(index) > 0) {
-
           return(self[index]$to_list()[[1]])
-
         }
-
       }
 
       return(NULL)
-
     },
 
     #' @description
@@ -280,35 +244,21 @@ ConceptSet <- R6::R6Class(
     #' @return A vector with the support of each concept.
     #' @export
     support = function() {
-
       if (!is.null(private$concept_support)) {
-
         return(private$concept_support)
-
       }
 
-      my_I <- private$I
-      my_I@x <- as.numeric(my_I@x)
-
-      subsets <- .subset(private$pr_intents, my_I)
-
-      private$concept_support <- Matrix::rowMeans(subsets)
+      private$concept_support <- Matrix::colSums(private$pr_extents) / nrow(private$pr_extents)
 
       return(private$concept_support)
-
     }
-
   ),
-
   private = list(
-
     pr_extents = NULL,
     pr_intents = NULL,
     objects = NULL,
     attributes = NULL,
     I = NULL,
     concept_support = NULL
-
   )
-
 )
