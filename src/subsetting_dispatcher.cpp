@@ -4,135 +4,167 @@
 using namespace Rcpp;
 
 // ===================================================================
-// KERNEL 1: IGUALDAD DIFUSA O(N) (Tu lógica 'legacy' de 82ms)
+// KERNEL 1: IGUALDAD O(N) - VERSIÓN PUNTEROS CRUDOS
 // ===================================================================
-inline int kernel_equal_fuzzy_O_N(const Rcpp::IntegerVector& X_i, const Rcpp::NumericVector& X_x, int X_start, int X_end,
-                                  const Rcpp::IntegerVector& Y_i, const Rcpp::NumericVector& Y_x, int Y_start) {
-  int pX = X_start;
-  int pY = Y_start;
-  int nnz = X_end - X_start;
-
+inline bool kernel_equal_raw(const int* Xi, const double* Xx, int nnz,
+                             const int* Yi, const double* Yx) {
   for (int p = 0; p < nnz; ++p) {
-    if (X_i[pX + p] != Y_i[pY + p] || X_x[pX + p] != Y_x[pY + p]) {
-      return -1; // No son iguales
+    // Acceso directo a memoria, sin chequeo de límites de Rcpp
+    if (Xi[p] != Yi[p] || Xx[p] != Yx[p]) {
+      return false;
     }
   }
-  return 0; // Son iguales
+  return true;
 }
 
 // ===================================================================
-// KERNEL 2: SUBCONJUNTO DIFUSO O(N+M) (Mi lógica 'merge' de 1095ms)
+// KERNEL 2: SUBCONJUNTO O(N+M) - VERSIÓN OPTIMIZADA CON PRE-CHECKS
 // ===================================================================
-inline int kernel_subset_fuzzy_O_NplusM(const Rcpp::IntegerVector& X_i, const Rcpp::NumericVector& X_x, int X_start, int X_end,
-                                        const Rcpp::IntegerVector& Y_i, const Rcpp::NumericVector& Y_x, int Y_start, int Y_end) {
-  int pX = X_start;
-  int pY = Y_start;
+inline int kernel_subset_raw(const int* Xi, const double* Xx, int nnz_X,
+                             const int* Yi, const double* Yx, int nnz_Y) {
 
-  if (pX == X_end) {
-    return (pY == Y_end) ? 0 : 1;
-  }
+  // --- OPTIMIZACIÓN "BOUNDING BOX" O(1) ---
+  // Como las matrices CSC tienen índices ordenados:
+  // 1. Si el primer índice de X es menor que el primero de Y, X tiene algo que Y no.
+  if (Xi[0] < Yi[0]) return -1;
+  // 2. Si el último índice de X es mayor que el último de Y, imposible ser subset.
+  if (Xi[nnz_X - 1] > Yi[nnz_Y - 1]) return -1;
+
+  int pX = 0;
+  int pY = 0;
   bool is_proper = false;
-  while (pX < X_end) {
-    if (pY == Y_end) return -1;
-    if (X_i[pX] < Y_i[pY]) {
-      return -1;
-    }
-    if (X_i[pX] > Y_i[pY]) {
-      is_proper = true;
+
+  while (pX < nnz_X) {
+    // Si se acaba Y pero X sigue, imposible (ya cubierto arriba parcialmente, pero necesario)
+    if (pY == nnz_Y) return -1;
+
+    int idx_X = Xi[pX];
+    int idx_Y = Yi[pY];
+
+    if (idx_X < idx_Y) {
+      return -1; // X tiene fila que Y no tiene
+    } else if (idx_X > idx_Y) {
+      is_proper = true; // Y tiene fila extra (potencial subset propio)
       pY++;
-      continue;
+    } else {
+      // Mismo índice, comparar valores
+      if (Xx[pX] > Yx[pY]) return -1; // Valor de X excede Y
+      if (Xx[pX] < Yx[pY]) is_proper = true; // Valor de X menor (subset)
+      pX++;
+      pY++;
     }
-    if (X_x[pX] > Y_x[pY]) {
-      return -1;
-    }
-    if (X_x[pX] < Y_x[pY]) {
-      is_proper = true;
-    }
-    pX++;
-    pY++;
   }
-  if (pY < Y_end) {
-    is_proper = true;
-  }
+
+  // Si terminamos X, y a Y le quedan elementos
+  if (pY < nnz_Y) is_proper = true;
+
   return is_proper ? 1 : 0;
 }
 
 // ===================================================================
-// KERNEL 3: BINARIO O(N/64) (Lógica de Bitset)
+// KERNEL 3: BINARIO BITSET - VERSIÓN VECTOR PLANO
 // ===================================================================
 using NativeBitset = std::vector<uint64_t>;
 
-void create_native_bitset(NativeBitset& out_cols, int num_rows, int num_cols,
-                          const Rcpp::IntegerVector& p, const Rcpp::IntegerVector& i) {
-  const size_t N_BLOCKS_N = (num_rows + 63) / 64;
-  out_cols.assign(num_cols * N_BLOCKS_N, 0);
+// Crea el bitset en un solo vector plano para mejorar la caché
+void create_native_bitset_raw(NativeBitset& out_cols, int num_rows, int num_cols,
+                              const int* p, const int* i, size_t N_BLOCKS) {
+  // Reservar e inicializar a 0 de golpe
+  out_cols.assign(num_cols * N_BLOCKS, 0);
+
   for (int j = 0; j < num_cols; ++j) {
     int start = p[j];
     int end = p[j+1];
+    // Puntero al inicio del bloque de esta columna
+    uint64_t* col_ptr = &out_cols[j * N_BLOCKS];
+
     for (int k = start; k < end; ++k) {
       int r = i[k];
-      int block_idx = r / 64;
-      int bit_idx = r % 64;
-      out_cols[j * N_BLOCKS_N + block_idx] |= (1ULL << bit_idx);
+      col_ptr[r / 64] |= (1ULL << (r % 64));
     }
   }
 }
 
-inline int kernel_compare_bitset_O_N64(const uint64_t* X_ptr,
-                                       const uint64_t* Y_ptr,
-                                       const size_t N_BLOCKS_N) {
+inline int kernel_compare_bitset_raw(const uint64_t* X_ptr,
+                                     const uint64_t* Y_ptr,
+                                     size_t N_BLOCKS) {
   bool is_proper = false;
-  for (size_t b = 0; b < N_BLOCKS_N; ++b) {
+
+  for (size_t b = 0; b < N_BLOCKS; ++b) {
     uint64_t Xk = X_ptr[b];
-    uint64_t Yk = Y_ptr[b];
-    if ((Xk & ~Yk) != 0) {
-      return -1; // No es subconjunto
+
+    // --- OPTIMIZACIÓN DE CEROS ---
+    // Si el bloque de X es 0, seguro es subset de lo que sea que tenga Y.
+    // Solo comprobamos si Y aporta "propiedad" (es mayor que 0).
+    if (Xk == 0) {
+      if (Y_ptr[b] != 0) is_proper = true;
+      continue;
     }
-    if ((~Xk & Yk) != 0) {
-      is_proper = true; // Es subconjunto propio
+
+    uint64_t Yk = Y_ptr[b];
+
+    // Chequeo estándar: bits en X que no están en Y
+    if ((Xk & ~Yk) != 0) {
+      return -1;
+    }
+    // Chequeo proper: bits en Y que no están en X
+    if (!is_proper && ((~Xk & Yk) != 0)) {
+      is_proper = true;
     }
   }
   return is_proper ? 1 : 0;
 }
 
 // ===================================================================
-// DISPATCHER C++ UNIFICADO
+// DISPATCHER UNIFICADO OPTIMIZADO
 // ===================================================================
-/**
- * @param proper_code 0=Equal, 1=Proper Subset, 2=Subset or Equal
- * @param is_binary Flag para seleccionar el kernel
- */
 // [[Rcpp::export]]
 List sparse_subset_dispatch(const Rcpp::IntegerVector& X_p, const Rcpp::IntegerVector& X_i, const Rcpp::NumericVector& X_x,
-                            const Rcpp::IntegerVector& Y_p, const Rcpp::IntegerVector& Y_i, const Rcpp::NumericVector& Y_x,
-                            int num_rows, int proper_code, bool is_binary) {
+                                const Rcpp::IntegerVector& Y_p, const Rcpp::IntegerVector& Y_i, const Rcpp::NumericVector& Y_x,
+                                int num_rows, int proper_code, bool is_binary) {
 
   int n_cols_X = X_p.size() - 1;
   int n_cols_Y = Y_p.size() - 1;
 
+  // Obtener punteros crudos (Read-Only) para evitar overhead de Rcpp dentro del loop
+  const int* Xp_ptr = X_p.begin();
+  const int* Xi_ptr = X_i.begin();
+  const double* Xx_ptr = X_x.begin();
+
+  const int* Yp_ptr = Y_p.begin();
+  const int* Yi_ptr = Y_i.begin();
+  const double* Yx_ptr = Y_x.begin();
+
+  // Vectores de salida
   std::vector<int> out_i;
+  out_i.reserve(n_cols_X); // Reserva mínima razonable
   Rcpp::IntegerVector out_p(n_cols_X + 1);
   out_p[0] = 0;
 
-  // --- RAMA BINARIA (BITSET O(N/64)) ---
   if (is_binary) {
-    const size_t N_BLOCKS_N = (num_rows + 63) / 64;
-    NativeBitset X_cols_flat;
-    NativeBitset Y_cols_flat;
-    create_native_bitset(X_cols_flat, num_rows, n_cols_X, X_p, X_i);
-    create_native_bitset(Y_cols_flat, num_rows, n_cols_Y, Y_p, Y_i);
+    // --- RAMA BINARIA ---
+    size_t N_BLOCKS = (num_rows + 63) / 64;
+    NativeBitset X_bits, Y_bits;
+
+    // Crear bitsets usando punteros
+    create_native_bitset_raw(X_bits, num_rows, n_cols_X, Xp_ptr, Xi_ptr, N_BLOCKS);
+    create_native_bitset_raw(Y_bits, num_rows, n_cols_Y, Yp_ptr, Yi_ptr, N_BLOCKS);
+
+    const uint64_t* X_bits_data = X_bits.data();
+    const uint64_t* Y_bits_data = Y_bits.data();
 
     for (int j = 0; j < n_cols_X; ++j) {
-      const uint64_t* X_ptr = &X_cols_flat[j * N_BLOCKS_N];
-      for (int k = 0; k < n_cols_Y; ++k) {
-        const uint64_t* Y_ptr = &Y_cols_flat[k * N_BLOCKS_N];
+      const uint64_t* curr_X_ptr = &X_bits_data[j * N_BLOCKS];
 
-        int result = kernel_compare_bitset_O_N64(X_ptr, Y_ptr, N_BLOCKS_N);
+      for (int k = 0; k < n_cols_Y; ++k) {
+        const uint64_t* curr_Y_ptr = &Y_bits_data[k * N_BLOCKS];
+
+        int result = kernel_compare_bitset_raw(curr_X_ptr, curr_Y_ptr, N_BLOCKS);
 
         bool match = false;
         if (proper_code == 0 && result == 0) match = true;
         else if (proper_code == 1 && result == 1) match = true;
-        else if (proper_code == 2 && (result == 0 || result == 1)) match = true;
+        else if (proper_code == 2 && result >= 0) match = true;
 
         if (match) out_i.push_back(k);
       }
@@ -140,36 +172,48 @@ List sparse_subset_dispatch(const Rcpp::IntegerVector& X_p, const Rcpp::IntegerV
     }
 
   } else {
-    // --- RAMA DIFUSA (O(N) o O(N+M)) ---
+    // --- RAMA DIFUSA (O(N) / O(N+M)) ---
     for (int j = 0; j < n_cols_X; ++j) {
-      int X_start = X_p[j];
-      int X_end = X_p[j+1];
-      int nnz_X = X_end - X_start;
+      int X_start = Xp_ptr[j];
+      int nnz_X   = Xp_ptr[j+1] - X_start;
+      // Punteros al inicio de la columna j
+      const int* cur_Xi = &Xi_ptr[X_start];
+      const double* cur_Xx = &Xx_ptr[X_start];
 
       for (int k = 0; k < n_cols_Y; ++k) {
-        int Y_start = Y_p[k];
-        int Y_end = Y_p[k+1];
-        int nnz_Y = Y_end - Y_start;
+        int Y_start = Yp_ptr[k];
+        int nnz_Y   = Yp_ptr[k+1] - Y_start;
 
         bool match = false;
 
-        if (proper_code == 0) { // --- IGUALDAD (Kernel O(N)) ---
-          if (nnz_X != nnz_Y) continue;
-          if (kernel_equal_fuzzy_O_N(X_i, X_x, X_start, X_end, Y_i, Y_x, Y_start) == 0) {
-            match = true;
+        if (proper_code == 0) {
+          // --- IGUALDAD ---
+          if (nnz_X == nnz_Y) {
+            const int* cur_Yi = &Yi_ptr[Y_start];
+            const double* cur_Yx = &Yx_ptr[Y_start];
+            if (kernel_equal_raw(cur_Xi, cur_Xx, nnz_X, cur_Yi, cur_Yx)) {
+              match = true;
+            }
           }
-        } else { // --- SUBCONJUNTO (Kernel O(N+M)) ---
-          if (proper_code == 1) {
-            if (nnz_X >= nnz_Y) continue;
+        } else {
+          // --- SUBCONJUNTO ---
+          // Pre-filtros rápidos de conteo (Cardinalidad)
+          if (proper_code == 1 && nnz_X >= nnz_Y) continue;
+          if (proper_code == 2 && nnz_X > nnz_Y) continue;
+
+          // Caso especial: X vacío es subset de todo (asumiendo valores >=0)
+          if (nnz_X == 0) {
+            if (proper_code == 2) match = true;
+            else if (proper_code == 1 && nnz_Y > 0) match = true;
           } else {
-            if (nnz_X > nnz_Y) continue;
+            const int* cur_Yi = &Yi_ptr[Y_start];
+            const double* cur_Yx = &Yx_ptr[Y_start];
+
+            int result = kernel_subset_raw(cur_Xi, cur_Xx, nnz_X, cur_Yi, cur_Yx, nnz_Y);
+
+            if (proper_code == 1 && result == 1) match = true;
+            else if (proper_code == 2 && result >= 0) match = true;
           }
-
-          int result = kernel_subset_fuzzy_O_NplusM(X_i, X_x, X_start, X_end,
-                                                    Y_i, Y_x, Y_start, Y_end);
-
-          if (proper_code == 1 && result == 1) match = true;
-          else if (proper_code == 2 && (result == 0 || result == 1)) match = true;
         }
 
         if (match) out_i.push_back(k);
