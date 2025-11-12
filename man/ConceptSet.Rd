@@ -17,7 +17,6 @@ fc_planets$find_concepts()
 fc_planets$concepts$join_irreducibles()
 fc_planets$concepts$meet_irreducibles()
 
-
 }
 \section{Methods}{
 \subsection{Public methods}{

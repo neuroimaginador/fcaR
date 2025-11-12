@@ -57,6 +57,10 @@ FuzzyFCbO <- function(I, grades_set, attrs, connection = "standard", name = "Zad
     .Call(`_fcaR_FuzzyFCbO`, I, grades_set, attrs, connection, name, verbose)
 }
 
+get_concept_strings_cpp <- function(extents, intents, objects, attributes, precision) {
+    .Call(`_fcaR_get_concept_strings_cpp`, extents, intents, objects, attributes, precision)
+}
+
 InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }

@@ -102,27 +102,74 @@ ConceptSet <- R6::R6Class(
     print = function() {
       if (self$is_empty()) {
         cat("An empty set of concepts.\n")
-      } else {
-        n <- ncol(private$pr_extents)
-
-        cat("A set of", n, "concepts:\n")
-
-        str <- sapply(seq(n), function(i) {
-          vA <- Matrix::Matrix(private$pr_extents[, i], sparse = TRUE)
-          vB <- Matrix::Matrix(private$pr_intents[, i], sparse = TRUE)
-
-          paste0(
-            i, ": ",
-            .concept_to_string(vA, vB,
-              objects = private$objects,
-              attributes = private$attributes
-            )
-          )
-        })
-
-        cat(str, sep = "\n")
+        return(invisible(self))
       }
+
+      # Obtenemos dimensiones
+      # Asumimos que private$pr_extents es dgCMatrix
+      n <- ncol(private$pr_extents)
+
+      # --- LÓGICA DE TRUNCAMIENTO (Opcional pero recomendada) ---
+      # Si tienes 10,000 conceptos, imprimir todos colgará la consola aunque el cálculo sea rápido.
+      limit <- 50 # O leer de options()
+      should_truncate <- n > limit
+
+      n_to_print <- if (should_truncate) limit else n
+
+      cat("A set of", n, "concepts:\n")
+
+      # Llamada a C++ optimizada
+      # Pasamos las matrices S4 enteras directamente
+      # NOTA: Asegúrate de pasar solo las columnas que quieres imprimir si vas a truncar,
+      # o modifica el C++ para aceptar un rango start/end.
+      # Para máxima velocidad en "print all", pasamos todo.
+
+      decimal_places <- fcaR_options("decimal_places")
+
+      # Generamos TODAS las strings (es muy rápido en C++ incluso para 100k conceptos)
+      # Si la memoria es problema, habría que pasar subsets al C++, pero raramente lo es para texto.
+      all_strings <- get_concept_strings_cpp(
+        private$pr_extents,
+        private$pr_intents,
+        private$objects,
+        private$attributes,
+        decimal_places
+      )
+
+      # Imprimir
+      if (should_truncate) {
+        cat(all_strings[1:limit], sep = "\n")
+        cat(sprintf("... and %d more concepts.\n", n - limit))
+      } else {
+        cat(all_strings, sep = "\n")
+      }
+
+      invisible(self)
     },
+    # print = function() {
+    #   if (self$is_empty()) {
+    #     cat("An empty set of concepts.\n")
+    #   } else {
+    #     n <- ncol(private$pr_extents)
+    #
+    #     cat("A set of", n, "concepts:\n")
+    #
+    #     str <- sapply(seq(n), function(i) {
+    #       vA <- Matrix::Matrix(private$pr_extents[, i], sparse = TRUE)
+    #       vB <- Matrix::Matrix(private$pr_intents[, i], sparse = TRUE)
+    #
+    #       paste0(
+    #         i, ": ",
+    #         .concept_to_string(vA, vB,
+    #           objects = private$objects,
+    #           attributes = private$attributes
+    #         )
+    #       )
+    #     })
+    #
+    #     cat(str, sep = "\n")
+    #   }
+    # },
 
     #' @description
     #' Write in LaTeX

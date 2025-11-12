@@ -180,6 +180,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// get_concept_strings_cpp
+CharacterVector get_concept_strings_cpp(S4 extents, S4 intents, CharacterVector objects, CharacterVector attributes, int precision);
+RcppExport SEXP _fcaR_get_concept_strings_cpp(SEXP extentsSEXP, SEXP intentsSEXP, SEXP objectsSEXP, SEXP attributesSEXP, SEXP precisionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type extents(extentsSEXP);
+    Rcpp::traits::input_parameter< S4 >::type intents(intentsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type objects(objectsSEXP);
+    Rcpp::traits::input_parameter< CharacterVector >::type attributes(attributesSEXP);
+    Rcpp::traits::input_parameter< int >::type precision(precisionSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_concept_strings_cpp(extents, intents, objects, attributes, precision));
+    return rcpp_result_gen;
+END_RCPP
+}
 // InClose
 List InClose(NumericMatrix I, NumericVector grades_set, StringVector attrs, String connection, String name, bool verbose);
 RcppExport SEXP _fcaR_InClose(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
@@ -591,6 +606,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
     {"_fcaR_FastCbO_binary", (DL_FUNC) &_fcaR_FastCbO_binary, 3},
     {"_fcaR_FuzzyFCbO", (DL_FUNC) &_fcaR_FuzzyFCbO, 6},
+    {"_fcaR_get_concept_strings_cpp", (DL_FUNC) &_fcaR_get_concept_strings_cpp, 5},
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
     {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 3},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
