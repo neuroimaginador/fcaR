@@ -61,6 +61,22 @@ get_concept_strings_cpp <- function(extents, intents, objects, attributes, preci
     .Call(`_fcaR_get_concept_strings_cpp`, extents, intents, objects, attributes, precision)
 }
 
+run_final_ts_rcpp_optimized <- function(lhs_in, rhs_in, attributes, L, logic_name, use_pruning = TRUE, verbose = FALSE) {
+    .Call(`_fcaR_run_final_ts_rcpp_optimized`, lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose)
+}
+
+run_direct_optimal_sp_rcpp_optimized <- function(lhs_in, rhs_in, attributes, L, logic_name, use_pruning = TRUE, verbose = FALSE) {
+    .Call(`_fcaR_run_direct_optimal_sp_rcpp_optimized`, lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose)
+}
+
+run_monotonic_incremental_rcpp_optimized <- function(lhs_in, rhs_in, attributes, L, logic_name, use_pruning = TRUE, verbose = FALSE) {
+    .Call(`_fcaR_run_monotonic_incremental_rcpp_optimized`, lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose)
+}
+
+run_priority_refinement_rcpp_optimized <- function(lhs_in, rhs_in, attributes, L, logic_name, use_pruning = TRUE, verbose = FALSE) {
+    .Call(`_fcaR_run_priority_refinement_rcpp_optimized`, lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose)
+}
+
 InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }

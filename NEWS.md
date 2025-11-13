@@ -4,6 +4,8 @@
 * In fuzzy contexts, the user can select, via the `method` argument to `find_concepts()`, the algorithm to use: "InClose", "FastCbO" or "NextClosure". Our advice is to use (the default) "InClose".
 * Some C functions have been optimized for efficiency. Maybe the user will notice a big speedup in some computations.
 * The computation of concept support is now faster.
+* Added method `to_direct_optimal()` for `ImplicationSet`s to convert the implication system into direct optimal.
+* Added methods `use_hedge()` and `get_hedge()` in `ImplicationSet` that allow to set and get the hedge used to compute closures using the system of implications, in the fuzzy case (there is no need for hedges in the crisp case).
 
 # fcaR 1.2.2
 
