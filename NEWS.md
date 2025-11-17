@@ -6,6 +6,7 @@
 * The computation of concept support is now faster.
 * Added method `to_direct_optimal()` for `ImplicationSet`s to convert the implication system into direct optimal.
 * Added methods `use_hedge()` and `get_hedge()` in `ImplicationSet` that allow to set and get the hedge used to compute closures using the system of implications, in the fuzzy case (there is no need for hedges in the crisp case).
+* * Added `factorize()` method to `FormalContext` class, implementing the **GreConD+** algorithm for matrix factorization with grades and overcovering, enabling custom fuzzy logic and Galois connections. Based on Belohlavek, R., & Trneckova, M. (2024). Factorization of Matrices With Grades With Overcovering. *IEEE Transactions on Fuzzy Systems*, 32(4), 1641-1652.
 
 # fcaR 1.2.2
 

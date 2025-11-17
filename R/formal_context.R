@@ -1063,6 +1063,77 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
+    #' Factorize the context using the GreConD+ algorithm.
+    #'
+    #' @param w (numeric) The weight parameter for overcovering penalty. Default is 1.0.
+    #' @param stop_threshold_ratio (numeric) Stopping criterion ratio for the error. Default is 0.0 (exact factorization).
+    #'
+    #' @return A list containing two new FormalContext objects:
+    #' \itemize{
+    #'   \item \code{object_factor}: The matrix A (Objects x Factors). Describes to what degree each object possesses each factor.
+    #'   \item \code{factor_attribute}: The matrix B (Factors x Attributes). Describes to what degree each attribute manifests in each factor.
+    #' }
+    #' @export
+    factorize = function(w = 1.0, stop_threshold_ratio = 0.0) {
+      # 1. Validar que la matriz existe
+      if (is.null(self$I)) {
+        stop("The context is empty.")
+      }
+
+      # 2. Ejecutar el algoritmo C++ (asegúrate de que esté exportado en tu paquete)
+      # NOTA: grecond_plus devuelve una lista de listas (extent, intent)
+      raw_factors <- grecond_plus(Matrix::as.matrix(Matrix::t(self$I)), w, stop_threshold_ratio, self$get_connection(), self$get_logic())
+
+      num_factors <- length(raw_factors)
+      if (num_factors == 0) {
+        warning("No factors found.")
+        return(NULL)
+      }
+
+      # 3. Construir Matrices A (Objects x Factors) y B (Factors x Attributes)
+
+      # Extraer nombres
+      obj_names <- self$objects
+      attr_names <- self$attributes
+      factor_names <- paste0("F", seq_len(num_factors))
+
+      # Inicializar matrices
+      A_mat <- matrix(0, nrow = length(self$objects), ncol = num_factors)
+      B_mat <- matrix(0, nrow = num_factors, ncol = length(self$attributes))
+
+      # Rellenar matrices desde la lista de factores
+      for (k in seq_len(num_factors)) {
+        A_mat[, k] <- raw_factors[[k]]$extent
+        B_mat[k, ] <- raw_factors[[k]]$intent
+      }
+
+      # Asignar nombres de dimensiones
+      rownames(A_mat) <- obj_names
+      colnames(A_mat) <- factor_names
+
+      rownames(B_mat) <- factor_names
+      colnames(B_mat) <- attr_names
+
+      # 4. Crear nuevos objetos FormalContext
+      # Como estamos dentro de la clase, usamos el generador global FormalContext$new()
+
+      ctx_A <- FormalContext$new(A_mat)
+      ctx_B <- FormalContext$new(B_mat)
+
+      # Opcional: Copiar configuraciones de lógica si es necesario
+      ctx_A$use_logic(self$get_logic())
+      ctx_B$use_logic(self$get_logic())
+
+      ctx_A$use_connection(self$get_connection())
+      ctx_B$use_connection(self$get_connection())
+
+      return(list(
+        object_factor = ctx_A,
+        factor_attribute = ctx_B
+      ))
+    },
+
+    #' @description
     #' Convert the formal context to object of class \code{transactions} from the \code{arules} package
     #'
     #' @return A \code{transactions} object.

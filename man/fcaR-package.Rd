@@ -68,10 +68,5 @@ Authors:
   \item Ana Villalon
 }
 
-Other contributors:
-\itemize{
-  \item Ian Johnson [contributor]
-}
-
 }
 \keyword{internal}

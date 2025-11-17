@@ -16,10 +16,7 @@ Authors@R:
              role = "aut"),
       person(given = "Ana",
              family = "Villalon",
-             role = "aut"),
-      person(given = "Ian",
-             family = "Johnson",
-             role = "ctb"))
+             role = "aut"))
 Maintainer: Domingo Lopez Rodriguez <dominlopez@uma.es>
 Description: Provides tools to perform fuzzy formal concept
     analysis, presented in Wille (1982) <doi:10.1007/978-3-642-01815-2_23>
@@ -27,7 +24,9 @@ Description: Provides tools to perform fuzzy formal concept
     provides functions to load and save a formal context, extract its
     concept lattice and implications.  In addition, one can use the
     implications to compute semantic closures of fuzzy sets and, thus,
-    build recommendation systems.
+    build recommendation systems. Matrix factorization is provided by 
+    the GreConD+ algorithm (Belohlavek and Trneckova, 2024 
+    <doi:10.1109/TFUZZ.2023.3330760>).
 License: GPL-3
 URL: https://github.com/Malaga-FCA-group/fcaR
 BugReports: https://github.com/Malaga-FCA-group/fcaR/issues

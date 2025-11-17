@@ -49,6 +49,7 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \item \href{#method-ImplicationSet-recommend}{\code{ImplicationSet$recommend()}}
 \item \href{#method-ImplicationSet-apply_rules}{\code{ImplicationSet$apply_rules()}}
 \item \href{#method-ImplicationSet-to_basis}{\code{ImplicationSet$to_basis()}}
+\item \href{#method-ImplicationSet-to_direct_optimal}{\code{ImplicationSet$to_direct_optimal()}}
 \item \href{#method-ImplicationSet-print}{\code{ImplicationSet$print()}}
 \item \href{#method-ImplicationSet-to_latex}{\code{ImplicationSet$to_latex()}}
 \item \href{#method-ImplicationSet-get_LHS_matrix}{\code{ImplicationSet$get_LHS_matrix()}}
@@ -57,6 +58,8 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \item \href{#method-ImplicationSet-support}{\code{ImplicationSet$support()}}
 \item \href{#method-ImplicationSet-use_logic}{\code{ImplicationSet$use_logic()}}
 \item \href{#method-ImplicationSet-get_logic}{\code{ImplicationSet$get_logic()}}
+\item \href{#method-ImplicationSet-use_hedge}{\code{ImplicationSet$use_hedge()}}
+\item \href{#method-ImplicationSet-get_hedge}{\code{ImplicationSet$get_hedge()}}
 \item \href{#method-ImplicationSet-clone}{\code{ImplicationSet$clone()}}
 }
 }
@@ -297,6 +300,37 @@ The canonical basis of implications obtained from the current \code{ImplicationS
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ImplicationSet-to_direct_optimal"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-to_direct_optimal}{}}}
+\subsection{Method \code{to_direct_optimal()}}{
+Compute the Direct Optimal Basis using optimized C++ algorithms.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_direct_optimal(
+  method = c("direct_optimal", "final_ts", "monotonic", "priority"),
+  verbose = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{method}}{(character) The specific algorithm to run:
+\itemize{
+\item \code{"direct_optimal"}: (Default) The Direct Optimal Saturation-Pruning algorithm.
+\item \code{"final_ts"}: Computes Transitive Closure then Prunes (Standard approach).
+\item \code{"monotonic"}: Incremental algorithm maintaining monotonicity.
+\item \code{"priority"}: Priority-based refinement algorithm.
+}}
+
+\item{\code{verbose}}{(logical) Print verbose output from the C++ backend.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Nothing, updates the \code{ImplicationSet} in place with the new basis.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ImplicationSet-print"></a>}}
 \if{latex}{\out{\hypertarget{method-ImplicationSet-print}{}}}
 \subsection{Method \code{print()}}{
@@ -441,6 +475,36 @@ Gets the logic used
 
 \subsection{Returns}{
 A string with the name of the logic.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ImplicationSet-use_hedge"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-use_hedge}{}}}
+\subsection{Method \code{use_hedge()}}{
+Sets the hedge to use when computing closures
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$use_hedge(name = c("globalization", "identity"))}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{The name of the hedge to use. Only "globalization" and "identity" are allowed.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ImplicationSet-get_hedge"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-get_hedge}{}}}
+\subsection{Method \code{get_hedge()}}{
+Gets the hedge used to compute closures
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$get_hedge()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string with the name of the hedge
 }
 }
 \if{html}{\out{<hr>}}

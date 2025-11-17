@@ -139,6 +139,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-FormalContext-standardize}{\code{FormalContext$standardize()}}
 \item \href{#method-FormalContext-find_concepts}{\code{FormalContext$find_concepts()}}
 \item \href{#method-FormalContext-find_implications}{\code{FormalContext$find_implications()}}
+\item \href{#method-FormalContext-factorize}{\code{FormalContext$factorize()}}
 \item \href{#method-FormalContext-to_transactions}{\code{FormalContext$to_transactions()}}
 \item \href{#method-FormalContext-save}{\code{FormalContext$save()}}
 \item \href{#method-FormalContext-load}{\code{FormalContext$load()}}
@@ -600,6 +601,32 @@ Use modified Ganter algorithm to compute both concepts and implications
 }
 \subsection{Returns}{
 Nothing, just updates the internal fields \code{concepts} and \code{implications}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-factorize"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-factorize}{}}}
+\subsection{Method \code{factorize()}}{
+Factorize the context using the GreConD+ algorithm.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$factorize(w = 1, stop_threshold_ratio = 0)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{w}}{(numeric) The weight parameter for overcovering penalty. Default is 1.0.}
+
+\item{\code{stop_threshold_ratio}}{(numeric) Stopping criterion ratio for the error. Default is 0.0 (exact factorization).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A list containing two new FormalContext objects:
+\itemize{
+\item \code{object_factor}: The matrix A (Objects x Factors). Describes to what degree each object possesses each factor.
+\item \code{factor_attribute}: The matrix B (Factors x Attributes). Describes to what degree each attribute manifests in each factor.
+}
 }
 }
 \if{html}{\out{<hr>}}
