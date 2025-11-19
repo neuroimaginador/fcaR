@@ -60,52 +60,68 @@ ConceptLattice <- R6::R6Class(
     #' @description
     #' Plot the concept lattice
     #'
-    #' @param object_names  (logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.
-    #' @param to_latex      (logical) If \code{TRUE}, export the plot as a \code{tikzpicture} environment that can be included in a \code{LaTeX} file.
-    #' @param ...          Other parameters to be passed to the \code{tikzDevice} that renders the lattice in \code{LaTeX}, or for the figure caption. See \code{Details}.
+    #' @param object_names (logical) Deprecated. Use \code{mode} instead. If \code{TRUE} (default), implies \code{mode = "reduced"} or similar depending on heuristics. Kept for backward compatibility.
+    #' @param to_latex     (logical) If \code{TRUE}, exports the plot as TikZ code (LaTeX) instead of drawing it. Returns an object of class \code{tikz_code} that prints the LaTeX code to console.
+    #' @param method       (character) The layout algorithm to use. Options are:
+    #' \itemize{
+    #'   \item \code{"sugiyama"} (default): A hierarchical layout that minimizes edge crossings and centers nodes (similar to ConExp or hasseDiagram).
+    #'   \item \code{"force"}: A force-directed (spring) layout, useful for large or non-hierarchical lattices.
+    #' }
+    #' @param mode         (character) The labeling mode for the nodes. If \code{NULL} (default), a heuristic based on lattice size is used. Options are:
+    #' \itemize{
+    #'   \item \code{"reduced"}: Standard FCA labeling. Nodes are labeled with an attribute (or object) only if they are the supreme (or infimum) of that attribute (or object).
+    #'   \item \code{"full"}: Each node shows its complete extent and intent.
+    #'   \item \code{"attributes"}: Nodes show only their intent (attributes).
+    #'   \item \code{"empty"}: Nodes are drawn as points without labels. Recommended for very large lattices (>50 concepts).
+    #' }
+    #' @param ...          Other parameters passed to the internal plotting function (e.g., graphical parameters for \code{ggraph}).
     #'
-    #' @details
-    #' Particular parameters that control the size of the \code{tikz} output are: \code{width}, \code{height} (both in inches), and \code{pointsize} (in points), that should be set to the font size used in the \code{documentclass} header in the \code{LaTeX} file where the code is to be inserted.
-    #'
-    #' If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
-    #'
-    #' @return If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the \code{LaTeX} code to reproduce the concept lattice.
+    #' @return If \code{to_latex} is \code{FALSE}, it returns (invisibly) the \code{ggplot2} object representing the graph.
+    #' If \code{to_latex} is \code{TRUE}, it returns a \code{tikz_code} object containing the LaTeX code.
     #' @export
-    #'
-    plot = function(object_names = TRUE,
-                    to_latex = FALSE,
-                    ...) {
+    plot = function(object_names = TRUE, to_latex = FALSE, method = c("sugiyama", "force"), mode = NULL, ...) {
+      # 1. Verificación de estado
       if (self$size() == 0) {
-        warning("No concepts.", call. = FALSE)
+        warning("No concepts to plot.", call. = FALSE)
         return(invisible(NULL))
       }
 
-      if (!private$can_plot) {
-        warning("The R system has not the needed capabilities to plot.",
-          call. = FALSE
-        )
-        return(invisible(FALSE))
+      if (is.null(private$subconcept_matrix)) {
+        private$subconcept_matrix <- as(.subset(private$pr_extents), "nMatrix")
+        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
+
+        # stop("Lattice structure not computed. Cannot plot.")
       }
 
-      if (!requireNamespace("hasseDiagram", quietly = TRUE)) {
-        warning("You have not installed the 'hasseDiagram' package, which is needed to plot the lattice.",
-          call. = FALSE
-        )
+      # 2. Construcción del índice de nodos (Data Frame mínimo)
+      # Solo creamos los IDs (1..N). La función externa calculará grados y layout.
+      nodes_df <- data.frame(
+        id = seq_len(self$size()),
+        stringsAsFactors = FALSE
+      )
 
-        return(invisible(FALSE))
-      }
+      # --- CONVERSIÓN IMPORTANTE ---
+      # Convertimos los SparseSets a listas estándar de R para que la función de plot
+      # pueda hacer `extents[[i]]` sin errores S4.
+      extents_list <- sparse_to_list(private$pr_extents)
+      intents_list <- sparse_to_list(private$pr_intents)
 
-      if ((super$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- as(.subset(private$pr_extents), "ngCMatrix")
-      }
-
+      # 3. Delegación a lattice_plot
+      # Pasamos los datos privados necesarios (matriz, objetos, atributos)
+      method <- match.arg(method)
       lattice_plot(
-        extents = private$pr_extents,
-        intents = private$pr_intents,
-        subconcept_matrix = private$subconcept_matrix,
+        nodes_df = nodes_df,
+        cover_matrix = private$covering_matrix,
+        method = method, # Pasamos el método
+        mode = mode, # Pasamos el modo (o NULL para heurística)
+
         objects = private$objects,
         attributes = private$attributes,
-        object_names = object_names,
+
+        # Pasamos los conjuntos dispersos para calcular reduced/full labels
+        extents = extents_list,
+        intents = intents_list,
+        object_names = self$objects,
         to_latex = to_latex,
         ...
       )
@@ -209,11 +225,11 @@ ConceptLattice <- R6::R6Class(
         private$subconcept_matrix <- .subset(private$pr_extents)
       }
 
-      if (is.null(private$reduced_matrix)) {
-        private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
+      if (is.null(private$covering_matrix)) {
+        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
       }
 
-      idx <- which(Matrix::colSums(private$reduced_matrix) == 1)
+      idx <- which(Matrix::colSums(private$covering_matrix) == 1)
       self[idx]
     },
 
@@ -438,11 +454,11 @@ ConceptLattice <- R6::R6Class(
         private$subconcept_matrix <- .subset(private$pr_extents)
       }
 
-      if (is.null(private$reduced_matrix)) {
-        private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
+      if (is.null(private$covering_matrix)) {
+        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
       }
 
-      self[which(private$reduced_matrix[, idx] > 0)]
+      self[which(private$covering_matrix[, idx] > 0)]
     },
 
     #' @description
@@ -461,16 +477,16 @@ ConceptLattice <- R6::R6Class(
         private$subconcept_matrix <- .subset(private$pr_extents)
       }
 
-      if (is.null(private$reduced_matrix)) {
-        private$reduced_matrix <- .reduce_transitivity(private$subconcept_matrix)
+      if (is.null(private$covering_matrix)) {
+        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
       }
 
-      self[which(private$reduced_matrix[idx, ] > 0)]
+      self[which(private$covering_matrix[idx, ] > 0)]
     }
   ),
   private = list(
     subconcept_matrix = NULL,
-    reduced_matrix = NULL,
+    covering_matrix = NULL,
     can_plot = TRUE,
     concept_list_to_indices = function(concept_list) {
       extents <- lapply(

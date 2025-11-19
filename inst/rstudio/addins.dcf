@@ -1,0 +1,4 @@
+Name: Browse FCA Repository
+Description: Interactive tool to browse and import contexts from fcarepository.org
+Binding: select_repository_context_addin
+Interactive: true

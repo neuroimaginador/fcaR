@@ -333,6 +333,34 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calculate_grades_rcpp
+IntegerVector calculate_grades_rcpp(const IntegerVector& concept_ids, const IntegerVector& edge_from, const IntegerVector& edge_to);
+RcppExport SEXP _fcaR_calculate_grades_rcpp(SEXP concept_idsSEXP, SEXP edge_fromSEXP, SEXP edge_toSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type concept_ids(concept_idsSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type edge_from(edge_fromSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type edge_to(edge_toSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_grades_rcpp(concept_ids, edge_from, edge_to));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_lattice_layout_rcpp
+DataFrame calculate_lattice_layout_rcpp(const IntegerVector& concept_ids, const IntegerVector& grades, const IntegerVector& edge_from, const IntegerVector& edge_to, const std::string& method);
+RcppExport SEXP _fcaR_calculate_lattice_layout_rcpp(SEXP concept_idsSEXP, SEXP gradesSEXP, SEXP edge_fromSEXP, SEXP edge_toSEXP, SEXP methodSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector& >::type concept_ids(concept_idsSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type grades(gradesSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type edge_from(edge_fromSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type edge_to(edge_toSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_lattice_layout_rcpp(concept_ids, grades, edge_from, edge_to, method));
+    return rcpp_result_gen;
+END_RCPP
+}
 // test_new
 void test_new(S4 A);
 RcppExport SEXP _fcaR_test_new(SEXP ASEXP) {
@@ -712,6 +740,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
     {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 3},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
+    {"_fcaR_calculate_grades_rcpp", (DL_FUNC) &_fcaR_calculate_grades_rcpp, 3},
+    {"_fcaR_calculate_lattice_layout_rcpp", (DL_FUNC) &_fcaR_calculate_lattice_layout_rcpp, 5},
     {"_fcaR_test_new", (DL_FUNC) &_fcaR_test_new, 1},
     {"_fcaR_test_export_new", (DL_FUNC) &_fcaR_test_export_new, 1},
     {"_fcaR_test_extent_new", (DL_FUNC) &_fcaR_test_extent_new, 2},

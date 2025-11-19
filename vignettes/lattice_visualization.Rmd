@@ -1,0 +1,153 @@
+---
+title: "Visualizing concept lattices: from R to LaTeX"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualizing concept lattices: from R to LaTeX}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 7,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+```{r setup}
+library(fcaR)
+```
+
+Visualization is a fundamental component of Formal Concept Analysis (FCA). The lattice structure reveals hierarchical relationships and implications between data that are difficult to detect in a flat table.
+
+`fcaR` provides a flexible plotting system based on `ggplot2` and `ggraph`, as well as a powerful tool for exporting to **LaTeX (TikZ)** to generate high-quality figures ready for academic publication.
+
+In this guide, we will use the classic `planets` dataset included in the package.
+
+```{r data_setup}
+# Load the context and find concepts
+fc <- FormalContext$new(planets)
+fc$find_concepts()
+```
+
+## 1\. Standard visualization
+
+The simplest way to visualize the lattice is by using the `plot()` method on the concepts object.
+
+```{r basic_plot}
+fc$concepts$plot()
+```
+
+By default, `fcaR` applies a heuristic to decide the best visualization mode based on the size of the lattice (usually reduced labeling and hierarchical layout).
+
+### Layout algorithms
+
+`fcaR` implements two main algorithms to position the nodes (concepts) in space:
+
+#### 1\. Sugiyama layout (layered)
+
+This is the default value (`method = "sugiyama"`). It arranges concepts in horizontal layers based on their generality (grade) and minimizes edge crossings. It is ideal for classic **Hasse diagrams**.
+
+```{r sugiyama}
+fc$concepts$plot(method = "sugiyama")
+```
+
+#### 2\. Force-directed layout (organic)
+
+The force-directed layout (`method = "force"`) simulates a physical system where nodes repel each other and edges act like springs. It is useful for very large, dense lattices or when the strict hierarchy makes the graph too wide.
+
+```{r force}
+fc$concepts$plot(method = "force")
+```
+
+## 2\. Labeling modes
+
+Information density is a challenge in lattice visualization. `fcaR` offers several modes (`mode`) to control what information is shown on the nodes.
+
+### Reduced labeling
+
+This is the standard in FCA literature (`mode = "reduced"`). To avoid redundancy:
+
+  * An **attribute** is shown only on the highest concept (supremum) that contains it.
+  * An **object** is shown only on the lowest concept (infimum) that contains it.
+
+This makes the graph easier to read: a concept possesses all attributes labeled on it and its ancestors (above), and possesses all objects labeled on it and its descendants (below).
+
+The color code helps identify the nature of the node:
+
+  * **Black:** Introduces attributes (Attribute Concept).
+  * **Blue:** Introduces objects (Object Concept).
+  * **Gray:** Introduces both (Clarified Concept).
+  * **White:** Introduces nothing new (it is just an intersection of other concepts).
+
+```{r reduced}
+fc$concepts$plot(mode = "reduced")
+```
+
+### Full labeling
+
+For educational purposes or very small lattices, it can be useful to see the full extent (objects) and intent (attributes) in each node.
+
+```{r full}
+fc$concepts$plot(mode = "full")
+```
+
+### Empty (structure only)
+
+For large lattices (\> 50 concepts), text labels can overlap and obscure the structure. The `"empty"` mode draws only the nodes and edges.
+
+```{r empty}
+fc$concepts$plot(mode = "empty")
+```
+
+## 3\. Exporting to LaTeX (TikZ)
+
+For *papers* and scientific presentations, raster graphics (PNG, JPEG) often lose quality. `fcaR` allows exporting the calculated layout directly to **TikZ** code (vector graphics), which can be pasted into a LaTeX document.
+
+To generate the code, use the argument `to_latex = TRUE`. This **does not** draw the plot in R, but returns a special object with the source code.
+
+```{r tikz_console}
+# Generate TikZ code
+tikz_code <- fc$concepts$plot(to_latex = TRUE)
+
+# The object prints cleanly to the console
+tikz_code
+```
+
+### Saving to a file
+
+You can save the code directly to a `.tex` file using the `save_tikz()` function and the R pipe operator:
+
+```{r save_file, eval=FALSE}
+# Save to a local file
+fc$concepts$plot(to_latex = TRUE) |> 
+  save_tikz("lattice_diagram.tex")
+```
+
+### How to use it in LaTeX
+
+To compile the generated code, ensure you include the following packages in your LaTeX document preamble:
+
+```latex
+\documentclass{article}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning}
+
+\begin{document}
+
+\begin{figure}[h]
+    \centering
+    % You can use \input{lattice_diagram.tex} here
+    % or paste the generated code directly:
+    
+    \begin{tikzpicture}... \end{tikzpicture}
+    
+    \caption{Concept lattice generated with fcaR.}
+\end{figure}
+
+\end{document}
+```

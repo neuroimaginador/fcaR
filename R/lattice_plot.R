@@ -1,335 +1,197 @@
-lattice_plot <- function(extents, intents,
-                         subconcept_matrix,
-                         objects, attributes,
-                         object_names,
-                         to_latex, ...) {
-  # Number of concepts
-  n <- ncol(extents)
+#' @title Plot Concept Lattice
+#' @description Visualization of the concept lattice using 'ggraph'.
+#'
+#' @param nodes_df Data frame with 'id'.
+#' @param cover_matrix Sparse matrix.
+#' @param method Layout method ("sugiyama", "force").
+#' @param mode Labeling mode ("reduced", "full", "empty").
+#' @param objects Character vector.
+#' @param attributes Character vector.
+#' @param object_names Logical (Deprecated).
+#' @param to_latex Logical.
+#' @param extents List of extents.
+#' @param intents List of intents.
+#' @param ... Extra args.
+#'
+#' @importFrom igraph graph_from_data_frame
+#' @importFrom ggraph ggraph geom_edge_fan geom_node_point geom_node_text scale_edge_color_manual
+#' @importFrom ggplot2 aes unit theme theme_void scale_fill_identity
+#' @importFrom dplyr mutate
+#' @export
+lattice_plot <- function(nodes_df,
+                         cover_matrix,
+                         method = "sugiyama",
+                         mode = NULL,
+                         objects = NULL,
+                         attributes = NULL,
+                         object_names = TRUE,
+                         to_latex = FALSE,
+                         extents = NULL,
+                         intents = NULL,
+                         ...) {
+  if (is.null(cover_matrix)) stop("Covering matrix is missing.")
 
-  if (missing(subconcept_matrix)) {
-    subconcept_matrix <- .subset(extents)
+  # 1. Heurística
+  if (is.null(mode)) {
+    if (nrow(nodes_df) > 50) mode <- "empty" else mode <- "reduced"
   }
 
-  if (fcaR_options("reduced_lattice")) {
-    labels <- obtain_reduced_labels(
-      subconcept_matrix,
-      intents = intents,
-      attributes = attributes,
-      latex = to_latex
-    )
-  } else {
-    if (to_latex) {
-      if (object_names) {
-        labels <- sapply(
-          seq(n),
-          function(i) {
-            vA <- Matrix::Matrix(extents[, i],
-              sparse = TRUE
-            )
-            vB <- Matrix::Matrix(intents[, i],
-              sparse = TRUE
-            )
+  # 2. Datos Base
+  cover_edges_df <- sparse_matrix_to_edges(cover_matrix)
 
-            vA <- Set$new(
-              attributes = objects,
-              M = vA
-            )
-            vB <- Set$new(
-              attributes = attributes,
-              M = vB
-            )
-
-            paste0(
-              "$\\left(\\,",
-              vA$to_latex(print = FALSE),
-              ",\\right.",
-              "\\left.",
-              vB$to_latex(print = FALSE),
-              "\\,\\right)$"
-            ) %>%
-              stringr::str_replace_all(
-                pattern = "\n",
-                replacement = ""
-              )
-          }
-        )
-      } else {
-        labels <- sapply(
-          seq(n),
-          function(i) {
-            vB <- Matrix::Matrix(intents[, i],
-              sparse = TRUE
-            )
-
-            vB <- Set$new(
-              attributes = attributes,
-              M = vB
-            )
-
-            vB$to_latex(print = FALSE) %>%
-              stringr::str_replace_all(
-                pattern = "\n",
-                replacement = ""
-              )
-          }
-        )
-      }
-
-      labels <- labels %>%
-        stringr::str_replace_all(
-          pattern = stringr::fixed(" "),
-          replacement = "\\,"
-        )
-    } else {
-      if (object_names) {
-        labels <- sapply(
-          seq(n),
-          function(i) {
-            vA <- Matrix::Matrix(extents[, i],
-              sparse = TRUE
-            )
-            vB <- Matrix::Matrix(intents[, i],
-              sparse = TRUE
-            )
-
-            .concept_to_string(
-              vA, vB,
-              objects,
-              attributes
-            )
-          }
-        )
-      } else {
-        labels <- sapply(
-          seq(n),
-          function(i) {
-            vB <- Matrix::Matrix(intents[, i],
-              sparse = TRUE
-            )
-
-            .set_to_string(
-              vB,
-              attributes
-            )
-          }
-        )
-      }
-    }
+  if (!"grade" %in% colnames(nodes_df)) {
+    grades_vec <- calculate_grades(nodes_df$id, cover_edges_df$from, cover_edges_df$to)
+    nodes_df$grade <- grades_vec[as.character(nodes_df$id)]
   }
 
-  if (to_latex) {
-    tmp_file <- tempfile(fileext = ".tex")
-    dots <- list(...)
-    args <- list(
-      file = tmp_file,
-      standAlone = FALSE,
-      sanitize = FALSE,
-      width = 6,
-      height = 4
-    )
+  # 3. Layout (C++)
+  layout_df <- calculate_lattice_layout_rcpp(
+    concept_ids = nodes_df$id,
+    grades = nodes_df$grade,
+    edge_from = cover_edges_df$from,
+    edge_to = cover_edges_df$to,
+    method = method
+  )
+  plot_data <- merge(nodes_df, layout_df, by = "id")
 
-    if ("filename" %in% names(dots)) {
-      filename <- dots$filename
-      dots$filename <- NULL
-    } else {
-      filename <- tempfile(fileext = ".tex")
-    }
-
-    if ("caption" %in% names(dots)) {
-      caption <- dots$caption
-      dots["caption"] <- NULL
-      label <- dots$label
-      if (is.null(label)) {
-        label <- "fig:"
-      } else {
-        dots["label"] <- NULL
-      }
-
-      caption <- paste0(
-        "\\label{",
-        label,
-        "}",
-        caption
-      )
-
-      tex_prefix <- c(
-        "\\begin{figure}",
-        "\\centering",
-        ""
-      )
-
-      tex_suffix <- c(
-        "",
-        paste0("\\caption{", caption, "}"),
-        "",
-        "\\end{figure}"
-      )
-    } else {
-      tex_prefix <- c()
-      tex_suffix <- c()
-    }
-
-    old_opt <- getOption("tikzDocumentDeclaration")
-
-    if ("pointsize" %in% names(dots)) {
-      options("tikzDocumentDeclaration" = paste0(
-        "\\documentclass[", dots$pointsize,
-        "pt]{article}\n"
-      ))
-    }
-
-    options(tikzLatexPackages = c(
-      "\\usepackage{tikz}",
-      "\\usepackage[active,tightpage,psfixbb]{preview}",
-      "\\PreviewEnvironment{pgfpicture}",
-      "\\setlength\\PreviewBorder{0pt}",
-      "\\usepackage{amssymb}",
-      "\\usepackage{amsmath}",
-      "\\usepackage{booktabs}",
-      "\\usepackage{xfrac}",
-      "\\usepackage{xcolor}",
-      "\\newcommand{\\el}[2]{\\ensuremath{^{#2\\!\\!}/{#1}}}"
-    ))
-
-    args[names(dots)] <- dots[names(dots)]
-
-    on.exit({
-      if (!is.null(grDevices::dev.list())) {
-        grDevices::dev.off()
-      }
-    })
-    do.call(tikzDevice::tikz, args = args)
+  # 4. Etiquetas y Colores
+  # Si faltan datos, forzamos modo empty para no romper
+  if (mode != "empty" && (is.null(extents) || is.null(intents))) {
+    warning("Missing extents/intents for labels. Using 'empty' mode.")
+    mode <- "empty"
   }
 
-  # MM <- private$subconcept_matrix %>%
-  #   .reduce_transitivity()
-  #
-  # colnames(MM) <- rownames(MM) <- labels
-  # g <- igraph::graph_from_adjacency_matrix(adjmatrix = as.matrix(MM))
-  #
-  # tree_layout <- igraph::layout_as_tree(g, root = 1, mode = "in") %>%
-  #   reorder_layout(labels = labels)
-  #
-  # # print(tree_layout)
-  #
-  #
-  # p <- ggplot2::ggplot(
-  #   ggnetwork::ggnetwork(as.matrix(Matrix::t(MM)),
-  #             layout = tree_layout),
-  #   aes(x = x, y = y, xend = xend, yend = yend)) +
-  #   ggnetwork::geom_edges(color = "grey50", arrow = arrow(length = unit(6, "points"))) +
-  #   ggnetwork::geom_nodelabel(aes(label = vertex.names)) +
-  #   theme_void()
-  #
-  # print(p)
-  #
-  lattice_data <- Matrix::as.matrix(Matrix::t(subconcept_matrix))
+  if (isTRUE(to_latex)) {
+    objects <- sapply(objects, format_label)
+    attributes <- sapply(attributes, format_label)
+  }
 
-  hasseDiagram::hasse(
-    data = lattice_data,
-    labels = labels,
-    parameters = list(arrows = "backward")
+  plot_data <- compute_labels_and_colors(
+    nodes_df = plot_data,
+    cover_edges = cover_edges_df,
+    extents = extents,
+    intents = intents,
+    obj_names = objects,
+    att_names = attributes,
+    mode = mode
   )
 
-  # M <- Matrix::as.matrix(subconcept_matrix) |> t()
-  #
-  # colnames(M) <- rownames(M) <- labels
-  # y <- parsec::incidence2cover.incidence(M)
-  #
-  # g2 <- igraph::graph_from_adjacency_matrix(t(y))
-  # ly <- igraph::layout_with_sugiyama(g2, maxiter = 100)$layout
-  #
-  # vertices <- ly
-  # colnames(vertices) <- c("x", "y")
-  #
-  # vertices[, "y"] <- 0.8 * vertices[, "y"]
-  #
-  # g2$layout <- as.matrix(vertices)
-  #
-  # pl <- ggraph::autograph(g2,
-  #   node_label = name
-  # ) +
-  #   ggraph::theme_graph(
-  #     plot_margin = ggplot2::margin(5, 5, 5, 5),
-  #     caption_margin = ggplot2::margin(5, 5, 5, 5)
-  #   )
-  #
-  # print(pl)
+  if (isTRUE(to_latex)) {
+    # Llamamos a la nueva función exportadora
+    # Podemos ajustar la escala según el tamaño del retículo
+    scale_factor <- if (nrow(plot_data) > 20) 1.5 else 2.0
 
-  # ord <- Matrix::as.matrix(Matrix::t(subconcept_matrix))
-  # hasse <- igraph::graph.adjacency(agop::rel_reduction_transitive(ord))
-  # plot(hasse, layout = igraph::layout.fruchterman.reingold(hasse, dim = 2))
+    return(export_to_tikz(plot_data, cover_edges_df))
+  } else {
+    if (!requireNamespace("ggraph", quietly = TRUE)) stop("Install 'ggraph'.")
 
-  if (to_latex) {
-    grDevices::dev.off()
+    g <- igraph::graph_from_data_frame(cover_edges_df, vertices = plot_data, directed = TRUE)
 
-    tex <- readLines(tmp_file)
-    unlink(tmp_file)
+    # 5. Construcción del Gráfico
+    p <- ggraph::ggraph(g, layout = "manual", x = x, y = y) +
+      # Aristas
+      ggraph::geom_edge_fan(color = "gray70", alpha = 0.6) +
 
-    tex <- c(
-      tex_prefix,
-      tex,
-      tex_suffix
-    )
+      # Nodos: Ahora 'fill_color' siempre existe (incluso "white" en empty)
+      ggraph::geom_node_point(
+        ggplot2::aes(fill = fill_color),
+        size = 5,
+        shape = 21,
+        color = "gray30", # Borde gris oscuro
+        stroke = 0.8
+      ) +
 
-    options("tikzDocumentDeclaration" = old_opt)
-    my_tex <- paste0(tex, collapse = "\n")
-    cat(my_tex, file = filename)
+      ggplot2::scale_fill_identity() +
+      ggplot2::theme_void()
 
-    return(filename)
+    # Añadir texto SOLO si no es empty y hay etiquetas
+    if (mode != "empty") {
+      p <- p +
+        ggraph::geom_node_text(
+          ggplot2::aes(label = label_top),
+          repel = TRUE, vjust = -1.2, size = 3, color = "black",
+          bg.color = "white", bg.r = 0.15, na.rm = TRUE
+        ) +
+        ggraph::geom_node_text(
+          ggplot2::aes(label = label_bottom),
+          repel = TRUE, vjust = 2.2, size = 3, color = "#0055AA", fontface = "italic",
+          bg.color = "white", bg.r = 0.15, na.rm = TRUE
+        )
+    }
+
+    print(p)
+    return(invisible(p))
   }
 }
 
-obtain_reduced_labels <- function(subconcept_matrix,
-                                  intents,
-                                  attributes,
-                                  latex = FALSE) {
-  if (latex) {
-    attr <- format_label(attributes)
+#' @title Plot Concept Lattice
+#' @description Visualization of the concept lattice using 'ggraph'.
+#' Supports hierarchical (Freese) and force-directed layouts.
+#'
+#' @param nodes_df Data frame with 'id' column.
+#' @param cover_matrix Sparse matrix (covering relation).
+#' @param method Character. Layout algorithm: "sugiyama" (default, layered/hierarchical) or "force" (spring-based).
+#' @param objects Character vector of object names.
+#' @param attributes Character vector of attribute names.
+#' @param object_names Logical. Show object names?
+#' @param to_latex Logical. Export to LaTeX?
+#' @param ... Arguments passed to internal plotting.
+#'
+#' @importFrom igraph graph_from_data_frame
+#' @importFrom ggraph ggraph geom_edge_fan geom_node_point geom_node_text
+#' @importFrom ggplot2 aes unit theme theme_void
+#' @export
+lattice_plot_legacy <- function(nodes_df,
+                                cover_matrix,
+                                method = "sugiyama", # Nuevo parámetro
+                                objects = NULL,
+                                attributes = NULL,
+                                object_names = TRUE,
+                                to_latex = FALSE,
+                                ...) {
+  if (is.null(cover_matrix)) stop("Covering matrix is missing.")
 
-    s2t <- function(set) {
-      set_to_latex(
-        S = set,
-        attributes = attr
-      )
-    }
+  # Edge prep
+  cover_edges_df <- sparse_matrix_to_edges(cover_matrix)
+
+  # Grade prep (Siempre útil, incluso para Force como punto de partida o color)
+  if (!"grade" %in% colnames(nodes_df)) {
+    grades_vec <- calculate_grades(
+      concept_ids = nodes_df$id,
+      edge_from = cover_edges_df$from,
+      edge_to = cover_edges_df$to
+    )
+    nodes_df$grade <- grades_vec[as.character(nodes_df$id)]
+  }
+
+  # Layout Calculation (C++ Dispatch)
+  # Pasamos el método elegido ("freese" o "force")
+  layout_df <- calculate_lattice_layout_rcpp(
+    concept_ids = nodes_df$id,
+    grades = nodes_df$grade,
+    edge_from = cover_edges_df$from,
+    edge_to = cover_edges_df$to,
+    method = method
+  )
+
+  plot_data <- merge(nodes_df, layout_df, by = "id")
+  plot_data$label <- as.character(plot_data$id)
+
+  if (isTRUE(to_latex)) {
+    return(list(nodes = plot_data, edges = cover_edges_df))
   } else {
-    s2t <- function(set) {
-      .set_to_string(
-        S = set,
-        attributes = attributes
-      )
-    }
+    if (!requireNamespace("ggraph", quietly = TRUE)) stop("Install 'ggraph'.")
+
+    g <- igraph::graph_from_data_frame(cover_edges_df, vertices = plot_data, directed = TRUE)
+
+    # El layout es manual porque C++ ya calculó x, y
+    p <- ggraph::ggraph(g, layout = "manual", x = x, y = y) +
+      ggraph::geom_edge_fan(color = "gray60", alpha = 0.6) +
+      ggraph::geom_node_point(size = 4, shape = 21, fill = "white", color = "black") +
+      ggraph::geom_node_text(ggplot2::aes(label = label), repel = TRUE, size = 3) +
+      ggplot2::theme_void()
+
+    print(p)
+    return(invisible(p))
   }
-
-  cardinality <- Matrix::colSums(intents)
-  bottom <- which.max(cardinality)
-  top <- which.min(cardinality)
-  A <- as.matrix(subconcept_matrix)
-  colnames(A) <- rownames(A) <- seq(nrow(subconcept_matrix))
-  poset <- POSetR::poset_from_incidence(A)
-  nodes <- as.numeric(poset$pointer$firstLE())
-  nodes <- rev(nodes)
-
-  last_node <- .extract_column(intents, nodes[1])
-  accumulated <- last_node
-  reduced <- list(last_node)
-  for (i in nodes[-1]) {
-    node <- .extract_column(intents, i)
-    accumulated <- .union(accumulated, last_node)
-    reduced[[i]] <- .difference2(node, accumulated)
-    last_node <- node
-  }
-
-  reduced_labels <- sapply(reduced, s2t)
-
-  if (latex) {
-    reduced_labels <- reduced_labels %>%
-      stringr::str_remove_all(pattern = stringr::fixed("\\\\varnothing"))
-  } else {
-    reduced_labels <- reduced_labels %>%
-      stringr::str_remove_all(pattern = stringr::fixed("{}"))
-  }
-
-  return(reduced_labels)
 }

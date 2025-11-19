@@ -101,42 +101,7 @@ FormalContext <- R6::R6Class(
       }
 
       if ((length(I) == 1) && is.character(I) && !file.exists(I)) {
-        warning("The file does not exist, trying to find it at fcarepository.org",
-          call. = FALSE,
-          immediate. = TRUE
-        )
-
-        URL <- glue::glue("https://github.com/fcatools/contexts/raw/main/contexts/{I}")
-
-        file <- tempfile(fileext = ".cxt")
-
-        err <- try(
-          download.file(URL,
-            destfile = file,
-            quiet = TRUE
-          )
-        )
-
-        if (inherits(err, "try-error")) {
-          stop("No such context.")
-        } else {
-          message("Found context.")
-
-          meta <- get_metadata(I)
-
-          if (!is.null(meta)) {
-            glue::glue("- {cli::style_underline('Title')}: {meta$title}\n- {cli::style_underline('Description')}: {stringr::str_to_sentence(meta$description)}\n- {cli::style_underline('Source')}: {meta$source}\n\n",
-              .trim = FALSE
-            ) |>
-              cat()
-          }
-        }
-
-        self$load(file)
-
-        unlink(file)
-
-        return(invisible(self))
+        stop(glue::glue("File '{I}' not found. If you want to download it from the repository, please use `fcaR::fetch_context('{I}')` instead."), call. = FALSE)
       }
 
       # version
@@ -1304,7 +1269,7 @@ FormalContext <- R6::R6Class(
         attributes <- txt[att_idx]
         matrix <- txt[matrix_idx] %>%
           stringr::str_replace_all(
-            pattern = "X",
+            pattern = "[X|x]",
             replacement = "1"
           ) %>%
           stringr::str_replace_all(

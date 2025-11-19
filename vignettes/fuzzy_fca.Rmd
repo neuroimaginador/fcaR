@@ -1,0 +1,178 @@
+---
+title: "Fuzzy formal concept analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Fuzzy formal concept analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  warning = FALSE
+)
+```
+
+```{r setup}
+library(fcaR)
+```
+
+## Introduction
+
+Traditional Formal Concept Analysis (FCA) deals with binary data: an object either possesses an attribute or not. However, real-world data is often graded. For instance, a user might like a movie to a certain degree, or a patient might show a symptom with a specific intensity.
+
+**Fuzzy FCA** generalizes the theory to handle degrees of membership in the interval $[0, 1]$. `fcaR` natively implements this framework, allowing the user to select the underlying fuzzy logic that governs the reasoning process.
+
+## 1\. Creating a fuzzy formal context
+
+To work with fuzzy logic, you create a `FormalContext` from a matrix containing numeric values between 0 and 1.
+
+Let us consider a dataset representing user preferences for different movie genres:
+
+```{r fuzzy_context}
+# Matrix with membership degrees
+I <- matrix(c(
+  0.9, 0.1, 0.8, 0.0,
+  0.2, 1.0, 0.0, 0.9,
+  0.5, 0.5, 0.5, 0.5,
+  0.0, 0.8, 0.1, 1.0
+), nrow = 4, byrow = TRUE)
+
+rownames(I) <- c("User1", "User2", "User3", "User4")
+colnames(I) <- c("Action", "Romance", "SciFi", "Drama")
+
+fc <- FormalContext$new(I)
+print(fc)
+```
+
+## 2\. Fuzzy logics and operators
+
+In Fuzzy FCA, the structure of the lattice and the validity of implications depend on the choice of the **fuzzy logic**. A logic is defined by an adjoint pair of operators:
+
+1.  **T-norm ($\otimes$):** Models the conjunction (AND).
+2.  **Residuum ($\to$):** Models the implication (IF...THEN).
+
+While the **intersection** of fuzzy sets (used for the infimum in the lattice) is typically modeled by the minimum, the derivation operators that form the concepts rely on the residuum:
+$$A^\uparrow(m) = \bigwedge_{g \in G} (A(g) \to I(g, m))$$
+
+`fcaR` implements the following logics:
+
+### Available logics
+
+1.  **Lukasiewicz**:
+
+      * **T-norm:** $x \otimes y = \max(0, x + y - 1)$
+      * **Residuum:** $x \to y = \min(1, 1 - x + y)$
+      * *Use case:* Ideal for capturing precise graded dependencies and avoiding drastic information loss.
+
+2.  **Gödel** (also referred to as **Zadeh** in `fcaR`):
+
+      * **T-norm:** $x \otimes y = \min(x, y)$
+      * **Residuum:** $x \to y = \begin{cases} 1 & \text{if } x \le y \\ y & \text{if } x > y \end{cases}$
+      * *Use case:* Useful when only the order of values matters, not their exact magnitude.
+
+3.  **Product** (Goguen):
+
+      * **T-norm:** $x \otimes y = x \cdot y$
+      * **Residuum:** $x \to y = \begin{cases} 1 & \text{if } x \le y \\ y/x & \text{if } x > y \end{cases}$
+
+By default, `fcaR` uses **Zadeh** (Gödel) logic.
+
+### Changing the logic
+
+For rigorous analysis where magnitude differences matter, **Lukasiewicz** is often the standard recommendation.
+
+```{r set_logic}
+# Switch to Lukasiewicz logic
+fc$use_logic("Lukasiewicz")
+fc$get_logic()
+```
+
+Changing the logic changes the definition of $\to$, and therefore, the concepts and implications that will be discovered.
+
+## 3\. Mining fuzzy concepts
+
+We compute the concept lattice using the selected logic. A fuzzy concept is a pair $(A, B)$ of fuzzy sets (vectors of values in $[0,1]$) closed under the derivation operators.
+
+```{r find_concepts}
+fc$find_concepts()
+fc$concepts
+```
+
+We can inspect the membership degrees of a specific concept. Note that an object can now belong "partially" to a concept.
+
+```{r inspect}
+# Select a concept (e.g., the 4th one)
+C <- fc$concepts$sub(4)
+
+# Extent (Degrees of objects)
+C$get_extent()
+
+# Intent (Degrees of attributes)
+C$get_intent()
+```
+
+## 4\. Visualization
+
+The resulting fuzzy lattice can be visualized as a Hasse diagram. The hierarchical structure is preserved based on the inclusion of fuzzy sets.
+
+```{r plot, fig.height=6, fig.width=6}
+fc$concepts$plot(mode = "reduced", method = "sugiyama")
+```
+
+## 5\. Fuzzy implications
+
+Fuzzy implications take the form $A \Rightarrow B$, where $A$ and $B$ are fuzzy sets of attributes. The validity of these rules depends on the selected logic.
+
+`fcaR` uses advanced algorithms (such as GreConD) adapted to handle degrees of confidence.
+
+```{r implications}
+fc$find_implications()
+fc$implications
+```
+
+### Support and confidence
+
+In the fuzzy setting:
+
+  * **Support:** The sum (or average) of degrees to which objects satisfy the antecedent.
+  * **Confidence:** The degree of truth of the implication $A \to B$ accumulated over all objects.
+
+With Lukasiewicz logic, confidence measures "how much is lost" when passing from $A$ to $B$. A confidence of 1 means that for every object, the degree of $A$ is less than or equal to the degree of $B$ (plus the residuum adjustment).
+
+```{r filter}
+# Filter strong rules
+fc$implications[fc$implications$support() > 0.2]
+```
+
+## 6\. Fuzzy closure and recommendation
+
+The `closure()` method allows for inference. Given an observed fuzzy set of attributes (e.g., a new user profile), we can compute which other attributes should be present according to the logic of the system.
+
+```{r closure}
+# Define a new user profile
+S <- Set$new(attributes = fc$attributes)
+# Likes Action very much, Drama somewhat
+S$assign(Action = 1.0, Drama = 0.5)
+
+# Compute the semantic closure using Lukasiewicz logic
+closure_S <- fc$implications$closure(S)
+
+# What do we infer about Romance or SciFi?
+print(closure_S)
+```
+
+## Summary of formulas
+
+| Logic ("Name") | T-Norm ($\otimes$) | Implication ($\to$) |
+| :--- | :--- | :--- |
+| **Lukasiewicz** | $\max(0, x+y-1)$ | $\min(1, 1-x+y)$ |
+| **Product** | $x \cdot y$ | $1$ if $x \le y$, else $y/x$ |
+| **Gödel** | $\min(x, y)$ | $1$ if $x \le y$, else $y$ |
+
+Selecting the appropriate logic is vital for correctly interpreting the results of `find_concepts()` and `closure()`.
+

@@ -112,28 +112,43 @@ A new \code{ConceptLattice} object.
 \subsection{Method \code{plot()}}{
 Plot the concept lattice
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$plot(object_names = TRUE, to_latex = FALSE, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$plot(
+  object_names = TRUE,
+  to_latex = FALSE,
+  method = c("sugiyama", "force"),
+  mode = NULL,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{object_names}}{(logical) If \code{TRUE}, plot object names, otherwise omit them from the diagram.}
+\item{\code{object_names}}{(logical) Deprecated. Use \code{mode} instead. If \code{TRUE} (default), implies \code{mode = "reduced"} or similar depending on heuristics. Kept for backward compatibility.}
 
-\item{\code{to_latex}}{(logical) If \code{TRUE}, export the plot as a \code{tikzpicture} environment that can be included in a \code{LaTeX} file.}
+\item{\code{to_latex}}{(logical) If \code{TRUE}, exports the plot as TikZ code (LaTeX) instead of drawing it. Returns an object of class \code{tikz_code} that prints the LaTeX code to console.}
 
-\item{\code{...}}{Other parameters to be passed to the \code{tikzDevice} that renders the lattice in \code{LaTeX}, or for the figure caption. See \code{Details}.}
+\item{\code{method}}{(character) The layout algorithm to use. Options are:
+\itemize{
+\item \code{"sugiyama"} (default): A hierarchical layout that minimizes edge crossings and centers nodes (similar to ConExp or hasseDiagram).
+\item \code{"force"}: A force-directed (spring) layout, useful for large or non-hierarchical lattices.
+}}
+
+\item{\code{mode}}{(character) The labeling mode for the nodes. If \code{NULL} (default), a heuristic based on lattice size is used. Options are:
+\itemize{
+\item \code{"reduced"}: Standard FCA labeling. Nodes are labeled with an attribute (or object) only if they are the supreme (or infimum) of that attribute (or object).
+\item \code{"full"}: Each node shows its complete extent and intent.
+\item \code{"attributes"}: Nodes show only their intent (attributes).
+\item \code{"empty"}: Nodes are drawn as points without labels. Recommended for very large lattices (>50 concepts).
+}}
+
+\item{\code{...}}{Other parameters passed to the internal plotting function (e.g., graphical parameters for \code{ggraph}).}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Details}{
-Particular parameters that control the size of the \code{tikz} output are: \code{width}, \code{height} (both in inches), and \code{pointsize} (in points), that should be set to the font size used in the \code{documentclass} header in the \code{LaTeX} file where the code is to be inserted.
-
-If a \code{caption} is provided, the whole \code{tikz} picture will be wrapped by a \code{figure} environment and the caption set.
-}
-
 \subsection{Returns}{
-If \code{to_latex} is \code{FALSE}, it returns nothing, just plots the graph of the concept lattice. Otherwise, this function returns the \code{LaTeX} code to reproduce the concept lattice.
+If \code{to_latex} is \code{FALSE}, it returns (invisibly) the \code{ggplot2} object representing the graph.
+If \code{to_latex} is \code{TRUE}, it returns a \code{tikz_code} object containing the LaTeX code.
 }
 }
 \if{html}{\out{<hr>}}

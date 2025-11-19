@@ -53,14 +53,19 @@ Imports:
     tidyr,
     tikzDevice,
     magrittr,
-    purrr
+    purrr,
+    yaml
 Suggests: 
     arules,
     covr,
-    hasseDiagram,
+    DT,
+    ggraph,
+    igraph,
     knitr,
     markdown,
+    miniUI,
     rmarkdown,
+    shiny,
     testthat (>= 2.1.0),
     tictoc,
     tinytex,

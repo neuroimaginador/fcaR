@@ -1,0 +1,164 @@
+---
+title: "Creating Formal Contexts in fcaR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Creating Formal Contexts in fcaR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fcaR)
+```
+
+The starting point of any Formal Concept Analysis (FCA) workflow is the **Formal Context**. A formal context is a triple $K = (G, M, I)$, where $G$ is a set of objects, $M$ is a set of attributes, and $I \subseteq G \times M$ is a binary relation between them.
+
+In `fcaR`, formal contexts are managed by the `FormalContext` R6 class. This vignette demonstrates the multiple ways to create or import a `FormalContext` object.
+
+## 1\. Creating from R Data Structures
+
+The most direct way to create a formal context is by passing a binary matrix (0/1 or TRUE/FALSE) or a data frame to the constructor.
+
+### From a matrix
+
+You can manually define a matrix where rows represent objects and columns represent attributes.
+
+```{r matrix}
+# Create a binary matrix
+M <- matrix(c(1, 0, 1,
+              1, 1, 0,
+              0, 1, 1), 
+            nrow = 3, 
+            byrow = TRUE)
+
+# Assign row and column names (Objects and Attributes)
+rownames(M) <- c("Object1", "Object2", "Object3")
+colnames(M) <- c("Attribute1", "Attribute2", "Attribute3")
+
+# Create the FormalContext object
+fc <- FormalContext$new(M)
+
+# Print the context
+fc
+```
+
+### From a data frame
+
+You can also use a `data.frame`. `fcaR` will attempt to coerce it into a binary matrix. This is useful if your data is already loaded in R from another source.
+
+```{r dataframe}
+df <- data.frame(
+  has_wings = c(TRUE, TRUE, FALSE),
+  can_fly   = c(TRUE, FALSE, FALSE),
+  has_legs  = c(TRUE, TRUE, TRUE),
+  row.names = c("Eagle", "Penguin", "Dog")
+)
+
+fc_df <- FormalContext$new(df)
+fc_df
+```
+
+## 2\. Importing from Local Files
+
+`fcaR` supports several standard file formats used in the FCA community. The `FormalContext$new()` constructor automatically detects the format based on the file extension.
+
+### CXT Format (`.cxt`)
+
+The Burmeister format (`.cxt`) is the standard for many classic FCA tools like ConExp.
+
+```{r cxt}
+# We use an example file included in the package
+cxt_file <- system.file("contexts", "lives_in_water.cxt", package = "fcaR")
+
+# Load the context
+fc_cxt <- FormalContext$new(cxt_file)
+fc_cxt
+```
+
+### CSV Files (`.csv`)
+
+You can load a context from a Comma-Separated Values file. It assumes the first column contains object names and the header contains attribute names.
+
+```{r csv}
+# We use an example file included in the package
+csv_file <- system.file("contexts", "airlines.csv", package = "fcaR")
+
+# Load from CSV
+# Note: Ensure your CSV contains binary data
+fc_csv <- FormalContext$new(csv_file)
+
+# Inspect dimensions
+dim(fc_csv)
+```
+
+## 3\. Fetching from the FCA Repository
+
+`fcaR` includes a powerful feature to download and load curated datasets directly from the online **FCA Repository** (fcarepository.org).
+
+### Browsing the Repository
+
+You don't need to know the filenames by heart. You can browse the available contexts and see their metadata (dimensions, description, source) directly from the console.
+
+```{r repo_browse}
+# Get the list of available contexts
+meta <- get_fcarepository_contexts()
+
+# Print a detailed summary to the console
+# (Shows Title, Dimensions, and Description for each entry)
+print_repo_details(meta)
+```
+
+### Downloading a Specific Context
+
+Once you have identified a context of interest (e.g., `"planets_en.cxt"` or `"animals_en.cxt"`), you can download it using `fetch_context()`. This function handles the download, parsing, and error checking for you.
+
+```{r fetch}
+# Download and load the 'Planets' context
+fc_planets <- fetch_context("planets_en.cxt")
+
+# The object is ready for analysis
+fc_planets$find_concepts()
+fc_planets$concepts$size()
+```
+
+## 4\. Interactive Use: The RStudio Addin
+
+For a more visual and user-friendly experience, `fcaR` includes an **RStudio Addin**. This tool provides a Graphical User Interface (GUI) to explore the repository without writing code initially.
+
+### How to Launch It
+
+You have two options:
+
+1.  **Via menu:** In RStudio, go to the toolbar, click the **"Addins"** dropdown menu, and select **"Browse FCA Repository"** under the **fcaR** section.
+2.  **Via console:** Run the following command:
+
+<!-- end list -->
+
+```{r addin, eval=FALSE}
+select_repository_context_addin()
+```
+
+### What Does the Addin Do?
+
+1.  It opens a floating window with an interactive table of all available contexts in the repository.
+2.  You can **filter** and **search** contexts by filename, title, or description.
+3.  When you select a row and click **"Done"**, the Addin automatically inserts the necessary code into your console to download that specific context (using `fetch_context`).
+
+This is the recommended way to discover new datasets and start working quickly.
+
+## Summary of Methods
+
+| Source | Function / Method | Description |
+| :--- | :--- | :--- |
+| **R Matrix / Data Frame** | `FormalContext$new(x)` | Direct creation from in-memory objects. |
+| **Local File (.cxt)** | `FormalContext$new("file.cxt")` | Loads Burmeister format files. |
+| **Local File (.csv)** | `FormalContext$new("file.csv")` | Loads CSV files (expects binary data). |
+| **FCA Repository (Code)** | `fetch_context("name.cxt")` | Downloads and loads from the web. |
+| **FCA Repository (GUI)** | `select_repository_context_addin()` | Graphical interface to search and load. |

@@ -97,6 +97,14 @@ InClose_binary <- function(I, attrs, verbose = FALSE) {
     .Call(`_fcaR_InClose_binary`, I, attrs, verbose)
 }
 
+calculate_grades_rcpp <- function(concept_ids, edge_from, edge_to) {
+    .Call(`_fcaR_calculate_grades_rcpp`, concept_ids, edge_from, edge_to)
+}
+
+calculate_lattice_layout_rcpp <- function(concept_ids, grades, edge_from, edge_to, method) {
+    .Call(`_fcaR_calculate_lattice_layout_rcpp`, concept_ids, grades, edge_from, edge_to, method)
+}
+
 test_new <- function(A) {
     invisible(.Call(`_fcaR_test_new`, A))
 }
