@@ -25,19 +25,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// grecond_internal
-IntegerVector grecond_internal(NumericMatrix I, String connection, String name);
-RcppExport SEXP _fcaR_grecond_internal(SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
-    Rcpp::traits::input_parameter< String >::type name(nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(grecond_internal(I, connection, name));
-    return rcpp_result_gen;
-END_RCPP
-}
 // tnorm_Zadeh
 double tnorm_Zadeh(double x, double y);
 RcppExport SEXP _fcaR_tnorm_Zadeh(SEXP xSEXP, SEXP ySEXP) {
@@ -765,7 +752,6 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_grecond_plus", (DL_FUNC) &_fcaR_grecond_plus, 5},
-    {"_fcaR_grecond_internal", (DL_FUNC) &_fcaR_grecond_internal, 3},
     {"_fcaR_tnorm_Zadeh", (DL_FUNC) &_fcaR_tnorm_Zadeh, 2},
     {"_fcaR_implication_Zadeh", (DL_FUNC) &_fcaR_implication_Zadeh, 2},
     {"_fcaR_tnorm_Lukasiewicz", (DL_FUNC) &_fcaR_tnorm_Lukasiewicz, 2},

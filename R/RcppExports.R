@@ -5,10 +5,6 @@ grecond_plus <- function(I, w = 1.0, stop_threshold_ratio = 0.0, connection = "s
     .Call(`_fcaR_grecond_plus`, I, w, stop_threshold_ratio, connection, logic_name)
 }
 
-grecond_internal <- function(I, connection = "standard", name = "Zadeh") {
-    .Call(`_fcaR_grecond_internal`, I, connection, name)
-}
-
 tnorm_Zadeh <- function(x, y) {
     .Call(`_fcaR_tnorm_Zadeh`, x, y)
 }
