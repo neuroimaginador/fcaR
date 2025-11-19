@@ -1,135 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>/ISSUE_TEMPLATE.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/SUPPORT.html</loc>
-  </url>
-  <url>
-    <loc>/articles/arules.html</loc>
-  </url>
-  <url>
-    <loc>/articles/concept_lattice.html</loc>
-  </url>
-  <url>
-    <loc>/articles/conceptual-scaling.html</loc>
-  </url>
-  <url>
-    <loc>/articles/extending_equivalence.html</loc>
-  </url>
-  <url>
-    <loc>/articles/implications.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Concept.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ConceptLattice.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ConceptSet.html</loc>
-  </url>
-  <url>
-    <loc>/reference/FormalContext.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ImplicationSet.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Set.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as_Set.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as_vector.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cobre32.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cobre61.html</loc>
-  </url>
-  <url>
-    <loc>/reference/equivalencesRegistry.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fcaR-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fcaR_options.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-and-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-entails-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-equals-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-holds_in-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-less-than-equals-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-or-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-respects-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/grapes-twiddle-grapes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/parse_implication.html</loc>
-  </url>
-  <url>
-    <loc>/reference/parse_implications.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/planets.html</loc>
-  </url>
-  <url>
-    <loc>/reference/scalingRegistry.html</loc>
-  </url>
-  <url>
-    <loc>/reference/vegas.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://neuroimaginador.github.io/fcaR/404.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/CONTRIBUTING.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/ISSUE_TEMPLATE.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/LICENSE.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/SUPPORT.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/advanced_lattice_metrics.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/arules.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/concept_lattice.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/conceptual-scaling.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/creating_contexts.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/extending_equivalence.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/fuzzy_fca.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/implications.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/index.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/lattice_visualization.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/matrix_factorization.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/authors.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/index.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/news/index.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/Concept.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/ConceptSet.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/FormalContext.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/ImplicationSet.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/Set.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/as_Set.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/as_vector.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_density.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_grades.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_separation.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_stability.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/cobre32.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/cobre61.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/compute_labels_and_colors.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/conceptRegistry.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/equivalencesRegistry.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/export_to_tikz.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/fcaR-package.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/fcaR_options.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/fetch_context.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/get_fcarepository_contexts.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-and-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-entails-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-equals-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-holds_in-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-less-than-equals-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-or-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-respects-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-twiddle-grapes.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/index.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/lattice_plot.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/parse_implication.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/parse_implications.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/pipe.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/planets.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/print_repo_details.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/save_tikz.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/scalingRegistry.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/select_repository_context.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/vegas.html</loc></url>
 </urlset>
+

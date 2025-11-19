@@ -1,0 +1,381 @@
+# fcaR: Tools for Formal Concept Analysis
+
+The aim of this package is to provide tools to perform fuzzy formal
+concept analysis (FCA) from within R. It provides functions to load and
+save a Formal Context, extract its concept lattice and implications. In
+addition, one can use the implications to compute semantic closures of
+fuzzy sets and, thus, build recommendation systems.
+
+## Details
+
+The fcaR package provides data structures which allow the user to work
+seamlessly with formal contexts and sets of implications. More
+explicitly, three main classes are implemented, using the
+object-oriented-programming paradigm in R:
+
+- FormalContext encapsulates the definition of a formal context (G, M,
+  I), being G the set of objects, M the set of attributes and I the
+  (fuzzy) relationship matrix, and provides methods to operate on the
+  context using FCA tools.
+- ImplicationSet represents a set of implications over a specific formal
+  context.
+- ConceptLattice represents the set of concepts and their relationships,
+  including methods to operate on the lattice.
+
+Two additional helper classes are implemented:
+
+- Set is a class solely used for visualization purposes, since it
+  encapsulates in sparse format a (fuzzy) set.
+- Concept encapsulates internally both extent and intent of a formal
+  concept as Set.
+
+Since fcaR is an extension of the data model in the arules package, most
+of the methods and classes implemented interoperates with the main S4
+classes in arules (transactions and rules).
+
+## Installation
+
+This package is available at CRAN, so its stable version can be easily
+installed using:
+
+``` R
+install.packages("fcaR")
+```
+
+The development version of this package can be installed with
+
+``` R
+remotes::install_github("neuroimaginador/fcaR", build_vignettes = TRUE)
+```
+
+or
+
+``` R
+remotes::install_github("Malaga-FCA-group/fcaR", build_vignettes = TRUE)
+```
+
+## Example of Use
+
+Let us start with a fuzzy dataset (stored in a matrix I) as follows:
+
+|     |  P1 |  P2 |  P3 |  P4 |  P5 |  P6 |
+|:----|----:|----:|----:|----:|----:|----:|
+| O1  | 0.0 | 1.0 | 0.5 | 0.5 | 1.0 |   0 |
+| O2  | 1.0 | 1.0 | 1.0 | 0.0 | 0.0 |   0 |
+| O3  | 0.5 | 0.5 | 0.0 | 0.0 | 0.0 |   1 |
+| O4  | 0.0 | 0.0 | 0.0 | 1.0 | 0.5 |   0 |
+| O5  | 0.0 | 0.0 | 1.0 | 0.5 | 0.0 |   0 |
+| O6  | 0.5 | 0.0 | 0.0 | 0.0 | 0.0 |   0 |
+
+Here, a value $x$ in the intersection of a row and a column indicates
+that the object of the corresponding row possesses the attribute in the
+column in a degree of at least $x$ (if $x = 0$, the attribute is absent
+in the object, and if $x = 1$, the attribute is fully present in the
+object).
+
+We can build a FormalContext object:
+
+``` r
+fc <- FormalContext$new(I)
+
+print(fc)
+#> FormalContext with 6 objects and 6 attributes.
+#>      P1   P2   P3   P4   P5  P6  
+#>  O1  0    1   0.5  0.5   1    0  
+#>  O2  1    1    1    0    0    0  
+#>  O3 0.5  0.5   0    0    0    1  
+#>  O4  0    0    0    1   0.5   0  
+#>  O5  0    0    1   0.5   0    0  
+#>  O6 0.5   0    0    0    0    0
+```
+
+With a single function, we can compute the set of concepts:
+
+``` r
+# Compute all concepts
+fc$find_concepts()
+
+# The first concept
+fc$concepts$sub(1)
+#> ({O1, O2, O3, O4, O5, O6}, {})
+
+# And plot the concept lattice
+fc$concepts$plot()
+```
+
+![](reference/figures/README-unnamed-chunk-4-1.png)
+
+We can also extract implications from the formal context:
+
+``` r
+# Extract implications
+fc$find_implications()
+
+# Which implications have been extracted
+fc$implications
+#> Implication set with 12 implications.
+#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
+#> Rule 2: {P5 [0.5]} -> {P4 [0.5]}
+#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
+#> Rule 4: {P3 [0.5], P4} -> {P3}
+#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
+#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2}
+#> Rule 7: {P2, P3, P4 [0.5], P5} -> {P4}
+#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
+#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
+#> Rule 10: {P1 [0.5], P2} -> {P1}
+#> Rule 11: {P1, P2 [0.5]} -> {P2}
+#> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
+```
+
+Some fundamental functionalities on the concept lattice associated to
+the formal context have been implemented:
+
+- Computing a sublattice.
+- Calculating the subconcepts and superconcepts of a given concept.
+- Finding the join- and meet- irreducible elements, which allows to
+  reduce the context and find the *standard context*.
+
+Also, one can compute the support of both implications and concepts:
+
+``` r
+fc$implications$support()
+#>  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000
+#>  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000
+fc$concepts$support()
+#>  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000
+#>  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333
+#> [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667
+#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000
+```
+
+In this package, we have implemented a logic to manage implications.
+This so-called Simplification Logic allows us to simplify the extracted
+rules by removing redundancies, as well as computing the closure of a
+given fuzzy attribute set.
+
+``` r
+# Reduce the number of implications using two simple
+# rules. The algorithm applies the specified rules
+# in batches, if the number of rules is high.
+fc$implications$apply_rules(rules = c("composition",
+                                      "generalization"))
+#> Processing batch
+#> --> Composition: from 12 to 12 in 0.001 secs.
+#> --> Generalization: from 12 to 12 in 0.001 secs.
+#> Batch took 0.004 secs.
+
+# Reduced set of implications
+fc$implications
+#> Implication set with 12 implications.
+#> Rule 1: {P6 [0.5]} -> {P1 [0.5], P2 [0.5], P6}
+#> Rule 2: {P5 [0.5]} -> {P4 [0.5]}
+#> Rule 3: {P3 [0.5], P4 [0.5], P5 [0.5]} -> {P2, P5}
+#> Rule 4: {P3 [0.5], P4} -> {P3}
+#> Rule 5: {P2 [0.5], P4 [0.5]} -> {P2, P3 [0.5], P5}
+#> Rule 6: {P2 [0.5], P3 [0.5]} -> {P2}
+#> Rule 7: {P2, P3, P4 [0.5], P5} -> {P4}
+#> Rule 8: {P1 [0.5], P4 [0.5]} -> {P1, P2, P3, P4, P5, P6}
+#> Rule 9: {P1 [0.5], P3 [0.5]} -> {P1, P2, P3}
+#> Rule 10: {P1 [0.5], P2} -> {P1}
+#> Rule 11: {P1, P2 [0.5]} -> {P2}
+#> Rule 12: {P1, P2, P3, P6} -> {P4, P5}
+```
+
+All these functions work natively with fuzzy and with binary datasets.
+
+For more details on the methods implemented and further examples, see
+the vignettes in this package.
+
+## Changelog
+
+With respect to the CRAN version, the development version has the
+following changes.
+
+# fcaR 1.2.2
+
+Enhancements:
+
+- Added more unit tests.
+- Minor changes to the plotting of formal contexts.
+- Now the `fc$scale()` function admits a new argument `bg` (default:
+  FALSE) which, if set to TRUE, avoids computing the background
+  knowledge of the scales.
+
+# fcaR 1.2.1
+
+Enhancements:
+
+- Other logics have been implemented. Now, we can use `fc$use_logic()`
+  to select one of the `available_logics()`.
+- Improved export to LaTeX.
+
+Bugfixes:
+
+- Some rounding errors might induce errors in the computations. These
+  has been fixed.
+
+### fcaR 1.2.0
+
+Bugfixes:
+
+- Fixes required by the new version of Matrix and the new use of HTML
+  Tidy in R 4.2.
+
+### fcaR 1.1.1
+
+Enhancements:
+
+- The user can control the number of decimal digits when exporting to
+  LaTeX or when printing formal contexts, concept lattices and
+  implications. Just use fcaR_options(decimal_places = n), where n is
+  the number of desired decimal digits.
+
+New functionality:
+
+- Now the package uses the *settings* package to manage several options.
+  Currently, the only option is the number of decimal digits to use when
+  printing or exporting to LaTeX.
+
+Bugfixes:
+
+- Fixed exporting to latex with special characters such as \$, \_, etc.
+
+## References
+
+Guigues J, Duquenne V (1986). “Familles minimales d’implications
+informatives résultant d’un tableau de données binaires.” *Mathématiques
+et Sciences humaines*, *95*, 5-18.
+
+Ganter B, Wille R (1999). *Formal concept analysis : mathematical
+foundations*. Springer. ISBN 3540627715.
+
+Cordero P, Enciso M, Mora Á, Pérez de Guzman I (2002). “SLFD Logic:
+Elimination of Data Redundancy in Knowledge Representation.” *Advances
+in Artificial Intelligence - IBERAMIA 2002*, *2527*, 141-150. doi:
+10.1007/3-540-36131-6_15 (URL:
+<https://doi.org/10.1007/3-540-36131-6_15>).
+
+Belohlavek R (2002). “Algorithms for fuzzy concept lattices.” In *Proc.
+Fourth Int. Conf. on Recent Advances in Soft Computing*. Nottingham,
+United Kingdom, 200-205.
+
+Hahsler M, Grun B, Hornik K (2005). “arules - a computational
+environment for mining association rules and frequent item sets.” *J
+Stat Softw*, *14*, 1-25.
+
+Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via
+functional dependence simplification.” *International Journal of
+Computer Mathematics*, *89*(4), 510-526.
+
+Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated
+prover for attribute dependencies in data with grades.” *International
+Journal of Approximate Reasoning*, *70*, 51-67.
+
+# Package index
+
+## All functions
+
+- [`Concept`](https://neuroimaginador.github.io/fcaR/reference/Concept.md)
+  : R6 class for a fuzzy concept with sparse internal representation
+- [`ConceptLattice`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.md)
+  : R6 class for a concept lattice
+- [`ConceptSet`](https://neuroimaginador.github.io/fcaR/reference/ConceptSet.md)
+  : R6 class for a set of concepts
+- [`FormalContext`](https://neuroimaginador.github.io/fcaR/reference/FormalContext.md)
+  : R6 class for a formal context
+- [`ImplicationSet`](https://neuroimaginador.github.io/fcaR/reference/ImplicationSet.md)
+  : R6 Class for Set of implications
+- [`Set`](https://neuroimaginador.github.io/fcaR/reference/Set.md) : R6
+  class for a fuzzy set with sparse internal representation
+- [`as_Set()`](https://neuroimaginador.github.io/fcaR/reference/as_Set.md)
+  : Convert Named Vector to Set
+- [`as_vector()`](https://neuroimaginador.github.io/fcaR/reference/as_vector.md)
+  : Convert Set to vector
+- [`calculate_density()`](https://neuroimaginador.github.io/fcaR/reference/calculate_density.md)
+  : Calculate Fuzzy Density
+- [`calculate_grades()`](https://neuroimaginador.github.io/fcaR/reference/calculate_grades.md)
+  : Calculate Concept Grades (Levels)
+- [`calculate_separation()`](https://neuroimaginador.github.io/fcaR/reference/calculate_separation.md)
+  : Calculate Concept Separation
+- [`calculate_stability()`](https://neuroimaginador.github.io/fcaR/reference/calculate_stability.md)
+  : Calculate Concept Stability
+- [`cobre32`](https://neuroimaginador.github.io/fcaR/reference/cobre32.md)
+  : Data for Differential Diagnosis for Schizophrenia
+- [`cobre61`](https://neuroimaginador.github.io/fcaR/reference/cobre61.md)
+  : Data for Differential Diagnosis for Schizophrenia
+- [`compute_labels_and_colors()`](https://neuroimaginador.github.io/fcaR/reference/compute_labels_and_colors.md)
+  : Compute Labels and Colors for Lattice Nodes
+- [`conceptRegistry`](https://neuroimaginador.github.io/fcaR/reference/conceptRegistry.md)
+  : Concept Miners Registry
+- [`equivalencesRegistry`](https://neuroimaginador.github.io/fcaR/reference/equivalencesRegistry.md)
+  : Equivalence Rules Registry
+- [`export_to_tikz()`](https://neuroimaginador.github.io/fcaR/reference/export_to_tikz.md)
+  : Export Layout to TikZ (LaTeX)
+- [`fcaR_options()`](https://neuroimaginador.github.io/fcaR/reference/fcaR_options.md)
+  : Set or get options for fcaR
+- [`fetch_context()`](https://neuroimaginador.github.io/fcaR/reference/fetch_context.md)
+  : Fetch a Formal Context from the FCA Repository
+- [`get_fcarepository_contexts()`](https://neuroimaginador.github.io/fcaR/reference/get_fcarepository_contexts.md)
+  : Get Metadata from the FCA Repository
+- [`` `%&%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-and-grapes.md)
+  : Intersection (Logical AND) of Fuzzy Sets
+- [`` `%entails%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-entails-grapes.md)
+  : Entailment between implication sets
+- [`` `%==%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-equals-grapes.md)
+  : Equality in Sets and Concepts
+- [`` `%-%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-grapes.md)
+  : Difference in Sets
+- [`` `%holds_in%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-holds_in-grapes.md)
+  : Implications that hold in a Formal Context
+- [`` `%<=%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-less-than-equals-grapes.md)
+  : Partial Order in Sets and Concepts
+- [`` `%|%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-or-grapes.md)
+  : Union (Logical OR) of Fuzzy Sets
+- [`` `%respects%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-respects-grapes.md)
+  : Check if Set or FormalContext respects an ImplicationSet
+- [`` `%~%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-twiddle-grapes.md)
+  : Equivalence of sets of implications
+- [`lattice_plot()`](https://neuroimaginador.github.io/fcaR/reference/lattice_plot.md)
+  : Plot Concept Lattice
+- [`parse_implication()`](https://neuroimaginador.github.io/fcaR/reference/parse_implication.md)
+  : Parses a string into an implication
+- [`parse_implications()`](https://neuroimaginador.github.io/fcaR/reference/parse_implications.md)
+  : Parses several implications given as a string
+- [`planets`](https://neuroimaginador.github.io/fcaR/reference/planets.md)
+  : Planets data
+- [`print_repo_details()`](https://neuroimaginador.github.io/fcaR/reference/print_repo_details.md)
+  : Print Details of Repository Contexts
+- [`save_tikz()`](https://neuroimaginador.github.io/fcaR/reference/save_tikz.md)
+  : Save TikZ Code to File
+- [`scalingRegistry`](https://neuroimaginador.github.io/fcaR/reference/scalingRegistry.md)
+  : Scaling Registry
+- [`select_repository_context()`](https://neuroimaginador.github.io/fcaR/reference/select_repository_context.md)
+  : GUI to select and download a context from the repository
+- [`vegas`](https://neuroimaginador.github.io/fcaR/reference/vegas.md) :
+  Data for Tourist Destination in Las Vegas
+
+# Articles
+
+### All vignettes
+
+- [Advanced lattice
+  metrics](https://neuroimaginador.github.io/fcaR/articles/advanced_lattice_metrics.md):
+- [Integration with the arules
+  package](https://neuroimaginador.github.io/fcaR/articles/arules.md):
+- [Using FormalContexts and
+  ConceptLattices](https://neuroimaginador.github.io/fcaR/articles/concept_lattice.md):
+- [Conceptual
+  Scaling](https://neuroimaginador.github.io/fcaR/articles/conceptual-scaling.md):
+- [Creating Formal Contexts in
+  fcaR](https://neuroimaginador.github.io/fcaR/articles/creating_contexts.md):
+- [Extending fcaR: Equivalence Rules for
+  Implications](https://neuroimaginador.github.io/fcaR/articles/extending_equivalence.md):
+- [Fuzzy formal concept
+  analysis](https://neuroimaginador.github.io/fcaR/articles/fuzzy_fca.md):
+- [Working with
+  ImplicationSets](https://neuroimaginador.github.io/fcaR/articles/implications.md):
+- [Visualizing concept lattices: from R to
+  LaTeX](https://neuroimaginador.github.io/fcaR/articles/lattice_visualization.md):
+- [Matrix Factorization with
+  GreConD+](https://neuroimaginador.github.io/fcaR/articles/matrix_factorization.md):

@@ -1,0 +1,134 @@
+# Integration with the arules package
+
+## Introduction
+
+One of the goals in the design of this package is to be able to
+integrate with the `arules` package. This means that any one using the
+`arules` functionalities can export to and import from `fcaR` objects,
+more precisely, `FormalContext` and `ImplicationSet` objects.
+
+``` r
+library(arules)
+#> Loading required package: Matrix
+#> 
+#> Attaching package: 'arules'
+#> The following objects are masked from 'package:base':
+#> 
+#>     abbreviate, write
+library(fcaR)
+#> 
+#> Attaching package: 'fcaR'
+#> The following object is masked from 'package:Matrix':
+#> 
+#>     %&%
+```
+
+## Datasets
+
+For these examples, we are using two binary datasets, `Mushroom` (from
+the `arules` package) and `planets` (from `fcaR`).
+
+``` r
+data("Mushroom", package = "arules")
+```
+
+At the moment, in `arules` there is no support for fuzzy sets, so we
+must restrict ourselves to the binary case.
+
+Let us create a `FormalContext` object for the `planets` dataset:
+
+``` r
+fc_planets <- FormalContext$new(planets)
+```
+
+## Converting between formal contexts and transactions objects
+
+We begin by converting between the objects which store the datasets.
+
+### Importing a transactions object
+
+It suffices to initialize a `FormalContext` object with the transactions
+dataset:
+
+``` r
+fc <- FormalContext$new(Mushroom)
+fc
+#> FormalContext with 8124 objects and 114 attributes.
+#>     Class=edible  Class=poisonous  CapShape=bell  CapShape=conical  CapShape=flat  
+#>   1                      X                                                         
+#>   2       X                                                                        
+#>   3       X                              X                                         
+#>   4                      X                                                         
+#>   5       X                                                                        
+#>   6       X                                                                        
+#>   7       X                              X                                         
+#>   8       X                              X                                         
+#>   9                      X                                                         
+#>  10       X                              X                                         
+#> Other attributes are: CapShape=knobbed, CapShape=sunken, CapShape=convex,
+#> CapSurf=fibrous, CapSurf=grooves, CapSurf=smooth, ...
+```
+
+From this point, we can use all the functionalities in the `fcaR`
+package regarding formal contexts, concept lattices and implication
+sets.
+
+### Exporting a FormalContext
+
+The `to_transactions()` function enables us to export a formal context
+to a format compatible with the `arules` package:
+
+``` r
+fc_planets$to_transactions()
+#> transactions in sparse format with
+#>  9 transactions (rows) and
+#>  7 items (columns)
+```
+
+and use the functionality in that package.
+
+## Converting between implication sets and rules objects
+
+Other point of integration between the two packages is the ability to
+import rules from the `arules` package, operate on them to compute
+closures, recommendations or to remove redundancies, or to export an
+implication set as a `rules` object.
+
+### Importing rules as an implication set
+
+Let us suppose that we have extracted implications from the `Mushroom`
+dataset using the
+[`apriori()`](https://rdrr.io/pkg/arules/man/apriori.html) function:
+
+``` r
+mushroom_rules <- apriori(Mushroom, parameter = list(conf = 1), control = list(verbose = FALSE))
+```
+
+Once we have created the `fc` object storing the `Mushroom` dataset, we
+simply add the implications to it as:
+
+``` r
+fc$implications$add(mushroom_rules)
+```
+
+And we can use all the functionalities for the `ImplicationSet` class.
+
+### Exporting ImplicationSets to rules format
+
+If we want to export the implications extracted for a binary formal
+context, we can use:
+
+``` r
+fc_planets$find_implications()
+fc_planets$implications$to_arules(quality = TRUE)
+#> set of 10 rules
+```
+
+## Final considerations
+
+An example of use may be to extract rules in the `arules` package by
+using [`apriori()`](https://rdrr.io/pkg/arules/man/apriori.html) or
+[`eclat()`](https://rdrr.io/pkg/arules/man/eclat.html), then importing
+everything into `fcaR` as described above, and use the functionalities
+to simplify, remove redundancies, compute closures, etc., as needed, and
+then re-export back to `arules`.
