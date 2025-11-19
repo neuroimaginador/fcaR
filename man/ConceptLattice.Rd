@@ -59,6 +59,9 @@ fc$concepts$bottom()
 \item \href{#method-ConceptLattice-superconcepts}{\code{ConceptLattice$superconcepts()}}
 \item \href{#method-ConceptLattice-lower_neighbours}{\code{ConceptLattice$lower_neighbours()}}
 \item \href{#method-ConceptLattice-upper_neighbours}{\code{ConceptLattice$upper_neighbours()}}
+\item \href{#method-ConceptLattice-stability}{\code{ConceptLattice$stability()}}
+\item \href{#method-ConceptLattice-separation}{\code{ConceptLattice$separation()}}
+\item \href{#method-ConceptLattice-density}{\code{ConceptLattice$density()}}
 \item \href{#method-ConceptLattice-clone}{\code{ConceptLattice$clone()}}
 }
 }
@@ -71,7 +74,6 @@ fc$concepts$bottom()
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-is_empty'><code>fcaR::ConceptSet$is_empty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="print"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-print'><code>fcaR::ConceptSet$print()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="size"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-size'><code>fcaR::ConceptSet$size()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="stability"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-stability'><code>fcaR::ConceptSet$stability()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="sub"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-sub'><code>fcaR::ConceptSet$sub()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="support"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-support'><code>fcaR::ConceptSet$support()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_latex"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-to_latex'><code>fcaR::ConceptSet$to_latex()</code></a></span></li>
@@ -396,6 +398,53 @@ Upper Neighbours of a Concept
 }
 \subsection{Returns}{
 A list with the upper neighbours of \code{C}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-stability"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-stability}{}}}
+\subsection{Method \code{stability()}}{
+Computes the stability of each concept.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$stability()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A numeric vector with the stability of each concept.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-separation"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-separation}{}}}
+\subsection{Method \code{separation()}}{
+Computes the separation of each concept.
+Separation is the number of objects covered by the concept but not by any of its immediate subconcepts.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$separation()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A numeric vector with the separation of each concept.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-density"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-density}{}}}
+\subsection{Method \code{density()}}{
+Computes the fuzzy density of each concept.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$density(I = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{I}}{(Optional) The original incidence matrix. If NULL, it tries to access it from the parent FormalContext if linked.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A numeric vector with the density of each concept.
 }
 }
 \if{html}{\out{<hr>}}

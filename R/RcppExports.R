@@ -105,6 +105,22 @@ calculate_lattice_layout_rcpp <- function(concept_ids, grades, edge_from, edge_t
     .Call(`_fcaR_calculate_lattice_layout_rcpp`, concept_ids, grades, edge_from, edge_to, method)
 }
 
+calculate_stability_sparse_rcpp <- function(mat) {
+    .Call(`_fcaR_calculate_stability_sparse_rcpp`, mat)
+}
+
+calculate_density_rcpp <- function(extents, intents, I) {
+    .Call(`_fcaR_calculate_density_rcpp`, extents, intents, I)
+}
+
+calculate_separation_rcpp <- function(mat) {
+    .Call(`_fcaR_calculate_separation_rcpp`, mat)
+}
+
+calculate_fuzzy_density_rcpp <- function(extents, intents, I) {
+    .Call(`_fcaR_calculate_fuzzy_density_rcpp`, extents, intents, I)
+}
+
 test_new <- function(A) {
     invisible(.Call(`_fcaR_test_new`, A))
 }
@@ -159,10 +175,6 @@ compute_upleft_arrow <- function(V, I, name) {
 
 compute_downright_arrow <- function(V, I, name) {
     .Call(`_fcaR_compute_downright_arrow`, V, I, name)
-}
-
-calculate_stability_sparse_rcpp <- function(mat) {
-    .Call(`_fcaR_calculate_stability_sparse_rcpp`, mat)
 }
 
 sparse_subset_dispatch <- function(X_p, X_i, X_x, Y_p, Y_i, Y_x, num_rows, proper_code, is_binary) {

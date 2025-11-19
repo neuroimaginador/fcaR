@@ -361,6 +361,54 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calculate_stability_sparse_rcpp
+NumericVector calculate_stability_sparse_rcpp(S4 mat);
+RcppExport SEXP _fcaR_calculate_stability_sparse_rcpp(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_stability_sparse_rcpp(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_density_rcpp
+NumericVector calculate_density_rcpp(S4 extents, S4 intents, NumericMatrix I);
+RcppExport SEXP _fcaR_calculate_density_rcpp(SEXP extentsSEXP, SEXP intentsSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type extents(extentsSEXP);
+    Rcpp::traits::input_parameter< S4 >::type intents(intentsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_density_rcpp(extents, intents, I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_separation_rcpp
+NumericVector calculate_separation_rcpp(S4 mat);
+RcppExport SEXP _fcaR_calculate_separation_rcpp(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_separation_rcpp(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_fuzzy_density_rcpp
+NumericVector calculate_fuzzy_density_rcpp(S4 extents, S4 intents, NumericMatrix I);
+RcppExport SEXP _fcaR_calculate_fuzzy_density_rcpp(SEXP extentsSEXP, SEXP intentsSEXP, SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type extents(extentsSEXP);
+    Rcpp::traits::input_parameter< S4 >::type intents(intentsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_fuzzy_density_rcpp(extents, intents, I));
+    return rcpp_result_gen;
+END_RCPP
+}
 // test_new
 void test_new(S4 A);
 RcppExport SEXP _fcaR_test_new(SEXP ASEXP) {
@@ -543,17 +591,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
     Rcpp::traits::input_parameter< String >::type name(nameSEXP);
     rcpp_result_gen = Rcpp::wrap(compute_downright_arrow(V, I, name));
-    return rcpp_result_gen;
-END_RCPP
-}
-// calculate_stability_sparse_rcpp
-NumericVector calculate_stability_sparse_rcpp(S4 mat);
-RcppExport SEXP _fcaR_calculate_stability_sparse_rcpp(SEXP matSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type mat(matSEXP);
-    rcpp_result_gen = Rcpp::wrap(calculate_stability_sparse_rcpp(mat));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -753,6 +790,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
     {"_fcaR_calculate_grades_rcpp", (DL_FUNC) &_fcaR_calculate_grades_rcpp, 3},
     {"_fcaR_calculate_lattice_layout_rcpp", (DL_FUNC) &_fcaR_calculate_lattice_layout_rcpp, 5},
+    {"_fcaR_calculate_stability_sparse_rcpp", (DL_FUNC) &_fcaR_calculate_stability_sparse_rcpp, 1},
+    {"_fcaR_calculate_density_rcpp", (DL_FUNC) &_fcaR_calculate_density_rcpp, 3},
+    {"_fcaR_calculate_separation_rcpp", (DL_FUNC) &_fcaR_calculate_separation_rcpp, 1},
+    {"_fcaR_calculate_fuzzy_density_rcpp", (DL_FUNC) &_fcaR_calculate_fuzzy_density_rcpp, 3},
     {"_fcaR_test_new", (DL_FUNC) &_fcaR_test_new, 1},
     {"_fcaR_test_export_new", (DL_FUNC) &_fcaR_test_export_new, 1},
     {"_fcaR_test_extent_new", (DL_FUNC) &_fcaR_test_extent_new, 2},
@@ -767,7 +808,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compute_downleft_arrow", (DL_FUNC) &_fcaR_compute_downleft_arrow, 3},
     {"_fcaR_compute_upleft_arrow", (DL_FUNC) &_fcaR_compute_upleft_arrow, 3},
     {"_fcaR_compute_downright_arrow", (DL_FUNC) &_fcaR_compute_downright_arrow, 3},
-    {"_fcaR_calculate_stability_sparse_rcpp", (DL_FUNC) &_fcaR_calculate_stability_sparse_rcpp, 1},
     {"_fcaR_sparse_subset_dispatch", (DL_FUNC) &_fcaR_sparse_subset_dispatch, 9},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},

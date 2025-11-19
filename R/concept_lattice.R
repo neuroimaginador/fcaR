@@ -482,6 +482,75 @@ ConceptLattice <- R6::R6Class(
       }
 
       self[which(private$covering_matrix[idx, ] > 0)]
+    },
+
+    #' @description
+    #' Computes the stability of each concept.
+    #'
+    #' @return A numeric vector with the stability of each concept.
+    #' @export
+    stability = function() {
+      if (self$size() == 0) {
+        return(numeric(0))
+      }
+      # Pass internal sparse extents directly
+      return(calculate_stability(private$pr_extents))
+    },
+
+    #' @description
+    #' Computes the separation of each concept.
+    #' Separation is the number of objects covered by the concept but not by any of its immediate subconcepts.
+    #'
+    #' @return A numeric vector with the separation of each concept.
+    #' @importFrom Matrix rowSums
+    #' @export
+    separation = function() {
+      if (self$size() == 0) {
+        return(numeric(0))
+      }
+      if (is.null(private$subconcept_matrix)) {
+        private$subconcept_matrix <- .subset(private$pr_extents)
+      }
+
+      # 1. Obtener la matriz de extents (Objetos x Conceptos)
+      M <- as(private$pr_extents, "CsparseMatrix")
+
+      # 2. Obtener la relación de cobertura (Hijos directos)
+      # Usamos la función interna .reduce_transitivity disponible en el paquete
+      # Se aplica sobre la matriz de subconceptos (orden parcial)
+      # Asumimos que subconcept_matrix es C_i <= C_j
+      if (is.null(private$covering_matrix)) {
+        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
+      }
+
+      cover_matrix <- private$covering_matrix
+
+      # 3. Calcular separación usando el helper (definido en metrics.R)
+      # Pasamos M (extents) y cover_matrix (grafo)
+      return(calculate_separation_internal(M, cover_matrix))
+    },
+
+    #' @description
+    #' Computes the fuzzy density of each concept.
+    #'
+    #' @param I (Optional) The original incidence matrix. If NULL, it tries to access it from the parent FormalContext if linked.
+    #' @return A numeric vector with the density of each concept.
+    #' @export
+    density = function(I = NULL) {
+      if (self$size() == 0) {
+        return(numeric(0))
+      }
+
+      # Ideally, ConceptLattice should know about I.
+      # If not passed, we might default to binary (density 1) or error.
+      if (is.null(I)) {
+        # User must provide I if not stored.
+        # For now, return NA or 1 if binary.
+        warning("Incidence matrix I not provided. Assuming density = 1.")
+        return(rep(1.0, self$size()))
+      }
+
+      return(calculate_density(private$pr_extents, private$pr_intents, I))
     }
   ),
   private = list(

@@ -3,7 +3,7 @@
 #' Stability measures the probability that a concept is preserved when a random subset of objects is removed.
 #'
 #' @param extents A \code{SparseSet} object or a sparse matrix (\code{CsparseMatrix}) representing concept extents (columns are concepts).
-#' @return A numeric vector with stability values in [0, 1].
+#' @return A numeric vector with stability values in \eqn{[0, 1]}.
 #' @useDynLib fcaR, .registration = TRUE
 #' @importFrom methods as
 #' @importFrom Rcpp sourceCpp
