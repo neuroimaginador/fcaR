@@ -161,6 +161,10 @@ compute_downright_arrow <- function(V, I, name) {
     .Call(`_fcaR_compute_downright_arrow`, V, I, name)
 }
 
+calculate_stability_sparse_rcpp <- function(mat) {
+    .Call(`_fcaR_calculate_stability_sparse_rcpp`, mat)
+}
+
 sparse_subset_dispatch <- function(X_p, X_i, X_x, Y_p, Y_i, Y_x, num_rows, proper_code, is_binary) {
     .Call(`_fcaR_sparse_subset_dispatch`, X_p, X_i, X_x, Y_p, Y_i, Y_x, num_rows, proper_code, is_binary)
 }

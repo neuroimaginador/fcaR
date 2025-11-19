@@ -298,6 +298,17 @@ ConceptSet <- R6::R6Class(
       private$concept_support <- Matrix::colSums(private$pr_extents) / nrow(private$pr_extents)
 
       return(private$concept_support)
+    },
+
+    #' @description
+    #' Compute the stability of each concept
+    #'
+    #' @return A numeric vector with the stability of each concept.
+    #' @export
+    stability = function() {
+      # Pasamos directamente el objeto SparseSet (o su matriz interna)
+      # El wrapper de R se encarga de la conversión a CsparseMatrix
+      return(calculate_stability(private$pr_extents))
     }
   ),
   private = list(

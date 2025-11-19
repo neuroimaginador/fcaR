@@ -546,6 +546,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calculate_stability_sparse_rcpp
+NumericVector calculate_stability_sparse_rcpp(S4 mat);
+RcppExport SEXP _fcaR_calculate_stability_sparse_rcpp(SEXP matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type mat(matSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_stability_sparse_rcpp(mat));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sparse_subset_dispatch
 List sparse_subset_dispatch(const Rcpp::IntegerVector& X_p, const Rcpp::IntegerVector& X_i, const Rcpp::NumericVector& X_x, const Rcpp::IntegerVector& Y_p, const Rcpp::IntegerVector& Y_i, const Rcpp::NumericVector& Y_x, int num_rows, int proper_code, bool is_binary);
 RcppExport SEXP _fcaR_sparse_subset_dispatch(SEXP X_pSEXP, SEXP X_iSEXP, SEXP X_xSEXP, SEXP Y_pSEXP, SEXP Y_iSEXP, SEXP Y_xSEXP, SEXP num_rowsSEXP, SEXP proper_codeSEXP, SEXP is_binarySEXP) {
@@ -756,6 +767,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compute_downleft_arrow", (DL_FUNC) &_fcaR_compute_downleft_arrow, 3},
     {"_fcaR_compute_upleft_arrow", (DL_FUNC) &_fcaR_compute_upleft_arrow, 3},
     {"_fcaR_compute_downright_arrow", (DL_FUNC) &_fcaR_compute_downright_arrow, 3},
+    {"_fcaR_calculate_stability_sparse_rcpp", (DL_FUNC) &_fcaR_calculate_stability_sparse_rcpp, 1},
     {"_fcaR_sparse_subset_dispatch", (DL_FUNC) &_fcaR_sparse_subset_dispatch, 9},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},

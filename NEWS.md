@@ -10,6 +10,7 @@
 * The connection to the fcarepository.org is now managed more elegantly, and even an addin has been added to the package to fetch formal contexts from the repo.
 * After long time, the `hasseDiagram` dependency has been removed, now a new graphic engin for concept lattices has been implemented.
 * Added new vignettes: `creating_contexts`, `fuzzy_fca` and `lattice_visualization`.
+* Added new method `stability()` to `ConceptLattice`  to compute the concept stability.
 
 # fcaR 1.2.2
 

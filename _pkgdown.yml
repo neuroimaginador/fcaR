@@ -1,1 +1,4 @@
-destination: docs
+url: https://neuroimaginador.github.io/fcaR/
+template:
+  bootstrap: 5
+

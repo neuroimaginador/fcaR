@@ -54,6 +54,7 @@ Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prov
 Useful links:
 \itemize{
   \item \url{https://github.com/Malaga-FCA-group/fcaR}
+  \item \url{https://neuroimaginador.github.io/fcaR/}
   \item Report bugs at \url{https://github.com/Malaga-FCA-group/fcaR/issues}
 }
 

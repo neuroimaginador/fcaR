@@ -32,6 +32,7 @@ fc_planets$concepts$meet_irreducibles()
 \item \href{#method-ConceptSet-bracket}{\code{ConceptSet$[()}}
 \item \href{#method-ConceptSet-sub}{\code{ConceptSet$sub()}}
 \item \href{#method-ConceptSet-support}{\code{ConceptSet$support()}}
+\item \href{#method-ConceptSet-stability}{\code{ConceptSet$stability()}}
 \item \href{#method-ConceptSet-clone}{\code{ConceptSet$clone()}}
 }
 }
@@ -218,6 +219,19 @@ Get support of each concept
 
 \subsection{Returns}{
 A vector with the support of each concept.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptSet-stability"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-stability}{}}}
+\subsection{Method \code{stability()}}{
+Compute the stability of each concept
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptSet$stability()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A numeric vector with the stability of each concept.
 }
 }
 \if{html}{\out{<hr>}}

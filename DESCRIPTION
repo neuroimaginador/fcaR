@@ -28,7 +28,7 @@ Description: Provides tools to perform fuzzy formal concept
     the GreConD+ algorithm (Belohlavek and Trneckova, 2024 
     <doi:10.1109/TFUZZ.2023.3330760>).
 License: GPL-3
-URL: https://github.com/Malaga-FCA-group/fcaR
+URL: https://github.com/Malaga-FCA-group/fcaR, https://neuroimaginador.github.io/fcaR/
 BugReports: https://github.com/Malaga-FCA-group/fcaR/issues
 Depends: 
     R (>= 4.1)

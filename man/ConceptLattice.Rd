@@ -71,6 +71,7 @@ fc$concepts$bottom()
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-is_empty'><code>fcaR::ConceptSet$is_empty()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="print"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-print'><code>fcaR::ConceptSet$print()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="size"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-size'><code>fcaR::ConceptSet$size()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="stability"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-stability'><code>fcaR::ConceptSet$stability()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="sub"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-sub'><code>fcaR::ConceptSet$sub()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="support"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-support'><code>fcaR::ConceptSet$support()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="to_latex"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-to_latex'><code>fcaR::ConceptSet$to_latex()</code></a></span></li>
