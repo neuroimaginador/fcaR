@@ -27,10 +27,10 @@
   contexts from the repo.
 - After long time, the `hasseDiagram` dependency has been removed, now a
   new graphic engin for concept lattices has been implemented.
-- Added new vignettes: `creating_contexts`, `fuzzy_fca` and
-  `lattice_visualization`.
-- Added new method `stability()` to `ConceptLattice` to compute the
-  concept stability.
+- Added new vignettes: `advanced_lattice_metrics`, `creating_contexts`,
+  `fuzzy_fca` and `lattice_visualization`.
+- Added new method `stability()`, `separation()` and `fuzzy_density()`
+  to `ConceptLattice` to compute several concept metrics.
 
 ## fcaR 1.2.2
 

@@ -43,6 +43,10 @@ export_to_tikz(
 
   Character. Optional caption for the figure.
 
+- ...:
+
+  Additional arguments (currently unused).
+
 ## Value
 
 An object of class 'tikz_code'.
