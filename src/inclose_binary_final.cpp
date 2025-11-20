@@ -1,66 +1,14 @@
 #include <Rcpp.h>
 #include <Rcpp/Benchmark/Timer.h>
-#include "aux_functions.h"
-#include "vector_operations.h"
-
 #include <vector>
 #include <algorithm>
 #include <utility>
 #include <cstring>
-#include <cstdlib>
 
 using namespace Rcpp;
 
 // =============================================================================
-// --- HELPERS DE E/S A GRANEL ---
-// =============================================================================
-
-// (Versión estable v9 para Doubles)
-inline void ensureArray_double_v9(DoubleArray *a, size_t additional_size) {
-  // !!! FIX !!!: Si el array es NULL, inicializamos size a 0 para que realloc funcione
-  if (a->array == NULL) { a->size = 0; a->used = 0; }
-
-  if (a->used + additional_size > a->size) {
-    size_t newSize = (a->size + additional_size) * 1.5;
-    if (newSize == 0) newSize = 1;
-    // realloc sobre NULL es seguro (actúa como malloc)
-    double* tmp = (double *)realloc(a->array, newSize * sizeof(double));
-    if (tmp == NULL) { Rcpp::stop("Failed to realloc memory (double)"); }
-    a->array = tmp; a->size = newSize;
-    // Rellenamos la nueva memoria con 0
-    for (size_t i = a->used; i < a->size; i++) { a->array[i] = 0; }
-  }
-}
-
-inline void insertArray_bulk_double_v9(DoubleArray *a, double* buffer, size_t n) {
-  ensureArray_double_v9(a, n);
-  memcpy(&a->array[a->used], buffer, n * sizeof(double));
-  a->used += n;
-}
-
-// (Versión estable v10 para Integers)
-inline void ensureArray_int_v10(IntArray *a, size_t additional_size) {
-  // !!! FIX !!!: Inicialización segura para realloc
-  if (a->array == NULL) { a->size = 0; a->used = 0; }
-
-  if (a->used + additional_size > a->size) {
-    size_t newSize = (a->size + additional_size) * 1.5;
-    if (newSize == 0) newSize = 1;
-    int* tmp = (int *)realloc(a->array, newSize * sizeof(int));
-    if (tmp == NULL) { Rcpp::stop("Failed to realloc memory (int)"); }
-    a->array = tmp; a->size = newSize;
-    for (size_t i = a->used; i < a->size; i++) { a->array[i] = 0; }
-  }
-}
-
-inline void insertArray_bulk_int_v13(IntArray *a, const int* buffer, size_t n) {
-  ensureArray_int_v10(a, n);
-  memcpy(&a->array[a->used], buffer, n * sizeof(int));
-  a->used += n;
-}
-
-// =============================================================================
-// --- LÓGICA V_REORDER ---
+// --- TIPOS Y HELPERS PARA REORDER ---
 // =============================================================================
 
 using Extent_Reorder = std::vector<int>;
@@ -170,6 +118,7 @@ List InClose_Reorder(NumericMatrix I,
   const size_t N_BLOCKS_M = (n_attributes + 63) / 64;
   const size_t N_BLOCKS_N = (n_objects + 63) / 64;
 
+  // 1. Reordenación
   std::vector<std::pair<int, int>> attr_support(n_attributes);
   for (int c = 0; c < n_attributes; ++c) {
     attr_support[c].second = c;
@@ -179,7 +128,6 @@ List InClose_Reorder(NumericMatrix I,
     }
     attr_support[c].first = support;
   }
-
   std::sort(attr_support.begin(), attr_support.end());
 
   std::vector<int> new_to_old_attr(n_attributes);
@@ -218,6 +166,7 @@ List InClose_Reorder(NumericMatrix I,
   ext_p_out.reserve(estimated_concepts + 1);
   int_blocks_out.reserve(estimated_concepts * N_BLOCKS_M);
 
+  // Bottom check
   std::vector<uint64_t> m_prime(N_BLOCKS_N);
   std::fill(m_prime.begin(), m_prime.end(), 0xFFFFFFFFFFFFFFFF);
 
@@ -230,10 +179,7 @@ List InClose_Reorder(NumericMatrix I,
 
   bool m_prime_is_empty = true;
   for(size_t k = 0; k < N_BLOCKS_N; ++k) {
-    if (m_prime[k] != 0) {
-      m_prime_is_empty = false;
-      break;
-    }
+    if (m_prime[k] != 0) { m_prime_is_empty = false; break; }
   }
 
   if (m_prime_is_empty) {
@@ -242,12 +188,12 @@ List InClose_Reorder(NumericMatrix I,
     int_blocks_out.insert(int_blocks_out.end(), intent_M.begin(), intent_M.end());
   }
 
+  // Top check
   Extent_Reorder initial_extent;
   initial_extent.reserve(n_objects);
   for(int i = 0; i < n_objects; ++i) initial_extent.push_back(i);
 
   IntentAccumulator_Reorder initial_intent(N_BLOCKS_M);
-
   for(size_t k = 0; k < N_BLOCKS_M; ++k) {
     const uint64_t* row_k_ptr = &obj_rows_reordered_transposed[k * n_objects];
     uint64_t intent_k = 0xFFFFFFFFFFFFFFFF;
@@ -267,87 +213,77 @@ List InClose_Reorder(NumericMatrix I,
 
   timer.step("end_reorder_recursion");
 
-  // 7. EMPAQUETADO SEGURO (MANUAL, SIN initVector)
-  // ===========================================================================
+  // ---------------------------------------------------------------------------
+  // FASE DE EMPAQUETADO "MODERNA" (SIN MALLOC/REALLOC NI STRUCTS C)
+  // Convertimos std::vector -> Objetos S4 R directamente
+  // ---------------------------------------------------------------------------
 
-  // A) EXTENTS
-  SparseVector extents_out;
-  // IMPORTANTE: Inicializamos a NULL para que realloc funcione (evitamos R_alloc)
-  extents_out.i.array = NULL; extents_out.i.used = 0; extents_out.i.size = 0;
-  extents_out.p.array = NULL; extents_out.p.used = 0; extents_out.p.size = 0;
-  extents_out.x.array = NULL; extents_out.x.used = 0; extents_out.x.size = 0;
-  extents_out.length = n_objects;
+  // 1. Construir EXTENTS (dgCMatrix: Rows=Objetos, Cols=Conceptos)
+  ext_p_out.push_back(ext_i_out.size()); // Final p
+  int n_concepts = ext_p_out.size() - 1;
 
-  size_t total_nnz = ext_i_out.size();
-  ensureArray_int_v10(&(extents_out.i), total_nnz);
-  if (total_nnz > 0) {
-    memcpy(extents_out.i.array, ext_i_out.data(), total_nnz * sizeof(int));
-  }
-  extents_out.i.used = total_nnz;
+  // Crear vectores Rcpp (esto copia memoria de forma segura al heap de R)
+  IntegerVector ext_i_rcpp = wrap(ext_i_out);
+  IntegerVector ext_p_rcpp = wrap(ext_p_out);
+  NumericVector ext_x_rcpp(ext_i_out.size(), 1.0); // Todo 1s para binario
 
-  ext_p_out.push_back(total_nnz);
-  size_t total_p = ext_p_out.size();
-  ensureArray_int_v10(&(extents_out.p), total_p);
-  if (total_p > 0) {
-    memcpy(extents_out.p.array, ext_p_out.data(), total_p * sizeof(int));
-  }
-  extents_out.p.used = total_p;
+  // Crear el objeto S4 directamente
+  S4 extents_S4("dgCMatrix");
+  extents_S4.slot("i") = ext_i_rcpp;
+  extents_S4.slot("p") = ext_p_rcpp;
+  extents_S4.slot("x") = ext_x_rcpp;
+  extents_S4.slot("Dim") = IntegerVector::create(n_objects, n_concepts);
 
-  ensureArray_double_v9(&(extents_out.x), total_nnz);
-  if (total_nnz > 0) {
-    std::fill_n(extents_out.x.array, total_nnz, 1.0);
-  }
-  extents_out.x.used = total_nnz;
+  // 2. Construir INTENTS (dgCMatrix: Rows=Atributos, Cols=Conceptos)
+  // Necesitamos reconstruir la matriz dispersa de intents a partir de los bloques de bits
+  std::vector<int> int_i_vec;
+  std::vector<int> int_p_vec;
+  int_p_vec.reserve(n_concepts + 1);
+  int_p_vec.push_back(0);
 
-  // B) INTENTS
-  DoubleArray intents_out;
-  // IMPORTANTE: Inicializamos a NULL
-  intents_out.array = NULL; intents_out.used = 0; intents_out.size = 0;
+  // Estimación de reserva para int_i (densidad 20% por defecto)
+  int_i_vec.reserve(n_concepts * n_attributes * 0.2);
 
-  size_t total_concepts = ext_p_out.size() - 1;
-  size_t total_int_doubles = total_concepts * n_attributes;
-  ensureArray_double_v9(&intents_out, total_int_doubles);
-  double* intent_out_ptr = intents_out.array;
-
-  std::vector<double> temp_intent(n_attributes);
-
-  for(size_t c = 0; c < total_concepts; ++c) {
+  for(int c = 0; c < n_concepts; ++c) {
     const uint64_t* block_ptr = &int_blocks_out[c * N_BLOCKS_M];
-    std::fill(temp_intent.begin(), temp_intent.end(), 0.0);
+    int count_c = 0;
 
     for (int j_new = 0; j_new < n_attributes; ++j_new) {
+      // Verificar bit en estructura reordenada
       if (test_bit_native_M_Reorder_flat(block_ptr, j_new)) {
+        // Recuperar índice original del atributo
         int j_orig = new_to_old_attr[j_new];
-        temp_intent[j_orig] = 1.0;
+        int_i_vec.push_back(j_orig);
+        count_c++;
       }
     }
+    // IMPORTANTE: dgCMatrix requiere índices de fila ordenados dentro de cada columna.
+    // Como 'new_to_old_attr' desordena, debemos ordenar este bloque recién insertado.
+    std::sort(int_i_vec.end() - count_c, int_i_vec.end());
 
-    if (intent_out_ptr != NULL) {
-      memcpy(intent_out_ptr, temp_intent.data(), n_attributes * sizeof(double));
-      intent_out_ptr += n_attributes;
-    }
+    int_p_vec.push_back(int_p_vec.back() + count_c);
   }
-  intents_out.used = total_int_doubles;
 
-  // 8. CONVERSIÓN A S4 Y LIMPIEZA
-  // ===========================================================================
-  S4 intents_S4 = DenseArrayToS4(intents_out, n_attributes);
-  S4 extents_S4 = SparseToS4_fast(extents_out);
+  // Convertir a Rcpp
+  IntegerVector int_i_rcpp = wrap(int_i_vec);
+  IntegerVector int_p_rcpp = wrap(int_p_vec);
+  NumericVector int_x_rcpp(int_i_vec.size(), 1.0);
 
-  // IMPORTANTE: Usar free() de C, NO freeVector/freeArray de R
-  if (extents_out.i.array) free(extents_out.i.array);
-  if (extents_out.p.array) free(extents_out.p.array);
-  if (extents_out.x.array) free(extents_out.x.array);
-  if (intents_out.array) free(intents_out.array);
+  S4 intents_S4("dgCMatrix");
+  intents_S4.slot("i") = int_i_rcpp;
+  intents_S4.slot("p") = int_p_rcpp;
+  intents_S4.slot("x") = int_x_rcpp;
+  intents_S4.slot("Dim") = IntegerVector::create(n_attributes, n_concepts);
 
   timer.step("end_reorder_packaging");
 
   List res = List::create(
     _["intents"] = intents_S4,
     _["extents"] = extents_S4,
-    _["total"] = total_concepts,
+    _["total"] = n_concepts,
     _["tests"] = canonicity_tests,
     _["att_intents"] = 0,
     _["timer"] = timer);
+
   return res;
 }
