@@ -13,6 +13,7 @@ status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/p
 [![R build
 status](https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg)](https://github.com/neuroimaginador/fcaR/actions)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcaR)](https://cran.r-project.org/package=fcaR)
+[![R-CMD-check](https://github.com/neuroimaginador/fcaR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/neuroimaginador/fcaR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The aim of this package is to provide tools to perform fuzzy formal
@@ -67,170 +68,287 @@ or
 
 Let us start with a fuzzy dataset (stored in a matrix I) as follows:
 <table>
+
 <thead>
+
 <tr>
+
 <th style="text-align:left;">
+
 </th>
+
 <th style="text-align:right;">
+
 P1
 </th>
+
 <th style="text-align:right;">
+
 P2
 </th>
+
 <th style="text-align:right;">
+
 P3
 </th>
+
 <th style="text-align:right;">
+
 P4
 </th>
+
 <th style="text-align:right;">
+
 P5
 </th>
+
 <th style="text-align:right;">
+
 P6
 </th>
+
 </tr>
+
 </thead>
+
 <tbody>
+
 <tr>
+
 <td style="text-align:left;">
+
 O1
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 1.0
 </td>
+
 <td style="text-align:right;">
+
 0.5
 </td>
+
 <td style="text-align:right;">
+
 0.5
 </td>
+
 <td style="text-align:right;">
+
 1.0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 O2
 </td>
+
 <td style="text-align:right;">
+
 1.0
 </td>
+
 <td style="text-align:right;">
+
 1.0
 </td>
+
 <td style="text-align:right;">
+
 1.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 O3
 </td>
+
 <td style="text-align:right;">
+
 0.5
 </td>
+
 <td style="text-align:right;">
+
 0.5
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 1
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 O4
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 1.0
 </td>
+
 <td style="text-align:right;">
+
 0.5
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 O5
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 1.0
 </td>
+
 <td style="text-align:right;">
+
 0.5
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 <tr>
+
 <td style="text-align:left;">
+
 O6
 </td>
+
 <td style="text-align:right;">
+
 0.5
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0.0
 </td>
+
 <td style="text-align:right;">
+
 0
 </td>
+
 </tr>
+
 </tbody>
+
 </table>
 
 Here, a value $x$ in the intersection of a row and a column indicates
@@ -267,6 +385,9 @@ fc$concepts$sub(1)
 
 # And plot the concept lattice
 fc$concepts$plot()
+#> Warning: 'as(<dgCMatrix>, "ngCMatrix")' is deprecated.
+#> Use 'as(., "nMatrix")' instead.
+#> See help("Deprecated") and help("Matrix-deprecated").
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
@@ -309,10 +430,11 @@ fc$implications$support()
 #>  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000
 #>  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000
 fc$concepts$support()
-#>  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000
-#>  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333
-#> [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667
-#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000
+#>  [1] 1.00000000 0.50000000 0.33333333 0.25000000 0.33333333 0.25000000
+#>  [7] 0.16666667 0.50000000 0.33333333 0.41666667 0.25000000 0.16666667
+#> [13] 0.50000000 0.41666667 0.33333333 0.16666667 0.25000000 0.08333333
+#> [19] 0.50000000 0.33333333 0.16666667 0.33333333 0.25000000 0.08333333
+#> [25] 0.16666667 0.00000000
 ```
 
 In this package, we have implemented a logic to manage implications.
@@ -327,9 +449,9 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.001 secs.
-#> --> Generalization: from 12 to 12 in 0.001 secs.
-#> Batch took 0.004 secs.
+#> --> Composition: from 12 to 12 in 0.002 secs.
+#> --> Generalization: from 12 to 12 in 0.002 secs.
+#> Batch took 0.005 secs.
 
 # Reduced set of implications
 fc$implications
