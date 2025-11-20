@@ -101,6 +101,9 @@ fc$concepts$sub(1)
 
 # And plot the concept lattice
 fc$concepts$plot()
+#> Warning: 'as(<dgCMatrix>, "ngCMatrix")' is deprecated.
+#> Use 'as(., "nMatrix")' instead.
+#> See help("Deprecated") and help("Matrix-deprecated").
 ```
 
 ![](reference/figures/README-unnamed-chunk-4-1.png)
@@ -143,10 +146,11 @@ fc$implications$support()
 #>  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000
 #>  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000
 fc$concepts$support()
-#>  [1] 1.0000000 0.5000000 0.3333333 0.1666667 0.1666667 0.1666667 0.0000000
-#>  [8] 0.5000000 0.3333333 0.3333333 0.1666667 0.0000000 0.5000000 0.3333333
-#> [15] 0.3333333 0.1666667 0.1666667 0.0000000 0.5000000 0.3333333 0.1666667
-#> [22] 0.1666667 0.1666667 0.0000000 0.1666667 0.0000000
+#>  [1] 1.00000000 0.50000000 0.33333333 0.25000000 0.33333333 0.25000000
+#>  [7] 0.16666667 0.50000000 0.33333333 0.41666667 0.25000000 0.16666667
+#> [13] 0.50000000 0.41666667 0.33333333 0.16666667 0.25000000 0.08333333
+#> [19] 0.50000000 0.33333333 0.16666667 0.33333333 0.25000000 0.08333333
+#> [25] 0.16666667 0.00000000
 ```
 
 In this package, we have implemented a logic to manage implications.
@@ -161,9 +165,9 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.001 secs.
-#> --> Generalization: from 12 to 12 in 0.001 secs.
-#> Batch took 0.004 secs.
+#> --> Composition: from 12 to 12 in 0.002 secs.
+#> --> Generalization: from 12 to 12 in 0.002 secs.
+#> Batch took 0.005 secs.
 
 # Reduced set of implications
 fc$implications
