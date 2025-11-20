@@ -26,6 +26,8 @@ export_to_tikz(
 \item{standalone}{Logical. If TRUE, wraps code in a documentclass to be compiled directly.}
 
 \item{caption}{Character. Optional caption for the figure.}
+
+\item{...}{Additional arguments (currently unused).}
 }
 \value{
 An object of class 'tikz_code'.

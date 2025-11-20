@@ -9,8 +9,8 @@
 * Added `factorize()` method to `FormalContext` class, implementing the **GreConD+** algorithm for matrix factorization with grades and overcovering, enabling custom fuzzy logic and Galois connections. Based on Belohlavek, R., & Trneckova, M. (2024). Factorization of Matrices With Grades With Overcovering. *IEEE Transactions on Fuzzy Systems*, 32(4), 1641-1652.
 * The connection to the fcarepository.org is now managed more elegantly, and even an addin has been added to the package to fetch formal contexts from the repo.
 * After long time, the `hasseDiagram` dependency has been removed, now a new graphic engin for concept lattices has been implemented.
-* Added new vignettes: `creating_contexts`, `fuzzy_fca` and `lattice_visualization`.
-* Added new method `stability()` to `ConceptLattice`  to compute the concept stability.
+* Added new vignettes: `advanced_lattice_metrics`,  `creating_contexts`, `fuzzy_fca` and `lattice_visualization`.
+* Added new method `stability()`, `separation()` and `fuzzy_density()` to `ConceptLattice`  to compute several concept metrics.
 
 # fcaR 1.2.2
 

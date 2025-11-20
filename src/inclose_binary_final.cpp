@@ -1,27 +1,29 @@
 #include <Rcpp.h>
 #include <Rcpp/Benchmark/Timer.h>
-#include "aux_functions.h"       // Dependencia de fcaR (para S4)
-#include "vector_operations.h" // Dependencia de fcaR (para Structs C)
+#include "aux_functions.h"
+#include "vector_operations.h"
 
 #include <vector>
-#include <algorithm> // Para std::sort
-#include <utility>   // Para std::pair
-#include <cstring>   // Para memcpy
-#include <cstdlib>   // Para realloc
+#include <algorithm>
+#include <utility>
+#include <cstring>
+#include <cstdlib>
 
 using namespace Rcpp;
 
 // =============================================================================
 // --- HELPERS DE E/S A GRANEL ---
 // =============================================================================
+
 // (Versión estable v9 para Doubles)
 inline void ensureArray_double_v9(DoubleArray *a, size_t additional_size) {
-  // Si el array es NULL, lo inicializamos correctamente para realloc
-  if (a->array == NULL) a->size = 0;
+  // !!! FIX !!!: Si el array es NULL, inicializamos size a 0 para que realloc funcione
+  if (a->array == NULL) { a->size = 0; a->used = 0; }
 
   if (a->used + additional_size > a->size) {
     size_t newSize = (a->size + additional_size) * 1.5;
     if (newSize == 0) newSize = 1;
+    // realloc sobre NULL es seguro (actúa como malloc)
     double* tmp = (double *)realloc(a->array, newSize * sizeof(double));
     if (tmp == NULL) { Rcpp::stop("Failed to realloc memory (double)"); }
     a->array = tmp; a->size = newSize;
@@ -38,8 +40,8 @@ inline void insertArray_bulk_double_v9(DoubleArray *a, double* buffer, size_t n)
 
 // (Versión estable v10 para Integers)
 inline void ensureArray_int_v10(IntArray *a, size_t additional_size) {
-  // Si el array es NULL, lo inicializamos
-  if (a->array == NULL) a->size = 0;
+  // !!! FIX !!!: Inicialización segura para realloc
+  if (a->array == NULL) { a->size = 0; a->used = 0; }
 
   if (a->used + additional_size > a->size) {
     size_t newSize = (a->size + additional_size) * 1.5;
@@ -50,25 +52,22 @@ inline void ensureArray_int_v10(IntArray *a, size_t additional_size) {
     for (size_t i = a->used; i < a->size; i++) { a->array[i] = 0; }
   }
 }
-// (Helper v13: memcpy directo desde std::vector<int>)
+
 inline void insertArray_bulk_int_v13(IntArray *a, const int* buffer, size_t n) {
   ensureArray_int_v10(a, n);
   memcpy(&a->array[a->used], buffer, n * sizeof(int));
   a->used += n;
 }
-// --- Fin de Helpers ---
-
 
 // =============================================================================
-// --- VERSIÓN REORDER (v_transpose + Reordenación de Atributos) ---
+// --- LÓGICA V_REORDER ---
 // =============================================================================
 
 using Extent_Reorder = std::vector<int>;
 using AttributeCols_Reorder = std::vector<uint64_t>;
-using ObjectRows_Reorder = std::vector<uint64_t>; // [bloque][objeto]
+using ObjectRows_Reorder = std::vector<uint64_t>;
 using IntentAccumulator_Reorder = std::vector<uint64_t>;
 
-// --- Helpers Nativos v_reorder ---
 inline bool test_bit_native_M_Reorder(const IntentAccumulator_Reorder& blocks, int k) {
   int block_idx = k / 64;
   int bit_idx = k % 64;
@@ -89,7 +88,6 @@ inline bool test_bit_native_N_Reorder(const AttributeCols_Reorder& blocks,
   int bit_idx = obj_idx % 64;
   return (blocks[attr_j * N_BLOCKS_N + block_idx] & (1ULL << bit_idx)) != 0;
 }
-
 
 void inclose_core_reorder(int y,
                           int n_objects,
@@ -159,7 +157,6 @@ void inclose_core_reorder(int y,
     }
   }
 }
-
 
 // [[Rcpp::export]]
 List InClose_Reorder(NumericMatrix I,
@@ -270,13 +267,12 @@ List InClose_Reorder(NumericMatrix I,
 
   timer.step("end_reorder_recursion");
 
-  // 7. EMPAQUETADO SEGURO (MANUAL INITIALIZATION)
-  // -----------------------------------------------------------------------
-  // NOTA: No usamos initVector/initArray de las librerías externas
-  // para evitar conflictos con R_alloc. Inicializamos a mano a NULL.
+  // 7. EMPAQUETADO SEGURO (MANUAL, SIN initVector)
+  // ===========================================================================
 
+  // A) EXTENTS
   SparseVector extents_out;
-  // Inicialización manual para garantizar que realloc funcione (actúa como malloc)
+  // IMPORTANTE: Inicializamos a NULL para que realloc funcione (evitamos R_alloc)
   extents_out.i.array = NULL; extents_out.i.used = 0; extents_out.i.size = 0;
   extents_out.p.array = NULL; extents_out.p.used = 0; extents_out.p.size = 0;
   extents_out.x.array = NULL; extents_out.x.used = 0; extents_out.x.size = 0;
@@ -297,16 +293,15 @@ List InClose_Reorder(NumericMatrix I,
   }
   extents_out.p.used = total_p;
 
-  // Para matriz binaria (ngCMatrix), 'x' no es estrictamente necesario,
-  // pero si SparseToS4_fast lo espera (dgCMatrix), lo llenamos de 1s.
   ensureArray_double_v9(&(extents_out.x), total_nnz);
   if (total_nnz > 0) {
     std::fill_n(extents_out.x.array, total_nnz, 1.0);
   }
   extents_out.x.used = total_nnz;
 
-  // Empaquetado de Intents (También manual)
+  // B) INTENTS
   DoubleArray intents_out;
+  // IMPORTANTE: Inicializamos a NULL
   intents_out.array = NULL; intents_out.used = 0; intents_out.size = 0;
 
   size_t total_concepts = ext_p_out.size() - 1;
@@ -334,10 +329,12 @@ List InClose_Reorder(NumericMatrix I,
   }
   intents_out.used = total_int_doubles;
 
+  // 8. CONVERSIÓN A S4 Y LIMPIEZA
+  // ===========================================================================
   S4 intents_S4 = DenseArrayToS4(intents_out, n_attributes);
   S4 extents_S4 = SparseToS4_fast(extents_out);
 
-  // Limpieza Manual (usando free de C, ya que usamos realloc)
+  // IMPORTANTE: Usar free() de C, NO freeVector/freeArray de R
   if (extents_out.i.array) free(extents_out.i.array);
   if (extents_out.p.array) free(extents_out.p.array);
   if (extents_out.x.array) free(extents_out.x.array);
