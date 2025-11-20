@@ -6,6 +6,9 @@
 \usage{
 select_repository_context(meta)
 }
+\arguments{
+\item{meta}{A list of metadata objects (obtained via \code{get_fcarepository_contexts}).}
+}
 \description{
 GUI to select and download a context from the repository
 }

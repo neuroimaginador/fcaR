@@ -7,8 +7,10 @@
 #' @param height Numeric. Target height in cm (default: 12).
 #' @param standalone Logical. If TRUE, wraps code in a documentclass to be compiled directly.
 #' @param caption Character. Optional caption for the figure.
+#' @param ... Additional arguments (currently unused).
 #'
 #' @return An object of class 'tikz_code'.
+#' @importFrom stats na.omit
 export_to_tikz <- function(plot_data, edges_df, width = 12, height = 12, standalone = FALSE, caption = NULL, ...) {
   # 1. Auto-escalado inteligente
   # Calculamos el rango actual de las coordenadas abstractas

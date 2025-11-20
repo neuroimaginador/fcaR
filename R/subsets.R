@@ -1,3 +1,4 @@
+#' @importFrom methods slotNames
 .subset <- function(x, y = NULL, proper = FALSE) {
   if (!inherits(x, "CsparseMatrix")) x <- as(x, "CsparseMatrix")
   if (is.null(y)) y <- x
@@ -43,7 +44,7 @@
       x = 1.0 # Con 'x' => dgCMatrix (numérica)
     )
   }
-  return(as(Matrix::t(M), "ngCMatrix"))
+  return(as(Matrix::t(M), "nMatrix"))
 }
 
 # --- B. Wrapper .equal_sets (Detecta tipo) ---
@@ -52,7 +53,7 @@
   if (is.null(y)) y <- x
   if (!inherits(y, "CsparseMatrix")) y <- as(y, "CsparseMatrix")
 
-  is_binary <- inherits(x, "ngCMatrix") && inherits(y, "ngCMatrix")
+  is_binary <- inherits(x, "nMatrix") && inherits(y, "ngCMatrix")
 
   if (!is_binary) {
     if (!("x" %in% slotNames(x))) x <- as(x, "dgCMatrix")
@@ -79,7 +80,7 @@
     dims = c(y@Dim[2], x@Dim[2])
     # Siempre sin 'x' para crear ngCMatrix
   )
-  return(as(Matrix::t(M), "ngCMatrix"))
+  return(as(Matrix::t(M), "nMatrix"))
 }
 
 

@@ -10,8 +10,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
 [![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://app.codecov.io/gh/neuroimaginador/fcaR)
-[![R build
-status](https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg)](https://github.com/neuroimaginador/fcaR/actions)
+<!-- [![R build status](https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg)](https://github.com/neuroimaginador/fcaR/actions) -->
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcaR)](https://cran.r-project.org/package=fcaR)
 [![R-CMD-check](https://github.com/neuroimaginador/fcaR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/neuroimaginador/fcaR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
@@ -385,9 +384,6 @@ fc$concepts$sub(1)
 
 # And plot the concept lattice
 fc$concepts$plot()
-#> Warning: 'as(<dgCMatrix>, "ngCMatrix")' is deprecated.
-#> Use 'as(., "nMatrix")' instead.
-#> See help("Deprecated") and help("Matrix-deprecated").
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />

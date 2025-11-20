@@ -140,7 +140,7 @@ lattice_plot <- function(nodes_df,
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom ggraph ggraph geom_edge_fan geom_node_point geom_node_text
 #' @importFrom ggplot2 aes unit theme theme_void
-#' @export
+#' @keywords internal
 lattice_plot_legacy <- function(nodes_df,
                                 cover_matrix,
                                 method = "sugiyama", # Nuevo parámetro

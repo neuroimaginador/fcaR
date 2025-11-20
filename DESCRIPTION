@@ -33,7 +33,6 @@ BugReports: https://github.com/Malaga-FCA-group/fcaR/issues
 Depends: 
     R (>= 4.1)
 Imports: 
-    BH,
     dplyr,
     DT,
     forcats,
@@ -46,7 +45,6 @@ Imports:
     Matrix,
     methods,
     miniUI,
-    POSetR,
     R6,
     rlang,
     Rcpp,
@@ -59,7 +57,9 @@ Imports:
     magrittr,
     purrr,
     shiny,
-    yaml
+    yaml,
+    cli,
+    rstudioapi
 Suggests: 
     arules,
     covr,

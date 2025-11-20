@@ -88,6 +88,9 @@ print_repo_details <- function(meta) {
 
 
 #' GUI to select and download a context from the repository
+#'
+#' @param meta A list of metadata objects (obtained via \code{get_fcarepository_contexts}).
+#'
 #' @importFrom shiny observeEvent stopApp showNotification
 #' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
 #' @importFrom DT renderDT DTOutput datatable
@@ -180,6 +183,8 @@ select_repository_context <- function(meta) {
 #' @param filename Character string. The ID/filename of the context (e.g., "animals_en.cxt").
 #' @param verbose Logical. If TRUE, prints metadata and progress messages using cli/glue.
 #'
+#' @importFrom utils download.file
+#' @importFrom cli cli_alert_info
 #' @return A FormalContext object.
 #' @export
 fetch_context <- function(filename, verbose = TRUE) {
@@ -209,7 +214,7 @@ fetch_context <- function(filename, verbose = TRUE) {
 
   download_status <- tryCatch(
     {
-      download.file(url, destfile = dest_file, quiet = TRUE, mode = "wb")
+      utils::download.file(url, destfile = dest_file, quiet = TRUE, mode = "wb")
     },
     error = function(e) {
       return(e)
