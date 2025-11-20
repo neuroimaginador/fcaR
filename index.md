@@ -101,9 +101,6 @@ fc$concepts$sub(1)
 
 # And plot the concept lattice
 fc$concepts$plot()
-#> Warning: 'as(<dgCMatrix>, "ngCMatrix")' is deprecated.
-#> Use 'as(., "nMatrix")' instead.
-#> See help("Deprecated") and help("Matrix-deprecated").
 ```
 
 ![](reference/figures/README-unnamed-chunk-4-1.png)

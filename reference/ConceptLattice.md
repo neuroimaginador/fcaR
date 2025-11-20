@@ -491,9 +491,6 @@ fc_planets$find_concepts()
 
 # Find join- and meet- irreducible elements
 fc_planets$concepts$join_irreducibles()
-#> Warning: 'as(<dgCMatrix>, "ngCMatrix")' is deprecated.
-#> Use 'as(., "nMatrix")' instead.
-#> See help("Deprecated") and help("Matrix-deprecated").
 #> A set of 5 concepts:
 #> 1: ({Uranus, Neptune}, {medium, far, moon})
 #> 2: ({Jupiter, Saturn}, {large, far, moon})

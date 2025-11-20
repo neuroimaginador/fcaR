@@ -47,9 +47,6 @@ $$\text{Sep}(C) = \left| \text{Ext}(C) \right| - \left| \bigcup\limits_{K \prec 
 
 ``` r
 sep <- fc$concepts$separation()
-#> Warning in Matrix.DeprecatedCoerce(cd1, cd2): 'as(<dgCMatrix>, "ngCMatrix")' is deprecated.
-#> Use 'as(., "nMatrix")' instead.
-#> See help("Deprecated") and help("Matrix-deprecated").
 head(sep)
 #> [1] 1 0 2 2 2 0
 ```
