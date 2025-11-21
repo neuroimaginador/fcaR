@@ -6,43 +6,47 @@
 using namespace Rcpp;
 
 // =============================================================================
-// --- TIPOS DE DATOS ---
+// --- TIPOS Y MACROS SEGUROS ---
 // =============================================================================
 
+// Usamos tipos explícitos de 64 bits para evitar problemas de alineación
 using Extent_Reorder = std::vector<int>;
 using AttributeCols_Reorder = std::vector<uint64_t>;
 using ObjectRows_Reorder = std::vector<uint64_t>;
 using IntentAccumulator_Reorder = std::vector<uint64_t>;
 
 // =============================================================================
-// --- HELPERS DE BITS (INLINE) ---
+// --- HELPERS (SIN PUNTEROS CRUDOS SIEMPRE QUE SEA POSIBLE) ---
 // =============================================================================
 
-inline bool test_bit_native_M_Reorder(const IntentAccumulator_Reorder& blocks, size_t k) {
-  size_t block_idx = k / 64;
-  size_t bit_idx = k % 64;
-  if (block_idx >= blocks.size()) return false;
+// Helper seguro para verificar bits en el acumulador (Intent)
+inline bool check_bit_M(const IntentAccumulator_Reorder& blocks, size_t k) {
+  size_t block_idx = k >> 6; // k / 64
+  size_t bit_idx = k & 63;   // k % 64
   return (blocks[block_idx] & (1ULL << bit_idx)) != 0;
 }
 
-inline bool test_bit_native_M_Reorder_flat(const uint64_t* blocks, size_t k) {
-  size_t block_idx = k / 64;
-  size_t bit_idx = k % 64;
-  return (blocks[block_idx] & (1ULL << bit_idx)) != 0;
-}
-
-inline bool test_bit_native_N_Reorder(const AttributeCols_Reorder& blocks,
-                                      size_t attr_j,
-                                      int obj_idx,
-                                      size_t N_BLOCKS_N) {
+// Helper seguro para verificar bits en la matriz plana de columnas
+inline bool check_bit_N(const AttributeCols_Reorder& blocks,
+                        size_t attr_j,
+                        int obj_idx,
+                        size_t N_BLOCKS_N) {
   size_t idx = static_cast<size_t>(obj_idx);
-  size_t block_idx = idx / 64;
-  size_t bit_idx = idx % 64;
+  size_t block_idx = idx >> 6;
+  size_t bit_idx = idx & 63;
+  // Acceso plano: Columna * Stride + Offset
   return (blocks[attr_j * N_BLOCKS_N + block_idx] & (1ULL << bit_idx)) != 0;
 }
 
+// Helper para verificar bits en un bloque específico (usado en output)
+inline bool check_bit_flat_block(const uint64_t* block_ptr, size_t k) {
+  size_t block_idx = k >> 6;
+  size_t bit_idx = k & 63;
+  return (block_ptr[block_idx] & (1ULL << bit_idx)) != 0;
+}
+
 // =============================================================================
-// --- LÓGICA RECURSIVA (CORE) ---
+// --- CORE RECURSIVO ---
 // =============================================================================
 
 void inclose_core_reorder(int y,
@@ -53,15 +57,17 @@ void inclose_core_reorder(int y,
                           const Extent_Reorder& extent,
                           IntentAccumulator_Reorder& intent,
                           const AttributeCols_Reorder& attr_cols_flat,
-                          const ObjectRows_Reorder& obj_rows_transposed,
+                          const ObjectRows_Reorder& obj_rows_flat, // Pasamos el vector, no puntero
                           std::vector<int>& ext_i_out,
                           std::vector<int>& ext_p_out,
                           std::vector<uint64_t>& int_blocks_out,
                           double& canonicity_tests,
                           int recursion_depth) {
 
-  if (recursion_depth % 500 == 0) Rcpp::checkUserInterrupt();
+  // Check de interrupción menos frecuente para no saturar
+  if (recursion_depth % 1000 == 0) Rcpp::checkUserInterrupt();
 
+  // Guardar concepto actual
   ext_p_out.push_back(ext_i_out.size());
   ext_i_out.insert(ext_i_out.end(), extent.begin(), extent.end());
   int_blocks_out.insert(int_blocks_out.end(), intent.begin(), intent.end());
@@ -72,24 +78,30 @@ void inclose_core_reorder(int y,
   IntentAccumulator_Reorder child_intent(N_BLOCKS_M);
 
   for (int j = y + 1; j < n_attributes; j++) {
-    if (test_bit_native_M_Reorder(intent, static_cast<size_t>(j))) continue;
+    // Si el atributo j ya está en el intent, saltar
+    if (check_bit_M(intent, static_cast<size_t>(j))) continue;
 
+    // Construir nuevo extent (Intersección)
     child_extent.clear();
     for (int obj_idx : extent) {
-      if (test_bit_native_N_Reorder(attr_cols_flat, static_cast<size_t>(j), obj_idx, N_BLOCKS_N)) {
+      if (check_bit_N(attr_cols_flat, static_cast<size_t>(j), obj_idx, N_BLOCKS_N)) {
         child_extent.push_back(obj_idx);
       }
     }
 
     if (child_extent.empty()) continue;
 
-    const uint64_t* base_obj_ptr = obj_rows_transposed.data();
+    // Construir nuevo intent (Intersección de filas de objetos)
+    // AQUÍ ELIMINAMOS LA ARITMÉTICA DE PUNTEROS PELIGROSA
+    // En vez de `ptr + k*n`, calculamos índices.
 
     for(size_t k = 0; k < N_BLOCKS_M; ++k) {
-      const uint64_t* row_k_ptr = base_obj_ptr + (k * n_objects);
       uint64_t intent_k = 0xFFFFFFFFFFFFFFFF;
+      size_t block_offset = k * n_objects; // Inicio del bloque k en la matriz transpuesta
+
       for (int obj_idx : child_extent) {
-        intent_k &= row_k_ptr[obj_idx];
+        // obj_rows_flat está organizada como [Bloque0_Obj0, Bloque0_Obj1... | Bloque1...]
+        intent_k &= obj_rows_flat[block_offset + obj_idx];
       }
       child_intent[k] = intent_k;
     }
@@ -98,9 +110,10 @@ void inclose_core_reorder(int y,
     bool is_canonical = true;
 
     size_t j_sz = static_cast<size_t>(j);
-    size_t j_block_idx = j_sz / 64;
-    size_t j_bit_idx = j_sz % 64;
+    size_t j_block_idx = j_sz >> 6;
+    size_t j_bit_idx = j_sz & 63;
 
+    // Test de canonicidad
     for (size_t b = 0; b < j_block_idx; b++) {
       if ((child_intent[b] & (~intent[b])) != 0) { is_canonical = false; break; }
     }
@@ -116,7 +129,7 @@ void inclose_core_reorder(int y,
     if (is_canonical) {
       inclose_core_reorder(j, n_objects, n_attributes, N_BLOCKS_M, N_BLOCKS_N,
                            child_extent, child_intent,
-                           attr_cols_flat, obj_rows_transposed,
+                           attr_cols_flat, obj_rows_flat,
                            ext_i_out, ext_p_out, int_blocks_out,
                            canonicity_tests, recursion_depth + 1);
     }
@@ -124,73 +137,91 @@ void inclose_core_reorder(int y,
 }
 
 // =============================================================================
-// --- FUNCIÓN PRINCIPAL EXPORTADA ---
+// --- MAIN EXPORT ---
 // =============================================================================
 
 // [[Rcpp::export]]
-List InClose_Reorder(RObject I, // Aceptamos RObject genérico (Matrix o S4)
+List InClose_Reorder(RObject I,
                      Nullable<StringVector> attrs = R_NilValue,
                      bool verbose = false) {
 
   int n_objects = 0;
   int n_attributes = 0;
 
-  // 1. Detectar tipo y calcular soporte
-  std::vector<std::pair<int, int>> attr_support;
+  // Vectores temporales para índices de matriz dispersa
+  // Usamos std::vector para desacoplar de la memoria de R si es necesario
+  std::vector<int> sp_i_vec;
+  std::vector<int> sp_p_vec;
   bool is_sparse = false;
 
-  // Punteros para acceso disperso (si aplica)
-  IntegerVector sp_p, sp_i, sp_dim;
+  // --- 1. DETECCIÓN Y VALIDACIÓN DE ENTRADA ---
 
   if (I.isS4()) {
-    // Asumimos dgCMatrix o ngCMatrix
     S4 mat(I);
-    // Verificación mínima
-    if (!mat.hasSlot("i") || !mat.hasSlot("p") || !mat.hasSlot("Dim")) {
-      stop("S4 object must be a valid sparse matrix (slots i, p, Dim).");
+    // Verificar clases válidas
+    bool valid_class = false;
+    if (mat.hasSlot("class")) { // A veces no es directo checkear class en S4 genérico
+      // Asumimos válido si tiene los slots
     }
-    sp_i = mat.slot("i");
-    sp_p = mat.slot("p");
-    sp_dim = mat.slot("Dim");
+    if (!mat.hasSlot("i") || !mat.hasSlot("p") || !mat.hasSlot("Dim")) {
+      stop("Input S4 object must have slots 'i', 'p', and 'Dim' (e.g. dgCMatrix).");
+    }
 
-    n_objects = sp_dim[0];
-    n_attributes = sp_dim[1];
+    IntegerVector dim = mat.slot("Dim");
+    n_objects = dim[0];
+    n_attributes = dim[1];
+
+    IntegerVector i_R = mat.slot("i");
+    IntegerVector p_R = mat.slot("p");
+
+    // Copiar a std::vector para acceso seguro y rápido (evita overhead de Rcpp wrapper en loops)
+    sp_i_vec.assign(i_R.begin(), i_R.end());
+    sp_p_vec.assign(p_R.begin(), p_R.end());
     is_sparse = true;
 
-    // Calcular soporte desde estructura dispersa (Muy rápido)
-    attr_support.resize(n_attributes);
-    for (int c = 0; c < n_attributes; ++c) {
-      attr_support[c].second = c;
-      // El soporte es simplemente la diferencia entre punteros de columna
-      attr_support[c].first = sp_p[c+1] - sp_p[c];
+    // VALIDACIÓN DE SEGURIDAD (CRÍTICO PARA EVITAR SEGFAULTS)
+    if (sp_p_vec.size() != (size_t)(n_attributes + 1)) stop("Invalid sparse matrix: p slot length mismatch.");
+    // Verificar bounds de i
+    for(int row_idx : sp_i_vec) {
+      if(row_idx < 0 || row_idx >= n_objects) stop("Invalid sparse matrix: row index out of bounds.");
     }
 
-  } else if (is<NumericMatrix>(I) || is<IntegerMatrix>(I) || is<LogicalMatrix>(I)) {
-    // Caso Matriz Densa (Legacy support)
-    // Convertimos a IntegerMatrix temporalmente para manejar lógicos/enteros/doubles uniformemente
-    IntegerMatrix mat = as<IntegerMatrix>(I);
+  } else {
+    // Conversión manual segura para matriz densa
+    IntegerMatrix mat;
+    try {
+      mat = as<IntegerMatrix>(I);
+    } catch (...) {
+      stop("Input must be a matrix or a sparse matrix.");
+    }
     n_objects = mat.nrow();
     n_attributes = mat.ncol();
 
-    attr_support.resize(n_attributes);
+    // Convertir a formato disperso interno (CSR/CSC) para unificar lógica
+    sp_p_vec.resize(n_attributes + 1, 0);
     for (int c = 0; c < n_attributes; ++c) {
-      attr_support[c].second = c;
-      int support = 0;
+      int count = 0;
       for (int r = 0; r < n_objects; ++r) {
-        if (mat(r, c) != 0) support++;
+        if (mat(r, c) != 0) {
+          sp_i_vec.push_back(r);
+          count++;
+        }
       }
-      attr_support[c].first = support;
+      sp_p_vec[c+1] = sp_p_vec[c] + count;
     }
-  } else {
-    stop("Input I must be a matrix or a sparse matrix (dgCMatrix/ngCMatrix).");
+    is_sparse = true; // Ahora tratamos todo como sparse internamente
   }
 
   if (n_objects == 0 || n_attributes == 0) return List::create();
 
-  const size_t N_BLOCKS_M = (static_cast<size_t>(n_attributes) + 63) / 64;
-  const size_t N_BLOCKS_N = (static_cast<size_t>(n_objects) + 63) / 64;
+  // --- 2. CÁLCULO DE SOPORTE ---
 
-  // 2. Ordenar Atributos
+  std::vector<std::pair<int, int>> attr_support(n_attributes);
+  for (int c = 0; c < n_attributes; ++c) {
+    attr_support[c].second = c;
+    // Soporte = p[c+1] - p[c]
+    attr_support[c].first = sp_p_vec[c+1] - sp_p_vec[c];
+  }
   std::sort(attr_support.begin(), attr_support.end());
 
   std::vector<int> new_to_old_attr(n_attributes);
@@ -201,121 +232,115 @@ List InClose_Reorder(RObject I, // Aceptamos RObject genérico (Matrix o S4)
     old_to_new_attr[original_idx] = j;
   }
 
-  // 3. Construir Estructuras de Bits (Carga de datos)
-  AttributeCols_Reorder attr_cols_reordered(n_attributes * N_BLOCKS_N, 0);
-  ObjectRows_Reorder obj_rows_reordered_transposed(N_BLOCKS_M * n_objects, 0);
+  // --- 3. POBLAR BITSETS (CON CHECK DE BOUNDS) ---
 
-  if (is_sparse) {
-    // --- CARGA OPTIMIZADA PARA SPARSE ---
-    for (int c_orig = 0; c_orig < n_attributes; ++c_orig) {
-      int start_idx = sp_p[c_orig];
-      int end_idx = sp_p[c_orig + 1];
+  const size_t N_BLOCKS_M = (static_cast<size_t>(n_attributes) + 63) / 64;
+  const size_t N_BLOCKS_N = (static_cast<size_t>(n_objects) + 63) / 64;
 
-      if (start_idx == end_idx) continue; // Columna vacía
+  AttributeCols_Reorder attr_cols(n_attributes * N_BLOCKS_N, 0);
+  ObjectRows_Reorder obj_rows(N_BLOCKS_M * n_objects, 0);
 
-      int c_new = old_to_new_attr[c_orig];
-      size_t c_new_sz = static_cast<size_t>(c_new);
-      size_t block_idx_m = c_new_sz / 64;
-      size_t bit_idx_m = c_new_sz % 64;
+  for (int c_orig = 0; c_orig < n_attributes; ++c_orig) {
+    int start = sp_p_vec[c_orig];
+    int end = sp_p_vec[c_orig + 1];
 
-      for (int k = start_idx; k < end_idx; ++k) {
-        int r = sp_i[k]; // Índice de fila
+    if (start == end) continue;
 
-        size_t r_sz = static_cast<size_t>(r);
-        size_t block_idx_n = r_sz / 64;
-        size_t bit_idx_n = r_sz % 64;
+    int c_new = old_to_new_attr[c_orig];
+    size_t c_new_sz = static_cast<size_t>(c_new);
 
-        attr_cols_reordered[c_new_sz * N_BLOCKS_N + block_idx_n] |= (1ULL << bit_idx_n);
-        obj_rows_reordered_transposed[block_idx_m * n_objects + r_sz] |= (1ULL << bit_idx_m);
-      }
-    }
-  } else {
-    // --- CARGA PARA DENSA (Fallback) ---
-    IntegerMatrix mat = as<IntegerMatrix>(I);
-    for (int r = 0; r < n_objects; ++r) {
-      for (int c_orig = 0; c_orig < n_attributes; ++c_orig) {
-        if (mat(r, c_orig) != 0) {
-          int c_new = old_to_new_attr[c_orig];
-          size_t r_sz = static_cast<size_t>(r);
-          size_t c_new_sz = static_cast<size_t>(c_new);
+    // Pre-cálculo índices columna
+    size_t block_idx_m = c_new_sz >> 6;
+    size_t bit_idx_m = c_new_sz & 63;
 
-          size_t block_idx_n = r_sz / 64;
-          size_t bit_idx_n = r_sz % 64;
-          attr_cols_reordered[c_new_sz * N_BLOCKS_N + block_idx_n] |= (1ULL << bit_idx_n);
+    for (int k = start; k < end; ++k) {
+      int r = sp_i_vec[k];
+      size_t r_sz = static_cast<size_t>(r);
 
-          size_t block_idx_m = c_new_sz / 64;
-          size_t bit_idx_m = c_new_sz % 64;
-          obj_rows_reordered_transposed[block_idx_m * n_objects + r_sz] |= (1ULL << bit_idx_m);
-        }
-      }
+      // Escribir en AttrCols (Indexado por columna nueva)
+      size_t block_idx_n = r_sz >> 6;
+      size_t bit_idx_n = r_sz & 63;
+
+      attr_cols[c_new_sz * N_BLOCKS_N + block_idx_n] |= (1ULL << bit_idx_n);
+
+      // Escribir en ObjRows (Transpuesta)
+      // Layout: [BlockM 0][Rows...] [BlockM 1][Rows...]
+      obj_rows[block_idx_m * n_objects + r_sz] |= (1ULL << bit_idx_m);
     }
   }
 
-  // 4. Preparar algoritmo
+  // --- 4. PREPARAR RECURSIÓN ---
+
   double canonicity_tests = 0;
   std::vector<int> ext_i_out;
   std::vector<int> ext_p_out;
   std::vector<uint64_t> int_blocks_out;
 
-  size_t estimated_concepts = (size_t)(n_objects * n_attributes) / 10;
-  if (estimated_concepts < 1000) estimated_concepts = 1000;
-
+  size_t est_concepts = (size_t)(n_objects * n_attributes) / 10;
+  if (est_concepts < 1000) est_concepts = 1000;
   try {
-    ext_i_out.reserve(estimated_concepts * n_objects / 5);
-    ext_p_out.reserve(estimated_concepts + 1);
-    int_blocks_out.reserve(estimated_concepts * N_BLOCKS_M);
+    ext_i_out.reserve(est_concepts * n_objects / 5);
+    ext_p_out.reserve(est_concepts + 1);
+    int_blocks_out.reserve(est_concepts * N_BLOCKS_M);
   } catch(...) {}
 
-  // Bottom Check
+  // Bottom Check (Intersección global)
   std::vector<uint64_t> m_prime(N_BLOCKS_N);
   std::fill(m_prime.begin(), m_prime.end(), 0xFFFFFFFFFFFFFFFF);
 
   for (int j = 0; j < n_attributes; j++) {
-    const uint64_t* col_j_ptr = &attr_cols_reordered[j * N_BLOCKS_N];
+    // Iteramos manual en vez de puntero para seguridad
+    size_t offset = j * N_BLOCKS_N;
     for(size_t k = 0; k < N_BLOCKS_N; ++k) {
-      m_prime[k] &= col_j_ptr[k];
+      m_prime[k] &= attr_cols[offset + k];
     }
   }
+
   bool m_prime_is_empty = true;
   for(size_t k = 0; k < N_BLOCKS_N; ++k) {
     if (m_prime[k] != 0) { m_prime_is_empty = false; break; }
   }
+
   if (m_prime_is_empty) {
     ext_p_out.push_back(ext_i_out.size());
+    // Intent vacío (lleno de 1s lógica inversa o 0s lógica directa? InClose suele usar 1s para bottom)
+    // Asumimos lógica estándar: Bottom concept tiene todos los atributos? No, extent vacío -> todos atributos.
     std::vector<uint64_t> intent_M(N_BLOCKS_M, 0xFFFFFFFFFFFFFFFF);
     int_blocks_out.insert(int_blocks_out.end(), intent_M.begin(), intent_M.end());
   }
 
-  // Top Check & Init
+  // Top Check
   Extent_Reorder initial_extent;
   initial_extent.reserve(n_objects);
   for(int i = 0; i < n_objects; ++i) initial_extent.push_back(i);
 
   IntentAccumulator_Reorder initial_intent(N_BLOCKS_M);
-  const uint64_t* base_obj_ptr = obj_rows_reordered_transposed.data();
+
+  // Calcular intent inicial
   for(size_t k = 0; k < N_BLOCKS_M; ++k) {
-    const uint64_t* row_k_ptr = base_obj_ptr + (k * n_objects);
     uint64_t intent_k = 0xFFFFFFFFFFFFFFFF;
+    size_t block_offset = k * n_objects;
     for (int obj_idx : initial_extent) {
-      intent_k &= row_k_ptr[obj_idx];
+      intent_k &= obj_rows[block_offset + obj_idx];
     }
     initial_intent[k] = intent_k;
   }
 
-  // Ejecutar Recursión
+  // Lanzar InClose
   inclose_core_reorder(-1, n_objects, n_attributes, N_BLOCKS_M, N_BLOCKS_N,
                        initial_extent, initial_intent,
-                       attr_cols_reordered, obj_rows_reordered_transposed,
+                       attr_cols, obj_rows,
                        ext_i_out, ext_p_out, int_blocks_out,
                        canonicity_tests, 0);
 
-  // 5. Empaquetado (sin cambios, solo safe wraps)
+  // --- 5. EMPAQUETADO ---
+
   ext_p_out.push_back(ext_i_out.size());
   int n_concepts = ext_p_out.size() - 1;
 
   IntegerVector ext_i_rcpp = wrap(ext_i_out);
   IntegerVector ext_p_rcpp = wrap(ext_p_out);
-  NumericVector ext_x_rcpp(ext_i_out.size(), 1.0);
+  NumericVector ext_x_rcpp(ext_i_out.size(), 1.0); // Todo 1
 
   S4 extents_S4("dgCMatrix");
   extents_S4.slot("i") = ext_i_rcpp;
@@ -328,16 +353,13 @@ List InClose_Reorder(RObject I, // Aceptamos RObject genérico (Matrix o S4)
   int_p_vec.reserve(n_concepts + 1);
   int_p_vec.push_back(0);
 
-  if (n_concepts > 0 && n_attributes > 0) {
-    size_t estimated_ints = (size_t)n_concepts * (size_t)n_attributes / 5;
-    if (estimated_ints > 0) int_i_vec.reserve(estimated_ints);
-  }
+  if (n_concepts > 0) int_i_vec.reserve(n_concepts * n_attributes / 5);
 
   for(int c = 0; c < n_concepts; ++c) {
-    const uint64_t* block_ptr = &int_blocks_out[c * N_BLOCKS_M];
+    const uint64_t* block_ptr = &int_blocks_out[c * N_BLOCKS_M]; // Aquí es seguro, vector completo
     int count_c = 0;
     for (int j_new = 0; j_new < n_attributes; ++j_new) {
-      if (test_bit_native_M_Reorder_flat(block_ptr, static_cast<size_t>(j_new))) {
+      if (check_bit_flat_block(block_ptr, static_cast<size_t>(j_new))) {
         int_i_vec.push_back(new_to_old_attr[j_new]);
         count_c++;
       }
@@ -360,7 +382,6 @@ List InClose_Reorder(RObject I, // Aceptamos RObject genérico (Matrix o S4)
     _["intents"] = intents_S4,
     _["extents"] = extents_S4,
     _["total"] = n_concepts,
-    _["tests"] = canonicity_tests,
-    _["att_intents"] = 0
+    _["tests"] = canonicity_tests
   );
 }
