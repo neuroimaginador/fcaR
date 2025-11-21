@@ -1044,69 +1044,78 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
-    #' Factorize the context using the GreConD+ algorithm.
+    #' Factorize the formal context using Boolean/Fuzzy Matrix Factorization algorithms.
     #'
-    #' @param w (numeric) The weight parameter for overcovering penalty. Default is 1.0.
-    #' @param stop_threshold_ratio (numeric) Stopping criterion ratio for the error. Default is 0.0 (exact factorization).
-    #'
-    #' @return A list containing two new FormalContext objects:
+    #' @param method (character) The algorithm to use. Currently supported: "GreConD", "ASSO".
+    #' @param ... Additional arguments:
     #' \itemize{
-    #'   \item \code{object_factor}: The matrix A (Objects x Factors). Describes to what degree each object possesses each factor.
-    #'   \item \code{factor_attribute}: The matrix B (Factors x Attributes). Describes to what degree each attribute manifests in each factor.
+    #'   \item For \code{GreConD}: \code{w} (weight, default 1.0), \code{stop_threshold_ratio} (error tolerance, default 0.0).
+    #'   \item For \code{ASSO}: \code{threshold} (confidence threshold, default 0.7), \code{w_pos} (reward), \code{w_neg} (penalty).
+    #' }
+    #'
+    #' @return A list with two \code{FormalContext} objects:
+    #' \itemize{
+    #'   \item \code{object_factor}: The context mapping Objects to Factors (Matrix A).
+    #'   \item \code{factor_attribute}: The context mapping Factors to Attributes (Matrix B).
     #' }
     #' @export
-    factorize = function(w = 1.0, stop_threshold_ratio = 0.0) {
-      # 1. Validar que la matriz existe
-      if (is.null(self$I)) {
-        stop("The context is empty.")
+    factorize = function(method = "GreConD", ...) {
+      if (self$is_empty()) stop("Context is empty.")
+
+      # Convertir a densa para algoritmos numéricos complejos
+      I_mat <- as.matrix(self$incidence())
+
+      dots <- list(...)
+      factors_list <- NULL
+
+      if (method == "GreConD" || method == "GreConD+") {
+        w <- ifelse(is.null(dots$w), 1.0, dots$w)
+        stop_ratio <- ifelse(is.null(dots$stop_threshold_ratio), 0.0, dots$stop_threshold_ratio)
+
+        # --- INTEGRACIÓN DIFUSA ---
+        # Recuperamos la lógica actual del objeto
+        current_logic <- self$get_logic()
+
+        factors_list <- grecond_plus_cpp(I_mat, w, stop_ratio, current_logic)
+      } else if (method == "ASSO") {
+        threshold <- ifelse(is.null(dots$threshold), 0.7, dots$threshold)
+        w_pos <- ifelse(is.null(dots$w_pos), 1.0, dots$w_pos)
+        w_neg <- ifelse(is.null(dots$w_neg), 1.0, dots$w_neg)
+
+        factors_list <- asso_cpp(I_mat, threshold, w_pos, w_neg)
+      } else {
+        stop(paste("Unknown factorization method:", method))
       }
 
-      # 2. Ejecutar el algoritmo C++ (asegúrate de que esté exportado en tu paquete)
-      # NOTA: grecond_plus devuelve una lista de listas (extent, intent)
-      raw_factors <- grecond_plus(Matrix::as.matrix(Matrix::t(self$I)), w, stop_threshold_ratio, self$get_connection(), self$get_logic())
-
-      num_factors <- length(raw_factors)
-      if (num_factors == 0) {
+      if (length(factors_list) == 0) {
         warning("No factors found.")
         return(NULL)
       }
 
-      # 3. Construir Matrices A (Objects x Factors) y B (Factors x Attributes)
+      # Reconstruir Contextos de Factores
+      n_factors <- length(factors_list)
+      factor_names <- paste0("F", seq_len(n_factors))
 
-      # Extraer nombres
-      obj_names <- self$objects
-      attr_names <- self$attributes
-      factor_names <- paste0("F", seq_len(num_factors))
+      A <- matrix(0, nrow = length(self$objects), ncol = n_factors)
+      rownames(A) <- self$objects
+      colnames(A) <- factor_names
 
-      # Inicializar matrices
-      A_mat <- matrix(0, nrow = length(self$objects), ncol = num_factors)
-      B_mat <- matrix(0, nrow = num_factors, ncol = length(self$attributes))
+      B <- matrix(0, nrow = n_factors, ncol = length(self$attributes))
+      rownames(B) <- factor_names
+      colnames(B) <- self$attributes
 
-      # Rellenar matrices desde la lista de factores
-      for (k in seq_len(num_factors)) {
-        A_mat[, k] <- raw_factors[[k]]$extent
-        B_mat[k, ] <- raw_factors[[k]]$intent
+      for (k in seq_len(n_factors)) {
+        f <- factors_list[[k]]
+        A[, k] <- f$extent
+        B[k, ] <- f$intent
       }
 
-      # Asignar nombres de dimensiones
-      rownames(A_mat) <- obj_names
-      colnames(A_mat) <- factor_names
+      # Crear nuevos objetos con la MISMA configuración de lógica que el padre
+      ctx_A <- FormalContext$new(A)
+      ctx_B <- FormalContext$new(B)
 
-      rownames(B_mat) <- factor_names
-      colnames(B_mat) <- attr_names
-
-      # 4. Crear nuevos objetos FormalContext
-      # Como estamos dentro de la clase, usamos el generador global FormalContext$new()
-
-      ctx_A <- FormalContext$new(A_mat)
-      ctx_B <- FormalContext$new(B_mat)
-
-      # Opcional: Copiar configuraciones de lógica si es necesario
       ctx_A$use_logic(self$get_logic())
       ctx_B$use_logic(self$get_logic())
-
-      ctx_A$use_connection(self$get_connection())
-      ctx_B$use_connection(self$get_connection())
 
       return(list(
         object_factor = ctx_A,

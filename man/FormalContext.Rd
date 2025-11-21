@@ -607,25 +607,29 @@ Nothing, just updates the internal fields \code{concepts} and \code{implications
 \if{html}{\out{<a id="method-FormalContext-factorize"></a>}}
 \if{latex}{\out{\hypertarget{method-FormalContext-factorize}{}}}
 \subsection{Method \code{factorize()}}{
-Factorize the context using the GreConD+ algorithm.
+Factorize the formal context using Boolean/Fuzzy Matrix Factorization algorithms.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$factorize(w = 1, stop_threshold_ratio = 0)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$factorize(method = "GreConD", ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{w}}{(numeric) The weight parameter for overcovering penalty. Default is 1.0.}
+\item{\code{method}}{(character) The algorithm to use. Currently supported: "GreConD", "ASSO".}
 
-\item{\code{stop_threshold_ratio}}{(numeric) Stopping criterion ratio for the error. Default is 0.0 (exact factorization).}
+\item{\code{...}}{Additional arguments:
+\itemize{
+\item For \code{GreConD}: \code{w} (weight, default 1.0), \code{stop_threshold_ratio} (error tolerance, default 0.0).
+\item For \code{ASSO}: \code{threshold} (confidence threshold, default 0.7), \code{w_pos} (reward), \code{w_neg} (penalty).
+}}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A list containing two new FormalContext objects:
+A list with two \code{FormalContext} objects:
 \itemize{
-\item \code{object_factor}: The matrix A (Objects x Factors). Describes to what degree each object possesses each factor.
-\item \code{factor_attribute}: The matrix B (Factors x Attributes). Describes to what degree each attribute manifests in each factor.
+\item \code{object_factor}: The context mapping Objects to Factors (Matrix A).
+\item \code{factor_attribute}: The context mapping Factors to Attributes (Matrix B).
 }
 }
 }

@@ -10,21 +10,6 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// grecond_plus
-List grecond_plus(NumericMatrix I, double w, double stop_threshold_ratio, String connection, String logic_name);
-RcppExport SEXP _fcaR_grecond_plus(SEXP ISEXP, SEXP wSEXP, SEXP stop_threshold_ratioSEXP, SEXP connectionSEXP, SEXP logic_nameSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< double >::type w(wSEXP);
-    Rcpp::traits::input_parameter< double >::type stop_threshold_ratio(stop_threshold_ratioSEXP);
-    Rcpp::traits::input_parameter< String >::type connection(connectionSEXP);
-    Rcpp::traits::input_parameter< String >::type logic_name(logic_nameSEXP);
-    rcpp_result_gen = Rcpp::wrap(grecond_plus(I, w, stop_threshold_ratio, connection, logic_name));
-    return rcpp_result_gen;
-END_RCPP
-}
 // tnorm_Zadeh
 double tnorm_Zadeh(double x, double y);
 RcppExport SEXP _fcaR_tnorm_Zadeh(SEXP xSEXP, SEXP ySEXP) {
@@ -128,6 +113,58 @@ BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     rcpp_result_gen = Rcpp::wrap(available_logics());
+    return rcpp_result_gen;
+END_RCPP
+}
+// grecond_plus_cpp
+List grecond_plus_cpp(NumericMatrix I, double w, double stop_threshold_ratio, String logic_name);
+RcppExport SEXP _fcaR_grecond_plus_cpp(SEXP ISEXP, SEXP wSEXP, SEXP stop_threshold_ratioSEXP, SEXP logic_nameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< double >::type w(wSEXP);
+    Rcpp::traits::input_parameter< double >::type stop_threshold_ratio(stop_threshold_ratioSEXP);
+    Rcpp::traits::input_parameter< String >::type logic_name(logic_nameSEXP);
+    rcpp_result_gen = Rcpp::wrap(grecond_plus_cpp(I, w, stop_threshold_ratio, logic_name));
+    return rcpp_result_gen;
+END_RCPP
+}
+// asso_cpp
+List asso_cpp(NumericMatrix I, double threshold, double w_pos, double w_neg);
+RcppExport SEXP _fcaR_asso_cpp(SEXP ISEXP, SEXP thresholdSEXP, SEXP w_posSEXP, SEXP w_negSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< double >::type threshold(thresholdSEXP);
+    Rcpp::traits::input_parameter< double >::type w_pos(w_posSEXP);
+    Rcpp::traits::input_parameter< double >::type w_neg(w_negSEXP);
+    rcpp_result_gen = Rcpp::wrap(asso_cpp(I, threshold, w_pos, w_neg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// randomize_swap_cpp
+IntegerMatrix randomize_swap_cpp(IntegerMatrix I, int iterations);
+RcppExport SEXP _fcaR_randomize_swap_cpp(SEXP ISEXP, SEXP iterationsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    rcpp_result_gen = Rcpp::wrap(randomize_swap_cpp(I, iterations));
+    return rcpp_result_gen;
+END_RCPP
+}
+// randomize_rewire_cpp
+IntegerMatrix randomize_rewire_cpp(IntegerMatrix I, int iterations);
+RcppExport SEXP _fcaR_randomize_rewire_cpp(SEXP ISEXP, SEXP iterationsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    rcpp_result_gen = Rcpp::wrap(randomize_rewire_cpp(I, iterations));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -752,7 +789,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_fcaR_grecond_plus", (DL_FUNC) &_fcaR_grecond_plus, 5},
     {"_fcaR_tnorm_Zadeh", (DL_FUNC) &_fcaR_tnorm_Zadeh, 2},
     {"_fcaR_implication_Zadeh", (DL_FUNC) &_fcaR_implication_Zadeh, 2},
     {"_fcaR_tnorm_Lukasiewicz", (DL_FUNC) &_fcaR_tnorm_Lukasiewicz, 2},
@@ -762,6 +798,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_tnorm_Product", (DL_FUNC) &_fcaR_tnorm_Product, 2},
     {"_fcaR_implication_Product", (DL_FUNC) &_fcaR_implication_Product, 2},
     {"_fcaR_available_logics", (DL_FUNC) &_fcaR_available_logics, 0},
+    {"_fcaR_grecond_plus_cpp", (DL_FUNC) &_fcaR_grecond_plus_cpp, 4},
+    {"_fcaR_asso_cpp", (DL_FUNC) &_fcaR_asso_cpp, 4},
+    {"_fcaR_randomize_swap_cpp", (DL_FUNC) &_fcaR_randomize_swap_cpp, 2},
+    {"_fcaR_randomize_rewire_cpp", (DL_FUNC) &_fcaR_randomize_rewire_cpp, 2},
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
