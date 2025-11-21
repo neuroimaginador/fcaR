@@ -837,7 +837,7 @@ FormalContext <- R6::R6Class(
       if (all(self$I@x == 1) && (method == "InClose")) {
         L <- InClose_Reorder(
           I = my_I,
-          attrs = self$attributes,
+          # attrs = self$attributes,
           verbose = verbose
         )
       } else {
