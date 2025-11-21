@@ -295,13 +295,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // InClose_Reorder
-List InClose_Reorder(NumericMatrix I, StringVector attrs, bool verbose);
+List InClose_Reorder(NumericMatrix I, Nullable<StringVector> attrs, bool verbose);
 RcppExport SEXP _fcaR_InClose_Reorder(SEXP ISEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type I(ISEXP);
-    Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
+    Rcpp::traits::input_parameter< Nullable<StringVector> >::type attrs(attrsSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
     rcpp_result_gen = Rcpp::wrap(InClose_Reorder(I, attrs, verbose));
     return rcpp_result_gen;
