@@ -10,9 +10,10 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fcaR)](https://cran.r-project.org/package=fcaR)
 [![codecov](https://codecov.io/gh/neuroimaginador/fcaR/branch/master/graph/badge.svg?token=8ujvQdrzUI)](https://app.codecov.io/gh/neuroimaginador/fcaR)
+[![R-hub](https://github.com/neuroimaginador/fcaR/actions/workflows/rhub.yaml/badge.svg)](https://github.com/neuroimaginador/fcaR/actions/workflows/rhub.yaml)
 <!-- [![R build status](https://github.com/neuroimaginador/fcaR/workflows/R-CMD-check/badge.svg)](https://github.com/neuroimaginador/fcaR/actions) -->
-[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcaR)](https://cran.r-project.org/package=fcaR)
 [![R-CMD-check](https://github.com/neuroimaginador/fcaR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/neuroimaginador/fcaR/actions/workflows/R-CMD-check.yaml)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcaR)](https://cran.r-project.org/package=fcaR)
 <!-- badges: end -->
 
 The aim of this package is to provide tools to perform fuzzy formal
@@ -445,9 +446,9 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.002 secs.
-#> --> Generalization: from 12 to 12 in 0.002 secs.
-#> Batch took 0.005 secs.
+#> --> Composition: from 12 to 12 in 0.001 secs.
+#> --> Generalization: from 12 to 12 in 0.003 secs.
+#> Batch took 0.006 secs.
 
 # Reduced set of implications
 fc$implications
