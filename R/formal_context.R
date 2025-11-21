@@ -832,15 +832,19 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      my_I <- Matrix::as.matrix(Matrix::t(self$I))
+      # my_I <- Matrix::as.matrix(Matrix::t(self$I))
 
       if (all(self$I@x == 1) && (method == "InClose")) {
+        my_I <- methods::as(Matrix::t(self$I), "dgCMatrix")
+
         L <- InClose_Reorder(
           I = my_I,
           # attrs = self$attributes,
           verbose = verbose
         )
       } else {
+        my_I <- Matrix::as.matrix(Matrix::t(self$I))
+
         method <- conceptRegistry$get_entry(method[1])
         if (is.null(method)) {
           avail_methods <- conceptRegistry$get_entry_names()
