@@ -295,14 +295,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // InClose_Reorder
-List InClose_Reorder(RObject I, bool verbose);
-RcppExport SEXP _fcaR_InClose_Reorder(SEXP ISEXP, SEXP verboseSEXP) {
+List InClose_Reorder(IntegerVector sp_i, IntegerVector sp_p, IntegerVector dim, bool verbose);
+RcppExport SEXP _fcaR_InClose_Reorder(SEXP sp_iSEXP, SEXP sp_pSEXP, SEXP dimSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< RObject >::type I(ISEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type sp_i(sp_iSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type sp_p(sp_pSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type dim(dimSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(InClose_Reorder(I, verbose));
+    rcpp_result_gen = Rcpp::wrap(InClose_Reorder(sp_i, sp_p, dim, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -771,7 +773,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_run_monotonic_incremental_rcpp_optimized", (DL_FUNC) &_fcaR_run_monotonic_incremental_rcpp_optimized, 7},
     {"_fcaR_run_priority_refinement_rcpp_optimized", (DL_FUNC) &_fcaR_run_priority_refinement_rcpp_optimized, 7},
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
-    {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 2},
+    {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 4},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
     {"_fcaR_calculate_grades_rcpp", (DL_FUNC) &_fcaR_calculate_grades_rcpp, 3},
     {"_fcaR_calculate_lattice_layout_rcpp", (DL_FUNC) &_fcaR_calculate_lattice_layout_rcpp, 5},

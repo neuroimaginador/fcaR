@@ -837,11 +837,25 @@ FormalContext <- R6::R6Class(
       if (all(self$I@x == 1) && (method == "InClose")) {
         my_I <- methods::as(Matrix::t(self$I), "dgCMatrix")
 
+        # DESACOPLE TOTAL: Extraemos los vectores en R.
+        # Esto es seguro. R maneja la memoria.
+        sp_i <- my_I@i
+        sp_p <- my_I@p
+        sp_dim <- my_I@Dim
+
+        # Llamamos a C++ pasando solo vectores. C++ no sabe nada de S4.
         L <- InClose_Reorder(
-          I = my_I,
-          # attrs = self$attributes,
+          sp_i = sp_i,
+          sp_p = sp_p,
+          dim = sp_dim,
           verbose = verbose
         )
+
+        # L <- InClose_Reorder(
+        #   I = my_I,
+        #   # attrs = self$attributes,
+        #   verbose = verbose
+        # )
       } else {
         my_I <- Matrix::as.matrix(Matrix::t(self$I))
 

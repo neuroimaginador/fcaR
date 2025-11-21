@@ -2,9 +2,6 @@
 #include <vector>
 #include <algorithm>
 
-// ¡¡¡ SIN TIMER !!!
-// #include <Rcpp/Benchmark/Timer.h>
-
 using namespace Rcpp;
 
 // --- TIPOS ---
@@ -13,7 +10,7 @@ using AttributeCols_Reorder = std::vector<uint64_t>;
 using ObjectRows_Reorder = std::vector<uint64_t>;
 using IntentAccumulator_Reorder = std::vector<uint64_t>;
 
-// Contexto Slim
+// Contexto
 struct InCloseContext {
   int n_objects;
   int n_attributes;
@@ -60,7 +57,6 @@ void inclose_core_slim(int y,
 
   if (recursion_depth % 1000 == 0) Rcpp::checkUserInterrupt();
 
-  // Guardar concepto
   ctx.ext_p_out->push_back(ctx.ext_i_out->size());
   ctx.ext_i_out->insert(ctx.ext_i_out->end(), extent.begin(), extent.end());
   ctx.int_blocks_out->insert(ctx.int_blocks_out->end(), intent.begin(), intent.end());
@@ -115,49 +111,35 @@ void inclose_core_slim(int y,
 }
 
 // [[Rcpp::export]]
-List InClose_Reorder(RObject I, bool verbose = false) {
+List InClose_Reorder(IntegerVector sp_i,
+                     IntegerVector sp_p,
+                     IntegerVector dim,
+                     bool verbose = false) {
 
-  // SIN TIMER
+  // Recibimos VECTORES PUROS. Nada de S4, nada de slots, nada de RObject.
+  // Esto es a prueba de balas.
 
-  int n_objects = 0;
-  int n_attributes = 0;
-  std::vector<int> sp_i_vec;
-  std::vector<int> sp_p_vec;
-
-  // --- LECTURA SEGURA (Igual que antes) ---
-  if (I.isS4()) {
-    S4 mat(I);
-    if (!mat.hasSlot("i") || !mat.hasSlot("p") || !mat.hasSlot("Dim")) stop("Invalid S4");
-
-    IntegerVector dim = mat.slot("Dim");
-    n_objects = dim[0]; n_attributes = dim[1];
-    IntegerVector i_R = as<IntegerVector>(mat.slot("i"));
-    IntegerVector p_R = as<IntegerVector>(mat.slot("p"));
-    sp_i_vec.assign(i_R.begin(), i_R.end());
-    sp_p_vec.assign(p_R.begin(), p_R.end());
-  } else {
-    IntegerMatrix mat = as<IntegerMatrix>(I);
-    n_objects = mat.nrow(); n_attributes = mat.ncol();
-    sp_p_vec.resize(n_attributes + 1, 0);
-    for (int c = 0; c < n_attributes; ++c) {
-      int count = 0;
-      for (int r = 0; r < n_objects; ++r) {
-        if (mat(r, c) != 0) { sp_i_vec.push_back(r); count++; }
-      }
-      sp_p_vec[c+1] = sp_p_vec[c] + count;
-    }
-  }
+  int n_objects = dim[0];
+  int n_attributes = dim[1];
 
   if (n_objects <= 0 || n_attributes <= 0) return List::create();
-  if (sp_p_vec.size() != (size_t)(n_attributes + 1)) stop("Matrix corruption (p).");
-  for (size_t k = 0; k < sp_i_vec.size(); ++k) {
-    int r = sp_i_vec[k];
-    if (r < 0 || r >= n_objects) stop("Matrix corruption (i).");
+
+  // --- Validación de Seguridad (Sanity Check) ---
+  if (sp_p.size() != n_attributes + 1) stop("Invalid p vector length");
+
+  // Copia segura a C++ STL para aislar memoria de R
+  std::vector<int> sp_i_vec(sp_i.begin(), sp_i.end());
+  std::vector<int> sp_p_vec(sp_p.begin(), sp_p.end());
+
+  // Validación de índices (evita el segfault 0x48...)
+  for(int r : sp_i_vec) {
+    if (r < 0 || r >= n_objects) stop("Row index out of bounds");
   }
 
   const size_t N_BLOCKS_M = (static_cast<size_t>(n_attributes) + 63) / 64;
   const size_t N_BLOCKS_N = (static_cast<size_t>(n_objects) + 63) / 64;
 
+  // Soporte
   std::vector<std::pair<int, int>> attr_support(n_attributes);
   for (int c = 0; c < n_attributes; ++c) attr_support[c] = {sp_p_vec[c+1] - sp_p_vec[c], c};
   std::sort(attr_support.begin(), attr_support.end());
@@ -183,6 +165,8 @@ List InClose_Reorder(RObject I, bool verbose = false) {
 
     for (int k = start; k < end; ++k) {
       int r = sp_i_vec[k];
+      if (r >= n_objects) continue;
+
       size_t r_sz = static_cast<size_t>(r);
       size_t block_idx_n = r_sz >> 6; size_t bit_idx_n = r_sz & 63;
 
@@ -194,10 +178,19 @@ List InClose_Reorder(RObject I, bool verbose = false) {
   sp_i_vec.clear(); sp_i_vec.shrink_to_fit();
   sp_p_vec.clear(); sp_p_vec.shrink_to_fit();
 
+  // Algoritmo (sin cambios)
   double canonicity_tests = 0;
-  std::vector<int> ext_i_out; ext_i_out.reserve(n_objects * 10);
-  std::vector<int> ext_p_out; ext_p_out.reserve(1000);
-  std::vector<uint64_t> int_blocks_out; int_blocks_out.reserve(1000 * N_BLOCKS_M);
+  std::vector<int> ext_i_out;
+  std::vector<int> ext_p_out;
+  std::vector<uint64_t> int_blocks_out;
+
+  size_t est = (size_t)(n_objects * n_attributes) / 10;
+  if (est < 1000) est = 1000;
+  try {
+    ext_i_out.reserve(est * n_objects / 5);
+    ext_p_out.reserve(est + 1);
+    int_blocks_out.reserve(est * N_BLOCKS_M);
+  } catch(...) {}
 
   std::vector<uint64_t> m_prime(N_BLOCKS_N, 0xFFFFFFFFFFFFFFFF);
   for (int j = 0; j < n_attributes; j++) {
@@ -227,6 +220,7 @@ List InClose_Reorder(RObject I, bool verbose = false) {
 
   inclose_core_slim(-1, initial_extent, initial_intent, ctx, 0);
 
+  // Empaquetado
   ext_p_out.push_back(ext_i_out.size());
   int n_concepts = ext_p_out.size() - 1;
 
@@ -265,6 +259,5 @@ List InClose_Reorder(RObject I, bool verbose = false) {
     _["total"] = n_concepts,
     _["tests"] = canonicity_tests,
     _["att_intents"] = 0
-  // _["timer"] = ... ELIMINADO
   );
 }
