@@ -295,16 +295,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // InClose_Reorder
-List InClose_Reorder(IntegerVector sp_i, IntegerVector sp_p, IntegerVector dim, bool verbose);
-RcppExport SEXP _fcaR_InClose_Reorder(SEXP sp_iSEXP, SEXP sp_pSEXP, SEXP dimSEXP, SEXP verboseSEXP) {
+List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose);
+RcppExport SEXP _fcaR_InClose_Reorder(SEXP sp_i_sexpSEXP, SEXP sp_p_sexpSEXP, SEXP dim_sexpSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type sp_i(sp_iSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type sp_p(sp_pSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type dim(dimSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type sp_i_sexp(sp_i_sexpSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type sp_p_sexp(sp_p_sexpSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type dim_sexp(dim_sexpSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(InClose_Reorder(sp_i, sp_p, dim, verbose));
+    rcpp_result_gen = Rcpp::wrap(InClose_Reorder(sp_i_sexp, sp_p_sexp, dim_sexp, verbose));
     return rcpp_result_gen;
 END_RCPP
 }

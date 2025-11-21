@@ -85,8 +85,8 @@ InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }
 
-InClose_Reorder <- function(sp_i, sp_p, dim, verbose = FALSE) {
-    .Call(`_fcaR_InClose_Reorder`, sp_i, sp_p, dim, verbose)
+InClose_Reorder <- function(sp_i_sexp, sp_p_sexp, dim_sexp, verbose = FALSE) {
+    .Call(`_fcaR_InClose_Reorder`, sp_i_sexp, sp_p_sexp, dim_sexp, verbose)
 }
 
 InClose_binary <- function(I, attrs, verbose = FALSE) {
