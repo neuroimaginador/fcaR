@@ -265,6 +265,24 @@ fc_planets <- fetch_context("planets_en.cxt")
 
 # The object is ready for analysis
 fc_planets$find_concepts()
+#> [DEBUG] Entered InClose_Reorder
+#> [DEBUG] Extracting Data...
+#> [DEBUG] Data Extracted. Objects: 9 Attributes: 7
+#> [DEBUG] Sorting attributes...
+#> [DEBUG] Building Bitsets...
+#> [DEBUG] Initializing Context...
+#> [DEBUG] Starting Recursion...
+#> [DEBUG] Recursion Depth: 0 Y: -1
+#> [DEBUG] Recursion Depth: 1 Y: 0
+#> [DEBUG] Recursion Depth: 1 Y: 1
+#> [DEBUG] Recursion Depth: 1 Y: 2
+#> [DEBUG] Recursion Depth: 1 Y: 3
+#> [DEBUG] Recursion Depth: 1 Y: 4
+#> [DEBUG] Recursion Depth: 1 Y: 5
+#> [DEBUG] Recursion Depth: 1 Y: 6
+#> [DEBUG] Recursion Finished.
+#> [DEBUG] Packaging Results: 12 concepts.
+#> [DEBUG] Done.
 fc_planets$concepts$size()
 #> [1] 12
 ```

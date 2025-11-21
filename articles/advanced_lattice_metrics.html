@@ -105,6 +105,24 @@ removed.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">planets</span><span class="op">)</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [DEBUG] Entered InClose_Reorder</span></span>
+<span><span class="co">#&gt; [DEBUG] Extracting Data...</span></span>
+<span><span class="co">#&gt; [DEBUG] Data Extracted. Objects: 9 Attributes: 7</span></span>
+<span><span class="co">#&gt; [DEBUG] Sorting attributes...</span></span>
+<span><span class="co">#&gt; [DEBUG] Building Bitsets...</span></span>
+<span><span class="co">#&gt; [DEBUG] Initializing Context...</span></span>
+<span><span class="co">#&gt; [DEBUG] Starting Recursion...</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Depth: 0 Y: -1</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Depth: 1 Y: 0</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Depth: 1 Y: 1</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Depth: 1 Y: 2</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Depth: 1 Y: 3</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Depth: 1 Y: 4</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Depth: 1 Y: 5</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Depth: 1 Y: 6</span></span>
+<span><span class="co">#&gt; [DEBUG] Recursion Finished.</span></span>
+<span><span class="co">#&gt; [DEBUG] Packaging Results: 12 concepts.</span></span>
+<span><span class="co">#&gt; [DEBUG] Done.</span></span>
 <span></span>
 <span><span class="va">stab</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">stability</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">stab</span><span class="op">)</span></span>
