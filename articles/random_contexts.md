@@ -1,0 +1,88 @@
+# Advanced Random Contexts
+
+``` r
+library(fcaR)
+```
+
+## Introduction
+
+Creating synthetic datasets is essential for testing algorithms and
+validating results in Formal Concept Analysis. However, simple uniform
+random generation (where every cell has a fixed probability $p$ of
+being 1) often fails to capture the structure of real-world data.
+
+`fcaR` now implements advanced generation methods, allowing for more
+realistic and controllable simulations.
+
+## 1. Dirichlet Distribution for Realistic Data
+
+Real-world contexts often have “clumpy” or “sparse” rows. Some objects
+have many attributes, while others have very few. A uniform distribution
+creates rows that are all roughly the same size (Binomial distribution).
+
+To mimic real variability, we use a **Dirichlet Distribution** to sample
+the probability of an object having $k$ attributes.
+
+``` r
+# Uniform Context (Standard)
+# All objects have roughly 20% of attributes
+fc_uni <- RandomContext(n_objects = 20, n_attributes = 10, density = 0.2, distribution = "uniform")
+
+# Dirichlet Context (Realistic)
+# Some objects will be empty, some full, some in between.
+# alpha = 0.1 -> High skewness (Very sparse or very dense rows)
+# alpha = 1.0 -> Uniform distribution of row sizes
+fc_dir <- RandomContext(n_objects = 20, n_attributes = 10, distribution = "dirichlet", alpha = 0.2)
+
+# Compare Row Sums
+barplot(rowSums(fc_uni$incidence()), main = "Uniform: Row Sums", ylim = c(0, 10))
+```
+
+![](random_contexts_files/figure-html/dirichlet-1.png)
+
+``` r
+barplot(rowSums(fc_dir$incidence()), main = "Dirichlet: Row Sums", ylim = c(0, 10))
+```
+
+![](random_contexts_files/figure-html/dirichlet-2.png)
+
+## 2. Randomization via Edge Swapping
+
+When performing statistical analysis on a concept lattice, we often ask:
+*“Is this pattern significant, or could it happen by chance?”*.
+
+To answer this, we need to compare our context against a “random null
+model”. The most robust null model is a random matrix that preserves:
+
+1.  The number of attributes per object (Row sums).
+2.  The frequency of each attribute (Column sums).
+
+This is achieved by **Edge Swapping** (also known as the Curveball
+algorithm). It swaps connections without altering the marginal sums.
+
+``` r
+data(planets)
+fc <- FormalContext$new(planets)
+
+# Original Marginals
+orig_col_sums <- colSums(fc$incidence())
+print(orig_col_sums)
+#>   small  medium   large    near     far    moon no_moon 
+#>       5       2       2       4       5       7       2
+
+# Randomize using Swap
+fc_random <- randomize_context(fc, method = "swap")
+
+# Verify Marginals are preserved
+new_col_sums <- colSums(fc_random$incidence())
+print(new_col_sums)
+#>   small  medium   large    near     far    moon no_moon 
+#>       5       2       2       4       5       7       2
+
+# But the structure is different
+print(all(fc$incidence() == fc_random$incidence()))
+#> [1] FALSE
+```
+
+This allows you to generate 1000 randomized versions of your data and
+check if your concept stability or support is statistically significant.

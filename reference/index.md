@@ -12,6 +12,8 @@
   : R6 class for a formal context
 - [`ImplicationSet`](https://neuroimaginador.github.io/fcaR/reference/ImplicationSet.md)
   : R6 Class for Set of implications
+- [`RandomContext()`](https://neuroimaginador.github.io/fcaR/reference/RandomContext.md)
+  : Generate Random Formal Contexts
 - [`Set`](https://neuroimaginador.github.io/fcaR/reference/Set.md) : R6
   class for a fuzzy set with sparse internal representation
 - [`as_Set()`](https://neuroimaginador.github.io/fcaR/reference/as_Set.md)
@@ -72,6 +74,8 @@
   : Planets data
 - [`print_repo_details()`](https://neuroimaginador.github.io/fcaR/reference/print_repo_details.md)
   : Print Details of Repository Contexts
+- [`randomize_context()`](https://neuroimaginador.github.io/fcaR/reference/randomize_context.md)
+  : Randomize an Existing Formal Context
 - [`save_tikz()`](https://neuroimaginador.github.io/fcaR/reference/save_tikz.md)
   : Save TikZ Code to File
 - [`scalingRegistry`](https://neuroimaginador.github.io/fcaR/reference/scalingRegistry.md)

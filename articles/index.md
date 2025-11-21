@@ -20,5 +20,7 @@
   ImplicationSets](https://neuroimaginador.github.io/fcaR/articles/implications.md):
 - [Visualizing concept lattices: from R to
   LaTeX](https://neuroimaginador.github.io/fcaR/articles/lattice_visualization.md):
-- [Matrix Factorization with
-  GreConD+](https://neuroimaginador.github.io/fcaR/articles/matrix_factorization.md):
+- [Matrix Factorization: GreConD+ and
+  ASSO](https://neuroimaginador.github.io/fcaR/articles/matrix_factorization.md):
+- [Advanced Random
+  Contexts](https://neuroimaginador.github.io/fcaR/articles/random_contexts.md):

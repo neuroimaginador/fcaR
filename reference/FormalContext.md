@@ -594,33 +594,38 @@ Nothing, just updates the internal fields `concepts` and `implications`.
 
 ### Method `factorize()`
 
-Factorize the context using the GreConD+ algorithm.
+Factorize the formal context using Boolean/Fuzzy Matrix Factorization
+algorithms.
 
 #### Usage
 
-    FormalContext$factorize(w = 1, stop_threshold_ratio = 0)
+    FormalContext$factorize(method = "GreConD", ...)
 
 #### Arguments
 
-- `w`:
+- `method`:
 
-  (numeric) The weight parameter for overcovering penalty. Default is
-  1.0.
+  (character) The algorithm to use. Currently supported: "GreConD",
+  "ASSO".
 
-- `stop_threshold_ratio`:
+- `...`:
 
-  (numeric) Stopping criterion ratio for the error. Default is 0.0
-  (exact factorization).
+  Additional arguments:
+
+  - For `GreConD`: `w` (weight, default 1.0), `stop_threshold_ratio`
+    (error tolerance, default 0.0).
+
+  - For `ASSO`: `threshold` (confidence threshold, default 0.7), `w_pos`
+    (reward), `w_neg` (penalty).
 
 #### Returns
 
-A list containing two new FormalContext objects:
+A list with two `FormalContext` objects:
 
-- `object_factor`: The matrix A (Objects x Factors). Describes to what
-  degree each object possesses each factor.
+- `object_factor`: The context mapping Objects to Factors (Matrix A).
 
-- `factor_attribute`: The matrix B (Factors x Attributes). Describes to
-  what degree each attribute manifests in each factor.
+- `factor_attribute`: The context mapping Factors to Attributes (Matrix
+  B).
 
 ------------------------------------------------------------------------
 

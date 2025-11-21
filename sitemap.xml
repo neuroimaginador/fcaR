@@ -16,6 +16,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/index.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/lattice_visualization.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/matrix_factorization.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/random_contexts.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/authors.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/index.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/news/index.html</loc></url>
@@ -24,6 +25,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/ConceptSet.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/FormalContext.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/ImplicationSet.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/RandomContext.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_vector.html</loc></url>
@@ -57,6 +59,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/pipe.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/planets.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/print_repo_details.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/randomize_context.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/save_tikz.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/scalingRegistry.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/select_repository_context.html</loc></url>
