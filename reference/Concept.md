@@ -127,24 +127,6 @@ The objects of this class are cloneable with this method.
 # Build a formal context and find its concepts
 fc_planets <- FormalContext$new(planets)
 fc_planets$find_concepts()
-#> [DEBUG] Entered InClose_Reorder
-#> [DEBUG] Extracting Data...
-#> [DEBUG] Data Extracted. Objects: 9 Attributes: 7
-#> [DEBUG] Sorting attributes...
-#> [DEBUG] Building Bitsets...
-#> [DEBUG] Initializing Context...
-#> [DEBUG] Starting Recursion...
-#> [DEBUG] Recursion Depth: 0 Y: -1
-#> [DEBUG] Recursion Depth: 1 Y: 0
-#> [DEBUG] Recursion Depth: 1 Y: 1
-#> [DEBUG] Recursion Depth: 1 Y: 2
-#> [DEBUG] Recursion Depth: 1 Y: 3
-#> [DEBUG] Recursion Depth: 1 Y: 4
-#> [DEBUG] Recursion Depth: 1 Y: 5
-#> [DEBUG] Recursion Depth: 1 Y: 6
-#> [DEBUG] Recursion Finished.
-#> [DEBUG] Packaging Results: 12 concepts.
-#> [DEBUG] Done.
 
 # Print the first three concepts
 fc_planets$concepts[1:3]
