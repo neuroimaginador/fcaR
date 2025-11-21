@@ -162,9 +162,9 @@ given fuzzy attribute set.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.002 secs.
-#> --> Generalization: from 12 to 12 in 0.002 secs.
-#> Batch took 0.005 secs.
+#> --> Composition: from 12 to 12 in 0.001 secs.
+#> --> Generalization: from 12 to 12 in 0.003 secs.
+#> Batch took 0.006 secs.
 
 # Reduced set of implications
 fc$implications
