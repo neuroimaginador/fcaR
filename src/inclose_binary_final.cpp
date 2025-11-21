@@ -12,7 +12,6 @@ using AttributeCols_Reorder = std::vector<uint64_t>;
 using ObjectRows_Reorder = std::vector<uint64_t>;
 using IntentAccumulator_Reorder = std::vector<uint64_t>;
 
-// --- CONTEXTO (Paso por referencia para velocidad y seguridad) ---
 struct InCloseContext {
   int n_objects;
   int n_attributes;
@@ -57,9 +56,13 @@ void inclose_core_slim(int y,
                        InCloseContext& ctx,
                        int recursion_depth) {
 
+  // DEBUG: Solo imprimir en niveles superficiales para no saturar log
+  if (recursion_depth < 2) {
+    Rcpp::Rcout << "[DEBUG] Recursion Depth: " << recursion_depth << " Y: " << y << std::endl;
+  }
+
   if (recursion_depth % 1000 == 0) Rcpp::checkUserInterrupt();
 
-  // 1. Guardar Concepto
   ctx.ext_p_out->push_back(ctx.ext_i_out->size());
   ctx.ext_i_out->insert(ctx.ext_i_out->end(), extent.begin(), extent.end());
   ctx.int_blocks_out->insert(ctx.int_blocks_out->end(), intent.begin(), intent.end());
@@ -68,7 +71,6 @@ void inclose_core_slim(int y,
   child_extent.reserve(extent.size());
   IntentAccumulator_Reorder child_intent(ctx.N_BLOCKS_M);
 
-  // 2. Generar Hijos
   for (int j = y + 1; j < ctx.n_attributes; j++) {
     if (check_bit_M(intent, static_cast<size_t>(j))) continue;
 
@@ -114,10 +116,9 @@ void inclose_core_slim(int y,
   }
 }
 
-// --- MAIN EXPORT (SIN ATTRS) ---
 // [[Rcpp::export]]
 List InClose_Reorder(RObject I, bool verbose = false) {
-
+  Rcpp::Rcout << "[DEBUG] Entered InClose_Reorder" << std::endl;
   Timer timer;
   timer.step("start_reorder_setup");
 
@@ -126,7 +127,7 @@ List InClose_Reorder(RObject I, bool verbose = false) {
   std::vector<int> sp_i_vec;
   std::vector<int> sp_p_vec;
 
-  // Detección y copia a C++ (Sin punteros de R inseguros)
+  Rcpp::Rcout << "[DEBUG] Extracting Data..." << std::endl;
   if (I.isS4()) {
     S4 mat(I);
     if (!mat.hasSlot("i") || !mat.hasSlot("p") || !mat.hasSlot("Dim")) stop("Invalid S4 matrix.");
@@ -148,13 +149,14 @@ List InClose_Reorder(RObject I, bool verbose = false) {
       sp_p_vec[c+1] = sp_p_vec[c] + count;
     }
   }
+  Rcpp::Rcout << "[DEBUG] Data Extracted. Objects: " << n_objects << " Attributes: " << n_attributes << std::endl;
 
   if (n_objects == 0 || n_attributes == 0) return List::create();
 
   const size_t N_BLOCKS_M = (static_cast<size_t>(n_attributes) + 63) / 64;
   const size_t N_BLOCKS_N = (static_cast<size_t>(n_objects) + 63) / 64;
 
-  // Soporte
+  Rcpp::Rcout << "[DEBUG] Sorting attributes..." << std::endl;
   std::vector<std::pair<int, int>> attr_support(n_attributes);
   for (int c = 0; c < n_attributes; ++c) attr_support[c] = {sp_p_vec[c+1] - sp_p_vec[c], c};
   std::sort(attr_support.begin(), attr_support.end());
@@ -166,7 +168,7 @@ List InClose_Reorder(RObject I, bool verbose = false) {
     old_to_new_attr[attr_support[j].second] = j;
   }
 
-  // Bitsets
+  Rcpp::Rcout << "[DEBUG] Building Bitsets..." << std::endl;
   AttributeCols_Reorder attr_cols(n_attributes * N_BLOCKS_N, 0);
   ObjectRows_Reorder obj_rows(N_BLOCKS_M * n_objects, 0);
 
@@ -187,12 +189,11 @@ List InClose_Reorder(RObject I, bool verbose = false) {
     }
   }
 
-  // Limpieza
   sp_i_vec.clear(); sp_i_vec.shrink_to_fit();
   sp_p_vec.clear(); sp_p_vec.shrink_to_fit();
 
   double canonicity_tests = 0;
-  std::vector<int> ext_i_out; ext_i_out.reserve(n_objects * 10); // Reserva modesta
+  std::vector<int> ext_i_out; ext_i_out.reserve(n_objects * 5);
   std::vector<int> ext_p_out; ext_p_out.reserve(1000);
   std::vector<uint64_t> int_blocks_out; int_blocks_out.reserve(1000 * N_BLOCKS_M);
 
@@ -210,7 +211,7 @@ List InClose_Reorder(RObject I, bool verbose = false) {
     int_blocks_out.insert(int_blocks_out.end(), N_BLOCKS_M, 0xFFFFFFFFFFFFFFFF);
   }
 
-  // Recursion
+  Rcpp::Rcout << "[DEBUG] Initializing Context..." << std::endl;
   Extent_Reorder initial_extent; initial_extent.reserve(n_objects);
   for(int i = 0; i < n_objects; ++i) initial_extent.push_back(i);
   IntentAccumulator_Reorder initial_intent(N_BLOCKS_M);
@@ -224,13 +225,17 @@ List InClose_Reorder(RObject I, bool verbose = false) {
   InCloseContext ctx(n_objects, n_attributes, N_BLOCKS_M, N_BLOCKS_N, attr_cols, obj_rows,
                      &ext_i_out, &ext_p_out, &int_blocks_out, &canonicity_tests);
 
+  Rcpp::Rcout << "[DEBUG] Starting Recursion..." << std::endl;
   timer.step("start_reorder_recursion");
   inclose_core_slim(-1, initial_extent, initial_intent, ctx, 0);
   timer.step("end_reorder_recursion");
+  Rcpp::Rcout << "[DEBUG] Recursion Finished." << std::endl;
 
-  // Empaquetado (safe wrap)
+  // Empaquetado
   ext_p_out.push_back(ext_i_out.size());
   int n_concepts = ext_p_out.size() - 1;
+
+  Rcpp::Rcout << "[DEBUG] Packaging Results: " << n_concepts << " concepts." << std::endl;
 
   S4 extents_S4("dgCMatrix");
   extents_S4.slot("i") = wrap(ext_i_out);
@@ -262,6 +267,7 @@ List InClose_Reorder(RObject I, bool verbose = false) {
   intents_S4.slot("Dim") = IntegerVector::create(n_attributes, n_concepts);
 
   timer.step("end_reorder_packaging");
+  Rcpp::Rcout << "[DEBUG] Done." << std::endl;
 
   return List::create(
     _["intents"] = intents_S4,
