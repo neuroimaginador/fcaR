@@ -1,12 +1,13 @@
 #include <Rcpp.h>
+#include <Rcpp/Benchmark/Timer.h> // Timer recuperado
 #include <vector>
 #include <algorithm>
-#include <Rinternals.h> // Para acceso a API C pura (SEXP)
+#include <Rinternals.h> // API C pura de R (Velocidad máxima)
 
 using namespace Rcpp;
 
 // =============================================================================
-// --- TIPOS ---
+// --- TIPOS OPTIMIZADOS ---
 // =============================================================================
 using Extent_Reorder = std::vector<int>;
 using AttributeCols_Reorder = std::vector<uint64_t>;
@@ -14,16 +15,15 @@ using ObjectRows_Reorder = std::vector<uint64_t>;
 using IntentAccumulator_Reorder = std::vector<uint64_t>;
 
 // =============================================================================
-// --- HELPERS GLOBALES (Fuera de clases y funciones) ---
+// --- HELPER GLOBAL (Inline para inyección directa de código) ---
 // =============================================================================
-
-// Este es el helper que daba problemas. Ahora está en el lugar correcto.
 inline bool check_bit_flat_block(const uint64_t* block_ptr, size_t k) {
+  // Operación a nivel de bit pura, sin saltos condicionales
   return (block_ptr[k >> 6] & (1ULL << (k & 63))) != 0;
 }
 
 // =============================================================================
-// --- CLASE SOLVER (Encapsula la lógica recursiva) ---
+// --- CLASE SOLVER (Gestión de Memoria en Heap) ---
 // =============================================================================
 class InCloseSolver {
 public:
@@ -32,7 +32,7 @@ public:
   size_t N_BLOCKS_M;
   size_t N_BLOCKS_N;
 
-  // Datos (Bitsets)
+  // Datos (Bitsets) - Acceso directo
   AttributeCols_Reorder attr_cols;
   ObjectRows_Reorder obj_rows;
 
@@ -48,19 +48,21 @@ public:
     N_BLOCKS_M = (static_cast<size_t>(n_attributes) + 63) / 64;
     N_BLOCKS_N = (static_cast<size_t>(n_objects) + 63) / 64;
 
-    // Reserva de memoria
+    // Reserva única de memoria (evita fragmentación)
     attr_cols.resize(n_attributes * N_BLOCKS_N, 0);
     obj_rows.resize(N_BLOCKS_M * n_objects, 0);
 
-    // Estimación inicial para evitar reallocs
-    size_t est = (size_t)(n_objects * n_attributes) / 10;
-    if (est < 1000) est = 1000;
-    ext_i_out.reserve(est * n_objects / 5);
+    // Heurística de reserva de salida (Ajustada para alto rendimiento)
+    // Asumimos un factor de densidad razonable para evitar reallocs
+    size_t est = (size_t)(n_objects * n_attributes) / 5;
+    if (est < 2000) est = 2000;
+
+    ext_i_out.reserve(est * n_objects / 4);
     ext_p_out.reserve(est + 1);
     int_blocks_out.reserve(est * N_BLOCKS_M);
   }
 
-  // Helpers internos de la clase
+  // Helpers internos (Inline forzado)
   inline bool check_bit_M(const IntentAccumulator_Reorder& blocks, size_t k) {
     size_t block_idx = k >> 6;
     if (block_idx >= blocks.size()) return false;
@@ -72,15 +74,16 @@ public:
     return (attr_cols[attr_j * N_BLOCKS_N + (idx >> 6)] & (1ULL << (idx & 63))) != 0;
   }
 
-  // Lógica recursiva (In-Close)
+  // Núcleo Recursivo (Hot Path)
   void solve_recursive(int y,
                        const Extent_Reorder& extent,
                        IntentAccumulator_Reorder& intent,
                        int recursion_depth) {
 
-    if (recursion_depth % 1000 == 0) Rcpp::checkUserInterrupt();
+    // Check de interrupción ligero (bitwise mask es más rápido que módulo)
+    if ((recursion_depth & 1023) == 0) Rcpp::checkUserInterrupt();
 
-    // Guardar concepto encontrado
+    // 1. Guardar concepto
     ext_p_out.push_back(ext_i_out.size());
     ext_i_out.insert(ext_i_out.end(), extent.begin(), extent.end());
     int_blocks_out.insert(int_blocks_out.end(), intent.begin(), intent.end());
@@ -90,6 +93,7 @@ public:
     IntentAccumulator_Reorder child_intent(N_BLOCKS_M);
 
     for (int j = y + 1; j < n_attributes; j++) {
+      // Poda rápida
       if (check_bit_M(intent, static_cast<size_t>(j))) continue;
 
       child_extent.clear();
@@ -101,7 +105,7 @@ public:
 
       if (child_extent.empty()) continue;
 
-      // Intersección de atributos (Intent)
+      // Cálculo del Intent (Intersección Vectorizada implícita por CPU de 64bits)
       for(size_t k = 0; k < N_BLOCKS_M; ++k) {
         uint64_t intent_k = 0xFFFFFFFFFFFFFFFF;
         size_t block_offset = k * n_objects;
@@ -117,6 +121,7 @@ public:
       size_t j_block_idx = j_sz >> 6;
       size_t j_bit_idx = j_sz & 63;
 
+      // Test de canonicidad (Optimizado para fallar rápido)
       for (size_t b = 0; b < j_block_idx; b++) {
         if ((child_intent[b] & (~intent[b])) != 0) { is_canonical = false; break; }
       }
@@ -137,18 +142,16 @@ public:
 };
 
 // =============================================================================
-// --- FUNCIÓN PRINCIPAL EXPORTADA ---
+// --- FUNCIÓN PRINCIPAL (API C PURA PARA VELOCIDAD) ---
 // =============================================================================
 
 // [[Rcpp::export]]
 List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose = false) {
 
-  // 1. VERIFICACIÓN DE TIPOS (API C)
-  if (TYPEOF(sp_i_sexp) != INTSXP || TYPEOF(sp_p_sexp) != INTSXP || TYPEOF(dim_sexp) != INTSXP) {
-    stop("Input vectors must be integers.");
-  }
+  Timer timer;
+  timer.step("setup");
 
-  // Punteros directos a memoria de R (Solo lectura)
+  // Acceso directo a punteros de R (Sin overhead de Rcpp wrappers)
   int* i_ptr = INTEGER(sp_i_sexp);
   int* p_ptr = INTEGER(sp_p_sexp);
   int* dim_ptr = INTEGER(dim_sexp);
@@ -158,22 +161,14 @@ List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose
   int n_objects = dim_ptr[0];
   int n_attributes = dim_ptr[1];
 
-  if (n_objects <= 0 || n_attributes <= 0) return List::create();
-  if (n_p != n_attributes + 1) stop("Invalid p vector length");
-
-  // 2. COPIA A C++ (Aislar memoria)
+  // Copia ultrarrápida a memoria C++ (memcpy implícito en constructor vector)
   std::vector<int> sp_i_vec(i_ptr, i_ptr + n_i);
   std::vector<int> sp_p_vec(p_ptr, p_ptr + n_p);
 
-  // Sanity Check (Fundamental para evitar Segfaults)
-  for(int r : sp_i_vec) {
-    if (r < 0 || r >= n_objects) stop("Row index out of bounds");
-  }
-
-  // 3. INICIALIZAR SOLVER
+  // Instanciar Solver
   InCloseSolver solver(n_objects, n_attributes);
 
-  // Calcular soporte
+  // --- FASE 1: SOPORTE Y REORDENACIÓN ---
   std::vector<std::pair<int, int>> attr_support(n_attributes);
   for (int c = 0; c < n_attributes; ++c) {
     attr_support[c] = {sp_p_vec[c+1] - sp_p_vec[c], c};
@@ -187,7 +182,7 @@ List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose
     old_to_new_attr[attr_support[j].second] = j;
   }
 
-  // Llenar estructuras de bits
+  // --- FASE 2: CARGA DE BITSETS ---
   for (int c_orig = 0; c_orig < n_attributes; ++c_orig) {
     int start = sp_p_vec[c_orig];
     int end = sp_p_vec[c_orig + 1];
@@ -200,8 +195,6 @@ List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose
 
     for (int k = start; k < end; ++k) {
       int r = sp_i_vec[k];
-      if (r >= n_objects) continue; // Seguridad extra
-
       size_t r_sz = static_cast<size_t>(r);
       size_t block_idx_n = r_sz >> 6;
       size_t bit_idx_n = r_sz & 63;
@@ -211,22 +204,20 @@ List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose
     }
   }
 
-  // Limpiar vectores temporales
+  // Liberar memoria inmediatamente para dar espacio a la recursión
   sp_i_vec.clear(); sp_i_vec.shrink_to_fit();
   sp_p_vec.clear(); sp_p_vec.shrink_to_fit();
 
-  // Bottom Check (Intersección global)
+  // --- FASE 3: ALGORITMO ---
+
+  // Bottom Check
   std::vector<uint64_t> m_prime(solver.N_BLOCKS_N, 0xFFFFFFFFFFFFFFFF);
   for (int j = 0; j < n_attributes; j++) {
     size_t offset = j * solver.N_BLOCKS_N;
-    for(size_t k = 0; k < solver.N_BLOCKS_N; ++k) {
-      m_prime[k] &= solver.attr_cols[offset + k];
-    }
+    for(size_t k = 0; k < solver.N_BLOCKS_N; ++k) m_prime[k] &= solver.attr_cols[offset + k];
   }
   bool m_prime_is_empty = true;
-  for(size_t k = 0; k < solver.N_BLOCKS_N; ++k) {
-    if (m_prime[k] != 0) { m_prime_is_empty = false; break; }
-  }
+  for(size_t k = 0; k < solver.N_BLOCKS_N; ++k) if (m_prime[k] != 0) { m_prime_is_empty = false; break; }
 
   if (m_prime_is_empty) {
     solver.ext_p_out.push_back(solver.ext_i_out.size());
@@ -242,19 +233,19 @@ List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose
   for(size_t k = 0; k < solver.N_BLOCKS_M; ++k) {
     uint64_t intent_k = 0xFFFFFFFFFFFFFFFF;
     size_t block_offset = k * n_objects;
-    for (int obj_idx : initial_extent) {
-      intent_k &= solver.obj_rows[block_offset + obj_idx];
-    }
+    for (int obj_idx : initial_extent) intent_k &= solver.obj_rows[block_offset + obj_idx];
     initial_intent[k] = intent_k;
   }
 
-  // Llamada Recursiva
+  timer.step("recursion");
   solver.solve_recursive(-1, initial_extent, initial_intent, 0);
+  timer.step("end_recursion");
 
-  // 4. EMPAQUETADO DE SALIDA
+  // --- FASE 4: EMPAQUETADO ---
   solver.ext_p_out.push_back(solver.ext_i_out.size());
   int n_concepts = solver.ext_p_out.size() - 1;
 
+  // Construcción segura de objetos S4 de salida
   S4 extents_S4("dgCMatrix");
   extents_S4.slot("i") = wrap(solver.ext_i_out);
   extents_S4.slot("p") = wrap(solver.ext_p_out);
@@ -272,7 +263,6 @@ List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose
     const uint64_t* block_ptr = &solver.int_blocks_out[c * solver.N_BLOCKS_M];
     int count_c = 0;
     for (int j_new = 0; j_new < n_attributes; ++j_new) {
-      // Aquí usamos el helper global corregido
       if (check_bit_flat_block(block_ptr, static_cast<size_t>(j_new))) {
         int_i_vec.push_back(new_to_old_attr[j_new]);
         count_c++;
@@ -288,11 +278,14 @@ List InClose_Reorder(SEXP sp_i_sexp, SEXP sp_p_sexp, SEXP dim_sexp, bool verbose
   intents_S4.slot("x") = NumericVector(int_i_vec.size(), 1.0);
   intents_S4.slot("Dim") = IntegerVector::create(n_attributes, n_concepts);
 
+  timer.step("packaging");
+
   return List::create(
     _["intents"] = intents_S4,
     _["extents"] = extents_S4,
     _["total"] = n_concepts,
     _["tests"] = solver.canonicity_tests,
-    _["att_intents"] = 0
+    _["att_intents"] = 0,
+    _["timer"] = timer
   );
 }
