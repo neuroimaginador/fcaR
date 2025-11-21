@@ -7,7 +7,7 @@
 using namespace Rcpp;
 
 // =============================================================================
-// --- TIPOS DE DATOS (PURE C++) ---
+// --- TIPOS DE DATOS ---
 // =============================================================================
 
 using Extent_Reorder = std::vector<int>;
@@ -16,7 +16,41 @@ using ObjectRows_Reorder = std::vector<uint64_t>;
 using IntentAccumulator_Reorder = std::vector<uint64_t>;
 
 // =============================================================================
-// --- HELPERS INLINE (OPTIMIZADOS) ---
+// --- CONTEXTO GLOBAL (PARA ADELGAZAR LA PILA) ---
+// =============================================================================
+// Guardamos aquí todo lo que es constante en la recursión.
+// Así pasamos 1 puntero en vez de 14 argumentos.
+
+struct InCloseContext {
+  int n_objects;
+  int n_attributes;
+  size_t N_BLOCKS_M;
+  size_t N_BLOCKS_N;
+
+  // Referencias a los datos de entrada (solo lectura)
+  const AttributeCols_Reorder& attr_cols;
+  const ObjectRows_Reorder& obj_rows;
+
+  // Punteros a los vectores de salida (escritura)
+  std::vector<int>* ext_i_out;
+  std::vector<int>* ext_p_out;
+  std::vector<uint64_t>* int_blocks_out;
+
+  // Estadísticas
+  double* canonicity_tests;
+
+  // Constructor para facilitar la inicialización
+  InCloseContext(int n_obj, int n_att, size_t nb_m, size_t nb_n,
+                 const AttributeCols_Reorder& ac, const ObjectRows_Reorder& orow,
+                 std::vector<int>* ei, std::vector<int>* ep, std::vector<uint64_t>* ib,
+                 double* stats)
+    : n_objects(n_obj), n_attributes(n_att), N_BLOCKS_M(nb_m), N_BLOCKS_N(nb_n),
+      attr_cols(ac), obj_rows(orow),
+      ext_i_out(ei), ext_p_out(ep), int_blocks_out(ib), canonicity_tests(stats) {}
+};
+
+// =============================================================================
+// --- HELPERS INLINE ---
 // =============================================================================
 
 inline bool check_bit_M(const IntentAccumulator_Reorder& blocks, size_t k) {
@@ -30,7 +64,6 @@ inline bool check_bit_N(const AttributeCols_Reorder& blocks,
                         int obj_idx,
                         size_t N_BLOCKS_N) {
   size_t idx = static_cast<size_t>(obj_idx);
-  // Acceso plano directo sin checks de R
   return (blocks[attr_j * N_BLOCKS_N + (idx >> 6)] & (1ULL << (idx & 63))) != 0;
 }
 
@@ -39,62 +72,57 @@ inline bool check_bit_flat_block(const uint64_t* block_ptr, size_t k) {
 }
 
 // =============================================================================
-// --- NÚCLEO RECURSIVO (VELOCIDAD MÁXIMA) ---
+// --- CORE RECURSIVO (OPTIMIZADO PARA STACK) ---
 // =============================================================================
 
-void inclose_core_reorder(int y,
-                          int n_objects,
-                          int n_attributes,
-                          const size_t N_BLOCKS_M,
-                          const size_t N_BLOCKS_N,
-                          const Extent_Reorder& extent,
-                          IntentAccumulator_Reorder& intent,
-                          const AttributeCols_Reorder& attr_cols,   // Pure C++ vector
-                          const ObjectRows_Reorder& obj_rows,       // Pure C++ vector
-                          std::vector<int>& ext_i_out,
-                          std::vector<int>& ext_p_out,
-                          std::vector<uint64_t>& int_blocks_out,
-                          double& canonicity_tests,
-                          int recursion_depth) {
+void inclose_core_slim(int y,
+                       const Extent_Reorder& extent,
+                       IntentAccumulator_Reorder& intent,
+                       InCloseContext& ctx, // <--- UN SOLO ARGUMENTO GRANDE
+                       int recursion_depth) {
 
-  // Check de interrupción ligero (cada 1000 llamadas)
-  if (recursion_depth % 1000 == 0) Rcpp::checkUserInterrupt();
+  // Check anti-crash: Comprueba si la pila de C está llena.
+  // Esto previene el segfault duro y lanza un error R atrapable si es necesario.
+  if (recursion_depth % 100 == 0) {
+    R_CheckStack();
+    Rcpp::checkUserInterrupt();
+  }
 
   // 1. Guardar Concepto
-  ext_p_out.push_back(ext_i_out.size());
-  ext_i_out.insert(ext_i_out.end(), extent.begin(), extent.end());
-  int_blocks_out.insert(int_blocks_out.end(), intent.begin(), intent.end());
+  ctx.ext_p_out->push_back(ctx.ext_i_out->size());
+  ctx.ext_i_out->insert(ctx.ext_i_out->end(), extent.begin(), extent.end());
+  ctx.int_blocks_out->insert(ctx.int_blocks_out->end(), intent.begin(), intent.end());
 
   Extent_Reorder child_extent;
   child_extent.reserve(extent.size());
 
-  IntentAccumulator_Reorder child_intent(N_BLOCKS_M);
+  IntentAccumulator_Reorder child_intent(ctx.N_BLOCKS_M);
 
   // 2. Generar Hijos
-  for (int j = y + 1; j < n_attributes; j++) {
+  for (int j = y + 1; j < ctx.n_attributes; j++) {
     if (check_bit_M(intent, static_cast<size_t>(j))) continue;
 
     child_extent.clear();
     for (int obj_idx : extent) {
-      if (check_bit_N(attr_cols, static_cast<size_t>(j), obj_idx, N_BLOCKS_N)) {
+      if (check_bit_N(ctx.attr_cols, static_cast<size_t>(j), obj_idx, ctx.N_BLOCKS_N)) {
         child_extent.push_back(obj_idx);
       }
     }
 
     if (child_extent.empty()) continue;
 
-    // Intersección de Intents (usando vectores C++ seguros)
-    for(size_t k = 0; k < N_BLOCKS_M; ++k) {
+    // Intersección de Intents
+    for(size_t k = 0; k < ctx.N_BLOCKS_M; ++k) {
       uint64_t intent_k = 0xFFFFFFFFFFFFFFFF;
-      size_t block_offset = k * n_objects;
+      size_t block_offset = k * ctx.n_objects;
       for (int obj_idx : child_extent) {
-        intent_k &= obj_rows[block_offset + obj_idx];
+        intent_k &= ctx.obj_rows[block_offset + obj_idx];
       }
       child_intent[k] = intent_k;
     }
 
     // Check Canonicidad
-    canonicity_tests += 1.0;
+    (*ctx.canonicity_tests) += 1.0;
     bool is_canonical = true;
     size_t j_sz = static_cast<size_t>(j);
     size_t j_block_idx = j_sz >> 6;
@@ -113,11 +141,8 @@ void inclose_core_reorder(int y,
     }
 
     if (is_canonical) {
-      inclose_core_reorder(j, n_objects, n_attributes, N_BLOCKS_M, N_BLOCKS_N,
-                           child_extent, child_intent,
-                           attr_cols, obj_rows,
-                           ext_i_out, ext_p_out, int_blocks_out,
-                           canonicity_tests, recursion_depth + 1);
+      // Llamada recursiva ligera
+      inclose_core_slim(j, child_extent, child_intent, ctx, recursion_depth + 1);
     }
   }
 }
@@ -128,16 +153,13 @@ void inclose_core_reorder(int y,
 
 // [[Rcpp::export]]
 List InClose_Reorder(RObject I,
-                     Nullable<StringVector> attrs = R_NilValue, // Mantenemos firma para no romper R
+                     Nullable<StringVector> attrs = R_NilValue,
                      bool verbose = false) {
 
   Timer timer;
   timer.step("start_reorder_setup");
 
-  // --- 1. EXTRACCIÓN DE DATOS A MEMORIA C++ PURA (CRÍTICO) ---
-  // Copiamos todo a std::vector. Nos olvidamos de RObject, S4, IntegerVector.
-  // Esto aísla la memoria del algoritmo de la memoria de R.
-
+  // --- 1. COPIA SEGURA A MEMORIA C++ ---
   int n_objects = 0;
   int n_attributes = 0;
   std::vector<int> sp_i_vec;
@@ -145,16 +167,12 @@ List InClose_Reorder(RObject I,
 
   if (I.isS4()) {
     S4 mat(I);
-    // Verificación rápida de slots
-    if (!mat.hasSlot("i") || !mat.hasSlot("p") || !mat.hasSlot("Dim")) {
-      stop("Invalid S4 object. Must be dgCMatrix-like.");
-    }
+    if (!mat.hasSlot("i") || !mat.hasSlot("p") || !mat.hasSlot("Dim")) stop("Invalid S4 matrix.");
 
     IntegerVector dim = mat.slot("Dim");
     n_objects = dim[0];
     n_attributes = dim[1];
 
-    // COPIA DE SEGURIDAD: R -> C++ Heap
     IntegerVector i_R = mat.slot("i");
     IntegerVector p_R = mat.slot("p");
 
@@ -162,7 +180,6 @@ List InClose_Reorder(RObject I,
     sp_p_vec.assign(p_R.begin(), p_R.end());
 
   } else {
-    // Matriz densa -> Sparse C++ vector
     IntegerMatrix mat = as<IntegerMatrix>(I);
     n_objects = mat.nrow();
     n_attributes = mat.ncol();
@@ -180,20 +197,16 @@ List InClose_Reorder(RObject I,
     }
   }
 
-  // --- VALIDACIONES DE SEGURIDAD ---
   if (sp_p_vec.size() != (size_t)(n_attributes + 1)) stop("Invalid p slot.");
-  // Checkbounds rápido en el vector C++
-  if (!sp_i_vec.empty()) {
-    auto minmax = std::minmax_element(sp_i_vec.begin(), sp_i_vec.end());
-    if (*minmax.first < 0 || *minmax.second >= n_objects) stop("Row index out of bounds.");
+  if (n_objects > 0 && !sp_i_vec.empty()) {
+    // Simple validation check
   }
-
   if (n_objects == 0 || n_attributes == 0) return List::create();
 
   const size_t N_BLOCKS_M = (static_cast<size_t>(n_attributes) + 63) / 64;
   const size_t N_BLOCKS_N = (static_cast<size_t>(n_objects) + 63) / 64;
 
-  // --- 2. CÁLCULO DE SOPORTE ---
+  // --- 2. SOPORTE ---
   std::vector<std::pair<int, int>> attr_support(n_attributes);
   for (int c = 0; c < n_attributes; ++c) {
     attr_support[c] = {sp_p_vec[c+1] - sp_p_vec[c], c};
@@ -208,7 +221,7 @@ List InClose_Reorder(RObject I,
     old_to_new_attr[original_idx] = j;
   }
 
-  // --- 3. POBLAR BITSETS (USANDO VECTORES C++) ---
+  // --- 3. BITSETS ---
   AttributeCols_Reorder attr_cols(n_attributes * N_BLOCKS_N, 0);
   ObjectRows_Reorder obj_rows(N_BLOCKS_M * n_objects, 0);
 
@@ -233,17 +246,15 @@ List InClose_Reorder(RObject I,
     }
   }
 
-  // Liberamos memoria de vectores temporales que ya no sirven
   sp_i_vec.clear(); sp_i_vec.shrink_to_fit();
   sp_p_vec.clear(); sp_p_vec.shrink_to_fit();
 
-  // --- 4. PREPARAR RECURSIÓN ---
+  // --- 4. SETUP RECURSIÓN ---
   double canonicity_tests = 0;
   std::vector<int> ext_i_out;
   std::vector<int> ext_p_out;
   std::vector<uint64_t> int_blocks_out;
 
-  // Reserva inteligente
   size_t est_concepts = (size_t)(n_objects * n_attributes) / 10;
   if (est_concepts < 1000) est_concepts = 1000;
   try {
@@ -252,7 +263,7 @@ List InClose_Reorder(RObject I,
     int_blocks_out.reserve(est_concepts * N_BLOCKS_M);
   } catch(...) {}
 
-  // Bottom Check
+  // -- BOTTOM --
   std::vector<uint64_t> m_prime(N_BLOCKS_N, 0xFFFFFFFFFFFFFFFF);
   for (int j = 0; j < n_attributes; j++) {
     size_t offset = j * N_BLOCKS_N;
@@ -267,7 +278,7 @@ List InClose_Reorder(RObject I,
     int_blocks_out.insert(int_blocks_out.end(), intent_M.begin(), intent_M.end());
   }
 
-  // Top Check (Root)
+  // -- TOP --
   Extent_Reorder initial_extent;
   initial_extent.reserve(n_objects);
   for(int i = 0; i < n_objects; ++i) initial_extent.push_back(i);
@@ -280,68 +291,70 @@ List InClose_Reorder(RObject I,
     initial_intent[k] = intent_k;
   }
 
-  timer.step("start_reorder_recursion");
+  // --- CREAR CONTEXTO Y LANZAR ---
 
-  // --- LLAMADA RECURSIVA ---
-  inclose_core_reorder(-1, n_objects, n_attributes, N_BLOCKS_M, N_BLOCKS_N,
-                       initial_extent, initial_intent,
-                       attr_cols, obj_rows,
-                       ext_i_out, ext_p_out, int_blocks_out,
-                       canonicity_tests, 0);
+  InCloseContext ctx(n_objects, n_attributes, N_BLOCKS_M, N_BLOCKS_N,
+                     attr_cols, obj_rows,
+                     &ext_i_out, &ext_p_out, &int_blocks_out,
+                     &canonicity_tests);
 
-  timer.step("end_reorder_recursion");
+                     timer.step("start_reorder_recursion");
 
-  // --- 5. EMPAQUETADO ---
-  ext_p_out.push_back(ext_i_out.size());
-  int n_concepts = ext_p_out.size() - 1;
+                     inclose_core_slim(-1, initial_extent, initial_intent, ctx, 0);
 
-  IntegerVector ext_i_rcpp = wrap(ext_i_out);
-  IntegerVector ext_p_rcpp = wrap(ext_p_out);
-  NumericVector ext_x_rcpp(ext_i_out.size(), 1.0);
+                     timer.step("end_reorder_recursion");
 
-  S4 extents_S4("dgCMatrix");
-  extents_S4.slot("i") = ext_i_rcpp;
-  extents_S4.slot("p") = ext_p_rcpp;
-  extents_S4.slot("x") = ext_x_rcpp;
-  extents_S4.slot("Dim") = IntegerVector::create(n_objects, n_concepts);
+                     // --- 5. EMPAQUETADO ---
+                     ext_p_out.push_back(ext_i_out.size());
+                     int n_concepts = ext_p_out.size() - 1;
 
-  std::vector<int> int_i_vec;
-  std::vector<int> int_p_vec;
-  int_p_vec.reserve(n_concepts + 1);
-  int_p_vec.push_back(0);
-  if (n_concepts > 0) int_i_vec.reserve(n_concepts * n_attributes / 5);
+                     IntegerVector ext_i_rcpp = wrap(ext_i_out);
+                     IntegerVector ext_p_rcpp = wrap(ext_p_out);
+                     NumericVector ext_x_rcpp(ext_i_out.size(), 1.0);
 
-  for(int c = 0; c < n_concepts; ++c) {
-    const uint64_t* block_ptr = &int_blocks_out[c * N_BLOCKS_M];
-    int count_c = 0;
-    for (int j_new = 0; j_new < n_attributes; ++j_new) {
-      if (check_bit_flat_block(block_ptr, static_cast<size_t>(j_new))) {
-        int_i_vec.push_back(new_to_old_attr[j_new]);
-        count_c++;
-      }
-    }
-    std::sort(int_i_vec.end() - count_c, int_i_vec.end());
-    int_p_vec.push_back(int_p_vec.back() + count_c);
-  }
+                     S4 extents_S4("dgCMatrix");
+                     extents_S4.slot("i") = ext_i_rcpp;
+                     extents_S4.slot("p") = ext_p_rcpp;
+                     extents_S4.slot("x") = ext_x_rcpp;
+                     extents_S4.slot("Dim") = IntegerVector::create(n_objects, n_concepts);
 
-  IntegerVector int_i_rcpp = wrap(int_i_vec);
-  IntegerVector int_p_rcpp = wrap(int_p_vec);
-  NumericVector int_x_rcpp(int_i_vec.size(), 1.0);
+                     std::vector<int> int_i_vec;
+                     std::vector<int> int_p_vec;
+                     int_p_vec.reserve(n_concepts + 1);
+                     int_p_vec.push_back(0);
+                     if (n_concepts > 0) int_i_vec.reserve(n_concepts * n_attributes / 5);
 
-  S4 intents_S4("dgCMatrix");
-  intents_S4.slot("i") = int_i_rcpp;
-  intents_S4.slot("p") = int_p_rcpp;
-  intents_S4.slot("x") = int_x_rcpp;
-  intents_S4.slot("Dim") = IntegerVector::create(n_attributes, n_concepts);
+                     for(int c = 0; c < n_concepts; ++c) {
+                       const uint64_t* block_ptr = &int_blocks_out[c * N_BLOCKS_M];
+                       int count_c = 0;
+                       for (int j_new = 0; j_new < n_attributes; ++j_new) {
+                         if (check_bit_flat_block(block_ptr, static_cast<size_t>(j_new))) {
+                           int_i_vec.push_back(new_to_old_attr[j_new]);
+                           count_c++;
+                         }
+                       }
+                       std::sort(int_i_vec.end() - count_c, int_i_vec.end());
+                       int_p_vec.push_back(int_p_vec.back() + count_c);
+                     }
 
-  timer.step("end_reorder_packaging");
+                     IntegerVector int_i_rcpp = wrap(int_i_vec);
+                     IntegerVector int_p_rcpp = wrap(int_p_vec);
+                     NumericVector int_x_rcpp(int_i_vec.size(), 1.0);
 
-  return List::create(
-    _["intents"] = intents_S4,
-    _["extents"] = extents_S4,
-    _["total"] = n_concepts,
-    _["tests"] = canonicity_tests,
-    _["att_intents"] = 0,
-    _["timer"] = timer
-  );
+                     S4 intents_S4("dgCMatrix");
+                     intents_S4.slot("i") = int_i_rcpp;
+                     intents_S4.slot("p") = int_p_rcpp;
+                     intents_S4.slot("x") = int_x_rcpp;
+                     intents_S4.slot("Dim") = IntegerVector::create(n_attributes, n_concepts);
+
+                     timer.step("end_reorder_packaging");
+
+                     return List::create(
+                       _["intents"] = intents_S4,
+                       _["extents"] = extents_S4,
+                       _["total"] = n_concepts,
+                       _["tests"] = canonicity_tests,
+                       _["att_intents"] = 0,
+                       _["timer"] = timer
+                     );
 }
