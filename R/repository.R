@@ -91,14 +91,11 @@ print_repo_details <- function(meta) {
 #'
 #' @param meta A list of metadata objects (obtained via \code{get_fcarepository_contexts}).
 #'
-#' @importFrom shiny observeEvent stopApp showNotification
-#' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
-#' @importFrom DT renderDT DTOutput datatable
 #' @export
 select_repository_context <- function(meta) {
-  requireNamespace("shiny")
-  requireNamespace("miniUI")
-  requireNamespace("DT")
+  check_needed_pkg("shiny", "the Context Fetcher Addin")
+  check_needed_pkg("miniUI", "the Context Fetcher Addin")
+  check_needed_pkg("DT", "displaying tables in the Addin")
 
   # 1. Preprocesamiento: Convertir la lista 'meta' compleja a data.frame plano
   # Esto es necesario para que DT pueda mostrarlo bien

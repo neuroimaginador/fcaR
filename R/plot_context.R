@@ -3,6 +3,8 @@ plot_context <- function(I, to_latex, ...) {
 
   if (to_latex) {
 
+    check_needed_pkg("tikzDevice", "exporting plots to LaTeX/TikZ")
+
     tmp_file <- tempfile(fileext = ".tex")
     dots <- list(...)
     args <- list(file = tmp_file,

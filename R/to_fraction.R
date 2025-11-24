@@ -10,6 +10,8 @@
                          latex = FALSE,
                          type = fcaR_options("latex_fraction")) {
 
+  check_needed_pkg("fractional", "converting numbers to LaTeX fractions")
+
   if (is.character(A)) return(A)
 
   A[abs(A) < 1.e-7] <- 0

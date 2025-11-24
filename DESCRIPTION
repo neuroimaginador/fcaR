@@ -34,9 +34,7 @@ Depends:
     R (>= 4.1)
 Imports: 
     dplyr,
-    DT,
     forcats,
-    fractional,
     ggplot2,
     ggraph,
     glue,
@@ -44,7 +42,6 @@ Imports:
     igraph,
     Matrix,
     methods,
-    miniUI,
     R6,
     rlang,
     Rcpp,
@@ -53,21 +50,24 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    tikzDevice,
     magrittr,
     purrr,
-    shiny,
     yaml,
     cli,
     rstudioapi
 Suggests: 
     arules,
     covr,
+    DT,
+    fractional,
     knitr,
     markdown,
+    miniUI,
     rmarkdown,
+    shiny,
     testthat (>= 2.1.0),
     tictoc,
+    tikzDevice,
     tinytex,
     parallel
 LinkingTo: 

@@ -112,6 +112,9 @@ FormalContext <- R6::R6Class(
 
       # Transform the formal context to sparse
       if (inherits(I, "transactions")) {
+
+        check_needed_pkg("arules", "process 'transactions' objects")
+
         # If it comes from the arules package
         attributes <- I@itemInfo$labels
         I <- convert_to_sparse(I@data)
@@ -1130,6 +1133,9 @@ FormalContext <- R6::R6Class(
     #'
     #' @export
     to_transactions = function() {
+
+      check_needed_pkg("arules", "exporting to transactions format")
+
       private$check_empty()
 
       if (private$is_many_valued) error_many_valued()

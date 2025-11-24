@@ -62,6 +62,7 @@ lattice_plot <- function(nodes_df,
   }
 
   if (isTRUE(to_latex)) {
+
     objects <- sapply(objects, format_label)
     attributes <- sapply(attributes, format_label)
   }

@@ -28,3 +28,22 @@ sparse_to_list <- function(sparse_set_or_matrix) {
 
   return(res)
 }
+
+
+#' Check if a suggested package is installed
+#'
+#' @param pkg Character. The name of the package.
+#' @param purpose Character. A brief description of why it is needed.
+#'
+#' @noRd
+check_needed_pkg <- function(pkg, purpose) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    stop(
+      glue::glue(
+        "The package '{pkg}' is required for {purpose}.\n",
+        "Please install it using: install.packages('{pkg}')"
+      ),
+      call. = FALSE
+    )
+  }
+}

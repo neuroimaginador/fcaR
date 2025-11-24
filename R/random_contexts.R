@@ -35,6 +35,8 @@ NULL
 #' fc_dir <- RandomContext(10, 5, distribution = "dirichlet", alpha = 0.5)
 #' print(fc_dir)
 #'
+#' @importFrom stats rgamma
+#'
 #' @export
 RandomContext <- function(n_objects, n_attributes, density = 0.1, distribution = "uniform", alpha = 1.0, ...) {
   # Validate input
