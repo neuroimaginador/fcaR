@@ -10,6 +10,17 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// check_lattice_properties_adjacency
+List check_lattice_properties_adjacency(IntegerMatrix M);
+RcppExport SEXP _fcaR_check_lattice_properties_adjacency(SEXP MSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type M(MSEXP);
+    rcpp_result_gen = Rcpp::wrap(check_lattice_properties_adjacency(M));
+    return rcpp_result_gen;
+END_RCPP
+}
 // tnorm_Zadeh
 double tnorm_Zadeh(double x, double y);
 RcppExport SEXP _fcaR_tnorm_Zadeh(SEXP xSEXP, SEXP ySEXP) {
@@ -789,6 +800,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_fcaR_check_lattice_properties_adjacency", (DL_FUNC) &_fcaR_check_lattice_properties_adjacency, 1},
     {"_fcaR_tnorm_Zadeh", (DL_FUNC) &_fcaR_tnorm_Zadeh, 2},
     {"_fcaR_implication_Zadeh", (DL_FUNC) &_fcaR_implication_Zadeh, 2},
     {"_fcaR_tnorm_Lukasiewicz", (DL_FUNC) &_fcaR_tnorm_Lukasiewicz, 2},

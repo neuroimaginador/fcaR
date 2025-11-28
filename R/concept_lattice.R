@@ -88,9 +88,14 @@ ConceptLattice <- R6::R6Class(
 
       if (is.null(private$subconcept_matrix)) {
         private$subconcept_matrix <- as(.subset(private$pr_extents), "nMatrix")
-        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
 
         # stop("Lattice structure not computed. Cannot plot.")
+      }
+
+      if (is.null(private$covering_matrix)) {
+
+        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
+
       }
 
       # 2. Construcción del índice de nodos (Data Frame mínimo)
@@ -551,7 +556,53 @@ ConceptLattice <- R6::R6Class(
       }
 
       return(calculate_density(private$pr_extents, private$pr_intents, I))
+    },
+
+    #' @description
+    #' Check algebraic properties of the lattice (Distributivity and Modularity).
+    #'
+    #' @details
+    #' This method builds the adjacency matrix of the lattice order relation
+    #' and calls an optimized C++ function to verify the properties.
+    #'
+    #' @return A list with components \code{distributive} and \code{modular} (booleans).
+    #' @export
+    check_properties = function() {
+      if (self$size() == 0)
+        return(list(distributive = TRUE, modular = TRUE))
+
+      if (is.null(private$subconcept_matrix)) {
+        private$subconcept_matrix <- .subset_legacy(private$pr_extents)
+      }
+
+      adj <- Matrix::as.matrix(private$subconcept_matrix)
+
+      # Convertir a matriz de enteros 0/1 para C++
+      storage.mode(adj) <- "integer"
+
+      # Llamada al motor C++
+      return(check_lattice_properties_adjacency(adj))
+    },
+
+    #' @description
+    #' Check if the lattice is distributive.
+    #' A lattice is distributive if \eqn{x \wedge (y \vee z) = (x \wedge y) \vee (x \wedge z)} for all elements.
+    #' @return Logical.
+    #' @export
+    is_distributive = function() {
+      return(self$check_properties()$distributive)
+    },
+
+    #' @description
+    #' Check if the lattice is modular.
+    #' A lattice is modular if \eqn{x \le z \implies x \vee (y \wedge z) = (x \vee y) \wedge z}.
+    #' Distributive lattices are always modular.
+    #' @return Logical.
+    #' @export
+    is_modular = function() {
+      return(self$check_properties()$modular)
     }
+
   ),
   private = list(
     subconcept_matrix = NULL,

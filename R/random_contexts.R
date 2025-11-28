@@ -157,3 +157,65 @@ randomize_context <- function(fc, method = "swap", iterations = NULL) {
 
   return(FormalContext$new(I_new))
 }
+
+#' Generate a Random Distributive Context
+#'
+#' @description
+#' Generates a random formal context that is guaranteed to produce a
+#' **Distributive Concept Lattice**.
+#'
+#' It relies on Birkhoff's Representation Theorem: The lattice of order ideals
+#' of a Poset is always distributive. The context is constructed such that
+#' objects and attributes are the elements of the poset, and the incidence
+#' relation is \eqn{g I m \iff \neg(g \ge m)}.
+#'
+#' @param n_elements Number of elements in the underlying Poset.
+#' @param density Probability of an order relation \eqn{a \le b}.
+#'
+#' @return A \code{FormalContext}.
+#' @export
+RandomDistributiveContext <- function(n_elements, density = 0.1) {
+
+  # 1. Generar Matriz de Adyacencia Aleatoria (DAG)
+  # M[i, j] = 1 significa i <= j
+  M <- matrix(0, nrow = n_elements, ncol = n_elements)
+
+  # Solo llenamos triángulo superior para evitar ciclos (i < j)
+  idx <- which(upper.tri(M))
+  n_edges <- round(length(idx) * density)
+  if(n_edges > 0) {
+    M[sample(idx, n_edges)] <- 1
+  }
+
+  # 2. Reflexividad (i <= i)
+  diag(M) <- 1
+
+  # 3. Cierre Transitivo (Warshall) para tener un Poset válido
+  # Si i <= k y k <= j => i <= j
+  for (k in 1:n_elements) {
+    # Vectorización parcial para velocidad en R
+    # M[i, j] = M[i, j] | (M[i, k] & M[k, j])
+    # Iteramos filas i que tienen conexión con k
+    i_connected_to_k <- which(M[, k] == 1)
+    if (length(i_connected_to_k) > 0) {
+      k_connected_to_j <- which(M[k, ] == 1)
+      if (length(k_connected_to_j) > 0) {
+        # Expandir cuadrícula
+        M[i_connected_to_k, k_connected_to_j] <- 1
+      }
+    }
+  }
+
+  # 4. Construir Contexto para el Retículo de Ideales
+  # Relación: g I m <=> NO (g >= m)
+  # g >= m significa M[m, g] == 1 (m es menor o igual que g)
+  # Por tanto: I[g, m] = 1 - M[m, g]
+
+  I <- 1 - t(M)
+
+  # Asignar nombres
+  rownames(I) <- paste0("E", 1:n_elements)
+  colnames(I) <- paste0("E", 1:n_elements)
+
+  return(FormalContext$new(I))
+}

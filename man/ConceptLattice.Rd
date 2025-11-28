@@ -62,6 +62,9 @@ fc$concepts$bottom()
 \item \href{#method-ConceptLattice-stability}{\code{ConceptLattice$stability()}}
 \item \href{#method-ConceptLattice-separation}{\code{ConceptLattice$separation()}}
 \item \href{#method-ConceptLattice-density}{\code{ConceptLattice$density()}}
+\item \href{#method-ConceptLattice-check_properties}{\code{ConceptLattice$check_properties()}}
+\item \href{#method-ConceptLattice-is_distributive}{\code{ConceptLattice$is_distributive()}}
+\item \href{#method-ConceptLattice-is_modular}{\code{ConceptLattice$is_modular()}}
 \item \href{#method-ConceptLattice-clone}{\code{ConceptLattice$clone()}}
 }
 }
@@ -445,6 +448,53 @@ Computes the fuzzy density of each concept.
 }
 \subsection{Returns}{
 A numeric vector with the density of each concept.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-check_properties"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-check_properties}{}}}
+\subsection{Method \code{check_properties()}}{
+Check algebraic properties of the lattice (Distributivity and Modularity).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$check_properties()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+This method builds the adjacency matrix of the lattice order relation
+and calls an optimized C++ function to verify the properties.
+}
+
+\subsection{Returns}{
+A list with components \code{distributive} and \code{modular} (booleans).
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-is_distributive"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-is_distributive}{}}}
+\subsection{Method \code{is_distributive()}}{
+Check if the lattice is distributive.
+A lattice is distributive if \eqn{x \wedge (y \vee z) = (x \wedge y) \vee (x \wedge z)} for all elements.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$is_distributive()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Logical.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-is_modular"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-is_modular}{}}}
+\subsection{Method \code{is_modular()}}{
+Check if the lattice is modular.
+A lattice is modular if \eqn{x \le z \implies x \vee (y \wedge z) = (x \vee y) \wedge z}.
+Distributive lattices are always modular.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$is_modular()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Logical.
 }
 }
 \if{html}{\out{<hr>}}
