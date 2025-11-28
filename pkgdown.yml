@@ -10,10 +10,11 @@ articles:
   extending_equivalence: extending_equivalence.html
   fuzzy_fca: fuzzy_fca.html
   implications: implications.html
+  lattice_properties: lattice_properties.html
   lattice_visualization: lattice_visualization.html
   matrix_factorization: matrix_factorization.html
   random_contexts: random_contexts.html
-last_built: 2025-11-28T13:34Z
+last_built: 2025-11-28T16:54Z
 urls:
   reference: https://neuroimaginador.github.io/fcaR/reference
   article: https://neuroimaginador.github.io/fcaR/articles

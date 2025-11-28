@@ -41,6 +41,7 @@
     <li><a class="dropdown-item" href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a></li>
     <li><a class="dropdown-item" href="../articles/fuzzy_fca.html">Fuzzy formal concept analysis</a></li>
     <li><a class="dropdown-item" href="../articles/implications.html">Working with ImplicationSets</a></li>
+    <li><a class="dropdown-item" href="../articles/lattice_properties.html">Lattice properties</a></li>
     <li><a class="dropdown-item" href="../articles/lattice_visualization.html">Visualizing concept lattices: from R to LaTeX</a></li>
     <li><a class="dropdown-item" href="../articles/matrix_factorization.html">Matrix Factorization: GreConD+ and ASSO</a></li>
     <li><a class="dropdown-item" href="../articles/random_contexts.html">Advanced Random Contexts</a></li>
@@ -158,6 +159,28 @@ sums.</p>
 <p>This allows you to generate 1000 randomized versions of your data and
 check if your concept stability or support is statistically
 significant.</p>
+</div>
+<div class="section level2">
+<h2 id="generating-distributive-lattices">3. Generating Distributive Lattices<a class="anchor" aria-label="anchor" href="#generating-distributive-lattices"></a>
+</h2>
+<p>We can also generate random contexts that are <strong>mathematically
+guaranteed</strong> to produce a Distributive Concept Lattice. This
+relies on Birkhoff’s Theorem, which states that the lattice of order
+ideals of a Poset is distributive.</p>
+<p>The function <code>RandomDistributiveContext</code> generates a
+random Poset and builds its associated formal context.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Generate a random distributive context based on a Poset with 15 elements</span></span>
+<span><span class="va">fc_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/RandomDistributiveContext.html">RandomDistributiveContext</a></span><span class="op">(</span>n_elements <span class="op">=</span> <span class="fl">15</span>, density <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="va">fc_dist</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Verify the mathematical guarantee</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Is Distributive?"</span>, <span class="va">fc_dist</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">is_distributive</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Is Distributive? TRUE"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Is Modular?"</span>,      <span class="va">fc_dist</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">is_modular</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Is Modular? TRUE"</span></span></code></pre></div>
+<p>This is particularly useful for testing algorithms designed for
+distributive lattices or for educational purposes.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

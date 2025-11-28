@@ -18,6 +18,8 @@
   analysis](https://neuroimaginador.github.io/fcaR/articles/fuzzy_fca.md):
 - [Working with
   ImplicationSets](https://neuroimaginador.github.io/fcaR/articles/implications.md):
+- [Lattice
+  properties](https://neuroimaginador.github.io/fcaR/articles/lattice_properties.md):
 - [Visualizing concept lattices: from R to
   LaTeX](https://neuroimaginador.github.io/fcaR/articles/lattice_visualization.md):
 - [Matrix Factorization: GreConD+ and

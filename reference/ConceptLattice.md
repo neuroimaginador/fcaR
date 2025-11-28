@@ -46,11 +46,13 @@ lattices.
 
 - [`ConceptLattice$density()`](#method-ConceptLattice-density)
 
-- [`ConceptLattice$check_properties()`](#method-ConceptLattice-check_properties)
-
 - [`ConceptLattice$is_distributive()`](#method-ConceptLattice-is_distributive)
 
 - [`ConceptLattice$is_modular()`](#method-ConceptLattice-is_modular)
+
+- [`ConceptLattice$is_semimodular()`](#method-ConceptLattice-is_semimodular)
+
+- [`ConceptLattice$is_atomic()`](#method-ConceptLattice-is_atomic)
 
 - [`ConceptLattice$clone()`](#method-ConceptLattice-clone)
 
@@ -472,26 +474,6 @@ A numeric vector with the density of each concept.
 
 ------------------------------------------------------------------------
 
-### Method `check_properties()`
-
-Check algebraic properties of the lattice (Distributivity and
-Modularity).
-
-#### Usage
-
-    ConceptLattice$check_properties()
-
-#### Details
-
-This method builds the adjacency matrix of the lattice order relation
-and calls an optimized C++ function to verify the properties.
-
-#### Returns
-
-A list with components `distributive` and `modular` (booleans).
-
-------------------------------------------------------------------------
-
 ### Method `is_distributive()`
 
 Check if the lattice is distributive. A lattice is distributive if \\x
@@ -516,6 +498,38 @@ lattices are always modular.
 #### Usage
 
     ConceptLattice$is_modular()
+
+#### Returns
+
+Logical.
+
+------------------------------------------------------------------------
+
+### Method `is_semimodular()`
+
+Check if the lattice is upper semimodular. A lattice is upper
+semimodular if for every \\x, y\\: if \\x\\ covers \\x \wedge y\\, then
+\\x \vee y\\ covers \\y\\.
+
+#### Usage
+
+    ConceptLattice$is_semimodular()
+
+#### Returns
+
+Logical.
+
+------------------------------------------------------------------------
+
+### Method `is_atomic()`
+
+Check if the lattice is atomic. A lattice is atomic if for every element
+\\x \> \bot\\, there exists an atom \\a\\ such that \\a \le x\\. Atoms
+are elements that cover the bottom element.
+
+#### Usage
+
+    ConceptLattice$is_atomic()
 
 #### Returns
 

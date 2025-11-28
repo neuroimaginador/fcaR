@@ -26,6 +26,7 @@
     <li><a class="dropdown-item" href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a></li>
     <li><a class="dropdown-item" href="../articles/fuzzy_fca.html">Fuzzy formal concept analysis</a></li>
     <li><a class="dropdown-item" href="../articles/implications.html">Working with ImplicationSets</a></li>
+    <li><a class="dropdown-item" href="../articles/lattice_properties.html">Lattice properties</a></li>
     <li><a class="dropdown-item" href="../articles/lattice_visualization.html">Visualizing concept lattices: from R to LaTeX</a></li>
     <li><a class="dropdown-item" href="../articles/matrix_factorization.html">Matrix Factorization: GreConD+ and ASSO</a></li>
     <li><a class="dropdown-item" href="../articles/random_contexts.html">Advanced Random Contexts</a></li>
@@ -62,12 +63,16 @@
 <code><a href="../reference/RandomContext.html">RandomContext()</a></code>: Generates synthetic contexts using <strong>Uniform</strong> or <strong>Dirichlet</strong> distributions (mimicking real-world data structure).</li>
 <li>
 <code><a href="../reference/randomize_context.html">randomize_context()</a></code>: Randomizes existing contexts via <strong>Edge swapping</strong> (preserves marginal sums) or <strong>Rewiring</strong> (preserves density).</li>
+<li>
+<strong>Distributive Generators:</strong> Added <code><a href="../reference/RandomDistributiveContext.html">RandomDistributiveContext()</a></code> to generate synthetic data guaranteed to produce distributive lattices (based on Birkhoff’s theorem).</li>
 </ul></li>
 <li>
 <strong>Robustness &amp; performance:</strong> The <strong>InClose</strong> algorithm has been completely refactored to use the C-API directly (avoiding Rcpp overhead). This significantly improves performance for sparse matrices.</li>
 </ul><p>New Functionality:</p>
 <ul><li>
 <strong>Advanced metrics:</strong> Added methods <code>stability()</code>, <code>separation()</code>, and <code>fuzzy_density()</code> to <code>ConceptLattice</code> to compute concept quality metrics.</li>
+<li>
+<strong>Lattice properties:</strong> Added methods to <code>ConceptLattice</code> to efficiently check algebraic properties using sparse matrix operations: <code>is_distributive()</code>, <code>is_modular()</code>, <code>is_semimodular()</code>, and <code>is_atomic()</code>.</li>
 <li>
 <strong>Fuzzy algorithms:</strong> In fuzzy contexts, the user can now select the algorithm for <code>find_concepts()</code>: “InClose” (default), “FastCbO”, or “NextClosure”.</li>
 <li>
@@ -83,7 +88,7 @@
 <li>
 <strong>Efficiency:</strong> Optimized C functions for concept support computation and general lattice mining.</li>
 <li>
-<strong>Documentation:</strong> Added new vignettes: <code>advanced_lattice_metrics</code>, <code>creating_contexts</code>, <code>fuzzy_fca</code>, <code>lattice_visualization</code>, <code>matrix_factorization</code>, and <code>random_contexts</code>.</li>
+<strong>Documentation:</strong> Added new vignettes: <code>advanced_lattice_metrics</code>, <code>creating_contexts</code>, <code>fuzzy_fca</code>, <code>lattice_visualization</code>, <code>matrix_factorization</code>, <code>random_contexts</code> and <code>lattice_properties</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.2" id="fcar-122">fcaR 1.2.2<a class="anchor" aria-label="anchor" href="#fcar-122"></a></h2><p class="text-muted">CRAN release: 2023-11-30</p>

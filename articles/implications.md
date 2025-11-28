@@ -278,7 +278,7 @@ fc_I$implications$apply_rules(rules = c(
   "simplification"
 ))
 #> Processing batch
-#> --> Composition: from 12 to 12 in 0.004 secs.
+#> --> Composition: from 12 to 12 in 0.005 secs.
 #> --> Simplification: from 12 to 12 in 0.034 secs.
 #> Batch took 0.041 secs.
 ```
@@ -323,7 +323,7 @@ imps2$apply_rules(c("simp", "rsimp"))
 #> Processing batch
 #> --> Simplification: from 10 to 10 in 0.019 secs.
 #> --> Right Simplification: from 10 to 10 in 0.045 secs.
-#> Batch took 0.066 secs.
+#> Batch took 0.065 secs.
 # Any implication in imps2 follows from imps
 imps %entails% imps2
 #>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]

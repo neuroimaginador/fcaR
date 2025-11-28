@@ -20,6 +20,10 @@ Major Enhancements:
   - [`randomize_context()`](https://neuroimaginador.github.io/fcaR/reference/randomize_context.md):
     Randomizes existing contexts via **Edge swapping** (preserves
     marginal sums) or **Rewiring** (preserves density).
+  - **Distributive Generators:** Added
+    [`RandomDistributiveContext()`](https://neuroimaginador.github.io/fcaR/reference/RandomDistributiveContext.md)
+    to generate synthetic data guaranteed to produce distributive
+    lattices (based on Birkhoff’s theorem).
 - **Robustness & performance:** The **InClose** algorithm has been
   completely refactored to use the C-API directly (avoiding Rcpp
   overhead). This significantly improves performance for sparse
@@ -30,6 +34,10 @@ New Functionality:
 - **Advanced metrics:** Added methods `stability()`, `separation()`, and
   `fuzzy_density()` to `ConceptLattice` to compute concept quality
   metrics.
+- **Lattice properties:** Added methods to `ConceptLattice` to
+  efficiently check algebraic properties using sparse matrix operations:
+  `is_distributive()`, `is_modular()`, `is_semimodular()`, and
+  `is_atomic()`.
 - **Fuzzy algorithms:** In fuzzy contexts, the user can now select the
   algorithm for `find_concepts()`: “InClose” (default), “FastCbO”, or
   “NextClosure”.
@@ -49,7 +57,7 @@ Improvements:
   and general lattice mining.
 - **Documentation:** Added new vignettes: `advanced_lattice_metrics`,
   `creating_contexts`, `fuzzy_fca`, `lattice_visualization`,
-  `matrix_factorization`, and `random_contexts`.
+  `matrix_factorization`, `random_contexts` and `lattice_properties`.
 
 ## fcaR 1.2.2
 

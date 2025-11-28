@@ -4,7 +4,9 @@ Generates a random formal context that is guaranteed to produce a
 **Distributive Concept Lattice**.
 
 It relies on Birkhoff's Representation Theorem: The lattice of order
-ideals of a Poset is always distributive.
+ideals of a Poset is always distributive. The context is constructed
+such that objects and attributes are the elements of the poset, and the
+incidence relation is \\g I m \iff \neg(g \ge m)\\.
 
 ## Usage
 
@@ -16,8 +18,7 @@ RandomDistributiveContext(n_elements, density = 0.1)
 
 - n_elements:
 
-  Number of elements in the underlying Poset. The resulting context will
-  have `n_elements` objects and attributes.
+  Number of elements in the underlying Poset.
 
 - density:
 
