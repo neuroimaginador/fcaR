@@ -46,6 +46,12 @@ lattices.
 
 - [`ConceptLattice$density()`](#method-ConceptLattice-density)
 
+- [`ConceptLattice$check_properties()`](#method-ConceptLattice-check_properties)
+
+- [`ConceptLattice$is_distributive()`](#method-ConceptLattice-is_distributive)
+
+- [`ConceptLattice$is_modular()`](#method-ConceptLattice-is_modular)
+
 - [`ConceptLattice$clone()`](#method-ConceptLattice-clone)
 
 Inherited methods
@@ -463,6 +469,57 @@ Computes the fuzzy density of each concept.
 #### Returns
 
 A numeric vector with the density of each concept.
+
+------------------------------------------------------------------------
+
+### Method `check_properties()`
+
+Check algebraic properties of the lattice (Distributivity and
+Modularity).
+
+#### Usage
+
+    ConceptLattice$check_properties()
+
+#### Details
+
+This method builds the adjacency matrix of the lattice order relation
+and calls an optimized C++ function to verify the properties.
+
+#### Returns
+
+A list with components `distributive` and `modular` (booleans).
+
+------------------------------------------------------------------------
+
+### Method `is_distributive()`
+
+Check if the lattice is distributive. A lattice is distributive if \\x
+\wedge (y \vee z) = (x \wedge y) \vee (x \wedge z)\\ for all elements.
+
+#### Usage
+
+    ConceptLattice$is_distributive()
+
+#### Returns
+
+Logical.
+
+------------------------------------------------------------------------
+
+### Method `is_modular()`
+
+Check if the lattice is modular. A lattice is modular if \\x \le z
+\implies x \vee (y \wedge z) = (x \vee y) \wedge z\\. Distributive
+lattices are always modular.
+
+#### Usage
+
+    ConceptLattice$is_modular()
+
+#### Returns
+
+Logical.
 
 ------------------------------------------------------------------------
 

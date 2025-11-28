@@ -14,6 +14,8 @@
   : R6 Class for Set of implications
 - [`RandomContext()`](https://neuroimaginador.github.io/fcaR/reference/RandomContext.md)
   : Generate Random Formal Contexts
+- [`RandomDistributiveContext()`](https://neuroimaginador.github.io/fcaR/reference/RandomDistributiveContext.md)
+  : Generate a Random Distributive Context
 - [`Set`](https://neuroimaginador.github.io/fcaR/reference/Set.md) : R6
   class for a fuzzy set with sparse internal representation
 - [`as_Set()`](https://neuroimaginador.github.io/fcaR/reference/as_Set.md)

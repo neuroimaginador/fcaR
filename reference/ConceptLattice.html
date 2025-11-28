@@ -79,6 +79,9 @@
 <li><p><a href="#method-ConceptLattice-stability"><code>ConceptLattice$stability()</code></a></p></li>
 <li><p><a href="#method-ConceptLattice-separation"><code>ConceptLattice$separation()</code></a></p></li>
 <li><p><a href="#method-ConceptLattice-density"><code>ConceptLattice$density()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-check_properties"><code>ConceptLattice$check_properties()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-is_distributive"><code>ConceptLattice$is_distributive()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-is_modular"><code>ConceptLattice$is_modular()</code></a></p></li>
 <li><p><a href="#method-ConceptLattice-clone"><code>ConceptLattice$clone()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href="ConceptSet.html#method-%5B"><code>fcaR::ConceptSet$[()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href="ConceptSet.html#method-extents"><code>fcaR::ConceptSet$extents()</code></a></span></li>
@@ -459,10 +462,55 @@ Separation is the number of objects covered by the concept but not by any of its
 <p>A numeric vector with the density of each concept.</p>
 </div>
 
+</div><p></p><hr><a id="method-ConceptLattice-check_properties"></a><div class="section">
+<h3 id="method-check-properties-">Method <code>check_properties()</code><a class="anchor" aria-label="anchor" href="#method-check-properties-"></a></h3>
+<p>Check algebraic properties of the lattice (Distributivity and Modularity).</p><div class="section">
+<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">check_properties</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="details-3">Details<a class="anchor" aria-label="anchor" href="#details-3"></a></h4>
+<p>This method builds the adjacency matrix of the lattice order relation
+and calls an optimized C++ function to verify the properties.</p>
+</div>
+
+<div class="section">
+<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
+<p>A list with components <code>distributive</code> and <code>modular</code> (booleans).</p>
+</div>
+
+</div><p></p><hr><a id="method-ConceptLattice-is_distributive"></a><div class="section">
+<h3 id="method-is-distributive-">Method <code>is_distributive()</code><a class="anchor" aria-label="anchor" href="#method-is-distributive-"></a></h3>
+<p>Check if the lattice is distributive.
+A lattice is distributive if \(x \wedge (y \vee z) = (x \wedge y) \vee (x \wedge z)\) for all elements.</p><div class="section">
+<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">is_distributive</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-18">Returns<a class="anchor" aria-label="anchor" href="#returns-18"></a></h4>
+<p>Logical.</p>
+</div>
+
+</div><p></p><hr><a id="method-ConceptLattice-is_modular"></a><div class="section">
+<h3 id="method-is-modular-">Method <code>is_modular()</code><a class="anchor" aria-label="anchor" href="#method-is-modular-"></a></h3>
+<p>Check if the lattice is modular.
+A lattice is modular if \(x \le z \implies x \vee (y \wedge z) = (x \vee y) \wedge z\).
+Distributive lattices are always modular.</p><div class="section">
+<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">is_modular</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-19">Returns<a class="anchor" aria-label="anchor" href="#returns-19"></a></h4>
+<p>Logical.</p>
+</div>
+
 </div><p></p><hr><a id="method-ConceptLattice-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
+<h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 

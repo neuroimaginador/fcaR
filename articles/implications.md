@@ -322,8 +322,8 @@ imps2 <- imps$clone()
 imps2$apply_rules(c("simp", "rsimp"))
 #> Processing batch
 #> --> Simplification: from 10 to 10 in 0.019 secs.
-#> --> Right Simplification: from 10 to 10 in 0.044 secs.
-#> Batch took 0.064 secs.
+#> --> Right Simplification: from 10 to 10 in 0.045 secs.
+#> Batch took 0.066 secs.
 # Any implication in imps2 follows from imps
 imps %entails% imps2
 #>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
