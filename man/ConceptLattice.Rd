@@ -62,9 +62,10 @@ fc$concepts$bottom()
 \item \href{#method-ConceptLattice-stability}{\code{ConceptLattice$stability()}}
 \item \href{#method-ConceptLattice-separation}{\code{ConceptLattice$separation()}}
 \item \href{#method-ConceptLattice-density}{\code{ConceptLattice$density()}}
-\item \href{#method-ConceptLattice-check_properties}{\code{ConceptLattice$check_properties()}}
 \item \href{#method-ConceptLattice-is_distributive}{\code{ConceptLattice$is_distributive()}}
 \item \href{#method-ConceptLattice-is_modular}{\code{ConceptLattice$is_modular()}}
+\item \href{#method-ConceptLattice-is_semimodular}{\code{ConceptLattice$is_semimodular()}}
+\item \href{#method-ConceptLattice-is_atomic}{\code{ConceptLattice$is_atomic()}}
 \item \href{#method-ConceptLattice-clone}{\code{ConceptLattice$clone()}}
 }
 }
@@ -451,24 +452,6 @@ A numeric vector with the density of each concept.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ConceptLattice-check_properties"></a>}}
-\if{latex}{\out{\hypertarget{method-ConceptLattice-check_properties}{}}}
-\subsection{Method \code{check_properties()}}{
-Check algebraic properties of the lattice (Distributivity and Modularity).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$check_properties()}\if{html}{\out{</div>}}
-}
-
-\subsection{Details}{
-This method builds the adjacency matrix of the lattice order relation
-and calls an optimized C++ function to verify the properties.
-}
-
-\subsection{Returns}{
-A list with components \code{distributive} and \code{modular} (booleans).
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ConceptLattice-is_distributive"></a>}}
 \if{latex}{\out{\hypertarget{method-ConceptLattice-is_distributive}{}}}
 \subsection{Method \code{is_distributive()}}{
@@ -491,6 +474,35 @@ A lattice is modular if \eqn{x \le z \implies x \vee (y \wedge z) = (x \vee y) \
 Distributive lattices are always modular.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$is_modular()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Logical.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-is_semimodular"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-is_semimodular}{}}}
+\subsection{Method \code{is_semimodular()}}{
+Check if the lattice is upper semimodular.
+A lattice is upper semimodular if for every \eqn{x, y}: if \eqn{x} covers \eqn{x \wedge y}, then \eqn{x \vee y} covers \eqn{y}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$is_semimodular()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Logical.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-is_atomic"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-is_atomic}{}}}
+\subsection{Method \code{is_atomic()}}{
+Check if the lattice is atomic.
+A lattice is atomic if for every element \eqn{x > \bot}, there exists an atom \eqn{a} such that \eqn{a \le x}.
+Atoms are elements that cover the bottom element.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$is_atomic()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{

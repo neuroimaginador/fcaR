@@ -981,8 +981,8 @@ implications.</p>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>))</span>
 <span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt; Processing batch</span></span>
 <span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.019 secs.</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; Batch took 0.021 secs.</span></span></code></pre></div>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.052 secs.</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; Batch took 0.053 secs.</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the
 <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be
@@ -1017,8 +1017,8 @@ another one:</p>
 <span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>imps2<span class="sc">$</span><span class="fu">apply_rules</span>(<span class="fu">c</span>(<span class="st">&quot;simp&quot;</span>, <span class="st">&quot;rsimp&quot;</span>))</span>
 <span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; Processing batch</span></span>
 <span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.006 secs.</span></span>
-<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.022 secs.</span></span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; Batch took 0.028 secs.</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.02 secs.</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; Batch took 0.027 secs.</span></span>
 <span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="co"># Any implication in imps2 follows from imps</span></span>
 <span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>imps <span class="sc">%entails%</span> imps2</span>
 <span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span></span>

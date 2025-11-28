@@ -86,17 +86,8 @@ ConceptLattice <- R6::R6Class(
         return(invisible(NULL))
       }
 
-      if (is.null(private$subconcept_matrix)) {
-        private$subconcept_matrix <- as(.subset(private$pr_extents), "nMatrix")
-
-        # stop("Lattice structure not computed. Cannot plot.")
-      }
-
-      if (is.null(private$covering_matrix)) {
-
-        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
-
-      }
+      private$build_adjacency()
+      private$build_covering()
 
       # 2. Construcción del índice de nodos (Data Frame mínimo)
       # Solo creamos los IDs (1..N). La función externa calculará grados y layout.
@@ -148,9 +139,8 @@ ConceptLattice <- R6::R6Class(
       idx <- private$to_indices(...)
 
       if (length(idx) > 0) {
-        if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-          private$subconcept_matrix <- .subset(private$pr_extents)
-        }
+
+        private$build_adjacency()
 
         idx <- .get_sublattice(private$subconcept_matrix,
           starting_idx = idx
@@ -187,9 +177,8 @@ ConceptLattice <- R6::R6Class(
     #' fc$concepts$top()
     #'
     top = function() {
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
+
+      private$build_adjacency()
 
       idx <- which(Matrix::colSums(private$subconcept_matrix) == self$size())
 
@@ -207,9 +196,8 @@ ConceptLattice <- R6::R6Class(
     #' fc$concepts$bottom()
     #'
     bottom = function() {
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
+
+      private$build_adjacency()
 
       idx <- which(Matrix::colSums(private$subconcept_matrix) == 1)
 
@@ -226,13 +214,9 @@ ConceptLattice <- R6::R6Class(
     #' @export
     #'
     join_irreducibles = function() {
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
 
-      if (is.null(private$covering_matrix)) {
-        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
-      }
+      private$build_adjacency()
+      private$build_covering()
 
       idx <- which(Matrix::colSums(private$covering_matrix) == 1)
       self[idx]
@@ -247,9 +231,8 @@ ConceptLattice <- R6::R6Class(
     #' @export
     #'
     meet_irreducibles = function() {
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
+
+      private$build_adjacency()
 
       M <- .reduce_transitivity(Matrix::t(private$subconcept_matrix))
 
@@ -318,9 +301,7 @@ ConceptLattice <- R6::R6Class(
     supremum = function(...) {
       idx <- private$to_indices(...)
 
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
+      private$build_adjacency()
 
       return(self[join(private$subconcept_matrix, idx)]$to_list()[[1]])
     },
@@ -340,9 +321,7 @@ ConceptLattice <- R6::R6Class(
     infimum = function(...) {
       idx <- private$to_indices(...)
 
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
+      private$build_adjacency()
 
       return(self[meet(private$subconcept_matrix, idx)]$to_list()[[1]])
     },
@@ -358,9 +337,7 @@ ConceptLattice <- R6::R6Class(
     subconcepts = function(C) {
       idx <- private$to_indices(C)
 
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
+      private$build_adjacency()
 
       # Get the index of all subconcepts
       M <- Matrix::t(private$subconcept_matrix)[idx, ]
@@ -406,9 +383,7 @@ ConceptLattice <- R6::R6Class(
     superconcepts = function(C) {
       idx <- private$to_indices(C)
 
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
+      private$build_adjacency()
 
       # Get the index of all superconcepts
       M <- private$subconcept_matrix[idx, ]
@@ -455,13 +430,8 @@ ConceptLattice <- R6::R6Class(
     lower_neighbours = function(C) {
       idx <- private$to_indices(C)
 
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
-
-      if (is.null(private$covering_matrix)) {
-        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
-      }
+      private$build_adjacency()
+      private$build_covering()
 
       self[which(private$covering_matrix[, idx] > 0)]
     },
@@ -478,13 +448,8 @@ ConceptLattice <- R6::R6Class(
     upper_neighbours = function(C) {
       idx <- private$to_indices(C)
 
-      if ((self$size() > 0) & (is.null(private$subconcept_matrix))) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
-
-      if (is.null(private$covering_matrix)) {
-        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
-      }
+      private$build_adjacency()
+      private$build_covering()
 
       self[which(private$covering_matrix[idx, ] > 0)]
     },
@@ -513,9 +478,7 @@ ConceptLattice <- R6::R6Class(
       if (self$size() == 0) {
         return(numeric(0))
       }
-      if (is.null(private$subconcept_matrix)) {
-        private$subconcept_matrix <- .subset(private$pr_extents)
-      }
+      private$build_adjacency()
 
       # 1. Obtener la matriz de extents (Objetos x Conceptos)
       M <- as(private$pr_extents, "CsparseMatrix")
@@ -524,9 +487,7 @@ ConceptLattice <- R6::R6Class(
       # Usamos la función interna .reduce_transitivity disponible en el paquete
       # Se aplica sobre la matriz de subconceptos (orden parcial)
       # Asumimos que subconcept_matrix es C_i <= C_j
-      if (is.null(private$covering_matrix)) {
-        private$covering_matrix <- .reduce_transitivity(private$subconcept_matrix)
-      }
+      private$build_covering()
 
       cover_matrix <- private$covering_matrix
 
@@ -559,38 +520,22 @@ ConceptLattice <- R6::R6Class(
     },
 
     #' @description
-    #' Check algebraic properties of the lattice (Distributivity and Modularity).
-    #'
-    #' @details
-    #' This method builds the adjacency matrix of the lattice order relation
-    #' and calls an optimized C++ function to verify the properties.
-    #'
-    #' @return A list with components \code{distributive} and \code{modular} (booleans).
-    #' @export
-    check_properties = function() {
-      if (self$size() == 0)
-        return(list(distributive = TRUE, modular = TRUE))
-
-      if (is.null(private$subconcept_matrix)) {
-        private$subconcept_matrix <- .subset_legacy(private$pr_extents)
-      }
-
-      adj <- Matrix::as.matrix(private$subconcept_matrix)
-
-      # Convertir a matriz de enteros 0/1 para C++
-      storage.mode(adj) <- "integer"
-
-      # Llamada al motor C++
-      return(check_lattice_properties_adjacency(adj))
-    },
-
-    #' @description
     #' Check if the lattice is distributive.
     #' A lattice is distributive if \eqn{x \wedge (y \vee z) = (x \wedge y) \vee (x \wedge z)} for all elements.
     #' @return Logical.
     #' @export
     is_distributive = function() {
-      return(self$check_properties()$distributive)
+
+      if (!is.na(private$properties$distributivity)) return(private$properties$distributivity)
+
+      private$build_structure()
+
+      res <- check_distributivity_internal(private$meet_matrix, private$join_matrix)
+
+      private$properties$distributivity <- res
+
+      return(res)
+
     },
 
     #' @description
@@ -600,14 +545,150 @@ ConceptLattice <- R6::R6Class(
     #' @return Logical.
     #' @export
     is_modular = function() {
-      return(self$check_properties()$modular)
+
+      if (!is.na(private$properties$modularity)) return(private$properties$modularity)
+
+      private$build_structure()
+
+      res <- check_modularity_internal(private$meet_matrix, private$join_matrix)
+
+      private$properties$modularity <- res
+
+      return(res)
+
+    },
+
+    #' @description
+    #' Check if the lattice is upper semimodular.
+    #' A lattice is upper semimodular if for every \eqn{x, y}: if \eqn{x} covers \eqn{x \wedge y}, then \eqn{x \vee y} covers \eqn{y}.
+    #' @return Logical.
+    #' @export
+    is_semimodular = function() {
+
+      if (!is.na(private$properties$semimodularity)) return(private$properties$semimodularity)
+
+      private$build_structure()
+
+      # Necesita Meet, Join y la relación de Cobertura
+      res <- check_semimodularity_internal(private$meet_matrix,
+                                           private$join_matrix,
+                                           private$covering_matrix)
+
+      private$properties$semimodularity <- res
+      return(res)
+
+    },
+
+    #' @description
+    #' Check if the lattice is atomic.
+    #' A lattice is atomic if for every element \eqn{x > \bot}, there exists an atom \eqn{a} such that \eqn{a \le x}.
+    #' Atoms are elements that cover the bottom element.
+    #' @return Logical.
+    #' @export
+    is_atomic = function() {
+
+      if (!is.na(private$properties$atomicity)) return(private$properties$atomicity)
+
+      private$build_structure()
+
+      # Necesita Adyacencia (Orden) y Cobertura (Hasse)
+      res <- check_atomicity_internal(private$subconcept_matrix,
+                                      private$covering_matrix)
+
+      private$properties$atomicity <- res
+      return(res)
+
     }
 
   ),
   private = list(
+
+    properties = list(
+      distributivity = NA,
+      modularity = NA,
+      semimodularity = NA,
+      atomicity = NA
+    ),
+
     subconcept_matrix = NULL,
     covering_matrix = NULL,
+    meet_matrix = NULL,
+    join_matrix = NULL,
+
+    build_adjacency = function() {
+
+      if (self$size() == 0) return(invisible(self))
+
+      if (is.null(private$subconcept_matrix)) {
+
+        private$subconcept_matrix <- as(.subset(private$pr_extents), "nMatrix")
+
+      }
+
+      invisible(self)
+
+    },
+
+    build_covering = function() {
+
+      if (self$size() == 0) return(invisible(self))
+
+      if (is.null(private$covering_matrix)) {
+
+        private$covering_matrix <- as(.reduce_transitivity(private$subconcept_matrix), "ngCMatrix")
+
+      }
+
+      invisible(self)
+
+    },
+
+    build_meet_join = function() {
+
+      if (self$size() == 0) return(invisible(self))
+
+      if (is.null(private$meet_matrix)) {
+
+        adj <- private$subconcept_matrix
+
+        # 2. Llamada a C++
+        # Pasamos punteros de la nMatrix
+        res <- compute_meet_join_cpp(adj@i, adj@p, adj@Dim)
+
+        # 3. Reconstruir ngCMatrix
+        # Nota: C++ devuelve base-1 en 'x' y base-0 en 'i' (para slots internos)
+        # Pero para new(), 'x' son los valores.
+
+        private$meet_matrix <- new(
+          "dgCMatrix",
+          i = res$meet$i,
+          p = res$meet$p,
+          x = as.double(res$meet$x),
+          Dim = res$meet$Dim)
+
+        private$join_matrix <- new(
+          "dgCMatrix",
+          i = res$join$i,
+          p = res$join$p,
+          x = as.double(res$join$x),
+          Dim = res$join$Dim)
+
+      }
+
+      return(invisible(self))
+    },
+
+    build_structure = function() {
+
+      private$build_adjacency()
+      private$build_covering()
+      private$build_meet_join()
+
+    },
+
     can_plot = TRUE,
+
+
     concept_list_to_indices = function(concept_list) {
       extents <- lapply(
         concept_list,

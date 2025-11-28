@@ -10,14 +10,97 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// check_lattice_properties_adjacency
-List check_lattice_properties_adjacency(IntegerMatrix M);
-RcppExport SEXP _fcaR_check_lattice_properties_adjacency(SEXP MSEXP) {
+// compute_meet_join_cpp
+List compute_meet_join_cpp(SEXP sp_i, SEXP sp_p, SEXP dim);
+RcppExport SEXP _fcaR_compute_meet_join_cpp(SEXP sp_iSEXP, SEXP sp_pSEXP, SEXP dimSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix >::type M(MSEXP);
-    rcpp_result_gen = Rcpp::wrap(check_lattice_properties_adjacency(M));
+    Rcpp::traits::input_parameter< SEXP >::type sp_i(sp_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type sp_p(sp_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type dim(dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_meet_join_cpp(sp_i, sp_p, dim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_lattice_tables_cpp
+List compute_lattice_tables_cpp(SEXP adj_i, SEXP adj_p, SEXP dim);
+RcppExport SEXP _fcaR_compute_lattice_tables_cpp(SEXP adj_iSEXP, SEXP adj_pSEXP, SEXP dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type adj_i(adj_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type adj_p(adj_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type dim(dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_lattice_tables_cpp(adj_i, adj_p, dim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// check_distributivity_sparse
+bool check_distributivity_sparse(SEXP m_i, SEXP m_p, SEXP m_x, SEXP j_i, SEXP j_p, SEXP j_x, SEXP dim);
+RcppExport SEXP _fcaR_check_distributivity_sparse(SEXP m_iSEXP, SEXP m_pSEXP, SEXP m_xSEXP, SEXP j_iSEXP, SEXP j_pSEXP, SEXP j_xSEXP, SEXP dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type m_i(m_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type m_p(m_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type m_x(m_xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_i(j_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_p(j_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_x(j_xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type dim(dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(check_distributivity_sparse(m_i, m_p, m_x, j_i, j_p, j_x, dim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// check_modularity_sparse
+bool check_modularity_sparse(SEXP m_i, SEXP m_p, SEXP m_x, SEXP j_i, SEXP j_p, SEXP j_x, SEXP dim);
+RcppExport SEXP _fcaR_check_modularity_sparse(SEXP m_iSEXP, SEXP m_pSEXP, SEXP m_xSEXP, SEXP j_iSEXP, SEXP j_pSEXP, SEXP j_xSEXP, SEXP dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type m_i(m_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type m_p(m_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type m_x(m_xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_i(j_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_p(j_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_x(j_xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type dim(dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(check_modularity_sparse(m_i, m_p, m_x, j_i, j_p, j_x, dim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// check_semimodularity_sparse
+bool check_semimodularity_sparse(SEXP m_i, SEXP m_p, SEXP m_x, SEXP j_i, SEXP j_p, SEXP j_x, SEXP cov_i, SEXP cov_p, SEXP dim);
+RcppExport SEXP _fcaR_check_semimodularity_sparse(SEXP m_iSEXP, SEXP m_pSEXP, SEXP m_xSEXP, SEXP j_iSEXP, SEXP j_pSEXP, SEXP j_xSEXP, SEXP cov_iSEXP, SEXP cov_pSEXP, SEXP dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type m_i(m_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type m_p(m_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type m_x(m_xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_i(j_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_p(j_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type j_x(j_xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cov_i(cov_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cov_p(cov_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type dim(dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(check_semimodularity_sparse(m_i, m_p, m_x, j_i, j_p, j_x, cov_i, cov_p, dim));
+    return rcpp_result_gen;
+END_RCPP
+}
+// check_atomicity_sparse
+bool check_atomicity_sparse(SEXP adj_i, SEXP adj_p, SEXP cov_i, SEXP cov_p, SEXP dim);
+RcppExport SEXP _fcaR_check_atomicity_sparse(SEXP adj_iSEXP, SEXP adj_pSEXP, SEXP cov_iSEXP, SEXP cov_pSEXP, SEXP dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type adj_i(adj_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type adj_p(adj_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cov_i(cov_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type cov_p(cov_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type dim(dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(check_atomicity_sparse(adj_i, adj_p, cov_i, cov_p, dim));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -176,6 +259,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerMatrix >::type I(ISEXP);
     Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
     rcpp_result_gen = Rcpp::wrap(randomize_rewire_cpp(I, iterations));
+    return rcpp_result_gen;
+END_RCPP
+}
+// reduce_transitivity_cpp
+List reduce_transitivity_cpp(SEXP sp_i, SEXP sp_p, SEXP dim);
+RcppExport SEXP _fcaR_reduce_transitivity_cpp(SEXP sp_iSEXP, SEXP sp_pSEXP, SEXP dimSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type sp_i(sp_iSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type sp_p(sp_pSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type dim(dimSEXP);
+    rcpp_result_gen = Rcpp::wrap(reduce_transitivity_cpp(sp_i, sp_p, dim));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -800,7 +896,12 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_fcaR_check_lattice_properties_adjacency", (DL_FUNC) &_fcaR_check_lattice_properties_adjacency, 1},
+    {"_fcaR_compute_meet_join_cpp", (DL_FUNC) &_fcaR_compute_meet_join_cpp, 3},
+    {"_fcaR_compute_lattice_tables_cpp", (DL_FUNC) &_fcaR_compute_lattice_tables_cpp, 3},
+    {"_fcaR_check_distributivity_sparse", (DL_FUNC) &_fcaR_check_distributivity_sparse, 7},
+    {"_fcaR_check_modularity_sparse", (DL_FUNC) &_fcaR_check_modularity_sparse, 7},
+    {"_fcaR_check_semimodularity_sparse", (DL_FUNC) &_fcaR_check_semimodularity_sparse, 9},
+    {"_fcaR_check_atomicity_sparse", (DL_FUNC) &_fcaR_check_atomicity_sparse, 5},
     {"_fcaR_tnorm_Zadeh", (DL_FUNC) &_fcaR_tnorm_Zadeh, 2},
     {"_fcaR_implication_Zadeh", (DL_FUNC) &_fcaR_implication_Zadeh, 2},
     {"_fcaR_tnorm_Lukasiewicz", (DL_FUNC) &_fcaR_tnorm_Lukasiewicz, 2},
@@ -814,6 +915,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_asso_cpp", (DL_FUNC) &_fcaR_asso_cpp, 4},
     {"_fcaR_randomize_swap_cpp", (DL_FUNC) &_fcaR_randomize_swap_cpp, 2},
     {"_fcaR_randomize_rewire_cpp", (DL_FUNC) &_fcaR_randomize_rewire_cpp, 2},
+    {"_fcaR_reduce_transitivity_cpp", (DL_FUNC) &_fcaR_reduce_transitivity_cpp, 3},
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},

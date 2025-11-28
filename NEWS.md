@@ -8,11 +8,13 @@ Major Enhancements:
 * **Advanced randomization:** New suite of functions to generate and perturb datasets for statistical testing:
     * `RandomContext()`: Generates synthetic contexts using **Uniform** or **Dirichlet** distributions (mimicking real-world data structure).
     * `randomize_context()`: Randomizes existing contexts via **Edge swapping** (preserves marginal sums) or **Rewiring** (preserves density).
+    * **Distributive Generators:** Added `RandomDistributiveContext()` to generate synthetic data guaranteed to produce distributive lattices (based on Birkhoff's theorem).
 * **Robustness & performance:** The **InClose** algorithm has been completely refactored to use the C-API directly (avoiding Rcpp overhead). This  significantly improves performance for sparse matrices.
 
 New Functionality:
 
 * **Advanced metrics:** Added methods `stability()`, `separation()`, and `fuzzy_density()` to `ConceptLattice` to compute concept quality metrics.
+* **Lattice properties:** Added methods to `ConceptLattice` to efficiently check algebraic properties using sparse matrix operations: `is_distributive()`, `is_modular()`, `is_semimodular()`, and `is_atomic()`.
 * **Fuzzy algorithms:** In fuzzy contexts, the user can now select the algorithm for `find_concepts()`: "InClose" (default), "FastCbO", or "NextClosure".
 * **Implications:**
     * Added `to_direct_optimal()` to convert implication sets into the direct optimal basis.
@@ -23,7 +25,7 @@ Improvements:
 
 * **Visualization:** Removed dependency on `hasseDiagram`. Implemented a new native graphics engine for concept lattices.
 * **Efficiency:** Optimized C functions for concept support computation and general lattice mining.
-* **Documentation:** Added new vignettes: `advanced_lattice_metrics`, `creating_contexts`, `fuzzy_fca`, `lattice_visualization`, `matrix_factorization`, and `random_contexts`.
+* **Documentation:** Added new vignettes: `advanced_lattice_metrics`, `creating_contexts`, `fuzzy_fca`, `lattice_visualization`, `matrix_factorization`, `random_contexts` and `lattice_properties`.
 
 # fcaR 1.2.2
 

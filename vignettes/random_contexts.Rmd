@@ -77,3 +77,21 @@ print(all(fc$incidence() == fc_random$incidence()))
 ```
 
 This allows you to generate 1000 randomized versions of your data and check if your concept stability or support is statistically significant.
+
+## 3\. Generating Distributive Lattices
+
+We can also generate random contexts that are **mathematically guaranteed** to produce a Distributive Concept Lattice. This relies on Birkhoff's Theorem, which states that the lattice of order ideals of a Poset is distributive.
+
+The function `RandomDistributiveContext` generates a random Poset and builds its associated formal context.
+
+```{r distributive_gen}
+# Generate a random distributive context based on a Poset with 15 elements
+fc_dist <- RandomDistributiveContext(n_elements = 15, density = 0.2)
+fc_dist$find_concepts()
+
+# Verify the mathematical guarantee
+print(paste("Is Distributive?", fc_dist$concepts$is_distributive()))
+print(paste("Is Modular?",      fc_dist$concepts$is_modular()))
+```
+
+This is particularly useful for testing algorithms designed for distributive lattices or for educational purposes.
