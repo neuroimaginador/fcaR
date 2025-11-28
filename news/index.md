@@ -2,35 +2,54 @@
 
 ## fcaR 1.3.0
 
-- Now the InClose algorithm is perfectly integrated to compute the
-  concept lattice for binary contexts.
-- In fuzzy contexts, the user can select, via the `method` argument to
-  `find_concepts()`, the algorithm to use: “InClose”, “FastCbO” or
-  “NextClosure”. Our advice is to use (the default) “InClose”.
-- Some C functions have been optimized for efficiency. Maybe the user
-  will notice a big speedup in some computations.
-- The computation of concept support is now faster.
-- Added method `to_direct_optimal()` for `ImplicationSet`s to convert
-  the implication system into direct optimal.
-- Added methods `use_hedge()` and `get_hedge()` in `ImplicationSet` that
-  allow to set and get the hedge used to compute closures using the
-  system of implications, in the fuzzy case (there is no need for hedges
-  in the crisp case).
-- Added `factorize()` method to `FormalContext` class, implementing the
-  **GreConD+** algorithm for matrix factorization with grades and
-  overcovering, enabling custom fuzzy logic and Galois connections.
-  Based on Belohlavek, R., & Trneckova, M. (2024). Factorization of
-  Matrices With Grades With Overcovering. *IEEE Transactions on Fuzzy
-  Systems*, 32(4), 1641-1652.
-- The connection to the fcarepository.org is now managed more elegantly,
-  and even an addin has been added to the package to fetch formal
-  contexts from the repo.
-- After long time, the `hasseDiagram` dependency has been removed, now a
-  new graphic engin for concept lattices has been implemented.
-- Added new vignettes: `advanced_lattice_metrics`, `creating_contexts`,
-  `fuzzy_fca` and `lattice_visualization`.
-- Added new method `stability()`, `separation()` and `fuzzy_density()`
-  to `ConceptLattice` to compute several concept metrics.
+Major Enhancements:
+
+- **Matrix factorization:** Added `factorize()` method to
+  `FormalContext` class. It now implements two state-of-the-art
+  algorithms:
+  - **GreConD+**: For Boolean and Fuzzy matrix factorization with grades
+    and overcovering (Belohlavek & Trneckova, 2024). It fully supports
+    custom fuzzy logics set in the context.
+  - **ASSO**: A heuristic algorithm based on association rules for
+    Boolean matrix factorization.
+- **Advanced randomization:** New suite of functions to generate and
+  perturb datasets for statistical testing:
+  - [`RandomContext()`](https://neuroimaginador.github.io/fcaR/reference/RandomContext.md):
+    Generates synthetic contexts using **Uniform** or **Dirichlet**
+    distributions (mimicking real-world data structure).
+  - [`randomize_context()`](https://neuroimaginador.github.io/fcaR/reference/randomize_context.md):
+    Randomizes existing contexts via **Edge swapping** (preserves
+    marginal sums) or **Rewiring** (preserves density).
+- **Robustness & performance:** The **InClose** algorithm has been
+  completely refactored to use the C-API directly (avoiding Rcpp
+  overhead). This significantly improves performance for sparse
+  matrices.
+
+New Functionality:
+
+- **Advanced metrics:** Added methods `stability()`, `separation()`, and
+  `fuzzy_density()` to `ConceptLattice` to compute concept quality
+  metrics.
+- **Fuzzy algorithms:** In fuzzy contexts, the user can now select the
+  algorithm for `find_concepts()`: “InClose” (default), “FastCbO”, or
+  “NextClosure”.
+- **Implications:**
+  - Added `to_direct_optimal()` to convert implication sets into the
+    direct optimal basis.
+  - Added `use_hedge()` and `get_hedge()` to manage hedges in fuzzy
+    implication closures.
+- **Repo integration:** The connection to fcarepository.org is now
+  managed more elegantly, including an RStudio addin to fetch contexts.
+
+Improvements:
+
+- **Visualization:** Removed dependency on `hasseDiagram`. Implemented a
+  new native graphics engine for concept lattices.
+- **Efficiency:** Optimized C functions for concept support computation
+  and general lattice mining.
+- **Documentation:** Added new vignettes: `advanced_lattice_metrics`,
+  `creating_contexts`, `fuzzy_fca`, `lattice_visualization`,
+  `matrix_factorization`, and `random_contexts`.
 
 ## fcaR 1.2.2
 
