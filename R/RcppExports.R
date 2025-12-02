@@ -93,6 +93,10 @@ get_element_array <- function(I, i, j, k) {
     .Call(`_fcaR_get_element_array`, I, i, j, k)
 }
 
+binary_next_closure_implications <- function(I, verbose = FALSE) {
+    .Call(`_fcaR_binary_next_closure_implications`, I, verbose)
+}
+
 FastCbO_binary <- function(I, attrs, verbose = FALSE) {
     .Call(`_fcaR_FastCbO_binary`, I, attrs, verbose)
 }

@@ -310,6 +310,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// binary_next_closure_implications
+List binary_next_closure_implications(IntegerMatrix I, bool verbose);
+RcppExport SEXP _fcaR_binary_next_closure_implications(SEXP ISEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(binary_next_closure_implications(I, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // FastCbO_binary
 List FastCbO_binary(NumericMatrix I, StringVector attrs, bool verbose);
 RcppExport SEXP _fcaR_FastCbO_binary(SEXP ISEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
@@ -919,6 +931,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
+    {"_fcaR_binary_next_closure_implications", (DL_FUNC) &_fcaR_binary_next_closure_implications, 2},
     {"_fcaR_FastCbO_binary", (DL_FUNC) &_fcaR_FastCbO_binary, 3},
     {"_fcaR_FuzzyFCbO", (DL_FUNC) &_fcaR_FuzzyFCbO, 6},
     {"_fcaR_get_concept_strings_cpp", (DL_FUNC) &_fcaR_get_concept_strings_cpp, 5},

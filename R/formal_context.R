@@ -940,43 +940,40 @@ FormalContext <- R6::R6Class(
 
       if (private$is_many_valued) error_many_valued()
 
-      my_I <- Matrix::as.matrix(Matrix::t(self$I))
-      # my_I <- unique(my_I)
-      grades_set <- rep(list(self$grades_set), length(self$attributes))
-      # grades_set <- self$expanded_grades_set
-      attrs <- self$attributes
+      if (all(self$I@x == 1)) {
 
-      # if (is.null(private$bg_implications)) {
+        I <- self$incidence()
+        mode(I) <- "integer"
+        L <- binary_next_closure_implications(
+          I,
+          verbose = verbose
+        )
 
-      L <- next_closure_implications(
-        I = my_I,
-        grades_set = grades_set,
-        attrs = attrs,
-        save_concepts = save_concepts,
-        connection = private$connection,
-        name = private$logic,
-        verbose = verbose
-      )
+      } else {
 
-      # }
+        my_I <- Matrix::as.matrix(Matrix::t(self$I))
+        grades_set <- rep(list(self$grades_set), length(self$attributes))
+        attrs <- self$attributes
+
+        L <- next_closure_implications(
+          I = my_I,
+          grades_set = grades_set,
+          attrs = attrs,
+          save_concepts = save_concepts,
+          connection = private$connection,
+          name = private$logic,
+          verbose = verbose
+        )
+
+      }
 
 
       if (!is.null(private$bg_implications) && private$bg_implications$cardinality() > 0) {
+
         private$bg_implications <- reorder_attributes(
           private$bg_implications,
           self$attributes
         )
-
-        # n_bg <- private$bg_implications$cardinality()
-        #
-        # L <- next_closure_implications_bg2(I = my_I,
-        #                                   grades_set = grades_set,
-        #                                   attrs = attrs,
-        #                                   lhs_bg = private$bg_implications$get_LHS_matrix(),
-        #                                   rhs_bg = private$bg_implications$get_RHS_matrix(),
-        #                                   n_bg = n_bg,
-        #                                   save_concepts = save_concepts,
-        #                                   verbose = verbose)
 
         bg <- private$bg_implications$clone()
         suppressMessages(bg$apply_rules(c("simp", "rsimp")))
