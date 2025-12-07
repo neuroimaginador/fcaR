@@ -1,30 +1,28 @@
-#include <Rcpp.h>
-#include "set_operations_galois.h"
 #include "Logics.h"
-#include <chrono>
 #include "binary_operations.h"
+#include "set_operations_galois.h"
+#include <Rcpp.h>
+#include <chrono>
 
 using namespace Rcpp;
 
-static void chkIntFn(void *dummy) {
-  R_CheckUserInterrupt();
-}
+static void chkIntFn(void *dummy) { R_CheckUserInterrupt(); }
 
-// this will call the above in a top-level context so it won't longjmp-out of your context
-bool checkInterrupt() {
-  return (R_ToplevelExec(chkIntFn, NULL) == FALSE);
-}
-
+// this will call the above in a top-level context so it won't longjmp-out of
+// your context
+bool checkInterrupt() { return (R_ToplevelExec(chkIntFn, NULL) == FALSE); }
 
 // Ganter's Next Closure Algorithm
-
+// This algorithm computes all formal concepts (or closed sets) of a formal
+// context. It generates them in the "lectic" order (a lexicographical order on
+// bitsets).
 
 // Functions to compute the next pseudo-closed set
 
-bool compute_direct_sum(SparseVector A,
-                        int a_i,
-                        double grade_i,
-                        int imax,
+// Computes the "direct sum" $A \oplus i$ in the context of the Next Closure
+// algorithm. It finds the smallest set strictly greater than A in the lectic
+// order at index i.
+bool compute_direct_sum(SparseVector A, int a_i, double grade_i, int imax,
                         SparseVector *res) {
 
   reinitVector(res);
@@ -47,18 +45,14 @@ bool compute_direct_sum(SparseVector A,
       } else {
 
         // Rcout << "    -> SI: " << A.x.array[i] << " < " << grade_i << "\n";
-
       }
-
     }
 
     if (A.i.array[i] >= a_i) {
 
       resp = i;
       break;
-
     }
-
   }
 
   assignUsed(&(res->i), resp);
@@ -68,30 +62,22 @@ bool compute_direct_sum(SparseVector A,
   insertArray(&(res->x), grade_i);
 
   return can;
-
 }
 
-bool binary_compute_direct_sum(BinarySparseVector A,
-                               int a_i,
-                               int imax,
+bool binary_compute_direct_sum(BinarySparseVector A, int a_i, int imax,
                                BinarySparseVector *res) {
-    reinitArray(&(res->i));
-    for (size_t i = 0; i < A.i.used; ++i) {
-        if (A.i.array[i] < a_i) {
-            insertArray(&(res->i), A.i.array[i]);
-        }
+  reinitArray(&(res->i));
+  for (size_t i = 0; i < A.i.used; ++i) {
+    if (A.i.array[i] < a_i) {
+      insertArray(&(res->i), A.i.array[i]);
     }
-    insertArray(&(res->i), a_i);
-    return true; // In binary case, we can always add an attribute
+  }
+  insertArray(&(res->i), a_i);
+  return true; // In binary case, we can always add an attribute
 }
 
-
-void semantic_closure(SparseVector A,
-                      ImplicationTree t,
-                      SparseVector LHS,
-                      SparseVector RHS,
-                      SparseVector *res) {
-
+void semantic_closure(SparseVector A, ImplicationTree t, SparseVector LHS,
+                      SparseVector RHS, SparseVector *res) {
 
   int n_attributes = A.length;
 
@@ -111,12 +97,11 @@ void semantic_closure(SparseVector A,
 
     IntArray subsets;
     initArray(&subsets, n);
-    bool* black_list = (bool*)malloc(n * sizeof(bool));
+    bool *black_list = (bool *)malloc(n * sizeof(bool));
 
     for (int i = 0; i < n; i++) {
 
       black_list[i] = true;
-
     }
 
     is_subset(A, t, &subsets, black_list);
@@ -135,11 +120,9 @@ void semantic_closure(SparseVector A,
       for (size_t i = 0; i < subsets.used; i++) {
 
         black_list[subsets.array[i]] = false;
-
       }
 
       is_subset(*res, t, &subsets, black_list);
-
     }
 
     freeVector(&res2);
@@ -148,15 +131,17 @@ void semantic_closure(SparseVector A,
     freeArray(&subsets);
 
     free(black_list);
-
   }
-
 }
 
-bool is_set_preceding2(SparseVector B,
-                      SparseVector C,
-                      int a_i,
-                      double grade_i) {
+// Checks if the candidate set B is the "next" closed set after A in the lectic
+// order. Specifically, it verifies if the closure B preserves the lectic
+// property with respect to index $i$. That is, checking if the new elements
+// added by closure are all at indices $> i$. If any element is added at an
+// index $< i$, then the candidate is not the canonical next one (it has been
+// skipped).
+bool is_set_preceding2(SparseVector B, SparseVector C, int a_i,
+                       double grade_i) {
 
   if (grade_i == 0 || grade_i == -1) {
     return false;
@@ -213,14 +198,9 @@ bool is_set_preceding2(SparseVector B,
   }
 
   return true;
-
 }
 
-
-bool is_set_preceding(SparseVector B,
-                      SparseVector C,
-                      int a_i,
-                      double grade_i) {
+bool is_set_preceding(SparseVector B, SparseVector C, int a_i, double grade_i) {
 
   // Rprintf("Comparing:\n");
 
@@ -239,15 +219,12 @@ bool is_set_preceding(SparseVector B,
 
       insertArray(&bi_lt_a_i, B.i.array[i]);
       insertArray(&bx_lt_a_i, B.x.array[i]);
-
     }
 
     if (B.i.array[i] == a_i) {
 
       bx_at_a_i = B.x.array[i];
-
     }
-
   }
 
   for (size_t i = 0; i < C.i.used; i++) {
@@ -256,15 +233,12 @@ bool is_set_preceding(SparseVector B,
 
       insertArray(&ci_lt_a_i, C.i.array[i]);
       insertArray(&cx_lt_a_i, C.x.array[i]);
-
     }
 
     if (C.i.array[i] == a_i) {
 
       cx_at_a_i = C.x.array[i];
-
     }
-
   }
 
   if (fabs(cx_at_a_i - grade_i) > 1.e-3) {
@@ -277,7 +251,6 @@ bool is_set_preceding(SparseVector B,
     // Rcout << "  -> Reason 1: " << cx_at_a_i << " != " << grade_i << "\n";
 
     return false;
-
   }
 
   if (bx_at_a_i >= cx_at_a_i) {
@@ -289,7 +262,6 @@ bool is_set_preceding(SparseVector B,
 
     // Rcout << "  -> Reason 2\n";
     return false;
-
   }
 
   if (ci_lt_a_i.used != bi_lt_a_i.used) {
@@ -301,7 +273,6 @@ bool is_set_preceding(SparseVector B,
 
     // Rcout << "  -> Reason 3\n";
     return false;
-
   }
 
   for (size_t i = 0; i < ci_lt_a_i.used; i++) {
@@ -315,7 +286,6 @@ bool is_set_preceding(SparseVector B,
 
       // Rcout << "  -> Reason 4\n";
       return false;
-
     }
     if (fabs(cx_lt_a_i.array[i] - bx_lt_a_i.array[i]) > 1.e-3) {
 
@@ -326,9 +296,7 @@ bool is_set_preceding(SparseVector B,
 
       // Rcout << "  -> Reason 5\n";
       return false;
-
     }
-
   }
 
   freeArray(&cx_lt_a_i);
@@ -337,59 +305,58 @@ bool is_set_preceding(SparseVector B,
   freeArray(&bi_lt_a_i);
 
   return true;
-
 }
 
-bool binary_is_set_preceding(const BinarySparseVector& B,
-                             const BinarySparseVector& C,
-                             int a_i) {
-    size_t b_idx = 0;
-    size_t c_idx = 0;
+bool binary_is_set_preceding(const BinarySparseVector &B,
+                             const BinarySparseVector &C, int a_i) {
+  size_t b_idx = 0;
+  size_t c_idx = 0;
 
-    // Check if C restricted to elements smaller than a_i is the same as B 
-    while (b_idx < B.i.used && B.i.array[b_idx] < a_i && c_idx < C.i.used && C.i.array[c_idx] < a_i) {
-        if (B.i.array[b_idx] != C.i.array[c_idx]) {
-            return false;
-        }
-        b_idx++;
-        c_idx++;
+  // Check if C restricted to elements smaller than a_i is the same as B
+  while (b_idx < B.i.used && B.i.array[b_idx] < a_i && c_idx < C.i.used &&
+         C.i.array[c_idx] < a_i) {
+    if (B.i.array[b_idx] != C.i.array[c_idx]) {
+      return false;
     }
+    b_idx++;
+    c_idx++;
+  }
 
-    // Check if there are remaining elements in B or C that are smaller than a_i
-    if ((b_idx < B.i.used && B.i.array[b_idx] < a_i) || (c_idx < C.i.used && C.i.array[c_idx] < a_i)) {
-        return false;
-    }
+  // Check if there are remaining elements in B or C that are smaller than a_i
+  if ((b_idx < B.i.used && B.i.array[b_idx] < a_i) ||
+      (c_idx < C.i.used && C.i.array[c_idx] < a_i)) {
+    return false;
+  }
 
-    // Check if a_i is in C but not in B
-    bool c_has_ai = false;
-    while(c_idx < C.i.used) {
-      if (C.i.array[c_idx] == a_i) {
-        c_has_ai = true;
-        break;
-      }
-      c_idx++;
+  // Check if a_i is in C but not in B
+  bool c_has_ai = false;
+  while (c_idx < C.i.used) {
+    if (C.i.array[c_idx] == a_i) {
+      c_has_ai = true;
+      break;
     }
-    
-    if (!c_has_ai) return false;
+    c_idx++;
+  }
 
-    while(b_idx < B.i.used) {
-      if (B.i.array[b_idx] == a_i) return false;
-      b_idx++;
-    }
-    
-    return true;
+  if (!c_has_ai)
+    return false;
+
+  while (b_idx < B.i.used) {
+    if (B.i.array[b_idx] == a_i)
+      return false;
+    b_idx++;
+  }
+
+  return true;
 }
 
-
-void compute_next_closure(SparseVector A, int i,
-                                  int imax,
-                                  ListOf<NumericVector> grades_set,
-                                  ImplicationTree t,
-                                  SparseVector LHS,
-                                  SparseVector RHS,
-                                  StringVector attrs,
-                                  SparseVector *candB) {
-
+// Main loop to find the next closed set A+.
+// It searches for the largest index $i$ such that $A \oplus i$ is a valid
+// generator for the next concept.
+void compute_next_closure(SparseVector A, int i, int imax,
+                          ListOf<NumericVector> grades_set, ImplicationTree t,
+                          SparseVector LHS, SparseVector RHS,
+                          StringVector attrs, SparseVector *candB) {
 
   // SparseVector candB;
   // initVector(&candB, A.length);
@@ -406,8 +373,10 @@ void compute_next_closure(SparseVector A, int i,
 
     for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
 
-      bool can = compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
-      if (!can) continue;
+      bool can =
+          compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
+      if (!can)
+        continue;
 
       semantic_closure(*candB, t, LHS, RHS, &candB2);
 
@@ -419,31 +388,26 @@ void compute_next_closure(SparseVector A, int i,
         exit = true;
 
         // return candB;
-
       }
 
-      if (exit) break;
-
+      if (exit)
+        break;
     }
 
-    if (exit) break;
-
+    if (exit)
+      break;
   }
 
   // Rprintf("Something went wrong...\n");
   //
   // return candB;
-
 }
 
-
 // [[Rcpp::export]]
-List next_closure_implications(NumericMatrix I,
-                               List grades_set,
+List next_closure_implications(NumericMatrix I, List grades_set,
                                StringVector attrs,
                                String connection = "standard",
-                               String name = "Zadeh",
-                               bool save_concepts = true,
+                               String name = "Zadeh", bool save_concepts = true,
                                bool verbose = false) {
 
   auto start = std::chrono::high_resolution_clock::now(); // Marca de inicio
@@ -479,8 +443,8 @@ List next_closure_implications(NumericMatrix I,
 
   SparseVector A;
   initVector(&A, n_attributes);
-  compute_closure(&A, empty, I.begin(), n_objects, n_attributes,
-                  extent_f, intent_f, tnorm, implication);
+  compute_closure(&A, empty, I.begin(), n_objects, n_attributes, extent_f,
+                  intent_f, tnorm, implication);
 
   SparseVector this_extent;
   initVector(&this_extent, n_objects);
@@ -491,32 +455,27 @@ List next_closure_implications(NumericMatrix I,
     add_column(&RHS, A);
     addImplicationToTree(&tree, empty);
 
-
     if (verbose) {
 
-      Rcout << "Added initial implication to basis" << std::endl << std::endl << std::endl;
+      Rcout << "Added initial implication to basis" << std::endl
+            << std::endl
+            << std::endl;
       // printVector(A, attrs);
       // Rcout << std::endl << std::endl;
       // printImpl(empty, A, attrs);
 
       n_imp++;
-
     }
-
   }
 
   if (save_concepts) {
 
     reinitVector(&this_extent);
-    extent_f(&this_extent, A, I.begin(),
-             n_objects, n_attributes,
-             tnorm,
+    extent_f(&this_extent, A, I.begin(), n_objects, n_attributes, tnorm,
              implication);
     add_column(&concepts, A);
     add_column(&extents, this_extent);
-
   }
-
 
   if (verbose & save_concepts) {
 
@@ -529,31 +488,25 @@ List next_closure_implications(NumericMatrix I,
     } else {
 
       Rprintf("{}");
-
     }
 
     Rprintf("\n");
-
   }
 
   int count = 0;
 
   double pctg, old_pctg = 0;
 
-  while ((cardinal(A) < n_attributes)){
+  while ((cardinal(A) < n_attributes)) {
 
-    compute_next_closure(A,
-                         n_attributes,
-                         n_attributes,
-                         grades_set,
-                         tree, LHS, RHS,
-                         attrs, &B);
+    compute_next_closure(A, n_attributes, n_attributes, grades_set, tree, LHS,
+                         RHS, attrs, &B);
 
     cloneVector(&A, B);
 
     reinitVector(&B);
-    compute_closure(&B, A, I.begin(), n_objects, n_attributes,
-                    extent_f, intent_f, tnorm, implication);
+    compute_closure(&B, A, I.begin(), n_objects, n_attributes, extent_f,
+                    intent_f, tnorm, implication);
 
     setdifference(B, A, &rhs);
 
@@ -563,9 +516,8 @@ List next_closure_implications(NumericMatrix I,
       if (save_concepts) {
 
         reinitVector(&this_extent);
-        extent_f(&this_extent, A, I.begin(),
-                 n_objects, n_attributes,
-                 tnorm, implication);
+        extent_f(&this_extent, A, I.begin(), n_objects, n_attributes, tnorm,
+                 implication);
 
         add_column(&concepts, A);
         add_column(&extents, this_extent);
@@ -575,9 +527,7 @@ List next_closure_implications(NumericMatrix I,
           Rprintf("Added concept:\n");
           // printVector(A, attrs);
           // Rprintf("\n");
-
         }
-
       }
 
     } else {
@@ -589,7 +539,6 @@ List next_closure_implications(NumericMatrix I,
 
         // Rcout << "Added implication " << n_imp++ << " to basis" << std::endl;
         // printImpl(A, rhs, attrs);
-
       }
 
       addImplicationToTree(&tree, A);
@@ -598,10 +547,9 @@ List next_closure_implications(NumericMatrix I,
 
       if (verbose) {
 
-        if (count % 10 == 0) Rprintf("%u\n", count);
-
+        if (count % 10 == 0)
+          Rprintf("%u\n", count);
       }
-
     }
 
     if (checkInterrupt()) { // user interrupted ...
@@ -628,17 +576,13 @@ List next_closure_implications(NumericMatrix I,
       // Calcula la duración en segundos
       std::chrono::duration<double> elapsed = end - start;
 
-      List res = List::create(_["concepts"] = intents_S4,
-                              _["extents"] = extents_S4,
-                              _["LHS"] = lhs_S4,
-                              _["RHS"] = rhs_S4,
-                              _["elapsed"] = elapsed.count());
+      List res = List::create(
+          _["concepts"] = intents_S4, _["extents"] = extents_S4,
+          _["LHS"] = lhs_S4, _["RHS"] = rhs_S4, _["elapsed"] = elapsed.count());
 
       Rprintf("User interrupted.\n");
       return res;
-
     }
-
   }
 
   S4 intents_S4 = SparseToS4_fast(concepts);
@@ -656,10 +600,8 @@ List next_closure_implications(NumericMatrix I,
   // Calcula la duración en segundos
   std::chrono::duration<double> elapsed = end - start;
 
-  List res = List::create(_["concepts"] = intents_S4,
-                          _["extents"] = extents_S4,
-                          _["LHS"] = lhs_S4,
-                          _["RHS"] = rhs_S4,
+  List res = List::create(_["concepts"] = intents_S4, _["extents"] = extents_S4,
+                          _["LHS"] = lhs_S4, _["RHS"] = rhs_S4,
                           _["elapsed"] = elapsed.count());
 
   if (verbose)
@@ -673,7 +615,6 @@ List next_closure_implications(NumericMatrix I,
   freeImplicationTree(&tree);
 
   return res;
-
 }
 
 // SparseVector compute_next_intent(SparseVector A,
@@ -720,20 +661,12 @@ List next_closure_implications(NumericMatrix I,
 //
 // }
 
-void compute_next_intent(SparseVector* candB,
-                         SparseVector A,
-                         NumericMatrix I,
-                         int i,
-                         int imax,
-                         ListOf<NumericVector> grades_set,
-                         double* closure_count,
-                         StringVector attrs,
-                         GaloisOperator extent_f,
-                         GaloisOperator intent_f,
-                         LogicOperator tnorm,
-                         LogicOperator implication,
+void compute_next_intent(SparseVector *candB, SparseVector A, NumericMatrix I,
+                         int i, int imax, ListOf<NumericVector> grades_set,
+                         double *closure_count, StringVector attrs,
+                         GaloisOperator extent_f, GaloisOperator intent_f,
+                         LogicOperator tnorm, LogicOperator implication,
                          bool verbose = false) {
-
 
   // SparseVector candB;
   // initVector(&candB, A.length);
@@ -752,8 +685,10 @@ void compute_next_intent(SparseVector* candB,
 
     for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
 
-      bool can = compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
-      if (!can) continue;
+      bool can =
+          compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, candB);
+      if (!can)
+        continue;
       // Rcout << "candB" << std::endl;
       // printArray(candB->i);
       // printArray(candB->x);
@@ -762,21 +697,17 @@ void compute_next_intent(SparseVector* candB,
         Rcout << "-> Testing: ";
         printVector(*candB, attrs);
         Rcout << "\n";
-
       }
 
       reinitVector(&candB2);
-      compute_closure(&candB2, *candB, I.begin(),
-                      n_objects, n_attributes,
-                      extent_f, intent_f,
-                      tnorm, implication);
+      compute_closure(&candB2, *candB, I.begin(), n_objects, n_attributes,
+                      extent_f, intent_f, tnorm, implication);
 
       if (verbose) {
 
         Rcout << "-> Its closure is: ";
         printVector(candB2, attrs);
         Rcout << "\n";
-
       }
 
       (*closure_count) = (*closure_count) + 1;
@@ -786,7 +717,6 @@ void compute_next_intent(SparseVector* candB,
         if (verbose) {
 
           Rcout << "-> It is valid!\n";
-
         }
         // return candB;
         cloneVector(candB, candB2);
@@ -799,29 +729,22 @@ void compute_next_intent(SparseVector* candB,
 
           Rcout << "-> It is NOT valid!: A = ";
           printVector(A, attrs);
-          Rcout << ", a_i = " << a_i << ", g = " << grades_set[a_i][grade_idx] << "\n";
-
+          Rcout << ", a_i = " << a_i << ", g = " << grades_set[a_i][grade_idx]
+                << "\n";
         }
-
       }
-
     }
-
   }
 
   // Rprintf("Something went wrong...\n");
   //
   // return candB;
-
 }
 
 // [[Rcpp::export]]
-List next_closure_concepts(NumericMatrix I,
-                           ListOf<NumericVector> grades_set,
-                           StringVector attrs,
-                           String connection = "standard",
-                           String name = "Zadeh",
-                           bool verbose = false,
+List next_closure_concepts(NumericMatrix I, ListOf<NumericVector> grades_set,
+                           StringVector attrs, String connection = "standard",
+                           String name = "Zadeh", bool verbose = false,
                            bool ret = true) {
 
   int n_objects = I.nrow();
@@ -849,8 +772,8 @@ List next_closure_concepts(NumericMatrix I,
 
   SparseVector A;
   initVector(&A, n_attributes);
-  compute_closure(&A, empty, I.begin(), n_objects, n_attributes,
-                  extent_f, intent_f, tnorm, implication);
+  compute_closure(&A, empty, I.begin(), n_objects, n_attributes, extent_f,
+                  intent_f, tnorm, implication);
   SparseVector A2;
   initVector(&A2, n_attributes);
 
@@ -871,29 +794,21 @@ List next_closure_concepts(NumericMatrix I,
     } else {
 
       Rprintf("{}");
-
     }
 
     Rprintf("\n");
-
   }
 
   // double pctg, old_pctg = 0;
 
-  while ((cardinal(A) < n_attributes)){
+  while ((cardinal(A) < n_attributes)) {
 
     // Rcout << "Starting iterations: " << std::endl;
     reinitVector(&A2);
     reinitVector(&B);
-    compute_next_intent(&A2, A, I,
-                        n_attributes,
-                        n_attributes,
-                        grades_set,
-                        &closure_count,
-                        attrs,
-                        extent_f, intent_f,
-                        tnorm, implication,
-                        verbose);
+    compute_next_intent(&A2, A, I, n_attributes, n_attributes, grades_set,
+                        &closure_count, attrs, extent_f, intent_f, tnorm,
+                        implication, verbose);
 
     // A2 = compute_next_intent(A, I,
     //                          n_attributes,
@@ -928,7 +843,6 @@ List next_closure_concepts(NumericMatrix I,
       // printArray(A2.x);
       printVector(A2, attrs);
       Rprintf("\n");
-
     }
 
     if (checkInterrupt()) { // user interrupted ...
@@ -943,18 +857,16 @@ List next_closure_concepts(NumericMatrix I,
       freeVector(&extents);
       freeVector(&A2);
 
-      List res = List::create(_["intents"] = intents_S4,
-                              _["extents"] = extents_S4,
-                              _["closure_count"] = closure_count / (double)(n_grades - 1));
+      List res = List::create(
+          _["intents"] = intents_S4, _["extents"] = extents_S4,
+          _["closure_count"] = closure_count / (double)(n_grades - 1));
 
       Rprintf("User interrupted.\n");
       return res;
-
     }
 
     cloneVector(&A, A2);
     // freeVector(&A2);
-
   }
 
   // Rcout << " Number of closures: " << closure_count << std::endl;
@@ -966,14 +878,14 @@ List next_closure_concepts(NumericMatrix I,
     S4 intents_S4 = SparseToS4_fast(concepts);
     S4 extents_S4 = SparseToS4_fast(extents);
 
-    res = List::create(_["intents"] = intents_S4,
-                       _["extents"] = extents_S4,
-                       _["closure_count"] = closure_count / (double)(n_grades - 1));
+    res = List::create(_["intents"] = intents_S4, _["extents"] = extents_S4,
+                       _["closure_count"] =
+                           closure_count / (double)(n_grades - 1));
 
   } else {
 
-    res = List::create(_["closure_count"] = closure_count / (double)(n_grades - 1));
-
+    res = List::create(_["closure_count"] =
+                           closure_count / (double)(n_grades - 1));
   }
 
   freeVector(&A);
@@ -987,13 +899,10 @@ List next_closure_concepts(NumericMatrix I,
     Rprintf("Finished.\n");
 
   return res;
-
 }
 
-
 // [[Rcpp::export]]
-List binary_next_closure_concepts(IntegerMatrix I,
-                                  bool verbose = false) {
+List binary_next_closure_concepts(IntegerMatrix I, bool verbose = false) {
 
   int n_attributes = I.ncol();
 
@@ -1006,22 +915,22 @@ List binary_next_closure_concepts(IntegerMatrix I,
   binary_compute_closure(&A, &empty, I);
 
   List concepts;
-  
+
   IntegerVector concept_to_add(A.i.used);
-  for(size_t i = 0; i < A.i.used; ++i) {
+  for (size_t i = 0; i < A.i.used; ++i) {
     concept_to_add[i] = A.i.array[i];
   }
   concepts.push_back(concept_to_add);
 
   BinarySparseVector candB;
   initVector(&candB, n_attributes);
-  
+
   BinarySparseVector B;
   initVector(&B, n_attributes);
 
-  while(A.i.used < n_attributes) {
+  while (A.i.used < n_attributes) {
     for (int i = n_attributes - 1; i >= 0; --i) {
-      
+
       bool inA = false;
       for (size_t j = 0; j < A.i.used; ++j) {
         if (A.i.array[j] == i) {
@@ -1029,17 +938,18 @@ List binary_next_closure_concepts(IntegerMatrix I,
           break;
         }
       }
-      if (inA) continue;
-      
+      if (inA)
+        continue;
+
       cloneVector(&B, &A);
       insertArray(&(B.i), i);
-      
+
       binary_compute_closure(&candB, &B, I);
 
       if (binary_is_set_preceding(A, candB, i)) {
         cloneVector(&A, &candB);
         IntegerVector concept_to_add(A.i.used);
-        for(size_t k = 0; k < A.i.used; ++k) {
+        for (size_t k = 0; k < A.i.used; ++k) {
           concept_to_add[k] = A.i.array[k];
         }
         concepts.push_back(concept_to_add);
