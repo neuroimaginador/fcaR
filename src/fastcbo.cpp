@@ -1,28 +1,35 @@
+#include "aux_functions.h"
 #include <Rcpp.h>
 #include <Rcpp/Benchmark/Timer.h>
-#include "aux_functions.h"
 
 using namespace Rcpp;
 
+// Fast Close By One (FCbO) Algorithm
+//
+// References:
+// Outrata, J., & Vychodil, V. (2012). Fast algorithm for computing fixpoints of
+// Galois connections induced by object-attribute relational data.
+//
+// This algorithm is a recursive version of Close By One (CbO).
+// It generates all formal concepts of a formal context.
+// The key idea is to use a "canonicity test" to avoid generating the same
+// concept multiple times. A concept (A, B) is canonical if B contains no
+// attributes $j < y$ (where $y$ is the current attribute index) that are not
+// already in B. Or more precisely, for the recursion: We iterate over
+// attributes $j > y$. We form a candidate intent $D = (B \cup \{j\})''$. If $D
+// \cap \{0, \dots, j-1\} = B \cap \{0, \dots, j-1\}$, then $D$ is canonical and
+// we recurse.
 
-void FuzzyFastGenerateFrom4(double* I,
-                            int n_objects,
-                            int n_attributes,
-                            int n_grades,
-                            StringVector attrs,
-                            double* grades_set,
-                            SparseVector *extents,
-                            SparseVector *intents,
-                            const SparseVector& qA, // Usamos referencia para eficiencia
-                            const SparseVector& qB, // Usamos referencia para eficiencia
-                            int id_col,
-                            int y,
-                            const double* Ny, // Matriz del padre (solo lectura)
-                            double* closure_count,
-                            double* intent_count,
-                            double* total,
-                            int depth,
-                            bool verbose) {
+void FuzzyFastGenerateFrom4(
+    double *I, int n_objects, int n_attributes, int n_grades,
+    StringVector attrs, double *grades_set, SparseVector *extents,
+    SparseVector *intents,
+    const SparseVector &qA, // Use reference for efficiency
+    const SparseVector &qB, // Use reference for efficiency
+    int id_col, int y,
+    const double *Ny, // Parent matrix (read-only)
+    double *closure_count, double *intent_count, double *total, int depth,
+    bool verbose) {
 
   SparseVector A, B;
   initVector(&A, qA.length);
@@ -41,14 +48,16 @@ void FuzzyFastGenerateFrom4(double* I,
     return;
   }
 
-  double* Bv = (double*)calloc(B.length, sizeof(double));
+  double *Bv = (double *)calloc(B.length, sizeof(double));
   double sumB = 0.0;
   for (size_t i = 0; i < B.i.used; i++) {
     Bv[B.i.array[i]] = B.x.array[i];
     sumB += B.x.array[i];
   }
 
-  // Se vuelve al sistema de colas robusto y correcto
+  // Back to the robust and correct queue system
+  // We queue the valid children to process them after iterating through all
+  // candidates in this level
   SparseVector queue_A, queue_B;
   initVector(&queue_A, qA.length);
   initVector(&queue_B, qB.length);
@@ -59,38 +68,50 @@ void FuzzyFastGenerateFrom4(double* I,
   initVector(&foo, n_objects);
   initVector(&D, n_attributes);
 
-  // --- CORRECCIÓN CLAVE ---
-  // Mj es una copia local de la matriz del padre (Ny).
-  // Los cambios en Mj no afectarán a otras ramas.
-  double* Mj = (double*)malloc((size_t)n_attributes * n_attributes * n_grades * sizeof(double));
-  memcpy(Mj, Ny, (size_t)n_attributes * n_attributes * n_grades * sizeof(double));
+  // --- KEY FIX ---
+  // Mj is a local copy of the parent matrix (Ny).
+  // Changes in Mj will not affect other branches (siblings).
+  // This matrix M stores the computed closures values for previous attributes,
+  // used for the canonicity test.
+  double *Mj = (double *)malloc((size_t)n_attributes * n_attributes * n_grades *
+                                sizeof(double));
+  memcpy(Mj, Ny,
+         (size_t)n_attributes * n_attributes * n_grades * sizeof(double));
 
   if ((sumB < n_attributes) && (y < n_attributes)) {
     for (int j = y + 1; j < n_attributes; j++) {
       double B_j = Bv[j];
-      if (B_j == 1) continue;
+      if (B_j == 1)
+        continue;
 
       for (int g_idx = 0; g_idx < n_grades; g_idx++) {
         double g = grades_set[g_idx];
 
         if (B_j >= g) {
-          // Avanzamos los grados para evitar cálculos redundantes
+          // Skip grades that are already covered by the current attribute value
+          // in B (optimization: avoid redundant calculations)
           while (g_idx < n_grades - 1 && g <= B_j) {
             g_idx++;
             g = grades_set[g_idx];
           }
-          if (B_j >= g) continue;
+          if (B_j >= g)
+            continue;
         }
 
-        // Primera prueba de canonicidad parcial
+        // First partial canonicity check
+        // We check if the attribute j (with grade g) is already implied by
+        // previous attributes $s < j$. If so, it would have been generated
+        // earlier, so we skip it.
         if (j > 0) {
           int s = 0;
           for (s = 0; s < j; s++) {
-            // Se usa Ny (la matriz del padre) para la comprobación
-            if (Ny[(size_t)g_idx * n_attributes * n_attributes + (size_t)j * n_attributes + s] > Bv[s])
+            // Use Ny (parent matrix) for the check
+            if (Ny[(size_t)g_idx * n_attributes * n_attributes +
+                   (size_t)j * n_attributes + s] > Bv[s])
               break;
           }
-          if (s < j) continue;
+          if (s < j)
+            continue;
         }
 
         reinitVector(&foo);
@@ -99,7 +120,7 @@ void FuzzyFastGenerateFrom4(double* I,
         for (size_t id = 0; id < foo.i.used; id++) {
           int i = foo.i.array[id];
           double val = I[(size_t)j * n_objects + i];
-          if(val < g){
+          if (val < g) {
             foo.x.array[id] = std::min(foo.x.array[id], val);
           }
         }
@@ -112,21 +133,26 @@ void FuzzyFastGenerateFrom4(double* I,
         double gv = get_element(D, j);
 
         if (gv != g) {
-          // Avanzamos los grados
+          // Advance grades if the computed value is higher than current g
           while (g_idx < n_grades - 1 && g < gv) {
             g_idx++;
             g = grades_set[g_idx];
           }
-          if (g < gv) continue;
+          if (g < gv)
+            continue;
         }
 
         bool canonical = true;
+        // Full canonicity check
+        // Check if D contains any attribute s < j that is not in B (or has a
+        // higher value than in B).
         if (j > 0) {
           size_t s_idx = 0;
-          for(size_t is = 0; is < D.i.used; ++is){
+          for (size_t is = 0; is < D.i.used; ++is) {
             int iD = D.i.array[is];
-            if(iD >= j) break;
-            if(Bv[iD] < D.x.array[is]){
+            if (iD >= j)
+              break;
+            if (Bv[iD] < D.x.array[is]) {
               canonical = false;
               break;
             }
@@ -138,9 +164,13 @@ void FuzzyFastGenerateFrom4(double* I,
           add_column(&queue_B, D);
           insertArray(&queue_y, j);
         } else {
-          // Actualizamos nuestra copia local de Mj, no la del padre
+          // Update our local copy of Mj, not the parent's
+          // This updates the information about what this non-canonical closure
+          // implies, which can be used to prune future candidates in this
+          // branch.
           for (size_t idx = 0; idx < D.i.used; idx++) {
-            size_t linear_index = (size_t)g_idx * n_attributes * n_attributes + (size_t)j * n_attributes + D.i.array[idx];
+            size_t linear_index = (size_t)g_idx * n_attributes * n_attributes +
+                                  (size_t)j * n_attributes + D.i.array[idx];
             Mj[linear_index] = D.x.array[idx];
           }
         }
@@ -149,13 +179,14 @@ void FuzzyFastGenerateFrom4(double* I,
   }
 
   for (size_t cols = 0; cols < queue_y.used; cols++) {
-    FuzzyFastGenerateFrom4(I, n_objects, n_attributes, n_grades, attrs,
-                           grades_set, extents, intents, queue_A, queue_B,
-                           cols, queue_y.array[cols], Mj, // Pasamos nuestra Mj modificada a los hijos
-                           closure_count, intent_count, total, depth + 1, verbose);
+    FuzzyFastGenerateFrom4(
+        I, n_objects, n_attributes, n_grades, attrs, grades_set, extents,
+        intents, queue_A, queue_B, cols, queue_y.array[cols],
+        Mj, // Pass our modified Mj to children
+        closure_count, intent_count, total, depth + 1, verbose);
   }
 
-  // Liberación de toda la memoria local
+  // Free all local memory
   freeVector(&queue_A);
   freeVector(&queue_B);
   freeArray(&queue_y);
@@ -168,11 +199,8 @@ void FuzzyFastGenerateFrom4(double* I,
 }
 
 // [[Rcpp::export]]
-List FuzzyFCbO(NumericMatrix I,
-               NumericVector grades_set,
-               StringVector attrs,
-               String connection = "standard",
-               String name = "Zadeh",
+List FuzzyFCbO(NumericMatrix I, NumericVector grades_set, StringVector attrs,
+               String connection = "standard", String name = "Zadeh",
                bool verbose = false) {
 
   Timer timer;
@@ -204,14 +232,14 @@ List FuzzyFCbO(NumericMatrix I,
   initVector(&intents, n_attributes);
   initVector(&extents, n_objects);
 
-  // La matriz original, vacía, que se pasa a la primera llamada
-  double* Ny = (double*)calloc((size_t)n_attributes * n_attributes * n_grades, sizeof(double));
+  // The original matrix, empty, passed to the first call
+  double *Ny = (double *)calloc((size_t)n_attributes * n_attributes * n_grades,
+                                sizeof(double));
 
-  // La primera llamada a la recursión
+  // The first recursion call
   FuzzyFastGenerateFrom4(I.begin(), n_objects, n_attributes, n_grades, attrs,
-                         grades_set.begin(), &extents, &intents,
-                         A, C, 0, -1, Ny,
-                         &closure_count, &intent_count, &total, 0, verbose);
+                         grades_set.begin(), &extents, &intents, A, C, 0, -1,
+                         Ny, &closure_count, &intent_count, &total, 0, verbose);
 
   free(Ny);
 
@@ -225,13 +253,10 @@ List FuzzyFCbO(NumericMatrix I,
 
   timer.step("end");
 
-  List res = List::create(
-    _["intents"] = intents_S4,
-    _["extents"] = extents_S4,
-    _["total"] = total,
-    _["closure_count"] = closure_count,
-    _["intent_count"] = intent_count,
-    _["timer"] = timer);
+  List res =
+      List::create(_["intents"] = intents_S4, _["extents"] = extents_S4,
+                   _["total"] = total, _["closure_count"] = closure_count,
+                   _["intent_count"] = intent_count, _["timer"] = timer);
 
   return res;
 }

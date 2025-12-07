@@ -16,12 +16,19 @@ bool checkInterrupt() { return (R_ToplevelExec(chkIntFn, NULL) == FALSE); }
 // This algorithm computes all formal concepts (or closed sets) of a formal
 // context. It generates them in the "lectic" order (a lexicographical order on
 // bitsets).
+//
+// References:
+// Ganter, B. (1984). Two basic algorithms in concept analysis.
 
 // Functions to compute the next pseudo-closed set
 
 // Computes the "direct sum" $A \oplus i$ in the context of the Next Closure
 // algorithm. It finds the smallest set strictly greater than A in the lectic
 // order at index i.
+// Specifically, $A \oplus i$ is defined as:
+// $((A \cap \{1, \dots, i-1\}) \cup \{i\})$
+// But here, since we deal with fuzzy grades or multiple values, the logic is
+// slightly more complex to handle the "grade" at index i.
 bool compute_direct_sum(SparseVector A, int a_i, double grade_i, int imax,
                         SparseVector *res) {
 
@@ -135,11 +142,16 @@ void semantic_closure(SparseVector A, ImplicationTree t, SparseVector LHS,
 }
 
 // Checks if the candidate set B is the "next" closed set after A in the lectic
-// order. Specifically, it verifies if the closure B preserves the lectic
-// property with respect to index $i$. That is, checking if the new elements
-// added by closure are all at indices $> i$. If any element is added at an
-// index $< i$, then the candidate is not the canonical next one (it has been
-// skipped).
+// order.
+// A set B comes lexically after A if at the first index i where they differ,
+// B contains i (or a larger grade) and A does not.
+// For the Next Closure algorithm, we generate candidates $C = (A \oplus i)''$
+// (closure of direct sum). We must verify that $C$ is the *canonical* next
+// concept. This is true if $C$ preserves the prefix of $A$ up to $i$. i.e., $C
+// \cap \{1, \dots, i-1\} = A \cap \{1, \dots, i-1\}$. If $C$ adds any element
+// $j < i$ that was not in $A$, then $C$ should have been generated when
+// processing index $j$, so we reject it now (it's not the *next* one, or it was
+// already found).
 bool is_set_preceding2(SparseVector B, SparseVector C, int a_i,
                        double grade_i) {
 
@@ -191,6 +203,7 @@ bool is_set_preceding2(SparseVector B, SparseVector C, int a_i,
   }
 
   // Check that the elements less than a_i in B and C are the same
+  // This enforces the lectic order condition: the prefix must match.
   for (size_t i = 0; i < ci_lt_a_i_size; i++) {
     if (C.i.array[i] != B.i.array[i] || C.x.array[i] != B.x.array[i]) {
       return false;

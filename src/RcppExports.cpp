@@ -434,18 +434,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// imp_to_basis_cpp
-List imp_to_basis_cpp(S4 lhs, S4 rhs);
-RcppExport SEXP _fcaR_imp_to_basis_cpp(SEXP lhsSEXP, SEXP rhsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< S4 >::type lhs(lhsSEXP);
-    Rcpp::traits::input_parameter< S4 >::type rhs(rhsSEXP);
-    rcpp_result_gen = Rcpp::wrap(imp_to_basis_cpp(lhs, rhs));
-    return rcpp_result_gen;
-END_RCPP
-}
 // InClose
 List InClose(NumericMatrix I, NumericVector grades_set, StringVector attrs, String connection, String name, bool verbose);
 RcppExport SEXP _fcaR_InClose(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
@@ -951,7 +939,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_run_direct_optimal_sp_rcpp_optimized", (DL_FUNC) &_fcaR_run_direct_optimal_sp_rcpp_optimized, 7},
     {"_fcaR_run_monotonic_incremental_rcpp_optimized", (DL_FUNC) &_fcaR_run_monotonic_incremental_rcpp_optimized, 7},
     {"_fcaR_run_priority_refinement_rcpp_optimized", (DL_FUNC) &_fcaR_run_priority_refinement_rcpp_optimized, 7},
-    {"_fcaR_imp_to_basis_cpp", (DL_FUNC) &_fcaR_imp_to_basis_cpp, 2},
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
     {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 4},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},

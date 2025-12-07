@@ -1,15 +1,29 @@
-#include <Rcpp.h>
 #include "implication_tree.h"
+#include <Rcpp.h>
 using namespace Rcpp;
 
 // Implication Tree
-
-
-// static void
+//
+// A Trie-like data structure to store a set of implications.
+// It is used to efficiently query for implications or check for
+// subsets/closures.
+//
+// Each node in the tree represents an attribute.
+// The tree allows for:
+// - Fast insertion of implications.
+// - Efficient traversal to find implications applicable to a given set of
+// attributes.
+//
+// n_attributes: Total number of attributes in the context.
+// n_implications: Total number of implications stored.
+// CARD, COUNT: Arrays likely used to store statistics or aggregated values at
+// nodes. LIST: Adjacency list or similar structure to manage child nodes or
+// implication indices. DEGREE: Likely stores degrees or weights associated with
+// implications. static void
 //   _finalizer(SEXP ext)
 //   {
-//     struct ImplicationTree *ptr = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
-//     Rprintf("Destroying pointer.\n");
+//     struct ImplicationTree *ptr = (struct ImplicationTree*)
+//     R_ExternalPtrAddr(ext); Rprintf("Destroying pointer.\n");
 //     freeArray(&(ptr->CARD));
 //     freeArray(&(ptr->COUNT));
 //     free(ptr->DEGREE);
@@ -17,7 +31,6 @@ using namespace Rcpp;
 //     Free(ptr);
 //
 //   }
-
 
 void initImplicationTree(struct ImplicationTree *t, int n_attributes) {
 
@@ -33,14 +46,13 @@ void initImplicationTree(struct ImplicationTree *t, int n_attributes) {
 
     initArray(&(t->LIST[i]), n_attributes);
     initArray(&(t->DEGREE[i]), n_attributes);
-
   }
-
 }
 
 // void printImplicationTree(SEXP ext) {
 //
-//   struct ImplicationTree *tree = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
+//   struct ImplicationTree *tree = (struct ImplicationTree*)
+//   R_ExternalPtrAddr(ext);
 //
 //   Rprintf("ImplicationTree\n");
 //   Rprintf("Number of attributes: %u\n", tree->n_attributes);
@@ -81,11 +93,10 @@ void addImplicationToTree(struct ImplicationTree *t, SparseVector A) {
 
     (t->CARD).array[new_idx] = (t->CARD).array[new_idx] + A.x.array[i];
     (t->COUNT).array[new_idx] = (t->COUNT).array[new_idx] + 1;
-
   }
 
-  // Rprintf("Added with CARD = %f, COUNT = %u\n", (t->CARD).array[new_idx], (t->COUNT).array[new_idx]);
-
+  // Rprintf("Added with CARD = %f, COUNT = %u\n", (t->CARD).array[new_idx],
+  // (t->COUNT).array[new_idx]);
 }
 
 // void addImplicationToTree_XPtr(SEXP ext, S4 A) {
@@ -93,12 +104,12 @@ void addImplicationToTree(struct ImplicationTree *t, SparseVector A) {
 //   // printImplicationTree(ext);
 //
 //   SparseVector S = S4toSparse(A);
-//   struct ImplicationTree *tree = (struct ImplicationTree*) R_ExternalPtrAddr(ext);
-//   addImplicationToTree(tree, S);
+//   struct ImplicationTree *tree = (struct ImplicationTree*)
+//   R_ExternalPtrAddr(ext); addImplicationToTree(tree, S);
 //
 // }
 
-void freeImplicationTree(struct ImplicationTree* t) {
+void freeImplicationTree(struct ImplicationTree *t) {
 
   freeArray(&(t->CARD));
   freeArray(&(t->COUNT));
@@ -107,11 +118,9 @@ void freeImplicationTree(struct ImplicationTree* t) {
 
     freeArray(&(t->LIST[i]));
     freeArray(&(t->DEGREE[i]));
-
   }
 
   // free(t->DEGREE);
   // free(t->LIST);
   // Free(t);
-
 }

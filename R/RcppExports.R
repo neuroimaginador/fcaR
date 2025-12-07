@@ -125,10 +125,6 @@ run_priority_refinement_rcpp_optimized <- function(lhs_in, rhs_in, attributes, L
     .Call(`_fcaR_run_priority_refinement_rcpp_optimized`, lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose)
 }
 
-imp_to_basis_cpp <- function(lhs, rhs) {
-    .Call(`_fcaR_imp_to_basis_cpp`, lhs, rhs)
-}
-
 InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }

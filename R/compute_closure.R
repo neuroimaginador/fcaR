@@ -1,7 +1,9 @@
 # Computes the closure of a set S with respect to a set of implications (LHS -> RHS).
 # Implements the LinClosure algorithm.
 # Input: S (set of attributes), LHS, RHS (implications A -> B)
-# Output: The closure $S^\mathcal{L}$ such that $S \subseteq S^\mathcal{L}$ and $S^\mathcal{L}$ is closed under implications.
+# Output: The closure $S^{\mathcal{L}}$ such that $S \subseteq S^{\mathcal{L}}$ and $S^{\mathcal{L}}$ is closed under implications.
+# The algorithm works by iteratively adding B to S whenever A is a subset of S, for all implications A -> B.
+# This linear time closure algorithm is crucial for minimal basis computations.
 .compute_closure <- function(
   S,
   LHS,
@@ -16,6 +18,7 @@
   }
 
   # Which are the rules applicable to the set S?
+  # We look for indices i such that LHS[, i] is a subset of S.
   S_subsets <- .subset(LHS, S)
 
   idx_subsets <- S_subsets@i + 1
@@ -24,9 +27,10 @@
 
   passes <- 0
 
-  # While there are applicable rules, apply!!
-  # While $\exists (A \to B) \in \Sigma$ such that $A \subseteq S$ and $B \not\subseteq S$:
-  # $S = S \cup B$
+  # While there are applicable rules, apply them!
+  # Loop condition: While $\exists (A \to B) \in \Sigma$ such that $A \subseteq S$ (and potentially $B \not\subseteq S$):
+  # Update: $S = S \cup B$
+  # We continue until no new implications can be fired.
   while (length(idx_subsets) > 0) {
     passes <- passes + 1
     if (verbose) {
@@ -39,11 +43,17 @@
       A <- RHS[, idx_subsets]
     }
 
+    # Add the RHS of triggered implications to S
+    # S_{new} = S_{old} \cup \bigcup_{i \in idx} RHS_i
     S <- .multiunion(add_col(A, S))
 
+    # Mark these implications as used so we don't check them again if not needed
+    # (Though in standard LinClosure we might check everything, here we optimize)
     do_not_use[idx_subsets] <- TRUE
 
     if (reduce) {
+      # If reduce is TRUE, we apply simplification logic to the implications set
+      # based on the current closure to reduce the size of the basis being built.
       L <- .simplification_logic(S = S, LHS = LHS, RHS = RHS)
 
       LHS <- L$lhs
@@ -59,9 +69,11 @@
     }
 
     if (!is_direct) {
+      # Re-evaluate subsets for the next pass since S has grown.
       S_subsets <- .subset(LHS, S)
 
       idx_subsets <- S_subsets@i + 1
+      # Avoid using implications that were already fully processed/removed
       idx_subsets <- setdiff(idx_subsets, which(do_not_use))
 
       if (verbose) {
@@ -85,7 +97,9 @@
 # Applies equivalence rules (like removing redundant attributes from LHS if they are in RHS, etc.)
 # Specifically Equivalence II and III from some literature (e.g. Maier).
 .simplification_logic <- function(S, LHS, RHS) {
-  # Equivalence II
+  # Equivalence II (Simpification by Entailment/Satisfaction)
+  # If $B \subseteq S$, then the implication $A \to B$ is satisfied by $S$ (if we consider S as a model)
+  # or if we are just reducing the basis relative to what we already know (S).
   subsets <- .subset(RHS, S)
   idx_subsets <- subsets@i + 1
 
@@ -102,7 +116,9 @@
     return(list(lhs = NULL, rhs = NULL))
   }
 
-  # Equivalence III
+  # Equivalence III (Generalization / Composition)
+  # We look for overlap between $S$ and $A \cup B$.
+  # Let $C = LHS, D = RHS$.
   C <- LHS
   D <- RHS
 
@@ -120,6 +136,7 @@
       Didx <- D[, idx_not_empty]
     }
 
+    # C_B = C \setminus S
     C_B <- set_difference_single(
       Cidx@i,
       Cidx@p,
@@ -130,6 +147,7 @@
       nrow(Cidx)
     )
 
+    # D_B = D \setminus S
     D_B <- set_difference_single(
       Didx@i,
       Didx@p,
@@ -140,6 +158,7 @@
       nrow(Didx)
     )
 
+    # If D \setminus S is empty, the rule is trivialised to possibly A \to \emptyset (redundant)
     idx_zeros <- Matrix::which(Matrix::colSums(D_B) == 0)
 
     if (length(idx_zeros) > 0) {
@@ -147,10 +166,12 @@
       D_B <- Matrix::Matrix(D_B[, -idx_zeros], sparse = TRUE)
     }
 
+    # Reconstruct LHS/RHS with simplified parts
     LHS <- cbind(C_B, Matrix::Matrix(C[, -idx_not_empty], sparse = TRUE))
     RHS <- cbind(D_B, Matrix::Matrix(D[, -idx_not_empty], sparse = TRUE))
   }
 
+  # Further simplification steps using generalization and composition rules
   L <- .generalization(LHS, RHS)
   L <- .composition(L$lhs, L$rhs)
   LHS <- L$lhs
