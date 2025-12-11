@@ -1,4 +1,4 @@
-# Matrix Factorization: GreConD+ and ASSO
+# Matrix Factorization
 
 ``` r
 library(fcaR)
