@@ -67,6 +67,9 @@ FormalContext <- R6::R6Class(
     #' @field implications A set of implications on the formal context as an \code{\link{ImplicationSet}}.
     implications = "Not computed yet",
 
+    #' @field description An optional description of the dataset
+    description = character(0),
+
     #' @description
     #' Creator for the Formal Context class
     #'

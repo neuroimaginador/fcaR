@@ -1,8 +1,8 @@
 ---
-title: "Matrix Factorization: GreConD+ and ASSO"
+title: "Matrix Factorization"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Matrix Factorization with GreConD+ and ASSO}
+  %\VignetteIndexEntry{Matrix Factorization}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

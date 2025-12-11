@@ -2,3 +2,32 @@ url: https://neuroimaginador.github.io/fcaR/
 template:
   bootstrap: 5
 
+articles:
+- title: Basics
+  navbar: Basics
+  contents:
+  - creating_contexts
+  - concept_lattice
+  - implications
+  - lattice_visualization
+
+- title: Advanced Topics
+  navbar: Advanced
+  contents:
+  - conceptual-scaling
+  - fuzzy_fca
+  - matrix_factorization
+  - extending_equivalence
+
+- title: Metrics and Properties
+  navbar: Metrics
+  contents:
+  - lattice_properties
+  - advanced_lattice_metrics
+  - random_contexts
+
+- title: Extension Packages
+  navbar: Extensions
+  contents:
+  - arules
+

@@ -270,6 +270,9 @@ fetch_context <- function(filename, verbose = TRUE) {
         .trim = FALSE
       )
       cat(info_text)
+
+      fc$description <- stringr::str_to_sentence(meta_info$description)
+
     }
   }
 

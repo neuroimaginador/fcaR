@@ -631,7 +631,7 @@ ConceptLattice <- R6::R6Class(
 
     build_covering = function() {
 
-      if (self$size() == 0) return(invisible(self))
+      private$build_adjacency()
 
       if (is.null(private$covering_matrix)) {
 
@@ -645,7 +645,7 @@ ConceptLattice <- R6::R6Class(
 
     build_meet_join = function() {
 
-      if (self$size() == 0) return(invisible(self))
+      private$build_adjacency()
 
       if (is.null(private$meet_matrix)) {
 
