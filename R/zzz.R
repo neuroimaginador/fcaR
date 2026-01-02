@@ -55,3 +55,7 @@ conceptRegistry$set_entry(
   fun = InClose,
   description = "Adaptation of InClose go work on binary and fuzzy contexts, introduced in Lopez-Rodriguez et al. (2025)."
 )
+
+
+### CRAN hack for ggplot2
+utils::globalVariables(c("fill_color", "label", "label_bottom", "label_top", "x", "y"))

@@ -10,6 +10,7 @@
 }
 
 # Wrapper en R
+#' @importFrom methods new
 .reduce_transitivity <- function(M) {
   # Asegurar dgCMatrix
   if (!inherits(M, "nMatrix")) M <- methods::as(M, "nMatrix")

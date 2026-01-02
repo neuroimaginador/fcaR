@@ -113,6 +113,8 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item{\code{concepts}}{The concept lattice associated to the formal context as a \code{\link{ConceptLattice}}.}
 
 \item{\code{implications}}{A set of implications on the formal context as an \code{\link{ImplicationSet}}.}
+
+\item{\code{description}}{An optional description of the dataset}
 }
 \if{html}{\out{</div>}}
 }

@@ -1,10 +1,20 @@
-pandoc: 3.1.11
-pkgdown: 2.1.0
+pandoc: 3.6.4
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
+  advanced_lattice_metrics: advanced_lattice_metrics.html
   arules: arules.html
   concept_lattice: concept_lattice.html
   conceptual-scaling: conceptual-scaling.html
+  creating_contexts: creating_contexts.html
   extending_equivalence: extending_equivalence.html
+  fuzzy_fca: fuzzy_fca.html
   implications: implications.html
-last_built: 2024-09-10T14:09Z
+  lattice_properties: lattice_properties.html
+  lattice_visualization: lattice_visualization.html
+  matrix_factorization: matrix_factorization.html
+  random_contexts: random_contexts.html
+last_built: 2025-12-07T15:47Z
+urls:
+  reference: https://neuroimaginador.github.io/fcaR/reference
+  article: https://neuroimaginador.github.io/fcaR/articles

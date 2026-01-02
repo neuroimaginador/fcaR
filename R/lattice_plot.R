@@ -150,49 +150,49 @@ lattice_plot_legacy <- function(nodes_df,
                                 object_names = TRUE,
                                 to_latex = FALSE,
                                 ...) {
-  if (is.null(cover_matrix)) stop("Covering matrix is missing.")
-
-  # Edge prep
-  cover_edges_df <- sparse_matrix_to_edges(cover_matrix)
-
-  # Grade prep (Siempre útil, incluso para Force como punto de partida o color)
-  if (!"grade" %in% colnames(nodes_df)) {
-    grades_vec <- calculate_grades(
-      concept_ids = nodes_df$id,
-      edge_from = cover_edges_df$from,
-      edge_to = cover_edges_df$to
-    )
-    nodes_df$grade <- grades_vec[as.character(nodes_df$id)]
-  }
-
-  # Layout Calculation (C++ Dispatch)
-  # Pasamos el método elegido ("freese" o "force")
-  layout_df <- calculate_lattice_layout_rcpp(
-    concept_ids = nodes_df$id,
-    grades = nodes_df$grade,
-    edge_from = cover_edges_df$from,
-    edge_to = cover_edges_df$to,
-    method = method
-  )
-
-  plot_data <- merge(nodes_df, layout_df, by = "id")
-  plot_data$label <- as.character(plot_data$id)
-
-  if (isTRUE(to_latex)) {
-    return(list(nodes = plot_data, edges = cover_edges_df))
-  } else {
-    if (!requireNamespace("ggraph", quietly = TRUE)) stop("Install 'ggraph'.")
-
-    g <- igraph::graph_from_data_frame(cover_edges_df, vertices = plot_data, directed = TRUE)
-
-    # El layout es manual porque C++ ya calculó x, y
-    p <- ggraph::ggraph(g, layout = "manual", x = x, y = y) +
-      ggraph::geom_edge_fan(color = "gray60", alpha = 0.6) +
-      ggraph::geom_node_point(size = 4, shape = 21, fill = "white", color = "black") +
-      ggraph::geom_node_text(ggplot2::aes(label = label), repel = TRUE, size = 3) +
-      ggplot2::theme_void()
-
-    print(p)
-    return(invisible(p))
-  }
+  # if (is.null(cover_matrix)) stop("Covering matrix is missing.")
+  #
+  # # Edge prep
+  # cover_edges_df <- sparse_matrix_to_edges(cover_matrix)
+  #
+  # # Grade prep (Siempre útil, incluso para Force como punto de partida o color)
+  # if (!"grade" %in% colnames(nodes_df)) {
+  #   grades_vec <- calculate_grades(
+  #     concept_ids = nodes_df$id,
+  #     edge_from = cover_edges_df$from,
+  #     edge_to = cover_edges_df$to
+  #   )
+  #   nodes_df$grade <- grades_vec[as.character(nodes_df$id)]
+  # }
+  #
+  # # Layout Calculation (C++ Dispatch)
+  # # Pasamos el método elegido ("freese" o "force")
+  # layout_df <- calculate_lattice_layout_rcpp(
+  #   concept_ids = nodes_df$id,
+  #   grades = nodes_df$grade,
+  #   edge_from = cover_edges_df$from,
+  #   edge_to = cover_edges_df$to,
+  #   method = method
+  # )
+  #
+  # plot_data <- merge(nodes_df, layout_df, by = "id")
+  # plot_data$label <- as.character(plot_data$id)
+  #
+  # if (isTRUE(to_latex)) {
+  #   return(list(nodes = plot_data, edges = cover_edges_df))
+  # } else {
+  #   if (!requireNamespace("ggraph", quietly = TRUE)) stop("Install 'ggraph'.")
+  #
+  #   g <- igraph::graph_from_data_frame(cover_edges_df, vertices = plot_data, directed = TRUE)
+  #
+  #   # El layout es manual porque C++ ya calculó x, y
+  #   p <- ggraph::ggraph(g, layout = "manual", x = x, y = y) +
+  #     ggraph::geom_edge_fan(color = "gray60", alpha = 0.6) +
+  #     ggraph::geom_node_point(size = 4, shape = 21, fill = "white", color = "black") +
+  #     ggraph::geom_node_text(ggplot2::aes(label = label), repel = TRUE, size = 3) +
+  #     ggplot2::theme_void()
+  #
+  #   print(p)
+  #   return(invisible(p))
+  # }
 }
