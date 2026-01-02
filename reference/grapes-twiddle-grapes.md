@@ -32,9 +32,9 @@ imps <- fc$implications$clone()
 imps2 <- imps$clone()
 imps2$apply_rules(c("simp", "rsimp"))
 #> Processing batch
-#> --> Simplification: from 10 to 10 in 0.014 secs.
-#> --> Right Simplification: from 10 to 10 in 0.035 secs.
-#> Batch took 0.051 secs. 
+#> --> Simplification: from 10 to 10 in 0.015 secs.
+#> --> Right Simplification: from 10 to 10 in 0.036 secs.
+#> Batch took 0.052 secs. 
 imps %~% imps2
 #> [1] TRUE
 imps %~% imps2[1:9]
