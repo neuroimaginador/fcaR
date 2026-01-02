@@ -107,7 +107,7 @@ included in the package.</p>
 <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method on the concepts object.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lattice_visualization_files/figure-html/basic_plot-1.png" class="r-plt" width="672"></p>
+<p><img src="lattice_visualization_files/figure-html/basic_plot-1.png" class="r-plt" alt="" width="672"></p>
 <p>By default, <code>fcaR</code> applies a heuristic to decide the best
 visualization mode based on the size of the lattice (usually reduced
 labeling and hierarchical layout).</p>
@@ -125,7 +125,7 @@ and minimizes edge crossings. It is ideal for classic <strong>Hasse
 diagrams</strong>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"sugiyama"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lattice_visualization_files/figure-html/sugiyama-1.png" class="r-plt" width="672"></p>
+<p><img src="lattice_visualization_files/figure-html/sugiyama-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level4">
 <h4 id="force-directed-layout-organic">2. Force-directed layout (organic)<a class="anchor" aria-label="anchor" href="#force-directed-layout-organic"></a>
@@ -136,7 +136,7 @@ It is useful for very large, dense lattices or when the strict hierarchy
 makes the graph too wide.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"force"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lattice_visualization_files/figure-html/force-1.png" class="r-plt" width="672"></p>
+<p><img src="lattice_visualization_files/figure-html/force-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 </div>
@@ -175,7 +175,7 @@ intersection of other concepts).</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"reduced"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lattice_visualization_files/figure-html/reduced-1.png" class="r-plt" width="672"></p>
+<p><img src="lattice_visualization_files/figure-html/reduced-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="full-labeling">Full labeling<a class="anchor" aria-label="anchor" href="#full-labeling"></a>
@@ -184,7 +184,7 @@ intersection of other concepts).</li>
 see the full extent (objects) and intent (attributes) in each node.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lattice_visualization_files/figure-html/full-1.png" class="r-plt" width="672"></p>
+<p><img src="lattice_visualization_files/figure-html/full-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="empty-structure-only">Empty (structure only)<a class="anchor" aria-label="anchor" href="#empty-structure-only"></a>
@@ -194,7 +194,7 @@ obscure the structure. The <code>"empty"</code> mode draws only the
 nodes and edges.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="va">concepts</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"empty"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="lattice_visualization_files/figure-html/empty-1.png" class="r-plt" width="672"></p>
+<p><img src="lattice_visualization_files/figure-html/empty-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level2">

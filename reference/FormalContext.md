@@ -52,6 +52,10 @@ Stat Softw*, *14*, 1-25.
   A set of implications on the formal context as an
   [`ImplicationSet`](https://neuroimaginador.github.io/fcaR/reference/ImplicationSet.md).
 
+- `description`:
+
+  An optional description of the dataset
+
 ## Methods
 
 ### Public methods
