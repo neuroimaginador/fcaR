@@ -1,9 +1,6 @@
 ## Test environments
-* local R installation, on MACOS BigSur 11.4, R version 4.3.0 (2023-04-21), platform: aarch64-apple-darwin20 (64-bit)
-* win-builder (devel)
-* macos-latest (release), windows-latest (release), ubuntu-20.04 (release) via GitHub actions.
-* Ubuntu Linux 20.04.1 LTS, R-release, GCC on R-hub.
-* Default platforms using devtools::check_rhub().
+* local R installation, on MACOS Sonoma 14.2, R version 4.3.0 (2023-04-21), platform: aarch64-apple-darwin20 (64-bit)
+* rhub::rhub_check() with platforms: clang-asan, clang-ubsan, ubuntu-next, ubuntu-release, valgrind, linux (All R versions on GitHub Actions ubuntu-latest), m1-san (All R versions on GitHub Actions macos-15, ASAN + UBSAN on macOS), macos-arm64 (All R versions on GitHub Actions macos-latest), windows (All R versions on GitHub Actions windows-latest). All passed.
 
 ## Comments
 New version with some improvements and several fixes for changes in other dependencies.
