@@ -125,23 +125,23 @@ lattice_plot <- function(nodes_df,
   }
 }
 
-#' @title Plot Concept Lattice
-#' @description Visualization of the concept lattice using 'ggraph'.
-#' Supports hierarchical (Freese) and force-directed layouts.
-#'
-#' @param nodes_df Data frame with 'id' column.
-#' @param cover_matrix Sparse matrix (covering relation).
-#' @param method Character. Layout algorithm: "sugiyama" (default, layered/hierarchical) or "force" (spring-based).
-#' @param objects Character vector of object names.
-#' @param attributes Character vector of attribute names.
-#' @param object_names Logical. Show object names?
-#' @param to_latex Logical. Export to LaTeX?
-#' @param ... Arguments passed to internal plotting.
-#'
-#' @importFrom igraph graph_from_data_frame
-#' @importFrom ggraph ggraph geom_edge_fan geom_node_point geom_node_text
-#' @importFrom ggplot2 aes unit theme theme_void
-#' @keywords internal
+# @title Plot Concept Lattice
+# @description Visualization of the concept lattice using 'ggraph'.
+# Supports hierarchical (Freese) and force-directed layouts.
+#
+# @param nodes_df Data frame with 'id' column.
+# @param cover_matrix Sparse matrix (covering relation).
+# @param method Character. Layout algorithm: "sugiyama" (default, layered/hierarchical) or "force" (spring-based).
+# @param objects Character vector of object names.
+# @param attributes Character vector of attribute names.
+# @param object_names Logical. Show object names?
+# @param to_latex Logical. Export to LaTeX?
+# @param ... Arguments passed to internal plotting.
+#
+# @importFrom igraph graph_from_data_frame
+# @importFrom ggraph ggraph geom_edge_fan geom_node_point geom_node_text
+# @importFrom ggplot2 aes unit theme theme_void
+# @keywords internal
 lattice_plot_legacy <- function(nodes_df,
                                 cover_matrix,
                                 method = "sugiyama", # Nuevo parámetro
