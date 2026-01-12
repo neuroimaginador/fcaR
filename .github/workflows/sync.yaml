@@ -15,9 +15,8 @@ jobs:
 
       - name: Push to Group Repository
         run: |
-          # 1. IMPORTANTE: Borrar la autenticación por defecto del bot
-          # Si no hacemos esto, git ignora el token de la URL
-          git config --global --unset-all http.https://github.com/.extraheader
+          # 1. Intentar borrar la auth del bot (|| true evita el error 5 si no existe)
+          git config --global --unset-all http.https://github.com/.extraheader || true
           
           # 2. Configurar el remoto con tu TOKEN
           git remote add target https://neuroimaginador:${{ secrets.API_TOKEN_GITHUB }}@github.com/Malaga-FCA-Group/fcaR.git
