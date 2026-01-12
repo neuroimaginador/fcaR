@@ -11,15 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Importante para traer todo el historial
+          fetch-depth: 0
+          persist-credentials: false  # <--- ESTO ES LA CLAVE MÁGICA
 
       - name: Push to Group Repository
         run: |
-          # 1. Configurar el remoto destino usando el TOKEN en la URL
-          # Esto fuerza a git a usar tu identidad, no la del bot
+          # Ahora no hace falta borrar nada, porque 'checkout' no ha guardado nada.
+          
+          # 1. Configurar el remoto con tu TOKEN explícito
           git remote add target https://neuroimaginador:${{ secrets.API_TOKEN_GITHUB }}@github.com/Malaga-FCA-Group/fcaR.git
-
-          # 2. Empujar explícitamente la rama master/main y los tags
-          # Nota: Ajusta 'master' si tu rama principal se llama 'main'
+          
+          # 2. Empujar
           git push --force target origin/master:master
           git push --force --tags target
