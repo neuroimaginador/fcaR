@@ -1,6 +1,12 @@
 # Changelog
 
+## fcaR 1.3.1
+
+- Added tests
+
 ## fcaR 1.3.0
+
+CRAN release: 2026-01-12
 
 Major Enhancements:
 
