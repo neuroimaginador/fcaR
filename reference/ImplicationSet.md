@@ -641,6 +641,6 @@ colMeans(sizes)
 # Simplify the implication set
 fc_planets$implications$apply_rules("simplification")
 #> Processing batch
-#> --> Simplification: from 10 to 10 in 0.032 secs.
-#> Batch took 0.034 secs. 
+#> --> Simplification: from 10 to 10 in 0.035 secs.
+#> Batch took 0.036 secs. 
 ```
