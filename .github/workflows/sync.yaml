@@ -1,0 +1,23 @@
+name: Sync to Malaga-FCA-Group
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Push to Group Repository
+      uses: yesolutions/mirror-action@master
+      with:
+        REMOTE: 'https://github.com/Malaga-FCA-Group/fcaR.git'
+        GIT_USERNAME: 'neuroimaginador'
+        # Usamos el secreto que creamos antes
+        GIT_PASSWORD: ${{ secrets.API_TOKEN_GITHUB }}
+        PUSH_ALL_REFS: 'true'
