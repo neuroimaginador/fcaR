@@ -12,15 +12,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false  # <--- ESTO ES LA CLAVE MÁGICA
 
       - name: Push to Group Repository
         run: |
-          # 1. Intentar borrar la auth del bot (|| true evita el error 5 si no existe)
-          git config --global --unset-all http.https://github.com/.extraheader || true
+          # Ahora no hace falta borrar nada, porque 'checkout' no ha guardado nada.
           
-          # 2. Configurar el remoto con tu TOKEN
+          # 1. Configurar el remoto con tu TOKEN explícito
           git remote add target https://neuroimaginador:${{ secrets.API_TOKEN_GITHUB }}@github.com/Malaga-FCA-Group/fcaR.git
           
-          # 3. Empujar
+          # 2. Empujar
           git push --force target origin/master:master
           git push --force --tags target
