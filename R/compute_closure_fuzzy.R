@@ -1,7 +1,7 @@
 .compute_closure_fuzzy <- function(S, LHS, RHS, attributes,
-                             reduce = FALSE, verbose = FALSE,
-                             is_direct = FALSE,
-                             logic = "Lukasiewicz") {
+                                   reduce = FALSE, verbose = FALSE,
+                                   is_direct = FALSE,
+                                   logic = "Lukasiewicz") {
 
   if (is.null(LHS) || (ncol(LHS) == 0)) {
 
@@ -19,12 +19,12 @@
 
     end <- TRUE
 
-    for (i in seq(ncol(LHS))) {
+    for (i in seq_len(ncol(LHS))) {
 
       subsethood <- sapply(seq_along(attributes),
                            \(j) {
                              implication(LHS[j, i], S[j])
-                            }) |>
+                           }) |>
         min()
 
       add <- sapply(seq_along(attributes),

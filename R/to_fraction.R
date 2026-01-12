@@ -98,7 +98,7 @@
 
   M_str <- list()
 
-  for (i in seq(nrow(M))) {
+  for (i in seq_len(nrow(M))) {
 
     M_str[[i]] <- sapply(
       ids,

@@ -121,20 +121,20 @@ FormalContext <- R6::R6Class(
         # If it comes from the arules package
         attributes <- I@itemInfo$labels
         I <- convert_to_sparse(I@data)
-        objects <- paste0(seq(ncol(I)))
+        objects <- paste0(seq_len(ncol(I)))
         dimnames(I) <- list(attributes, objects)
       } else {
         # Or if it comes from a numeric table
         if (length(colnames(I)) > 0) {
           attributes <- colnames(I)
         } else {
-          attributes <- paste0("A", seq(ncol(I)))
+          attributes <- paste0("A", seq_len(ncol(I)))
         }
 
         if (length(rownames(I)) > 0) {
           objects <- rownames(I)
         } else {
-          objects <- paste0("O", seq(nrow(I)))
+          objects <- paste0("O", seq_len(nrow(I)))
         }
 
         private$is_many_valued <- check_many_valued(I)

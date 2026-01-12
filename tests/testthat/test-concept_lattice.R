@@ -184,3 +184,45 @@ test_that("fcaR decomposes concepts in its meet-irreducible elements", {
   expect_is(cl, "list")
   expect_is(cl[[1]], "ConceptSet")
 })
+
+test_that("fcaR calculates lattice properties correctly", {
+  # CASO 1: Retículo Distributivo (Boolean Algebra)
+  # La matriz identidad genera un retículo Booleano (2^n conceptos)
+  I_dist <- 1 - diag(3)
+  colnames(I_dist) <- c("a", "b", "c")
+  rownames(I_dist) <- c("o1", "o2", "o3")
+  fc_dist <- FormalContext$new(I_dist)
+  fc_dist$find_concepts()
+
+  # Propiedades esperadas para B3 (Boolean algebra of 3 atoms)
+  expect_true(fc_dist$concepts$is_distributive(), label = "Boolean lattice should be distributive")
+  expect_true(fc_dist$concepts$is_modular(), label = "Distributive implies modular")
+  expect_true(fc_dist$concepts$is_semimodular())
+  expect_true(fc_dist$concepts$is_atomic())
+
+  # CASO 2: Retículo NO Distributivo (Pentágono N5 - contraejemplo clásico)
+  # Contexto simple para generar N5:
+  # Elementos: 0 < x < z < 1, y incomparable con x,z.
+  # Matriz de incidencia manual para forzar estructura no modular
+  I_n5 <- matrix(c(1, 1, 1, 1, 1,
+                   0, 1, 1, 0, 1,
+                   0, 0, 1, 0, 1,
+                   0, 0, 0, 1, 1,
+                   0, 0, 0, 0, 1), nrow = 5, byrow = TRUE)
+  fc_n5 <- FormalContext$new(I_n5)
+  fc_n5$find_concepts()
+
+  # Verificamos que los métodos devuelven logical sin error
+  prop_dist <- fc_n5$concepts$is_distributive()
+  prop_mod  <- fc_n5$concepts$is_modular()
+
+  expect_is(prop_dist, "logical")
+  expect_is(prop_mod, "logical")
+
+  expect_false(prop_dist)
+  expect_false(prop_mod)
+
+  # Cache check: Llamar por segunda vez debe devolver lo mismo (usa la cache privada)
+  expect_equal(fc_n5$concepts$is_distributive(), prop_dist)
+})
+

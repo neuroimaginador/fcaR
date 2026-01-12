@@ -77,7 +77,7 @@ export_to_tikz <- function(plot_data, edges_df, width = 12, height = 12, standal
   code <- c(code, "]")
 
   # Dibujar Aristas (Fondo)
-  for (i in 1:nrow(edges_df)) {
+  for (i in seq_len(nrow(edges_df))) {
     u <- plot_data[plot_data$id == edges_df$from[i], ]
     v <- plot_data[plot_data$id == edges_df$to[i], ]
     if (nrow(u) == 1 && nrow(v) == 1) {
@@ -89,7 +89,7 @@ export_to_tikz <- function(plot_data, edges_df, width = 12, height = 12, standal
   }
 
   # Dibujar Nodos
-  for (i in 1:nrow(plot_data)) {
+  for (i in seq_len(nrow(plot_data))) {
     row <- plot_data[i, ]
     fill <- get_col(row$fill_color)
 

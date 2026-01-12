@@ -711,3 +711,98 @@ test_that("fcaR combines implications", {
 
 
 })
+
+
+test_that("fcaR computes direct optimal basis using all C++ backends", {
+  # Contexto pequeño pero suficiente para generar implicaciones no triviales
+  I <- matrix(c(1, 0, 1, 0,
+                1, 1, 0, 0,
+                1, 1, 1, 0,
+                0, 0, 1, 1), nrow = 4, byrow = TRUE)
+  colnames(I) <- letters[1:4]
+  rownames(I) <- paste0("O", 1:4)
+
+  fc <- FormalContext$new(I)
+  fc$find_implications()
+
+  # Guardamos una copia de la base original para comparar equivalencia semántica
+  base_imps <- fc$implications$clone()
+
+  methods <- c("direct_optimal", "final_ts", "monotonic", "priority")
+
+  for (m in methods) {
+    # Clonamos para no alterar el original y probar cada método desde cero
+    imps_test <- base_imps$clone()
+
+    # Verificar que no da error la ejecución C++
+    expect_error(imps_test$to_direct_optimal(method = m), NA)
+
+    # Verificar que la estructura interna sigue siendo válida
+    expect_is(imps_test, "ImplicationSet")
+    expect_gt(imps_test$cardinality(), 0)
+
+    # PRUEBA DE ORO: Equivalencia Semántica
+    # El conjunto optimizado debe deducir exactamente lo mismo que el original
+    # (imps_test %~% base_imps) comprueba si A implica B y B implica A
+    expect_true(imps_test %~% base_imps,
+                label = paste("Equivalence check failed for method:", m))
+  }
+})
+
+test_that("fcaR filters implications robustly", {
+  # Creamos implicaciones manualmente para tener control total
+  # a -> b
+  # b -> c
+  # a, c -> d
+  fc <- FormalContext$new(matrix(0, ncol = 4, nrow = 2))
+  fc$attributes <- c("a", "b", "c", "d")
+  fc$implications <- parse_implications(c("a -> b; b -> c; a,c -> d"))
+
+  # 1. Filtrar por LHS que contiene "a" (debería recuperar la 1 y la 3)
+  res_lhs <- fc$implications$filter(lhs = "a")
+  expect_equal(res_lhs$cardinality(), 2)
+  # Verificamos que 'b -> c' NO está
+  LHS_mat <- res_lhs$get_LHS_matrix()
+  expect_equal(unname(LHS_mat["b", ]), c(0, 0))
+
+  # 2. Filtrar por RHS que contiene "c" (debería recuperar la 2: b->c)
+  res_rhs <- fc$implications$filter(rhs = "c")
+  expect_equal(res_rhs$cardinality(), 1)
+  expect_equal(sum(res_rhs$get_LHS_matrix()["b", ]), 1)
+
+  # 3. Filtrar intersección (LHS="a" AND RHS="d") -> (a,c -> d)
+  res_both <- fc$implications$filter(lhs = "a", rhs = "d")
+  expect_equal(res_both$cardinality(), 1)
+
+  # 4. Caso borde: Filtrado que no produce resultados
+  # (ninguna regla tiene 'd' en el antecedente)
+  # Esto suele devolver NULL o un ImplicationSet vacío, verificamos que no rompa
+  expect_warning(empty_res <- fc$implications$filter(lhs = "d"), "No combination")
+  expect_null(empty_res)
+})
+
+test_that("fcaR applies simplification rules with reordering and parallelization", {
+  # Usamos un dataset real pequeño para esto
+  data("planets", package = "fcaR")
+  fc <- FormalContext$new(planets)
+  fc$find_implications()
+
+  # Línea base
+  n_original <- fc$implications$cardinality()
+
+  # Copia para testear reorder = TRUE (aleatoriedad en el orden de aplicación)
+  imps_reorder <- fc$implications$clone()
+  expect_error(imps_reorder$apply_rules(rules = c("composition", "simplification"),
+                                        reorder = TRUE), NA)
+
+  # El resultado debe seguir siendo equivalente semánticamente al original
+  # (aunque el número de reglas pueda variar ligeramente o ser el mismo, la lógica no cambia)
+  expect_true(imps_reorder %~% fc$implications)
+
+  # Copia para testear batching (forzando batch_size pequeño)
+  imps_batch <- fc$implications$clone()
+  # Batch size 2 fuerza a que se procese en trozos
+  expect_error(imps_batch$apply_rules(batch_size = 2L), NA)
+  expect_true(imps_batch %~% fc$implications)
+})
+

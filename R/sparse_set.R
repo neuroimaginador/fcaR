@@ -71,9 +71,9 @@ Set <- R6::R6Class(
     #' \code{S$assign(attributes = c(A, B), values = c(1, 0.3))}.
     #'
     #' @export
-    assign = function(attributes = c(),
-                      values = c(),
-                      ...) {
+    assign = function(...,
+                      attributes = c(),
+                      values = c()) {
 
       dots <- unlist(list(...))
 
@@ -131,7 +131,7 @@ Set <- R6::R6Class(
       }
 
       w <- private$v
-      idx <- setdiff(seq(self$length()), indices)
+      idx <- setdiff(seq_len(self$length()), indices)
       w[idx] <- 0
       S <- Set$new(attributes = private$attributes,
                    M = w)

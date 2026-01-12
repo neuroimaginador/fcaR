@@ -38,7 +38,7 @@ ordinal_scaling <- function(V, col_name,
   # Scale (context)
   vals <- sort(unique(V))
 
-  if (is.character(V) | is.factor(V)) {
+  if (is.character(V) || is.factor(V)) {
 
     vals <- as.character(vals)
 
@@ -87,7 +87,7 @@ interordinal_scaling <- function(V, col_name,
   # Scale (context)
   vals <- sort(unique(V))
 
-  if (is.character(V) | is.factor(V)) {
+  if (is.character(V) || is.factor(V)) {
 
     vals <- as.character(vals)
 
@@ -137,7 +137,7 @@ biordinal_scaling <- function(V, col_name,
   # Scale (context)
   vals <- sort(unique(V))
 
-  if (is.character(V) | is.factor(V)) {
+  if (is.character(V) || is.factor(V)) {
 
     vals <- as.character(vals)
 

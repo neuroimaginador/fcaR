@@ -24,7 +24,7 @@
   conclusions <- imps$get_RHS_matrix()
   I <- fc$incidence()
 
-  holds <- sapply(seq(ncol(premises)),
+  holds <- sapply(seq_len(ncol(premises)),
                      function(i) {
 
                        p <- .extract_column(premises, i)

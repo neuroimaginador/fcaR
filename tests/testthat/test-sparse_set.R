@@ -95,3 +95,27 @@ test_that("fcaR computes operations of Sets", {
   expect_error(S %|% T, NA)
 
 })
+
+test_that("SparseSet handles numeric/logical indexing and empty sets", {
+  attributes <- c("a", "b", "c")
+  S <- Set$new(attributes = attributes)
+  S$assign(a = 1, c = 0.5)
+
+  # 1. Indexado Numérico
+  expect_equal(S[1]$cardinal(), 1)
+  expect_equal(S[2]$cardinal(), 0)
+
+  # 2. Indexado Lógico
+  # Seleccionar 'a' y 'c'
+  mask <- c(TRUE, FALSE, TRUE)
+  subS <- S[mask]
+  expect_equal(subS$length(), 3) # Mantiene la dimensión original pero hace 0 los no seleccionados
+  expect_equal(subS$cardinal(), 1.5)
+
+  # 3. Comportamiento del Conjunto Vacío
+  E <- Set$new(attributes = attributes)
+  expect_equal(E$cardinal(), 0)
+  # Verificar que el print no falla para conjunto vacío
+  expect_output(E$print(), "\\{\\}")
+  expect_match(E$to_latex(print = FALSE), "varnothing")
+})

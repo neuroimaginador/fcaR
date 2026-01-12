@@ -606,7 +606,7 @@ ImplicationSet <- R6::R6Class(
 
       dimnames(LHS) <- list(
         private$attributes,
-        paste0(seq(ncol(LHS)))
+        paste0(seq_len(ncol(LHS)))
       )
 
       return(LHS)
@@ -631,7 +631,7 @@ ImplicationSet <- R6::R6Class(
 
       dimnames(RHS) <- list(
         private$attributes,
-        paste0(seq(ncol(RHS)))
+        paste0(seq_len(ncol(RHS)))
       )
 
 
@@ -675,7 +675,7 @@ ImplicationSet <- R6::R6Class(
       } else {
         # If not specified a filter for LHS,
         # select all implications
-        idx_lhs <- seq(ncol(LHS))
+        idx_lhs <- seq_len(ncol(LHS))
       }
 
       if (!is.null(not_lhs)) {
@@ -715,7 +715,7 @@ ImplicationSet <- R6::R6Class(
       } else {
         # If not specified a filter for RHS,
         # select all implications
-        idx_rhs <- seq(ncol(RHS))
+        idx_rhs <- seq_len(ncol(RHS))
       }
 
       if (!is.null(not_rhs)) {
@@ -754,7 +754,7 @@ ImplicationSet <- R6::R6Class(
           newLHS <- LHS[, idx]
           newRHS <- RHS[, idx]
 
-          other_idx <- setdiff(seq(nrow(RHS)), idx_attr)
+          other_idx <- setdiff(seq_len(nrow(RHS)), idx_attr)
           newRHS[other_idx, ] <- 0
 
           imp <- ImplicationSet$new(

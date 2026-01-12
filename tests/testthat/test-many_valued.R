@@ -1,27 +1,27 @@
 # Nominal
 A_nom <- matrix(c("yes", "yes", "no", "yes", "no"), ncol = 1)
 colnames(A_nom) <- "Grant"
-rownames(A_nom) <- paste0("Student ", seq(nrow(A_nom)))
+rownames(A_nom) <- paste0("Student ", seq_len(nrow(A_nom)))
 
 # Ordinal
 A_ord <- matrix(c(7, 10, 5, 8, 4), ncol = 1)
 colnames(A_ord) <- "Intern"
-rownames(A_ord) <- paste0("Student ", seq(nrow(A_ord)))
+rownames(A_ord) <- paste0("Student ", seq_len(nrow(A_ord)))
 
 # Interordinal
 A_int <- matrix(c("agree", "strongly agree", "neither agree nor disagree", "agree", "disagree"), ncol = 1)
 colnames(A_int) <- "Agreement"
-rownames(A_int) <- paste0("Student ", seq(nrow(A_int)))
+rownames(A_int) <- paste0("Student ", seq_len(nrow(A_int)))
 
 # Biordinal
 A_bi <- matrix(c("working", "hard working", "working", "working", "lazy"), ncol = 1)
 colnames(A_bi) <- "Attitude"
-rownames(A_bi) <- paste0("Student ", seq(nrow(A_bi)))
+rownames(A_bi) <- paste0("Student ", seq_len(nrow(A_bi)))
 
 # Interval
 A_interv <- matrix(c(2.7, 4.1, 3.6, 4, 3.6), ncol = 1)
 colnames(A_interv) <- "Score"
-rownames(A_interv) <- paste0("Student ", seq(nrow(A_interv)))
+rownames(A_interv) <- paste0("Student ", seq_len(nrow(A_interv)))
 
 # Aposition
 A <- data.frame(A_nom, A_ord, A_int, A_bi, A_interv)

@@ -22,14 +22,14 @@
 #' @export
 `%<=%` <- function(C1, C2) {
 
-  if (inherits(C1, "Concept") &
+  if (inherits(C1, "Concept") &&
       inherits(C2, "Concept")) {
 
     return(all(C1$get_extent()$get_vector() <= C2$get_extent()$get_vector()))
 
   }
 
-  if (inherits(C1, "Set") |
+  if (inherits(C1, "Set") ||
       inherits(C2, "Set")) {
 
     return(all(C1$get_vector() <= C2$get_vector()))
@@ -66,14 +66,14 @@
 `%==%` <- function(C1, C2) {
 
   # Equality of sets/concepts
-  if (inherits(C1, "Concept") &
+  if (inherits(C1, "Concept") &&
       inherits(C2, "Concept")) {
 
     return(all(C1$get_extent()$get_vector() == C2$get_extent()$get_vector()))
 
   }
 
-  if (inherits(C1, "Set") |
+  if (inherits(C1, "Set") ||
       inherits(C2, "Set")) {
 
     return(all(C1$get_vector() == C2$get_vector()))
@@ -110,7 +110,7 @@
 `%-%` <- function(S1, S2) {
 
   # Fuzzy set difference
-  if (inherits(S1, "Set") &
+  if (inherits(S1, "Set") &&
       inherits(S2, "Set")) {
 
     A <- S1$get_vector()
@@ -155,7 +155,7 @@
 `%&%` <- function(S1, S2) {
 
   # Fuzzy set difference
-  if (inherits(S1, "Set") &
+  if (inherits(S1, "Set") &&
       inherits(S2, "Set")) {
 
     att <- S1$get_attributes()
@@ -203,7 +203,7 @@
 `%|%` <- function(S1, S2) {
 
   # Fuzzy set difference
-  if (inherits(S1, "Set") &
+  if (inherits(S1, "Set") &&
       inherits(S2, "Set")) {
 
     att <- S1$get_attributes()

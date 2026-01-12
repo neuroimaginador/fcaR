@@ -1,7 +1,7 @@
 #' @importFrom methods cbind2
 .imp_to_basis_bg <- function(lhs_bg, rhs_bg, LHS, RHS, attributes) {
 
-  n <- ncol(LHS)
+  # n <- ncol(LHS)
 
   # for (i in seq(n)) {
   #

@@ -13,7 +13,7 @@ set_to_latex <- function(S, attributes) {
     att <- attributes[idx] %>%
       format_label()
 
-    str <- sapply(seq(length(att)),
+    str <- sapply(seq_along(att),
                   \(i) element_to_latex(nm = att[i],
                                         val = A[i])) %>%
       stringr::str_flatten(", ")
@@ -85,7 +85,7 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   output <- c()
 
-  for (i in seq(ncol(LHS))) {
+  for (i in seq_len(ncol(LHS))) {
 
     lhs <- Matrix::Matrix(LHS[, i], sparse = TRUE)
     rhs <- Matrix::Matrix(RHS[, i], sparse = TRUE)
@@ -109,7 +109,7 @@ imp_to_latex <- function(imp_set, ncols = 1,
 
   output <- matrix(output, ncol = ncols)
 
-  output <- sapply(seq(nrow(output)), function(r) {
+  output <- sapply(seq_len(nrow(output)), function(r) {
 
     paste0(stringr::str_flatten(output[r, ], collapse = " & "), "\\\\")
 
@@ -150,7 +150,7 @@ concepts_to_latex <- function(extents, intents,
                               ncols = 1,
                               align = TRUE,
                               numbered = TRUE,
-                              numbers = seq(ncol(extents))) {
+                              numbers = seq_len(ncol(extents))) {
 
   output <- c()
   n <- ncol(extents)
@@ -178,7 +178,7 @@ concepts_to_latex <- function(extents, intents,
 
   output <- matrix(output, ncol = ncols)
 
-  output <- sapply(seq(nrow(output)), function(r) {
+  output <- sapply(seq_len(nrow(output)), function(r) {
 
     paste0(stringr::str_flatten(output[r, ], collapse = " & "), "\\\\")
 

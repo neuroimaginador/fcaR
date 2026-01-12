@@ -33,8 +33,8 @@
 
     message("Using parallel execution\n")
 
-    my_apply <- function(x, FUN)
-      parallel::mclapply(x, FUN, mc.cores = parallel::detectCores())
+    my_apply <- function(x, FUN) {
+      parallel::mclapply(x, FUN, mc.cores = parallel::detectCores())}
 
     verbose <- TRUE
 

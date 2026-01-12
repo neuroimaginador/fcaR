@@ -339,7 +339,7 @@ test_that("fcaR prints large formal contexts", {
                             size = 400,
                             replace = TRUE),
               nrow = 20)
-  colnames(I) <- paste0("ATT_", seq(ncol(I)))
+  colnames(I) <- paste0("ATT_", seq_len(ncol(I)))
 
   fc <- FormalContext$new(I)
   expect_error(fc$print(), NA)
@@ -672,4 +672,179 @@ test_that("fcaR works with contexts with one attribute or one object", {
   expect_equal(dim(fc$concepts$intents()), c(1, 3))
   expect_equal(dim(fc$concepts$extents()), c(2, 3))
 
+})
+
+test_that("fcaR factorizes a context (GreConD and ASSO)", {
+  # Crear un contexto pequeño pero interesante
+  I <- matrix(c(1, 1, 0, 0,
+                1, 1, 1, 0,
+                0, 1, 1, 1,
+                0, 0, 1, 1), nrow = 4, byrow = TRUE)
+  colnames(I) <- paste0("P", 1:4)
+  rownames(I) <- paste0("O", 1:4)
+
+  fc <- FormalContext$new(I)
+
+  # 1. Test GreConD (Debería ser exacto para este caso booleano simple)
+  res_grecond <- fc$factorize(method = "GreConD")
+
+  expect_is(res_grecond$object_factor, "FormalContext")
+  expect_is(res_grecond$factor_attribute, "FormalContext")
+
+  # Verificar reconstrucción: I == A %*% B (Booleano)
+  A <- as.matrix(res_grecond$object_factor$incidence())
+  B <- as.matrix(res_grecond$factor_attribute$incidence())
+
+  # Producto booleano
+  Reconstructed <- (A %*% B) > 0
+  Reconstructed <- Reconstructed + 0 # Convertir a numérico
+
+  expect_true(all(I == Reconstructed))
+
+  # 2. Test ASSO (verificar que no da error y devuelve estructura correcta)
+  expect_error(res_asso <- fc$factorize(method = "ASSO", threshold = 0.5), NA)
+  expect_is(res_asso$object_factor, "FormalContext")
+})
+
+test_that("fcaR handles scaling and background knowledge correctly", {
+  # Datos simples
+  df <- data.frame(val = c(1, 2, 3, 1))
+  fc <- FormalContext$new(df)
+
+  # Escalar con generación de background knowledge
+  expect_error(fc$scale("val", "ordinal", bg = TRUE), NA)
+
+  # Verificar que se han guardado las escalas
+  scales <- fc$get_scales()
+  expect_true(length(scales) > 0)
+
+  # Verificar que hay conocimiento de fondo (implicaciones)
+  bg <- fc$background_knowledge()
+  expect_is(bg, "ImplicationSet")
+  # Para escala ordinal 1->2->3, debería haber implicaciones
+  expect_gt(bg$cardinality(), 0)
+})
+
+test_that("fcaR handles dense contexts (optimization path)", {
+  # Matriz de todo unos
+  I <- matrix(1, nrow = 5, ncol = 5)
+  colnames(I) <- letters[1:5]
+  rownames(I) <- LETTERS[1:5]
+
+  fc <- FormalContext$new(I)
+
+  # Esto activará el bloque 'if (all(self$I@x == 1) && (method == "InClose"))'
+  expect_error(fc$find_concepts(method = "InClose"), NA)
+
+  # Debería haber exactamente 1 concepto (el que tiene todos los objetos y atributos)
+  # O 2 si consideramos el vacío dependiendo de la lógica, pero en FCA clásico con todo 1s:
+  # Extensión total <-> Intención total.
+  # Verificamos simplemente que el lattice no esté vacío y sea consistente.
+  expect_gt(fc$concepts$size(), 0)
+
+  # Verificar propiedad básica: el concepto top tiene todos los objetos
+  top_extent <- fc$concepts$top()$get_extent()
+  expect_equal(sum(top_extent$get_vector()), 5)
+})
+
+test_that("fcaR saves and loads many-valued contexts properly", {
+  # Crear contexto multivaluado
+  I_mv <- data.frame(A = c(1, 2), B = factor(c("x", "y")))
+  fc_mv <- FormalContext$new(I_mv)
+
+  tmp_file <- tempfile(fileext = ".rds")
+
+  # Guardar
+  expect_error(fc_mv$save(tmp_file), NA)
+
+  # Cargar en objeto nuevo
+  fc_loaded <- FormalContext$new(tmp_file)
+
+  # Verificar que sigue siendo multivaluado y los datos coinciden
+  # Nota: El acceso a private no es directo en tests, verificamos print o incidence
+  expect_output(fc_loaded$print(), "FormalContext with")
+
+  # incidence() devuelve many_valued_I en estos casos
+  I_loaded <- fc_loaded$incidence()
+  expect_equal(as.matrix(I_mv), as.matrix(I_loaded))
+})
+
+test_that("fcaR setters/getters and error handling work", {
+  I <- matrix(c(0, 1, 1, 0), nrow = 2)
+  fc <- FormalContext$new(I)
+
+  # Logics
+  fc$use_logic("Lukasiewicz")
+  expect_equal(fc$get_logic(), "Lukasiewicz")
+
+  fc$use_connection("benevolent1")
+  expect_equal(fc$get_connection(), "benevolent1")
+
+  # Fichero inexistente
+  expect_error(FormalContext$new("non_existent_file.csv"), "not found")
+
+  # Intentar reducir un contexto no binario (fuerza error específico)
+  # Usamos un contexto multivaluado para esto
+  I_mv <- data.frame(A = c(1, 2))
+  fc_mv <- FormalContext$new(I_mv)
+  expect_error(fc_mv$reduce(), "not binary")
+})
+
+
+
+test_that("fcaR object/attribute concepts are semantically correct", {
+  # Contexto simple:
+  #    a b
+  # o1 1 0
+  # o2 1 1
+  I <- matrix(c(1, 0, 1, 1), nrow = 2, byrow = TRUE)
+  colnames(I) <- c("a", "b")
+  rownames(I) <- c("o1", "o2")
+  fc <- FormalContext$new(I)
+  fc$find_concepts()
+
+  # Concepto Objeto o1:
+  # Intent(o1) = {a}. Extent({a}) = {o1, o2}.
+  # Por tanto obj_concept(o1) debe ser el concepto ({o1,o2}, {a})
+  C_o1 <- fc$obj_concept("o1")
+
+  # Verificamos extensión (debe tener cardinal 2)
+  expect_equal(C_o1$get_extent()$cardinal(), 2)
+  # Verificamos intención (debe ser solo 'a')
+  intent_names <- C_o1$get_intent()$get_attributes()[Matrix::which(C_o1$get_intent()$get_vector() > 0)]
+  expect_equal(intent_names, "a")
+
+  # Concepto Atributo b:
+  # Extent(b) = {o2}. Intent({o2}) = {a, b}.
+  # Por tanto att_concept(b) debe ser ({o2}, {a,b})
+  C_b <- fc$att_concept("b")
+
+  expect_equal(C_b$get_extent()$cardinal(), 1) # Solo o2
+  intent_names_b <- C_b$get_intent()$get_attributes()[Matrix::which(C_b$get_intent()$get_vector() > 0)]
+  expect_true(all(c("a", "b") %in% intent_names_b))
+})
+
+test_that("fcaR allows perfect round-trip persistence (Save -> Load)", {
+  # Usar un contexto no trivial
+  data("planets", package = "fcaR")
+  fc_orig <- FormalContext$new(planets)
+  fc_orig$find_concepts()
+  fc_orig$find_implications()
+
+  tmp <- tempfile(fileext = ".rds")
+  fc_orig$save(tmp)
+
+  # Cargar en nueva instancia
+  fc_new <- FormalContext$new(tmp)
+
+  # 1. Verificar Dimensiones
+  expect_equal(fc_orig$dim(), fc_new$dim())
+
+  # 2. Verificar Contenido del Retículo
+  expect_equal(fc_orig$concepts$size(), fc_new$concepts$size())
+  # Comparamos la matriz de extensiones directamente
+  expect_true(all(fc_orig$concepts$extents() == fc_new$concepts$extents()))
+
+  # 3. Verificar Implicaciones (cantidad y reglas)
+  expect_equal(fc_orig$implications$cardinality(), fc_new$implications$cardinality())
 })

@@ -27,7 +27,7 @@
   conclusions <- imps2$get_RHS_matrix()
   premises <- imps2$get_LHS_matrix()
 
-  entails <- sapply(seq(ncol(premises)),
+  entails <- sapply(seq_len(ncol(premises)),
                   function(i) {
 
                     p <- .extract_column(premises, i)
