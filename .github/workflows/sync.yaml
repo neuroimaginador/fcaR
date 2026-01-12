@@ -6,18 +6,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  sync:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Importante para traer todo el historial
 
-    - name: Push to Group Repository
-      uses: yesolutions/mirror-action@master
-      with:
-        REMOTE: 'https://github.com/Malaga-FCA-Group/fcaR.git'
-        GIT_USERNAME: 'neuroimaginador'
-        # Usamos el secreto que creamos antes
-        GIT_PASSWORD: ${{ secrets.API_TOKEN_GITHUB }}
-        PUSH_ALL_REFS: 'true'
+      - name: Push to Group Repository
+        run: |
+          # 1. Configurar el remoto destino usando el TOKEN en la URL
+          # Esto fuerza a git a usar tu identidad, no la del bot
+          git remote add target https://neuroimaginador:${{ secrets.API_TOKEN_GITHUB }}@github.com/Malaga-FCA-Group/fcaR.git
+
+          # 2. Empujar explícitamente la rama master/main y los tags
+          # Nota: Ajusta 'master' si tu rama principal se llama 'main'
+          git push --force target origin/master:master
+          git push --force --tags target
