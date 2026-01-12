@@ -1,4 +1,4 @@
-name: Sync to Malaga-FCA-Group
+name: Sync to Malaga-FCA-group
 
 on:
   push:
@@ -17,10 +17,10 @@ jobs:
       - name: Push to Group Repository
         run: |
           # Ahora no hace falta borrar nada, porque 'checkout' no ha guardado nada.
-          
+
           # 1. Configurar el remoto con tu TOKEN explícito
-          git remote add target https://neuroimaginador:${{ secrets.API_TOKEN_GITHUB }}@github.com/Malaga-FCA-Group/fcaR.git
-          
+          git remote add target https://neuroimaginador:${{ secrets.API_TOKEN_GITHUB }}@github.com/Malaga-FCA-group/fcaR.git
+
           # 2. Empujar
           git push --force target origin/master:master
           git push --force --tags target
