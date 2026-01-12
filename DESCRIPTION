@@ -5,7 +5,7 @@ Authors@R:
     c(person(given = "Domingo",
              family = "Lopez Rodriguez",
              role = c("aut", "cre"),
-             email = "dominlopez@uma.es",
+             email = c("dominlopez78@gmail.com", "dominlopez@uma.es"),
              comment = c(ORCID = "0000-0002-0172-1585")),
       person(given = "Angel",
              family = "Mora",
@@ -17,16 +17,7 @@ Authors@R:
       person(given = "Ana",
              family = "Villalon",
              role = "aut"))
-Maintainer: Domingo Lopez Rodriguez <dominlopez@uma.es>
-Description: Provides tools to perform fuzzy formal concept
-    analysis, presented in Wille (1982) <doi:10.1007/978-3-642-01815-2_23>
-    and in Ganter and Obiedkov (2016) <doi:10.1007/978-3-662-49291-8>.  It
-    provides functions to load and save a formal context, extract its
-    concept lattice and implications.  In addition, one can use the
-    implications to compute semantic closures of fuzzy sets and, thus,
-    build recommendation systems. Matrix factorization is provided by 
-    the GreConD+ algorithm (Belohlavek and Trneckova, 2024 
-    <doi:10.1109/TFUZZ.2023.3330760>).
+Description: Provides tools to perform fuzzy formal concept analysis, presented in Wille (1982) <doi:10.1007/978-3-642-01815-2_23> and in Ganter and Obiedkov (2016) <doi:10.1007/978-3-662-49291-8>.  It provides functions to load and save a formal context, extract its concept lattice and implications.  In addition, one can use the implications to compute semantic closures of fuzzy sets and, thus, build recommendation systems. Matrix factorization is provided by the GreConD+ algorithm (Belohlavek and Trneckova, 2024 <doi:10.1109/TFUZZ.2023.3330760>).
 License: GPL-3
 URL: https://github.com/Malaga-FCA-group/fcaR, https://neuroimaginador.github.io/fcaR/
 BugReports: https://github.com/Malaga-FCA-group/fcaR/issues
