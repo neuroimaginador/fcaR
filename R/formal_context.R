@@ -1511,59 +1511,100 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
-    #' Subcontext of the formal context
+    #' Generates a new FormalContext restricted to a subset of objects and/or attributes.
     #'
-    #' @param objects (character array) Name of the objects to
-    #' keep.
-    #' @param attributes (character array) Names of the attributes
-    #' to keep.
+    #' @param objects (character or integer vector) The names or indices of the objects to keep. If NULL, keeps all.
+    #' @param attributes (character or integer vector) The names or indices of the attributes to keep. If NULL, keeps all.
     #'
-    #' @details
-    #' A warning will be issued if any of the names is not present
-    #' in the list of objects or attributes of the formal context.
+    #' @return A new \code{FormalContext} object representing the subcontext.
     #'
-    #' If \code{objects} or \code{attributes} is empty, then it is
-    #' assumed to represent the whole set of objects or attributes
-    #' of the original formal context.
-    #'
-    #' @return Another \code{FormalContext} that is a subcontext
-    #' of the original one, with only the objects and attributes
-    #' selected.
     #' @export
     #'
     #' @examples
     #' fc <- FormalContext$new(planets)
     #' fc$subcontext(attributes = c("moon", "no_moon"))
-    subcontext = function(objects,
-                          attributes) {
-      if (missing(objects)) objects <- self$objects
-      if (missing(attributes)) attributes <- self$attributes
+    subcontext = function(objects, attributes) {
 
-      if (is.numeric(objects)) {
-        final_objects <- self$objects[objects[objects > 0 & objects < length(self$objects)]]
+        if (missing(objects)) objects <- self$objects
+        if (missing(attributes)) attributes <- self$attributes
+
+      # --- 1. Resolver Índices de Objetos ---
+      if (is.null(objects)) {
+        # Si es NULL, mantenemos todos los índices
+        idx_objs <- seq_len(self$dim()[1])
+      } else if (is.character(objects)) {
+        # Si son nombres, buscamos sus índices
+        idx_objs <- match(objects, self$objects)
+        # Filtramos NAs (nombres que no existen)
+        idx_objs <- idx_objs[!is.na(idx_objs)]
       } else {
-        final_objects <- intersect(objects, self$objects)
+        # Asumimos numérico/lógico
+        idx_objs <- objects
       }
 
-      if (is.numeric(attributes)) {
-        final_attributes <- self$attributes[attributes[attributes > 0 & attributes < length(self$attributes)]]
+      # --- 2. Resolver Índices de Atributos ---
+      if (is.null(attributes)) {
+        idx_attrs <- seq_len(self$dim()[2])
+      } else if (is.character(attributes)) {
+        idx_attrs <- match(attributes, self$attributes)
+        idx_attrs <- idx_attrs[!is.na(idx_attrs)]
       } else {
-        final_attributes <- intersect(attributes, self$attributes)
+        idx_attrs <- attributes
       }
 
-      if (length(objects) == 0) objects <- self$objects
-      if (length(attributes) == 0) attributes <- self$attributes
+      # --- 3. Subconjunto de la Matriz (CRÍTICO) ---
+      I_sub <- self$incidence()[idx_objs, idx_attrs, drop = FALSE]
+      # rownames(I_sub) <- self$objects[idx_objs]
+      # rownames(I_sub) <- self$attributes[idx_attrs]
 
-      I <- self$incidence()[final_objects, final_attributes]
-      I <- matrix(I,
-        nrow = length(final_objects),
-        ncol = length(final_attributes)
-      )
-      rownames(I) <- final_objects
-      colnames(I) <- final_attributes
+      # --- 4. Crear el Nuevo Contexto ---
+      # FormalContext$new es capaz de ingerir una matriz dispersa directamente.
+      # Esto reinicia automáticamente conceptos e implicaciones a NULL (lo correcto).
+      new_fc <- FormalContext$new(I_sub)
 
-      return(FormalContext$new(I))
+      # --- 5. Preservar Metadatos Vitales ---
+      # El subcontexto debe operar bajo las mismas reglas matemáticas que el padre.
+      # Copiamos la lógica difusa actual.
+      new_fc$use_logic(private$logic)
+
+      # (Opcional) Si hubiera Background Knowledge cargado, ¿debería copiarse?
+      # Generalmente no, porque las escalas dependen de los atributos originales.
+      # Si se han borrado atributos, el BG knowledge podría ser inválido.
+      # Por seguridad, es mejor dejarlo limpio.
+
+      return(new_fc)
     },
+    # subcontext = function(objects,
+    #                       attributes) {
+    #   if (missing(objects)) objects <- self$objects
+    #   if (missing(attributes)) attributes <- self$attributes
+    #
+    #   if (is.numeric(objects)) {
+    #
+    #     final_objects <- self$objects[objects[objects > 0 & objects < length(self$objects)]]
+    #   } else {
+    #     final_objects <- intersect(objects, self$objects)
+    #   }
+    #
+    #   if (is.numeric(attributes)) {
+    #     final_attributes <- self$attributes[attributes[attributes > 0 & attributes < length(self$attributes)]]
+    #   } else {
+    #     final_attributes <- intersect(attributes, self$attributes)
+    #   }
+    #
+    #   if (length(objects) == 0) objects <- self$objects
+    #   if (length(attributes) == 0) attributes <- self$attributes
+    #
+    #   I <- self$incidence()[final_objects, final_attributes]
+    #   I <- matrix(I,
+    #     nrow = length(final_objects),
+    #     ncol = length(final_attributes)
+    #   )
+    #   rownames(I) <- final_objects
+    #   colnames(I) <- final_attributes
+    #
+    #   return(FormalContext$new(I))
+    # },
 
     #' @description
     #' Subcontext of the formal context

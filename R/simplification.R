@@ -52,13 +52,13 @@
     # that are already covered by the more general rule.
 
     if (length(my_idx) > 1) {
-      C <- LHS[, my_idx]
-      D <- RHS[, my_idx]
+      C <- LHS[, my_idx, drop = FALSE]
+      D <- RHS[, my_idx, drop = FALSE]
     } else {
-      C <- Matrix::Matrix(LHS[, my_idx], sparse = TRUE)
-      D <- Matrix::Matrix(RHS[, my_idx], sparse = TRUE)
+      C <- Matrix::Matrix(LHS[, my_idx, drop = FALSE], sparse = TRUE)
+      D <- Matrix::Matrix(RHS[, my_idx, drop = FALSE], sparse = TRUE)
     }
-    B <- Matrix::Matrix(RHS[, this_row], sparse = TRUE)
+    B <- Matrix::Matrix(RHS[, this_row, drop = FALSE], sparse = TRUE)
     # Perform the set difference on the RHS: D_new = D \setminus B
     newLHS <- set_difference_single(C@i, C@p, C@x, B@i, B@p, B@x, nrow(C))
     newRHS <- set_difference_single(D@i, D@p, D@x, B@i, B@p, B@x, nrow(D))
@@ -70,7 +70,7 @@
     id_inter <- which(intersections == 0)
 
     LHS_subsets[my_idx, id_inter] <- Matrix::t(.subset(
-      Matrix::Matrix(LHS[, id_inter], sparse = TRUE),
+      Matrix::Matrix(LHS[, id_inter, drop = FALSE], sparse = TRUE),
       newLHS
     ))
     col_values <- Matrix::colSums(LHS_subsets)
@@ -86,8 +86,8 @@
   idx_to_remove <- Matrix::which(Matrix::colSums(RHS) == 0)
 
   if (length(idx_to_remove) > 0) {
-    LHS <- LHS[, -idx_to_remove]
-    RHS <- RHS[, -idx_to_remove]
+    LHS <- LHS[, -idx_to_remove, drop = FALSE]
+    RHS <- RHS[, -idx_to_remove, drop = FALSE]
   }
 
   return(list(lhs = LHS, rhs = RHS))

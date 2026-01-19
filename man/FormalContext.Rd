@@ -774,7 +774,7 @@ fc$incidence()
 \if{html}{\out{<a id="method-FormalContext-subcontext"></a>}}
 \if{latex}{\out{\hypertarget{method-FormalContext-subcontext}{}}}
 \subsection{Method \code{subcontext()}}{
-Subcontext of the formal context
+Generates a new FormalContext restricted to a subset of objects and/or attributes.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$subcontext(objects, attributes)}\if{html}{\out{</div>}}
 }
@@ -782,27 +782,14 @@ Subcontext of the formal context
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{objects}}{(character array) Name of the objects to
-keep.}
+\item{\code{objects}}{(character or integer vector) The names or indices of the objects to keep. If NULL, keeps all.}
 
-\item{\code{attributes}}{(character array) Names of the attributes
-to keep.}
+\item{\code{attributes}}{(character or integer vector) The names or indices of the attributes to keep. If NULL, keeps all.}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Details}{
-A warning will be issued if any of the names is not present
-in the list of objects or attributes of the formal context.
-
-If \code{objects} or \code{attributes} is empty, then it is
-assumed to represent the whole set of objects or attributes
-of the original formal context.
-}
-
 \subsection{Returns}{
-Another \code{FormalContext} that is a subcontext
-of the original one, with only the objects and attributes
-selected.
+A new \code{FormalContext} object representing the subcontext.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}

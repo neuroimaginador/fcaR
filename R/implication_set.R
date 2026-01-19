@@ -125,7 +125,8 @@ ImplicationSet <- R6::R6Class(
             ),
             rhs = Matrix::Matrix(private$rhs_matrix[, idx],
               sparse = TRUE
-            )
+            ),
+            I = private$I
           )
 
           return(imp)
@@ -387,15 +388,24 @@ ImplicationSet <- R6::R6Class(
 
 
       if (length(rules) > 0) {
-        L <- .batch_apply(
+
+        L <- .process_batch(
           LHS = private$lhs_matrix,
           RHS = private$rhs_matrix,
           attributes = private$attributes,
           rules = rules,
-          parallelize = parallelize,
-          batch_size = batch_size,
-          reorder = reorder
+          verbose = FALSE
         )
+
+        # L <- .batch_apply(
+        #   LHS = private$lhs_matrix,
+        #   RHS = private$rhs_matrix,
+        #   attributes = private$attributes,
+        #   rules = rules,
+        #   parallelize = parallelize,
+        #   batch_size = batch_size,
+        #   reorder = reorder
+        # )
 
         private$lhs_matrix <- L$lhs
         private$rhs_matrix <- L$rhs

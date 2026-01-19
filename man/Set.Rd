@@ -65,17 +65,17 @@ An object of class \code{Set}.
 \subsection{Method \code{assign()}}{
 Assign grades to attributes in the set
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Set$assign(attributes = c(), values = c(), ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Set$assign(..., attributes = c(), values = c())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{...}}{\code{key} = \code{value} pairs, where the value \code{value} is assigned to the \code{key} attribute name.}
+
 \item{\code{attributes}}{(character vector) Names of the attributes to assign a grade to.}
 
 \item{\code{values}}{(numeric vector) Grades to be assigned to the previous \code{attributes}.}
-
-\item{\code{...}}{\code{key} = \code{value} pairs, where the value \code{value} is assigned to the \code{key} attribute name.}
 }
 \if{html}{\out{</div>}}
 }
