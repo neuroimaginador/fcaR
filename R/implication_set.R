@@ -656,8 +656,12 @@ ImplicationSet <- R6::R6Class(
                       rhs = NULL,
                       not_rhs = NULL,
                       drop = FALSE) {
+
       RHS <- private$rhs_matrix
       LHS <- private$lhs_matrix
+
+      if (is.null(LHS) || ncol(LHS) == 0) return(self)
+
 
       if (!is.null(lhs)) {
         # Filter the implications which have
