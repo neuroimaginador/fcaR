@@ -9,6 +9,7 @@ articles:
   - creating_contexts
   - concept_lattice
   - implications
+  - fcaR_dplyr
   - lattice_visualization
 
 - title: Advanced Topics
