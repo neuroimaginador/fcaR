@@ -780,7 +780,8 @@ The incidence matrix of the formal context
 
 ### Method `subcontext()`
 
-Subcontext of the formal context
+Generates a new FormalContext restricted to a subset of objects and/or
+attributes.
 
 #### Usage
 
@@ -790,24 +791,17 @@ Subcontext of the formal context
 
 - `objects`:
 
-  (character array) Name of the objects to keep.
+  (character or integer vector) The names or indices of the objects to
+  keep. If NULL, keeps all.
 
 - `attributes`:
 
-  (character array) Names of the attributes to keep.
-
-#### Details
-
-A warning will be issued if any of the names is not present in the list
-of objects or attributes of the formal context.
-
-If `objects` or `attributes` is empty, then it is assumed to represent
-the whole set of objects or attributes of the original formal context.
+  (character or integer vector) The names or indices of the attributes
+  to keep. If NULL, keeps all.
 
 #### Returns
 
-Another `FormalContext` that is a subcontext of the original one, with
-only the objects and attributes selected.
+A new `FormalContext` object representing the subcontext.
 
 #### Examples
 

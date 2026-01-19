@@ -71,9 +71,14 @@ Assign grades to attributes in the set
 
 #### Usage
 
-    Set$assign(attributes = c(), values = c(), ...)
+    Set$assign(..., attributes = c(), values = c())
 
 #### Arguments
+
+- `...`:
+
+  `key` = `value` pairs, where the value `value` is assigned to the
+  `key` attribute name.
 
 - `attributes`:
 
@@ -82,11 +87,6 @@ Assign grades to attributes in the set
 - `values`:
 
   (numeric vector) Grades to be assigned to the previous `attributes`.
-
-- `...`:
-
-  `key` = `value` pairs, where the value `value` is assigned to the
-  `key` attribute name.
 
 #### Details
 

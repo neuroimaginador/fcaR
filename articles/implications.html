@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@
     <li><a class="dropdown-item" href="../articles/creating_contexts.html">Creating Formal Contexts in fcaR</a></li>
     <li><a class="dropdown-item" href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a></li>
     <li><a class="dropdown-item" href="../articles/implications.html">Working with ImplicationSets</a></li>
+    <li><a class="dropdown-item" href="../articles/fcaR_dplyr.html">Data Manipulation with fcaR and dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/lattice_visualization.html">Visualizing concept lattices: from R to LaTeX</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
@@ -744,11 +745,7 @@ implications.</p>
 <code class="sourceCode R"><span><span class="va">fc_I</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"composition"</span>,</span>
 <span>  <span class="st">"simplification"</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Processing batch</span></span>
-<span><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.005 secs.</span></span>
-<span><span class="co">#&gt; --&gt; Simplification: from 12 to 12 in 0.035 secs.</span></span>
-<span><span class="co">#&gt; Batch took 0.042 secs.</span></span></code></pre></div>
+<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This enables the reduction of the cardinality and/or the size of the
 <code>ImplicationSet</code>.</p>
 <p>In addition, the “simplification” rule to remove redundancies can be
@@ -784,10 +781,6 @@ another one:</p>
 <span><span class="co"># imps2 is an equivalent set of implications</span></span>
 <span><span class="co"># where we have removed redundancies</span></span>
 <span><span class="va">imps2</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"simp"</span>, <span class="st">"rsimp"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Processing batch</span></span>
-<span><span class="co">#&gt; --&gt; Simplification: from 10 to 10 in 0.019 secs.</span></span>
-<span><span class="co">#&gt; --&gt; Right Simplification: from 10 to 10 in 0.048 secs.</span></span>
-<span><span class="co">#&gt; Batch took 0.07 secs.</span></span>
 <span><span class="co"># Any implication in imps2 follows from imps</span></span>
 <span><span class="va">imps</span> <span class="op"><a href="../reference/grapes-entails-grapes.html">%entails%</a></span> <span class="va">imps2</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span></span>

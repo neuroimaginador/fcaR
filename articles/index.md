@@ -8,6 +8,8 @@
   ConceptLattices](https://neuroimaginador.github.io/fcaR/articles/concept_lattice.md):
 - [Working with
   ImplicationSets](https://neuroimaginador.github.io/fcaR/articles/implications.md):
+- [Data Manipulation with fcaR and
+  dplyr](https://neuroimaginador.github.io/fcaR/articles/fcaR_dplyr.md):
 - [Visualizing concept lattices: from R to
   LaTeX](https://neuroimaginador.github.io/fcaR/articles/lattice_visualization.md):
 

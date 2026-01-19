@@ -8,13 +8,14 @@ articles:
   conceptual-scaling: conceptual-scaling.html
   creating_contexts: creating_contexts.html
   extending_equivalence: extending_equivalence.html
+  fcaR_dplyr: fcaR_dplyr.html
   fuzzy_fca: fuzzy_fca.html
   implications: implications.html
   lattice_properties: lattice_properties.html
   lattice_visualization: lattice_visualization.html
   matrix_factorization: matrix_factorization.html
   random_contexts: random_contexts.html
-last_built: 2026-01-19T09:45Z
+last_built: 2026-01-19T20:07Z
 urls:
   reference: https://neuroimaginador.github.io/fcaR/reference
   article: https://neuroimaginador.github.io/fcaR/articles

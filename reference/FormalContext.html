@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,6 +23,7 @@
     <li><a class="dropdown-item" href="../articles/creating_contexts.html">Creating Formal Contexts in fcaR</a></li>
     <li><a class="dropdown-item" href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a></li>
     <li><a class="dropdown-item" href="../articles/implications.html">Working with ImplicationSets</a></li>
+    <li><a class="dropdown-item" href="../articles/fcaR_dplyr.html">Data Manipulation with fcaR and dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/lattice_visualization.html">Visualizing concept lattices: from R to LaTeX</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
@@ -756,7 +757,7 @@ extracted from the application of scales.</p>
 
 </div><p></p><hr><a id="method-FormalContext-subcontext"></a><div class="section">
 <h3 id="method-subcontext-">Method <code>subcontext()</code><a class="anchor" aria-label="anchor" href="#method-subcontext-"></a></h3>
-<p>Subcontext of the formal context</p><div class="section">
+<p>Generates a new FormalContext restricted to a subset of objects and/or attributes.</p><div class="section">
 <h4 id="usage-28">Usage<a class="anchor" aria-label="anchor" href="#usage-28"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">subcontext</span><span class="op">(</span><span class="va">objects</span>, <span class="va">attributes</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
@@ -764,31 +765,18 @@ extracted from the application of scales.</p>
 <div class="section">
 <h4 id="arguments-20">Arguments<a class="anchor" aria-label="anchor" href="#arguments-20"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>objects</code></dt>
-<dd><p>(character array) Name of the objects to
-keep.</p></dd>
+<dd><p>(character or integer vector) The names or indices of the objects to keep. If NULL, keeps all.</p></dd>
 
 
 <dt><code>attributes</code></dt>
-<dd><p>(character array) Names of the attributes
-to keep.</p></dd>
+<dd><p>(character or integer vector) The names or indices of the attributes to keep. If NULL, keeps all.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="details-5">Details<a class="anchor" aria-label="anchor" href="#details-5"></a></h4>
-<p>A warning will be issued if any of the names is not present
-in the list of objects or attributes of the formal context.</p>
-<p>If <code>objects</code> or <code>attributes</code> is empty, then it is
-assumed to represent the whole set of objects or attributes
-of the original formal context.</p>
-</div>
-
-<div class="section">
 <h4 id="returns-28">Returns<a class="anchor" aria-label="anchor" href="#returns-28"></a></h4>
-<p>Another <code>FormalContext</code> that is a subcontext
-of the original one, with only the objects and attributes
-selected.</p>
+<p>A new <code>FormalContext</code> object representing the subcontext.</p>
 </div>
 <div class="section">
 <h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a></h4>
@@ -819,7 +807,7 @@ to keep.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="details-6">Details<a class="anchor" aria-label="anchor" href="#details-6"></a></h4>
+<h4 id="details-5">Details<a class="anchor" aria-label="anchor" href="#details-5"></a></h4>
 <p>A warning will be issued if any of the names is not present
 in the list of objects or attributes of the formal context.</p>
 <p>If <code>objects</code> or <code>attributes</code> is empty, then it is
@@ -860,7 +848,7 @@ selected.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="details-7">Details<a class="anchor" aria-label="anchor" href="#details-7"></a></h4>
+<h4 id="details-6">Details<a class="anchor" aria-label="anchor" href="#details-6"></a></h4>
 <p>Particular parameters that control the size of the <code>tikz</code> output are: <code>width</code>, <code>height</code> (both in inches), and <code>pointsize</code> (in points), that should be set to the font size used in the <code>documentclass</code> header in the <code>LaTeX</code> file where the code is to be inserted.</p>
 <p>If a <code>caption</code> is provided, the whole <code>tikz</code> picture will be wrapped by a <code>figure</code> environment and the caption set.</p>
 </div>

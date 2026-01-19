@@ -17,13 +17,13 @@ Source:
 [`DESCRIPTION`](https://github.com/Malaga-FCA-group/fcaR/blob/master/DESCRIPTION)
 
 Lopez Rodriguez D, Mora A, Dominguez J, Villalon A (2026). *fcaR: Formal
-Concept Analysis*. R package version 1.3.1,
+Concept Analysis*. R package version 1.4.0,
 <https://github.com/Malaga-FCA-group/fcaR>.
 
     @Manual{,
       title = {fcaR: Formal Concept Analysis},
       author = {Domingo {Lopez Rodriguez} and Angel Mora and Jesus Dominguez and Ana Villalon},
       year = {2026},
-      note = {R package version 1.3.1},
+      note = {R package version 1.4.0},
       url = {https://github.com/Malaga-FCA-group/fcaR},
     }

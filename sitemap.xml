@@ -11,6 +11,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/conceptual-scaling.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/creating_contexts.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/extending_equivalence.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/fcaR_dplyr.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/fuzzy_fca.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/implications.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/index.html</loc></url>
@@ -39,6 +40,8 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/cobre61.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/compute_labels_and_colors.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/conceptRegistry.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/dplyr_implications.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/dplyr_verbs.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/equivalencesRegistry.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/export_to_tikz.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/fcaR-package.html</loc></url>

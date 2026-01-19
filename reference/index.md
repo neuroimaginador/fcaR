@@ -38,6 +38,10 @@
   : Compute Labels and Colors for Lattice Nodes
 - [`conceptRegistry`](https://neuroimaginador.github.io/fcaR/reference/conceptRegistry.md)
   : Concept Miners Registry
+- [`arrange(`*`<ImplicationSet>`*`)`](https://neuroimaginador.github.io/fcaR/reference/dplyr_implications.md)
+  : dplyr verbs for ImplicationSet
+- [`select(`*`<FormalContext>`*`)`](https://neuroimaginador.github.io/fcaR/reference/dplyr_verbs.md)
+  : dplyr verbs for FormalContext
 - [`equivalencesRegistry`](https://neuroimaginador.github.io/fcaR/reference/equivalencesRegistry.md)
   : Equivalence Rules Registry
 - [`export_to_tikz()`](https://neuroimaginador.github.io/fcaR/reference/export_to_tikz.md)

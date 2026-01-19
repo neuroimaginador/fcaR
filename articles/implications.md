@@ -277,10 +277,6 @@ fc_I$implications$apply_rules(rules = c(
   "composition",
   "simplification"
 ))
-#> Processing batch
-#> --> Composition: from 12 to 12 in 0.005 secs.
-#> --> Simplification: from 12 to 12 in 0.035 secs.
-#> Batch took 0.042 secs.
 ```
 
 This enables the reduction of the cardinality and/or the size of the
@@ -320,10 +316,6 @@ imps2 <- imps$clone()
 # imps2 is an equivalent set of implications
 # where we have removed redundancies
 imps2$apply_rules(c("simp", "rsimp"))
-#> Processing batch
-#> --> Simplification: from 10 to 10 in 0.019 secs.
-#> --> Right Simplification: from 10 to 10 in 0.048 secs.
-#> Batch took 0.07 secs.
 # Any implication in imps2 follows from imps
 imps %entails% imps2
 #>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]

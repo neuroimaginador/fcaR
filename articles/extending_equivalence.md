@@ -168,9 +168,6 @@ fc$implications
 ``` r
 # Apply the randomize method
 fc$implications$apply_rules("randomize")
-#> Processing batch
-#> --> Randomize: from 10 to 10 in 0 secs.
-#> Batch took 0.002 secs.
 ```
 
 ``` r

@@ -1,5 +1,70 @@
 # Changelog
 
+## fcaR 1.4.0
+
+Major Enhancements:
+
+- **Tidyverse integration:** Implemented S3 methods to support `dplyr`
+  verbs, allowing for a fluent, grammar-based manipulation of FCA
+  objects:
+  - **FormalContext:** Support for
+    [`select()`](https://dplyr.tidyverse.org/reference/select.html)
+    (attributes),
+    [`filter()`](https://dplyr.tidyverse.org/reference/filter.html)
+    (objects),
+    [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html)
+    (feature engineering),
+    [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html)
+    (sorting), and
+    [`rename()`](https://dplyr.tidyverse.org/reference/rename.html).
+    Includes support for `tidyselect` helpers (e.g.,
+    [`starts_with()`](https://tidyselect.r-lib.org/reference/starts_with.html)).
+  - **ImplicationSet:** Support for
+    [`filter()`](https://dplyr.tidyverse.org/reference/filter.html)
+    (based on metrics or attributes),
+    [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html)
+    (sorting rules), and
+    [`slice()`](https://dplyr.tidyverse.org/reference/slice.html)
+    (subsetting by index).
+- **Semantic Rule Filtering:** Introduced helper functions for
+  `ImplicationSet` filtering to query rules based on attribute
+  presence/absence:
+  [`lhs()`](https://rdrr.io/pkg/arules/man/rules-class.html),
+  [`rhs()`](https://rdrr.io/pkg/arules/man/rules-class.html),
+  `not_lhs()`, `lhs_any()`, etc. This allows querying rules like
+  `filter(rhs("Attribute_A"), support > 0.2)`.
+
+Improvements:
+
+- **Robust Subsetting:** Completely rewritten `subcontext()` method in
+  `FormalContext`. It now robustly handles negative indices, logical
+  vectors, and character vectors, and prevents dimension collapsing
+  issues (using `drop = FALSE`) that previously caused errors with the
+  `Matrix` package.
+- **Metadata Preservation:** Rewritten `[` and related methods of
+  `ImplicationSet`. These ensure that critical context metadata (such as
+  the number of objects $N$ for support calculation) is preserved when
+  filtering or sorting rules, fixing previous issues where metadata was
+  lost.
+- **Data Safety:** Enhanced type safety in internal functions to
+  strictly handle integer indices, preventing errors with `dplyr`
+  attributes.
+
+Documentation:
+
+- **New Vignette:** Added `fcaR_dplyr` vignette illustrating the new
+  data manipulation workflow.
+
+Fixes:
+
+- Fixed `Matrix` coercion errors (`dgCMatrix` to `data.frame`) in R 4.x
+  when using internal incidence matrices.
+- Fixed `fixupDN.if.valid` errors from the `Matrix` package when
+  filtering operations resulted in empty contexts (0 objects or 0
+  attributes).
+- Resolved floating-point precision issues in unit tests when comparing
+  support values.
+
 ## fcaR 1.3.1
 
 - Added tests
