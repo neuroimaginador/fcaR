@@ -7,6 +7,7 @@
 #' @importFrom rlang enquo enquos expr
 #' @importFrom methods as
 #' @importFrom Matrix Matrix
+#' @importFrom stats setNames
 #'
 #' @param .data An object of class \code{FormalContext}.
 #' @param ...   Arguments passed to the corresponding dplyr verbs.
@@ -100,6 +101,7 @@ arrange.FormalContext <- function(.data, ...) {
 }
 
 #' @export
+#' @importFrom stats setNames
 rename.FormalContext <- function(.data, ...) {
   current_attrs <- .data$attributes
   sim_data <- setNames(seq_along(current_attrs), current_attrs)
