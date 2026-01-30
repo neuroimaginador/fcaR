@@ -72,21 +72,21 @@ print("Matrix A (Object-Factor):")
 #> [1] "Matrix A (Object-Factor):"
 print(A$incidence())
 #>              F1  F2  F3  F4  F5  F6  F7
-#> Labrador    0.2 1.0 0.3 0.9 0.1 1.0 0.1
-#> Golden Ret. 0.3 0.9 0.2 0.8 0.1 1.0 0.2
-#> G. Shepherd 1.0 0.3 0.9 0.2 1.0 0.3 1.0
-#> Rottweiler  1.0 0.2 1.0 0.1 1.0 0.2 0.9
-#> Beagle      0.4 0.3 0.3 0.9 0.2 0.3 0.3
-#> Chihuahua   0.3 0.2 1.0 0.2 0.2 0.2 0.2
+#> Labrador    0.2 1.0 0.3 1.0 0.1 1.0 0.1
+#> Golden Ret. 0.3 0.9 0.2 0.9 0.1 1.0 0.2
+#> G. Shepherd 1.0 0.3 0.9 0.3 1.0 0.3 1.0
+#> Rottweiler  1.0 0.2 1.0 0.2 1.0 0.2 0.9
+#> Beagle      0.4 0.3 0.3 1.0 0.2 0.3 0.3
+#> Chihuahua   0.3 0.2 1.0 0.3 0.2 0.2 0.2
 
 print("Matrix B (Factor-Attribute):")
 #> [1] "Matrix B (Factor-Attribute):"
 print(B$incidence())
 #>    Friendly Playful Guard Aggressive Small
-#> F1      0.1     0.1   0.8        0.8   0.8
+#> F1      0.1     0.1   0.8        0.7   0.8
 #> F2      0.9     0.9   0.0        0.0   0.2
 #> F3      0.1     0.1   0.1        0.1   0.9
-#> F4      1.0     0.3   0.1        0.1   0.3
+#> F4      0.9     0.2   0.0        0.0   0.2
 #> F5      0.1     0.1   0.8        0.9   0.8
 #> F6      0.8     0.9   0.0        0.0   0.1
 #> F7      0.2     0.2   0.9        0.8   0.8
