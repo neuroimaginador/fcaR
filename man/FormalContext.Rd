@@ -141,6 +141,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-FormalContext-standardize}{\code{FormalContext$standardize()}}
 \item \href{#method-FormalContext-find_concepts}{\code{FormalContext$find_concepts()}}
 \item \href{#method-FormalContext-find_implications}{\code{FormalContext$find_implications()}}
+\item \href{#method-FormalContext-find_causal_rules}{\code{FormalContext$find_causal_rules()}}
 \item \href{#method-FormalContext-factorize}{\code{FormalContext$factorize()}}
 \item \href{#method-FormalContext-to_transactions}{\code{FormalContext$to_transactions()}}
 \item \href{#method-FormalContext-save}{\code{FormalContext$save()}}
@@ -603,6 +604,40 @@ Use modified Ganter algorithm to compute both concepts and implications
 }
 \subsection{Returns}{
 Nothing, just updates the internal fields \code{concepts} and \code{implications}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-find_causal_rules"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-find_causal_rules}{}}}
+\subsection{Method \code{find_causal_rules()}}{
+Find causal rules
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$find_causal_rules(
+  response_var,
+  min_support = 0.1,
+  confidence_level = 0.95,
+  max_length = 3,
+  verbose = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{response_var}}{(character) The name of the response variable.}
+
+\item{\code{min_support}}{(numeric) Minimum support for the premise attributes.}
+
+\item{\code{confidence_level}}{(numeric) Confidence level for the causality test.}
+
+\item{\code{max_length}}{(integer) Maximum length of the premise.}
+
+\item{\code{verbose}}{(logical) Show verbose output.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{RuleSet} object containing the discovered causal rules and their quality metrics.
 }
 }
 \if{html}{\out{<hr>}}

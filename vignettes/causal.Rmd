@@ -1,0 +1,131 @@
+---
+title: "Mining Causal Association Rules"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Mining Causal Association Rules}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+# Introduction
+
+Standard association rules (or implications in Formal Concept Analysis) identify correlations between attributes ($A \to B$). However, correlation does not imply causation. A rule $A \to B$ might be strong simply because both $A$ and $B$ are caused by a third confounding variable $C$.
+
+The `fcaR` package now supports **Mining Causal Association Rules**, implementing a method to identify likely causal relationships by controlling for confounding variables. This considers the "Fair Odds Ratio" calculated on a "Fair Data Set" of matched pairs.
+
+```{r setup}
+library(fcaR)
+```
+
+# The Approach
+
+To check if $A \to B$ is causal, the algorithm:
+
+1.  Identifies potential **confounders** (controlled variables) that are not part of the premise $A$, the conclusion $B$, or variables irrelevant to $B$.
+2.  Constructs a **Fair Data Set** by finding **matched pairs** of objects. Two objects $(u, v)$ form a matched pair if:
+    *   They have the same values for all controlled variables.
+    *   One object has the premise ($u$ has property $A$).
+    *   The other object does not ($v$ does not have property $A$).
+3.  Computes the **Fair Odds Ratio** on these matched pairs.
+4.  Considers the rule "Causal" if the lower bound of the Confidence Interval for the Fair Odds Ratio is greater than 1.
+
+# Example 1: Direct Causality
+
+Let's consider a simple case where **Treatment** causes **Recovery**.
+
+```{r}
+# 100 Patients
+# 50 Treated, 50 Untreated
+# Treated: 90% Recovery
+# Untreated: 20% Recovery
+
+n <- 100
+treated <- c(rep(1, 45), rep(1, 5), rep(0, 10), rep(0, 40))
+recovered <- c(rep(1, 45), rep(0, 5), rep(1, 10), rep(0, 40))
+
+I <- matrix(c(treated, recovered), ncol = 2)
+colnames(I) <- c("Treatment", "Recovery")
+
+fc <- FormalContext$new(I)
+```
+
+We can mine for causal rules targeting "Recovery":
+
+```{r}
+rules <- fc$find_causal_rules(
+    response_var = "Recovery",
+    min_support = 0.1,
+    confidence_level = 0.95
+)
+
+rules$print()
+```
+
+The algorithm correctly identifies "Treatment" as a cause for "Recovery".
+
+# Example 2: Simpson's Paradox (Spurious Correlation)
+
+A classic example where standard association rules fail is Simpson's Paradox, or confounding variables creating spurious correlations.
+
+Consider a dataset relating **Ice Cream** consumption and **Drowning**. They are highly correlated because both increase during hot weather (the **Heat** variable).
+
+*   **Heat** causes **Ice Cream**.
+*   **Heat** causes **Drowning**.
+*   **Ice Cream** does *not* cause **Drowning**.
+
+However, a naive frequent itemset mining might find `Ice Cream -> Drowning`.
+
+Let's simulate this:
+
+```{r}
+set.seed(123)
+n <- 200
+# Heat: 50% Hot, 50% Cold
+heat <- c(rep(1, 100), rep(0, 100))
+
+# Ice Cream: Strongly dependent on Heat (80% if Hot, 20% if Cold)
+ic <- numeric(200)
+ic[1:100] <- rbinom(100, 1, 0.8)
+ic[101:200] <- rbinom(100, 1, 0.2)
+
+# Drowning: Strongly dependent on Heat (80% if Hot, 20% if Cold)
+drown <- numeric(200)
+drown[1:100] <- rbinom(100, 1, 0.8)
+drown[101:200] <- rbinom(100, 1, 0.2)
+
+I <- matrix(c(heat, ic, drown), ncol = 3)
+colnames(I) <- c("Heat", "IceCream", "Drowning")
+
+fc_spurious <- FormalContext$new(I)
+```
+
+If we just looked at correlations, `IceCream` and `Drowning` would be correlated. But `find_causal_rules` controls for confounders.
+
+When testing `IceCream -> Drowning`:
+- It controls for `Heat`.
+- It compares days with same Heat (Hot vs Hot, Cold vs Cold) but different Ice Cream consumption.
+- Within "Hot" days, Ice Cream consumption is random (w.r.t Drowning causal mechanism) and doesn't increase drowning risk further.
+- The odds ratio should be near 1.
+
+```{r}
+causal_rules <- fc_spurious$find_causal_rules(
+    response_var = "Drowning",
+    min_support = 0.5
+)
+
+# Should contain "Heat" but NOT "IceCream"
+print(causal_rules)
+```
+
+As expected, the algorithm identifies **Heat** as the true cause and rejects the spurious **Ice Cream** association.
+
+# Conclusion
+
+The `find_causal_rules` method provides a powerful tool to go beyond simple association and identify rules that are robust to confounding, providing a step towards causal inference in Concept Analysis. It returns a `RuleSet` object with quality metrics including Support, Confidence, and the Fair Odds Ratio with its Confidence Interval.

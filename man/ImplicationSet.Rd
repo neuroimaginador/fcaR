@@ -306,7 +306,7 @@ The canonical basis of implications obtained from the current \code{ImplicationS
 Compute the Direct Optimal Basis using optimized C++ algorithms.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_direct_optimal(
-  method = c("direct_optimal", "final_ts", "monotonic", "priority"),
+  method = c("do_sp", "direct_optimal", "final_ts", "monotonic", "priority"),
   verbose = FALSE
 )}\if{html}{\out{</div>}}
 }

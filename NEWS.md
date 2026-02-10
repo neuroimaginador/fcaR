@@ -6,6 +6,7 @@ Major Enhancements:
     * **FormalContext:** Support for `select()` (attributes), `filter()` (objects), `mutate()` (feature engineering), `arrange()` (sorting), and `rename()`. Includes support for `tidyselect` helpers (e.g., `starts_with()`).
     * **ImplicationSet:** Support for `filter()` (based on metrics or attributes), `arrange()` (sorting rules), and `slice()` (subsetting by index).
 * **Semantic Rule Filtering:** Introduced helper functions for `ImplicationSet` filtering to query rules based on attribute presence/absence: `lhs()`, `rhs()`, `not_lhs()`, `lhs_any()`, etc. This allows querying rules like `filter(rhs("Attribute_A"), support > 0.2)`.
+* **Mining Causal Association Rules:** Implemented the `find_causal_rules()` method in `FormalContext`, enabling the discovery of causal rules by controlling for confounding variables using the "Fair Odds Ratio" on matched pairs.
 
 Improvements:
 
@@ -16,6 +17,7 @@ Improvements:
 Documentation:
 
 * **New Vignette:** Added `fcaR_dplyr` vignette illustrating the new data manipulation workflow.
+* **New Vignette:** Added `causal` vignette explaining the new causal mining functionality and its application to Simpson's Paradox.
 
 Fixes:
 

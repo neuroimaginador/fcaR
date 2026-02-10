@@ -271,14 +271,27 @@ SigmaMap internal_run_final_ts(SigmaMap sigma_in, Metrics& metrics, bool use_pru
 }
 
 SigmaMap internal_run_dosp(SigmaMap sigma_in, Metrics& metrics, bool use_pruning, const std::vector<double>& L_vec, bool verbose, const AttributeManager& am, const LogicContext& ctx) {
-  while(true) {
+  // while(true) {
     metrics.iterations++;
-    if (verbose) Rcpp::Rcout << "\n\n==================\n--- DO-SP Pass #" << metrics.iterations << " ---\n==================\n";
+    // if (verbose)
+      Rcpp::Rcout << "\n\n==================\n--- DO-SP Pass #" << metrics.iterations << " ---\n==================\n";
     SigmaMap sigma_old = sigma_in;
+
+    Rcpp::Rcout << "Before Saturation:\n";
+    print_sigma_cpp(sigma_in, am, "  ");
+
     saturate_system(sigma_in, metrics, use_pruning, L_vec, verbose, am, ctx);
+
+    Rcpp::Rcout << "Before Pruning:\n";
+    print_sigma_cpp(sigma_in, am, "  ");
+
     prune_system(sigma_in, metrics, verbose, am, ctx);
-    if(sigma_in == sigma_old) break;
-  }
+
+    Rcpp::Rcout << "After pass:\n";
+    print_sigma_cpp(sigma_in, am, "  ");
+
+    // if(sigma_in == sigma_old) break;
+  // }
   return sigma_in;
 }
 
@@ -587,4 +600,151 @@ Rcpp::List run_priority_refinement_rcpp_optimized(Rcpp::S4 lhs_in, Rcpp::S4 rhs_
   metrics.execution_time = std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - start_time).count();
   metrics.final_implication_count = sigma_final.size();
   return Rcpp::List::create(Rcpp::Named("Sigma") = Sigma_to_R(sigma_final, am), Rcpp::Named("metrics") = Metrics_to_R(metrics));
+}
+
+
+// --- 6. EXTENSIÓN: SINGLE PASS (AGREGADO) ---
+
+void saturate_system_single_pass(SigmaMap& sigma, Metrics& metrics, bool use_pruning, const std::vector<double>& L_vec, bool verbose, const AttributeManager& am, const LogicContext& ctx) {
+  metrics.iterations_saturate++;
+  if (verbose) {
+    Rcpp::Rcout << "\n--- Single Pass Saturation ---\n";
+    print_sigma_cpp(sigma, am, "  ");
+  }
+
+  // Generamos todos los pares posibles (A, C) de la base actual
+  std::vector<std::pair<FuzzySet, FuzzySet>> pairs_to_process;
+  for(const auto& p1 : sigma) {
+    for(const auto& p2 : sigma) {
+      // En una pasada única "naive" o inicial, cruzamos todo contra todo.
+      // Si se quisiera optimizar para no cruzar A con A si no es necesario, se podría filtrar,
+      // pero para mantener la lógica de "una pasada completa", incluimos todos.
+      pairs_to_process.push_back(std::make_pair(p1.first, p2.first));
+    }
+  }
+
+  if (pairs_to_process.empty()) return;
+
+  std::vector<FuzzySet> derived_lhs_pass, derived_rhs_pass;
+  for (const auto& pair : pairs_to_process) {
+    const FuzzySet& A = pair.first;
+    const FuzzySet& C = pair.second;
+
+    // Asumimos que existen en sigma (seguro, porque iteramos sobre sigma)
+    const FuzzySet& B = sigma.at(A);
+    const FuzzySet& D = sigma.at(C);
+
+    if (verbose) Rcpp::Rcout << "  > Combining " << print_implication_cpp(A, B, am) << " AND " << print_implication_cpp(C, D, am) << "\n";
+
+    add_derived_internal(A, B, C, D, derived_lhs_pass, derived_rhs_pass, use_pruning, metrics, L_vec, verbose, am, ctx);
+  }
+
+  // Actualizar Sigma con los resultados de esta única pasada
+  if (!derived_lhs_pass.empty()) {
+    for (size_t i = 0; i < derived_lhs_pass.size(); ++i) {
+      const FuzzySet& G = derived_lhs_pass[i];
+      const FuzzySet& H = derived_rhs_pass[i];
+      auto it = sigma.find(G);
+      if (it == sigma.end()) {
+        sigma[G] = H;
+      } else {
+        FuzzySet B_old = it->second;
+        FuzzySet B_merged = set_union(B_old, H);
+        if (B_merged != B_old) {
+          sigma[G] = B_merged;
+        }
+      }
+    }
+  }
+
+  if (verbose) {
+    Rcpp::Rcout << "\n--- Single Pass Saturation END---\n";
+    print_sigma_cpp(sigma, am, "  ");
+  }
+
+}
+
+void prune_system_single_pass(SigmaMap& sigma, Metrics& metrics, bool verbose, const AttributeManager& am, const LogicContext& ctx) {
+  metrics.iterations_prune++;
+  if (verbose) {
+    Rcpp::Rcout << "\n--- Single Pass Pruning ---\n";
+    print_sigma_cpp(sigma, am, "  ");
+  }
+
+  SigmaMap sigma_old = sigma;
+  SigmaMap sigma_f; // Nueva base reducida
+
+  for(const auto& pair : sigma_old) {
+    const FuzzySet& A = pair.first;
+    SigmaMap sigma_prime = sigma_old;
+    sigma_prime.erase(A); // Removemos la regla actual para ver si se deduce de las otras
+
+    if (verbose) Rcpp::Rcout << "  > Checking " << print_implication_cpp(A, pair.second, am) << "\n";
+
+    FuzzySet D = calculate_pi_operator_internal(A, sigma_prime, metrics, verbose, am, ctx);
+    FuzzySet B_new = set_setminus(pair.second, D);
+
+    if(set_sum(B_new) > 0) {
+      sigma_f[A] = B_new;
+    } else {
+      if (verbose) Rcpp::Rcout << "    >> PURGED (redundant in single pass).\n";
+    }
+  }
+  // Actualizamos sigma directamente tras la pasada única
+  sigma = sigma_f;
+
+  if (verbose) {
+    Rcpp::Rcout << "\n--- Single Pass Pruning END ---\n";
+    print_sigma_cpp(sigma, am, "  ");
+  }
+
+}
+
+SigmaMap internal_run_dosp_single(SigmaMap sigma_in, Metrics& metrics, bool use_pruning, const std::vector<double>& L_vec, bool verbose, const AttributeManager& am, const LogicContext& ctx) {
+  while(true) {
+    metrics.iterations++;
+    // if (verbose)
+      Rcpp::Rcout << "\n\n==================\n--- DO-SP Pass #" << metrics.iterations << " ---\n==================\n";
+    SigmaMap sigma_old = sigma_in;
+
+    Rcpp::Rcout << "Before Saturation:\n";
+    print_sigma_cpp(sigma_in, am, "  ");
+    saturate_system_single_pass(sigma_in, metrics, use_pruning, L_vec, verbose, am, ctx);
+
+    Rcpp::Rcout << "Before Pruning:\n";
+    print_sigma_cpp(sigma_in, am, "  ");
+    prune_system_single_pass(sigma_in, metrics, verbose, am, ctx);
+
+    Rcpp::Rcout << "After Pass:\n";
+    print_sigma_cpp(sigma_in, am, "  ");
+
+    if(sigma_in == sigma_old) break;
+  }
+  return sigma_in;
+}
+
+
+// [[Rcpp::export]]
+Rcpp::List run_direct_optimal_sp_single_pass_rcpp_optimized(Rcpp::S4 lhs_in, Rcpp::S4 rhs_in, std::vector<std::string> attributes, Rcpp::NumericVector L, std::string logic_name, bool use_pruning = true, bool verbose = false) {
+  auto start_time = std::chrono::high_resolution_clock::now();
+  Metrics metrics;
+  AttributeManager am;
+  setup_am(am, attributes);
+
+  LogicContext ctx;
+  ctx.tnorm = get_tnorm(logic_name);
+  ctx.implication = get_implication(logic_name);
+  if (ctx.tnorm == NULL || ctx.implication == NULL) Rcpp::stop("Logic not found or invalid.");
+
+  std::vector<double> L_vec = Rcpp::as<std::vector<double>>(L);
+  SigmaMap sigma_in = Sparse_to_Sigma(lhs_in, rhs_in, am);
+  SigmaMap sigma_final = internal_run_dosp_single(sigma_in, metrics, use_pruning, L_vec, verbose, am, ctx);
+
+  metrics.execution_time = std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - start_time).count();
+  metrics.final_implication_count = sigma_final.size();
+
+  return Rcpp::List::create(
+    Rcpp::Named("Sigma") = Sigma_to_R(sigma_final, am),
+    Rcpp::Named("metrics") = Metrics_to_R(metrics)
+  );
 }

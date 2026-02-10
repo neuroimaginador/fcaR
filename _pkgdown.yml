@@ -19,6 +19,7 @@ articles:
   - fuzzy_fca
   - matrix_factorization
   - extending_equivalence
+  - causal
 
 - title: Metrics and Properties
   navbar: Metrics

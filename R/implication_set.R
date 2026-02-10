@@ -454,7 +454,7 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @return Nothing, updates the \code{ImplicationSet} in place with the new basis.
     #' @export
-    to_direct_optimal = function(method = c("direct_optimal", "final_ts", "monotonic", "priority"),
+    to_direct_optimal = function(method = c("do_sp", "direct_optimal", "final_ts", "monotonic", "priority"),
                                  verbose = FALSE) {
       method <- match.arg(method)
 
@@ -475,7 +475,11 @@ ImplicationSet <- R6::R6Class(
 
       # 2. Call C++
       # Now passing 'current_logic' as an argument
-      res_list <- switch(method,
+      res_list <- switch(
+        method,
+        "do_sp" = run_direct_optimal_sp_single_pass_rcpp_optimized(
+          private$lhs_matrix, private$rhs_matrix, private$attributes, vals, current_logic, TRUE, verbose
+        ),
         "direct_optimal" = run_direct_optimal_sp_rcpp_optimized(
           private$lhs_matrix, private$rhs_matrix, private$attributes, vals, current_logic, TRUE, verbose
         ),
@@ -523,10 +527,10 @@ ImplicationSet <- R6::R6Class(
       private$implication_support <- numeric(0)
       private$directness <- TRUE
 
-      if (verbose) {
+      # if (verbose) {
         cat("Algorithm finished using logic:", current_logic, "\n")
         print(res_list$metrics)
-      }
+      # }
 
       return(invisible(self))
     },

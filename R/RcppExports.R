@@ -125,6 +125,10 @@ run_priority_refinement_rcpp_optimized <- function(lhs_in, rhs_in, attributes, L
     .Call(`_fcaR_run_priority_refinement_rcpp_optimized`, lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose)
 }
 
+run_direct_optimal_sp_single_pass_rcpp_optimized <- function(lhs_in, rhs_in, attributes, L, logic_name, use_pruning = TRUE, verbose = FALSE) {
+    .Call(`_fcaR_run_direct_optimal_sp_single_pass_rcpp_optimized`, lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose)
+}
+
 InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }

@@ -434,6 +434,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// run_direct_optimal_sp_single_pass_rcpp_optimized
+Rcpp::List run_direct_optimal_sp_single_pass_rcpp_optimized(Rcpp::S4 lhs_in, Rcpp::S4 rhs_in, std::vector<std::string> attributes, Rcpp::NumericVector L, std::string logic_name, bool use_pruning, bool verbose);
+RcppExport SEXP _fcaR_run_direct_optimal_sp_single_pass_rcpp_optimized(SEXP lhs_inSEXP, SEXP rhs_inSEXP, SEXP attributesSEXP, SEXP LSEXP, SEXP logic_nameSEXP, SEXP use_pruningSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type lhs_in(lhs_inSEXP);
+    Rcpp::traits::input_parameter< Rcpp::S4 >::type rhs_in(rhs_inSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type attributes(attributesSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type L(LSEXP);
+    Rcpp::traits::input_parameter< std::string >::type logic_name(logic_nameSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_pruning(use_pruningSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_direct_optimal_sp_single_pass_rcpp_optimized(lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // InClose
 List InClose(NumericMatrix I, NumericVector grades_set, StringVector attrs, String connection, String name, bool verbose);
 RcppExport SEXP _fcaR_InClose(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
@@ -939,6 +956,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_run_direct_optimal_sp_rcpp_optimized", (DL_FUNC) &_fcaR_run_direct_optimal_sp_rcpp_optimized, 7},
     {"_fcaR_run_monotonic_incremental_rcpp_optimized", (DL_FUNC) &_fcaR_run_monotonic_incremental_rcpp_optimized, 7},
     {"_fcaR_run_priority_refinement_rcpp_optimized", (DL_FUNC) &_fcaR_run_priority_refinement_rcpp_optimized, 7},
+    {"_fcaR_run_direct_optimal_sp_single_pass_rcpp_optimized", (DL_FUNC) &_fcaR_run_direct_optimal_sp_single_pass_rcpp_optimized, 7},
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
     {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 4},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
