@@ -60,7 +60,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Domingo Lopez Rodriguez \email{dominlopez78@gmail.com, dominlopez@uma.es} (\href{https://orcid.org/0000-0002-0172-1585}{ORCID})
+\strong{Maintainer}: Domingo Lopez Rodriguez \email{dominlopez78@gmail.com} (\href{https://orcid.org/0000-0002-0172-1585}{ORCID})
 
 Authors:
 \itemize{

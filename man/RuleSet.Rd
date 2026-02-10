@@ -207,7 +207,7 @@ Export to LaTeX
   print = TRUE,
   ncols = 1,
   numbered = TRUE,
-  numbers = seq(self$cardinality())
+  numbers = seq_len(self$cardinality())
 )}\if{html}{\out{</div>}}
 }
 
