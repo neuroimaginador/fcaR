@@ -33,6 +33,11 @@ Major Enhancements:
   [`rhs()`](https://rdrr.io/pkg/arules/man/rules-class.html),
   `not_lhs()`, `lhs_any()`, etc. This allows querying rules like
   `filter(rhs("Attribute_A"), support > 0.2)`.
+- **Mining Causal Association Rules:** Implemented the
+  [`find_causal_rules()`](https://neuroimaginador.github.io/fcaR/reference/find_causal_rules.md)
+  method in `FormalContext`, enabling the discovery of causal rules by
+  controlling for confounding variables using the “Fair Odds Ratio” on
+  matched pairs.
 
 Improvements:
 
@@ -54,6 +59,8 @@ Documentation:
 
 - **New Vignette:** Added `fcaR_dplyr` vignette illustrating the new
   data manipulation workflow.
+- **New Vignette:** Added `causal` vignette explaining the new causal
+  mining functionality and its application to Simpson’s Paradox.
 
 Fixes:
 

@@ -100,6 +100,8 @@ Stat Softw*, *14*, 1-25.
 
 - [`FormalContext$find_implications()`](#method-FormalContext-find_implications)
 
+- [`FormalContext$find_causal_rules()`](#method-FormalContext-find_causal_rules)
+
 - [`FormalContext$factorize()`](#method-FormalContext-factorize)
 
 - [`FormalContext$to_transactions()`](#method-FormalContext-to_transactions)
@@ -593,6 +595,49 @@ Use modified Ganter algorithm to compute both concepts and implications
 #### Returns
 
 Nothing, just updates the internal fields `concepts` and `implications`.
+
+------------------------------------------------------------------------
+
+### Method [`find_causal_rules()`](https://neuroimaginador.github.io/fcaR/reference/find_causal_rules.md)
+
+Find causal rules
+
+#### Usage
+
+    FormalContext$find_causal_rules(
+      response_var,
+      min_support = 0.1,
+      confidence_level = 0.95,
+      max_length = 3,
+      verbose = FALSE
+    )
+
+#### Arguments
+
+- `response_var`:
+
+  (character) The name of the response variable.
+
+- `min_support`:
+
+  (numeric) Minimum support for the premise attributes.
+
+- `confidence_level`:
+
+  (numeric) Confidence level for the causality test.
+
+- `max_length`:
+
+  (integer) Maximum length of the premise.
+
+- `verbose`:
+
+  (logical) Show verbose output.
+
+#### Returns
+
+A `RuleSet` object containing the discovered causal rules and their
+quality metrics.
 
 ------------------------------------------------------------------------
 

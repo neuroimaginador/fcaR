@@ -23,6 +23,8 @@
   Factorization](https://neuroimaginador.github.io/fcaR/articles/matrix_factorization.md):
 - [Extending fcaR: Equivalence Rules for
   Implications](https://neuroimaginador.github.io/fcaR/articles/extending_equivalence.md):
+- [Mining Causal Association
+  Rules](https://neuroimaginador.github.io/fcaR/articles/causal.md):
 
 ### Metrics and Properties
 

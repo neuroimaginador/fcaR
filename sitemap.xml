@@ -7,6 +7,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/SUPPORT.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/advanced_lattice_metrics.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/arules.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/causal.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/concept_lattice.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/conceptual-scaling.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/creating_contexts.html</loc></url>
@@ -29,6 +30,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/ImplicationSet.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/RandomContext.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/RandomDistributiveContext.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/RuleSet.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_vector.html</loc></url>
@@ -47,6 +49,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/fcaR-package.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/fcaR_options.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/fetch_context.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/find_causal_rules.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/get_fcarepository_contexts.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-and-grapes.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-entails-grapes.html</loc></url>

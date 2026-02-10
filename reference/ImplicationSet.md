@@ -357,7 +357,7 @@ Compute the Direct Optimal Basis using optimized C++ algorithms.
 #### Usage
 
     ImplicationSet$to_direct_optimal(
-      method = c("direct_optimal", "final_ts", "monotonic", "priority"),
+      method = c("do_sp", "direct_optimal", "final_ts", "monotonic", "priority"),
       verbose = FALSE
     )
 

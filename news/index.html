@@ -31,6 +31,7 @@
     <li><a class="dropdown-item" href="../articles/fuzzy_fca.html">Fuzzy formal concept analysis</a></li>
     <li><a class="dropdown-item" href="../articles/matrix_factorization.html">Matrix Factorization</a></li>
     <li><a class="dropdown-item" href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a></li>
+    <li><a class="dropdown-item" href="../articles/causal.html">Mining Causal Association Rules</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Metrics</h6></li>
     <li><a class="dropdown-item" href="../articles/lattice_properties.html">Lattice properties</a></li>
@@ -68,6 +69,8 @@
 </ul></li>
 <li>
 <strong>Semantic Rule Filtering:</strong> Introduced helper functions for <code>ImplicationSet</code> filtering to query rules based on attribute presence/absence: <code><a href="https://rdrr.io/pkg/arules/man/rules-class.html" class="external-link">lhs()</a></code>, <code><a href="https://rdrr.io/pkg/arules/man/rules-class.html" class="external-link">rhs()</a></code>, <code>not_lhs()</code>, <code>lhs_any()</code>, etc. This allows querying rules like <code>filter(rhs("Attribute_A"), support &gt; 0.2)</code>.</li>
+<li>
+<strong>Mining Causal Association Rules:</strong> Implemented the <code><a href="../reference/find_causal_rules.html">find_causal_rules()</a></code> method in <code>FormalContext</code>, enabling the discovery of causal rules by controlling for confounding variables using the “Fair Odds Ratio” on matched pairs.</li>
 </ul><p>Improvements:</p>
 <ul><li>
 <strong>Robust Subsetting:</strong> Completely rewritten <code>subcontext()</code> method in <code>FormalContext</code>. It now robustly handles negative indices, logical vectors, and character vectors, and prevents dimension collapsing issues (using <code>drop = FALSE</code>) that previously caused errors with the <code>Matrix</code> package.</li>
@@ -78,6 +81,8 @@
 </ul><p>Documentation:</p>
 <ul><li>
 <strong>New Vignette:</strong> Added <code>fcaR_dplyr</code> vignette illustrating the new data manipulation workflow.</li>
+<li>
+<strong>New Vignette:</strong> Added <code>causal</code> vignette explaining the new causal mining functionality and its application to Simpson’s Paradox.</li>
 </ul><p>Fixes:</p>
 <ul><li>Fixed <code>Matrix</code> coercion errors (<code>dgCMatrix</code> to <code>data.frame</code>) in R 4.x when using internal incidence matrices.</li>
 <li>Fixed <code>fixupDN.if.valid</code> errors from the <code>Matrix</code> package when filtering operations resulted in empty contexts (0 objects or 0 attributes).</li>

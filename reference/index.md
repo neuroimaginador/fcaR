@@ -16,6 +16,8 @@
   : Generate Random Formal Contexts
 - [`RandomDistributiveContext()`](https://neuroimaginador.github.io/fcaR/reference/RandomDistributiveContext.md)
   : Generate a Random Distributive Context
+- [`RuleSet`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.md)
+  : R6 Class for Set of association rules
 - [`Set`](https://neuroimaginador.github.io/fcaR/reference/Set.md) : R6
   class for a fuzzy set with sparse internal representation
 - [`as_Set()`](https://neuroimaginador.github.io/fcaR/reference/as_Set.md)
@@ -50,6 +52,8 @@
   : Set or get options for fcaR
 - [`fetch_context()`](https://neuroimaginador.github.io/fcaR/reference/fetch_context.md)
   : Fetch a Formal Context from the FCA Repository
+- [`find_causal_rules()`](https://neuroimaginador.github.io/fcaR/reference/find_causal_rules.md)
+  : Causal Association Rules
 - [`get_fcarepository_contexts()`](https://neuroimaginador.github.io/fcaR/reference/get_fcarepository_contexts.md)
   : Get Metadata from the FCA Repository
 - [`` `%&%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-and-grapes.md)
