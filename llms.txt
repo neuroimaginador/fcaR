@@ -357,6 +357,8 @@ Journal of Approximate Reasoning*, *70*, 51-67.
   : Parses several implications given as a string
 - [`planets`](https://neuroimaginador.github.io/fcaR/reference/planets.md)
   : Planets data
+- [`print.tikz_code()`](https://neuroimaginador.github.io/fcaR/reference/print.tikz_code.md)
+  : Print TikZ Code
 - [`print_repo_details()`](https://neuroimaginador.github.io/fcaR/reference/print_repo_details.md)
   : Print Details of Repository Contexts
 - [`randomize_context()`](https://neuroimaginador.github.io/fcaR/reference/randomize_context.md)

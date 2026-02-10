@@ -76,8 +76,7 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Domingo Lopez Rodriguez [dominlopez78@gmail.com,
-dominlopez@uma.es](mailto:dominlopez78@gmail.com,%20dominlopez@uma.es)
+**Maintainer**: Domingo Lopez Rodriguez <dominlopez78@gmail.com>
 ([ORCID](https://orcid.org/0000-0002-0172-1585))
 
 Authors:
