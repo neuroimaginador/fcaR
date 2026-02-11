@@ -35,8 +35,8 @@
                        .subset(.extract_column(conclusions, i),
                                p)
 
-                     }) %>%
-    purrr::reduce(cbind) %>%
+                     }) |>
+    purrr::reduce(cbind) |>
     as.vector()
 
   return(holds)
@@ -83,7 +83,7 @@
       (length(set) > 0) &&
       inherits(set[[1]], "Set")) {
 
-    res <- lapply(set, function(s) .respect(s, imps)) %>%
+    res <- lapply(set, function(s) .respect(s, imps)) |>
       purrr::reduce(cbind)
 
     setnumber <- stringr::str_pad(seq_along(set),

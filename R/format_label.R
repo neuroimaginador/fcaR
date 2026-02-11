@@ -10,7 +10,7 @@ format_label <- function(x) {
 
   }
 
-  x %>%
+  x |>
     stringr::str_replace_all(
       regex,
       "\\\\\\1"

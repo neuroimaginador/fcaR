@@ -2,7 +2,7 @@
 title: "Lattice properties"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Lattice Properties}
+  %\VignetteIndexEntry{Lattice properties}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

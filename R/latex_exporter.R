@@ -176,6 +176,7 @@ export_to_tikz <- function(
 #' @param ... Additional arguments (currently unused).
 #'
 #' @export
+#' @method print tikz_code
 print.tikz_code <- function(x, ...) {
   cat(x)
   invisible(x)
@@ -194,6 +195,7 @@ save_tikz <- function(x, file, ...) {
 }
 
 #' @export
+#' @method save_tikz tikz_code
 save_tikz.tikz_code <- function(x, file, ...) {
   # writeLines maneja la codificación y saltos de línea correctamente
   writeLines(as.character(x), con = file)

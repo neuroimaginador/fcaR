@@ -51,11 +51,11 @@ complete_rhs <- function(LHS, RHS) {
   n <- ncol(LHS)
 
   for (i in seq(n)) {
-    A <- Matrix::Matrix(LHS[, 1], sparse = TRUE) # %>% extract_columns(1)
-    B <- Matrix::Matrix(RHS[, 1], sparse = TRUE) # %>% extract_columns(1)
+    A <- Matrix::Matrix(LHS[, 1], sparse = TRUE) # |> extract_columns(1)
+    B <- Matrix::Matrix(RHS[, 1], sparse = TRUE) # |> extract_columns(1)
 
-    LHS <- Matrix::Matrix(LHS[, -1], sparse = TRUE) # %>% remove_columns(1)
-    RHS <- Matrix::Matrix(RHS[, -1], sparse = TRUE) # %>% remove_columns(1)
+    LHS <- Matrix::Matrix(LHS[, -1], sparse = TRUE) # |> remove_columns(1)
+    RHS <- Matrix::Matrix(RHS[, -1], sparse = TRUE) # |> remove_columns(1)
 
     AUB <- .union(A, B)
 

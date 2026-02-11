@@ -1,4 +1,6 @@
 get_metadata <- function(ID) {
+  check_needed_pkg("yaml", "reading the repository metadata")
+
   meta <- yaml::read_yaml("https://fcarepository.org/contexts.yaml")
 
   if (ID %in% names(meta)) {
@@ -15,7 +17,6 @@ get_metadata <- function(ID) {
 #' the metadata for all available datasets.
 #'
 #' @return A list containing the metadata for each context (title, dimensions, description, source).
-#' @importFrom yaml read_yaml
 #' @export
 #'
 #' @examples
@@ -23,6 +24,7 @@ get_metadata <- function(ID) {
 #' meta <- get_fcarepository_contexts()
 #' }
 get_fcarepository_contexts <- function() {
+  check_needed_pkg("yaml", "reading the repository")
   meta <- yaml::read_yaml("https://fcarepository.org/contexts.yaml")
 }
 
@@ -68,13 +70,20 @@ print_repo_details <- function(meta) {
 
     # Formateamos la descripción para que no desborde si la consola es estrecha
     # 'exdent = 15' alinea las líneas siguientes con la indentación visual
-    desc_wrapped <- paste(strwrap(desc, width = 60, exdent = 15), collapse = "\n")
+    desc_wrapped <- paste(
+      strwrap(desc, width = 60, exdent = 15),
+      collapse = "\n"
+    )
 
     # --- 3. Impresión del Bloque ---
     # Usamos un marcador visual (bullet) para separar elementos
     cat(sprintf("* %s\n", filename))
     cat(sprintf("    Title:        %s\n", title))
-    cat(sprintf("    Dimensions:   %d objects x %d attributes\n", n_obj, n_attr))
+    cat(sprintf(
+      "    Dimensions:   %d objects x %d attributes\n",
+      n_obj,
+      n_attr
+    ))
 
     # Solo imprimimos descripción si existe
     if (nchar(desc) > 0) {
@@ -99,27 +108,30 @@ select_repository_context <- function(meta) {
 
   # 1. Preprocesamiento: Convertir la lista 'meta' compleja a data.frame plano
   # Esto es necesario para que DT pueda mostrarlo bien
-  df_meta <- do.call(rbind, lapply(names(meta), function(fname) {
-    item <- meta[[fname]]
+  df_meta <- do.call(
+    rbind,
+    lapply(names(meta), function(fname) {
+      item <- meta[[fname]]
 
-    # Lógica de normalización de tamaño (la misma que discutimos antes)
-    if (!is.null(item$size)) {
-      obj <- item$size[[1]]$objects
-      att <- item$size[[2]]$attributes
-    } else {
-      obj <- if (!is.null(item$objects)) item$objects else 0
-      att <- if (!is.null(item$attributes)) item$attributes else 0
-    }
+      # Lógica de normalización de tamaño (la misma que discutimos antes)
+      if (!is.null(item$size)) {
+        obj <- item$size[[1]]$objects
+        att <- item$size[[2]]$attributes
+      } else {
+        obj <- if (!is.null(item$objects)) item$objects else 0
+        att <- if (!is.null(item$attributes)) item$attributes else 0
+      }
 
-    data.frame(
-      Filename = fname,
-      Title = if (!is.null(item$title)) item$title else "",
-      Objects = obj,
-      Attributes = att,
-      Description = if (!is.null(item$description)) item$description else "",
-      stringsAsFactors = FALSE
-    )
-  }))
+      data.frame(
+        Filename = fname,
+        Title = if (!is.null(item$title)) item$title else "",
+        Objects = obj,
+        Attributes = att,
+        Description = if (!is.null(item$description)) item$description else "",
+        stringsAsFactors = FALSE
+      )
+    })
+  )
 
   # 2. Definición de la Interfaz (UI) usando miniUI
   ui <- miniUI::miniPage(
@@ -206,7 +218,9 @@ fetch_context <- function(filename, verbose = TRUE) {
 
   # 3. Descarga con Manejo de Errores
   if (verbose) {
-    cli::cli_alert_info("Attempting to fetch {.val {filename}} from repository...")
+    cli::cli_alert_info(
+      "Attempting to fetch {.val {filename}} from repository..."
+    )
   }
 
   download_status <- tryCatch(
@@ -218,7 +232,10 @@ fetch_context <- function(filename, verbose = TRUE) {
     },
     warning = function(w) {
       # download.file a veces emite warnings en 404, los capturamos como error
-      return(structure(list(message = w$message), class = c("error", "condition")))
+      return(structure(
+        list(message = w$message),
+        class = c("error", "condition")
+      ))
     }
   )
 
@@ -227,7 +244,12 @@ fetch_context <- function(filename, verbose = TRUE) {
     msg <- download_status$message
     # Intentamos dar un mensaje más amigable si es un 404
     if (grepl("404", msg) || grepl("cannot open URL", msg)) {
-      stop(glue::glue("Could not find context '{filename}' in the repository. Please check the ID."), call. = FALSE)
+      stop(
+        glue::glue(
+          "Could not find context '{filename}' in the repository. Please check the ID."
+        ),
+        call. = FALSE
+      )
     } else {
       stop(glue::glue("Network error while downloading: {msg}"), call. = FALSE)
     }
@@ -242,7 +264,12 @@ fetch_context <- function(filename, verbose = TRUE) {
       FormalContext$new(dest_file)
     },
     error = function(e) {
-      stop(glue::glue("The file was downloaded but could not be parsed as a Formal Context.\nReason: {e$message}"), call. = FALSE)
+      stop(
+        glue::glue(
+          "The file was downloaded but could not be parsed as a Formal Context.\nReason: {e$message}"
+        ),
+        call. = FALSE
+      )
     }
   )
 
@@ -272,7 +299,6 @@ fetch_context <- function(filename, verbose = TRUE) {
       cat(info_text)
 
       fc$description <- stringr::str_to_sentence(meta_info$description)
-
     }
   }
 

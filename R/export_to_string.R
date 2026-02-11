@@ -4,8 +4,8 @@
   if (length(idx) > 0) {
     A <- S[idx]
     decimal_places <- fcaR_options("decimal_places")
-    A <- as.numeric(A) %>%
-      formatC(digits = decimal_places) %>%
+    A <- as.numeric(A) |>
+      formatC(digits = decimal_places) |>
       stringr::str_replace_all("\\s*", "")
     att <- attributes[idx]
 

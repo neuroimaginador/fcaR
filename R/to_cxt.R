@@ -16,9 +16,9 @@ to_cxt <- function(I, objects, attributes,
               length(objects), length(attributes), "",
               objects, attributes)
 
-  str <- I %>%
-    .print_binary() %>%
-    apply(1, stringr::str_flatten) %>%
+  str <- I |>
+    .print_binary() |>
+    apply(1, stringr::str_flatten) |>
     stringr::str_replace_all(pattern = stringr::fixed(" "),
                              replacement = ".")
 

@@ -24,6 +24,8 @@ Fixes:
 * Fixed `Matrix` coercion errors (`dgCMatrix` to `data.frame`) in R 4.x when using internal incidence matrices.
 * Fixed `fixupDN.if.valid` errors from the `Matrix` package when filtering operations resulted in empty contexts (0 objects or 0 attributes).
 * Resolved floating-point precision issues in unit tests when comparing support values.
+* Reduced dependencies: moved `ggplot2`, `ggraph`, `igraph`, `rstudioapi`, and `yaml` to Suggests.
+* Removed `forcats` and `magrittr` dependencies by using base R equivalents and the native pipe `|>`.
 
 # fcaR 1.3.1
 

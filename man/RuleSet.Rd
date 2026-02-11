@@ -11,7 +11,7 @@ This class implements the structure needed to store association rules and the me
 \itemize{
 \item \href{#method-RuleSet-new}{\code{RuleSet$new()}}
 \item \href{#method-RuleSet-get_attributes}{\code{RuleSet$get_attributes()}}
-\item \href{#method-RuleSet-bracket}{\code{RuleSet$[()}}
+\item \href{#method-RuleSet-[}{\code{RuleSet$[()}}
 \item \href{#method-RuleSet-to_arules}{\code{RuleSet$to_arules()}}
 \item \href{#method-RuleSet-add}{\code{RuleSet$add()}}
 \item \href{#method-RuleSet-cardinality}{\code{RuleSet$cardinality()}}
@@ -73,8 +73,8 @@ A character vector with the names of the attributes used in the implications.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RuleSet-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-RuleSet-bracket}{}}}
+\if{html}{\out{<a id="method-RuleSet-["></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-[}{}}}
 \subsection{Method \code{[()}}{
 Get a subset of the rule set
 \subsection{Usage}{
@@ -282,10 +282,14 @@ An \code{RuleSet} that is a subset of the current set, only with those rules whi
 \if{html}{\out{<a id="method-RuleSet-get_implications"></a>}}
 \if{latex}{\out{\hypertarget{method-RuleSet-get_implications}{}}}
 \subsection{Method \code{get_implications()}}{
+Extract the implications with confidence 1
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RuleSet$get_implications()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+An \code{ImplicationSet} object containing only the rules with confidence 1.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-RuleSet-support"></a>}}
@@ -304,10 +308,14 @@ A vector with the support of each implication
 \if{html}{\out{<a id="method-RuleSet-confidence"></a>}}
 \if{latex}{\out{\hypertarget{method-RuleSet-confidence}{}}}
 \subsection{Method \code{confidence()}}{
+Compute the confidence of each rule
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RuleSet$confidence()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A numeric vector with the confidence of each rule.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-RuleSet-clone"></a>}}

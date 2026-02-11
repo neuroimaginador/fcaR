@@ -40,8 +40,8 @@
                     .subset(.extract_column(conclusions, i),
                             cl)
 
-                  }) %>%
-    purrr::reduce(cbind) %>%
+                  }) |>
+    purrr::reduce(cbind) |>
     Matrix::as.matrix()
 
   return(entails)

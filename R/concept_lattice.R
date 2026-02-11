@@ -726,7 +726,7 @@ ConceptLattice <- R6::R6Class(
         csets <- sapply(
           dots[csets_idx],
           function(l) l$to_list()
-        ) %>%
+        ) |>
           unlist()
       } else {
         csets <- c()

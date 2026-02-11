@@ -24,14 +24,8 @@ BugReports: https://github.com/Malaga-FCA-group/fcaR/issues
 Depends: 
     R (>= 4.1)
 Imports: 
-    arules,
     dplyr,
-    forcats,
-    ggplot2,
-    ggraph,
     glue,
-    grDevices,
-    igraph,
     Matrix,
     methods,
     R6,
@@ -43,12 +37,10 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
-    magrittr,
     purrr,
-    yaml,
-    cli,
-    rstudioapi
+    cli
 Suggests: 
+    arules,
     covr,
     DT,
     fractional,
@@ -61,7 +53,13 @@ Suggests:
     tictoc,
     tikzDevice,
     tinytex,
-    parallel
+    parallel,
+    ggplot2,
+    ggraph,
+    igraph,
+    grDevices,
+    rstudioapi,
+    yaml
 LinkingTo: 
     Rcpp, BH
 VignetteBuilder: 

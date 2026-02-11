@@ -1,186 +1,180 @@
-nominal_scaling <- function(V, col_name,
-                            values) {
-
-  if (missing(values)) values <- sort(unique(V))
-  if (is.function(values)) values <- values(V)
+nominal_scaling <- function(V, col_name, values) {
+  if (missing(values)) {
+    values <- sort(unique(V))
+  }
+  if (is.function(values)) {
+    values <- values(V)
+  }
 
   # Scale (context)
   vals <- sort(unique(V))
   scale_matrix <- outer(vals, values, `==`)
   rownames(scale_matrix) <- as.character(vals)
-  colnames(scale_matrix) <- paste0(col_name, " = ",
-                                   as.character(values))
+  colnames(scale_matrix) <- paste0(col_name, " = ", as.character(values))
   scale_matrix[] <- as.numeric(scale_matrix)
 
   return(scale_matrix)
-
 }
 
-ordinal_scaling <- function(V, col_name,
-                            values,
-                            comparison = `<=`) {
-
+ordinal_scaling <- function(V, col_name, values, comparison = `<=`) {
   # browser()
-  if (missing(values)) values <- sort(unique(V))
-  if (is.function(values)) values <- values(V)
-
+  if (missing(values)) {
+    values <- sort(unique(V))
+  }
+  if (is.function(values)) {
+    values <- values(V)
+  }
 
   if (comparison(0, 1)) {
-
     comp_str <- " <= "
-
   } else {
-
     comp_str <- " >= "
-
   }
 
   # Scale (context)
   vals <- sort(unique(V))
 
   if (is.character(V) || is.factor(V)) {
-
     vals <- as.character(vals)
 
     vals <- sort(unique(c(vals, values)))
-    values <- forcats::as_factor(values)
-    vals <- factor(vals, levels = levels(values)) %>% sort()
+    values <- factor(values, levels = unique(values))
+    vals <- factor(vals, levels = levels(values)) |> sort()
 
     if (anyNA(vals)) {
-
-      stop("If the attribute is given by a string, values must order all possible strings.",
-           call. = FALSE)
-
+      stop(
+        "If the attribute is given by a string, values must order all possible strings.",
+        call. = FALSE
+      )
     }
-
   }
 
-  scale_matrix <- outer(as.numeric(vals),
-                        as.numeric(values), comparison)
+  scale_matrix <- outer(as.numeric(vals), as.numeric(values), comparison)
   rownames(scale_matrix) <- as.character(vals)
   colnames(scale_matrix) <- paste0(col_name, comp_str, values)
   scale_matrix[] <- as.numeric(scale_matrix)
 
   return(scale_matrix)
-
 }
 
-interordinal_scaling <- function(V, col_name,
-                                 values,
-                                 comparison = `<=`) {
-
-  if (missing(values)) values <- sort(unique(V))
-  if (is.function(values)) values <- values(V)
+interordinal_scaling <- function(V, col_name, values, comparison = `<=`) {
+  if (missing(values)) {
+    values <- sort(unique(V))
+  }
+  if (is.function(values)) {
+    values <- values(V)
+  }
 
   if (comparison(0, 1)) {
-
     comp1_str <- " <= "
     comp2_str <- " >= "
-
   } else {
-
     comp1_str <- " >= "
     comp2_str <- " <= "
-
   }
 
   # Scale (context)
   vals <- sort(unique(V))
 
   if (is.character(V) || is.factor(V)) {
-
     vals <- as.character(vals)
 
     vals <- sort(unique(c(V, values)))
 
-    values <- forcats::as_factor(values)
-    vals <- factor(vals, levels = levels(values)) %>% sort()
+    values <- factor(values, levels = unique(values))
+    vals <- factor(vals, levels = levels(values)) |> sort()
 
     if (anyNA(vals)) {
-
-      stop("If the attribute is given by a string, values must order all possible strings.",
-           call. = FALSE)
-
+      stop(
+        "If the attribute is given by a string, values must order all possible strings.",
+        call. = FALSE
+      )
     }
-
   }
 
-  scale_matrix <- cbind(outer(as.numeric(vals), as.numeric(values), comparison),
-                        !outer(as.numeric(vals), as.numeric(values), FUN = comparison) |
-                          outer(as.numeric(vals), as.numeric(values), FUN = `==`))
+  scale_matrix <- cbind(
+    outer(as.numeric(vals), as.numeric(values), comparison),
+    !outer(as.numeric(vals), as.numeric(values), FUN = comparison) |
+      outer(as.numeric(vals), as.numeric(values), FUN = `==`)
+  )
   rownames(scale_matrix) <- as.character(vals)
-  colnames(scale_matrix) <- c(paste0(col_name, comp1_str, values),
-                              paste0(col_name, comp2_str, values))
+  colnames(scale_matrix) <- c(
+    paste0(col_name, comp1_str, values),
+    paste0(col_name, comp2_str, values)
+  )
   scale_matrix[] <- as.numeric(scale_matrix)
 
   return(scale_matrix)
-
 }
 
-biordinal_scaling <- function(V, col_name,
-                              values_le = sort((unique(V))),
-                              values_ge = values_le,
-                              comparison = `<=`) {
-
+biordinal_scaling <- function(
+  V,
+  col_name,
+  values_le = sort((unique(V))),
+  values_ge = values_le,
+  comparison = `<=`
+) {
   if (comparison(0, 1)) {
-
     comp1_str <- " <= "
     comp2_str <- " >= "
-
   } else {
-
     comp1_str <- " >= "
     comp2_str <- " <= "
-
   }
 
   # Scale (context)
   vals <- sort(unique(V))
 
   if (is.character(V) || is.factor(V)) {
-
     vals <- as.character(vals)
 
     all_values <- c(values_le, values_ge)
-    all_values <- forcats::as_factor(all_values)
+    all_values <- factor(all_values, levels = unique(all_values))
     vals <- sort(unique(c(vals, values_le, values_ge)))
     values_le <- factor(values_le, levels = levels(all_values))
     values_ge <- factor(values_ge, levels = levels(all_values))
-    vals <- factor(vals, levels = levels(all_values)) %>%
+    vals <- factor(vals, levels = levels(all_values)) |>
       sort()
 
     if (anyNA(vals)) {
-
-      stop("If the attribute is given by a string, values must order all possible strings.",
-           call. = FALSE)
-
+      stop(
+        "If the attribute is given by a string, values must order all possible strings.",
+        call. = FALSE
+      )
     }
-
   }
 
-  scale_matrix <- cbind(outer(as.numeric(vals), as.numeric(values_le), comparison),
-                        !outer(as.numeric(vals), as.numeric(values_ge), FUN = comparison) |
-                          outer(as.numeric(vals), as.numeric(values_ge), FUN = `==`))
+  scale_matrix <- cbind(
+    outer(as.numeric(vals), as.numeric(values_le), comparison),
+    !outer(as.numeric(vals), as.numeric(values_ge), FUN = comparison) |
+      outer(as.numeric(vals), as.numeric(values_ge), FUN = `==`)
+  )
   rownames(scale_matrix) <- as.character(vals)
-  colnames(scale_matrix) <- c(paste0(col_name, comp1_str, values_le),
-                              paste0(col_name, comp2_str, values_ge))
+  colnames(scale_matrix) <- c(
+    paste0(col_name, comp1_str, values_le),
+    paste0(col_name, comp2_str, values_ge)
+  )
   scale_matrix[] <- as.numeric(scale_matrix)
 
   return(scale_matrix)
-
 }
 
-interval_scaling <- function(V, col_name, interval_names,
-                             values) {
-
-  if (missing(values)) values <- sort(unique(V))
-  if (is.function(values)) values <- values(V)
+interval_scaling <- function(V, col_name, interval_names, values) {
+  if (missing(values)) {
+    values <- sort(unique(V))
+  }
+  if (is.function(values)) {
+    values <- values(V)
+  }
 
   if (missing(interval_names)) {
-
-    interval_names <- paste0("(", values[seq(length(values) - 1)], ", ",
-                             values[-1], "]")
-
+    interval_names <- paste0(
+      "(",
+      values[seq(length(values) - 1)],
+      ", ",
+      values[-1],
+      "]"
+    )
   }
 
   # Scale (context)
@@ -194,31 +188,35 @@ interval_scaling <- function(V, col_name, interval_names,
   scale_matrix[] <- as.numeric(scale_matrix)
 
   return(scale_matrix)
-
 }
 
-implication_scaling <- function(V, col_name,
-                             values) {
-
+implication_scaling <- function(V, col_name, values) {
   I <- function(a, b) ifelse(a >= b, 1, a)
 
-  if (missing(values)) values <- sort(unique(c(0, V, 1)))
-  if (is.function(values)) values <- values(V)
+  if (missing(values)) {
+    values <- sort(unique(c(0, V, 1)))
+  }
+  if (is.function(values)) {
+    values <- values(V)
+  }
 
   # Scale (context)
   vals <- sort(unique(c(0, V, 1)))
   scale_matrix <- outer(vals, values, I)
   rownames(scale_matrix) <- as.character(vals)
-  colnames(scale_matrix) <- paste0("(", col_name, ", ",
-                                   as.character(values), ")")
+  colnames(scale_matrix) <- paste0(
+    "(",
+    col_name,
+    ", ",
+    as.character(values),
+    ")"
+  )
   scale_matrix[] <- as.numeric(scale_matrix)
 
   return(scale_matrix)
-
 }
 
 scale_context <- function(I, column, type, bg, ...) {
-
   idx <- which(colnames(I) == column)
   prev <- seq_len(idx - 1)
   post <- seq(idx, ncol(I))[-1]
@@ -239,35 +237,28 @@ scale_context <- function(I, column, type, bg, ...) {
   M <- apply_scale(as.matrix(V), scale_matrix)
 
   res <- cbind.data.frame(I[, prev], M, I[, post])
-  colnames(res) <- c(colnames(I)[prev],
-                     colnames(M),
-                     colnames(I)[post])
+  colnames(res) <- c(colnames(I)[prev], colnames(M), colnames(I)[post])
 
   if (bg) {
-
     # Scale background implications
     scale$find_implications(save_concepts = FALSE)
     imps <- scale$implications$clone()
-
   } else {
-
     imps <- ImplicationSet$new(
       attributes = scale$attributes,
-      I = scale$I)
-
+      I = scale$I
+    )
   }
 
-  return(list(derived = res,
-              scale = scale,
-              bg_implications = imps))
-
+  return(list(derived = res, scale = scale, bg_implications = imps))
 }
 
 apply_scale <- function(V, scale_matrix) {
-
   n <- ncol(scale_matrix)
   m <- nrow(V)
-  if (is.null(m)) m <- length(V)
+  if (is.null(m)) {
+    m <- length(V)
+  }
   res <- matrix(0, ncol = n, nrow = m)
   attributes <- rownames(scale_matrix)
   id <- match(V, attributes)
@@ -276,5 +267,4 @@ apply_scale <- function(V, scale_matrix) {
   colnames(res) <- colnames(scale_matrix)
 
   return(res)
-
 }

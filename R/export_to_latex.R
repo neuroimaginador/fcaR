@@ -6,16 +6,16 @@ set_to_latex <- function(S, attributes) {
 
     A <- S[idx]
     decimal_places <- fcaR_options("decimal_places")
-    A <- A %>%
-      formatC(digits = decimal_places) %>%
+    A <- A |>
+      formatC(digits = decimal_places) |>
       stringr::str_replace_all("\\s*", "")
 
-    att <- attributes[idx] %>%
+    att <- attributes[idx] |>
       format_label()
 
     str <- sapply(seq_along(att),
                   \(i) element_to_latex(nm = att[i],
-                                        val = A[i])) %>%
+                                        val = A[i])) |>
       stringr::str_flatten(", ")
 
     str <- paste0("\\left\\{", str, "\\right\\}")

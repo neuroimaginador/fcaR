@@ -29,6 +29,7 @@ RuleSet <- R6::R6Class(
     #'
     #' @return A new \code{RuleSet} object.
     initialize = function(...) {
+      check_needed_pkg("arules", "initialize from arules objects")
       dots <- list(...)
 
       classes <- lapply(dots, function(d) class(d)[1])
@@ -140,10 +141,11 @@ RuleSet <- R6::R6Class(
     #'
     #' @return A \code{rules} object as used by package \code{arules}.
     #'
-    #' @import arules
     #' @importFrom methods as is
     #' @export
     to_arules = function(quality = TRUE) {
+      check_needed_pkg("arules", "export to arules format")
+
       if (self$is_empty()) {
         stop("No implications to export.\n", call. = FALSE)
       }
@@ -193,9 +195,9 @@ RuleSet <- R6::R6Class(
     #'
     #' @return Nothing, just updates the internal field.
     #'
-    #' @import arules
     #' @export
     add = function(...) {
+      check_needed_pkg("arules", "import from arules objects")
       dots <- list(...)
 
       # Just a single RuleSet
@@ -497,6 +499,11 @@ RuleSet <- R6::R6Class(
       }
     },
 
+    #' @description
+    #' Extract the implications with confidence 1
+    #'
+    #' @return An \code{ImplicationSet} object containing only the rules with confidence 1.
+    #' @export
     get_implications = function() {
       # Confidence 1 implies implications?
       # If 'confidence' is in quality
@@ -552,6 +559,11 @@ RuleSet <- R6::R6Class(
       return(supp_val)
     },
 
+    #' @description
+    #' Compute the confidence of each rule
+    #'
+    #' @return A numeric vector with the confidence of each rule.
+    #' @export
     confidence = function() {
       if (self$is_empty()) {
         return(numeric(0))

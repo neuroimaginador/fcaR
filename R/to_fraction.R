@@ -6,41 +6,43 @@
 #
 # @return A character string representing the matrix. It can be \code{cat}ed.
 #
-.to_fraction <- function(A,
-                         latex = FALSE,
-                         type = fcaR_options("latex_fraction")) {
-
+.to_fraction <- function(
+  A,
+  latex = FALSE,
+  type = fcaR_options("latex_fraction")
+) {
   check_needed_pkg("fractional", "converting numbers to LaTeX fractions")
 
-  if (is.character(A)) return(A)
+  if (is.character(A)) {
+    return(A)
+  }
 
   A[abs(A) < 1.e-7] <- 0
 
   if (!latex) {
-
     A[] <- fractional::vfractional(A)
 
     return(A)
-
   }
 
   if (type == "sfrac") {
-
     first_time_message(
       option = "fcaR.sfrac_message",
       txt = paste0(
         "You need to add this command to your LaTeX file:\n",
-        "\\usepackage{xfrac}"))
-
+        "\\usepackage{xfrac}"
+      )
+    )
   }
 
   if (type == "nicefrac") {
-
     first_time_message(
       option = "fcaR.nicefrac_message",
-      txt = paste0("You need to add this command to your LaTeX file:\n",
-                   "\\usepackage{nicefrac}"))
-
+      txt = paste0(
+        "You need to add this command to your LaTeX file:\n",
+        "\\usepackage{nicefrac}"
+      )
+    )
   }
 
   den <- fractional::denominators(A)
@@ -56,12 +58,12 @@
   A_chr[idx_neg] <- paste0("- ", A_chr[idx_neg])
 
   return(A_chr)
-
 }
 
 .print_binary <- function(A, latex = FALSE) {
-
-  if (is.character(A)) return(A)
+  if (is.character(A)) {
+    return(A)
+  }
 
   A[abs(A) < 1.e-7] <- 0
 
@@ -70,57 +72,56 @@
   A[] <- ifelse(A == 1, x_chr, " ")
 
   return(A)
-
 }
 
-.print_matrix <- function(M,
-                          objects = rownames(M),
-                          attributes = colnames(M),
-                          width = getOption("width")) {
-
+.print_matrix <- function(
+  M,
+  objects = rownames(M),
+  attributes = colnames(M),
+  width = getOption("width")
+) {
   decimal_places <- fcaR_options("decimal_places")
-  M[] <- M %>%
-    formatC(digits = decimal_places) %>%
+  M[] <- M |>
+    formatC(digits = decimal_places) |>
     stringr::str_replace_all("\\s*", "")
 
   M <- cbind(objects, M)
   M <- rbind(c("", attributes), M)
 
   # Column width
-  col_width <- apply(M, 2,
-                     function(m) max(stringr::str_length(m))) + 1
+  col_width <- apply(M, 2, function(m) max(stringr::str_length(m))) + 1
 
   # Columns to show
   ids <- which(cumsum(col_width) < width)
 
-  fmt_row <- rep("%s ", length(ids)) %>%
+  fmt_row <- rep("%s ", length(ids)) |>
     stringr::str_flatten()
 
   M_str <- list()
 
   for (i in seq_len(nrow(M))) {
-
     M_str[[i]] <- sapply(
       ids,
       function(j) {
-
-        stringr::str_pad(M[i, j],
-                width = col_width[j],
-                side = ifelse(j == 1, "left", "both"))
-
-                })
-
+        stringr::str_pad(
+          M[i, j],
+          width = col_width[j],
+          side = ifelse(j == 1, "left", "both")
+        )
+      }
+    )
   }
 
-  write_row <- function(...) do.call(
-    function(...) sprintf(fmt = fmt_row, ...),
-    as.list(...))
+  write_row <- function(...) {
+    do.call(
+      function(...) sprintf(fmt = fmt_row, ...),
+      as.list(...)
+    )
+  }
 
-  body <- lapply(M_str, write_row) %>%
-    unlist() %>%
-    stringr::str_flatten("\n")
+  body <- lapply(M_str, write_row) |>
+    unlist() |>
+    stringr::str_flatten(collapse = "\n")
 
-  return(list(mat = body,
-              att_id = ids))
-
+  return(list(mat = body, att_id = ids))
 }

@@ -4,7 +4,7 @@
 \alias{print.tikz_code}
 \title{Print TikZ Code}
 \usage{
-print.tikz_code(x, ...)
+\method{print}{tikz_code}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{tikz_code}.}

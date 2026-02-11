@@ -115,8 +115,8 @@
 
     A <- S1$get_vector()
     B <- S2$get_vector()
-    my_diff <- .difference2(A, B) %>%
-      Matrix::as.matrix() %>% as.vector()
+    my_diff <- .difference2(A, B) |>
+      Matrix::as.matrix() |> as.vector()
     names(my_diff) <- S1$get_attributes()
 
     S <- as_Set(my_diff)

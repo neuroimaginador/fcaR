@@ -52,6 +52,7 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @return A new \code{ImplicationSet} object.
     initialize = function(...) {
+      check_needed_pkg("arules", "initialize from arules objects")
       dots <- list(...)
 
       classes <- lapply(dots, function(d) class(d)[1])
@@ -120,18 +121,15 @@ ImplicationSet <- R6::R6Class(
           imp <- ImplicationSet$new(
             name = paste0(private$name, "_", paste0(idx)),
             attributes = private$attributes,
-            lhs = Matrix::Matrix(private$lhs_matrix[, idx],
-              sparse = TRUE
-            ),
-            rhs = Matrix::Matrix(private$rhs_matrix[, idx],
-              sparse = TRUE
-            ),
+            lhs = Matrix::Matrix(private$lhs_matrix[, idx], sparse = TRUE),
+            rhs = Matrix::Matrix(private$rhs_matrix[, idx], sparse = TRUE),
             I = private$I
           )
 
           return(imp)
         } else {
-          stop("Cannot use mixed positive and negative indices.\n",
+          stop(
+            "Cannot use mixed positive and negative indices.\n",
             call. = FALSE
           )
         }
@@ -152,14 +150,14 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @export
     to_arules = function(quality = TRUE) {
+      check_needed_pkg("arules", "export to arules format")
       if (self$is_empty()) {
-        stop("No implications to export.\n",
-          call. = FALSE
-        )
+        stop("No implications to export.\n", call. = FALSE)
       }
 
       if (!private$is_binary()) {
-        stop("Export to arules format is only allowed when using binary implications.\n",
+        stop(
+          "Export to arules format is only allowed when using binary implications.\n",
           call. = FALSE
         )
       }
@@ -171,7 +169,6 @@ ImplicationSet <- R6::R6Class(
         I = private$I,
         quality = quality
       )
-
 
       return(rules)
     },
@@ -185,6 +182,7 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @export
     add = function(...) {
+      check_needed_pkg("arules", "import from arules objects")
       dots <- list(...)
 
       # Just a single ImplicationSet
@@ -218,9 +216,7 @@ ImplicationSet <- R6::R6Class(
 
           private$append_implications(imp)
         } else {
-          stop("Invalid number of arguments.\n",
-            call. = FALSE
-          )
+          stop("Invalid number of arguments.\n", call. = FALSE)
         }
       }
     },
@@ -272,9 +268,7 @@ ImplicationSet <- R6::R6Class(
     #' @return If \code{reduce == FALSE}, the output is a fuzzy set corresponding to the closure of \code{S}. If \code{reduce == TRUE}, a list with two components: \code{closure}, with the closure as above, and \code{implications}, the reduced set of implications.
     #'
     #' @export
-    closure = function(S,
-                       reduce = FALSE,
-                       verbose = FALSE) {
+    closure = function(S, reduce = FALSE, verbose = FALSE) {
       if (inherits(S, "Set")) {
         original <- S$clone()
         S <- match_attributes(S, private$attributes)
@@ -294,7 +288,8 @@ ImplicationSet <- R6::R6Class(
           is_direct = private$directness,
           logic = private$logic
         )
-      } else { # Should be globalization
+      } else {
+        # Should be globalization
         cl <- .compute_closure(
           S,
           LHS = private$lhs_matrix,
@@ -307,10 +302,12 @@ ImplicationSet <- R6::R6Class(
       }
 
       if (!reduce) {
-        cl <- list(closure = Set$new(
-          attributes = private$attributes,
-          M = cl$closure
-        ))
+        cl <- list(
+          closure = Set$new(
+            attributes = private$attributes,
+            M = cl$closure
+          )
+        )
       } else {
         cl$closure <- Set$new(
           attributes = private$attributes,
@@ -371,10 +368,12 @@ ImplicationSet <- R6::R6Class(
     #' @return Nothing, just updates the internal matrices for LHS and RHS.
     #'
     #' @export
-    apply_rules = function(rules = c("composition", "generalization"),
-                           batch_size = 25000L,
-                           parallelize = FALSE,
-                           reorder = FALSE) {
+    apply_rules = function(
+      rules = c("composition", "generalization"),
+      batch_size = 25000L,
+      parallelize = FALSE,
+      reorder = FALSE
+    ) {
       # If no implications, do nothing
       if (is.null(private$lhs_matrix) || (ncol(private$lhs_matrix) == 0)) {
         return(invisible(self))
@@ -386,9 +385,7 @@ ImplicationSet <- R6::R6Class(
         rules <- intersect(rules, "reduction")
       }
 
-
       if (length(rules) > 0) {
-
         L <- .process_batch(
           LHS = private$lhs_matrix,
           RHS = private$rhs_matrix,
@@ -454,8 +451,16 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @return Nothing, updates the \code{ImplicationSet} in place with the new basis.
     #' @export
-    to_direct_optimal = function(method = c("do_sp", "direct_optimal", "final_ts", "monotonic", "priority"),
-                                 verbose = FALSE) {
+    to_direct_optimal = function(
+      method = c(
+        "do_sp",
+        "direct_optimal",
+        "final_ts",
+        "monotonic",
+        "priority"
+      ),
+      verbose = FALSE
+    ) {
       method <- match.arg(method)
 
       # TODO: What happens with different hedges??!!
@@ -478,19 +483,49 @@ ImplicationSet <- R6::R6Class(
       res_list <- switch(
         method,
         "do_sp" = run_direct_optimal_sp_single_pass_rcpp_optimized(
-          private$lhs_matrix, private$rhs_matrix, private$attributes, vals, current_logic, TRUE, verbose
+          private$lhs_matrix,
+          private$rhs_matrix,
+          private$attributes,
+          vals,
+          current_logic,
+          TRUE,
+          verbose
         ),
         "direct_optimal" = run_direct_optimal_sp_rcpp_optimized(
-          private$lhs_matrix, private$rhs_matrix, private$attributes, vals, current_logic, TRUE, verbose
+          private$lhs_matrix,
+          private$rhs_matrix,
+          private$attributes,
+          vals,
+          current_logic,
+          TRUE,
+          verbose
         ),
         "final_ts" = run_final_ts_rcpp_optimized(
-          private$lhs_matrix, private$rhs_matrix, private$attributes, vals, current_logic, TRUE, verbose
+          private$lhs_matrix,
+          private$rhs_matrix,
+          private$attributes,
+          vals,
+          current_logic,
+          TRUE,
+          verbose
         ),
         "monotonic" = run_monotonic_incremental_rcpp_optimized(
-          private$lhs_matrix, private$rhs_matrix, private$attributes, vals, current_logic, TRUE, verbose
+          private$lhs_matrix,
+          private$rhs_matrix,
+          private$attributes,
+          vals,
+          current_logic,
+          TRUE,
+          verbose
         ),
         "priority" = run_priority_refinement_rcpp_optimized(
-          private$lhs_matrix, private$rhs_matrix, private$attributes, vals, current_logic, TRUE, verbose
+          private$lhs_matrix,
+          private$rhs_matrix,
+          private$attributes,
+          vals,
+          current_logic,
+          TRUE,
+          verbose
         )
       )
 
@@ -528,8 +563,8 @@ ImplicationSet <- R6::R6Class(
       private$directness <- TRUE
 
       # if (verbose) {
-        cat("Algorithm finished using logic:", current_logic, "\n")
-        print(res_list$metrics)
+      cat("Algorithm finished using logic:", current_logic, "\n")
+      print(res_list$metrics)
       # }
 
       return(invisible(self))
@@ -560,14 +595,18 @@ ImplicationSet <- R6::R6Class(
           seq(n_implications),
           function(i) {
             paste0(
-              "Rule ", i, ": ",
+              "Rule ",
+              i,
+              ": ",
               # function(i) paste0("Rule: ",
               .implication_to_string(LHS[, i], RHS[, i], attributes)
             )
           }
         )
 
-        implications <- sapply(implications, function(s) stringr::str_wrap(s, width = getOption("width"), exdent = 2))
+        implications <- sapply(implications, function(s) {
+          stringr::str_wrap(s, width = getOption("width"), exdent = 2)
+        })
 
         cat(implications, sep = "\n")
       }
@@ -584,11 +623,14 @@ ImplicationSet <- R6::R6Class(
     #' @return A string in LaTeX format that prints nicely all the implications.
     #'
     #' @export
-    to_latex = function(print = TRUE,
-                        ncols = 1,
-                        numbered = TRUE,
-                        numbers = seq(self$cardinality())) {
-      output <- imp_to_latex(self,
+    to_latex = function(
+      print = TRUE,
+      ncols = 1,
+      numbered = TRUE,
+      numbers = seq(self$cardinality())
+    ) {
+      output <- imp_to_latex(
+        self,
         ncols = ncols,
         numbered = numbered,
         numbers = numbers
@@ -609,7 +651,8 @@ ImplicationSet <- R6::R6Class(
     #' @export
     get_LHS_matrix = function() {
       if (self$is_empty()) {
-        LHS <- Matrix::Matrix(FALSE,
+        LHS <- Matrix::Matrix(
+          FALSE,
           nrow = length(private$attributes),
           ncol = 1,
           sparse = TRUE
@@ -634,7 +677,8 @@ ImplicationSet <- R6::R6Class(
     #' @export
     get_RHS_matrix = function() {
       if (self$is_empty()) {
-        RHS <- Matrix::Matrix(FALSE,
+        RHS <- Matrix::Matrix(
+          FALSE,
           nrow = length(private$attributes),
           ncol = 1,
           sparse = TRUE
@@ -648,10 +692,8 @@ ImplicationSet <- R6::R6Class(
         paste0(seq_len(ncol(RHS)))
       )
 
-
       return(RHS)
     },
-
 
     #' @description
     #' Filter implications by attributes in LHS and RHS
@@ -665,17 +707,19 @@ ImplicationSet <- R6::R6Class(
     #' @return An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
     #'
     #' @export
-    filter = function(lhs = NULL,
-                      not_lhs = NULL,
-                      rhs = NULL,
-                      not_rhs = NULL,
-                      drop = FALSE) {
-
+    filter = function(
+      lhs = NULL,
+      not_lhs = NULL,
+      rhs = NULL,
+      not_rhs = NULL,
+      drop = FALSE
+    ) {
       RHS <- private$rhs_matrix
       LHS <- private$lhs_matrix
 
-      if (is.null(LHS) || ncol(LHS) == 0) return(self)
-
+      if (is.null(LHS) || ncol(LHS) == 0) {
+        return(self)
+      }
 
       if (!is.null(lhs)) {
         # Filter the implications which have
@@ -760,7 +804,8 @@ ImplicationSet <- R6::R6Class(
       idx <- intersect(idx_lhs, idx_rhs)
 
       if (length(idx) == 0) {
-        warning("No combination of given LHS and RHS found.\n",
+        warning(
+          "No combination of given LHS and RHS found.\n",
           call. = FALSE,
           immediate. = TRUE
         )
@@ -889,8 +934,10 @@ ImplicationSet <- R6::R6Class(
       } else {
         if (!is.null(private$lhs_matrix)) {
           v <- unique(c(
-            0, private$lhs_matrix@x,
-            private$rhs_matrix@x, 1
+            0,
+            private$lhs_matrix@x,
+            private$rhs_matrix@x,
+            1
           ))
         } else {
           return(FALSE)

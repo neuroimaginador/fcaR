@@ -36,23 +36,23 @@ parse_implications <- function(input) {
   }
 
   # Detect attributes
-  attributes <- input %>%
-    stringr::str_split("(,|->|;)") %>%
-    purrr::map(stringr::str_squish) %>%
-    unlist() %>% unique()
+  attributes <- input |>
+    stringr::str_split("(,|->|;)") |>
+    purrr::map(stringr::str_squish) |>
+    unlist() |> unique()
 
   # Split implications and obtain LHS and RHS matrices
-  LR <- input %>%
-    stringr::str_split(";") %>% unlist() %>%
+  LR <- input |>
+    stringr::str_split(";") |> unlist() |>
     purrr::map(function(x) parse_implication(x, attributes))
 
   # Combine matrices of each implication
-  LHS <- LR %>%
+  LHS <- LR |>
     purrr::map(purrr::pluck("lhs"))
 
   LHS <- do.call(cbind, LHS)
 
-  RHS <- LR %>%
+  RHS <- LR |>
     purrr::map(purrr::pluck("rhs"))
 
   RHS <- do.call(cbind, RHS)
@@ -77,21 +77,21 @@ parse_implications <- function(input) {
 parse_implication <- function(string, attributes) {
 
   # Split left and right hand sides
-  LR <- string %>%
-    stringr::str_split(pattern = stringr::fixed("->")) %>%
+  LR <- string |>
+    stringr::str_split(pattern = stringr::fixed("->")) |>
     purrr::map(stringr::str_squish)
 
   LR <- LR[[1]]
 
   # Add some markers as delimiters for attributes
-  LR <- LR %>%
+  LR <- LR |>
     stringr::str_replace_all(pattern = "\\s*,\\s*",
                              replacement = "%%%")
 
   LR <- paste0("%%%", LR, "%%%")
 
   # Index of the attributes found in the string
-  idx <- LR %>%
+  idx <- LR |>
     purrr::map(function(s)
       stringr::str_which(s,
                          pattern = paste0("%%%",

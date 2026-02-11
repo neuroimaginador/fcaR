@@ -13,23 +13,23 @@
 #' @param intents List of intents.
 #' @param ... Extra args.
 #'
-#' @importFrom igraph graph_from_data_frame
-#' @importFrom ggraph ggraph geom_edge_fan geom_node_point geom_node_text scale_edge_color_manual
-#' @importFrom ggplot2 aes unit theme theme_void scale_fill_identity
-#' @importFrom dplyr mutate
 #' @export
-lattice_plot <- function(nodes_df,
-                         cover_matrix,
-                         method = "sugiyama",
-                         mode = NULL,
-                         objects = NULL,
-                         attributes = NULL,
-                         object_names = TRUE,
-                         to_latex = FALSE,
-                         extents = NULL,
-                         intents = NULL,
-                         ...) {
-  if (is.null(cover_matrix)) stop("Covering matrix is missing.")
+lattice_plot <- function(
+  nodes_df,
+  cover_matrix,
+  method = "sugiyama",
+  mode = NULL,
+  objects = NULL,
+  attributes = NULL,
+  object_names = TRUE,
+  to_latex = FALSE,
+  extents = NULL,
+  intents = NULL,
+  ...
+) {
+  if (is.null(cover_matrix)) {
+    stop("Covering matrix is missing.")
+  }
 
   # 1. Heurística
   if (is.null(mode)) {
@@ -40,7 +40,11 @@ lattice_plot <- function(nodes_df,
   cover_edges_df <- sparse_matrix_to_edges(cover_matrix)
 
   if (!"grade" %in% colnames(nodes_df)) {
-    grades_vec <- calculate_grades(nodes_df$id, cover_edges_df$from, cover_edges_df$to)
+    grades_vec <- calculate_grades(
+      nodes_df$id,
+      cover_edges_df$from,
+      cover_edges_df$to
+    )
     nodes_df$grade <- grades_vec[as.character(nodes_df$id)]
   }
 
@@ -62,7 +66,6 @@ lattice_plot <- function(nodes_df,
   }
 
   if (isTRUE(to_latex)) {
-
     objects <- sapply(objects, format_label)
     attributes <- sapply(attributes, format_label)
   }
@@ -80,13 +83,17 @@ lattice_plot <- function(nodes_df,
   if (isTRUE(to_latex)) {
     # Llamamos a la nueva función exportadora
     # Podemos ajustar la escala según el tamaño del retículo
-    scale_factor <- if (nrow(plot_data) > 20) 1.5 else 2.0
+    # scale_factor <- if (nrow(plot_data) > 20) 1.5 else 2.0
 
     return(export_to_tikz(plot_data, cover_edges_df))
   } else {
-    if (!requireNamespace("ggraph", quietly = TRUE)) stop("Install 'ggraph'.")
+    check_needed_pkg("ggraph", "plotting the lattice")
 
-    g <- igraph::graph_from_data_frame(cover_edges_df, vertices = plot_data, directed = TRUE)
+    g <- igraph::graph_from_data_frame(
+      cover_edges_df,
+      vertices = plot_data,
+      directed = TRUE
+    )
 
     # 5. Construcción del Gráfico
     p <- ggraph::ggraph(g, layout = "manual", x = x, y = y) +
@@ -110,13 +117,24 @@ lattice_plot <- function(nodes_df,
       p <- p +
         ggraph::geom_node_text(
           ggplot2::aes(label = label_top),
-          repel = TRUE, vjust = -1.2, size = 3, color = "black",
-          bg.color = "white", bg.r = 0.15, na.rm = TRUE
+          repel = TRUE,
+          vjust = -1.2,
+          size = 3,
+          color = "black",
+          bg.color = "white",
+          bg.r = 0.15,
+          na.rm = TRUE
         ) +
         ggraph::geom_node_text(
           ggplot2::aes(label = label_bottom),
-          repel = TRUE, vjust = 2.2, size = 3, color = "#0055AA", fontface = "italic",
-          bg.color = "white", bg.r = 0.15, na.rm = TRUE
+          repel = TRUE,
+          vjust = 2.2,
+          size = 3,
+          color = "#0055AA",
+          fontface = "italic",
+          bg.color = "white",
+          bg.r = 0.15,
+          na.rm = TRUE
         )
     }
 
@@ -138,18 +156,17 @@ lattice_plot <- function(nodes_df,
 # @param to_latex Logical. Export to LaTeX?
 # @param ... Arguments passed to internal plotting.
 #
-# @importFrom igraph graph_from_data_frame
-# @importFrom ggraph ggraph geom_edge_fan geom_node_point geom_node_text
-# @importFrom ggplot2 aes unit theme theme_void
 # @keywords internal
-lattice_plot_legacy <- function(nodes_df,
-                                cover_matrix,
-                                method = "sugiyama", # Nuevo parámetro
-                                objects = NULL,
-                                attributes = NULL,
-                                object_names = TRUE,
-                                to_latex = FALSE,
-                                ...) {
+lattice_plot_legacy <- function(
+  nodes_df,
+  cover_matrix,
+  method = "sugiyama", # Nuevo parámetro
+  objects = NULL,
+  attributes = NULL,
+  object_names = TRUE,
+  to_latex = FALSE,
+  ...
+) {
   # if (is.null(cover_matrix)) stop("Covering matrix is missing.")
   #
   # # Edge prep

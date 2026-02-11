@@ -1,10 +1,10 @@
 check_many_valued <- function(I) {
 
   suppressWarnings({
-    val <- I %>%
-      as.data.frame() %>%
-      unlist() %>%
-      as.vector() %>%
+    val <- I |>
+      as.data.frame() |>
+      unlist() |>
+      as.vector() |>
       as.numeric()})
   # val <- I$px
   return(any(is.na(val) | val > 1 | val < 0))

@@ -409,7 +409,7 @@ FormalContext <- R6::R6Class(
             " that in the formal context. Attempting to match",
             " attribute names gives ",
             .set_to_string(S, self$objects)
-          ) %>%
+          ) |>
             stringr::str_flatten()
           warning(warn, call. = FALSE, immediate. = TRUE)
           # stop("It is not a set of the required type (set of objects).", call. = FALSE)
@@ -489,7 +489,7 @@ FormalContext <- R6::R6Class(
             " that in the formal context. Attempting to match",
             " attribute names gives ",
             .set_to_string(S, self$attributes)
-          ) %>%
+          ) |>
             stringr::str_flatten()
           warning(warn, call. = FALSE, immediate. = TRUE)
           # stop("It is not a set of the required type (set of attributes).", call. = FALSE)
@@ -567,7 +567,7 @@ FormalContext <- R6::R6Class(
             " that in the formal context. Attempting to match",
             " attribute names gives ",
             .set_to_string(S, self$attributes)
-          ) %>%
+          ) |>
             stringr::str_flatten()
           warning(warn, call. = FALSE, immediate. = TRUE)
 
@@ -1280,9 +1280,9 @@ FormalContext <- R6::R6Class(
 
       pattern <- "(?<!^|[.]|/)[.]([^.]+)$"
 
-      extension <- filename %>%
-        stringr::str_extract_all(pattern) %>%
-        unlist() %>%
+      extension <- filename |>
+        stringr::str_extract_all(pattern) |>
+        unlist() |>
         tolower()
 
       if (extension == ".cxt") {
@@ -1349,9 +1349,9 @@ FormalContext <- R6::R6Class(
     load = function(filename) {
       pattern <- "(?<!^|[.]|/)[.]([^.]+)$"
 
-      extension <- filename %>%
-        stringr::str_extract_all(pattern) %>%
-        unlist() %>%
+      extension <- filename |>
+        stringr::str_extract_all(pattern) |>
+        unlist() |>
         tolower()
 
       if (extension == ".rds") {
@@ -1403,8 +1403,8 @@ FormalContext <- R6::R6Class(
       if (extension == ".cxt") {
         txt <- readLines(filename)
 
-        n_objects <- txt[3] %>% as.numeric()
-        n_attributes <- txt[4] %>% as.numeric()
+        n_objects <- txt[3] |> as.numeric()
+        n_attributes <- txt[4] |> as.numeric()
 
         obj_idx <- seq(6, 6 + n_objects - 1)
         att_idx <- seq(
@@ -1418,17 +1418,17 @@ FormalContext <- R6::R6Class(
 
         objects <- txt[obj_idx]
         attributes <- txt[att_idx]
-        matrix <- txt[matrix_idx] %>%
+        matrix <- txt[matrix_idx] |>
           stringr::str_replace_all(
             pattern = "[X|x]",
             replacement = "1"
-          ) %>%
+          ) |>
           stringr::str_replace_all(
             pattern = stringr::fixed("."),
             replacement = "0"
-          ) %>%
-          as.list() %>%
-          stringr::str_split(pattern = "") %>%
+          ) |>
+          as.list() |>
+          stringr::str_split(pattern = "") |>
           purrr::map(as.numeric)
 
         I <- do.call(rbind, matrix)
@@ -1493,7 +1493,7 @@ FormalContext <- R6::R6Class(
           " objects and ",
           dims[2],
           " attributes."
-        ) %>%
+        ) |>
           stringr::str_wrap(width = getOption("width"))
 
         cat(str)
@@ -1509,10 +1509,10 @@ FormalContext <- R6::R6Class(
             remaining <- c(remaining[1:6], "...")
           }
 
-          remaining <- remaining %>%
+          remaining <- remaining |>
             stringr::str_flatten(", ")
 
-          str <- paste0("Other attributes are: ", remaining) %>%
+          str <- paste0("Other attributes are: ", remaining) |>
             stringr::str_wrap(width = getOption("width"))
 
           cat(str, "\n")
@@ -1524,7 +1524,7 @@ FormalContext <- R6::R6Class(
           " objects and ",
           dims[2],
           " attributes."
-        ) %>%
+        ) |>
           stringr::str_wrap(width = getOption("width"))
 
         cat(str)
@@ -1567,8 +1567,8 @@ FormalContext <- R6::R6Class(
           I <- .to_fraction(I, latex = TRUE, type = fraction)
         } else {
           decimal_places <- fcaR_options("decimal_places")
-          I[] <- I %>%
-            formatC(digits = decimal_places) %>%
+          I[] <- I |>
+            formatC(digits = decimal_places) |>
             stringr::str_replace_all("\\s*", "")
         }
       }

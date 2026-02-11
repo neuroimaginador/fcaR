@@ -31,8 +31,8 @@
   #   # c("ALL = ",
   #   #   AUB@Dim,
   #   #   LHS_clos@Dim,
-  #   #   RHS_clos@Dim) %>%
-  #   #   stringr::str_flatten(" ") %>%
+  #   #   RHS_clos@Dim) |>
+  #   #   stringr::str_flatten(" ") |>
   #   #   warning(inmediate. = TRUE, call. = FALSE)
   #
   #   B <- .compute_closure(AUB, LHS_clos, RHS_clos,
@@ -62,8 +62,8 @@
   #   # c("ALL = ",
   #   #   AUB@Dim,
   #   #   LHS_clos@Dim,
-  #   #   RHS_clos@Dim) %>%
-  #   #   stringr::str_flatten(" ") %>%
+  #   #   RHS_clos@Dim) |>
+  #   #   stringr::str_flatten(" ") |>
   #   #   warning(inmediate. = TRUE, call. = FALSE)
   #
   #   A <- .compute_closure(A, LHS_clos, RHS_clos,
