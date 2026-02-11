@@ -445,10 +445,6 @@ given fuzzy attribute set.
 # in batches, if the number of rules is high.
 fc$implications$apply_rules(rules = c("composition",
                                       "generalization"))
-#> Processing batch
-#> --> Composition: from 12 to 12 in 0.001 secs.
-#> --> Generalization: from 12 to 12 in 0.003 secs.
-#> Batch took 0.006 secs.
 
 # Reduced set of implications
 fc$implications
@@ -477,54 +473,70 @@ the vignettes in this package.
 With respect to the CRAN version, the development version has the
 following changes.
 
-# fcaR 1.2.2
+### fcaR 1.4.0
 
-Enhancements:
+Major Enhancements:
 
-- Added more unit tests.
-- Minor changes to the plotting of formal contexts.
-- Now the `fc$scale()` function admits a new argument `bg` (default:
-  FALSE) which, if set to TRUE, avoids computing the background
-  knowledge of the scales.
+- **Tidyverse integration:** Implemented S3 methods to support `dplyr`
+  verbs, allowing for a fluent, grammar-based manipulation of FCA
+  objects:
+  - **FormalContext:** Support for `select()` (attributes), `filter()`
+    (objects), `mutate()` (feature engineering), `arrange()` (sorting),
+    and `rename()`. Includes support for `tidyselect` helpers (e.g.,
+    `starts_with()`).
+  - **ImplicationSet:** Support for `filter()` (based on metrics or
+    attributes), `arrange()` (sorting rules), and `slice()` (subsetting
+    by index).
+- **Semantic Rule Filtering:** Introduced helper functions for
+  `ImplicationSet` filtering to query rules based on attribute
+  presence/absence: `lhs()`, `rhs()`, `not_lhs()`, `lhs_any()`, etc.
+  This allows querying rules like
+  `filter(rhs("Attribute_A"), support > 0.2)`.
+- **Mining Causal Association Rules:** Implemented the
+  `find_causal_rules()` method in `FormalContext`, enabling the
+  discovery of causal rules by controlling for confounding variables
+  using the “Fair Odds Ratio” on matched pairs.
 
-# fcaR 1.2.1
+Improvements:
 
-Enhancements:
+- **Robust Subsetting:** Completely rewritten `subcontext()` method in
+  `FormalContext`. It now robustly handles negative indices, logical
+  vectors, and character vectors, and prevents dimension collapsing
+  issues (using `drop = FALSE`) that previously caused errors with the
+  `Matrix` package.
+- **Metadata Preservation:** Rewritten `[` and related methods of
+  `ImplicationSet`. These ensure that critical context metadata (such as
+  the number of objects $N$ for support calculation) is preserved when
+  filtering or sorting rules, fixing previous issues where metadata was
+  lost.
+- **Data Safety:** Enhanced type safety in internal functions to
+  strictly handle integer indices, preventing errors with `dplyr`
+  attributes.
 
-- Other logics have been implemented. Now, we can use `fc$use_logic()`
-  to select one of the `available_logics()`.
-- Improved export to LaTeX.
+Documentation:
 
-Bugfixes:
+- **New Vignette:** Added `fcaR_dplyr` vignette illustrating the new
+  data manipulation workflow.
+- **New Vignette:** Added `causal` vignette explaining the new causal
+  mining functionality and its application to Simpson’s Paradox.
 
-- Some rounding errors might induce errors in the computations. These
-  has been fixed.
+Fixes:
 
-### fcaR 1.2.0
+- Fixed `Matrix` coercion errors (`dgCMatrix` to `data.frame`) in R 4.x
+  when using internal incidence matrices.
+- Fixed `fixupDN.if.valid` errors from the `Matrix` package when
+  filtering operations resulted in empty contexts (0 objects or 0
+  attributes).
+- Resolved floating-point precision issues in unit tests when comparing
+  support values.
+- Reduced dependencies: moved `ggplot2`, `ggraph`, `igraph`,
+  `rstudioapi`, and `yaml` to Suggests.
+- Removed `forcats` and `magrittr` dependencies by using base R
+  equivalents and the native pipe `|>`.
 
-Bugfixes:
+### fcaR 1.3.1
 
-- Fixes required by the new version of Matrix and the new use of HTML
-  Tidy in R 4.2.
-
-### fcaR 1.1.1
-
-Enhancements:
-
-- The user can control the number of decimal digits when exporting to
-  LaTeX or when printing formal contexts, concept lattices and
-  implications. Just use fcaR_options(decimal_places = n), where n is
-  the number of desired decimal digits.
-
-New functionality:
-
-- Now the package uses the *settings* package to manage several options.
-  Currently, the only option is the number of decimal digits to use when
-  printing or exporting to LaTeX.
-
-Bugfixes:
-
-- Fixed exporting to latex with special characters such as \$, \_, etc.
+- Added tests
 
 ## References
 
