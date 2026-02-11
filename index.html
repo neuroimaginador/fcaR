@@ -343,10 +343,6 @@ O6
 <span><span class="co"># in batches, if the number of rules is high.</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">apply_rules</span><span class="op">(</span>rules <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"composition"</span>,</span>
 <span>                                      <span class="st">"generalization"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Processing batch</span></span>
-<span><span class="co">#&gt; --&gt; Composition: from 12 to 12 in 0.001 secs.</span></span>
-<span><span class="co">#&gt; --&gt; Generalization: from 12 to 12 in 0.003 secs.</span></span>
-<span><span class="co">#&gt; Batch took 0.006 secs.</span></span>
 <span></span>
 <span><span class="co"># Reduced set of implications</span></span>
 <span><span class="va">fc</span><span class="op">$</span><span class="va">implications</span></span>
@@ -370,53 +366,57 @@ O6
 <h2 id="changelog">Changelog<a class="anchor" aria-label="anchor" href="#changelog"></a>
 </h2>
 <p>With respect to the CRAN version, the development version has the following changes.</p>
-</div>
-</div>
-<div class="section level1">
-<h1 id="fcar-122">fcaR 1.2.2<a class="anchor" aria-label="anchor" href="#fcar-122"></a>
-</h1>
-<p>Enhancements:</p>
-<ul>
-<li>Added more unit tests.</li>
-<li>Minor changes to the plotting of formal contexts.</li>
-<li>Now the <code>fc$scale()</code> function admits a new argument <code>bg</code> (default: FALSE) which, if set to TRUE, avoids computing the background knowledge of the scales.</li>
-</ul>
-</div>
-<div class="section level1">
-<h1 id="fcar-121">fcaR 1.2.1<a class="anchor" aria-label="anchor" href="#fcar-121"></a>
-</h1>
-<p>Enhancements:</p>
-<ul>
-<li>Other logics have been implemented. Now, we can use <code>fc$use_logic()</code> to select one of the <code>available_logics()</code>.</li>
-<li>Improved export to LaTeX.</li>
-</ul>
-<p>Bugfixes:</p>
-<ul>
-<li>Some rounding errors might induce errors in the computations. These has been fixed.</li>
-</ul>
 <div class="section level3">
-<h3 id="fcar-120">fcaR 1.2.0<a class="anchor" aria-label="anchor" href="#fcar-120"></a>
+<h3 id="fcar-140">fcaR 1.4.0<a class="anchor" aria-label="anchor" href="#fcar-140"></a>
 </h3>
-<p>Bugfixes:</p>
+<p>Major Enhancements:</p>
 <ul>
-<li>Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.</li>
+<li>
+<strong>Tidyverse integration:</strong> Implemented S3 methods to support <code>dplyr</code> verbs, allowing for a fluent, grammar-based manipulation of FCA objects:
+<ul>
+<li>
+<strong>FormalContext:</strong> Support for <code>select()</code> (attributes), <code><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter()</a></code> (objects), <code>mutate()</code> (feature engineering), <code>arrange()</code> (sorting), and <code>rename()</code>. Includes support for <code>tidyselect</code> helpers (e.g., <code>starts_with()</code>).</li>
+<li>
+<strong>ImplicationSet:</strong> Support for <code><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter()</a></code> (based on metrics or attributes), <code>arrange()</code> (sorting rules), and <code>slice()</code> (subsetting by index).</li>
+</ul>
+</li>
+<li>
+<strong>Semantic Rule Filtering:</strong> Introduced helper functions for <code>ImplicationSet</code> filtering to query rules based on attribute presence/absence: <code>lhs()</code>, <code>rhs()</code>, <code>not_lhs()</code>, <code>lhs_any()</code>, etc. This allows querying rules like <code>filter(rhs("Attribute_A"), support &gt; 0.2)</code>.</li>
+<li>
+<strong>Mining Causal Association Rules:</strong> Implemented the <code><a href="reference/find_causal_rules.html">find_causal_rules()</a></code> method in <code>FormalContext</code>, enabling the discovery of causal rules by controlling for confounding variables using the “Fair Odds Ratio” on matched pairs.</li>
+</ul>
+<p>Improvements:</p>
+<ul>
+<li>
+<strong>Robust Subsetting:</strong> Completely rewritten <code>subcontext()</code> method in <code>FormalContext</code>. It now robustly handles negative indices, logical vectors, and character vectors, and prevents dimension collapsing issues (using <code>drop = FALSE</code>) that previously caused errors with the <code>Matrix</code> package.</li>
+<li>
+<strong>Metadata Preservation:</strong> Rewritten <code>[</code> and related methods of <code>ImplicationSet</code>. These ensure that critical context metadata (such as the number of objects <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> for support calculation) is preserved when filtering or sorting rules, fixing previous issues where metadata was lost.</li>
+<li>
+<strong>Data Safety:</strong> Enhanced type safety in internal functions to strictly handle integer indices, preventing errors with <code>dplyr</code> attributes.</li>
+</ul>
+<p>Documentation:</p>
+<ul>
+<li>
+<strong>New Vignette:</strong> Added <code>fcaR_dplyr</code> vignette illustrating the new data manipulation workflow.</li>
+<li>
+<strong>New Vignette:</strong> Added <code>causal</code> vignette explaining the new causal mining functionality and its application to Simpson’s Paradox.</li>
+</ul>
+<p>Fixes:</p>
+<ul>
+<li>Fixed <code>Matrix</code> coercion errors (<code>dgCMatrix</code> to <code>data.frame</code>) in R 4.x when using internal incidence matrices.</li>
+<li>Fixed <code>fixupDN.if.valid</code> errors from the <code>Matrix</code> package when filtering operations resulted in empty contexts (0 objects or 0 attributes).</li>
+<li>Resolved floating-point precision issues in unit tests when comparing support values.</li>
+<li>Reduced dependencies: moved <code>ggplot2</code>, <code>ggraph</code>, <code>igraph</code>, <code>rstudioapi</code>, and <code>yaml</code> to Suggests.</li>
+<li>Removed <code>forcats</code> and <code>magrittr</code> dependencies by using base R equivalents and the native pipe <code>|&gt;</code>.</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="fcar-111">fcaR 1.1.1<a class="anchor" aria-label="anchor" href="#fcar-111"></a>
+<h3 id="fcar-131">fcaR 1.3.1<a class="anchor" aria-label="anchor" href="#fcar-131"></a>
 </h3>
-<p>Enhancements:</p>
 <ul>
-<li>The user can control the number of decimal digits when exporting to LaTeX or when printing formal contexts, concept lattices and implications. Just use fcaR_options(decimal_places = n), where n is the number of desired decimal digits.</li>
+<li>Added tests</li>
 </ul>
-<p>New functionality:</p>
-<ul>
-<li>Now the package uses the <em>settings</em> package to manage several options. Currently, the only option is the number of decimal digits to use when printing or exporting to LaTeX.</li>
-</ul>
-<p>Bugfixes:</p>
-<ul>
-<li>Fixed exporting to latex with special characters such as $, _, etc.</li>
-</ul>
+</div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -430,7 +430,6 @@ O6
 <p>Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” <em>International Journal of Approximate Reasoning</em>, <em>70</em>, 51-67.</p>
 </div>
 </div>
-
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
