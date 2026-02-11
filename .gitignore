@@ -16,3 +16,8 @@ doc
 check
 docs
 CRAN-SUBMISSION
+
+# qrtdown
+_quarto.yml
+/.quarto/
+**/*.quarto_ipynb

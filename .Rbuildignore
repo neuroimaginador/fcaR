@@ -16,3 +16,15 @@
 ^appveyor\.yml$
 ^CRAN-RELEASE$
 ^CRAN-SUBMISSION$
+
+# qrtdown
+^\.quarto$
+^_quarto\.yml$
+^_qrtdown\.yml$
+^reference$
+^reference\.qmd$
+^articles\.qmd$
+^citation\.qmd$
+^index\.qmd$
+^vignettes/articles$
+^llms\.txt$
