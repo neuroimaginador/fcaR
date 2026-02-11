@@ -11,7 +11,7 @@ and the methods associated.
 
 - [`RuleSet$get_attributes()`](#method-RuleSet-get_attributes)
 
-- [`RuleSet$[()`](#method-RuleSet-bracket)
+- [`RuleSet$[()`](#method-RuleSet-%5B)
 
 - [`RuleSet$to_arules()`](#method-RuleSet-to_arules)
 
@@ -328,9 +328,15 @@ respectively.
 
 ### Method `get_implications()`
 
+Extract the implications with confidence 1
+
 #### Usage
 
     RuleSet$get_implications()
+
+#### Returns
+
+An `ImplicationSet` object containing only the rules with confidence 1.
 
 ------------------------------------------------------------------------
 
@@ -350,9 +356,15 @@ A vector with the support of each implication
 
 ### Method `confidence()`
 
+Compute the confidence of each rule
+
 #### Usage
 
     RuleSet$confidence()
+
+#### Returns
+
+A numeric vector with the confidence of each rule.
 
 ------------------------------------------------------------------------
 

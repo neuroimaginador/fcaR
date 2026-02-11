@@ -133,13 +133,13 @@ existing ones. This is particularly powerful for <strong>conceptual
 scaling</strong> or creating higher-level abstractions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Let's clean up the context</span></span>
-<span><span class="va">fc_clean</span> <span class="op">&lt;-</span> <span class="va">fc</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">fc_clean</span> <span class="op">&lt;-</span> <span class="va">fc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span></span>
 <span>    has_moon <span class="op">=</span> <span class="va">moon</span>,</span>
 <span>    no_moon  <span class="op">=</span> <span class="va">no_moon</span>,</span>
 <span>    is_large <span class="op">=</span> <span class="va">large</span>,</span>
 <span>    is_small <span class="op">=</span> <span class="va">small</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    <span class="co"># Create a new binary attribute 'giant_loner'</span></span>
 <span>    <span class="co"># (A planet that is large but has no moon)</span></span>
@@ -162,8 +162,8 @@ scaling</strong> or creating higher-level abstractions.</p>
 of the domain.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Focus only on 'extreme' sized planets and keep specific attributes</span></span>
-<span><span class="va">fc_focused</span> <span class="op">&lt;-</span> <span class="va">fc_clean</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">extreme_size</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">fc_focused</span> <span class="op">&lt;-</span> <span class="va">fc_clean</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">extreme_size</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">has_moon</span>, <span class="va">giant_loner</span>, <span class="va">is_large</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fc_focused</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span>
@@ -199,8 +199,8 @@ on their quality measures: <code>support</code>, <code>lhs_size</code>
 <code>size</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get strong rules (support &gt; 0.2) that are not trivial (size &gt; 2)</span></span>
-<span><span class="va">strong_rules</span> <span class="op">&lt;-</span> <span class="va">rules</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">support</span> <span class="op">&gt;</span> <span class="fl">0.2</span>, <span class="va">size</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">strong_rules</span> <span class="op">&lt;-</span> <span class="va">rules</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">support</span> <span class="op">&gt;</span> <span class="fl">0.2</span>, <span class="va">size</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">strong_rules</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span>
@@ -231,7 +231,7 @@ Side MUST contain “B”.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Find rules that imply 'moon'</span></span>
-<span><span class="va">moon_rules</span> <span class="op">&lt;-</span> <span class="va">rules</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">moon_rules</span> <span class="op">&lt;-</span> <span class="va">rules</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/arules/man/rules-class.html" class="external-link">rhs</a></span><span class="op">(</span><span class="st">"moon"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Rules implying 'moon':\n"</span><span class="op">)</span></span>
@@ -252,13 +252,13 @@ single pipeline. This allows for very specific queries like:</p>
 not concern distance.”</p>
 </blockquote>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">specific_rules</span> <span class="op">&lt;-</span> <span class="va">rules</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">specific_rules</span> <span class="op">&lt;-</span> <span class="va">rules</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/arules/man/rules-class.html" class="external-link">lhs</a></span><span class="op">(</span><span class="st">"large"</span><span class="op">)</span>,     <span class="co"># Must be about large planets</span></span>
 <span>    <span class="fu">not_lhs</span><span class="op">(</span><span class="st">"far"</span><span class="op">)</span>,    <span class="co"># Ignore far planets</span></span>
 <span>    <span class="va">support</span> <span class="op">&gt;=</span> <span class="fl">0.2</span>    <span class="co"># Minimum support threshold</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>          <span class="co"># Take the top 3</span></span>
 <span></span>
 <span><span class="va">specific_rules</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span>

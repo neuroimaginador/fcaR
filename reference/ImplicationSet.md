@@ -28,7 +28,7 @@ Computer Mathematics*, *89*(4), 510-526.
 
 - [`ImplicationSet$get_attributes()`](#method-ImplicationSet-get_attributes)
 
-- [`ImplicationSet$[()`](#method-ImplicationSet-bracket)
+- [`ImplicationSet$[()`](#method-ImplicationSet-%5B)
 
 - [`ImplicationSet$to_arules()`](#method-ImplicationSet-to_arules)
 

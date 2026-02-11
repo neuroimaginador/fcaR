@@ -5,7 +5,8 @@ Prints the TikZ code to the console.
 ## Usage
 
 ``` r
-print.tikz_code(x, ...)
+# S3 method for class 'tikz_code'
+print(x, ...)
 ```
 
 ## Arguments

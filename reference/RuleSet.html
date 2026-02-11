@@ -71,7 +71,7 @@
 
 <ul><li><p><a href="#method-RuleSet-new"><code>RuleSet$new()</code></a></p></li>
 <li><p><a href="#method-RuleSet-get_attributes"><code>RuleSet$get_attributes()</code></a></p></li>
-<li><p><a href="#method-RuleSet-bracket"><code>RuleSet$[()</code></a></p></li>
+<li><p><a href="#method-RuleSet-%5B"><code>RuleSet$[()</code></a></p></li>
 <li><p><a href="#method-RuleSet-to_arules"><code>RuleSet$to_arules()</code></a></p></li>
 <li><p><a href="#method-RuleSet-add"><code>RuleSet$add()</code></a></p></li>
 <li><p><a href="#method-RuleSet-cardinality"><code>RuleSet$cardinality()</code></a></p></li>
@@ -128,7 +128,7 @@ or <code>initialize(rules)</code></p>
 <p>A character vector with the names of the attributes used in the implications.</p>
 </div>
 
-</div><p></p><hr><a id="method-RuleSet-bracket"></a><div class="section">
+</div><p></p><hr><a id="method-RuleSet-["></a><div class="section">
 <h3 id="method-">Method <code>[()</code><a class="anchor" aria-label="anchor" href="#method-"></a></h3>
 <p>Get a subset of the rule set</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -339,12 +339,15 @@ or <code>initialize(rules)</code></p>
 
 </div><p></p><hr><a id="method-RuleSet-get_implications"></a><div class="section">
 <h3 id="method-get-implications-">Method <code>get_implications()</code><a class="anchor" aria-label="anchor" href="#method-get-implications-"></a></h3>
-
-<div class="section">
+<p>Extract the implications with confidence 1</p><div class="section">
 <h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">get_implications</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+<div class="section">
+<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
+<p>An <code>ImplicationSet</code> object containing only the rules with confidence 1.</p>
+</div>
 
 </div><p></p><hr><a id="method-RuleSet-support"></a><div class="section">
 <h3 id="method-support-">Method <code>support()</code><a class="anchor" aria-label="anchor" href="#method-support-"></a></h3>
@@ -354,18 +357,21 @@ or <code>initialize(rules)</code></p>
 </div>
 
 <div class="section">
-<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
+<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
 <p>A vector with the support of each implication</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-confidence"></a><div class="section">
 <h3 id="method-confidence-">Method <code>confidence()</code><a class="anchor" aria-label="anchor" href="#method-confidence-"></a></h3>
-
-<div class="section">
+<p>Compute the confidence of each rule</p><div class="section">
 <h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">confidence</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
+<div class="section">
+<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
+<p>A numeric vector with the confidence of each rule.</p>
+</div>
 
 </div><p></p><hr><a id="method-RuleSet-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>

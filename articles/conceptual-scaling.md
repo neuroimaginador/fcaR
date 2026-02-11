@@ -535,7 +535,7 @@ fc <- FormalContext$new(filename)
 ```
 
 ``` r
-fc$incidence() %>%
+fc$incidence() |>
   knitr::kable(
     format = "html",
     align = "c"
