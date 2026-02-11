@@ -52,7 +52,6 @@ ImplicationSet <- R6::R6Class(
     #'
     #' @return A new \code{ImplicationSet} object.
     initialize = function(...) {
-      check_needed_pkg("arules", "initialize from arules objects")
       dots <- list(...)
 
       classes <- lapply(dots, function(d) class(d)[1])
@@ -60,6 +59,7 @@ ImplicationSet <- R6::R6Class(
       any_rules <- which(classes == "rules")
 
       if (length(any_rules) > 0) {
+        check_needed_pkg("arules", "initialize from arules objects")
         arules_imp <- dots[[any_rules[1]]]
 
         attributes <- arules_imp@lhs@itemInfo$labels
