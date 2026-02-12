@@ -11,7 +11,7 @@ and the methods associated.
 
 - [`RuleSet$get_attributes()`](#method-RuleSet-get_attributes)
 
-- [`RuleSet$[()`](#method-RuleSet-%5B)
+- [`RuleSet$[()`](#method-RuleSet-bracket)
 
 - [`RuleSet$to_arules()`](#method-RuleSet-to_arules)
 
@@ -40,6 +40,8 @@ and the methods associated.
 - [`RuleSet$support()`](#method-RuleSet-support)
 
 - [`RuleSet$confidence()`](#method-RuleSet-confidence)
+
+- [`RuleSet$to_json()`](#method-RuleSet-to_json)
 
 - [`RuleSet$clone()`](#method-RuleSet-clone)
 
@@ -365,6 +367,32 @@ Compute the confidence of each rule
 #### Returns
 
 A numeric vector with the confidence of each rule.
+
+------------------------------------------------------------------------
+
+### Method `to_json()`
+
+Export the rule set to JSON
+
+#### Usage
+
+    RuleSet$to_json(file = NULL, return_list = FALSE)
+
+#### Arguments
+
+- `file`:
+
+  (character) The path of the file to save the JSON to.
+
+- `return_list`:
+
+  (logical) If TRUE, returns the list representation instead of the JSON
+  string.
+
+#### Returns
+
+A JSON string representing the rule set, or a list if `return_list` is
+TRUE.
 
 ------------------------------------------------------------------------
 

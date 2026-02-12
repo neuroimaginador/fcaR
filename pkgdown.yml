@@ -12,11 +12,12 @@ articles:
   fcaR_dplyr: fcaR_dplyr.html
   fuzzy_fca: fuzzy_fca.html
   implications: implications.html
+  json_export_import: json_export_import.html
   lattice_properties: lattice_properties.html
   lattice_visualization: lattice_visualization.html
   matrix_factorization: matrix_factorization.html
   random_contexts: random_contexts.html
-last_built: 2026-02-11T11:21Z
+last_built: 2026-02-12T11:45Z
 urls:
   reference: https://neuroimaginador.github.io/fcaR/reference
   article: https://neuroimaginador.github.io/fcaR/articles

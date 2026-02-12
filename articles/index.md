@@ -4,6 +4,8 @@
 
 - [Creating Formal Contexts in
   fcaR](https://neuroimaginador.github.io/fcaR/articles/creating_contexts.md):
+- [JSON Export and
+  Import](https://neuroimaginador.github.io/fcaR/articles/json_export_import.md):
 - [Using FormalContexts and
   ConceptLattices](https://neuroimaginador.github.io/fcaR/articles/concept_lattice.md):
 - [Working with

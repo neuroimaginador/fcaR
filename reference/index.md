@@ -40,6 +40,8 @@
   : Compute Labels and Colors for Lattice Nodes
 - [`conceptRegistry`](https://neuroimaginador.github.io/fcaR/reference/conceptRegistry.md)
   : Concept Miners Registry
+- [`context_from_json()`](https://neuroimaginador.github.io/fcaR/reference/context_from_json.md)
+  : Import FormalContext from JSON
 - [`arrange(`*`<ImplicationSet>`*`)`](https://neuroimaginador.github.io/fcaR/reference/dplyr_implications.md)
   : dplyr verbs for ImplicationSet
 - [`select(`*`<FormalContext>`*`)`](https://neuroimaginador.github.io/fcaR/reference/dplyr_verbs.md)
@@ -74,6 +76,10 @@
   : Check if Set or FormalContext respects an ImplicationSet
 - [`` `%~%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-twiddle-grapes.md)
   : Equivalence of sets of implications
+- [`implications_from_json()`](https://neuroimaginador.github.io/fcaR/reference/implications_from_json.md)
+  : Import ImplicationSet from JSON
+- [`lattice_from_json()`](https://neuroimaginador.github.io/fcaR/reference/lattice_from_json.md)
+  : Import ConceptLattice from JSON
 - [`lattice_plot()`](https://neuroimaginador.github.io/fcaR/reference/lattice_plot.md)
   : Plot Concept Lattice
 - [`parse_implication()`](https://neuroimaginador.github.io/fcaR/reference/parse_implication.md)
@@ -88,6 +94,8 @@
   : Print Details of Repository Contexts
 - [`randomize_context()`](https://neuroimaginador.github.io/fcaR/reference/randomize_context.md)
   : Randomize an Existing Formal Context
+- [`rules_from_json()`](https://neuroimaginador.github.io/fcaR/reference/rules_from_json.md)
+  : Import RuleSet from JSON
 - [`save_tikz()`](https://neuroimaginador.github.io/fcaR/reference/save_tikz.md)
   : Save TikZ Code to File
 - [`scalingRegistry`](https://neuroimaginador.github.io/fcaR/reference/scalingRegistry.md)

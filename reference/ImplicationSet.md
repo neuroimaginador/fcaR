@@ -28,7 +28,7 @@ Computer Mathematics*, *89*(4), 510-526.
 
 - [`ImplicationSet$get_attributes()`](#method-ImplicationSet-get_attributes)
 
-- [`ImplicationSet$[()`](#method-ImplicationSet-%5B)
+- [`ImplicationSet$[()`](#method-ImplicationSet-bracket)
 
 - [`ImplicationSet$to_arules()`](#method-ImplicationSet-to_arules)
 
@@ -69,6 +69,8 @@ Computer Mathematics*, *89*(4), 510-526.
 - [`ImplicationSet$use_hedge()`](#method-ImplicationSet-use_hedge)
 
 - [`ImplicationSet$get_hedge()`](#method-ImplicationSet-get_hedge)
+
+- [`ImplicationSet$to_json()`](#method-ImplicationSet-to_json)
 
 - [`ImplicationSet$clone()`](#method-ImplicationSet-clone)
 
@@ -590,6 +592,32 @@ Gets the hedge used to compute closures
 #### Returns
 
 A string with the name of the hedge
+
+------------------------------------------------------------------------
+
+### Method `to_json()`
+
+Export the implication set to JSON
+
+#### Usage
+
+    ImplicationSet$to_json(file = NULL, return_list = FALSE)
+
+#### Arguments
+
+- `file`:
+
+  (character) The path of the file to save the JSON to.
+
+- `return_list`:
+
+  (logical) If TRUE, returns the list representation instead of the JSON
+  string.
+
+#### Returns
+
+A JSON string representing the implication set, or a list if
+`return_list` is TRUE.
 
 ------------------------------------------------------------------------
 

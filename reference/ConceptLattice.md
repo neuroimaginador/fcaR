@@ -54,6 +54,10 @@ lattices.
 
 - [`ConceptLattice$is_atomic()`](#method-ConceptLattice-is_atomic)
 
+- [`ConceptLattice$set_state()`](#method-ConceptLattice-set_state)
+
+- [`ConceptLattice$to_json()`](#method-ConceptLattice-to_json)
+
 - [`ConceptLattice$clone()`](#method-ConceptLattice-clone)
 
 Inherited methods
@@ -534,6 +538,48 @@ are elements that cover the bottom element.
 #### Returns
 
 Logical.
+
+------------------------------------------------------------------------
+
+### Method `set_state()`
+
+Internal method to set state from JSON import
+
+#### Usage
+
+    ConceptLattice$set_state(state)
+
+#### Arguments
+
+- `state`:
+
+  List of internal state variables
+
+------------------------------------------------------------------------
+
+### Method `to_json()`
+
+Export the concept lattice to JSON
+
+#### Usage
+
+    ConceptLattice$to_json(file = NULL, return_list = FALSE)
+
+#### Arguments
+
+- `file`:
+
+  (character) The path of the file to save the JSON to.
+
+- `return_list`:
+
+  (logical) If TRUE, returns the list representation instead of the JSON
+  string.
+
+#### Returns
+
+A JSON string representing the concept lattice, or a list if
+`return_list` is TRUE.
 
 ------------------------------------------------------------------------
 

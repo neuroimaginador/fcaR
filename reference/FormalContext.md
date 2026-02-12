@@ -112,6 +112,8 @@ Stat Softw*, *14*, 1-25.
 
 - [`FormalContext$dim()`](#method-FormalContext-dim)
 
+- [`FormalContext$to_json()`](#method-FormalContext-to_json)
+
 - [`FormalContext$print()`](#method-FormalContext-print)
 
 - [`FormalContext$to_latex()`](#method-FormalContext-to_latex)
@@ -120,7 +122,7 @@ Stat Softw*, *14*, 1-25.
 
 - [`FormalContext$subcontext()`](#method-FormalContext-subcontext)
 
-- [`FormalContext$[()`](#method-FormalContext-%5B)
+- [`FormalContext$[()`](#method-FormalContext-bracket)
 
 - [`FormalContext$plot()`](#method-FormalContext-plot)
 
@@ -752,6 +754,26 @@ Dimensions of the formal context
 #### Returns
 
 A vector with (number of objects, number of attributes).
+
+------------------------------------------------------------------------
+
+### Method `to_json()`
+
+Export the formal context to JSON
+
+#### Usage
+
+    FormalContext$to_json(file = NULL)
+
+#### Arguments
+
+- `file`:
+
+  (character) The path of the file to save the JSON to.
+
+#### Returns
+
+A JSON string representing the formal context.
 
 ------------------------------------------------------------------------
 
