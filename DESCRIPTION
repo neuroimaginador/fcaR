@@ -59,7 +59,8 @@ Suggests:
     igraph,
     grDevices,
     rstudioapi,
-    yaml
+    yaml,
+    jsonlite
 LinkingTo: 
     Rcpp, BH
 VignetteBuilder: 

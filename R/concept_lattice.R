@@ -38,9 +38,7 @@ ConceptLattice <- R6::R6Class(
     #' A new \code{ConceptLattice} object.
     #'
     #' @export
-    initialize = function(extents, intents,
-                          objects, attributes,
-                          I = NULL) {
+    initialize = function(extents, intents, objects, attributes, I = NULL) {
       private$objects <- objects
       private$attributes <- attributes
       private$pr_extents <- extents
@@ -51,8 +49,10 @@ ConceptLattice <- R6::R6Class(
       }
 
       super$initialize(
-        extents, intents,
-        objects, attributes,
+        extents,
+        intents,
+        objects,
+        attributes,
         I
       )
     },
@@ -79,7 +79,13 @@ ConceptLattice <- R6::R6Class(
     #' @return If \code{to_latex} is \code{FALSE}, it returns (invisibly) the \code{ggplot2} object representing the graph.
     #' If \code{to_latex} is \code{TRUE}, it returns a \code{tikz_code} object containing the LaTeX code.
     #' @export
-    plot = function(object_names = TRUE, to_latex = FALSE, method = c("sugiyama", "force"), mode = NULL, ...) {
+    plot = function(
+      object_names = TRUE,
+      to_latex = FALSE,
+      method = c("sugiyama", "force"),
+      mode = NULL,
+      ...
+    ) {
       # 1. Verificación de estado
       if (self$size() == 0) {
         warning("No concepts to plot.", call. = FALSE)
@@ -139,12 +145,9 @@ ConceptLattice <- R6::R6Class(
       idx <- private$to_indices(...)
 
       if (length(idx) > 0) {
-
         private$build_adjacency()
 
-        idx <- .get_sublattice(private$subconcept_matrix,
-          starting_idx = idx
-        )
+        idx <- .get_sublattice(private$subconcept_matrix, starting_idx = idx)
 
         if (length(idx) > 1) {
           my_intents <- private$pr_intents[, idx]
@@ -177,7 +180,6 @@ ConceptLattice <- R6::R6Class(
     #' fc$concepts$top()
     #'
     top = function() {
-
       private$build_adjacency()
 
       idx <- which(Matrix::colSums(private$subconcept_matrix) == self$size())
@@ -196,14 +198,12 @@ ConceptLattice <- R6::R6Class(
     #' fc$concepts$bottom()
     #'
     bottom = function() {
-
       private$build_adjacency()
 
       idx <- which(Matrix::colSums(private$subconcept_matrix) == 1)
 
       self[idx]$to_list()[[1]]
     },
-
 
     #' @description
     #' Join-irreducible Elements
@@ -214,7 +214,6 @@ ConceptLattice <- R6::R6Class(
     #' @export
     #'
     join_irreducibles = function() {
-
       private$build_adjacency()
       private$build_covering()
 
@@ -231,7 +230,6 @@ ConceptLattice <- R6::R6Class(
     #' @export
     #'
     meet_irreducibles = function() {
-
       private$build_adjacency()
 
       M <- .reduce_transitivity(Matrix::t(private$subconcept_matrix))
@@ -259,9 +257,7 @@ ConceptLattice <- R6::R6Class(
       ss <- lapply(
         seq(C$size()),
         function(i) {
-          r <- Matrix::Matrix(C_intents[, i],
-            sparse = TRUE
-          )
+          r <- Matrix::Matrix(C_intents[, i], sparse = TRUE)
 
           if (sum(r) == 0) {
             return(C[i])
@@ -281,7 +277,6 @@ ConceptLattice <- R6::R6Class(
           return(decomposition)
         }
       )
-
 
       return(ss)
     },
@@ -525,17 +520,20 @@ ConceptLattice <- R6::R6Class(
     #' @return Logical.
     #' @export
     is_distributive = function() {
-
-      if (!is.na(private$properties$distributivity)) return(private$properties$distributivity)
+      if (!is.na(private$properties$distributivity)) {
+        return(private$properties$distributivity)
+      }
 
       private$build_structure()
 
-      res <- check_distributivity_internal(private$meet_matrix, private$join_matrix)
+      res <- check_distributivity_internal(
+        private$meet_matrix,
+        private$join_matrix
+      )
 
       private$properties$distributivity <- res
 
       return(res)
-
     },
 
     #' @description
@@ -545,8 +543,9 @@ ConceptLattice <- R6::R6Class(
     #' @return Logical.
     #' @export
     is_modular = function() {
-
-      if (!is.na(private$properties$modularity)) return(private$properties$modularity)
+      if (!is.na(private$properties$modularity)) {
+        return(private$properties$modularity)
+      }
 
       private$build_structure()
 
@@ -555,7 +554,6 @@ ConceptLattice <- R6::R6Class(
       private$properties$modularity <- res
 
       return(res)
-
     },
 
     #' @description
@@ -564,19 +562,21 @@ ConceptLattice <- R6::R6Class(
     #' @return Logical.
     #' @export
     is_semimodular = function() {
-
-      if (!is.na(private$properties$semimodularity)) return(private$properties$semimodularity)
+      if (!is.na(private$properties$semimodularity)) {
+        return(private$properties$semimodularity)
+      }
 
       private$build_structure()
 
       # Necesita Meet, Join y la relación de Cobertura
-      res <- check_semimodularity_internal(private$meet_matrix,
-                                           private$join_matrix,
-                                           private$covering_matrix)
+      res <- check_semimodularity_internal(
+        private$meet_matrix,
+        private$join_matrix,
+        private$covering_matrix
+      )
 
       private$properties$semimodularity <- res
       return(res)
-
     },
 
     #' @description
@@ -586,23 +586,139 @@ ConceptLattice <- R6::R6Class(
     #' @return Logical.
     #' @export
     is_atomic = function() {
-
-      if (!is.na(private$properties$atomicity)) return(private$properties$atomicity)
+      if (!is.na(private$properties$atomicity)) {
+        return(private$properties$atomicity)
+      }
 
       private$build_structure()
 
       # Necesita Adyacencia (Orden) y Cobertura (Hasse)
-      res <- check_atomicity_internal(private$subconcept_matrix,
-                                      private$covering_matrix)
+      res <- check_atomicity_internal(
+        private$subconcept_matrix,
+        private$covering_matrix
+      )
 
       private$properties$atomicity <- res
       return(res)
+    },
 
+    #' @description
+    #' Internal method to set state from JSON import
+    #' @param state List of internal state variables
+    set_state = function(state) {
+      private$pr_extents <- state$extents
+      private$pr_intents <- state$intents
+      private$objects <- state$objects
+      private$attributes <- state$attributes
+
+      # Reconstruct basic info
+      # Hierarchy? covering_matrix?
+      # If hierarchy is provided, rebuild covering matrix
+      if (!is.null(state$hierarchy)) {
+        # List of source->target
+        # Rebuild covering matrix
+        n <- ncol(private$pr_extents)
+        i_idx <- integer(0)
+        j_idx <- integer(0)
+
+        for (h in state$hierarchy) {
+          i_idx <- c(i_idx, h$source)
+          j_idx <- c(j_idx, h$target)
+        }
+
+        if (length(i_idx) > 0) {
+          private$covering_matrix <- Matrix::sparseMatrix(
+            i = i_idx,
+            j = j_idx,
+            dims = c(n, n),
+            x = 1
+          )
+        }
+      }
+    },
+
+    #' @description
+    #' Export the concept lattice to JSON
+    #'
+    #' @param file        (character) The path of the file to save the JSON to.
+    #' @param return_list (logical) If TRUE, returns the list representation instead of the JSON string.
+    #'
+    #' @return A JSON string representing the concept lattice, or a list if \code{return_list} is TRUE.
+    #' @export
+    to_json = function(file = NULL, return_list = FALSE) {
+      check_needed_pkg("jsonlite", "export to JSON")
+
+      # Helper to convert sparse matrix to list of indices/values
+      mat_to_list <- function(M) {
+        if (is.null(M)) {
+          return(list())
+        }
+
+        # Fix deprecation: use TsparseMatrix directly if possible, or via generalMatrix
+        # Trying direct cast first
+        T <- as(M, "TsparseMatrix")
+
+        if (length(T@x) == 0 && length(T@i) == 0) {
+          return(replicate(ncol(M), integer(0), simplify = FALSE))
+        }
+
+        # 1-based indices
+        df <- data.frame(i = T@i + 1, j = T@j + 1)
+        res <- split(df$i, factor(df$j, levels = seq_len(ncol(M))))
+        return(res)
+      }
+
+      # Extents and Intents (Concepts are columns)
+      extents_list <- mat_to_list(private$pr_extents)
+      intents_list <- mat_to_list(private$pr_intents)
+
+      concepts <- lapply(seq_len(self$size()), function(k) {
+        list(
+          id = k,
+          extent = extents_list[[k]],
+          intent = intents_list[[k]]
+        )
+      })
+
+      # Hierarchy (Covering relation)
+      private$build_covering()
+      hierarchy <- list()
+      if (!is.null(private$covering_matrix)) {
+        T <- as(as(private$covering_matrix, "dgCMatrix"), "dgTMatrix")
+        if (length(T@i) > 0) {
+          hierarchy <- lapply(seq_along(T@i), function(k) {
+            list(source = T@i[k] + 1, target = T@j[k] + 1)
+          })
+        }
+      }
+
+      # Context I
+      I_data <- NULL
+      if (!is.null(private$I)) {
+        I_data <- mat_to_list(Matrix::t(private$I))
+      }
+
+      out <- list(
+        type = "ConceptLattice",
+        objects = private$objects,
+        attributes = private$attributes,
+        concepts = concepts,
+        hierarchy = hierarchy,
+        I = I_data
+      )
+
+      if (return_list) {
+        return(out)
+      }
+
+      json <- jsonlite::toJSON(out, auto_unbox = TRUE)
+      if (!is.null(file)) {
+        writeLines(json, file)
+      }
+      return(json)
     }
-
   ),
   private = list(
-
     properties = list(
       distributivity = NA,
       modularity = NA,
@@ -616,39 +732,38 @@ ConceptLattice <- R6::R6Class(
     join_matrix = NULL,
 
     build_adjacency = function() {
-
-      if (self$size() == 0) return(invisible(self))
+      if (self$size() == 0) {
+        return(invisible(self))
+      }
 
       if (is.null(private$subconcept_matrix)) {
-
         private$subconcept_matrix <- as(.subset(private$pr_extents), "nMatrix")
-
       }
 
       invisible(self)
-
     },
 
     build_covering = function() {
-
       private$build_adjacency()
 
+      if (is.null(private$subconcept_matrix)) {
+        return(NULL)
+      }
+
       if (is.null(private$covering_matrix)) {
-
-        private$covering_matrix <- as(.reduce_transitivity(private$subconcept_matrix), "ngCMatrix")
-
+        private$covering_matrix <- as(
+          .reduce_transitivity(private$subconcept_matrix),
+          "ngCMatrix"
+        )
       }
 
       invisible(self)
-
     },
 
     build_meet_join = function() {
-
       private$build_adjacency()
 
       if (is.null(private$meet_matrix)) {
-
         adj <- private$subconcept_matrix
 
         # 2. Llamada a C++
@@ -664,30 +779,28 @@ ConceptLattice <- R6::R6Class(
           i = res$meet$i,
           p = res$meet$p,
           x = as.double(res$meet$x),
-          Dim = res$meet$Dim)
+          Dim = res$meet$Dim
+        )
 
         private$join_matrix <- new(
           "dgCMatrix",
           i = res$join$i,
           p = res$join$p,
           x = as.double(res$join$x),
-          Dim = res$join$Dim)
-
+          Dim = res$join$Dim
+        )
       }
 
       return(invisible(self))
     },
 
     build_structure = function() {
-
       private$build_adjacency()
       private$build_covering()
       private$build_meet_join()
-
     },
 
     can_plot = TRUE,
-
 
     concept_list_to_indices = function(concept_list) {
       extents <- lapply(
@@ -702,9 +815,7 @@ ConceptLattice <- R6::R6Class(
         y = private$pr_extents
       )
 
-      indices <- arrayInd(Matrix::which(indices),
-        .dim = dim(indices)
-      )[, 2]
+      indices <- arrayInd(Matrix::which(indices), .dim = dim(indices))[, 2]
 
       return(indices)
     },

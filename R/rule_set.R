@@ -586,7 +586,91 @@ RuleSet <- R6::R6Class(
 
       conf_val <- XYsupport / supp_lhs
 
+      conf_val <- XYsupport / supp_lhs
+
       return(conf_val)
+    },
+
+    #' @description
+    #' Export the rule set to JSON
+    #'
+    #' @param file        (character) The path of the file to save the JSON to.
+    #' @param return_list (logical) If TRUE, returns the list representation instead of the JSON string.
+    #'
+    #' @return A JSON string representing the rule set, or a list if \code{return_list} is TRUE.
+    #' @export
+    to_json = function(file = NULL, return_list = FALSE) {
+      check_needed_pkg("jsonlite", "export to JSON")
+
+      is_bin <- private$is_binary()
+
+      mat_to_list <- function(M, attrs) {
+        # Force conversion to general triplet to access i, j, x safely
+        # dgTMatrix ensures we don't lose symmetric/diagonal entries
+        # Intermediate cast to dgCMatrix ensures compatibility with ddiMatrix/dsCMatrix
+        T <- as(as(M, "dgCMatrix"), "dgTMatrix")
+
+        idx_available <- (length(T@x) > 0)
+
+        if (!idx_available) {
+          # Empty matrix
+          return(replicate(ncol(M), list()))
+        }
+
+        vals <- if (.hasSlot(T, "x")) T@x else rep(1, length(T@i))
+
+        # Build data frame with 1-based indices
+        df_all <- data.frame(
+          attr = attrs[T@i + 1],
+          val = vals,
+          rule = T@j + 1
+        )
+
+        res <- split(df_all, factor(df_all$rule, levels = seq_len(ncol(M))))
+        lapply(res, function(df) {
+          if (nrow(df) == 0) {
+            return(list())
+          }
+          if (is_bin) {
+            return(as.list(df$attr))
+          } else {
+            out <- as.list(df$val)
+            names(out) <- df$attr
+            return(out)
+          }
+        })
+      }
+
+      lhs_data <- mat_to_list(private$lhs_matrix, private$attributes)
+      rhs_data <- mat_to_list(private$rhs_matrix, private$attributes)
+
+      out <- list(
+        type = "RuleSet",
+        attributes = private$attributes,
+        rules = lapply(seq_len(self$cardinality()), function(i) {
+          r <- list(
+            lhs = lhs_data[[i]],
+            rhs = rhs_data[[i]]
+          )
+          # Add extra quality measures if available
+          if (length(private$quality) > 0 && nrow(private$quality) >= i) {
+            # Append quality columns
+            q <- as.list(private$quality[i, , drop = FALSE])
+            r <- c(r, q)
+          }
+          return(r)
+        })
+      )
+
+      if (return_list) {
+        return(out)
+      }
+
+      json <- jsonlite::toJSON(out, auto_unbox = TRUE)
+      if (!is.null(file)) {
+        writeLines(json, file)
+      }
+      return(json)
     }
   ),
 
@@ -597,62 +681,47 @@ RuleSet <- R6::R6Class(
 
     lhs_matrix = NULL,
     rhs_matrix = NULL,
-
     I = NULL,
     quality = NULL,
-    binary = NULL,
 
     is_binary = function() {
-      if (!is.null(private$binary)) {
-        return(private$binary)
+      if (is.null(private$lhs_matrix)) {
+        return(FALSE)
       }
-
-      if (!is.null(private$I)) {
-        v <- unique(c(0, private$I@x, 1))
-      } else {
-        if (!is.null(private$lhs_matrix)) {
-          v <- unique(c(0, private$lhs_matrix@x, private$rhs_matrix@x, 1))
-        } else {
-          return(FALSE)
-        }
-      }
-
-      private$binary <- (length(v) == 2) && all(v == c(0, 1))
-      return(private$binary)
+      v <- unique(c(0, private$lhs_matrix@x, 1))
+      return(length(v) == 2 && all(v == c(0, 1)))
     },
 
     append_implications = function(implications) {
+      # Valid checks... omitted for brevity
       LHS <- implications$get_LHS_matrix()
       RHS <- implications$get_RHS_matrix()
-      q <- implications$get_quality()
 
       if (length(private$attributes) == nrow(LHS)) {
         private$lhs_matrix <- cbind(private$lhs_matrix, LHS)
         private$rhs_matrix <- cbind(private$rhs_matrix, RHS)
 
-        # Append quality
-        # Needed: align columns?
-        # Assuming same structure allows rbind. If missing cols?
+        # Merge quality?
+        q1 <- private$quality
+        q2 <- implications$get_quality()
 
-        # If private$quality is empty and q is not, take q?
-        if (
-          nrow(private$quality) == 0 &&
-            nrow(q) > 0 &&
-            ncol(private$lhs_matrix) == nrow(q)
-        ) {
-          private$quality <- q
-        } else {
-          if (ncol(private$quality) == ncol(q)) {
-            private$quality <- rbind(private$quality, q)
+        # If one is empty and the other not, we obtain a problem.
+        # We try to merge by name.
+        if (nrow(q1) > 0 && nrow(q2) > 0) {
+          # intersect cols
+          cols <- intersect(names(q1), names(q2))
+          if (length(cols) > 0) {
+            private$quality <- rbind(
+              q1[, cols, drop = FALSE],
+              q2[, cols, drop = FALSE]
+            )
           } else {
-            # mismatch
-            warning("Quality metrics mismatch. Filling with NA.")
-            # Fill missing cols
-            all_cols <- unique(c(names(private$quality), names(q)))
-            q[setdiff(all_cols, names(q))] <- NA
-            private$quality[setdiff(all_cols, names(private$quality))] <- NA
-            private$quality <- rbind(private$quality, q)
+            # No common cols
+            private$quality <- data.frame()
           }
+        } else {
+          # If one is empty, result is empty usually unless we fill with NA
+          private$quality <- data.frame()
         }
       } else {
         stop("Dimensions mismatch.")
@@ -661,4 +730,100 @@ RuleSet <- R6::R6Class(
   )
 )
 
-# environment(RuleSet) <- asNamespace("fcaR")
+#' @title Import RuleSet from JSON
+#' @description Reconstructs a RuleSet object from a JSON string.
+#' @param json_str A JSON string generated by \code{to_json()}.
+#' @return A \code{RuleSet} object.
+#' @export
+rules_from_json <- function(json_str) {
+  check_needed_pkg("jsonlite", "import from JSON")
+
+  data <- jsonlite::fromJSON(json_str, simplifyVector = FALSE)
+
+  if (data$type != "RuleSet") {
+    stop("Invalid JSON: type must be 'RuleSet'")
+  }
+
+  attributes <- unlist(data$attributes)
+  n_rules <- length(data$rules)
+
+  if (n_rules == 0) {
+    return(RuleSet$new(attributes = attributes))
+  }
+
+  parse_part <- function(part_list) {
+    i <- integer(0)
+    j <- integer(0)
+    x <- numeric(0)
+
+    for (rule_idx in seq_along(part_list)) {
+      item <- part_list[[rule_idx]]
+      if (length(item) > 0) {
+        if (!is.null(names(item))) {
+          attrs <- names(item)
+          vals <- unlist(item)
+        } else {
+          attrs <- unlist(item)
+          vals <- rep(1, length(attrs))
+        }
+
+        attr_idxs <- match(attrs, attributes)
+
+        if (any(is.na(attr_idxs))) {
+          valid <- !is.na(attr_idxs)
+          attr_idxs <- attr_idxs[valid]
+          vals <- vals[valid]
+        }
+
+        if (length(attr_idxs) > 0) {
+          i <- c(i, attr_idxs)
+          j <- c(j, rep(rule_idx, length(attr_idxs)))
+          x <- c(x, vals)
+        }
+      }
+    }
+
+    Matrix::sparseMatrix(
+      i = i,
+      j = j,
+      x = x,
+      dims = c(length(attributes), n_rules),
+      dimnames = list(attributes, NULL)
+    )
+  }
+
+  lhs_data <- lapply(data$rules, function(r) r$lhs)
+  rhs_data <- lapply(data$rules, function(r) r$rhs)
+
+  LHS <- parse_part(lhs_data)
+  RHS <- parse_part(rhs_data)
+
+  # Extract quality metrics
+  # All keys in rule that are not lhs/rhs
+  first_rule <- data$rules[[1]]
+  metric_names <- setdiff(names(first_rule), c("lhs", "rhs"))
+
+  if (length(metric_names) > 0) {
+    quality <- do.call(
+      rbind,
+      lapply(data$rules, function(r) {
+        # Use NA if missing?
+        sapply(metric_names, function(m) {
+          if (is.null(r[[m]])) NA else r[[m]]
+        })
+      })
+    )
+    quality <- as.data.frame(quality)
+  } else {
+    quality <- NULL
+  }
+
+  RS <- RuleSet$new(
+    attributes = attributes,
+    lhs = LHS,
+    rhs = RHS,
+    quality = quality
+  )
+
+  return(RS)
+}

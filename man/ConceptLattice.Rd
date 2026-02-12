@@ -66,13 +66,15 @@ fc$concepts$bottom()
 \item \href{#method-ConceptLattice-is_modular}{\code{ConceptLattice$is_modular()}}
 \item \href{#method-ConceptLattice-is_semimodular}{\code{ConceptLattice$is_semimodular()}}
 \item \href{#method-ConceptLattice-is_atomic}{\code{ConceptLattice$is_atomic()}}
+\item \href{#method-ConceptLattice-set_state}{\code{ConceptLattice$set_state()}}
+\item \href{#method-ConceptLattice-to_json}{\code{ConceptLattice$to_json()}}
 \item \href{#method-ConceptLattice-clone}{\code{ConceptLattice$clone()}}
 }
 }
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-['><code>fcaR::ConceptSet$[()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-bracket'><code>fcaR::ConceptSet$[()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-extents'><code>fcaR::ConceptSet$extents()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-intents'><code>fcaR::ConceptSet$intents()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-is_empty'><code>fcaR::ConceptSet$is_empty()</code></a></span></li>
@@ -507,6 +509,45 @@ Atoms are elements that cover the bottom element.
 
 \subsection{Returns}{
 Logical.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-set_state"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-set_state}{}}}
+\subsection{Method \code{set_state()}}{
+Internal method to set state from JSON import
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$set_state(state)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{state}}{List of internal state variables}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-to_json"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-to_json}{}}}
+\subsection{Method \code{to_json()}}{
+Export the concept lattice to JSON
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$to_json(file = NULL, return_list = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{file}}{(character) The path of the file to save the JSON to.}
+
+\item{\code{return_list}}{(logical) If TRUE, returns the list representation instead of the JSON string.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A JSON string representing the concept lattice, or a list if \code{return_list} is TRUE.
 }
 }
 \if{html}{\out{<hr>}}

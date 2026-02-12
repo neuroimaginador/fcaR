@@ -11,7 +11,7 @@ This class implements the structure needed to store association rules and the me
 \itemize{
 \item \href{#method-RuleSet-new}{\code{RuleSet$new()}}
 \item \href{#method-RuleSet-get_attributes}{\code{RuleSet$get_attributes()}}
-\item \href{#method-RuleSet-[}{\code{RuleSet$[()}}
+\item \href{#method-RuleSet-bracket}{\code{RuleSet$[()}}
 \item \href{#method-RuleSet-to_arules}{\code{RuleSet$to_arules()}}
 \item \href{#method-RuleSet-add}{\code{RuleSet$add()}}
 \item \href{#method-RuleSet-cardinality}{\code{RuleSet$cardinality()}}
@@ -26,6 +26,7 @@ This class implements the structure needed to store association rules and the me
 \item \href{#method-RuleSet-get_implications}{\code{RuleSet$get_implications()}}
 \item \href{#method-RuleSet-support}{\code{RuleSet$support()}}
 \item \href{#method-RuleSet-confidence}{\code{RuleSet$confidence()}}
+\item \href{#method-RuleSet-to_json}{\code{RuleSet$to_json()}}
 \item \href{#method-RuleSet-clone}{\code{RuleSet$clone()}}
 }
 }
@@ -73,8 +74,8 @@ A character vector with the names of the attributes used in the implications.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RuleSet-["></a>}}
-\if{latex}{\out{\hypertarget{method-RuleSet-[}{}}}
+\if{html}{\out{<a id="method-RuleSet-bracket"></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-bracket}{}}}
 \subsection{Method \code{[()}}{
 Get a subset of the rule set
 \subsection{Usage}{
@@ -315,6 +316,28 @@ Compute the confidence of each rule
 
 \subsection{Returns}{
 A numeric vector with the confidence of each rule.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-RuleSet-to_json"></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-to_json}{}}}
+\subsection{Method \code{to_json()}}{
+Export the rule set to JSON
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RuleSet$to_json(file = NULL, return_list = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{file}}{(character) The path of the file to save the JSON to.}
+
+\item{\code{return_list}}{(logical) If TRUE, returns the list representation instead of the JSON string.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A JSON string representing the rule set, or a list if \code{return_list} is TRUE.
 }
 }
 \if{html}{\out{<hr>}}

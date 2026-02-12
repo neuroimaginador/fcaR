@@ -147,11 +147,12 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-FormalContext-save}{\code{FormalContext$save()}}
 \item \href{#method-FormalContext-load}{\code{FormalContext$load()}}
 \item \href{#method-FormalContext-dim}{\code{FormalContext$dim()}}
+\item \href{#method-FormalContext-to_json}{\code{FormalContext$to_json()}}
 \item \href{#method-FormalContext-print}{\code{FormalContext$print()}}
 \item \href{#method-FormalContext-to_latex}{\code{FormalContext$to_latex()}}
 \item \href{#method-FormalContext-incidence}{\code{FormalContext$incidence()}}
 \item \href{#method-FormalContext-subcontext}{\code{FormalContext$subcontext()}}
-\item \href{#method-FormalContext-[}{\code{FormalContext$[()}}
+\item \href{#method-FormalContext-bracket}{\code{FormalContext$[()}}
 \item \href{#method-FormalContext-plot}{\code{FormalContext$plot()}}
 \item \href{#method-FormalContext-use_logic}{\code{FormalContext$use_logic()}}
 \item \href{#method-FormalContext-get_logic}{\code{FormalContext$get_logic()}}
@@ -745,6 +746,26 @@ A vector with (number of objects, number of attributes).
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-to_json"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-to_json}{}}}
+\subsection{Method \code{to_json()}}{
+Export the formal context to JSON
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$to_json(file = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{file}}{(character) The path of the file to save the JSON to.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A JSON string representing the formal context.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-FormalContext-print"></a>}}
 \if{latex}{\out{\hypertarget{method-FormalContext-print}{}}}
 \subsection{Method \code{print()}}{
@@ -837,8 +858,8 @@ fc$subcontext(attributes = c("moon", "no_moon"))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FormalContext-["></a>}}
-\if{latex}{\out{\hypertarget{method-FormalContext-[}{}}}
+\if{html}{\out{<a id="method-FormalContext-bracket"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-bracket}{}}}
 \subsection{Method \code{[()}}{
 Subcontext of the formal context
 \subsection{Usage}{

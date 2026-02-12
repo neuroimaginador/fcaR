@@ -1,12 +1,14 @@
 # fcaR 1.4.1
 
+* **JSON Import/Export:** Added `to_json()` methods and corresponding `*_from_json()` functions for `FormalContext`, `ConceptLattice`, `ImplicationSet`, and `RuleSet`. This allows for efficient serialization of all major data structures in `fcaR`, including recursive export of nested objects.
+
 # fcaR 1.4.0
 
 Major Enhancements:
 
 * **Tidyverse integration:** Implemented S3 methods to support `dplyr` verbs, allowing for a fluent, grammar-based manipulation of FCA objects:
-    * **FormalContext:** Support for `select()` (attributes), `filter()` (objects), `mutate()` (feature engineering), `arrange()` (sorting), and `rename()`. Includes support for `tidyselect` helpers (e.g., `starts_with()`).
-    * **ImplicationSet:** Support for `filter()` (based on metrics or attributes), `arrange()` (sorting rules), and `slice()` (subsetting by index).
+  * **FormalContext:** Support for `select()` (attributes), `filter()` (objects), `mutate()` (feature engineering), `arrange()` (sorting), and `rename()`. Includes support for `tidyselect` helpers (e.g., `starts_with()`).
+  * **ImplicationSet:** Support for `filter()` (based on metrics or attributes), `arrange()` (sorting rules), and `slice()` (subsetting by index).
 * **Semantic Rule Filtering:** Introduced helper functions for `ImplicationSet` filtering to query rules based on attribute presence/absence: `lhs()`, `rhs()`, `not_lhs()`, `lhs_any()`, etc. This allows querying rules like `filter(rhs("Attribute_A"), support > 0.2)`.
 * **Mining Causal Association Rules:** Implemented the `find_causal_rules()` method in `FormalContext`, enabling the discovery of causal rules by controlling for confounding variables using the "Fair Odds Ratio" on matched pairs.
 
@@ -38,12 +40,12 @@ Fixes:
 Major Enhancements:
 
 * **Matrix factorization:** Added `factorize()` method to `FormalContext` class. It now implements two state-of-the-art algorithms:
-    * **GreConD+**: For Boolean and Fuzzy matrix factorization with grades and overcovering (Belohlavek & Trneckova, 2024). It fully supports custom fuzzy logics set in the context.
-    * **ASSO**: A heuristic algorithm based on association rules for Boolean matrix factorization.
+  * **GreConD+**: For Boolean and Fuzzy matrix factorization with grades and overcovering (Belohlavek & Trneckova, 2024). It fully supports custom fuzzy logics set in the context.
+  * **ASSO**: A heuristic algorithm based on association rules for Boolean matrix factorization.
 * **Advanced randomization:** New suite of functions to generate and perturb datasets for statistical testing:
-    * `RandomContext()`: Generates synthetic contexts using **Uniform** or **Dirichlet** distributions (mimicking real-world data structure).
-    * `randomize_context()`: Randomizes existing contexts via **Edge swapping** (preserves marginal sums) or **Rewiring** (preserves density).
-    * **Distributive Generators:** Added `RandomDistributiveContext()` to generate synthetic data guaranteed to produce distributive lattices (based on Birkhoff's theorem).
+  * `RandomContext()`: Generates synthetic contexts using **Uniform** or **Dirichlet** distributions (mimicking real-world data structure).
+  * `randomize_context()`: Randomizes existing contexts via **Edge swapping** (preserves marginal sums) or **Rewiring** (preserves density).
+  * **Distributive Generators:** Added `RandomDistributiveContext()` to generate synthetic data guaranteed to produce distributive lattices (based on Birkhoff's theorem).
 * **Robustness & performance:** The **InClose** algorithm has been completely refactored to use the C-API directly (avoiding Rcpp overhead). This  significantly improves performance for sparse matrices.
 
 New Functionality:
@@ -52,8 +54,8 @@ New Functionality:
 * **Lattice properties:** Added methods to `ConceptLattice` to efficiently check algebraic properties using sparse matrix operations: `is_distributive()`, `is_modular()`, `is_semimodular()`, and `is_atomic()`.
 * **Fuzzy algorithms:** In fuzzy contexts, the user can now select the algorithm for `find_concepts()`: "InClose" (default), "FastCbO", or "NextClosure".
 * **Implications:**
-    * Added `to_direct_optimal()` to convert implication sets into the direct optimal basis.
-    * Added `use_hedge()` and `get_hedge()` to manage hedges in fuzzy implication closures.
+  * Added `to_direct_optimal()` to convert implication sets into the direct optimal basis.
+  * Added `use_hedge()` and `get_hedge()` to manage hedges in fuzzy implication closures.
 * **Repo integration:** The connection to fcarepository.org is now managed more elegantly, including an RStudio addin to fetch contexts.
 
 Improvements:
@@ -90,7 +92,6 @@ Bugfixes:
 
 * Fixes required by the new version of Matrix and the new use of HTML Tidy in R 4.2.
 
-
 # fcaR 1.1.1
 
 Enhancements:
@@ -106,25 +107,25 @@ Bugfixes:
 * Fixed exporting to latex with special characters such as $, _, etc.
 
 # fcaR 1.1.0
- 
-Enhancements: 
+
+Enhancements:
 
 * Better printing of Sets.
 * More optimized ConceptLattice class. Now it inherits from a ConceptSet superclass with generic functions.
 
 New functionality:
 
-* Added function to compute the __difference__ of two Sets.
-* Added function to compute the __dual__ of a FormalContext.
+* Added function to compute the **difference** of two Sets.
+* Added function to compute the **dual** of a FormalContext.
 * Now one can create a FormalContext from a CSV, CXT or RDS file directly, without needing to "load()" it.
 * FormalContexts can now be saved to CXT format, in addition to RDS.
 * Added functions to compute the top and the bottom of a concept lattice.
 * Added new function sub() to extract a single Concept from a ConceptSet.
-* Added functions %holds_in% and %respects%, which check the __validity__ of a set of implications in a formal context, and if a list of attribute sets respect an implication set.
-* Added functions %entails% and %~% to check the __entailment__ and __equivalence__ between two implication sets.
+* Added functions %holds_in% and %respects%, which check the **validity** of a set of implications in a formal context, and if a list of attribute sets respect an implication set.
+* Added functions %entails% and %~% to check the **entailment** and **equivalence** between two implication sets.
 * Added new convenience function to map attributes between Sets, so computing intents, extents and closures is more robust.
 * Added new functions `%&%` and `%|%` that compute the intersection (logical _and_) and the union (_or_ operation) on Sets.
-* __Conceptual scaling__, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.
+* **Conceptual scaling**, including nominal, ordinal, interordinal, biordinal and interval scales for many-valued formal contexts. Also, computation of background knowledge from the applied scales and of the implications that hold in the formal context. Added new vignette.
 
 _Breaking changes_:
 
@@ -147,13 +148,13 @@ Enhancements:
 * Better printing of FormalContexts, specially for binary FormalContexts.
 
 # fcaR 1.0.6
- 
+
 Bugfixes:
 
 * Detect if R has been built with no long double capabilities and warn the user if she tries to plot FormalContexts and ConceptLattices.
 
 # fcaR 1.0.5
- 
+
 Bugfixes:
 
 * Fixes #17. The reduced set of implications after performing closure with reduce == TRUE now stores the matrix I, so it can be re-exported to the arules format.
@@ -161,7 +162,7 @@ Bugfixes:
 Enhancements:
 
 * More efficient version of the simplification rule. Now it performs linearly on the number of implications.
-* Added a way to extend the equivalence rules by means of the registry package. This has been used to introduce the "Right Simplification" and the "Reorder" rules. 
+* Added a way to extend the equivalence rules by means of the registry package. This has been used to introduce the "Right Simplification" and the "Reorder" rules.
 * New vignette to show how to extend equivalence rules in the package.
 * More efficient version of the NextClosure algorithm to mine concepts and implications.
 
@@ -182,7 +183,7 @@ Enhancements:
 
 # fcaR 1.0.3
 
-* Changes to some C functions since they could potentially give a segfault. 
+* Changes to some C functions since they could potentially give a segfault.
 
 # fcaR 1.0.2
 
@@ -192,9 +193,9 @@ Enhancements:
 
 * Made changes suggested by CRAN:
 
-  - Added examples in the documentation.
-  - Changed cat() to message() in functions not related to printing.
-  - Added proper contributors.
+  * Added examples in the documentation.
+  * Changed cat() to message() in functions not related to printing.
+  * Added proper contributors.
   
 * Updated vignettes
 

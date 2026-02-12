@@ -1,0 +1,149 @@
+---
+title: "JSON Export and Import"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{JSON Export and Import}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+In version 1.4.1, `fcaR` introduces comprehensive support for **JSON** (JavaScript Object Notation) export and import. This facilitates interoperability with other systems, web applications, and non-R based tools.
+
+This vignette demonstrates how to export and import the main data structures in `fcaR`: `FormalContext`, `ConceptLattice`, `ImplicationSet`, and `RuleSet`.
+
+## Setup
+
+First, ensure you have the `jsonlite` package installed, as it is required for these features.
+
+```{r setup}
+library(fcaR)
+# install.packages("jsonlite")
+```
+
+## FormalContext
+
+We can export a `FormalContext` to JSON, which preserves the objects, attributes, and the incidence matrix. Importantly, the incidence matrix is exported in a sparse format (indices and values) to handle large datasets efficiently.
+
+### Creating and Exporting
+
+Let's load a sample dataset and create a `FormalContext`.
+
+```{r context}
+data("planets")
+fc <- FormalContext$new(planets)
+print(fc)
+```
+
+To export the context to a JSON string:
+
+```{r export_context}
+json_str <- fc$to_json()
+cat(substr(json_str, 1, 200), "...") # Print first 200 chars
+```
+
+You can also save it directly to a file:
+
+```{r export_file, eval=FALSE}
+fc$to_json(file = "context.json")
+```
+
+### Importing
+
+To verify the export, we can import the JSON string back into a new `FormalContext` object using `context_from_json()`:
+
+```{r import_context}
+fc2 <- context_from_json(json_str)
+print(fc2)
+```
+
+We can check that the original and reconstructed contexts are identical:
+
+```{r verify_context}
+all(fc$objects == fc2$objects)
+all(fc$attributes == fc2$attributes)
+all(as.matrix(fc$I) == as.matrix(fc2$I))
+```
+
+### Recursive Export
+
+The `to_json()` method for `FormalContext` is **recursive**. If you have computed concepts or implications, they will be nested within the exported JSON.
+
+```{r recursive}
+fc$find_concepts()
+fc$find_implications()
+
+# Export with nested concepts and implications
+json_full <- fc$to_json()
+
+# Import back
+fc_full <- context_from_json(json_full)
+
+# Check if concepts are present
+fc_full$concepts$size()
+```
+
+## ConceptLattice
+
+You can also export a `ConceptLattice` independently.
+
+```{r lattice}
+cl <- fc$concepts
+json_lattice <- cl$to_json()
+```
+
+And import it using `lattice_from_json()`:
+
+```{r import_lattice}
+cl2 <- lattice_from_json(json_lattice)
+print(cl2)
+```
+
+The exported JSON includes the lattice hierarchy (superconcept/subconcept relations), allowing for full reconstruction of the lattice structure.
+
+## ImplicationSet
+
+Similarly, sets of implications can be exported and imported.
+
+```{r implications}
+imps <- fc$implications
+json_imps <- imps$to_json()
+```
+
+Import using `implications_from_json()`:
+
+```{r import_imps}
+imps2 <- implications_from_json(json_imps)
+print(imps2)
+```
+
+## RuleSet
+
+Association rules (including causal rules) are also supported.
+
+```{r rules}
+# Assuming we have a RuleSet, e.g. from arules or created manually
+# Here we'll just demonstrate the syntax
+rs <- RuleSet$new(attributes = fc$attributes)
+# ... populate rules ...
+# json_rules <- rs$to_json()
+# rs2 <- rules_from_json(json_rules)
+```
+
+## Summary
+
+The new JSON functionality ensures that you can easily move your FCA models out of R for visualization, storage, or integration with web services.
+
+| Class | Export Method | Import Function |
+|-------|---------------|-----------------|
+| `FormalContext` | `$to_json()` | `context_from_json()` |
+| `ConceptLattice` | `$to_json()` | `lattice_from_json()` |
+| `ImplicationSet` | `$to_json()` | `implications_from_json()` |
+| `RuleSet` | `$to_json()` | `rules_from_json()` |
+

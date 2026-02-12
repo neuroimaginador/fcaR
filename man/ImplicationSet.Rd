@@ -39,7 +39,7 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \itemize{
 \item \href{#method-ImplicationSet-new}{\code{ImplicationSet$new()}}
 \item \href{#method-ImplicationSet-get_attributes}{\code{ImplicationSet$get_attributes()}}
-\item \href{#method-ImplicationSet-[}{\code{ImplicationSet$[()}}
+\item \href{#method-ImplicationSet-bracket}{\code{ImplicationSet$[()}}
 \item \href{#method-ImplicationSet-to_arules}{\code{ImplicationSet$to_arules()}}
 \item \href{#method-ImplicationSet-add}{\code{ImplicationSet$add()}}
 \item \href{#method-ImplicationSet-cardinality}{\code{ImplicationSet$cardinality()}}
@@ -60,6 +60,7 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \item \href{#method-ImplicationSet-get_logic}{\code{ImplicationSet$get_logic()}}
 \item \href{#method-ImplicationSet-use_hedge}{\code{ImplicationSet$use_hedge()}}
 \item \href{#method-ImplicationSet-get_hedge}{\code{ImplicationSet$get_hedge()}}
+\item \href{#method-ImplicationSet-to_json}{\code{ImplicationSet$to_json()}}
 \item \href{#method-ImplicationSet-clone}{\code{ImplicationSet$clone()}}
 }
 }
@@ -107,8 +108,8 @@ A character vector with the names of the attributes used in the implications.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-["></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-[}{}}}
+\if{html}{\out{<a id="method-ImplicationSet-bracket"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-bracket}{}}}
 \subsection{Method \code{[()}}{
 Get a subset of the implication set
 \subsection{Usage}{
@@ -505,6 +506,28 @@ Gets the hedge used to compute closures
 
 \subsection{Returns}{
 A string with the name of the hedge
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ImplicationSet-to_json"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-to_json}{}}}
+\subsection{Method \code{to_json()}}{
+Export the implication set to JSON
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_json(file = NULL, return_list = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{file}}{(character) The path of the file to save the JSON to.}
+
+\item{\code{return_list}}{(logical) If TRUE, returns the list representation instead of the JSON string.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A JSON string representing the implication set, or a list if \code{return_list} is TRUE.
 }
 }
 \if{html}{\out{<hr>}}

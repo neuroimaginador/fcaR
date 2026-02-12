@@ -7,6 +7,7 @@ articles:
   navbar: Basics
   contents:
   - creating_contexts
+  - json_export_import
   - concept_lattice
   - implications
   - fcaR_dplyr

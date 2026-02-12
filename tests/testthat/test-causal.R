@@ -67,6 +67,7 @@ test_that("Causal Association Rules handle Simpson's Paradox", {
     # Response: Drowning
     # Factor: IceCream (correlated but not causal)
     # Confounder: Heat (causes both IceCream    # Construct Spurious Data
+    set.seed(123)
     n <- 1000
     # Heat: 50%
     heat <- c(rep(1, 500), rep(0, 500))
