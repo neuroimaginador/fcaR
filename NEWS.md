@@ -1,3 +1,5 @@
+# fcaR 1.5.0
+
 # fcaR 1.4.1
 
 * **JSON Import/Export:** Added `to_json()` methods and corresponding `*_from_json()` functions for `FormalContext`, `ConceptLattice`, `ImplicationSet`, and `RuleSet`. This allows for efficient serialization of all major data structures in `fcaR`, including recursive export of nested objects.
