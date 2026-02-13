@@ -122,7 +122,7 @@ Stat Softw*, *14*, 1-25.
 
 - [`FormalContext$subcontext()`](#method-FormalContext-subcontext)
 
-- [`FormalContext$[()`](#method-FormalContext-bracket)
+- [`FormalContext$[()`](#method-FormalContext-%5B)
 
 - [`FormalContext$plot()`](#method-FormalContext-plot)
 

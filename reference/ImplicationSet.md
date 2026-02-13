@@ -1,24 +1,14 @@
-# R6 Class for Set of implications
+# R6 class for an Implication Set
 
-This class implements the structure needed to store implications and the
-methods associated.
+This class implements an implication set (LHS -\> RHS) in the framework
+of Formal Concept Analysis (FCA). It inherits from `RuleSet` and adds
+FCA-specific methods such as closure computation, simplification, and
+basis transformation.
 
-## References
+## Super class
 
-Ganter B, Obiedkov S (2016). Conceptual Exploration. Springer.
-https://doi.org/10.1007/978-3-662-49291-8
-
-Hahsler M, Grun B, Hornik K (2005). “arules - a computational
-environment for mining association rules and frequent item sets.” *J
-Stat Softw*, *14*, 1-25.
-
-Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated
-prover for attribute dependencies in data with grades.” *International
-Journal of Approximate Reasoning*, *70*, 51-67.
-
-Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via
-functional dependence simplification.” *International Journal of
-Computer Mathematics*, *89*(4), 510-526.
+[`fcaR::RuleSet`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.md)
+-\> `ImplicationSet`
 
 ## Methods
 
@@ -26,19 +16,13 @@ Computer Mathematics*, *89*(4), 510-526.
 
 - [`ImplicationSet$new()`](#method-ImplicationSet-new)
 
-- [`ImplicationSet$get_attributes()`](#method-ImplicationSet-get_attributes)
-
-- [`ImplicationSet$[()`](#method-ImplicationSet-bracket)
+- [`ImplicationSet$add()`](#method-ImplicationSet-add)
 
 - [`ImplicationSet$to_arules()`](#method-ImplicationSet-to_arules)
 
-- [`ImplicationSet$add()`](#method-ImplicationSet-add)
+- [`ImplicationSet$print()`](#method-ImplicationSet-print)
 
-- [`ImplicationSet$cardinality()`](#method-ImplicationSet-cardinality)
-
-- [`ImplicationSet$is_empty()`](#method-ImplicationSet-is_empty)
-
-- [`ImplicationSet$size()`](#method-ImplicationSet-size)
+- [`ImplicationSet$support()`](#method-ImplicationSet-support)
 
 - [`ImplicationSet$closure()`](#method-ImplicationSet-closure)
 
@@ -49,18 +33,6 @@ Computer Mathematics*, *89*(4), 510-526.
 - [`ImplicationSet$to_basis()`](#method-ImplicationSet-to_basis)
 
 - [`ImplicationSet$to_direct_optimal()`](#method-ImplicationSet-to_direct_optimal)
-
-- [`ImplicationSet$print()`](#method-ImplicationSet-print)
-
-- [`ImplicationSet$to_latex()`](#method-ImplicationSet-to_latex)
-
-- [`ImplicationSet$get_LHS_matrix()`](#method-ImplicationSet-get_LHS_matrix)
-
-- [`ImplicationSet$get_RHS_matrix()`](#method-ImplicationSet-get_RHS_matrix)
-
-- [`ImplicationSet$filter()`](#method-ImplicationSet-filter)
-
-- [`ImplicationSet$support()`](#method-ImplicationSet-support)
 
 - [`ImplicationSet$use_logic()`](#method-ImplicationSet-use_logic)
 
@@ -74,11 +46,26 @@ Computer Mathematics*, *89*(4), 510-526.
 
 - [`ImplicationSet$clone()`](#method-ImplicationSet-clone)
 
+Inherited methods
+
+- [`fcaR::RuleSet$[()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-%5B)
+- [`fcaR::RuleSet$cardinality()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-cardinality)
+- [`fcaR::RuleSet$confidence()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-confidence)
+- [`fcaR::RuleSet$filter()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-filter)
+- [`fcaR::RuleSet$get_LHS_matrix()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-get_LHS_matrix)
+- [`fcaR::RuleSet$get_RHS_matrix()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-get_RHS_matrix)
+- [`fcaR::RuleSet$get_attributes()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-get_attributes)
+- [`fcaR::RuleSet$get_implications()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-get_implications)
+- [`fcaR::RuleSet$get_quality()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-get_quality)
+- [`fcaR::RuleSet$is_empty()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-is_empty)
+- [`fcaR::RuleSet$size()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-size)
+- [`fcaR::RuleSet$to_latex()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-to_latex)
+
 ------------------------------------------------------------------------
 
 ### Method `new()`
 
-Initialize with an optional name
+Initialize an ImplicationSet
 
 #### Usage
 
@@ -88,84 +75,13 @@ Initialize with an optional name
 
 - `...`:
 
-  See Details.
-
-#### Details
-
-Creates and initialize a new `ImplicationSet` object. It can be done in
-two ways: `initialize(name, attributes, lhs, rhs)` or
-`initialize(rules)`
-
-In the first way, the only mandatory argument is `attributes`,
-(character vector) which is a vector of names of the attributes on which
-we define the implications. Optional arguments are: `name` (character
-string), name of the implication set, `lhs` (a `dgCMatrix`), initial LHS
-of the implications stored and the analogous `rhs`.
-
-The other way is used to initialize the `ImplicationSet` object from a
-`rules` object from package `arules`.
+  A `rules` object (from `arules`) or named arguments: `name` (string),
+  `attributes` (character vector), `lhs` and `rhs` (sparse matrices),
+  `I` (incidence matrix).
 
 #### Returns
 
 A new `ImplicationSet` object.
-
-------------------------------------------------------------------------
-
-### Method `get_attributes()`
-
-Get the names of the attributes
-
-#### Usage
-
-    ImplicationSet$get_attributes()
-
-#### Returns
-
-A character vector with the names of the attributes used in the
-implications.
-
-------------------------------------------------------------------------
-
-### Method `[()`
-
-Get a subset of the implication set
-
-#### Usage
-
-    ImplicationSet$[(idx)
-
-#### Arguments
-
-- `idx`:
-
-  (integer or logical vector) Indices of the implications to extract or
-  remove. If logical vector, only `TRUE` elements are retained and the
-  rest discarded.
-
-#### Returns
-
-A new `ImplicationSet` with only the rules given by the `idx` indices
-(if all `idx > 0` and all but `idx` if all `idx < 0`.
-
-------------------------------------------------------------------------
-
-### Method `to_arules()`
-
-Convert to arules format
-
-#### Usage
-
-    ImplicationSet$to_arules(quality = TRUE)
-
-#### Arguments
-
-- `quality`:
-
-  (logical) Compute the interest measures for each rule?
-
-#### Returns
-
-A `rules` object as used by package `arules`.
 
 ------------------------------------------------------------------------
 
@@ -191,46 +107,51 @@ Nothing, just updates the internal `implications` field.
 
 ------------------------------------------------------------------------
 
-### Method `cardinality()`
+### Method `to_arules()`
 
-Cardinality: Number of implications in the set
+Convert to arules format
 
 #### Usage
 
-    ImplicationSet$cardinality()
+    ImplicationSet$to_arules(quality = TRUE)
+
+#### Arguments
+
+- `quality`:
+
+  (logical) Compute the interest measures for each rule?
 
 #### Returns
 
-The cardinality of the implication set.
+A `rules` object as used by package `arules`.
 
 ------------------------------------------------------------------------
 
-### Method `is_empty()`
+### Method [`print()`](https://rdrr.io/r/base/print.html)
 
-Empty set
+Print all implications to text
 
 #### Usage
 
-    ImplicationSet$is_empty()
+    ImplicationSet$print()
 
 #### Returns
 
-`TRUE` if the set of implications is empty, `FALSE` otherwise.
+A string with all the implications in the set.
 
 ------------------------------------------------------------------------
 
-### Method `size()`
+### Method `support()`
 
-Size: number of attributes in each of LHS and RHS
+Compute support of each implication
 
 #### Usage
 
-    ImplicationSet$size()
+    ImplicationSet$support()
 
 #### Returns
 
-A vector with two components: the number of attributes present in each
-of the LHS and RHS of each implication in the set.
+A vector with the support of each implication
 
 ------------------------------------------------------------------------
 
@@ -389,150 +310,6 @@ Nothing, updates the `ImplicationSet` in place with the new basis.
 
 ------------------------------------------------------------------------
 
-### Method [`print()`](https://rdrr.io/r/base/print.html)
-
-Print all implications to text
-
-#### Usage
-
-    ImplicationSet$print()
-
-#### Returns
-
-A string with all the implications in the set.
-
-------------------------------------------------------------------------
-
-### Method `to_latex()`
-
-Export to LaTeX
-
-#### Usage
-
-    ImplicationSet$to_latex(
-      print = TRUE,
-      ncols = 1,
-      numbered = TRUE,
-      numbers = seq(self$cardinality())
-    )
-
-#### Arguments
-
-- `print`:
-
-  (logical) Print to output?
-
-- `ncols`:
-
-  (integer) Number of columns for the output.
-
-- `numbered`:
-
-  (logical) If `TRUE` (default), implications will be numbered in the
-  output.
-
-- `numbers`:
-
-  (vector) If `numbered`, use these elements to enumerate the
-  implications. The default is to enumerate 1, 2, ..., but can be
-  changed.
-
-#### Returns
-
-A string in LaTeX format that prints nicely all the implications.
-
-------------------------------------------------------------------------
-
-### Method `get_LHS_matrix()`
-
-Get internal LHS matrix
-
-#### Usage
-
-    ImplicationSet$get_LHS_matrix()
-
-#### Returns
-
-A sparse matrix representing the LHS of the implications in the set.
-
-------------------------------------------------------------------------
-
-### Method `get_RHS_matrix()`
-
-Get internal RHS matrix
-
-#### Usage
-
-    ImplicationSet$get_RHS_matrix()
-
-#### Returns
-
-A sparse matrix representing the RHS of the implications in the set.
-
-------------------------------------------------------------------------
-
-### Method [`filter()`](https://rdrr.io/r/stats/filter.html)
-
-Filter implications by attributes in LHS and RHS
-
-#### Usage
-
-    ImplicationSet$filter(
-      lhs = NULL,
-      not_lhs = NULL,
-      rhs = NULL,
-      not_rhs = NULL,
-      drop = FALSE
-    )
-
-#### Arguments
-
-- `lhs`:
-
-  (character vector) Names of the attributes to filter the LHS by. If
-  `NULL`, no filtering is done on the LHS.
-
-- `not_lhs`:
-
-  (character vector) Names of the attributes to not include in the LHS.
-  If `NULL` (the default), it is not considered at all.
-
-- `rhs`:
-
-  (character vector) Names of the attributes to filter the RHS by. If
-  `NULL`, no filtering is done on the RHS.
-
-- `not_rhs`:
-
-  (character vector) Names of the attributes to not include in the RHS.
-  If `NULL` (the default), it is not considered at all.
-
-- `drop`:
-
-  (logical) Remove the rest of attributes in RHS?
-
-#### Returns
-
-An `ImplicationSet` that is a subset of the current set, only with those
-rules which has the attributes in `lhs` and `rhs` in their LHS and RHS,
-respectively.
-
-------------------------------------------------------------------------
-
-### Method `support()`
-
-Compute support of each implication
-
-#### Usage
-
-    ImplicationSet$support()
-
-#### Returns
-
-A vector with the support of each implication
-
-------------------------------------------------------------------------
-
 ### Method `use_logic()`
 
 Sets the logic to use
@@ -634,38 +411,3 @@ The objects of this class are cloneable with this method.
 - `deep`:
 
   Whether to make a deep clone.
-
-## Examples
-
-``` r
-# Build a formal context
-fc_planets <- FormalContext$new(planets)
-
-# Find its implication basis
-fc_planets$find_implications()
-
-# Print implications
-fc_planets$implications
-#> Implication set with 10 implications.
-#> Rule 1: {no_moon} -> {small, near}
-#> Rule 2: {far} -> {moon}
-#> Rule 3: {near} -> {small}
-#> Rule 4: {large} -> {far, moon}
-#> Rule 5: {medium} -> {far, moon}
-#> Rule 6: {medium, large, far, moon} -> {small, near, no_moon}
-#> Rule 7: {small, near, moon, no_moon} -> {medium, large, far}
-#> Rule 8: {small, near, far, moon} -> {medium, large, no_moon}
-#> Rule 9: {small, large, far, moon} -> {medium, near, no_moon}
-#> Rule 10: {small, medium, far, moon} -> {large, near, no_moon}
-
-# Cardinality and mean size in the ruleset
-fc_planets$implications$cardinality()
-#> [1] 10
-sizes <- fc_planets$implications$size()
-colMeans(sizes)
-#> LHS RHS 
-#> 2.5 2.3 
-
-# Simplify the implication set
-fc_planets$implications$apply_rules("simplification")
-```

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,6 +58,14 @@
       <small>Source: <a href="https://github.com/Malaga-FCA-group/fcaR/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.5.0" id="fcar-150">fcaR 1.5.0<a class="anchor" aria-label="anchor" href="#fcar-150"></a></h2>
+<p>Improvements:</p>
+<ul><li>
+<strong>OOP Refactoring:</strong> <code>ImplicationSet</code> now inherits from <code>RuleSet</code>, following proper object-oriented design. Shared methods (filtering, subsetting, printing, serialization, etc.) live in the parent <code>RuleSet</code> class, eliminating ~600 lines of duplicated code. <code>ImplicationSet</code> retains only FCA-specific methods (<code>closure()</code>, <code>apply_rules()</code>, <code>to_basis()</code>, <code>to_direct_optimal()</code>, etc.).</li>
+<li>
+<strong>Tidyverse for RuleSet:</strong> The <code>dplyr</code> verbs (<code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice()</a></code>) now work on <code>RuleSet</code> objects in addition to <code>ImplicationSet</code>, via S3 method dispatch.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.1" id="fcar-141">fcaR 1.4.1<a class="anchor" aria-label="anchor" href="#fcar-141"></a></h2>
 <ul><li>

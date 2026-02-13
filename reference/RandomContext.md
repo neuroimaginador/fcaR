@@ -68,14 +68,14 @@ print(fc_uni)
 #>      A1  A2  A3  A4  A5  
 #>   O1          X          
 #>   O2  X                  
-#>   O3      X           X  
-#>   O4          X       X  
+#>   O3      X              
+#>   O4          X          
 #>   O5  X   X              
 #>   O6                     
-#>   O7                     
-#>   O8                     
-#>   O9                  X  
-#>  O10                  X  
+#>   O7                  X  
+#>   O8              X   X  
+#>   O9  X                  
+#>  O10                     
 
 # 2. Dirichlet Random Context (Mimicking real data structure)
 # Objects will have varying 'sizes' (number of attributes)

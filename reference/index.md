@@ -11,13 +11,13 @@
 - [`FormalContext`](https://neuroimaginador.github.io/fcaR/reference/FormalContext.md)
   : R6 class for a formal context
 - [`ImplicationSet`](https://neuroimaginador.github.io/fcaR/reference/ImplicationSet.md)
-  : R6 Class for Set of implications
+  : R6 class for an Implication Set
 - [`RandomContext()`](https://neuroimaginador.github.io/fcaR/reference/RandomContext.md)
   : Generate Random Formal Contexts
 - [`RandomDistributiveContext()`](https://neuroimaginador.github.io/fcaR/reference/RandomDistributiveContext.md)
   : Generate a Random Distributive Context
 - [`RuleSet`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.md)
-  : R6 Class for Set of association rules
+  : R6 class for a Rule Set
 - [`Set`](https://neuroimaginador.github.io/fcaR/reference/Set.md) : R6
   class for a fuzzy set with sparse internal representation
 - [`as_Set()`](https://neuroimaginador.github.io/fcaR/reference/as_Set.md)
@@ -42,8 +42,8 @@
   : Concept Miners Registry
 - [`context_from_json()`](https://neuroimaginador.github.io/fcaR/reference/context_from_json.md)
   : Import FormalContext from JSON
-- [`arrange(`*`<ImplicationSet>`*`)`](https://neuroimaginador.github.io/fcaR/reference/dplyr_implications.md)
-  : dplyr verbs for ImplicationSet
+- [`arrange(`*`<RuleSet>`*`)`](https://neuroimaginador.github.io/fcaR/reference/dplyr_rules.md)
+  : dplyr verbs for RuleSet
 - [`select(`*`<FormalContext>`*`)`](https://neuroimaginador.github.io/fcaR/reference/dplyr_verbs.md)
   : dplyr verbs for FormalContext
 - [`equivalencesRegistry`](https://neuroimaginador.github.io/fcaR/reference/equivalencesRegistry.md)

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,7 +173,7 @@ Interval for the Fair Odds Ratio is greater than 1.</li>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">rules</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rules set with 1 rules</span></span>
+<span><span class="co">#&gt; Rules set with 1 Rules.</span></span>
 <span><span class="co">#&gt; Rule 1: {Treatment} -&gt; {Recovery} [support = 0.5, confidence = 0.9,</span></span>
 <span><span class="co">#&gt;   fair_odds_ratio = 35, ci_lower = 4.8, ci_upper = 255.47]</span></span></code></pre></div>
 <p>The algorithm correctly identifies “Treatment” as a cause for
@@ -236,9 +236,9 @@ doesn’t increase drowning risk further. - The odds ratio should be near
 <span></span>
 <span><span class="co"># Should contain "Heat" but NOT "IceCream"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">causal_rules</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rules set with 1 rules</span></span>
-<span><span class="co">#&gt; Rule 1: {Heat} -&gt; {Drowning} [support = 0.5, confidence = 0.81,</span></span>
-<span><span class="co">#&gt;   fair_odds_ratio = 27, ci_lower = 3.67, ci_upper = 198.69]</span></span></code></pre></div>
+<span><span class="co">#&gt; Rules set with 1 Rules.</span></span>
+<span><span class="co">#&gt; Rule 1: {Heat} -&gt; {Drowning} [support = 0.5, confidence = 0.81, fair_odds_ratio</span></span>
+<span><span class="co">#&gt;   = 27, ci_lower = 3.67, ci_upper = 198.69]</span></span></code></pre></div>
 <p>As expected, the algorithm identifies <strong>Heat</strong> as the
 true cause and rejects the spurious <strong>Ice Cream</strong>
 association.</p>

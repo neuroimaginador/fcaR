@@ -1,7 +1,8 @@
-# R6 Class for Set of association rules
+# R6 class for a Rule Set
 
-This class implements the structure needed to store association rules
-and the methods associated.
+This class implements a generic rule set (LHS -\> RHS), serving as the
+parent class for `ImplicationSet`. It provides common functionality for
+managing, filtering, and exporting rules.
 
 ## Methods
 
@@ -11,7 +12,7 @@ and the methods associated.
 
 - [`RuleSet$get_attributes()`](#method-RuleSet-get_attributes)
 
-- [`RuleSet$[()`](#method-RuleSet-bracket)
+- [`RuleSet$[()`](#method-RuleSet-%5B)
 
 - [`RuleSet$to_arules()`](#method-RuleSet-to_arules)
 
@@ -49,7 +50,7 @@ and the methods associated.
 
 ### Method `new()`
 
-Initialize with an optional name
+Initialize a RuleSet
 
 #### Usage
 
@@ -59,20 +60,10 @@ Initialize with an optional name
 
 - `...`:
 
-  See Details.
-
-#### Details
-
-Creates and initialize a new `RuleSet` object. It can be done in two
-ways: `initialize(name, attributes, lhs, rhs, quality)` or
-`initialize(rules)`
-
-In the first way, the only mandatory argument is `attributes`,
-(character vector) which is a vector of names of the attributes on which
-we define the rules.
-
-The other way is used to initialize the `RuleSet` object from a `rules`
-object from package `arules`.
+  A `rules` object (from `arules`) or named arguments: `name` (string),
+  `attributes` (character vector), `lhs` and `rhs` (sparse matrices),
+  `I` (incidence matrix), `quality` (data.frame), `confidence` (numeric
+  vector, backward compat).
 
 #### Returns
 
@@ -90,8 +81,7 @@ Get the names of the attributes
 
 #### Returns
 
-A character vector with the names of the attributes used in the
-implications.
+A character vector with the names of the attributes used in the rules.
 
 ------------------------------------------------------------------------
 
@@ -149,7 +139,7 @@ Add a precomputed rule set
 
 - `...`:
 
-  An `RuleSet` object, or a pair `lhs`, `rhs` of `dgCMatrix`.
+  A `RuleSet` object, or a pair `lhs`, `rhs` of `dgCMatrix`.
 
 #### Returns
 
@@ -159,7 +149,7 @@ Nothing, just updates the internal field.
 
 ### Method `cardinality()`
 
-Cardinality: Number of implications in the set
+Cardinality: Number of rules in the set
 
 #### Usage
 
@@ -167,7 +157,7 @@ Cardinality: Number of implications in the set
 
 #### Returns
 
-The cardinality of the implication set.
+The cardinality of the rule set.
 
 ------------------------------------------------------------------------
 
@@ -181,7 +171,7 @@ Empty set
 
 #### Returns
 
-`TRUE` if the set of implications is empty, `FALSE` otherwise.
+`TRUE` if the set of rules is empty, `FALSE` otherwise.
 
 ------------------------------------------------------------------------
 
@@ -195,8 +185,8 @@ Size: number of attributes in each of LHS and RHS
 
 #### Returns
 
-A vector with two components: the number of attributes present in each
-of the LHS and RHS of each implication in the set.
+A matrix with two columns: the number of attributes present in each of
+the LHS and RHS of each rule.
 
 ------------------------------------------------------------------------
 
@@ -264,7 +254,7 @@ Export to LaTeX
 
 #### Returns
 
-A string in LaTeX format that prints nicely all the implications.
+A string in LaTeX format that prints nicely all the rules.
 
 ------------------------------------------------------------------------
 
@@ -278,7 +268,7 @@ Get internal LHS matrix
 
 #### Returns
 
-A sparse matrix representing the LHS of the implications in the set.
+A sparse matrix representing the LHS of the rules in the set.
 
 ------------------------------------------------------------------------
 
@@ -292,17 +282,23 @@ Get internal RHS matrix
 
 #### Returns
 
-A sparse matrix representing the RHS of the implications in the set.
+A sparse matrix representing the RHS of the rules in the set.
 
 ------------------------------------------------------------------------
 
 ### Method [`filter()`](https://rdrr.io/r/stats/filter.html)
 
-Filter implications by attributes in LHS and RHS
+Filter rules by attributes in LHS and RHS
 
 #### Usage
 
-    RuleSet$filter(lhs = NULL, rhs = NULL, drop = FALSE)
+    RuleSet$filter(
+      lhs = NULL,
+      not_lhs = NULL,
+      rhs = NULL,
+      not_rhs = NULL,
+      drop = FALSE
+    )
 
 #### Arguments
 
@@ -311,10 +307,20 @@ Filter implications by attributes in LHS and RHS
   (character vector) Names of the attributes to filter the LHS by. If
   `NULL`, no filtering is done on the LHS.
 
+- `not_lhs`:
+
+  (character vector) Names of the attributes to not include in the LHS.
+  If `NULL` (the default), it is not considered at all.
+
 - `rhs`:
 
   (character vector) Names of the attributes to filter the RHS by. If
   `NULL`, no filtering is done on the RHS.
+
+- `not_rhs`:
+
+  (character vector) Names of the attributes to not include in the RHS.
+  If `NULL` (the default), it is not considered at all.
 
 - `drop`:
 
@@ -322,9 +328,9 @@ Filter implications by attributes in LHS and RHS
 
 #### Returns
 
-An `RuleSet` that is a subset of the current set, only with those rules
-which has the attributes in `lhs` and `rhs` in their LHS and RHS,
-respectively.
+A `RuleSet` (or subclass) that is a subset of the current set, only with
+those rules which have the attributes in `lhs` and `rhs` in their LHS
+and RHS, respectively.
 
 ------------------------------------------------------------------------
 
@@ -344,7 +350,7 @@ An `ImplicationSet` object containing only the rules with confidence 1.
 
 ### Method `support()`
 
-Compute support of each implication
+Compute support of each rule
 
 #### Usage
 
@@ -352,7 +358,7 @@ Compute support of each implication
 
 #### Returns
 
-A vector with the support of each implication
+A vector with the support of each rule.
 
 ------------------------------------------------------------------------
 

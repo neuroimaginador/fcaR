@@ -63,7 +63,7 @@ rules <- fc$find_causal_rules(
 )
 
 rules$print()
-#> Rules set with 1 rules
+#> Rules set with 1 Rules.
 #> Rule 1: {Treatment} -> {Recovery} [support = 0.5, confidence = 0.9,
 #>   fair_odds_ratio = 35, ci_lower = 4.8, ci_upper = 255.47]
 ```
@@ -128,9 +128,9 @@ causal_rules <- fc_spurious$find_causal_rules(
 
 # Should contain "Heat" but NOT "IceCream"
 print(causal_rules)
-#> Rules set with 1 rules
-#> Rule 1: {Heat} -> {Drowning} [support = 0.5, confidence = 0.81,
-#>   fair_odds_ratio = 27, ci_lower = 3.67, ci_upper = 198.69]
+#> Rules set with 1 Rules.
+#> Rule 1: {Heat} -> {Drowning} [support = 0.5, confidence = 0.81, fair_odds_ratio
+#>   = 27, ci_lower = 3.67, ci_upper = 198.69]
 ```
 
 As expected, the algorithm identifies **Heat** as the true cause and
