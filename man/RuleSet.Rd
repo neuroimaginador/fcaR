@@ -2,16 +2,18 @@
 % Please edit documentation in R/rule_set.R
 \name{RuleSet}
 \alias{RuleSet}
-\title{R6 Class for Set of association rules}
+\title{R6 class for a Rule Set}
 \description{
-This class implements the structure needed to store association rules and the methods associated.
+This class implements a generic rule set (LHS -> RHS), serving as the parent
+class for \code{ImplicationSet}. It provides common functionality for
+managing, filtering, and exporting rules.
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-RuleSet-new}{\code{RuleSet$new()}}
 \item \href{#method-RuleSet-get_attributes}{\code{RuleSet$get_attributes()}}
-\item \href{#method-RuleSet-bracket}{\code{RuleSet$[()}}
+\item \href{#method-RuleSet-[}{\code{RuleSet$[()}}
 \item \href{#method-RuleSet-to_arules}{\code{RuleSet$to_arules()}}
 \item \href{#method-RuleSet-add}{\code{RuleSet$add()}}
 \item \href{#method-RuleSet-cardinality}{\code{RuleSet$cardinality()}}
@@ -34,7 +36,7 @@ This class implements the structure needed to store association rules and the me
 \if{html}{\out{<a id="method-RuleSet-new"></a>}}
 \if{latex}{\out{\hypertarget{method-RuleSet-new}{}}}
 \subsection{Method \code{new()}}{
-Initialize with an optional name
+Initialize a RuleSet
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RuleSet$new(...)}\if{html}{\out{</div>}}
 }
@@ -42,20 +44,13 @@ Initialize with an optional name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{See Details.}
+\item{\code{...}}{A \code{rules} object (from \code{arules}) or named arguments:
+\code{name} (string), \code{attributes} (character vector),
+\code{lhs} and \code{rhs} (sparse matrices), \code{I} (incidence matrix),
+\code{quality} (data.frame), \code{confidence} (numeric vector, backward compat).}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Details}{
-Creates and initialize a new \code{RuleSet} object. It can be done in two ways:
-\code{initialize(name, attributes, lhs, rhs, quality)}
-or \code{initialize(rules)}
-
-In the first way, the only mandatory argument is \code{attributes}, (character vector) which is a vector of names of the attributes on which we define the rules.
-
-The other way is used to initialize the \code{RuleSet} object from a \code{rules} object from package \code{arules}.
-}
-
 \subsection{Returns}{
 A new \code{RuleSet} object.
 }
@@ -70,12 +65,12 @@ Get the names of the attributes
 }
 
 \subsection{Returns}{
-A character vector with the names of the attributes used in the implications.
+A character vector with the names of the attributes used in the rules.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RuleSet-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-RuleSet-bracket}{}}}
+\if{html}{\out{<a id="method-RuleSet-["></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-[}{}}}
 \subsection{Method \code{[()}}{
 Get a subset of the rule set
 \subsection{Usage}{
@@ -125,7 +120,7 @@ Add a precomputed rule set
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{An \code{RuleSet} object, or a pair \code{lhs}, \code{rhs} of \code{dgCMatrix}.}
+\item{\code{...}}{A \code{RuleSet} object, or a pair \code{lhs}, \code{rhs} of \code{dgCMatrix}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -137,13 +132,13 @@ Nothing, just updates the internal field.
 \if{html}{\out{<a id="method-RuleSet-cardinality"></a>}}
 \if{latex}{\out{\hypertarget{method-RuleSet-cardinality}{}}}
 \subsection{Method \code{cardinality()}}{
-Cardinality: Number of implications in the set
+Cardinality: Number of rules in the set
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RuleSet$cardinality()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-The cardinality of the implication set.
+The cardinality of the rule set.
 }
 }
 \if{html}{\out{<hr>}}
@@ -156,7 +151,7 @@ Empty set
 }
 
 \subsection{Returns}{
-\code{TRUE} if the set of implications is empty, \code{FALSE} otherwise.
+\code{TRUE} if the set of rules is empty, \code{FALSE} otherwise.
 }
 }
 \if{html}{\out{<hr>}}
@@ -169,7 +164,7 @@ Size: number of attributes in each of LHS and RHS
 }
 
 \subsection{Returns}{
-A vector with two components: the number of attributes present in each of the LHS and RHS of each implication in the set.
+A matrix with two columns: the number of attributes present in each of the LHS and RHS of each rule.
 }
 }
 \if{html}{\out{<hr>}}
@@ -226,7 +221,7 @@ Export to LaTeX
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A string in LaTeX format that prints nicely all the implications.
+A string in LaTeX format that prints nicely all the rules.
 }
 }
 \if{html}{\out{<hr>}}
@@ -239,7 +234,7 @@ Get internal LHS matrix
 }
 
 \subsection{Returns}{
-A sparse matrix representing the LHS of the implications in the set.
+A sparse matrix representing the LHS of the rules in the set.
 }
 }
 \if{html}{\out{<hr>}}
@@ -252,16 +247,22 @@ Get internal RHS matrix
 }
 
 \subsection{Returns}{
-A sparse matrix representing the RHS of the implications in the set.
+A sparse matrix representing the RHS of the rules in the set.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-RuleSet-filter"></a>}}
 \if{latex}{\out{\hypertarget{method-RuleSet-filter}{}}}
 \subsection{Method \code{filter()}}{
-Filter implications by attributes in LHS and RHS
+Filter rules by attributes in LHS and RHS
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RuleSet$filter(lhs = NULL, rhs = NULL, drop = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RuleSet$filter(
+  lhs = NULL,
+  not_lhs = NULL,
+  rhs = NULL,
+  not_rhs = NULL,
+  drop = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -269,14 +270,18 @@ Filter implications by attributes in LHS and RHS
 \describe{
 \item{\code{lhs}}{(character vector) Names of the attributes to filter the LHS by. If \code{NULL}, no filtering is done on the LHS.}
 
+\item{\code{not_lhs}}{(character vector) Names of the attributes to not include in the LHS. If \code{NULL} (the default), it is not considered at all.}
+
 \item{\code{rhs}}{(character vector) Names of the attributes to filter the RHS by. If \code{NULL}, no filtering is done on the RHS.}
+
+\item{\code{not_rhs}}{(character vector) Names of the attributes to not include in the RHS. If \code{NULL} (the default), it is not considered at all.}
 
 \item{\code{drop}}{(logical) Remove the rest of attributes in RHS?}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-An \code{RuleSet} that is a subset of the current set, only with those rules which has the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
+A \code{RuleSet} (or subclass) that is a subset of the current set, only with those rules which have the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
 }
 }
 \if{html}{\out{<hr>}}
@@ -296,13 +301,13 @@ An \code{ImplicationSet} object containing only the rules with confidence 1.
 \if{html}{\out{<a id="method-RuleSet-support"></a>}}
 \if{latex}{\out{\hypertarget{method-RuleSet-support}{}}}
 \subsection{Method \code{support()}}{
-Compute support of each implication
+Compute support of each rule
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RuleSet$support()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-A vector with the support of each implication
+A vector with the support of each rule.
 }
 }
 \if{html}{\out{<hr>}}

@@ -1,56 +1,32 @@
 #' @title
-#' R6 Class for Set of implications
+#' R6 class for an Implication Set
 #'
 #' @description
-#' This class implements the structure needed to store implications and the methods associated.
+#' This class implements an implication set (LHS -> RHS) in the framework of
+#' Formal Concept Analysis (FCA). It inherits from \code{RuleSet} and adds
+#' FCA-specific methods such as closure computation, simplification, and
+#' basis transformation.
 #'
-#' @examples
-#' # Build a formal context
-#' fc_planets <- FormalContext$new(planets)
-#'
-#' # Find its implication basis
-#' fc_planets$find_implications()
-#'
-#' # Print implications
-#' fc_planets$implications
-#'
-#' # Cardinality and mean size in the ruleset
-#' fc_planets$implications$cardinality()
-#' sizes <- fc_planets$implications$size()
-#' colMeans(sizes)
-#'
-#' # Simplify the implication set
-#' fc_planets$implications$apply_rules("simplification")
-#'
-#' @references
-#'
-#' Ganter B, Obiedkov S (2016). Conceptual Exploration. Springer. https://doi.org/10.1007/978-3-662-49291-8
-#'
-#' Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” _J Stat Softw_, *14*, 1-25.
-#'
-#' Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” _International Journal of Approximate Reasoning_, *70*, 51-67.
-#'
-#' Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” _International Journal of Computer Mathematics_, *89*(4), 510-526.
+#' @importFrom Matrix colSums Matrix
+#' @importFrom stringr str_wrap
+#' @importFrom methods new
 #'
 #' @export
 ImplicationSet <- R6::R6Class(
-  classname = "ImplicationSet",
+  "ImplicationSet",
+  inherit = RuleSet,
+
   public = list(
     #' @description
-    #' Initialize with an optional name
+    #' Initialize an ImplicationSet
     #'
-    #' @param ... See Details.
-    #'
-    #' @details
-    #' Creates and initialize a new \code{ImplicationSet} object. It can be done in two ways:
-    #' \code{initialize(name, attributes, lhs, rhs)}
-    #' or \code{initialize(rules)}
-    #'
-    #' In the first way, the only mandatory argument is \code{attributes}, (character vector) which is a vector of names of the attributes on which we define the implications. Optional arguments are: \code{name} (character string), name of the implication set, \code{lhs} (a \code{dgCMatrix}), initial LHS of the implications stored and the analogous \code{rhs}.
-    #'
-    #' The other way is used to initialize the \code{ImplicationSet} object from a \code{rules} object from package \code{arules}.
+    #' @param ...   A \code{rules} object (from \code{arules}) or named arguments:
+    #' \code{name} (string), \code{attributes} (character vector),
+    #' \code{lhs} and \code{rhs} (sparse matrices), \code{I} (incidence matrix).
     #'
     #' @return A new \code{ImplicationSet} object.
+    #'
+    #' @export
     initialize = function(...) {
       dots <- list(...)
 
@@ -73,6 +49,8 @@ ImplicationSet <- R6::R6Class(
 
         rownames(private$lhs_matrix) <- private$attributes
         rownames(private$rhs_matrix) <- private$attributes
+
+        private$quality <- data.frame()
       } else {
         args <- list(
           name = "",
@@ -87,57 +65,56 @@ ImplicationSet <- R6::R6Class(
         private$lhs_matrix <- args$lhs
         private$rhs_matrix <- args$rhs
         private$I <- args$I
+        private$quality <- data.frame()
         private$implication_support <- numeric(0)
       }
     },
 
     #' @description
-    #' Get the names of the attributes
+    #' Add a precomputed implication set
     #'
-    #' @return A character vector with the names of the attributes used in the implications.
+    #' @param ...   An \code{ImplicationSet} object, a \code{rules} object, or a pair \code{lhs}, \code{rhs} of \code{Set} objects or \code{dgCMatrix}. The implications to add to this formal context.
+    #'
+    #' @return Nothing, just updates the internal \code{implications} field.
     #'
     #' @export
-    get_attributes = function() {
-      return(private$attributes)
-    },
+    add = function(...) {
+      check_needed_pkg("arules", "import from arules objects")
+      dots <- list(...)
 
-    #' @description
-    #' Get a subset of the implication set
-    #'
-    #' @param idx   (integer or logical vector) Indices of the implications to extract or remove. If logical vector, only \code{TRUE} elements are retained and the rest discarded.
-    #'
-    #' @return A new \code{ImplicationSet} with only the rules given by the \code{idx} indices (if all \code{idx > 0} and all but \code{idx} if all \code{idx < 0}.
-    #' @export
-    `[` = function(idx) {
-      if (is.logical(idx)) {
-        idx <- which(idx)
-      }
-
-      idx <- idx[abs(idx) <= self$cardinality()]
-      idx <- idx[abs(idx) > 0]
-
-      if (length(idx) > 0) {
-        if (all(idx < 0) | all(idx > 0)) {
-          imp <- ImplicationSet$new(
-            name = paste0(private$name, "_", paste0(idx)),
-            attributes = private$attributes,
-            lhs = Matrix::Matrix(private$lhs_matrix[, idx], sparse = TRUE),
-            rhs = Matrix::Matrix(private$rhs_matrix[, idx], sparse = TRUE),
-            I = private$I
-          )
-
-          return(imp)
+      # Just a single ImplicationSet
+      if (length(dots) == 1) {
+        if (inherits(dots[[1]], "ImplicationSet")) {
+          private$append_rules(dots[[1]])
         } else {
-          stop(
-            "Cannot use mixed positive and negative indices.\n",
-            call. = FALSE
-          )
+          # It is a rules object
+          implications <- ImplicationSet$new(dots[[1]])
+          private$append_rules(implications)
         }
       } else {
-        return(ImplicationSet$new(
-          attributes = private$attributes,
-          I = private$I
-        ))
+        # It must come in the form LHS, RHS
+        if (length(dots) == 2) {
+          lhs <- dots[[1]]
+          rhs <- dots[[2]]
+
+          if (inherits(lhs, "Set")) {
+            lhs <- lhs$get_vector()
+          }
+
+          if (inherits(rhs, "Set")) {
+            rhs <- rhs$get_vector()
+          }
+
+          imp <- ImplicationSet$new(
+            attributes = private$attributes,
+            lhs = lhs,
+            rhs = rhs
+          )
+
+          private$append_rules(imp)
+        } else {
+          stop("Invalid number of arguments.\n", call. = FALSE)
+        }
       }
     },
 
@@ -174,88 +151,72 @@ ImplicationSet <- R6::R6Class(
     },
 
     #' @description
-    #' Add a precomputed implication set
+    #' Print all implications to text
     #'
-    #' @param ...   An \code{ImplicationSet} object, a \code{rules} object, or a pair \code{lhs}, \code{rhs} of \code{Set} objects or \code{dgCMatrix}. The implications to add to this formal context.
-    #'
-    #' @return Nothing, just updates the internal \code{implications} field.
+    #' @return A string with all the implications in the set.
     #'
     #' @export
-    add = function(...) {
-      check_needed_pkg("arules", "import from arules objects")
-      dots <- list(...)
+    print = function() {
+      if (is.null(private$lhs_matrix)) {
+        cat("Implication set with 0 implications.\n")
 
-      # Just a single ImplicationSet
-      if (length(dots) == 1) {
-        if (inherits(dots[[1]], "ImplicationSet")) {
-          private$append_implications(dots[[1]])
-        } else {
-          # It is a rules object
-          implications <- ImplicationSet$new(dots[[1]])
-          private$append_implications(implications)
-        }
-      } else {
-        # It must come in the form LHS, RHS
-        if (length(dots) == 2) {
-          lhs <- dots[[1]]
-          rhs <- dots[[2]]
+        return(invisible(self))
+      }
 
-          if (inherits(lhs, "Set")) {
-            lhs <- lhs$get_vector()
+      n_implications <- ncol(private$lhs_matrix)
+      cat("Implication set with", n_implications, "implications.\n")
+
+      if (n_implications > 0) {
+        attributes <- private$attributes
+        LHS <- private$lhs_matrix
+        RHS <- private$rhs_matrix
+
+        implications <- sapply(
+          seq(n_implications),
+          function(i) {
+            paste0(
+              "Rule ",
+              i,
+              ": ",
+              .implication_to_string(LHS[, i], RHS[, i], attributes)
+            )
           }
+        )
 
-          if (inherits(rhs, "Set")) {
-            rhs <- rhs$get_vector()
-          }
+        implications <- sapply(implications, function(s) {
+          stringr::str_wrap(s, width = getOption("width"), exdent = 2)
+        })
 
-          imp <- ImplicationSet$new(
-            attributes = private$attributes,
-            lhs = lhs,
-            rhs = rhs
-          )
-
-          private$append_implications(imp)
-        } else {
-          stop("Invalid number of arguments.\n", call. = FALSE)
-        }
+        cat(implications, sep = "\n")
       }
     },
 
     #' @description
-    #' Cardinality: Number of implications in the set
+    #' Compute support of each implication
     #'
-    #' @return The cardinality of the implication set.
-    #'
+    #' @return A vector with the support of each implication
     #' @export
-    cardinality = function() {
+    support = function() {
       if (self$is_empty()) {
-        return(0)
+        return(numeric(0))
       }
 
-      ncol(private$lhs_matrix)
-    },
+      if (length(private$implication_support) > 0) {
+        return(private$implication_support)
+      }
 
-    #' @description
-    #' Empty set
-    #'
-    #' @return \code{TRUE} if the set of implications is empty, \code{FALSE} otherwise.
-    #'
-    #' @export
-    is_empty = function() {
-      is.null(private$lhs_matrix)
-    },
+      if (is.null(private$I)) {
+        return(numeric(0))
+      }
 
-    #' @description
-    #' Size: number of attributes in each of LHS and RHS
-    #'
-    #' @return A vector with two components: the number of attributes present in each of the LHS and RHS of each implication in the set.
-    #'
-    #' @export
-    size = function() {
-      lhs_size <- Matrix::colSums(private$lhs_matrix)
-      rhs_size <- Matrix::colSums(private$rhs_matrix)
+      subsets <- .subset(
+        private$lhs_matrix,
+        private$I
+      )
 
-      return(cbind(LHS = lhs_size, RHS = rhs_size))
+      private$implication_support <- Matrix::rowMeans(subsets)
+
+      return(private$implication_support)
     },
 
     #' @description
@@ -394,16 +355,6 @@ ImplicationSet <- R6::R6Class(
           verbose = FALSE
         )
 
-        # L <- .batch_apply(
-        #   LHS = private$lhs_matrix,
-        #   RHS = private$rhs_matrix,
-        #   attributes = private$attributes,
-        #   rules = rules,
-        #   parallelize = parallelize,
-        #   batch_size = batch_size,
-        #   reorder = reorder
-        # )
-
         private$lhs_matrix <- L$lhs
         private$rhs_matrix <- L$rhs
       }
@@ -463,15 +414,10 @@ ImplicationSet <- R6::R6Class(
     ) {
       method <- match.arg(method)
 
-      # TODO: What happens with different hedges??!!
-
       # 1. Prepare Inputs for C++
-      # Calculate L (set of truth degrees present in data + 0 + 1)
       vals <- unique(c(0, 1, private$lhs_matrix@x, private$rhs_matrix@x))
       vals <- sort(vals)
 
-      # Retrieve the logic name from the private field
-      # Note: Ensure private$logic holds one of: "Lukasiewicz", "Zadeh", "Godel", "Product"
       current_logic <- private$logic
 
       if (is.null(current_logic)) {
@@ -479,7 +425,6 @@ ImplicationSet <- R6::R6Class(
       }
 
       # 2. Call C++
-      # Now passing 'current_logic' as an argument
       res_list <- switch(
         method,
         "do_sp" = run_direct_optimal_sp_single_pass_rcpp_optimized(
@@ -535,7 +480,6 @@ ImplicationSet <- R6::R6Class(
       n_attrs <- length(private$attributes)
 
       if (n_rules > 0) {
-        # Convert 0-based indices (C++) to 1-based indices (R)
         new_lhs <- Matrix::sparseMatrix(
           i = s_data$lhs_i + 1,
           j = s_data$lhs_j + 1,
@@ -562,305 +506,10 @@ ImplicationSet <- R6::R6Class(
       private$implication_support <- numeric(0)
       private$directness <- TRUE
 
-      # if (verbose) {
       cat("Algorithm finished using logic:", current_logic, "\n")
       print(res_list$metrics)
-      # }
 
       return(invisible(self))
-    },
-
-    #' @description
-    #' Print all implications to text
-    #'
-    #' @return A string with all the implications in the set.
-    #'
-    #' @export
-    print = function() {
-      if (is.null(private$lhs_matrix)) {
-        cat("Implication set with 0 implications.\n")
-
-        return(invisible(self))
-      }
-
-      n_implications <- ncol(private$lhs_matrix)
-      cat("Implication set with", n_implications, "implications.\n")
-
-      if (n_implications > 0) {
-        attributes <- private$attributes
-        LHS <- private$lhs_matrix
-        RHS <- private$rhs_matrix
-
-        implications <- sapply(
-          seq(n_implications),
-          function(i) {
-            paste0(
-              "Rule ",
-              i,
-              ": ",
-              # function(i) paste0("Rule: ",
-              .implication_to_string(LHS[, i], RHS[, i], attributes)
-            )
-          }
-        )
-
-        implications <- sapply(implications, function(s) {
-          stringr::str_wrap(s, width = getOption("width"), exdent = 2)
-        })
-
-        cat(implications, sep = "\n")
-      }
-    },
-
-    #' @description
-    #' Export to LaTeX
-    #'
-    #' @param print (logical) Print to output?
-    #' @param ncols  (integer) Number of columns for the output.
-    #' @param numbered (logical) If \code{TRUE} (default), implications will be numbered in the output.
-    #' @param numbers (vector) If \code{numbered}, use these elements to enumerate the implications. The default is to enumerate 1, 2, ..., but can be changed.
-    #'
-    #' @return A string in LaTeX format that prints nicely all the implications.
-    #'
-    #' @export
-    to_latex = function(
-      print = TRUE,
-      ncols = 1,
-      numbered = TRUE,
-      numbers = seq(self$cardinality())
-    ) {
-      output <- imp_to_latex(
-        self,
-        ncols = ncols,
-        numbered = numbered,
-        numbers = numbers
-      )
-
-      if (print) {
-        cat(output)
-      }
-
-      return(invisible(output))
-    },
-
-    #' @description
-    #' Get internal LHS matrix
-    #'
-    #' @return A sparse matrix representing the LHS of the implications in the set.
-    #'
-    #' @export
-    get_LHS_matrix = function() {
-      if (self$is_empty()) {
-        LHS <- Matrix::Matrix(
-          FALSE,
-          nrow = length(private$attributes),
-          ncol = 1,
-          sparse = TRUE
-        )
-      } else {
-        LHS <- private$lhs_matrix
-      }
-
-      dimnames(LHS) <- list(
-        private$attributes,
-        paste0(seq_len(ncol(LHS)))
-      )
-
-      return(LHS)
-    },
-
-    #' @description
-    #' Get internal RHS matrix
-    #'
-    #' @return A sparse matrix representing the RHS of the implications in the set.
-    #'
-    #' @export
-    get_RHS_matrix = function() {
-      if (self$is_empty()) {
-        RHS <- Matrix::Matrix(
-          FALSE,
-          nrow = length(private$attributes),
-          ncol = 1,
-          sparse = TRUE
-        )
-      } else {
-        RHS <- private$rhs_matrix
-      }
-
-      dimnames(RHS) <- list(
-        private$attributes,
-        paste0(seq_len(ncol(RHS)))
-      )
-
-      return(RHS)
-    },
-
-    #' @description
-    #' Filter implications by attributes in LHS and RHS
-    #'
-    #' @param lhs  (character vector) Names of the attributes to filter the LHS by. If \code{NULL}, no filtering is done on the LHS.
-    #' @param not_lhs  (character vector) Names of the attributes to not include in the LHS. If \code{NULL} (the default), it is not considered at all.
-    #' @param rhs  (character vector) Names of the attributes to filter the RHS by. If \code{NULL}, no filtering is done on the RHS.
-    #' @param not_rhs  (character vector) Names of the attributes to not include in the RHS. If \code{NULL} (the default), it is not considered at all.
-    #' @param drop  (logical) Remove the rest of attributes in RHS?
-    #'
-    #' @return An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
-    #'
-    #' @export
-    filter = function(
-      lhs = NULL,
-      not_lhs = NULL,
-      rhs = NULL,
-      not_rhs = NULL,
-      drop = FALSE
-    ) {
-      RHS <- private$rhs_matrix
-      LHS <- private$lhs_matrix
-
-      if (is.null(LHS) || ncol(LHS) == 0) {
-        return(self)
-      }
-
-      if (!is.null(lhs)) {
-        # Filter the implications which have
-        # the given lhs
-        idx_attr <- match(
-          lhs,
-          private$attributes
-        )
-
-        if (length(idx_attr) > 1) {
-          idx_lhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
-        } else {
-          idx_lhs <- which(LHS[idx_attr, ] > 0)
-        }
-      } else {
-        # If not specified a filter for LHS,
-        # select all implications
-        idx_lhs <- seq_len(ncol(LHS))
-      }
-
-      if (!is.null(not_lhs)) {
-        # Filter the implications which
-        # does not have the given not_lhs
-        idx_attr <- match(
-          not_lhs,
-          private$attributes
-        )
-
-        if (length(idx_attr) > 1) {
-          idx_not_lhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
-        } else {
-          idx_not_lhs <- which(LHS[idx_attr, ] > 0)
-        }
-      } else {
-        # If not specified a filter for LHS,
-        # select none.
-        idx_not_lhs <- c()
-      }
-
-      idx_lhs <- setdiff(idx_lhs, idx_not_lhs)
-
-      if (!is.null(rhs)) {
-        # Filter the implications which have
-        # the given lhs
-        idx_attr <- match(
-          rhs,
-          private$attributes
-        )
-
-        if (length(idx_attr) > 1) {
-          idx_rhs <- Matrix::which(Matrix::colSums(RHS[idx_attr, ]) > 0)
-        } else {
-          idx_rhs <- which(RHS[idx_attr, ] > 0)
-        }
-      } else {
-        # If not specified a filter for RHS,
-        # select all implications
-        idx_rhs <- seq_len(ncol(RHS))
-      }
-
-      if (!is.null(not_rhs)) {
-        # Filter the implications which
-        # does not have the given not_lhs
-        idx_attr <- match(
-          not_rhs,
-          private$attributes
-        )
-
-        if (length(idx_attr) > 1) {
-          idx_not_rhs <- Matrix::which(Matrix::colSums(RHS[idx_attr, ]) > 0)
-        } else {
-          idx_not_rhs <- which(RHS[idx_attr, ] > 0)
-        }
-      } else {
-        # If not specified a filter for LHS,
-        # select none.
-        idx_not_rhs <- c()
-      }
-
-      idx_rhs <- setdiff(idx_rhs, idx_not_rhs)
-
-      idx <- intersect(idx_lhs, idx_rhs)
-
-      if (length(idx) == 0) {
-        warning(
-          "No combination of given LHS and RHS found.\n",
-          call. = FALSE,
-          immediate. = TRUE
-        )
-        return(invisible(NULL))
-      }
-
-      if (length(idx) > 0) {
-        if (drop && !is.null(rhs)) {
-          newLHS <- LHS[, idx]
-          newRHS <- RHS[, idx]
-
-          other_idx <- setdiff(seq_len(nrow(RHS)), idx_attr)
-          newRHS[other_idx, ] <- 0
-
-          imp <- ImplicationSet$new(
-            name = paste0(private$name, "_filtered"),
-            attributes = private$attributes,
-            lhs = Matrix::Matrix(newLHS, sparse = TRUE),
-            rhs = Matrix::Matrix(newRHS, sparse = TRUE)
-          )
-        } else {
-          imp <- ImplicationSet$new(
-            name = paste0(private$name, "_filtered"),
-            attributes = private$attributes,
-            lhs = Matrix::Matrix(LHS[, idx], sparse = TRUE),
-            rhs = Matrix::Matrix(RHS[, idx], sparse = TRUE)
-          )
-        }
-
-        return(imp)
-      }
-    },
-
-    #' @description
-    #' Compute support of each implication
-    #'
-    #' @return A vector with the support of each implication
-    #' @export
-    support = function() {
-      if (self$is_empty()) {
-        return(numeric(0))
-      }
-
-      if (length(private$implication_support) > 0) {
-        return(private$implication_support)
-      }
-
-      subsets <- .subset(
-        private$lhs_matrix,
-        private$I
-      )
-
-      private$implication_support <- Matrix::rowMeans(subsets)
-
-      return(private$implication_support)
     },
 
     #' @description
@@ -926,7 +575,7 @@ ImplicationSet <- R6::R6Class(
 
       if (self$is_empty()) {
         out <- list(
-          type = "ImplicationSet",
+          type = private$json_type_name(),
           attributes = private$attributes,
           rules = list()
         )
@@ -934,18 +583,6 @@ ImplicationSet <- R6::R6Class(
           return(out)
         }
         return(jsonlite::toJSON(out, auto_unbox = TRUE))
-      }
-
-      # Convert LHS and RHS to lists of attributes
-      # We use apply on the logical matrix or similar approach
-      # For sparse matrices:
-
-      get_attr_list <- function(M, attrs) {
-        # M is sparse matrix (dgCMatrix)
-        # We need a list where each element contains the names of attributes with value > 0
-        apply(M, 2, function(col) {
-          attrs[col > 0]
-        })
       }
 
       # Determine if fuzzy or binary
@@ -989,23 +626,17 @@ ImplicationSet <- R6::R6Class(
         return(r)
       })
 
-      # Add metrics if available (support, confidence, lift, etc? they are not stored in private usually, only computed on demand or in rules)
-      # ImplicationSet doesn't store quality metrics by default unless calculated.
-      # But wait, Arules does. ImplicationSet calculates them.
-      # If we want to export them, we might need to compute them or export what we have.
-      # Reference implementation plan said "metrics: Support, confidence, etc."
-      # But ImplicationSet computes them on the fly usually.
-      # Let's check if we have support stored? private$implication_support?
-      # Yes: private$implication_support
-
-      if (!is.null(private$implication_support)) {
+      if (
+        !is.null(private$implication_support) &&
+          length(private$implication_support) > 0
+      ) {
         for (i in seq_along(rules)) {
           rules[[i]]$support <- private$implication_support[i]
         }
       }
 
       out <- list(
-        type = "ImplicationSet",
+        type = private$json_type_name(),
         attributes = private$attributes,
         rules = rules
       )
@@ -1024,17 +655,20 @@ ImplicationSet <- R6::R6Class(
       }
     }
   ),
+
   private = list(
-    name = "",
-    attributes = NULL,
-    lhs_matrix = NULL,
-    rhs_matrix = NULL,
-    I = NULL,
+    # ImplicationSet-specific fields
     implication_support = NULL,
     binary = NULL,
     directness = FALSE,
     logic = "Godel",
     hedge = "globalization",
+
+    # Override parent helpers
+    rule_type_label = function() "Implication",
+    json_type_name = function() "ImplicationSet",
+
+    # Override is_binary with caching version
     is_binary = function() {
       if (!is.null(private$binary)) {
         return(private$binary)
@@ -1058,7 +692,14 @@ ImplicationSet <- R6::R6Class(
       private$binary <- (length(v) == 2) && all(v == c(0, 1))
       return(private$binary)
     },
-    append_implications = function(implications) {
+
+    # Override factory method
+    create_subset = function(...) {
+      ImplicationSet$new(...)
+    },
+
+    # Override append to match attributes
+    append_rules = function(implications) {
       imps <- match_implications(
         implications,
         private$attributes
@@ -1158,10 +799,6 @@ implications_from_json <- function(json_str) {
 
   LHS <- parse_part(lhs_data)
   RHS <- parse_part(rhs_data)
-
-  # Create ImplicationSet
-  # We use the internal constructor approach or public add?
-  # ImplicationSet$new(attributes = ..., lhs = ..., rhs = ...) works if we documented it (we did in comments)
 
   IS <- ImplicationSet$new(attributes = attributes, lhs = LHS, rhs = RHS)
 

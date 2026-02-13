@@ -1,33 +1,30 @@
 #' @title
-#' R6 Class for Set of association rules
+#' R6 class for a Rule Set
 #'
 #' @description
-#' This class implements the structure needed to store association rules and the methods associated.
+#' This class implements a generic rule set (LHS -> RHS), serving as the parent
+#' class for \code{ImplicationSet}. It provides common functionality for
+#' managing, filtering, and exporting rules.
 #'
-#' @import Matrix
+#' @importFrom Matrix colSums Matrix
+#' @importFrom stringr str_wrap
+#' @importFrom methods new
+#'
 #' @export
 RuleSet <- R6::R6Class(
-  lock_objects = FALSE,
-  parent_env = asNamespace("fcaR"),
-
-  classname = "RuleSet",
-
+  "RuleSet",
   public = list(
     #' @description
-    #' Initialize with an optional name
+    #' Initialize a RuleSet
     #'
-    #' @param ... See Details.
-    #'
-    #' @details
-    #' Creates and initialize a new \code{RuleSet} object. It can be done in two ways:
-    #' \code{initialize(name, attributes, lhs, rhs, quality)}
-    #' or \code{initialize(rules)}
-    #'
-    #' In the first way, the only mandatory argument is \code{attributes}, (character vector) which is a vector of names of the attributes on which we define the rules.
-    #'
-    #' The other way is used to initialize the \code{RuleSet} object from a \code{rules} object from package \code{arules}.
+    #' @param ...   A \code{rules} object (from \code{arules}) or named arguments:
+    #' \code{name} (string), \code{attributes} (character vector),
+    #' \code{lhs} and \code{rhs} (sparse matrices), \code{I} (incidence matrix),
+    #' \code{quality} (data.frame), \code{confidence} (numeric vector, backward compat).
     #'
     #' @return A new \code{RuleSet} object.
+    #'
+    #' @export
     initialize = function(...) {
       check_needed_pkg("arules", "initialize from arules objects")
       dots <- list(...)
@@ -87,7 +84,7 @@ RuleSet <- R6::R6Class(
     #' @description
     #' Get the names of the attributes
     #'
-    #' @return A character vector with the names of the attributes used in the implications.
+    #' @return A character vector with the names of the attributes used in the rules.
     #'
     #' @export
     get_attributes = function() {
@@ -114,11 +111,12 @@ RuleSet <- R6::R6Class(
           # Subset quality data frame
           new_quality <- private$quality[idx, , drop = FALSE]
 
-          imp <- RuleSet$new(
+          imp <- private$create_subset(
             name = paste0(private$name, "_", paste0(idx)),
             attributes = private$attributes,
             lhs = Matrix::Matrix(private$lhs_matrix[, idx], sparse = TRUE),
             rhs = Matrix::Matrix(private$rhs_matrix[, idx], sparse = TRUE),
+            I = private$I,
             quality = new_quality
           )
 
@@ -130,7 +128,10 @@ RuleSet <- R6::R6Class(
           )
         }
       } else {
-        return(RuleSet$new(attributes = private$attributes, I = private$I))
+        return(private$create_subset(
+          attributes = private$attributes,
+          I = private$I
+        ))
       }
     },
 
@@ -176,12 +177,17 @@ RuleSet <- R6::R6Class(
 
       if (quality) {
         # If we have stored quality, use it.
-        # But maybe update it if I is provided?
-        # For now, export what we have.
         if (nrow(private$quality) == length(rules)) {
           quality(rules) <- private$quality
-        } else {
-          # Only if quality matches rules count
+        } else if (!is.null(private$I)) {
+          # Compute from incidence matrix
+          rules <- imps_to_arules(
+            LHS = private$lhs_matrix,
+            RHS = private$rhs_matrix,
+            attributes = private$attributes,
+            I = private$I,
+            quality = quality
+          )
         }
       }
 
@@ -191,7 +197,7 @@ RuleSet <- R6::R6Class(
     #' @description
     #' Add a precomputed rule set
     #'
-    #' @param ...   An \code{RuleSet} object, or a pair \code{lhs}, \code{rhs} of \code{dgCMatrix}.
+    #' @param ...   A \code{RuleSet} object, or a pair \code{lhs}, \code{rhs} of \code{dgCMatrix}.
     #'
     #' @return Nothing, just updates the internal field.
     #'
@@ -203,11 +209,11 @@ RuleSet <- R6::R6Class(
       # Just a single RuleSet
       if (length(dots) == 1) {
         if (inherits(dots[[1]], "RuleSet")) {
-          private$append_implications(dots[[1]])
+          private$append_rules(dots[[1]])
         } else {
           # It is a rules object
           implications <- RuleSet$new(dots[[1]])
-          private$append_implications(implications)
+          private$append_rules(implications)
         }
       } else {
         # It must come in the form LHS, RHS, quality
@@ -220,9 +226,6 @@ RuleSet <- R6::R6Class(
             qual <- dots[[3]]
           }
 
-          # Helper to convert Set to vector removed for brevity if no Sets passed?
-          # Assuming matrix passed for now based on RuleSet intended usage or kept robust.
-
           imp <- RuleSet$new(
             attributes = private$attributes,
             lhs = lhs,
@@ -230,7 +233,7 @@ RuleSet <- R6::R6Class(
             quality = qual
           )
 
-          private$append_implications(imp)
+          private$append_rules(imp)
         } else {
           stop("Invalid number of arguments.\n", call. = FALSE)
         }
@@ -238,9 +241,9 @@ RuleSet <- R6::R6Class(
     },
 
     #' @description
-    #' Cardinality: Number of implications in the set
+    #' Cardinality: Number of rules in the set
     #'
-    #' @return The cardinality of the implication set.
+    #' @return The cardinality of the rule set.
     #'
     #' @export
     cardinality = function() {
@@ -254,7 +257,7 @@ RuleSet <- R6::R6Class(
     #' @description
     #' Empty set
     #'
-    #' @return \code{TRUE} if the set of implications is empty, \code{FALSE} otherwise.
+    #' @return \code{TRUE} if the set of rules is empty, \code{FALSE} otherwise.
     #'
     #' @export
     is_empty = function() {
@@ -264,7 +267,7 @@ RuleSet <- R6::R6Class(
     #' @description
     #' Size: number of attributes in each of LHS and RHS
     #'
-    #' @return A vector with two components: the number of attributes present in each of the LHS and RHS of each implication in the set.
+    #' @return A matrix with two columns: the number of attributes present in each of the LHS and RHS of each rule.
     #'
     #' @export
     size = function() {
@@ -281,14 +284,15 @@ RuleSet <- R6::R6Class(
     #'
     #' @export
     print = function() {
-      if (is.null(private$lhs_matrix)) {
-        cat("Rules set with 0 association rules.\n")
+      label <- private$rule_type_label()
 
+      if (is.null(private$lhs_matrix)) {
+        cat(label, "set with 0", paste0(label, ".\n"))
         return(invisible(self))
       }
 
       n_implications <- ncol(private$lhs_matrix)
-      cat("Rules set with", n_implications, "rules\n")
+      cat(label, "set with", n_implications, paste0(label, ".\n"))
 
       if (n_implications > 0) {
         attributes <- private$attributes
@@ -309,7 +313,6 @@ RuleSet <- R6::R6Class(
 
         # formatting quality
         if (nrow(private$quality) > 0) {
-          # Format each row
           quals <- apply(private$quality, 1, function(row) {
             paste(names(row), "=", round(as.numeric(row), 2), collapse = ", ")
           })
@@ -317,7 +320,7 @@ RuleSet <- R6::R6Class(
         }
 
         implications <- sapply(implications, function(s) {
-          stringr::str_wrap(s, width = 70, exdent = 2)
+          stringr::str_wrap(s, width = getOption("width"), exdent = 2)
         })
 
         cat(implications, sep = "\n")
@@ -341,7 +344,7 @@ RuleSet <- R6::R6Class(
     #' @param numbered (logical) If \code{TRUE} (default), implications will be numbered in the output.
     #' @param numbers (vector) If \code{numbered}, use these elements to enumerate the implications. The default is to enumerate 1, 2, ..., but can be changed.
     #'
-    #' @return A string in LaTeX format that prints nicely all the implications.
+    #' @return A string in LaTeX format that prints nicely all the rules.
     #'
     #' @export
     to_latex = function(
@@ -367,7 +370,7 @@ RuleSet <- R6::R6Class(
     #' @description
     #' Get internal LHS matrix
     #'
-    #' @return A sparse matrix representing the LHS of the implications in the set.
+    #' @return A sparse matrix representing the LHS of the rules in the set.
     #'
     #' @export
     get_LHS_matrix = function() {
@@ -390,7 +393,7 @@ RuleSet <- R6::R6Class(
     #' @description
     #' Get internal RHS matrix
     #'
-    #' @return A sparse matrix representing the RHS of the implications in the set.
+    #' @return A sparse matrix representing the RHS of the rules in the set.
     #'
     #' @export
     get_RHS_matrix = function() {
@@ -411,50 +414,82 @@ RuleSet <- R6::R6Class(
     },
 
     #' @description
-    #' Filter implications by attributes in LHS and RHS
+    #' Filter rules by attributes in LHS and RHS
     #'
     #' @param lhs  (character vector) Names of the attributes to filter the LHS by. If \code{NULL}, no filtering is done on the LHS.
+    #' @param not_lhs  (character vector) Names of the attributes to not include in the LHS. If \code{NULL} (the default), it is not considered at all.
     #' @param rhs  (character vector) Names of the attributes to filter the RHS by. If \code{NULL}, no filtering is done on the RHS.
+    #' @param not_rhs  (character vector) Names of the attributes to not include in the RHS. If \code{NULL} (the default), it is not considered at all.
     #' @param drop  (logical) Remove the rest of attributes in RHS?
     #'
-    #' @return An \code{RuleSet} that is a subset of the current set, only with those rules which has the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
+    #' @return A \code{RuleSet} (or subclass) that is a subset of the current set, only with those rules which have the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
     #'
     #' @export
-    filter = function(lhs = NULL, rhs = NULL, drop = FALSE) {
+    filter = function(
+      lhs = NULL,
+      not_lhs = NULL,
+      rhs = NULL,
+      not_rhs = NULL,
+      drop = FALSE
+    ) {
       RHS <- private$rhs_matrix
       LHS <- private$lhs_matrix
 
+      if (is.null(LHS) || ncol(LHS) == 0) {
+        return(self)
+      }
+
       if (!is.null(lhs)) {
-        # Filter the implications which have
-        # the given lhs
         idx_attr <- match(lhs, private$attributes)
 
         if (length(idx_attr) > 1) {
-          idx_lhs <- which(colSums(LHS[idx_attr, ]) > 0)
+          idx_lhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
         } else {
           idx_lhs <- which(LHS[idx_attr, ] > 0)
         }
       } else {
-        # If not specified a filter for LHS,
-        # select all implications
         idx_lhs <- seq_len(ncol(LHS))
       }
 
+      if (!is.null(not_lhs)) {
+        idx_attr <- match(not_lhs, private$attributes)
+
+        if (length(idx_attr) > 1) {
+          idx_not_lhs <- Matrix::which(Matrix::colSums(LHS[idx_attr, ]) > 0)
+        } else {
+          idx_not_lhs <- which(LHS[idx_attr, ] > 0)
+        }
+      } else {
+        idx_not_lhs <- c()
+      }
+
+      idx_lhs <- setdiff(idx_lhs, idx_not_lhs)
+
       if (!is.null(rhs)) {
-        # Filter the implications which have
-        # the given lhs
         idx_attr <- match(rhs, private$attributes)
 
         if (length(idx_attr) > 1) {
-          idx_rhs <- which(colSums(RHS[idx_attr, ]) > 0)
+          idx_rhs <- Matrix::which(Matrix::colSums(RHS[idx_attr, ]) > 0)
         } else {
           idx_rhs <- which(RHS[idx_attr, ] > 0)
         }
       } else {
-        # If not specified a filter for RHS,
-        # select all implications
         idx_rhs <- seq_len(ncol(RHS))
       }
+
+      if (!is.null(not_rhs)) {
+        idx_attr <- match(not_rhs, private$attributes)
+
+        if (length(idx_attr) > 1) {
+          idx_not_rhs <- Matrix::which(Matrix::colSums(RHS[idx_attr, ]) > 0)
+        } else {
+          idx_not_rhs <- which(RHS[idx_attr, ] > 0)
+        }
+      } else {
+        idx_not_rhs <- c()
+      }
+
+      idx_rhs <- setdiff(idx_rhs, idx_not_rhs)
 
       idx <- intersect(idx_lhs, idx_rhs)
 
@@ -468,29 +503,34 @@ RuleSet <- R6::R6Class(
       }
 
       if (length(idx) > 0) {
-        # New quality
+        # Subset quality
         qual_new <- private$quality[idx, , drop = FALSE]
 
         if (drop && !is.null(rhs)) {
           newLHS <- LHS[, idx]
           newRHS <- RHS[, idx]
 
-          other_idx <- setdiff(seq_len(nrow(RHS)), idx_attr)
+          other_idx <- setdiff(
+            seq_len(nrow(RHS)),
+            match(rhs, private$attributes)
+          )
           newRHS[other_idx, ] <- 0
 
-          imp <- RuleSet$new(
+          imp <- private$create_subset(
             name = paste0(private$name, "_filtered"),
             attributes = private$attributes,
-            lhs = Matrix(newLHS, sparse = TRUE),
-            rhs = Matrix(newRHS, sparse = TRUE),
+            lhs = Matrix::Matrix(newLHS, sparse = TRUE),
+            rhs = Matrix::Matrix(newRHS, sparse = TRUE),
+            I = private$I,
             quality = qual_new
           )
         } else {
-          imp <- RuleSet$new(
+          imp <- private$create_subset(
             name = paste0(private$name, "_filtered"),
             attributes = private$attributes,
-            lhs = Matrix(LHS[, idx], sparse = TRUE),
-            rhs = Matrix(RHS[, idx], sparse = TRUE),
+            lhs = Matrix::Matrix(LHS[, idx], sparse = TRUE),
+            rhs = Matrix::Matrix(RHS[, idx], sparse = TRUE),
+            I = private$I,
             quality = qual_new
           )
         }
@@ -530,9 +570,9 @@ RuleSet <- R6::R6Class(
     },
 
     #' @description
-    #' Compute support of each implication
+    #' Compute support of each rule
     #'
-    #' @return A vector with the support of each implication
+    #' @return A vector with the support of each rule.
     #' @export
     support = function() {
       if (self$is_empty()) {
@@ -543,18 +583,14 @@ RuleSet <- R6::R6Class(
         return(private$quality$support)
       }
 
-      # If not in quality, compute it?
-      # But RuleSet might not have I (FormalContext).
+      # If not in quality, compute it from I
       if (is.null(private$I)) {
         return(numeric(0))
       }
 
       subsets <- .subset(private$lhs_matrix, private$I)
 
-      supp_val <- rowMeans(subsets)
-
-      # Update quality?
-      # private$quality$support <- supp_val
+      supp_val <- Matrix::rowMeans(subsets)
 
       return(supp_val)
     },
@@ -586,8 +622,6 @@ RuleSet <- R6::R6Class(
 
       conf_val <- XYsupport / supp_lhs
 
-      conf_val <- XYsupport / supp_lhs
-
       return(conf_val)
     },
 
@@ -602,24 +636,32 @@ RuleSet <- R6::R6Class(
     to_json = function(file = NULL, return_list = FALSE) {
       check_needed_pkg("jsonlite", "export to JSON")
 
+      if (self$is_empty()) {
+        out <- list(
+          type = private$json_type_name(),
+          attributes = private$attributes,
+          rules = list()
+        )
+        if (return_list) {
+          return(out)
+        }
+        return(jsonlite::toJSON(out, auto_unbox = TRUE))
+      }
+
       is_bin <- private$is_binary()
 
       mat_to_list <- function(M, attrs) {
-        # Force conversion to general triplet to access i, j, x safely
-        # dgTMatrix ensures we don't lose symmetric/diagonal entries
-        # Intermediate cast to dgCMatrix ensures compatibility with ddiMatrix/dsCMatrix
+        # Force conversion to general triplet
         T <- as(as(M, "dgCMatrix"), "dgTMatrix")
 
         idx_available <- (length(T@x) > 0)
 
         if (!idx_available) {
-          # Empty matrix
           return(replicate(ncol(M), list()))
         }
 
         vals <- if (.hasSlot(T, "x")) T@x else rep(1, length(T@i))
 
-        # Build data frame with 1-based indices
         df_all <- data.frame(
           attr = attrs[T@i + 1],
           val = vals,
@@ -645,7 +687,7 @@ RuleSet <- R6::R6Class(
       rhs_data <- mat_to_list(private$rhs_matrix, private$attributes)
 
       out <- list(
-        type = "RuleSet",
+        type = private$json_type_name(),
         attributes = private$attributes,
         rules = lapply(seq_len(self$cardinality()), function(i) {
           r <- list(
@@ -654,7 +696,6 @@ RuleSet <- R6::R6Class(
           )
           # Add extra quality measures if available
           if (length(private$quality) > 0 && nrow(private$quality) >= i) {
-            # Append quality columns
             q <- as.list(private$quality[i, , drop = FALSE])
             r <- c(r, q)
           }
@@ -669,6 +710,7 @@ RuleSet <- R6::R6Class(
       json <- jsonlite::toJSON(out, auto_unbox = TRUE)
       if (!is.null(file)) {
         writeLines(json, file)
+        return(invisible(json))
       }
       return(json)
     }
@@ -692,10 +734,19 @@ RuleSet <- R6::R6Class(
       return(length(v) == 2 && all(v == c(0, 1)))
     },
 
-    append_implications = function(implications) {
+    # Virtual-like helpers for subclass customization
+    rule_type_label = function() "Rules",
+    json_type_name = function() "RuleSet",
+
+    # Factory method for subsetting — subclasses override to return their own type
+    create_subset = function(...) {
+      RuleSet$new(...)
+    },
+
+    append_rules = function(rules_obj) {
       # Valid checks... omitted for brevity
-      LHS <- implications$get_LHS_matrix()
-      RHS <- implications$get_RHS_matrix()
+      LHS <- rules_obj$get_LHS_matrix()
+      RHS <- rules_obj$get_RHS_matrix()
 
       if (length(private$attributes) == nrow(LHS)) {
         private$lhs_matrix <- cbind(private$lhs_matrix, LHS)
@@ -703,7 +754,7 @@ RuleSet <- R6::R6Class(
 
         # Merge quality?
         q1 <- private$quality
-        q2 <- implications$get_quality()
+        q2 <- rules_obj$get_quality()
 
         # If one is empty and the other not, we obtain a problem.
         # We try to merge by name.
@@ -729,7 +780,6 @@ RuleSet <- R6::R6Class(
     }
   )
 )
-
 #' @title Import RuleSet from JSON
 #' @description Reconstructs a RuleSet object from a JSON string.
 #' @param json_str A JSON string generated by \code{to_json()}.
@@ -766,15 +816,17 @@ rules_from_json <- function(json_str) {
           attrs <- unlist(item)
           vals <- rep(1, length(attrs))
         }
-
         attr_idxs <- match(attrs, attributes)
-
         if (any(is.na(attr_idxs))) {
+          warning(sprintf(
+            "Unknown attributes in rule %d: %s",
+            rule_idx,
+            paste(attrs[is.na(attr_idxs)], collapse = ", ")
+          ))
           valid <- !is.na(attr_idxs)
           attr_idxs <- attr_idxs[valid]
           vals <- vals[valid]
         }
-
         if (length(attr_idxs) > 0) {
           i <- c(i, attr_idxs)
           j <- c(j, rep(rule_idx, length(attr_idxs)))
@@ -799,23 +851,22 @@ rules_from_json <- function(json_str) {
   RHS <- parse_part(rhs_data)
 
   # Extract quality metrics
-  # All keys in rule that are not lhs/rhs
-  first_rule <- data$rules[[1]]
-  metric_names <- setdiff(names(first_rule), c("lhs", "rhs"))
+  quality_cols <- setdiff(
+    unique(unlist(lapply(data$rules, names))),
+    c("lhs", "rhs")
+  )
 
-  if (length(metric_names) > 0) {
-    quality <- do.call(
-      rbind,
-      lapply(data$rules, function(r) {
-        # Use NA if missing?
-        sapply(metric_names, function(m) {
-          if (is.null(r[[m]])) NA else r[[m]]
+  quality <- data.frame()
+  if (length(quality_cols) > 0) {
+    quality <- as.data.frame(
+      lapply(quality_cols, function(col) {
+        sapply(data$rules, function(r) {
+          v <- r[[col]]
+          if (is.null(v)) NA else v
         })
       })
     )
-    quality <- as.data.frame(quality)
-  } else {
-    quality <- NULL
+    names(quality) <- quality_cols
   }
 
   RS <- RuleSet$new(

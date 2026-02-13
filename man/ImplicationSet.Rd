@@ -2,60 +2,29 @@
 % Please edit documentation in R/implication_set.R
 \name{ImplicationSet}
 \alias{ImplicationSet}
-\title{R6 Class for Set of implications}
+\title{R6 class for an Implication Set}
 \description{
-This class implements the structure needed to store implications and the methods associated.
+This class implements an implication set (LHS -> RHS) in the framework of
+Formal Concept Analysis (FCA). It inherits from \code{RuleSet} and adds
+FCA-specific methods such as closure computation, simplification, and
+basis transformation.
 }
-\examples{
-# Build a formal context
-fc_planets <- FormalContext$new(planets)
-
-# Find its implication basis
-fc_planets$find_implications()
-
-# Print implications
-fc_planets$implications
-
-# Cardinality and mean size in the ruleset
-fc_planets$implications$cardinality()
-sizes <- fc_planets$implications$size()
-colMeans(sizes)
-
-# Simplify the implication set
-fc_planets$implications$apply_rules("simplification")
-
-}
-\references{
-Ganter B, Obiedkov S (2016). Conceptual Exploration. Springer. https://doi.org/10.1007/978-3-662-49291-8
-
-Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for mining association rules and frequent item sets.” \emph{J Stat Softw}, \emph{14}, 1-25.
-
-Belohlavek R, Cordero P, Enciso M, Mora Á, Vychodil V (2016). “Automated prover for attribute dependencies in data with grades.” \emph{International Journal of Approximate Reasoning}, \emph{70}, 51-67.
-
-Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functional dependence simplification.” \emph{International Journal of Computer Mathematics}, \emph{89}(4), 510-526.
+\section{Super class}{
+\code{\link[fcaR:RuleSet]{fcaR::RuleSet}} -> \code{ImplicationSet}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-ImplicationSet-new}{\code{ImplicationSet$new()}}
-\item \href{#method-ImplicationSet-get_attributes}{\code{ImplicationSet$get_attributes()}}
-\item \href{#method-ImplicationSet-bracket}{\code{ImplicationSet$[()}}
-\item \href{#method-ImplicationSet-to_arules}{\code{ImplicationSet$to_arules()}}
 \item \href{#method-ImplicationSet-add}{\code{ImplicationSet$add()}}
-\item \href{#method-ImplicationSet-cardinality}{\code{ImplicationSet$cardinality()}}
-\item \href{#method-ImplicationSet-is_empty}{\code{ImplicationSet$is_empty()}}
-\item \href{#method-ImplicationSet-size}{\code{ImplicationSet$size()}}
+\item \href{#method-ImplicationSet-to_arules}{\code{ImplicationSet$to_arules()}}
+\item \href{#method-ImplicationSet-print}{\code{ImplicationSet$print()}}
+\item \href{#method-ImplicationSet-support}{\code{ImplicationSet$support()}}
 \item \href{#method-ImplicationSet-closure}{\code{ImplicationSet$closure()}}
 \item \href{#method-ImplicationSet-recommend}{\code{ImplicationSet$recommend()}}
 \item \href{#method-ImplicationSet-apply_rules}{\code{ImplicationSet$apply_rules()}}
 \item \href{#method-ImplicationSet-to_basis}{\code{ImplicationSet$to_basis()}}
 \item \href{#method-ImplicationSet-to_direct_optimal}{\code{ImplicationSet$to_direct_optimal()}}
-\item \href{#method-ImplicationSet-print}{\code{ImplicationSet$print()}}
-\item \href{#method-ImplicationSet-to_latex}{\code{ImplicationSet$to_latex()}}
-\item \href{#method-ImplicationSet-get_LHS_matrix}{\code{ImplicationSet$get_LHS_matrix()}}
-\item \href{#method-ImplicationSet-get_RHS_matrix}{\code{ImplicationSet$get_RHS_matrix()}}
-\item \href{#method-ImplicationSet-filter}{\code{ImplicationSet$filter()}}
-\item \href{#method-ImplicationSet-support}{\code{ImplicationSet$support()}}
 \item \href{#method-ImplicationSet-use_logic}{\code{ImplicationSet$use_logic()}}
 \item \href{#method-ImplicationSet-get_logic}{\code{ImplicationSet$get_logic()}}
 \item \href{#method-ImplicationSet-use_hedge}{\code{ImplicationSet$use_hedge()}}
@@ -64,11 +33,29 @@ Mora A, Cordero P, Enciso M, Fortes I, Aguilera G (2012). “Closure via functio
 \item \href{#method-ImplicationSet-clone}{\code{ImplicationSet$clone()}}
 }
 }
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="["><a href='../../fcaR/html/RuleSet.html#method-RuleSet-['><code>fcaR::RuleSet$[()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="cardinality"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-cardinality'><code>fcaR::RuleSet$cardinality()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="confidence"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-confidence'><code>fcaR::RuleSet$confidence()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="filter"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-filter'><code>fcaR::RuleSet$filter()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="get_LHS_matrix"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-get_LHS_matrix'><code>fcaR::RuleSet$get_LHS_matrix()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="get_RHS_matrix"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-get_RHS_matrix'><code>fcaR::RuleSet$get_RHS_matrix()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="get_attributes"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-get_attributes'><code>fcaR::RuleSet$get_attributes()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="get_implications"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-get_implications'><code>fcaR::RuleSet$get_implications()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="get_quality"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-get_quality'><code>fcaR::RuleSet$get_quality()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="is_empty"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-is_empty'><code>fcaR::RuleSet$is_empty()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="size"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-size'><code>fcaR::RuleSet$size()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="to_latex"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-to_latex'><code>fcaR::RuleSet$to_latex()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ImplicationSet-new"></a>}}
 \if{latex}{\out{\hypertarget{method-ImplicationSet-new}{}}}
 \subsection{Method \code{new()}}{
-Initialize with an optional name
+Initialize an ImplicationSet
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$new(...)}\if{html}{\out{</div>}}
 }
@@ -76,75 +63,14 @@ Initialize with an optional name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{See Details.}
+\item{\code{...}}{A \code{rules} object (from \code{arules}) or named arguments:
+\code{name} (string), \code{attributes} (character vector),
+\code{lhs} and \code{rhs} (sparse matrices), \code{I} (incidence matrix).}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Details}{
-Creates and initialize a new \code{ImplicationSet} object. It can be done in two ways:
-\code{initialize(name, attributes, lhs, rhs)}
-or \code{initialize(rules)}
-
-In the first way, the only mandatory argument is \code{attributes}, (character vector) which is a vector of names of the attributes on which we define the implications. Optional arguments are: \code{name} (character string), name of the implication set, \code{lhs} (a \code{dgCMatrix}), initial LHS of the implications stored and the analogous \code{rhs}.
-
-The other way is used to initialize the \code{ImplicationSet} object from a \code{rules} object from package \code{arules}.
-}
-
 \subsection{Returns}{
 A new \code{ImplicationSet} object.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-get_attributes"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-get_attributes}{}}}
-\subsection{Method \code{get_attributes()}}{
-Get the names of the attributes
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$get_attributes()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A character vector with the names of the attributes used in the implications.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-bracket}{}}}
-\subsection{Method \code{[()}}{
-Get a subset of the implication set
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$[(idx)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{idx}}{(integer or logical vector) Indices of the implications to extract or remove. If logical vector, only \code{TRUE} elements are retained and the rest discarded.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A new \code{ImplicationSet} with only the rules given by the \code{idx} indices (if all \code{idx > 0} and all but \code{idx} if all \code{idx < 0}.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-to_arules"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-to_arules}{}}}
-\subsection{Method \code{to_arules()}}{
-Convert to arules format
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_arules(quality = TRUE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{quality}}{(logical) Compute the interest measures for each rule?}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{rules} object as used by package \code{arules}.
 }
 }
 \if{html}{\out{<hr>}}
@@ -168,42 +94,49 @@ Nothing, just updates the internal \code{implications} field.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-cardinality"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-cardinality}{}}}
-\subsection{Method \code{cardinality()}}{
-Cardinality: Number of implications in the set
+\if{html}{\out{<a id="method-ImplicationSet-to_arules"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-to_arules}{}}}
+\subsection{Method \code{to_arules()}}{
+Convert to arules format
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$cardinality()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_arules(quality = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quality}}{(logical) Compute the interest measures for each rule?}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
-The cardinality of the implication set.
+A \code{rules} object as used by package \code{arules}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-is_empty"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-is_empty}{}}}
-\subsection{Method \code{is_empty()}}{
-Empty set
+\if{html}{\out{<a id="method-ImplicationSet-print"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-print}{}}}
+\subsection{Method \code{print()}}{
+Print all implications to text
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$is_empty()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$print()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-\code{TRUE} if the set of implications is empty, \code{FALSE} otherwise.
+A string with all the implications in the set.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-size"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-size}{}}}
-\subsection{Method \code{size()}}{
-Size: number of attributes in each of LHS and RHS
+\if{html}{\out{<a id="method-ImplicationSet-support"></a>}}
+\if{latex}{\out{\hypertarget{method-ImplicationSet-support}{}}}
+\subsection{Method \code{support()}}{
+Compute support of each implication
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$size()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$support()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-A vector with two components: the number of attributes present in each of the LHS and RHS of each implication in the set.
+A vector with the support of each implication
 }
 }
 \if{html}{\out{<hr>}}
@@ -329,123 +262,6 @@ Compute the Direct Optimal Basis using optimized C++ algorithms.
 }
 \subsection{Returns}{
 Nothing, updates the \code{ImplicationSet} in place with the new basis.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-print"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-print}{}}}
-\subsection{Method \code{print()}}{
-Print all implications to text
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$print()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A string with all the implications in the set.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-to_latex"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-to_latex}{}}}
-\subsection{Method \code{to_latex()}}{
-Export to LaTeX
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$to_latex(
-  print = TRUE,
-  ncols = 1,
-  numbered = TRUE,
-  numbers = seq(self$cardinality())
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{print}}{(logical) Print to output?}
-
-\item{\code{ncols}}{(integer) Number of columns for the output.}
-
-\item{\code{numbered}}{(logical) If \code{TRUE} (default), implications will be numbered in the output.}
-
-\item{\code{numbers}}{(vector) If \code{numbered}, use these elements to enumerate the implications. The default is to enumerate 1, 2, ..., but can be changed.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A string in LaTeX format that prints nicely all the implications.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-get_LHS_matrix"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-get_LHS_matrix}{}}}
-\subsection{Method \code{get_LHS_matrix()}}{
-Get internal LHS matrix
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$get_LHS_matrix()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A sparse matrix representing the LHS of the implications in the set.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-get_RHS_matrix"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-get_RHS_matrix}{}}}
-\subsection{Method \code{get_RHS_matrix()}}{
-Get internal RHS matrix
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$get_RHS_matrix()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A sparse matrix representing the RHS of the implications in the set.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-filter"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-filter}{}}}
-\subsection{Method \code{filter()}}{
-Filter implications by attributes in LHS and RHS
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$filter(
-  lhs = NULL,
-  not_lhs = NULL,
-  rhs = NULL,
-  not_rhs = NULL,
-  drop = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{lhs}}{(character vector) Names of the attributes to filter the LHS by. If \code{NULL}, no filtering is done on the LHS.}
-
-\item{\code{not_lhs}}{(character vector) Names of the attributes to not include in the LHS. If \code{NULL} (the default), it is not considered at all.}
-
-\item{\code{rhs}}{(character vector) Names of the attributes to filter the RHS by. If \code{NULL}, no filtering is done on the RHS.}
-
-\item{\code{not_rhs}}{(character vector) Names of the attributes to not include in the RHS. If \code{NULL} (the default), it is not considered at all.}
-
-\item{\code{drop}}{(logical) Remove the rest of attributes in RHS?}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-An \code{ImplicationSet} that is a subset of the current set, only with those rules which has the attributes in \code{lhs} and \code{rhs} in their LHS and RHS, respectively.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ImplicationSet-support"></a>}}
-\if{latex}{\out{\hypertarget{method-ImplicationSet-support}{}}}
-\subsection{Method \code{support()}}{
-Compute support of each implication
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ImplicationSet$support()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A vector with the support of each implication
 }
 }
 \if{html}{\out{<hr>}}

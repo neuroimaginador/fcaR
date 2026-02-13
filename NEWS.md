@@ -1,5 +1,10 @@
 # fcaR 1.5.0
 
+Improvements:
+
+* **OOP Refactoring:** `ImplicationSet` now inherits from `RuleSet`, following proper object-oriented design. Shared methods (filtering, subsetting, printing, serialization, etc.) live in the parent `RuleSet` class, eliminating ~600 lines of duplicated code. `ImplicationSet` retains only FCA-specific methods (`closure()`, `apply_rules()`, `to_basis()`, `to_direct_optimal()`, etc.).
+* **Tidyverse for RuleSet:** The `dplyr` verbs (`filter()`, `arrange()`, `slice()`) now work on `RuleSet` objects in addition to `ImplicationSet`, via S3 method dispatch.
+
 # fcaR 1.4.1
 
 * **JSON Import/Export:** Added `to_json()` methods and corresponding `*_from_json()` functions for `FormalContext`, `ConceptLattice`, `ImplicationSet`, and `RuleSet`. This allows for efficient serialization of all major data structures in `fcaR`, including recursive export of nested objects.
