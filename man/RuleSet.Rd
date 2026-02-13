@@ -13,7 +13,7 @@ managing, filtering, and exporting rules.
 \itemize{
 \item \href{#method-RuleSet-new}{\code{RuleSet$new()}}
 \item \href{#method-RuleSet-get_attributes}{\code{RuleSet$get_attributes()}}
-\item \href{#method-RuleSet-[}{\code{RuleSet$[()}}
+\item \href{#method-RuleSet-bracket}{\code{RuleSet$[()}}
 \item \href{#method-RuleSet-to_arules}{\code{RuleSet$to_arules()}}
 \item \href{#method-RuleSet-add}{\code{RuleSet$add()}}
 \item \href{#method-RuleSet-cardinality}{\code{RuleSet$cardinality()}}
@@ -69,8 +69,8 @@ A character vector with the names of the attributes used in the rules.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RuleSet-["></a>}}
-\if{latex}{\out{\hypertarget{method-RuleSet-[}{}}}
+\if{html}{\out{<a id="method-RuleSet-bracket"></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-bracket}{}}}
 \subsection{Method \code{[()}}{
 Get a subset of the rule set
 \subsection{Usage}{

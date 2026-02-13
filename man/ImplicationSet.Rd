@@ -36,7 +36,7 @@ basis transformation.
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="["><a href='../../fcaR/html/RuleSet.html#method-RuleSet-['><code>fcaR::RuleSet$[()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="["><a href='../../fcaR/html/RuleSet.html#method-RuleSet-bracket'><code>fcaR::RuleSet$[()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="cardinality"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-cardinality'><code>fcaR::RuleSet$cardinality()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="confidence"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-confidence'><code>fcaR::RuleSet$confidence()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="RuleSet" data-id="filter"><a href='../../fcaR/html/RuleSet.html#method-RuleSet-filter'><code>fcaR::RuleSet$filter()</code></a></span></li>
