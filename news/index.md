@@ -2,6 +2,8 @@
 
 ## fcaR 1.5.0
 
+CRAN release: 2026-02-13
+
 Improvements:
 
 - **OOP Refactoring:** `ImplicationSet` now inherits from `RuleSet`,
@@ -16,6 +18,9 @@ Improvements:
   [`slice()`](https://dplyr.tidyverse.org/reference/slice.html)) now
   work on `RuleSet` objects in addition to `ImplicationSet`, via S3
   method dispatch.
+- **Standard Context:** Added `get_standard_context()` method to
+  `ImplicationSet`, which computes the standard formal context from a
+  set of implications by finding the meet-irreducible closed sets.
 
 ## fcaR 1.4.1
 

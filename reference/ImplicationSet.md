@@ -38,6 +38,8 @@ basis transformation.
 
 - [`ImplicationSet$get_logic()`](#method-ImplicationSet-get_logic)
 
+- [`ImplicationSet$get_standard_context()`](#method-ImplicationSet-get_standard_context)
+
 - [`ImplicationSet$use_hedge()`](#method-ImplicationSet-use_hedge)
 
 - [`ImplicationSet$get_hedge()`](#method-ImplicationSet-get_hedge)
@@ -338,6 +340,30 @@ Gets the logic used
 #### Returns
 
 A string with the name of the logic.
+
+------------------------------------------------------------------------
+
+### Method `get_standard_context()`
+
+Get the standard formal context associated with the implication set.
+
+#### Usage
+
+    ImplicationSet$get_standard_context()
+
+#### Details
+
+The standard formal context \\K = (J, M, I)\\ associated to a set of
+implications on \\M\\ is such that its concept lattice is isomorphic to
+the lattice of closed sets of the implication set. The objects \\J\\ of
+this context are the meet-irreducible closed sets of the implication
+set.
+
+#### Returns
+
+A `FormalContext` object where the objects are the meet-irreducible
+closed sets and the attributes are the attributes of the implication
+set.
 
 ------------------------------------------------------------------------
 

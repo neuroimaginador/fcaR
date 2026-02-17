@@ -59,12 +59,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.5.0" id="fcar-150">fcaR 1.5.0<a class="anchor" aria-label="anchor" href="#fcar-150"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.5.0" id="fcar-150">fcaR 1.5.0<a class="anchor" aria-label="anchor" href="#fcar-150"></a></h2><p class="text-muted">CRAN release: 2026-02-13</p>
 <p>Improvements:</p>
 <ul><li>
 <strong>OOP Refactoring:</strong> <code>ImplicationSet</code> now inherits from <code>RuleSet</code>, following proper object-oriented design. Shared methods (filtering, subsetting, printing, serialization, etc.) live in the parent <code>RuleSet</code> class, eliminating ~600 lines of duplicated code. <code>ImplicationSet</code> retains only FCA-specific methods (<code>closure()</code>, <code>apply_rules()</code>, <code>to_basis()</code>, <code>to_direct_optimal()</code>, etc.).</li>
 <li>
 <strong>Tidyverse for RuleSet:</strong> The <code>dplyr</code> verbs (<code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice()</a></code>) now work on <code>RuleSet</code> objects in addition to <code>ImplicationSet</code>, via S3 method dispatch.</li>
+<li>
+<strong>Standard Context:</strong> Added <code>get_standard_context()</code> method to <code>ImplicationSet</code>, which computes the standard formal context from a set of implications by finding the meet-irreducible closed sets.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.1" id="fcar-141">fcaR 1.4.1<a class="anchor" aria-label="anchor" href="#fcar-141"></a></h2>

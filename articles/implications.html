@@ -801,14 +801,38 @@ another one:</p>
 <span><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="recommendations">Recommendations<a class="anchor" aria-label="anchor" href="#recommendations"></a>
+<h3 id="standard-context">Standard Context<a class="anchor" aria-label="anchor" href="#standard-context"></a>
+</h3>
+<p>The <code>ImplicationSet</code> allows us to recover the underlying
+lattice structure (the lattice of closed sets) by computing the
+<strong>standard context</strong>. This context has the meet-irreducible
+closed sets of the implication set as objects, and the original
+attributes as attributes:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get the standard context from the implications of the planets context</span></span>
+<span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="va">fc_planets</span><span class="op">$</span><span class="va">implications</span><span class="op">$</span><span class="fu">get_standard_context</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># We can inspect the new context</span></span>
+<span><span class="va">sc</span></span>
+<span><span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span></span>
+<span><span class="co">#&gt;     small  medium  large  near  far  moon  no_moon  </span></span>
+<span><span class="co">#&gt;  C1                  X           X     X            </span></span>
+<span><span class="co">#&gt;  C2           X                  X     X            </span></span>
+<span><span class="co">#&gt;  C3   X                          X     X            </span></span>
+<span><span class="co">#&gt;  C4   X                     X                 X     </span></span>
+<span><span class="co">#&gt;  C5   X                     X          X</span></span></code></pre></div>
+<p>The concept lattice of this standard context is isomorphic to the
+lattice of closed sets of the original implication set.</p>
+</div>
+<div class="section level3">
+<h3 id="recommendation-systems">Recommendation systems<a class="anchor" aria-label="anchor" href="#recommendation-systems"></a>
 </h3>
 <p>One of the final applications of an <code>ImplicationSet</code> is
 the easy development of a recommendation system where, from an attribute
 set, the system would infer the value to other attribute. This is done
 by the <code>recommend()</code> function, which internally computes the
 closure of the attribute set:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/Set.html">Set</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>attributes <span class="op">=</span> <span class="va">fc_I</span><span class="op">$</span><span class="va">attributes</span><span class="op">)</span></span>
 <span><span class="va">S</span><span class="op">$</span><span class="fu">assign</span><span class="op">(</span>P1 <span class="op">=</span> <span class="fl">1</span>, P4 <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span></span>

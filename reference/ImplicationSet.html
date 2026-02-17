@@ -95,6 +95,7 @@ basis transformation.</p>
 <li><p><a href="#method-ImplicationSet-to_direct_optimal"><code>ImplicationSet$to_direct_optimal()</code></a></p></li>
 <li><p><a href="#method-ImplicationSet-use_logic"><code>ImplicationSet$use_logic()</code></a></p></li>
 <li><p><a href="#method-ImplicationSet-get_logic"><code>ImplicationSet$get_logic()</code></a></p></li>
+<li><p><a href="#method-ImplicationSet-get_standard_context"><code>ImplicationSet$get_standard_context()</code></a></p></li>
 <li><p><a href="#method-ImplicationSet-use_hedge"><code>ImplicationSet$use_hedge()</code></a></p></li>
 <li><p><a href="#method-ImplicationSet-get_hedge"><code>ImplicationSet$get_hedge()</code></a></p></li>
 <li><p><a href="#method-ImplicationSet-to_json"><code>ImplicationSet$to_json()</code></a></p></li>
@@ -362,10 +363,28 @@ basis transformation.</p>
 <p>A string with the name of the logic.</p>
 </div>
 
+</div><p></p><hr><a id="method-ImplicationSet-get_standard_context"></a><div class="section">
+<h3 id="method-get-standard-context-">Method <code>get_standard_context()</code><a class="anchor" aria-label="anchor" href="#method-get-standard-context-"></a></h3>
+<p>Get the standard formal context associated with the implication set.</p><div class="section">
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImplicationSet</span><span class="op">$</span><span class="fu">get_standard_context</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="details-1">Details<a class="anchor" aria-label="anchor" href="#details-1"></a></h4>
+<p>The standard formal context \(K = (J, M, I)\) associated to a set of implications on \(M\) is such that its concept lattice is isomorphic to the lattice of closed sets of the implication set.
+The objects \(J\) of this context are the meet-irreducible closed sets of the implication set.</p>
+</div>
+
+<div class="section">
+<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<p>A <code>FormalContext</code> object where the objects are the meet-irreducible closed sets and the attributes are the attributes of the implication set.</p>
+</div>
+
 </div><p></p><hr><a id="method-ImplicationSet-use_hedge"></a><div class="section">
 <h3 id="method-use-hedge-">Method <code>use_hedge()</code><a class="anchor" aria-label="anchor" href="#method-use-hedge-"></a></h3>
 <p>Sets the hedge to use when computing closures</p><div class="section">
-<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImplicationSet</span><span class="op">$</span><span class="fu">use_hedge</span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"globalization"</span>, <span class="st">"identity"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -381,19 +400,19 @@ basis transformation.</p>
 </div><p></p><hr><a id="method-ImplicationSet-get_hedge"></a><div class="section">
 <h3 id="method-get-hedge-">Method <code>get_hedge()</code><a class="anchor" aria-label="anchor" href="#method-get-hedge-"></a></h3>
 <p>Gets the hedge used to compute closures</p><div class="section">
-<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
+<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImplicationSet</span><span class="op">$</span><span class="fu">get_hedge</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
 <p>A string with the name of the hedge</p>
 </div>
 
 </div><p></p><hr><a id="method-ImplicationSet-to_json"></a><div class="section">
 <h3 id="method-to-json-">Method <code>to_json()</code><a class="anchor" aria-label="anchor" href="#method-to-json-"></a></h3>
 <p>Export the implication set to JSON</p><div class="section">
-<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
+<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImplicationSet</span><span class="op">$</span><span class="fu">to_json</span><span class="op">(</span>file <span class="op">=</span> <span class="cn">NULL</span>, return_list <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -410,14 +429,14 @@ basis transformation.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
 <p>A JSON string representing the implication set, or a list if <code>return_list</code> is TRUE.</p>
 </div>
 
 </div><p></p><hr><a id="method-ImplicationSet-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
+<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ImplicationSet</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
