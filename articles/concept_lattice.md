@@ -341,6 +341,25 @@ fc_planets$implications
 #> Rule 10: {small, medium, far, moon} -> {large, near, no_moon}
 ```
 
+### Protoconcepts
+
+In addition to concepts, one can compute *protoconcepts*. A protoconcept
+is a pair $(A,B)$ of object and attribute sets such that
+$A\prime = B''$. This definition generalizes concepts (where
+$A\prime = B$ and $B\prime = A$, which implies $A\prime = B''$) and is
+useful in certain applications.
+
+To find all protoconcepts, use `find_protoconcepts()`:
+
+``` r
+P <- fc_planets$find_protoconcepts()
+length(P)
+#> [1] 679
+```
+
+The result is a list of pairs (extent, intent). Each element of the list
+matches a concept or a protoconcept.
+
 ### Standard Context
 
 Once we have computed the concepts, we can build the *standard context*
@@ -413,13 +432,13 @@ the `ConceptLattice` component:
 fc_planets$concepts$plot()
 ```
 
-![](concept_lattice_files/figure-html/unnamed-chunk-21-1.png)
+![](concept_lattice_files/figure-html/unnamed-chunk-22-1.png)
 
 ``` r
 fc_I$concepts$plot()
 ```
 
-![](concept_lattice_files/figure-html/unnamed-chunk-21-2.png)
+![](concept_lattice_files/figure-html/unnamed-chunk-22-2.png)
 
 If one desires to get the list of concepts printed, or in LaTeX format,
 just:
@@ -537,7 +556,7 @@ And we can plot just the sublattice:
 sublattice$plot()
 ```
 
-![](concept_lattice_files/figure-html/unnamed-chunk-27-1.png)
+![](concept_lattice_files/figure-html/unnamed-chunk-28-1.png)
 
 ### Subconcepts, superconcepts, infimum and supremum
 

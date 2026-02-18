@@ -100,6 +100,8 @@ Stat Softw*, *14*, 1-25.
 
 - [`FormalContext$find_implications()`](#method-FormalContext-find_implications)
 
+- [`FormalContext$find_protoconcepts()`](#method-FormalContext-find_protoconcepts)
+
 - [`FormalContext$find_causal_rules()`](#method-FormalContext-find_causal_rules)
 
 - [`FormalContext$factorize()`](#method-FormalContext-factorize)

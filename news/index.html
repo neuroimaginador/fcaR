@@ -67,6 +67,9 @@
 <strong>Tidyverse for RuleSet:</strong> The <code>dplyr</code> verbs (<code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice()</a></code>) now work on <code>RuleSet</code> objects in addition to <code>ImplicationSet</code>, via S3 method dispatch.</li>
 <li>
 <strong>Standard Context:</strong> Added <code>get_standard_context()</code> method to <code>ImplicationSet</code>, which computes the standard formal context from a set of implications by finding the meet-irreducible closed sets.</li>
+</ul><p>New Functionality:</p>
+<ul><li>
+<strong>Protoconcepts:</strong> Added <code>find_protoconcepts()</code> method to <code>FormalContext</code> to compute protoconcepts (pairs <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(A, B)</annotation></semantics></math> such that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>′</mi><mo>=</mo><mi>B</mi><mi>″</mi></mrow><annotation encoding="application/x-tex">A' = B''</annotation></semantics></math>) using an efficient C++ implementation.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.1" id="fcar-141">fcaR 1.4.1<a class="anchor" aria-label="anchor" href="#fcar-141"></a></h2>

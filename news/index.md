@@ -22,6 +22,12 @@ Improvements:
   `ImplicationSet`, which computes the standard formal context from a
   set of implications by finding the meet-irreducible closed sets.
 
+New Functionality:
+
+- **Protoconcepts:** Added `find_protoconcepts()` method to
+  `FormalContext` to compute protoconcepts (pairs $(A,B)$ such that
+  $A\prime = B''$) using an efficient C++ implementation.
+
 ## fcaR 1.4.1
 
 - **JSON Import/Export:** Added `to_json()` methods and corresponding
