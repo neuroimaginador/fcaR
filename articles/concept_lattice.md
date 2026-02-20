@@ -305,6 +305,7 @@ binary or fuzzy concepts and implications:
 fc_planets$find_implications()
 
 fc_I$find_implications()
+#> LinCbO is only available for binary contexts. Falling back to NextClosure.FALSE
 ```
 
 We can inspect the results as:

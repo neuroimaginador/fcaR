@@ -201,6 +201,7 @@ degrees of confidence.
 
 ``` r
 fc$find_implications()
+#> LinCbO is only available for binary contexts. Falling back to NextClosure.FALSE
 fc$implications
 #> Implication set with 26 implications.
 #> Rule 1: {} -> {Romance [0.1]}

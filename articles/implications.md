@@ -75,6 +75,7 @@ formal context to extract the canonical basis of implications:
 ``` r
 fc_planets$find_implications()
 fc_I$find_implications()
+#> LinCbO is only available for binary contexts. Falling back to NextClosure.FALSE
 ```
 
 We can inspect the implications by doing:

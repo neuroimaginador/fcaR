@@ -583,7 +583,11 @@ Use modified Ganter algorithm to compute both concepts and implications
 
 #### Usage
 
-    FormalContext$find_implications(save_concepts = TRUE, verbose = FALSE)
+    FormalContext$find_implications(
+      save_concepts = TRUE,
+      verbose = FALSE,
+      method = c("LinCbO", "NextClosure")
+    )
 
 #### Arguments
 
@@ -596,9 +600,37 @@ Use modified Ganter algorithm to compute both concepts and implications
 
   (logical) `TRUE` will provide a verbose output.
 
+- `method`:
+
+  (character) Algorithm to use for binary contexts. One of `"LinCbO"`
+  (default, Janostik, Konecny, Krajca) or `"NextClosure"` (Ganter's
+  algorithm). For non-binary (fuzzy) contexts, NextClosure is always
+  used.
+
 #### Returns
 
 Nothing, just updates the internal fields `concepts` and `implications`.
+
+------------------------------------------------------------------------
+
+### Method `find_protoconcepts()`
+
+Find protoconcepts
+
+#### Usage
+
+    FormalContext$find_protoconcepts(verbose = FALSE)
+
+#### Arguments
+
+- `verbose`:
+
+  (logical) Show verbose output.
+
+#### Returns
+
+A list of protoconcepts, where each protoconcept is a list of two Sets
+(extent and intent).
 
 ------------------------------------------------------------------------
 
