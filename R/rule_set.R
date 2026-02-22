@@ -378,14 +378,19 @@ RuleSet <- R6::R6Class(
         LHS <- Matrix::Matrix(
           FALSE,
           nrow = length(private$attributes),
-          ncol = 1,
+          ncol = 0,
           sparse = TRUE
         )
       } else {
         LHS <- private$lhs_matrix
       }
 
-      dimnames(LHS) <- list(private$attributes, paste0(seq_len(ncol(LHS))))
+      n_lhs <- if (is.null(dim(LHS))) 0 else ncol(LHS)
+      if (is.null(dim(LHS)) && length(LHS) > 0) {
+        cat("CRASHING ON LHS:\nCLASS:", class(LHS), "\nLENGTH:", length(LHS), "\n")
+        print(LHS)
+      }
+      dimnames(LHS) <- list(private$attributes, paste0(seq_len(n_lhs)))
 
       return(LHS)
     },
@@ -408,7 +413,8 @@ RuleSet <- R6::R6Class(
         RHS <- private$rhs_matrix
       }
 
-      dimnames(RHS) <- list(private$attributes, paste0(seq_len(ncol(RHS))))
+      n_rhs <- if (is.null(dim(RHS))) 0 else ncol(RHS)
+      dimnames(RHS) <- list(private$attributes, paste0(seq_len(n_rhs)))
 
       return(RHS)
     },

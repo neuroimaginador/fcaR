@@ -93,6 +93,30 @@ get_element_array <- function(I, i, j, k) {
     .Call(`_fcaR_get_element_array`, I, i, j, k)
 }
 
+run_binary_monotonic_optimized <- function(lhs_in, rhs_in, use_pruning = TRUE) {
+    .Call(`_fcaR_run_binary_monotonic_optimized`, lhs_in, rhs_in, use_pruning)
+}
+
+run_binary_dosp_optimized <- function(lhs_in, rhs_in, use_pruning = TRUE) {
+    .Call(`_fcaR_run_binary_dosp_optimized`, lhs_in, rhs_in, use_pruning)
+}
+
+run_binary_single_pass_optimized <- function(lhs_in, rhs_in, use_pruning = TRUE) {
+    .Call(`_fcaR_run_binary_single_pass_optimized`, lhs_in, rhs_in, use_pruning)
+}
+
+run_binary_monotonic_batch_optimized <- function(lhs_in, rhs_in, use_pruning = TRUE) {
+    .Call(`_fcaR_run_binary_monotonic_batch_optimized`, lhs_in, rhs_in, use_pruning)
+}
+
+run_binary_tree_optimized <- function(lhs_in, rhs_in, use_pruning = TRUE) {
+    .Call(`_fcaR_run_binary_tree_optimized`, lhs_in, rhs_in, use_pruning)
+}
+
+run_binary_lexicographic_optimized <- function(lhs_in, rhs_in, use_pruning = TRUE) {
+    .Call(`_fcaR_run_binary_lexicographic_optimized`, lhs_in, rhs_in, use_pruning)
+}
+
 binary_next_closure_implications <- function(I, verbose = FALSE) {
     .Call(`_fcaR_binary_next_closure_implications`, I, verbose)
 }

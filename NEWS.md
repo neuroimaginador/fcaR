@@ -6,6 +6,7 @@ Improvements:
 * **Tidyverse for RuleSet:** The `dplyr` verbs (`filter()`, `arrange()`, `slice()`) now work on `RuleSet` objects in addition to `ImplicationSet`, via S3 method dispatch.
 * **Standard Context:** Added `get_standard_context()` method to `ImplicationSet`, which computes the standard formal context from a set of implications by finding the meet-irreducible closed sets.
 * **Default Implication Algorithm:** The default algorithm for finding the Duquenne-Guigues basis of implications in binary formal contexts is now `LinCbO`, achieving performance improvements of up to 100x compared to `NextClosure`.
+* **Binary Direct Optimal Basis:** introduced a suite of hyper-optimized algorithms for computing the Direct Optimal Basis in binary contexts. These include a new Tree-based closure operator with logarithmic complexity, semi-naive delta evaluation, and candidate deduplication. These improvements achieve speedups of over 10x in dense contexts. The `to_direct_optimal()` method now automatically detects binary contexts and routes the computation to these optimized native routines.
 
 New Functionality:
 

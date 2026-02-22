@@ -425,54 +425,67 @@ ImplicationSet <- R6::R6Class(
       }
 
       # 2. Call C++
-      res_list <- switch(
-        method,
-        "do_sp" = run_direct_optimal_sp_single_pass_rcpp_optimized(
+      is_binary <- (length(vals) <= 2) && all(vals %in% c(0, 1))
+
+      if (is_binary && method %in% c("do_sp", "direct_optimal", "monotonic", "priority")) {
+        if (verbose) {
+          message("Binary context detected: using hyper-optimized native Tree-Closure logic.")
+        }
+        res_list <- run_binary_tree_optimized(
           private$lhs_matrix,
           private$rhs_matrix,
-          private$attributes,
-          vals,
-          current_logic,
-          TRUE,
-          verbose
-        ),
-        "direct_optimal" = run_direct_optimal_sp_rcpp_optimized(
-          private$lhs_matrix,
-          private$rhs_matrix,
-          private$attributes,
-          vals,
-          current_logic,
-          TRUE,
-          verbose
-        ),
-        "final_ts" = run_final_ts_rcpp_optimized(
-          private$lhs_matrix,
-          private$rhs_matrix,
-          private$attributes,
-          vals,
-          current_logic,
-          TRUE,
-          verbose
-        ),
-        "monotonic" = run_monotonic_incremental_rcpp_optimized(
-          private$lhs_matrix,
-          private$rhs_matrix,
-          private$attributes,
-          vals,
-          current_logic,
-          TRUE,
-          verbose
-        ),
-        "priority" = run_priority_refinement_rcpp_optimized(
-          private$lhs_matrix,
-          private$rhs_matrix,
-          private$attributes,
-          vals,
-          current_logic,
-          TRUE,
-          verbose
+          TRUE
         )
-      )
+      } else {
+        res_list <- switch(
+          method,
+          "do_sp" = run_direct_optimal_sp_single_pass_rcpp_optimized(
+            private$lhs_matrix,
+            private$rhs_matrix,
+            private$attributes,
+            vals,
+            current_logic,
+            TRUE,
+            verbose
+          ),
+          "direct_optimal" = run_direct_optimal_sp_rcpp_optimized(
+            private$lhs_matrix,
+            private$rhs_matrix,
+            private$attributes,
+            vals,
+            current_logic,
+            TRUE,
+            verbose
+          ),
+          "final_ts" = run_final_ts_rcpp_optimized(
+            private$lhs_matrix,
+            private$rhs_matrix,
+            private$attributes,
+            vals,
+            current_logic,
+            TRUE,
+            verbose
+          ),
+          "monotonic" = run_monotonic_incremental_rcpp_optimized(
+            private$lhs_matrix,
+            private$rhs_matrix,
+            private$attributes,
+            vals,
+            current_logic,
+            TRUE,
+            verbose
+          ),
+          "priority" = run_priority_refinement_rcpp_optimized(
+            private$lhs_matrix,
+            private$rhs_matrix,
+            private$attributes,
+            vals,
+            current_logic,
+            TRUE,
+            verbose
+          )
+        )
+      }
 
       # 3. Reconstruct Sparse Matrices
       s_data <- res_list$Sigma

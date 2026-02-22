@@ -3,7 +3,8 @@
                                    is_direct = FALSE,
                                    logic = "Lukasiewicz") {
 
-  if (is.null(LHS) || (ncol(LHS) == 0)) {
+  n_lhs <- if (is.null(dim(LHS))) 0 else ncol(LHS)
+  if (is.null(LHS) || n_lhs == 0) {
 
     return(list(closure = S,
                 implications = list(lhs = LHS,
@@ -19,7 +20,7 @@
 
     end <- TRUE
 
-    for (i in seq_len(ncol(LHS))) {
+    for (i in seq_len(n_lhs)) {
 
       subsethood <- sapply(seq_along(attributes),
                            \(j) {

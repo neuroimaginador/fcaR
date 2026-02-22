@@ -8,6 +8,8 @@ using namespace Rcpp;
 // --- LINCBO (Algorithm 8 & 9) - DEEP MEMORY OPTIMIZED ---
 // =============================================================================
 
+namespace {
+
 // Fast bitset with Small-Object Optimization (SBO)
 // Stores up to 256 bits inline avoiding heap allocations for typical FCA contexts.
 class FastBitset {
@@ -98,12 +100,10 @@ public:
     ptr[i >> 6] |= (1ULL << (i & 63));
   }
 
-  inline void set() { // fill with 1s up to n_bits
+  inline void set() { 
     std::fill(ptr, ptr + n_words, ~0ULL);
     int rem = n_bits & 63;
-    if (rem > 0) {
-      ptr[n_words - 1] &= (1ULL << rem) - 1;
-    }
+    if (rem > 0) ptr[n_words - 1] &= (1ULL << rem) - 1;
   }
 
   inline void reset() {
@@ -117,6 +117,8 @@ public:
   inline bool test(int i) const {
     return (ptr[i >> 6] & (1ULL << (i & 63))) != 0;
   }
+
+  inline bool operator[](int i) const { return test(i); }
 
   inline void bitwise_and(const FastBitset& other) {
     for (int i = 0; i < n_words; ++i) {
@@ -137,10 +139,40 @@ public:
   }
 
   inline bool none() const {
-    for (int i = 0; i < n_words; ++i) {
-      if (ptr[i] != 0) return false;
+    for (int i = 0; i < n_words; ++i) if (ptr[i]) return false;
+    return true;
+  }
+
+  inline bool any() const { return !none(); }
+
+  inline bool is_subset_of(const FastBitset& other) const {
+    for (int i=0; i<n_words; ++i) {
+      if ((ptr[i] & other.ptr[i]) != ptr[i]) return false;
     }
     return true;
+  }
+
+  FastBitset& operator|=(const FastBitset& other) {
+    for (int i=0; i<n_words; ++i) ptr[i] |= other.ptr[i];
+    return *this;
+  }
+
+  FastBitset& operator&=(const FastBitset& other) {
+    for (int i=0; i<n_words; ++i) ptr[i] &= other.ptr[i];
+    return *this;
+  }
+  
+  bool operator==(const FastBitset& other) const {
+    if (n_bits != other.n_bits) return false;
+    for (int i=0; i<n_words; ++i) if (ptr[i] != other.ptr[i]) return false;
+    return true;
+  }
+
+  inline bool operator!=(const FastBitset& other) const {
+    for (int i = 0; i < n_words; ++i) {
+      if (ptr[i] != other.ptr[i]) return true;
+    }
+    return false;
   }
 
   inline int count() const {
@@ -175,13 +207,6 @@ public:
       }
     }
     return n_bits;
-  }
-
-  inline bool operator!=(const FastBitset& other) const {
-    for (int i = 0; i < n_words; ++i) {
-      if (ptr[i] != other.ptr[i]) return true;
-    }
-    return false;
   }
 };
 
@@ -441,6 +466,8 @@ public:
     return List::create(_["LHS"] = L, _["RHS"] = R);
   }
 };
+
+} // anonymous namespace
 
 // [[Rcpp::export]]
 List binary_lincbo_implications(NumericMatrix I, bool save_concepts = false, bool verbose = false) {

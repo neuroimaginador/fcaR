@@ -115,7 +115,7 @@ void print_sigma_cpp(const SigmaMap& sigma, const AttributeManager& am, const st
 FuzzySet calculate_pi_operator_internal(FuzzySet A, const SigmaMap& sigma, Metrics& metrics, bool verbose, const AttributeManager& am, const LogicContext& ctx) {
   metrics.pi_calculations++;
   if (sigma.empty()) return A;
-  if (verbose) Rcpp::Rcout << "  -> Calculating pi(" << print_set_cpp(A, am) << ")...\n";
+  
   FuzzySet closure = A;
   for(const auto& pair : sigma) {
     double degree = S(pair.first, A, ctx);
@@ -124,7 +124,7 @@ FuzzySet calculate_pi_operator_internal(FuzzySet A, const SigmaMap& sigma, Metri
       closure = set_union(closure, update);
     }
   }
-  if (verbose) Rcpp::Rcout << "  <- Pi result: " << print_set_cpp(closure, am) << "\n";
+  
   return closure;
 }
 
@@ -145,8 +145,6 @@ void add_derived_internal(
 
       FuzzySet G = set_union(alphaA, set_setminus(betaC, alphaB));
 
-      if (verbose) Rcpp::Rcout << "    -> Candidate (a=" << alpha << ",b=" << beta << "): " << print_implication_cpp(G, H, am) << "\n";
-
       FuzzySet H_sem_reduced = H;
       if (use_pruning) {
         SigmaMap parents;
@@ -157,7 +155,6 @@ void add_derived_internal(
 
       FuzzySet H_final = set_setminus(H_sem_reduced, G);
       if (set_sum(H_final) > 0) {
-        if (verbose) Rcpp::Rcout << "       - SURVIVED.\n";
         derived_lhs.push_back(G);
         derived_rhs.push_back(H_final);
       }
@@ -196,8 +193,6 @@ void saturate_system(SigmaMap& sigma, Metrics& metrics, bool use_pruning, const 
 
       const FuzzySet& B = sigma.at(A);
       const FuzzySet& D = sigma.at(C);
-
-      if (verbose) Rcpp::Rcout << "  > Combining " << print_implication_cpp(A, B, am) << " AND " << print_implication_cpp(C, D, am) << "\n";
 
       add_derived_internal(A, B, C, D, derived_lhs_pass, derived_rhs_pass, use_pruning, metrics, L_vec, verbose, am, ctx);
     }
@@ -246,15 +241,12 @@ void prune_system(SigmaMap& sigma, Metrics& metrics, bool verbose, const Attribu
       const FuzzySet& A = pair.first;
       SigmaMap sigma_prime = sigma_old;
       sigma_prime.erase(A);
-      if (verbose) Rcpp::Rcout << "  > Checking " << print_implication_cpp(A, pair.second, am) << "\n";
 
       FuzzySet D = calculate_pi_operator_internal(A, sigma_prime, metrics, verbose, am, ctx);
       FuzzySet B_new = set_setminus(pair.second, D);
 
       if(set_sum(B_new) > 0) {
         sigma_f[A] = B_new;
-      } else {
-        if (verbose) Rcpp::Rcout << "    >> PURGED (redundant).\n";
       }
     }
     if(sigma == sigma_f) break;
@@ -271,32 +263,37 @@ SigmaMap internal_run_final_ts(SigmaMap sigma_in, Metrics& metrics, bool use_pru
 }
 
 SigmaMap internal_run_dosp(SigmaMap sigma_in, Metrics& metrics, bool use_pruning, const std::vector<double>& L_vec, bool verbose, const AttributeManager& am, const LogicContext& ctx) {
-  // while(true) {
+  while(true) {
     metrics.iterations++;
-    // if (verbose)
+    if (verbose) {
       Rcpp::Rcout << "\n\n==================\n--- DO-SP Pass #" << metrics.iterations << " ---\n==================\n";
-    SigmaMap sigma_old = sigma_in;
+      Rcpp::Rcout << "Before Saturation:\n";
+      print_sigma_cpp(sigma_in, am, "  ");
+    }
 
-    Rcpp::Rcout << "Before Saturation:\n";
-    print_sigma_cpp(sigma_in, am, "  ");
+    SigmaMap sigma_old = sigma_in;
 
     saturate_system(sigma_in, metrics, use_pruning, L_vec, verbose, am, ctx);
 
-    Rcpp::Rcout << "Before Pruning:\n";
-    print_sigma_cpp(sigma_in, am, "  ");
+    if (verbose) {
+      Rcpp::Rcout << "Before Pruning:\n";
+      print_sigma_cpp(sigma_in, am, "  ");
+    }
 
     prune_system(sigma_in, metrics, verbose, am, ctx);
 
-    Rcpp::Rcout << "After pass:\n";
-    print_sigma_cpp(sigma_in, am, "  ");
+    if (verbose) {
+      Rcpp::Rcout << "After pass:\n";
+      print_sigma_cpp(sigma_in, am, "  ");
+    }
 
-    // if(sigma_in == sigma_old) break;
-  // }
+    if(sigma_in == sigma_old) break;
+  }
   return sigma_in;
 }
 
-struct SigmaRule { FuzzySet B; bool is_redundant; };
-using MonotonicSigma = std::map<FuzzySet, SigmaRule>;
+struct FuzzySigmaRule { FuzzySet B; bool is_redundant; };
+using MonotonicSigma = std::map<FuzzySet, FuzzySigmaRule>;
 
 SigmaMap internal_run_monotonic(std::deque<std::pair<FuzzySet, FuzzySet>> W, Metrics& metrics, bool use_pruning, const std::vector<double>& L_vec, bool verbose, const AttributeManager& am, const LogicContext& ctx) {
   MonotonicSigma sigma_do;
@@ -634,8 +631,6 @@ void saturate_system_single_pass(SigmaMap& sigma, Metrics& metrics, bool use_pru
     const FuzzySet& B = sigma.at(A);
     const FuzzySet& D = sigma.at(C);
 
-    if (verbose) Rcpp::Rcout << "  > Combining " << print_implication_cpp(A, B, am) << " AND " << print_implication_cpp(C, D, am) << "\n";
-
     add_derived_internal(A, B, C, D, derived_lhs_pass, derived_rhs_pass, use_pruning, metrics, L_vec, verbose, am, ctx);
   }
 
@@ -679,15 +674,11 @@ void prune_system_single_pass(SigmaMap& sigma, Metrics& metrics, bool verbose, c
     SigmaMap sigma_prime = sigma_old;
     sigma_prime.erase(A); // Removemos la regla actual para ver si se deduce de las otras
 
-    if (verbose) Rcpp::Rcout << "  > Checking " << print_implication_cpp(A, pair.second, am) << "\n";
-
     FuzzySet D = calculate_pi_operator_internal(A, sigma_prime, metrics, verbose, am, ctx);
     FuzzySet B_new = set_setminus(pair.second, D);
 
     if(set_sum(B_new) > 0) {
       sigma_f[A] = B_new;
-    } else {
-      if (verbose) Rcpp::Rcout << "    >> PURGED (redundant in single pass).\n";
     }
   }
   // Actualizamos sigma directamente tras la pasada única
@@ -703,20 +694,25 @@ void prune_system_single_pass(SigmaMap& sigma, Metrics& metrics, bool verbose, c
 SigmaMap internal_run_dosp_single(SigmaMap sigma_in, Metrics& metrics, bool use_pruning, const std::vector<double>& L_vec, bool verbose, const AttributeManager& am, const LogicContext& ctx) {
   while(true) {
     metrics.iterations++;
-    // if (verbose)
+    if (verbose) {
       Rcpp::Rcout << "\n\n==================\n--- DO-SP Pass #" << metrics.iterations << " ---\n==================\n";
+      Rcpp::Rcout << "Before Saturation:\n";
+      print_sigma_cpp(sigma_in, am, "  ");
+    }
     SigmaMap sigma_old = sigma_in;
 
-    Rcpp::Rcout << "Before Saturation:\n";
-    print_sigma_cpp(sigma_in, am, "  ");
     saturate_system_single_pass(sigma_in, metrics, use_pruning, L_vec, verbose, am, ctx);
 
-    Rcpp::Rcout << "Before Pruning:\n";
-    print_sigma_cpp(sigma_in, am, "  ");
+    if (verbose) {
+      Rcpp::Rcout << "Before Pruning:\n";
+      print_sigma_cpp(sigma_in, am, "  ");
+    }
     prune_system_single_pass(sigma_in, metrics, verbose, am, ctx);
 
-    Rcpp::Rcout << "After Pass:\n";
-    print_sigma_cpp(sigma_in, am, "  ");
+    if (verbose) {
+      Rcpp::Rcout << "After Pass:\n";
+      print_sigma_cpp(sigma_in, am, "  ");
+    }
 
     if(sigma_in == sigma_old) break;
   }

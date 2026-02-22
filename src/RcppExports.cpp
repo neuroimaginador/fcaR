@@ -310,6 +310,84 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// run_binary_monotonic_optimized
+List run_binary_monotonic_optimized(S4 lhs_in, S4 rhs_in, bool use_pruning);
+RcppExport SEXP _fcaR_run_binary_monotonic_optimized(SEXP lhs_inSEXP, SEXP rhs_inSEXP, SEXP use_pruningSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type lhs_in(lhs_inSEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs_in(rhs_inSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_pruning(use_pruningSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_binary_monotonic_optimized(lhs_in, rhs_in, use_pruning));
+    return rcpp_result_gen;
+END_RCPP
+}
+// run_binary_dosp_optimized
+List run_binary_dosp_optimized(S4 lhs_in, S4 rhs_in, bool use_pruning);
+RcppExport SEXP _fcaR_run_binary_dosp_optimized(SEXP lhs_inSEXP, SEXP rhs_inSEXP, SEXP use_pruningSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type lhs_in(lhs_inSEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs_in(rhs_inSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_pruning(use_pruningSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_binary_dosp_optimized(lhs_in, rhs_in, use_pruning));
+    return rcpp_result_gen;
+END_RCPP
+}
+// run_binary_single_pass_optimized
+List run_binary_single_pass_optimized(S4 lhs_in, S4 rhs_in, bool use_pruning);
+RcppExport SEXP _fcaR_run_binary_single_pass_optimized(SEXP lhs_inSEXP, SEXP rhs_inSEXP, SEXP use_pruningSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type lhs_in(lhs_inSEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs_in(rhs_inSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_pruning(use_pruningSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_binary_single_pass_optimized(lhs_in, rhs_in, use_pruning));
+    return rcpp_result_gen;
+END_RCPP
+}
+// run_binary_monotonic_batch_optimized
+List run_binary_monotonic_batch_optimized(S4 lhs_in, S4 rhs_in, bool use_pruning);
+RcppExport SEXP _fcaR_run_binary_monotonic_batch_optimized(SEXP lhs_inSEXP, SEXP rhs_inSEXP, SEXP use_pruningSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type lhs_in(lhs_inSEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs_in(rhs_inSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_pruning(use_pruningSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_binary_monotonic_batch_optimized(lhs_in, rhs_in, use_pruning));
+    return rcpp_result_gen;
+END_RCPP
+}
+// run_binary_tree_optimized
+List run_binary_tree_optimized(S4 lhs_in, S4 rhs_in, bool use_pruning);
+RcppExport SEXP _fcaR_run_binary_tree_optimized(SEXP lhs_inSEXP, SEXP rhs_inSEXP, SEXP use_pruningSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type lhs_in(lhs_inSEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs_in(rhs_inSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_pruning(use_pruningSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_binary_tree_optimized(lhs_in, rhs_in, use_pruning));
+    return rcpp_result_gen;
+END_RCPP
+}
+// run_binary_lexicographic_optimized
+List run_binary_lexicographic_optimized(S4 lhs_in, S4 rhs_in, bool use_pruning);
+RcppExport SEXP _fcaR_run_binary_lexicographic_optimized(SEXP lhs_inSEXP, SEXP rhs_inSEXP, SEXP use_pruningSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type lhs_in(lhs_inSEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs_in(rhs_inSEXP);
+    Rcpp::traits::input_parameter< bool >::type use_pruning(use_pruningSEXP);
+    rcpp_result_gen = Rcpp::wrap(run_binary_lexicographic_optimized(lhs_in, rhs_in, use_pruning));
+    return rcpp_result_gen;
+END_RCPP
+}
 // binary_next_closure_implications
 List binary_next_closure_implications(IntegerMatrix I, bool verbose);
 RcppExport SEXP _fcaR_binary_next_closure_implications(SEXP ISEXP, SEXP verboseSEXP) {
@@ -989,6 +1067,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
+    {"_fcaR_run_binary_monotonic_optimized", (DL_FUNC) &_fcaR_run_binary_monotonic_optimized, 3},
+    {"_fcaR_run_binary_dosp_optimized", (DL_FUNC) &_fcaR_run_binary_dosp_optimized, 3},
+    {"_fcaR_run_binary_single_pass_optimized", (DL_FUNC) &_fcaR_run_binary_single_pass_optimized, 3},
+    {"_fcaR_run_binary_monotonic_batch_optimized", (DL_FUNC) &_fcaR_run_binary_monotonic_batch_optimized, 3},
+    {"_fcaR_run_binary_tree_optimized", (DL_FUNC) &_fcaR_run_binary_tree_optimized, 3},
+    {"_fcaR_run_binary_lexicographic_optimized", (DL_FUNC) &_fcaR_run_binary_lexicographic_optimized, 3},
     {"_fcaR_binary_next_closure_implications", (DL_FUNC) &_fcaR_binary_next_closure_implications, 2},
     {"_fcaR_FastCbO_binary", (DL_FUNC) &_fcaR_FastCbO_binary, 3},
     {"_fcaR_FuzzyFCbO", (DL_FUNC) &_fcaR_FuzzyFCbO, 6},
