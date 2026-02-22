@@ -69,6 +69,8 @@
 <strong>Standard Context:</strong> Added <code>get_standard_context()</code> method to <code>ImplicationSet</code>, which computes the standard formal context from a set of implications by finding the meet-irreducible closed sets.</li>
 <li>
 <strong>Default Implication Algorithm:</strong> The default algorithm for finding the Duquenne-Guigues basis of implications in binary formal contexts is now <code>LinCbO</code>, achieving performance improvements of up to 100x compared to <code>NextClosure</code>.</li>
+<li>
+<strong>Binary Direct Optimal Basis:</strong> introduced a suite of hyper-optimized algorithms for computing the Direct Optimal Basis in binary contexts. These include a new Tree-based closure operator with logarithmic complexity, semi-naive delta evaluation, and candidate deduplication. These improvements achieve speedups of over 10x in dense contexts. The <code>to_direct_optimal()</code> method now automatically detects binary contexts and routes the computation to these optimized native routines.</li>
 </ul><p>New Functionality:</p>
 <ul><li>
 <strong>Protoconcepts:</strong> Added <code>find_protoconcepts()</code> method to <code>FormalContext</code> to compute protoconcepts (pairs <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(A, B)</annotation></semantics></math> such that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>′</mi><mo>=</mo><mi>B</mi><mi>″</mi></mrow><annotation encoding="application/x-tex">A' = B''</annotation></semantics></math>) using an efficient C++ implementation.</li>
