@@ -285,7 +285,7 @@ test_that("fcaR gets LHS and RHS of implications", {
 
   imps <- ImplicationSet$new(attributes = letters[1:3])
   expect_error(LHS <- imps$get_LHS_matrix(), NA)
-  expect_equal(dim(LHS), c(3, 1))
+  expect_equal(dim(LHS), c(3, 0))
   expect_error(RHS <- imps$get_RHS_matrix(), NA)
   expect_equal(dim(RHS), c(3, 1))
 

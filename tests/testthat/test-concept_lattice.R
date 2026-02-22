@@ -37,7 +37,7 @@ test_that("fcaR creates a ConceptLattice", {
 
 test_that("fcaR plots a ConceptLattice", {
   skip_on_cran()
-  skip_if_not_installed("hasseDiagram")
+  # skip_if_not_installed("hasseDiagram")
   expect_error(fc$concepts$plot(), NA)
   fcaR_options("escape_" = FALSE)
   expect_error(fc$concepts$plot(object_names = FALSE), NA)
