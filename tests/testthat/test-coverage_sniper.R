@@ -122,3 +122,281 @@ test_that("Sniper 5: Legacy Subsetting and Dispatcher", {
   fc_str <- fc[fc$objects[1:2], fc$attributes[1:2]]
   expect_equal(fc_str$dim(), c(2, 2))
 })
+
+test_that("Sniper 6: Background Implication Completion", {
+  # Target: R/imp_to_basis.R (complete_rhs), R/formal_context.R (find_implications with bg)
+  # Strategy: Set background implications and find implications to trigger completion logic.
+
+  fc <- FormalContext$new(planets)
+  # Create some dummy background implications
+  lhs <- Matrix::sparseMatrix(i = 1, j = 1, x = 1, dims = c(ncol(planets), 1))
+  rhs <- Matrix::sparseMatrix(i = 2, j = 1, x = 1, dims = c(ncol(planets), 1))
+  rownames(lhs) <- rownames(rhs) <- colnames(planets)
+  
+  bg <- ImplicationSet$new(attributes = colnames(planets), lhs = lhs, rhs = rhs)
+  
+  # Accessing private field via $.__enclos_env__$private or just injecting
+  # Since we are testing, we can use this trick if there's no public setter
+  fc$.__enclos_env__$private$bg_implications <- bg
+  
+  expect_error(fc$find_implications(), NA)
+  expect_gt(fc$implications$cardinality(), 0)
+})
+
+test_that("Sniper 7: RuleSet Advanced Methods", {
+  # Target: R/rule_set.R (to_arules, add, filter, get_implications, support)
+  # Strategy: Exercise various RuleSet methods with different inputs.
+
+  fc <- FormalContext$new(planets)
+  fc$find_implications()
+  imps <- fc$implications
+  
+  # 1. to_arules (already covered in part, but let's be explicit)
+  if (requireNamespace("arules", quietly = TRUE)) {
+    ari <- imps$to_arules()
+    expect_is(ari, "rules")
+  }
+  
+  # 2. add (adding an ImplicationSet to another)
+  imps2 <- imps$clone()
+  expect_error(imps$add(imps2), NA)
+  expect_equal(imps$cardinality(), imps2$cardinality() * 2)
+  
+  # 3. filter
+  filtered <- imps$filter(lhs = colnames(planets)[1])
+  expect_true(inherits(filtered, "RuleSet"))
+  
+  # 4. get_implications (variety of indices)
+  # get_implications() takes no arguments and returns rules with confidence 1
+  sub_imps <- imps$get_implications()
+  if (!is.null(sub_imps)) {
+    expect_is(sub_imps, "ImplicationSet")
+  }
+  
+  # To get a subset of rules, use [
+  sub_imps_idx <- imps[1:5]
+  expect_equal(sub_imps_idx$cardinality(), 5)
+  
+  # 5. support
+  supp <- imps$support()
+  expect_length(supp, imps$cardinality())
+})
+
+test_that("Sniper 8: Implication Combination and Reordering", {
+  # Target: R/combine_implications.R (combine_implications, reorder_attributes)
+  # Strategy: Call these functions directly.
+
+  fc <- FormalContext$new(planets)
+  fc$find_implications()
+  imps1 <- fc$implications
+  
+  # Reorder attributes
+  new_attrs <- rev(fc$attributes)
+  imps_reordered <- reorder_attributes(imps1, new_attrs)
+  expect_equal(imps_reordered$get_attributes(), new_attrs)
+  
+  # Combine implications
+  # Create another set with different attributes
+  I2 <- matrix(c(1,1,0,0), 2, 2)
+  colnames(I2) <- c("X", "Y")
+  fc2 <- FormalContext$new(I2)
+  fc2$find_implications()
+  imps2 <- fc2$implications
+  
+  combined <- combine_implications(imps1, imps2)
+  expect_true("X" %in% combined$get_attributes())
+  expect_true(colnames(planets)[1] %in% combined$get_attributes())
+})
+
+test_that("Sniper 9: C++ Vector Operations (Remaining)", {
+  # Target: src/vector_operations.cpp
+  # Strategy: Use Product logic and more edge cases.
+
+  I_fuzzy <- matrix(runif(16), nrow = 4)
+  colnames(I_fuzzy) <- letters[1:4]
+  fc <- FormalContext$new(I_fuzzy)
+  fc$use_logic("Product")
+  
+  fc$find_implications()
+  
+  # Force some operations
+  S1 <- Set$new(attributes = fc$attributes)
+  S1$assign(attributes = 1:2, values = c(0.1, 0.9))
+  
+  cl <- fc$implications$closure(S1)
+  expect_is(cl$closure, "Set")
+  
+  # Trigger cardinality and other metrics
+  expect_gt(fc$implications$cardinality(), 0)
+})
+
+test_that("Sniper 10: Scaling and Advanced Context Operations", {
+  # Target: R/scaling.R (nominal, ordinal, interordinal)
+  # Strategy: Explicitly call scaling functions with sample data.
+
+  data <- data.frame(
+    A = c("a", "b", "a"),
+    B = c(1, 2, 3),
+    stringsAsFactors = FALSE
+  )
+  
+  # Nominal scaling
+  expect_error(fc_nom_mat <- nominal_scaling(data$A, "A"), NA)
+  fc_nom <- FormalContext$new(fc_nom_mat)
+  expect_is(fc_nom, "FormalContext")
+  
+  # Ordinal scaling
+  expect_error(fc_ord_mat <- ordinal_scaling(data$B, "B"), NA)
+  fc_ord <- FormalContext$new(fc_ord_mat)
+  expect_is(fc_ord, "FormalContext")
+  
+  # Interordinal scaling
+  expect_error(fc_inter_mat <- interordinal_scaling(data$B, "B"), NA)
+  fc_inter <- FormalContext$new(fc_inter_mat)
+  expect_is(fc_inter, "FormalContext")
+})
+
+test_that("Sniper 11: RuleSet Initialization Edge Cases", {
+  # Target: R/rule_set.R (initialize branches)
+  # Strategy: Initialize RuleSet with different parameters.
+
+  attrs <- c("a", "b", "c")
+  # 1. Empty initialization
+  rs_empty <- RuleSet$new(attributes = attrs)
+  expect_true(rs_empty$is_empty())
+  
+  # 2. Initialization with quality but no incidence
+  qual <- data.frame(confidence = 0.9)
+  rs_q <- RuleSet$new(attributes = attrs, quality = qual)
+  expect_equal(nrow(rs_q$get_quality()), 1)
+  
+  # 3. Initialization from sparse matrices (explicitly)
+  lhs <- Matrix::sparseMatrix(i = 1, j = 1, x = 1, dims = c(3, 1))
+  rhs <- Matrix::sparseMatrix(i = 2, j = 1, x = 1, dims = c(3, 1))
+  rs_mat <- RuleSet$new(attributes = attrs, lhs = lhs, rhs = rhs)
+  expect_equal(rs_mat$cardinality(), 1)
+})
+
+test_that("Sniper 12: JSON Import/Export", {
+  # Target: R/formal_context.R (to_json, context_from_json), R/rule_set.R (to_json, rules_from_json)
+  skip_if_not_installed("jsonlite")
+  
+  fc <- FormalContext$new(planets)
+  fc$find_implications()
+  
+  # 1. FormalContext to/from JSON
+  js <- fc$to_json()
+  fc2 <- context_from_json(js)
+  expect_equal(fc$attributes, fc2$attributes)
+  expect_equal(fc$objects, fc2$objects)
+  
+  # 2. RuleSet/ImplicationSet to/from JSON
+  imps <- fc$implications
+  js_i <- imps$to_json()
+  expect_error(imps2 <- implications_from_json(js_i), NA)
+  expect_equal(imps$cardinality(), imps2$cardinality())
+})
+
+test_that("Sniper 13: Specialized Scaling & Registry", {
+  # Target: R/scaling.R (biordinal_scaling, implication_scaling, interval_scaling)
+  
+  V <- c(0.1, 0.5, 0.9)
+  # biordinal
+  m1 <- biordinal_scaling(V, "V")
+  expect_equal(ncol(m1), 6) # 3 for <=, 3 for >=
+  
+  # implication
+  m2 <- implication_scaling(V, "V")
+  expect_is(m2, "matrix")
+  
+  # interval
+  m3 <- interval_scaling(V, "V", values = c(0, 0.5, 1))
+  expect_equal(ncol(m3), 2)
+})
+
+test_that("Sniper 14: Many-valued Context & Plotting", {
+  # Target: R/formal_context.R (many-valued, plot)
+  
+  data <- data.frame(
+    O1 = c(1, 2),
+    O2 = c(3, 4),
+    row.names = c("A", "B")
+  )
+  fc <- FormalContext$new(data)
+  # Internal private check
+  expect_true(fc$.__enclos_env__$private$is_many_valued)
+  
+  # Trigger errors for many-valued context
+  expect_error(fc$find_implications())
+  expect_error(fc$find_concepts())
+  
+  # Plotting (smoke test) - expect error for many-valued
+  if (requireNamespace("ggplot2", quietly = TRUE)) {
+    expect_error(fc$plot())
+  }
+})
+
+test_that("Sniper 15: Direct Optimal Basis & Edge Cases", {
+  # Target: R/implication_set.R (to_direct_optimal)
+  
+  fc <- FormalContext$new(planets)
+  fc$find_implications()
+  imps <- fc$implications
+  
+  # to_direct_optimal
+  expect_error(do <- imps$to_direct_optimal(), NA)
+  expect_is(do, "ImplicationSet")
+})
+
+test_that("Sniper 16: Causal Rules & Subcontext", {
+  # Target: R/formal_context.R (find_causal_rules, subcontext)
+  
+  fc <- FormalContext$new(planets)
+  
+  # Subcontext
+  sc <- fc$subcontext(objects = 1:3, attributes = 1:3)
+  expect_equal(sc$dim(), c(3, 3))
+  
+  # Causal Rules
+  # Let's say we want to predict 'moon'
+  expect_error(cr <- fc$find_causal_rules(response_var = "moon", min_support = 0.01), NA)
+  expect_is(cr, "RuleSet")
+})
+
+test_that("Sniper 17: Deeper Scaling and Cache Logic", {
+  # Target: R/scaling.R (functions, character attributes)
+  
+  # 1. Custom function as values in nominal_scaling
+  V <- c(1, 2, 3)
+  my_vals <- function(x) c(1, 3)
+  m <- nominal_scaling(V, "V", values = my_vals)
+  expect_equal(ncol(m), 2)
+  
+  # 2. Character attributes in ordinal_scaling
+  V_char <- c("low", "medium", "high")
+  m_char <- ordinal_scaling(V_char, "V", values = c("low", "medium", "high"))
+  expect_is(m_char, "matrix")
+  
+  # 3. Cache logic in ImplicationSet$support()
+  fc <- FormalContext$new(planets)
+  fc$find_implications()
+  imps <- fc$implications
+  # First call computes support
+  s1 <- imps$support()
+  # Second call should use cached value
+  s2 <- imps$support()
+  expect_equal(s1, s2)
+  
+  # 4. Binary context message in to_direct_optimal
+  expect_message(imps$to_direct_optimal(verbose = TRUE), "Binary context detected")
+  
+  # 5. Fuzzy closure with non-Set input
+  # Use a sparse matrix (S4) instead of a numeric vector
+  S_mat <- Matrix::sparseMatrix(i = integer(0), j = integer(0), x = numeric(0), dims = c(1, length(fc$attributes)))
+  cl <- imps$closure(S_mat)
+  expect_is(cl$closure, "Set")
+  
+  # 6. FormalContext$closure with sparse matrix input
+  cl_fc <- fc$closure(S_mat)
+  expect_is(cl_fc, "Set")
+})
