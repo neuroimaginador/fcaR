@@ -192,7 +192,7 @@ test_that("Sniper 8: Implication Combination and Reordering", {
   
   # Reorder attributes
   new_attrs <- rev(fc$attributes)
-  imps_reordered <- reorder_attributes(imps1, new_attrs)
+  imps_reordered <- fcaR:::reorder_attributes(imps1, new_attrs)
   expect_equal(imps_reordered$get_attributes(), new_attrs)
   
   # Combine implications
@@ -203,7 +203,7 @@ test_that("Sniper 8: Implication Combination and Reordering", {
   fc2$find_implications()
   imps2 <- fc2$implications
   
-  combined <- combine_implications(imps1, imps2)
+  combined <- fcaR:::combine_implications(imps1, imps2)
   expect_true("X" %in% combined$get_attributes())
   expect_true(colnames(planets)[1] %in% combined$get_attributes())
 })
@@ -241,17 +241,17 @@ test_that("Sniper 10: Scaling and Advanced Context Operations", {
   )
   
   # Nominal scaling
-  expect_error(fc_nom_mat <- nominal_scaling(data$A, "A"), NA)
+  expect_error(fc_nom_mat <- fcaR:::nominal_scaling(data$A, "A"), NA)
   fc_nom <- FormalContext$new(fc_nom_mat)
   expect_is(fc_nom, "FormalContext")
   
   # Ordinal scaling
-  expect_error(fc_ord_mat <- ordinal_scaling(data$B, "B"), NA)
+  expect_error(fc_ord_mat <- fcaR:::ordinal_scaling(data$B, "B"), NA)
   fc_ord <- FormalContext$new(fc_ord_mat)
   expect_is(fc_ord, "FormalContext")
   
   # Interordinal scaling
-  expect_error(fc_inter_mat <- interordinal_scaling(data$B, "B"), NA)
+  expect_error(fc_inter_mat <- fcaR:::interordinal_scaling(data$B, "B"), NA)
   fc_inter <- FormalContext$new(fc_inter_mat)
   expect_is(fc_inter, "FormalContext")
 })
@@ -302,15 +302,15 @@ test_that("Sniper 13: Specialized Scaling & Registry", {
   
   V <- c(0.1, 0.5, 0.9)
   # biordinal
-  m1 <- biordinal_scaling(V, "V")
+  m1 <- fcaR:::biordinal_scaling(V, "V")
   expect_equal(ncol(m1), 6) # 3 for <=, 3 for >=
   
   # implication
-  m2 <- implication_scaling(V, "V")
+  m2 <- fcaR:::implication_scaling(V, "V")
   expect_is(m2, "matrix")
   
   # interval
-  m3 <- interval_scaling(V, "V", values = c(0, 0.5, 1))
+  m3 <- fcaR:::interval_scaling(V, "V", values = c(0, 0.5, 1))
   expect_equal(ncol(m3), 2)
 })
 
@@ -369,12 +369,12 @@ test_that("Sniper 17: Deeper Scaling and Cache Logic", {
   # 1. Custom function as values in nominal_scaling
   V <- c(1, 2, 3)
   my_vals <- function(x) c(1, 3)
-  m <- nominal_scaling(V, "V", values = my_vals)
+  m <- fcaR:::nominal_scaling(V, "V", values = my_vals)
   expect_equal(ncol(m), 2)
   
   # 2. Character attributes in ordinal_scaling
   V_char <- c("low", "medium", "high")
-  m_char <- ordinal_scaling(V_char, "V", values = c("low", "medium", "high"))
+  m_char <- fcaR:::ordinal_scaling(V_char, "V", values = c("low", "medium", "high"))
   expect_is(m_char, "matrix")
   
   # 3. Cache logic in ImplicationSet$support()
@@ -399,4 +399,91 @@ test_that("Sniper 17: Deeper Scaling and Cache Logic", {
   # 6. FormalContext$closure with sparse matrix input
   cl_fc <- fc$closure(S_mat)
   expect_is(cl_fc, "Set")
+})
+
+test_that("Sniper 18: Orphan Helpers and Internal Methods", {
+  # 1. R/build_sparse_matrix.R
+  m_sparse <- fcaR:::build_sparse_matrix(i = as.integer(c(0, 1)), p = as.integer(c(0, 1, 2)), x = c(1, 1), dims = c(2, 2))
+  expect_is(m_sparse, "dgCMatrix")
+  
+  # 2. R/logics.R - Hit all logics
+  for (l in fcaR:::available_logics()) {
+    expect_is(fcaR:::get_implication(l), "function")
+    expect_is(fcaR:::get_tnorm(l), "function")
+  }
+  expect_null(fcaR:::get_implication("non-existent"))
+  expect_null(fcaR:::get_tnorm("non-existent"))
+  
+  # 3. R/reorder.R
+  m1 <- Matrix::Matrix(c(1,1,0, 0,0,1, 1,0,0), nrow=3, ncol=3, sparse=TRUE)
+  m2 <- Matrix::Matrix(c(0,0,1, 1,1,0, 0,1,1), nrow=3, ncol=3, sparse=TRUE)
+  res_reorder <- fcaR:::reorder(m1, m2, c("a", "b", "c"))
+  expect_is(res_reorder, "list")
+
+  # 4. R/plot_context.R
+  fc_bin <- FormalContext$new(planets)
+  if (requireNamespace("ggplot2", quietly = TRUE)) {
+    expect_error(fc_bin$plot(), NA)
+  }
+})
+
+test_that("Sniper 19: Expanded C++ Metrics and Concepts", {
+  # Target src/fastcbo.cpp, src/fastcbo-binary.cpp, src/inclose_binary_old.cpp
+  fc <- FormalContext$new(planets)
+  
+  # FastCbO
+  expect_error(fc$find_concepts(method = "FastCbO"), NA)
+  
+  # FastCbO_binary (direct call to hit src/fastcbo-binary.cpp)
+  I_mat <- as.matrix(planets)
+  expect_is(fcaR:::FastCbO_binary(I_mat, colnames(planets)), "list")
+  
+  # InClose_binary (direct call to hit src/inclose_binary_old.cpp)
+  expect_is(fcaR:::InClose_binary(I_mat, colnames(planets)), "list")
+
+  # Fuzzy basis methods (src/binary_do_optimized.cpp & src/fuzzy_do.cpp)
+  m_tiny <- matrix(c(1, 0.5, 0.2, 0.8), nrow=2)
+  rownames(m_tiny) <- c("O1", "O2")
+  colnames(m_tiny) <- c("A1", "A2")
+  fc_tiny <- FormalContext$new(m_tiny)
+  fc_tiny$find_implications()
+  
+  methods <- c("do_sp", "direct_optimal", "final_ts", "monotonic")
+  for (m in methods) {
+    expect_error(fc_tiny$implications$clone()$to_direct_optimal(method = m, verbose = FALSE), NA)
+  }
+  
+  # ConceptLattice properties (hit LatticeProperties.cpp)
+  fc_tiny$find_concepts()
+  lat <- fc_tiny$concepts
+  expect_is(lat$join_irreducibles(), "ConceptSet")
+  expect_is(lat$meet_irreducibles(), "ConceptSet")
+  expect_error(lat$separation(), NA)
+})
+
+test_that("Sniper 20: Random Contexts, dplyr and Utils", {
+  # Random Contexts
+  expect_is(RandomContext(5, 5, density = 0.5), "FormalContext")
+  expect_is(RandomContext(5, 5, distribution = "dirichlet"), "FormalContext")
+  expect_is(RandomDistributiveContext(5), "FormalContext")
+  
+  # Randomization
+  fc <- FormalContext$new(planets)
+  expect_is(randomize_context(fc, method = "swap", iterations = 5), "FormalContext")
+  expect_is(randomize_context(fc, method = "rewire", iterations = 5), "FormalContext")
+  
+  # dplyr Verbs - Hit more branches
+  expect_true("moon" %in% (fc |> dplyr::select(moon))$attributes)
+  expect_equal(length((fc |> dplyr::filter(moon == 100))$objects), 0)
+  expect_true("X" %in% (fc |> dplyr::mutate(X = 1))$attributes)
+  expect_is(fc |> dplyr::arrange(desc(moon)), "FormalContext")
+  expect_true("luna" %in% (fc |> dplyr::rename(luna = moon))$attributes)
+  
+  # Utils
+  m <- Matrix::Matrix(c(1,0,1, 0,1,0), nrow=3, ncol=2, sparse=TRUE)
+  l <- fcaR:::sparse_to_list(m)
+  expect_equal(length(l), 2)
+  
+  # Messages
+  expect_message(fcaR:::first_time_message("fcaR_opt_final_v2", "msg"), "msg")
 })
