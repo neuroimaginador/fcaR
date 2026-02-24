@@ -1,3 +1,5 @@
+# fcaR 1.6.0
+
 # fcaR 1.5.0
 
 Improvements:
