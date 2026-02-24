@@ -22,3 +22,5 @@ _quarto.yml
 **/*.quarto_ipynb
 .agent
 papers
+examples
+scripts_dev

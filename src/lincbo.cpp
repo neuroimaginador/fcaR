@@ -1,217 +1,21 @@
 #include <Rcpp.h>
 #include <algorithm>
 #include <vector>
+#include "fcaR_bitset.h"
 
 using namespace Rcpp;
 
 // =============================================================================
-// --- LINCBO (Algorithm 8 & 9) - DEEP MEMORY OPTIMIZED ---
+// --- LinCbO (Algorithm 8 & 9) - High-Performance Implementation ---
+// Uses the shared fcaR::FastBitset from fcaR_bitset.h to avoid symbol collisions.
 // =============================================================================
 
 namespace {
 
-// Fast bitset with Small-Object Optimization (SBO)
-// Stores up to 256 bits inline avoiding heap allocations for typical FCA contexts.
-class FastBitset {
-public:
-  uint64_t inline_words[4];
-  std::vector<uint64_t> heap_words;
-  uint64_t* ptr;
-  int n_words;
-  int n_bits;
-
-  FastBitset() : ptr(nullptr), n_words(0), n_bits(0) {}
-  
-  // Custom destructor, copy constructor, assignment operator for safety if needed,
-  // but Rcpp vectors of objects often need valid defaults.
-  // Using explicit init() is safer here.
-  
-  void init(int n) {
-    n_bits = n;
-    n_words = (n + 63) / 64;
-    if (n_words <= 4) {
-      ptr = inline_words;
-      for (int i=0; i<4; ++i) inline_words[i] = 0;
-    } else {
-      heap_words.assign(n_words, 0);
-      ptr = heap_words.data();
-    }
-  }
-  
-  FastBitset(const FastBitset& other) : n_words(other.n_words), n_bits(other.n_bits) {
-    if (n_words <= 4) {
-      ptr = inline_words;
-      for (int i=0; i<n_words; ++i) inline_words[i] = other.ptr[i];
-    } else {
-      heap_words = other.heap_words;
-      ptr = heap_words.data();
-    }
-  }
-
-  FastBitset& operator=(const FastBitset& other) {
-    if (this == &other) return *this;
-    n_bits = other.n_bits;
-    int old_words = n_words;
-    n_words = other.n_words;
-    if (n_words <= 4) {
-      if (old_words > 4) std::vector<uint64_t>().swap(heap_words); // free
-      ptr = inline_words;
-      for (int i=0; i<n_words; ++i) inline_words[i] = other.ptr[i];
-    } else {
-      heap_words = other.heap_words;
-      ptr = heap_words.data();
-    }
-    return *this;
-  }
-  
-  // Fast move constructor to avoid copying arrays returned by value
-  FastBitset(FastBitset&& other) noexcept : n_words(other.n_words), n_bits(other.n_bits) {
-    if (n_words <= 4) {
-      ptr = inline_words;
-      for (int i=0; i<n_words; ++i) inline_words[i] = other.ptr[i];
-    } else {
-      heap_words = std::move(other.heap_words);
-      ptr = heap_words.data();
-    }
-    other.ptr = nullptr;
-    other.n_words = 0;
-    other.n_bits = 0;
-  }
-  
-  FastBitset& operator=(FastBitset&& other) noexcept {
-    if (this == &other) return *this;
-    n_bits = other.n_bits;
-    n_words = other.n_words;
-    if (n_words <= 4) {
-      std::vector<uint64_t>().swap(heap_words); // free
-      ptr = inline_words;
-      for (int i=0; i<n_words; ++i) inline_words[i] = other.ptr[i];
-    } else {
-      heap_words = std::move(other.heap_words);
-      ptr = heap_words.data();
-    }
-    other.ptr = nullptr;
-    other.n_words = 0;
-    other.n_bits = 0;
-    return *this;
-  }
-
-  inline void set(int i) {
-    ptr[i >> 6] |= (1ULL << (i & 63));
-  }
-
-  inline void set() { 
-    std::fill(ptr, ptr + n_words, ~0ULL);
-    int rem = n_bits & 63;
-    if (rem > 0) ptr[n_words - 1] &= (1ULL << rem) - 1;
-  }
-
-  inline void reset() {
-    std::fill(ptr, ptr + n_words, 0ULL);
-  }
-
-  inline void reset(int i) {
-    ptr[i >> 6] &= ~(1ULL << (i & 63));
-  }
-
-  inline bool test(int i) const {
-    return (ptr[i >> 6] & (1ULL << (i & 63))) != 0;
-  }
-
-  inline bool operator[](int i) const { return test(i); }
-
-  inline void bitwise_and(const FastBitset& other) {
-    for (int i = 0; i < n_words; ++i) {
-      ptr[i] &= other.ptr[i];
-    }
-  }
-
-  inline void bitwise_or(const FastBitset& other) {
-    for (int i = 0; i < n_words; ++i) {
-      ptr[i] |= other.ptr[i];
-    }
-  }
-
-  inline void bitwise_and_not(const FastBitset& other) {
-    for (int i = 0; i < n_words; ++i) {
-      ptr[i] &= ~other.ptr[i];
-    }
-  }
-
-  inline bool none() const {
-    for (int i = 0; i < n_words; ++i) if (ptr[i]) return false;
-    return true;
-  }
-
-  inline bool any() const { return !none(); }
-
-  inline bool is_subset_of(const FastBitset& other) const {
-    for (int i=0; i<n_words; ++i) {
-      if ((ptr[i] & other.ptr[i]) != ptr[i]) return false;
-    }
-    return true;
-  }
-
-  FastBitset& operator|=(const FastBitset& other) {
-    for (int i=0; i<n_words; ++i) ptr[i] |= other.ptr[i];
-    return *this;
-  }
-
-  FastBitset& operator&=(const FastBitset& other) {
-    for (int i=0; i<n_words; ++i) ptr[i] &= other.ptr[i];
-    return *this;
-  }
-  
-  bool operator==(const FastBitset& other) const {
-    if (n_bits != other.n_bits) return false;
-    for (int i=0; i<n_words; ++i) if (ptr[i] != other.ptr[i]) return false;
-    return true;
-  }
-
-  inline bool operator!=(const FastBitset& other) const {
-    for (int i = 0; i < n_words; ++i) {
-      if (ptr[i] != other.ptr[i]) return true;
-    }
-    return false;
-  }
-
-  inline int count() const {
-    int c = 0;
-    for (int i = 0; i < n_words; ++i) {
-      c += __builtin_popcountll(ptr[i]);
-    }
-    return c;
-  }
-
-  inline int find_first() const {
-    for (int i = 0; i < n_words; ++i) {
-      if (ptr[i] != 0) {
-        return (i << 6) + __builtin_ctzll(ptr[i]);
-      }
-    }
-    return n_bits;
-  }
-
-  inline int find_next(int prev) const {
-    int next_idx = prev + 1;
-    if (next_idx >= n_bits) return n_bits;
-    int word_idx = next_idx >> 6;
-    uint64_t mask = ~0ULL << (next_idx & 63);
-    uint64_t masked_word = ptr[word_idx] & mask;
-    if (masked_word != 0) {
-      return (word_idx << 6) + __builtin_ctzll(masked_word);
-    }
-    for (int i = word_idx + 1; i < n_words; ++i) {
-      if (ptr[i] != 0) {
-        return (i << 6) + __builtin_ctzll(ptr[i]);
-      }
-    }
-    return n_bits;
-  }
-};
+using Bitset = fcaR::FastBitset;
 
 struct LRule {
-  FastBitset lhs, rhs;
+  Bitset lhs, rhs;
 };
 
 // Flattened Adjacency List for storing List[m] logic with zero vector overheads
@@ -236,8 +40,8 @@ public:
 class LinCbOSolver {
 public:
   int nO, nA;
-  std::vector<FastBitset> attr_data;
-  std::vector<FastBitset> obj_data;
+  std::vector<Bitset> attr_data;
+  std::vector<Bitset> obj_data;
 
   std::vector<LRule> T;
   FlatListM list_m;
@@ -272,15 +76,14 @@ public:
         }
       }
     }
-    // Preallocate extreme count stack depth conservatively to avoid reallocs
     count_stack.reserve(2 * nA * nA * 100);
   }
 
-  inline void formal_closure(const FastBitset &A, FastBitset &res, FastBitset &ext) const {
+  inline void formal_closure(const Bitset &A, Bitset &res, Bitset &ext) const {
     ext.init(nO);
     ext.set();
-    for (int j = A.find_first(); j < nA; j = A.find_next(j)) {
-      ext.bitwise_and(attr_data[j]);
+    for (size_t j = A.find_first(); j != Bitset::npos && j < (size_t)nA; j = A.find_next(j)) {
+      ext &= attr_data[j];
     }
     
     res.init(nA);
@@ -288,14 +91,14 @@ public:
       res.set();
     } else {
       res.set();
-      for (int i = ext.find_first(); i < nO; i = ext.find_next(i)) {
-        res.bitwise_and(obj_data[i]);
+      for (size_t i = ext.find_first(); i != Bitset::npos && i < (size_t)nO; i = ext.find_next(i)) {
+        res &= obj_data[i];
       }
     }
   }
 
   // Uses flat count stack offsets
-  bool lin_closure_rc(const FastBitset &B, int y, const FastBitset &Z_prime, int prev_offset, int cur_offset, FastBitset &D) {
+  bool lin_closure_rc(const Bitset &B, int y, const Bitset &Z_prime, int prev_offset, int cur_offset, Bitset &D) {
     D = B;
     int old_size = (prev_offset >= 0) ? (cur_offset - prev_offset) : 0;
     int new_size = T.size();
@@ -305,19 +108,21 @@ public:
       std::copy_n(count_stack.begin() + prev_offset, old_size, count_stack.begin() + cur_offset);
     }
     
-    FastBitset B_old = B;
+    Bitset B_old = B;
     B_old.bitwise_and_not(Z_prime);
     
     // Process new rules
     for (int r = old_size; r < new_size; ++r) {
-      FastBitset diff = T[r].lhs;
+      Bitset diff = T[r].lhs;
       diff.bitwise_and_not(B_old);
       count_stack[cur_offset + r] = diff.count();
     }
 
-    FastBitset Z = Z_prime;
-    while (!Z.none()) {
-      int m = Z.find_first();
+    Bitset Z = Z_prime;
+    while (Z.any()) {
+      size_t m_pos = Z.find_first();
+      if (m_pos == Bitset::npos) break;
+      int m = static_cast<int>(m_pos);
       Z.reset(m);
       
       // Traverse flattened linked list
@@ -325,15 +130,16 @@ public:
       while (curr != -1) {
         int r = list_m.val[curr];
         if (--count_stack[cur_offset + r] == 0) {
-          FastBitset add = T[r].rhs;
+          Bitset add = T[r].rhs;
           add.bitwise_and_not(D);
-          if (!add.none()) {
-            int min_add = add.find_first();
+          if (add.any()) {
+            size_t min_add_pos = add.find_first();
+            int min_add = (min_add_pos != Bitset::npos) ? static_cast<int>(min_add_pos) : nA;
             if (y >= 0 && min_add < y) {
                return false;
             }
-            D.bitwise_or(add);
-            Z.bitwise_or(add);
+            D |= add;
+            Z |= add;
           }
         }
         curr = list_m.next[curr];
@@ -342,10 +148,10 @@ public:
     return true;
   }
 
-  void step(FastBitset B, int y, FastBitset Z, int prev_offset) {
+  void step(Bitset B, int y, Bitset Z, int prev_offset) {
     if (++step_count % 4096 == 0) Rcpp::checkUserInterrupt();
 
-    FastBitset B_star;
+    Bitset B_star;
     B_star.init(nA);
     
     int cur_offset = count_stack.size();
@@ -357,60 +163,55 @@ public:
       return;
     }
 
-    FastBitset B_pp, ext;
+    Bitset B_pp, ext;
     formal_closure(B_star, B_pp, ext);
 
     if (B_star != B_pp) {
       int r_idx = T.size();
       
       LRule new_rule;
-      new_rule.lhs.init(nA);
       new_rule.lhs = B_star;
-      new_rule.rhs.init(nA);
       new_rule.rhs = B_pp;
       T.push_back(std::move(new_rule));
       
-      for (int i = B_star.find_first(); i < nA; i = B_star.find_next(i)) {
-        list_m.push_back(i, r_idx);
+      for (size_t i = B_star.find_first(); i != Bitset::npos && i < (size_t)nA; i = B_star.find_next(i)) {
+        list_m.push_back(static_cast<int>(i), r_idx);
       }
 
       FinalRule fr;
-      for (int k = B_star.find_first(); k < nA; k = B_star.find_next(k)) {
-        fr.lhs.push_back(k);
+      for (size_t k = B_star.find_first(); k != Bitset::npos && k < (size_t)nA; k = B_star.find_next(k)) {
+        fr.lhs.push_back(static_cast<int>(k));
       }
-      FastBitset diff = B_pp;
+      Bitset diff = B_pp;
       diff.bitwise_and_not(B_star);
-      for (int k = diff.find_first(); k < nA; k = diff.find_next(k)) {
-        fr.rhs.push_back(k);
+      for (size_t k = diff.find_first(); k != Bitset::npos && k < (size_t)nA; k = diff.find_next(k)) {
+        fr.rhs.push_back(static_cast<int>(k));
       }
       results.push_back(std::move(fr));
 
-      // Append rule threshold mapping (1 because new element added locally differs immediately by 0, but initialization dictates logic count)
-      // lin_closure_rc recalculates immediately next descent
-      count_stack.push_back(0); // Safe pad for deeper descents
+      count_stack.push_back(0);
 
-      int min_diff = diff.none() ? nA : diff.find_first();
+      size_t min_diff_pos = diff.find_first();
+      int min_diff = (min_diff_pos != Bitset::npos) ? static_cast<int>(min_diff_pos) : nA;
       if (y == -1 || min_diff >= y) {
         step(B_pp, y, diff, cur_offset);
       }
     } else {
       if (save_concepts) {
         FinalConcept fc;
-        for (int k = B_star.find_first(); k < nA; k = B_star.find_next(k)) {
-          fc.intent.push_back(k);
+        for (size_t k = B_star.find_first(); k != Bitset::npos && k < (size_t)nA; k = B_star.find_next(k)) {
+          fc.intent.push_back(static_cast<int>(k));
         }
-        for (int k = ext.find_first(); k < nO; k = ext.find_next(k)) {
-          fc.extent.push_back(k);
+        for (size_t k = ext.find_first(); k != Bitset::npos && k < (size_t)nO; k = ext.find_next(k)) {
+          fc.extent.push_back(static_cast<int>(k));
         }
         concepts.push_back(std::move(fc));
       }
       for (int i = nA - 1; i > y; --i) {
         if (!B_star.test(i)) {
-          FastBitset Bn;
-          Bn.init(nA);
-          Bn = B_star;
+          Bitset Bn = B_star;
           Bn.set(i);
-          FastBitset zn;
+          Bitset zn;
           zn.init(nA);
           zn.set(i);
           step(Bn, i, zn, cur_offset);
@@ -421,9 +222,9 @@ public:
   }
 
   List solve() {
-    FastBitset B;
+    Bitset B;
     B.init(nA);
-    FastBitset Z;
+    Bitset Z;
     Z.init(nA);
     step(B, -1, Z, -1);
 

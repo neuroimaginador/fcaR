@@ -66,6 +66,8 @@ fc$concepts$bottom()
 \item \href{#method-ConceptLattice-is_modular}{\code{ConceptLattice$is_modular()}}
 \item \href{#method-ConceptLattice-is_semimodular}{\code{ConceptLattice$is_semimodular()}}
 \item \href{#method-ConceptLattice-is_atomic}{\code{ConceptLattice$is_atomic()}}
+\item \href{#method-ConceptLattice-width}{\code{ConceptLattice$width()}}
+\item \href{#method-ConceptLattice-dimension}{\code{ConceptLattice$dimension()}}
 \item \href{#method-ConceptLattice-set_state}{\code{ConceptLattice$set_state()}}
 \item \href{#method-ConceptLattice-to_json}{\code{ConceptLattice$to_json()}}
 \item \href{#method-ConceptLattice-clone}{\code{ConceptLattice$clone()}}
@@ -509,6 +511,34 @@ Atoms are elements that cover the bottom element.
 
 \subsection{Returns}{
 Logical.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-width"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-width}{}}}
+\subsection{Method \code{width()}}{
+Computes the Dilworth's width of the lattice.
+The width is the size of the largest antichain.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$width()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Integer.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-dimension"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-dimension}{}}}
+\subsection{Method \code{dimension()}}{
+Computes the order dimension (Dushnik-Miller) of the lattice.
+Note: This uses a heuristic and may return an estimate for large lattices.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$dimension()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Integer.
 }
 }
 \if{html}{\out{<hr>}}

@@ -121,6 +121,10 @@ binary_next_closure_implications <- function(I, verbose = FALSE) {
     .Call(`_fcaR_binary_next_closure_implications`, I, verbose)
 }
 
+binary_closure_cpp <- function(S_mat, LHS_mat, RHS_mat) {
+    .Call(`_fcaR_binary_closure_cpp`, S_mat, LHS_mat, RHS_mat)
+}
+
 FastCbO_binary <- function(I, attrs, verbose = FALSE) {
     .Call(`_fcaR_FastCbO_binary`, I, attrs, verbose)
 }
@@ -223,6 +227,14 @@ binary_next_closure_concepts <- function(I, verbose = FALSE) {
 
 get_closed_sets_implications <- function(lhs, rhs, attrs, verbose = FALSE) {
     .Call(`_fcaR_get_closed_sets_implications`, lhs, rhs, attrs, verbose)
+}
+
+calculate_width_cpp <- function(i_idx, p_idx, n) {
+    .Call(`_fcaR_calculate_width_cpp`, i_idx, p_idx, n)
+}
+
+calculate_dimension_heuristic_cpp <- function(i_idx, p_idx, n) {
+    .Call(`_fcaR_calculate_dimension_heuristic_cpp`, i_idx, p_idx, n)
 }
 
 find_protoconcepts_cpp <- function(I, connection = "standard", name = "Zadeh", verbose = FALSE) {

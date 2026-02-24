@@ -400,6 +400,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// binary_closure_cpp
+List binary_closure_cpp(S4 S_mat, S4 LHS_mat, S4 RHS_mat);
+RcppExport SEXP _fcaR_binary_closure_cpp(SEXP S_matSEXP, SEXP LHS_matSEXP, SEXP RHS_matSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type S_mat(S_matSEXP);
+    Rcpp::traits::input_parameter< S4 >::type LHS_mat(LHS_matSEXP);
+    Rcpp::traits::input_parameter< S4 >::type RHS_mat(RHS_matSEXP);
+    rcpp_result_gen = Rcpp::wrap(binary_closure_cpp(S_mat, LHS_mat, RHS_mat));
+    return rcpp_result_gen;
+END_RCPP
+}
 // FastCbO_binary
 List FastCbO_binary(NumericMatrix I, StringVector attrs, bool verbose);
 RcppExport SEXP _fcaR_FastCbO_binary(SEXP ISEXP, SEXP attrsSEXP, SEXP verboseSEXP) {
@@ -766,6 +779,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// calculate_width_cpp
+int calculate_width_cpp(IntegerVector i_idx, IntegerVector p_idx, int n);
+RcppExport SEXP _fcaR_calculate_width_cpp(SEXP i_idxSEXP, SEXP p_idxSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type i_idx(i_idxSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type p_idx(p_idxSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_width_cpp(i_idx, p_idx, n));
+    return rcpp_result_gen;
+END_RCPP
+}
+// calculate_dimension_heuristic_cpp
+int calculate_dimension_heuristic_cpp(IntegerVector i_idx, IntegerVector p_idx, int n);
+RcppExport SEXP _fcaR_calculate_dimension_heuristic_cpp(SEXP i_idxSEXP, SEXP p_idxSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type i_idx(i_idxSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type p_idx(p_idxSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_dimension_heuristic_cpp(i_idx, p_idx, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 // find_protoconcepts_cpp
 List find_protoconcepts_cpp(NumericMatrix I, String connection, String name, bool verbose);
 RcppExport SEXP _fcaR_find_protoconcepts_cpp(SEXP ISEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
@@ -1074,6 +1113,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_run_binary_tree_optimized", (DL_FUNC) &_fcaR_run_binary_tree_optimized, 3},
     {"_fcaR_run_binary_lexicographic_optimized", (DL_FUNC) &_fcaR_run_binary_lexicographic_optimized, 3},
     {"_fcaR_binary_next_closure_implications", (DL_FUNC) &_fcaR_binary_next_closure_implications, 2},
+    {"_fcaR_binary_closure_cpp", (DL_FUNC) &_fcaR_binary_closure_cpp, 3},
     {"_fcaR_FastCbO_binary", (DL_FUNC) &_fcaR_FastCbO_binary, 3},
     {"_fcaR_FuzzyFCbO", (DL_FUNC) &_fcaR_FuzzyFCbO, 6},
     {"_fcaR_get_concept_strings_cpp", (DL_FUNC) &_fcaR_get_concept_strings_cpp, 5},
@@ -1100,6 +1140,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 7},
     {"_fcaR_binary_next_closure_concepts", (DL_FUNC) &_fcaR_binary_next_closure_concepts, 2},
     {"_fcaR_get_closed_sets_implications", (DL_FUNC) &_fcaR_get_closed_sets_implications, 4},
+    {"_fcaR_calculate_width_cpp", (DL_FUNC) &_fcaR_calculate_width_cpp, 3},
+    {"_fcaR_calculate_dimension_heuristic_cpp", (DL_FUNC) &_fcaR_calculate_dimension_heuristic_cpp, 3},
     {"_fcaR_find_protoconcepts_cpp", (DL_FUNC) &_fcaR_find_protoconcepts_cpp, 4},
     {"_fcaR_compute_intent", (DL_FUNC) &_fcaR_compute_intent, 4},
     {"_fcaR_compute_extent", (DL_FUNC) &_fcaR_compute_extent, 4},

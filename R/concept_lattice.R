@@ -603,6 +603,42 @@ ConceptLattice <- R6::R6Class(
     },
 
     #' @description
+    #' Computes the Dilworth's width of the lattice.
+    #' The width is the size of the largest antichain.
+    #' @return Integer.
+    #' @export
+    width = function() {
+      if (!is.na(private$properties$width)) {
+        return(private$properties$width)
+      }
+
+      private$build_adjacency()
+      adj <- private$subconcept_matrix
+
+      res <- calculate_width_cpp(adj@i, adj@p, adj@Dim[1])
+      private$properties$width <- res
+      return(res)
+    },
+
+    #' @description
+    #' Computes the order dimension (Dushnik-Miller) of the lattice.
+    #' Note: This uses a heuristic and may return an estimate for large lattices.
+    #' @return Integer.
+    #' @export
+    dimension = function() {
+      if (!is.na(private$properties$dimension)) {
+        return(private$properties$dimension)
+      }
+
+      private$build_adjacency()
+      adj <- private$subconcept_matrix
+
+      res <- calculate_dimension_heuristic_cpp(adj@i, adj@p, adj@Dim[1])
+      private$properties$dimension <- res
+      return(res)
+    },
+
+    #' @description
     #' Internal method to set state from JSON import
     #' @param state List of internal state variables
     set_state = function(state) {
@@ -723,7 +759,9 @@ ConceptLattice <- R6::R6Class(
       distributivity = NA,
       modularity = NA,
       semimodularity = NA,
-      atomicity = NA
+      atomicity = NA,
+      width = NA,
+      dimension = NA
     ),
 
     subconcept_matrix = NULL,

@@ -18,6 +18,8 @@
 ^CRAN-SUBMISSION$
 ^\.agent$
 ^papers$
+^examples$
+^scripts_dev$
 
 # qrtdown
 ^\.quarto$
