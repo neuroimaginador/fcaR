@@ -1,5 +1,48 @@
 # Changelog
 
+## fcaR 1.6.0
+
+New Functionality:
+
+- **Bonds between Formal Contexts:** Added `compute_bonds()` function
+  and `BondLattice` class to compute and analyze the bonds between two
+  formal contexts. Bonds are dual-closure-compatible relations that
+  capture structural similarities between contexts at the lattice level.
+- **BondLattice Similarity Metrics:** The `BondLattice` class provides a
+  rich suite of similarity and complexity metrics via the `similarity()`
+  method, including:
+  - `"log-bond"`: Logarithmic bond ratio measuring logical affinity.
+  - `"top-density"`: Density of the bond lattice relative to total
+    possible bonds.
+  - `"complexity"`: Structural complexity ratio (join-irreducibles /
+    bonds).
+  - `"core-agreement"`: Proportion of shared core structural elements.
+  - `"entropy"`: Interaction entropy of the bond distribution.
+  - `"stability"`, `"width"`, `"dimension"`, `"width-index"`,
+    `"dimension-index"`: Order-theoretic metrics derived from the bond
+    lattice structure.
+- **Dilworth’s Width:** Added `width()` method to `ConceptLattice` and
+  `BondLattice`, computing the maximum antichain size via an efficient
+  C++ implementation. This measures the “maximum parallelism” in the
+  lattice.
+- **Order Dimension:** Added `dimension()` method to `ConceptLattice`
+  and `BondLattice`, computing a heuristic estimate of the order
+  dimension (minimum number of linear extensions needed to represent the
+  partial order) via C++.
+
+Improvements:
+
+- **LinCbO Stability Fix:** Fixed a symbol collision between the
+  `FastBitset` class used internally by `LinCbO` and other translation
+  units. The solver now uses the shared `fcaR::FastBitset` from
+  `fcaR_bitset.h`, eliminating segfaults that could occur during
+  implication mining. LinCbO remains up to 40x faster than NextClosure
+  on large contexts (~10,000+ implications).
+- **Expanded Test Coverage:** Added comprehensive test suite
+  (`test-coverage_sniper.R`) covering edge cases for C++ operations,
+  fuzzy logic, background implication completion, RuleSet methods,
+  advanced scaling, and poset metrics.
+
 ## fcaR 1.5.0
 
 CRAN release: 2026-02-13

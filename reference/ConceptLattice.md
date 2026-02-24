@@ -54,6 +54,10 @@ lattices.
 
 - [`ConceptLattice$is_atomic()`](#method-ConceptLattice-is_atomic)
 
+- [`ConceptLattice$width()`](#method-ConceptLattice-width)
+
+- [`ConceptLattice$dimension()`](#method-ConceptLattice-dimension)
+
 - [`ConceptLattice$set_state()`](#method-ConceptLattice-set_state)
 
 - [`ConceptLattice$to_json()`](#method-ConceptLattice-to_json)
@@ -538,6 +542,36 @@ are elements that cover the bottom element.
 #### Returns
 
 Logical.
+
+------------------------------------------------------------------------
+
+### Method `width()`
+
+Computes the Dilworth's width of the lattice. The width is the size of
+the largest antichain.
+
+#### Usage
+
+    ConceptLattice$width()
+
+#### Returns
+
+Integer.
+
+------------------------------------------------------------------------
+
+### Method `dimension()`
+
+Computes the order dimension (Dushnik-Miller) of the lattice. Note: This
+uses a heuristic and may return an estimate for large lattices.
+
+#### Usage
+
+    ConceptLattice$dimension()
+
+#### Returns
+
+Integer.
 
 ------------------------------------------------------------------------
 

@@ -24,6 +24,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/authors.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/index.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/news/index.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/BondLattice.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/Concept.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/ConceptSet.html</loc></url>
@@ -35,6 +36,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_vector.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/bonds.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_density.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_grades.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_separation.html</loc></url>
@@ -64,6 +66,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/grapes-twiddle-grapes.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/implications_from_json.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/index.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/is_bond.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/lattice_from_json.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/lattice_plot.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/parse_implication.html</loc></url>

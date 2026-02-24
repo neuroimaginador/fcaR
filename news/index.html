@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,6 +58,36 @@
       <small>Source: <a href="https://github.com/Malaga-FCA-group/fcaR/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.6.0" id="fcar-160">fcaR 1.6.0<a class="anchor" aria-label="anchor" href="#fcar-160"></a></h2>
+<p>New Functionality:</p>
+<ul><li>
+<strong>Bonds between Formal Contexts:</strong> Added <code>compute_bonds()</code> function and <code>BondLattice</code> class to compute and analyze the bonds between two formal contexts. Bonds are dual-closure-compatible relations that capture structural similarities between contexts at the lattice level.</li>
+<li>
+<strong>BondLattice Similarity Metrics:</strong> The <code>BondLattice</code> class provides a rich suite of similarity and complexity metrics via the <code>similarity()</code> method, including:
+<ul><li>
+<code>"log-bond"</code>: Logarithmic bond ratio measuring logical affinity.</li>
+<li>
+<code>"top-density"</code>: Density of the bond lattice relative to total possible bonds.</li>
+<li>
+<code>"complexity"</code>: Structural complexity ratio (join-irreducibles / bonds).</li>
+<li>
+<code>"core-agreement"</code>: Proportion of shared core structural elements.</li>
+<li>
+<code>"entropy"</code>: Interaction entropy of the bond distribution.</li>
+<li>
+<code>"stability"</code>, <code>"width"</code>, <code>"dimension"</code>, <code>"width-index"</code>, <code>"dimension-index"</code>: Order-theoretic metrics derived from the bond lattice structure.</li>
+</ul></li>
+<li>
+<strong>Dilworth’s Width:</strong> Added <code>width()</code> method to <code>ConceptLattice</code> and <code>BondLattice</code>, computing the maximum antichain size via an efficient C++ implementation. This measures the “maximum parallelism” in the lattice.</li>
+<li>
+<strong>Order Dimension:</strong> Added <code>dimension()</code> method to <code>ConceptLattice</code> and <code>BondLattice</code>, computing a heuristic estimate of the order dimension (minimum number of linear extensions needed to represent the partial order) via C++.</li>
+</ul><p>Improvements:</p>
+<ul><li>
+<strong>LinCbO Stability Fix:</strong> Fixed a symbol collision between the <code>FastBitset</code> class used internally by <code>LinCbO</code> and other translation units. The solver now uses the shared <code>fcaR::FastBitset</code> from <code>fcaR_bitset.h</code>, eliminating segfaults that could occur during implication mining. LinCbO remains up to 40x faster than NextClosure on large contexts (~10,000+ implications).</li>
+<li>
+<strong>Expanded Test Coverage:</strong> Added comprehensive test suite (<code>test-coverage_sniper.R</code>) covering edge cases for C++ operations, fuzzy logic, background implication completion, RuleSet methods, advanced scaling, and poset metrics.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.5.0" id="fcar-150">fcaR 1.5.0<a class="anchor" aria-label="anchor" href="#fcar-150"></a></h2><p class="text-muted">CRAN release: 2026-02-13</p>
 <p>Improvements:</p>

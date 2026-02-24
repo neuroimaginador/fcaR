@@ -292,6 +292,8 @@ Journal of Approximate Reasoning*, *70*, 51-67.
 
 ## All functions
 
+- [`BondLattice`](https://neuroimaginador.github.io/fcaR/reference/BondLattice.md)
+  : R6 class for a Bond Lattice
 - [`Concept`](https://neuroimaginador.github.io/fcaR/reference/Concept.md)
   : R6 class for a fuzzy concept with sparse internal representation
 - [`ConceptLattice`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.md)
@@ -314,6 +316,8 @@ Journal of Approximate Reasoning*, *70*, 51-67.
   : Convert Named Vector to Set
 - [`as_vector()`](https://neuroimaginador.github.io/fcaR/reference/as_vector.md)
   : Convert Set to vector
+- [`bonds()`](https://neuroimaginador.github.io/fcaR/reference/bonds.md)
+  : Compute bonds between two formal contexts
 - [`calculate_density()`](https://neuroimaginador.github.io/fcaR/reference/calculate_density.md)
   : Calculate Fuzzy Density
 - [`calculate_grades()`](https://neuroimaginador.github.io/fcaR/reference/calculate_grades.md)
@@ -368,6 +372,8 @@ Journal of Approximate Reasoning*, *70*, 51-67.
   : Equivalence of sets of implications
 - [`implications_from_json()`](https://neuroimaginador.github.io/fcaR/reference/implications_from_json.md)
   : Import ImplicationSet from JSON
+- [`is_bond()`](https://neuroimaginador.github.io/fcaR/reference/is_bond.md)
+  : Verify if a relation is a bond between two formal contexts
 - [`lattice_from_json()`](https://neuroimaginador.github.io/fcaR/reference/lattice_from_json.md)
   : Import ConceptLattice from JSON
 - [`lattice_plot()`](https://neuroimaginador.github.io/fcaR/reference/lattice_plot.md)
