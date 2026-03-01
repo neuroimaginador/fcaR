@@ -937,7 +937,9 @@ void saturate_system_tree_binary(std::vector<SigmaRule>& sigma, BinaryTrie& trie
     }
 
     if (!candidate_map.empty()) {
-        for (auto const& [G, H_accum] : candidate_map) {
+        for (auto const& pair_item : candidate_map) {
+            const Bitset& G = pair_item.first;
+            const Bitset& H_accum = pair_item.second;
             Bitset H = H_accum;
             Bitset closure_G = calculate_pi_operator_tree(G, trie, metrics);
             H &= ~closure_G;

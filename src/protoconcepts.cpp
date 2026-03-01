@@ -169,7 +169,9 @@ List find_protoconcepts_cpp(NumericMatrix I, String connection = "standard", Str
   
   List results;
   
-  for (auto const& [key, obj_list] : obj_equiv_classes) {
+  for (auto const& pair_item : obj_equiv_classes) {
+    const SparseVectorWrapper& key = pair_item.first;
+    const std::vector<SparseVectorWrapper>& obj_list = pair_item.second;
     if (att_equiv_classes.count(key)) {
       const std::vector<SparseVectorWrapper>& att_list = att_equiv_classes[key];
       
