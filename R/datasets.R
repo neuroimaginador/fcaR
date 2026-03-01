@@ -86,3 +86,25 @@
 #' @source
 #' Wille R (1982). “Restructuring Lattice Theory: An Approach Based on Hierarchies of Concepts.” In Ordered Sets, pp. 445–470. Springer.
 "planets"
+
+#' Data for Guess Who Board Game
+#'
+#' A dataset representing the 24 classical characters from the Guess Who board game with their 19 binary attributes.
+#'
+#' @format
+#' A matrix with 24 rows and 19 columns. Column names correspond to the physical attributes:
+#' \describe{
+#'   \item{Gender}{Male, Female.}
+#'   \item{Hair Color}{BlackHair, WhiteHair, BlondeHair, BrownHair, RedHair.}
+#'   \item{Baldness}{Bald.}
+#'   \item{Eye Color}{BlueEyes, BrownEyes.}
+#'   \item{Facial Hair}{Moustache, Beard.}
+#'   \item{Accessories}{Hat, Glasses, Earrings.}
+#'   \item{Other features}{RosyCheeks, BigNose, BigMouth, Sad.}
+#' }
+#'
+#' Each entry contains a 1 if the character possesses the trait and a 0 otherwise.
+#'
+#' @source
+#' Extracted from the physical version of the Guess Who board game characters.
+"guesswho"
