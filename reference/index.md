@@ -80,6 +80,8 @@
   : Check if Set or FormalContext respects an ImplicationSet
 - [`` `%~%` ``](https://neuroimaginador.github.io/fcaR/reference/grapes-twiddle-grapes.md)
   : Equivalence of sets of implications
+- [`guesswho`](https://neuroimaginador.github.io/fcaR/reference/guesswho.md)
+  : Data for Guess Who Board Game
 - [`implications_from_json()`](https://neuroimaginador.github.io/fcaR/reference/implications_from_json.md)
   : Import ImplicationSet from JSON
 - [`is_bond()`](https://neuroimaginador.github.io/fcaR/reference/is_bond.md)
