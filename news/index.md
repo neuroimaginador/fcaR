@@ -4,6 +4,10 @@
 
 New Functionality:
 
+- **New Dataset:** Added the `guesswho` dataset, based on the classic
+  board game, containing 24 characters and their binary attributes.
+  Ideal for demonstrating concept lattices and implications in binary
+  contexts.
 - **Bonds between Formal Contexts:** Added `compute_bonds()` function
   and `BondLattice` class to compute and analyze the bonds between two
   formal contexts. Bonds are dual-closure-compatible relations that
