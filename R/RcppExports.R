@@ -81,6 +81,10 @@ reduce_transitivity_cpp <- function(sp_i, sp_p, dim) {
     .Call(`_fcaR_reduce_transitivity_cpp`, sp_i, sp_p, dim)
 }
 
+bonds_mcis_cpp <- function(extents, intents, verbose = FALSE) {
+    .Call(`_fcaR_bonds_mcis_cpp`, extents, intents, verbose)
+}
+
 print_matrix <- function(I) {
     invisible(.Call(`_fcaR_print_matrix`, I))
 }
@@ -267,6 +271,10 @@ compute_upleft_arrow <- function(V, I, name) {
 
 compute_downright_arrow <- function(V, I, name) {
     .Call(`_fcaR_compute_downright_arrow`, V, I, name)
+}
+
+bonds_standard_opt_cpp <- function(I1, I2, verbose = FALSE) {
+    .Call(`_fcaR_bonds_standard_opt_cpp`, I1, I2, verbose)
 }
 
 sparse_subset_dispatch <- function(X_p, X_i, X_x, Y_p, Y_i, Y_x, num_rows, proper_code, is_binary) {

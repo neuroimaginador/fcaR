@@ -4,12 +4,19 @@
 \alias{bonds}
 \title{Compute bonds between two formal contexts}
 \usage{
-bonds(fc1, fc2)
+bonds(fc1, fc2, method = c("conexp", "mcis"), verbose = FALSE)
 }
 \arguments{
 \item{fc1}{(\code{FormalContext}) The first formal context.}
 
 \item{fc2}{(\code{FormalContext}) The second formal context.}
+
+\item{method}{(character) The method to use. \code{"conexp"} uses
+implication-based closed set enumeration on the tensor product.
+\code{"mcis"} uses a backtracking algorithm based on pre-computed concepts
+(extents of C1 and intents of C2). Default is \code{"conexp"}.}
+
+\item{verbose}{(logical) If TRUE, print progress information.}
 }
 \value{
 A \code{BondLattice} object whose intents represent the bonds.
@@ -33,7 +40,7 @@ colnames(mat2) <- paste0("B", 1:3)
 fc2 <- FormalContext$new(mat2)
 
 # Compute bonds returning a lattice
-bonds_lattice <- bonds(fc1, fc2)
+bonds_lattice <- bonds(fc1, fc2, method = "conexp")
 bonds_lattice$print()
 }
 }

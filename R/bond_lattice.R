@@ -34,6 +34,9 @@ BondLattice <- R6::R6Class(
   classname = "BondLattice",
   inherit = ConceptLattice,
   public = list(
+    #' @field elapsed (numeric) Time elapsed during bond computation (C++ level)
+    elapsed = NULL,
+
     #' @description
     #' Initialize a BondLattice object.
     #'
@@ -145,88 +148,71 @@ BondLattice <- R6::R6Class(
     similarity = function(type = c("log-bond", "top-density", "complexity", "core-agreement", "entropy", "stability", "width", "dimension", "width-index", "dimension-index")) {
       type <- match.arg(type)
 
-      if (type == "log-bond") {
-        # Normalized log-affinity metric
-        # log |B(K1, K2)| / sqrt(log |B(K1, K1)| * log |B(K2, K2)|)
-        b12 <- self$size()
-        
-        b11 <- bonds(private$fc1, private$fc1)$size()
-        b22 <- bonds(private$fc2, private$fc2)$size()
-        
-        if (b12 <= 1) return(0)
-        if (b11 <= 1 || b22 <= 1) return(1)
-        
-        denom <- sqrt(log(b11) * log(b22))
-        return(if (denom == 0) 1 else log(b12) / denom)
+      if (!is.null(private$cached_similarities[[type]])) {
+        return(private$cached_similarities[[type]])
       }
 
-      if (type == "top-density") {
-        # Density of the sup bond (maximal possible relation)
-        private$build_adjacency()
-        bottom_idx <- which(Matrix::colSums(private$subconcept_matrix) == 1)
-        
-        bonds_intents <- self$intents()
-        max_intent <- bonds_intents[, bottom_idx[1]]
-        
-        return(sum(max_intent > 0) / (length(private$fc1$objects) * length(private$fc2$attributes)))
-      }
+      val <- switch(type,
+        "log-bond" = {
+          b12 <- self$size()
+          b11 <- bonds(private$fc1, private$fc1)$size()
+          b22 <- bonds(private$fc2, private$fc2)$size()
+          if (b12 <= 1) { 0 }
+          else if (b11 <= 1 || b22 <= 1) { 1 }
+          else {
+            denom <- sqrt(log(b11) * log(b22))
+            if (denom == 0) 1 else log(b12) / denom
+          }
+        },
+        "top-density" = {
+          private$build_adjacency()
+          bottom_idx <- which(Matrix::colSums(private$subconcept_matrix) == 1)
+          bonds_intents <- self$intents()
+          max_intent <- bonds_intents[, bottom_idx[1]]
+          sum(max_intent > 0) / (length(private$fc1$objects) * length(private$fc2$attributes))
+        },
+        "complexity" = {
+          length(self$join_irreducibles()) / self$size()
+        },
+        "core-agreement" = {
+          private$build_adjacency()
+          bottom_idx <- which(Matrix::colSums(private$subconcept_matrix) == 1)
+          top_idx <- which(Matrix::colSums(private$subconcept_matrix) == self$size())
+          bonds_intents <- self$intents()
+          max_intent <- bonds_intents[, bottom_idx[1]]
+          core_intent <- bonds_intents[, top_idx[1]]
+          sum(core_intent > 0) / sum(max_intent > 0)
+        },
+        "entropy" = {
+          b12 <- self$size()
+          b11 <- bonds(private$fc1, private$fc1)$size()
+          b22 <- bonds(private$fc2, private$fc2)$size()
+          if (b12 <= 1) { 0 }
+          else {
+            denom <- log(b11) + log(b22)
+            if (denom == 0) 1 else log(b12) / denom
+          }
+        },
+        "stability" = {
+          mean(super$stability())
+        },
+        "width" = {
+          super$width()
+        },
+        "dimension" = {
+          super$dimension()
+        },
+        "width-index" = {
+          if (self$size() == 0) 0 else super$width() / self$size()
+        },
+        "dimension-index" = {
+          sz <- self$size()
+          if (sz <= 1) 1 else super$dimension() / log2(sz)
+        }
+      )
 
-      if (type == "complexity") {
-        # Structural complexity derived from irreducible elements
-        return(length(self$join_irreducibles()) / self$size())
-      }
-
-      if (type == "core-agreement") {
-        # Ratio of Core Bond to Top Bond
-        private$build_adjacency()
-        bottom_idx <- which(Matrix::colSums(private$subconcept_matrix) == 1)
-        top_idx <- which(Matrix::colSums(private$subconcept_matrix) == self$size())
-
-        bonds_intents <- self$intents()
-        max_intent <- bonds_intents[, bottom_idx[1]]
-        core_intent <- bonds_intents[, top_idx[1]]
-
-        return(sum(core_intent > 0) / sum(max_intent > 0))
-      }
-
-      if (type == "entropy") {
-        # Normalized Interaction Entropy
-        # Shared info / Total potential info
-        b12 <- self$size()
-        b11 <- bonds(private$fc1, private$fc1)$size()
-        b22 <- bonds(private$fc2, private$fc2)$size()
-
-        if (b12 <= 1) return(0)
-        
-        denom <- log(b11) + log(b22)
-        return(if (denom == 0) 1 else log(b12) / denom)
-      }
-
-      if (type == "stability") {
-        # Average stability of bonds
-        return(mean(super$stability()))
-      }
-
-      if (type == "width") {
-        return(super$width())
-      }
-
-      if (type == "dimension") {
-        return(super$dimension())
-      }
-
-      if (type == "width-index") {
-        # Proportion of mutually incomparable bonds
-        if (self$size() == 0) return(0)
-        return(super$width() / self$size())
-      }
-
-      if (type == "dimension-index") {
-        # Structural complexity relative to a boolean cube
-        sz <- self$size()
-        if (sz <= 1) return(1)
-        return(super$dimension() / log2(sz))
-      }
+      private$cached_similarities[[type]] <- val
+      return(val)
     },
 
     #' @description
@@ -259,15 +245,32 @@ BondLattice <- R6::R6Class(
                   length(private$fc2$attributes), 
                   paste(head(private$fc2$attributes, 2), collapse=", ")))
       cat("- Total Bonds:", self$size(), "\n")
-      cat("- Logical Affinity (Log-Bond):", round(self$similarity("log-bond"), 4), "\n")
-      cat("- Interaction Entropy:", round(self$similarity("entropy"), 4), "\n")
-      cat("- Structural Complexity (JI/Bonds):", round(self$similarity("complexity"), 4), "\n")
-      cat("- Core Agreement Ratio:", round(self$similarity("core-agreement"), 4), "\n")
-      cat("- Average Bond Stability:", round(self$similarity("stability"), 4), "\n")
-      cat("- Dilworth's Width:", self$width(), 
-          sprintf("(Index: %.4f)\n", self$similarity("width-index")))
-      cat("- Order Dimension:", self$dimension(), 
-          sprintf("(Index: %.4f)\n", self$similarity("dimension-index")))
+      
+      c_sim <- private$cached_similarities
+      
+      if (!is.null(c_sim[["log-bond"]])) {
+        cat("- Logical Affinity (Log-Bond):", round(c_sim[["log-bond"]], 4), "\n")
+      }
+      if (!is.null(c_sim[["entropy"]])) {
+        cat("- Interaction Entropy:", round(c_sim[["entropy"]], 4), "\n")
+      }
+      if (!is.null(c_sim[["complexity"]])) {
+        cat("- Structural Complexity (JI/Bonds):", round(c_sim[["complexity"]], 4), "\n")
+      }
+      if (!is.null(c_sim[["core-agreement"]])) {
+        cat("- Core Agreement Ratio:", round(c_sim[["core-agreement"]], 4), "\n")
+      }
+      if (!is.null(c_sim[["stability"]])) {
+        cat("- Average Bond Stability:", round(c_sim[["stability"]], 4), "\n")
+      }
+      if (!is.null(c_sim[["width"]])) {
+        cat("- Dilworth's Width:", c_sim[["width"]], 
+            sprintf("(Index: %.4f)\n", c_sim[["width-index"]]))
+      }
+      if (!is.null(c_sim[["dimension"]])) {
+        cat("- Order Dimension:", c_sim[["dimension"]], 
+            sprintf("(Index: %.4f)\n", c_sim[["dimension-index"]]))
+      }
       
       invisible(self)
     },
@@ -286,6 +289,7 @@ BondLattice <- R6::R6Class(
 
   ),
   private = list(
+    cached_similarities = list(),
     pr_extents = NULL,
     pr_intents = NULL,
     objects = NULL,

@@ -275,6 +275,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// bonds_mcis_cpp
+List bonds_mcis_cpp(IntegerMatrix extents, IntegerMatrix intents, bool verbose);
+RcppExport SEXP _fcaR_bonds_mcis_cpp(SEXP extentsSEXP, SEXP intentsSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type extents(extentsSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type intents(intentsSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(bonds_mcis_cpp(extents, intents, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // print_matrix
 void print_matrix(NumericMatrix I);
 RcppExport SEXP _fcaR_print_matrix(SEXP ISEXP) {
@@ -913,6 +926,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// bonds_standard_opt_cpp
+List bonds_standard_opt_cpp(IntegerMatrix I1, IntegerMatrix I2, bool verbose);
+RcppExport SEXP _fcaR_bonds_standard_opt_cpp(SEXP I1SEXP, SEXP I2SEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type I1(I1SEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type I2(I2SEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(bonds_standard_opt_cpp(I1, I2, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 // sparse_subset_dispatch
 List sparse_subset_dispatch(const Rcpp::IntegerVector& X_p, const Rcpp::IntegerVector& X_i, const Rcpp::NumericVector& X_x, const Rcpp::IntegerVector& Y_p, const Rcpp::IntegerVector& Y_i, const Rcpp::NumericVector& Y_x, int num_rows, int proper_code, bool is_binary);
 RcppExport SEXP _fcaR_sparse_subset_dispatch(SEXP X_pSEXP, SEXP X_iSEXP, SEXP X_xSEXP, SEXP Y_pSEXP, SEXP Y_iSEXP, SEXP Y_xSEXP, SEXP num_rowsSEXP, SEXP proper_codeSEXP, SEXP is_binarySEXP) {
@@ -1103,6 +1129,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_randomize_swap_cpp", (DL_FUNC) &_fcaR_randomize_swap_cpp, 2},
     {"_fcaR_randomize_rewire_cpp", (DL_FUNC) &_fcaR_randomize_rewire_cpp, 2},
     {"_fcaR_reduce_transitivity_cpp", (DL_FUNC) &_fcaR_reduce_transitivity_cpp, 3},
+    {"_fcaR_bonds_mcis_cpp", (DL_FUNC) &_fcaR_bonds_mcis_cpp, 3},
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
@@ -1150,6 +1177,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_compute_downleft_arrow", (DL_FUNC) &_fcaR_compute_downleft_arrow, 3},
     {"_fcaR_compute_upleft_arrow", (DL_FUNC) &_fcaR_compute_upleft_arrow, 3},
     {"_fcaR_compute_downright_arrow", (DL_FUNC) &_fcaR_compute_downright_arrow, 3},
+    {"_fcaR_bonds_standard_opt_cpp", (DL_FUNC) &_fcaR_bonds_standard_opt_cpp, 3},
     {"_fcaR_sparse_subset_dispatch", (DL_FUNC) &_fcaR_sparse_subset_dispatch, 9},
     {"_fcaR_self_intersection_C", (DL_FUNC) &_fcaR_self_intersection_C, 4},
     {"_fcaR_is_subset_C", (DL_FUNC) &_fcaR_is_subset_C, 10},

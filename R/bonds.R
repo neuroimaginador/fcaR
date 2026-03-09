@@ -8,6 +8,11 @@
 #'
 #' @param fc1           (\code{FormalContext}) The first formal context.
 #' @param fc2           (\code{FormalContext}) The second formal context.
+#' @param method        (character) The method to use. \code{"conexp"} uses
+#'   implication-based closed set enumeration on the tensor product.
+#'   \code{"mcis"} uses a backtracking algorithm based on pre-computed concepts
+#'   (extents of C1 and intents of C2). Default is \code{"conexp"}.
+#' @param verbose       (logical) If TRUE, print progress information.
 #'
 #' @return
 #' A \code{BondLattice} object whose intents represent the bonds.
@@ -28,95 +33,23 @@
 #' fc2 <- FormalContext$new(mat2)
 #'
 #' # Compute bonds returning a lattice
-#' bonds_lattice <- bonds(fc1, fc2)
+#' bonds_lattice <- bonds(fc1, fc2, method = "conexp")
 #' bonds_lattice$print()
 #' }
-bonds <- function(fc1, fc2) {
+bonds <- function(fc1, fc2, method = c("conexp", "mcis"), verbose = FALSE) {
+  method <- match.arg(method)
 
   if (!inherits(fc1, "FormalContext") || !inherits(fc2, "FormalContext")) {
     stop("Both arguments must be of class FormalContext.", call. = FALSE)
   }
 
-  G1 <- fc1$objects
-  M1 <- fc1$attributes
-  G2 <- fc2$objects
-  M2 <- fc2$attributes
-
-  # Compute basis of implications for fc1^d and fc2
-  fc1d <- fc1$dual()
-  fc1d$find_implications()
-  imps1 <- fc1d$implications
-
-  fc2$find_implications()
-  imps2 <- fc2$implications
-
-  # Attributes for the new ImplicationSet are G1 \times M2
-  new_attrs <- paste(rep(G1, times = length(M2)), rep(M2, each = length(G1)), sep = "_")
-
-  LHS <- list()
-  RHS <- list()
-
-  # A \times {m} -> B \times {m}
-  for (m in M2) {
-    for (i in seq_len(imps1$cardinality())) {
-      A <- imps1$get_LHS_matrix()[, i]
-      B <- imps1$get_RHS_matrix()[, i]
-
-      A_names <- fc1d$attributes[which(A > 0)]
-      B_names <- fc1d$attributes[which(B > 0)]
-
-      if (length(A_names) || length(B_names)) {
-        LHS <- append(LHS, list(paste(A_names, m, sep = "_")))
-        RHS <- append(RHS, list(paste(B_names, m, sep = "_")))
-      }
-    }
+  if (method == "conexp") {
+    return(bonds_standard(fc1, fc2, verbose = verbose))
   }
 
-  # {g} \times A -> {g} \times B
-  for (g in G1) {
-    for (i in seq_len(imps2$cardinality())) {
-      A <- imps2$get_LHS_matrix()[, i]
-      B <- imps2$get_RHS_matrix()[, i]
-
-      A_names <- fc2$attributes[which(A > 0)]
-      B_names <- fc2$attributes[which(B > 0)]
-
-      if (length(A_names) || length(B_names)) {
-        LHS <- append(LHS, list(paste(g, A_names, sep = "_")))
-        RHS <- append(RHS, list(paste(g, B_names, sep = "_")))
-      }
-    }
+  if (method == "mcis") {
+    return(bonds_mcis(fc1, fc2, verbose = verbose))
   }
-
-  new_imps <- ImplicationSet$new(attributes = new_attrs)
-
-  for (i in seq_along(LHS)) {
-    S_L <- Set$new(attributes = new_attrs)
-    if (length(LHS[[i]])) S_L$assign(attributes = LHS[[i]], values = 1)
-
-    S_R <- Set$new(attributes = new_attrs)
-    if (length(RHS[[i]])) S_R$assign(attributes = RHS[[i]], values = 1)
-
-    new_imps$add(S_L, S_R)
-  }
-
-  # Build Formal Context and return lattice
-  fc_bonds <- new_imps$get_standard_context()
-  fc_bonds$find_concepts()
-
-  lattice <- fc_bonds$concepts
-
-  bl <- BondLattice$new(
-    extents = lattice$extents(),
-    intents = lattice$intents(),
-    objects = fc_bonds$objects,
-    attributes = fc_bonds$attributes,
-    I = fc_bonds$I,
-    fc1 = fc1,
-    fc2 = fc2
-  )
-
-  return(bl)
 }
 
 #' @title
@@ -139,8 +72,7 @@ is_bond <- function(fc1, fc2, relation) {
   }
 
   if (inherits(relation, "FormalContext")) {
-    # Use the incidence method in sparse mode
-    mat <- relation$incidence(sparse = TRUE)
+    mat <- relation$incidence()
   } else {
     mat <- relation
   }
@@ -150,30 +82,130 @@ is_bond <- function(fc1, fc2, relation) {
     return(FALSE)
   }
 
-  # Conversion to sparse if needed to ensure robustness in extraction calls
+  # Conversion to sparse if needed
   if (!inherits(mat, "dgCMatrix")) {
     mat <- Matrix::Matrix(mat, sparse = TRUE)
   }
 
   # Check rows are intents of fc2
-  # Each row of the relation must be an intent in fc2
   for (i in seq_len(nrow(mat))) {
-    v_row <- mat[i, ]
-    # Closure (extent then intent) should return the same vector
-    if (!all(abs(as.numeric(fc2$closure(v_row)) - as.numeric(v_row)) < 1e-9)) {
+    v_row <- as.numeric(mat[i, ])
+    S_row <- Set$new(attributes = fc2$attributes)
+    S_row$assign(attributes = fc2$attributes, values = v_row)
+    if (!all(abs(as.numeric(fc2$closure(S_row)$get_vector()) - v_row) < 1e-9)) {
        return(FALSE)
     }
   }
 
   # Check columns are extents of fc1
-  # Each column of the relation must be an extent in fc1
   for (j in seq_len(ncol(mat))) {
-    v_col <- mat[, j]
-    # extent(intent(v_col)) should be v_col
-    if (!all(abs(as.numeric(fc1$extent(fc1$intent(v_col))) - as.numeric(v_col)) < 1e-9)) {
+    v_col <- as.numeric(mat[, j])
+    S_col <- Set$new(attributes = fc1$objects)
+    S_col$assign(attributes = fc1$objects, values = v_col)
+
+    intent_col <- fc1$intent(S_col)
+    extent_col <- fc1$extent(intent_col)
+    if (!all(abs(as.numeric(extent_col$get_vector()) - v_col) < 1e-9)) {
        return(FALSE)
     }
   }
 
   return(TRUE)
+}
+
+#' @title
+#' Compute bonds via standard implication-based method
+#'
+#' @description
+#' Computes bonds using implication merging and closed-set enumeration.
+#' Uses a FastBitset-optimized C++ implementation.
+#'
+#' @param fc1      (\code{FormalContext}) The first formal context.
+#' @param fc2      (\code{FormalContext}) The second formal context.
+#' @param verbose  (\code{logical}) Print progress info.
+#'
+#' @importFrom Matrix t
+#' @return A \code{BondLattice} object.
+bonds_standard <- function(fc1, fc2, verbose = FALSE) {
+
+  mat1 <- methods::as(fc1$incidence(), "matrix")
+  mat2 <- methods::as(fc2$incidence(), "matrix")
+
+  res <- bonds_standard_opt_cpp(mat1, mat2, verbose = verbose)
+  bonds_intents <- res$intents
+
+  G1 <- fc1$objects
+  M2 <- fc2$attributes
+
+  new_attrs <- paste(rep(G1, times = length(M2)), rep(M2, each = length(G1)), sep = "_")
+  dimnames(bonds_intents) <- list(new_attrs, paste0("C", seq_len(ncol(bonds_intents))))
+
+  M <- .subset(bonds_intents)
+  bonds_extents <- Matrix::t(M)
+  dimnames(bonds_extents) <- list(paste0("O", seq_len(nrow(bonds_extents))), colnames(bonds_intents))
+
+  bl <- BondLattice$new(
+    extents = bonds_extents,
+    intents = bonds_intents,
+    objects = rownames(bonds_extents),
+    attributes = new_attrs,
+    I = matrix(0, nrow = 0, ncol = 0),
+    fc1 = fc1,
+    fc2 = fc2
+  )
+
+  bl$elapsed <- res$elapsed
+
+  return(bl)
+}
+
+#' @title
+#' Compute bonds via MCIS (backtracking on pre-computed concepts)
+#'
+#' @description
+#' Computes bonds using Algorithm 1 from "Computing bonds between formal contexts",
+#' optimized with FastBitset in a unified C++ solver. Pre-computes concepts
+#' (extents of C1 and intents of C2) in R, then passes them to C++ for
+#' the backtracking search.
+#'
+#' @param fc1      (\code{FormalContext}) The first formal context.
+#' @param fc2      (\code{FormalContext}) The second formal context.
+#' @param verbose  (\code{logical}) Print progress info.
+#'
+#' @importFrom Matrix t
+#' @return A \code{BondLattice} object.
+bonds_mcis <- function(fc1, fc2, verbose = FALSE) {
+
+  G1 <- fc1$objects
+  M2 <- fc2$attributes
+
+  fc1$find_concepts()
+  fc2$find_concepts()
+
+  extents1 <- methods::as(fc1$concepts$extents(), "matrix")
+  intents2 <- methods::as(fc2$concepts$intents(), "matrix")
+
+  res <- bonds_mcis_cpp(extents1, intents2, verbose = verbose)
+  bonds_intents <- res$intents
+
+  new_attrs <- paste(rep(G1, times = length(M2)), rep(M2, each = length(G1)), sep = "_")
+  dimnames(bonds_intents) <- list(new_attrs, paste0("C", seq_len(ncol(bonds_intents))))
+
+  M <- .subset(bonds_intents)
+  bonds_extents <- Matrix::t(M)
+  dimnames(bonds_extents) <- list(paste0("O", seq_len(nrow(bonds_extents))), colnames(bonds_intents))
+
+  bl <- BondLattice$new(
+    extents = bonds_extents,
+    intents = bonds_intents,
+    objects = rownames(bonds_extents),
+    attributes = new_attrs,
+    I = matrix(0, nrow = 0, ncol = 0),
+    fc1 = fc1,
+    fc2 = fc2
+  )
+
+  bl$elapsed <- res$elapsed
+
+  return(bl)
 }

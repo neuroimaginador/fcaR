@@ -7,9 +7,9 @@ articles:
   navbar: Basics
   contents:
   - creating_contexts
-  - json_export_import
   - concept_lattice
   - implications
+  - fuzzy_fca
   - fcaR_dplyr
   - lattice_visualization
 
@@ -17,20 +17,26 @@ articles:
   navbar: Advanced
   contents:
   - conceptual-scaling
-  - fuzzy_fca
-  - matrix_factorization
+  - random_contexts
+  - json_export_import
   - extending_equivalence
-  - causal
 
 - title: Metrics and Properties
   navbar: Metrics
   contents:
   - lattice_properties
   - advanced_lattice_metrics
-  - random_contexts
 
 - title: Extension Packages
   navbar: Extensions
   contents:
   - arules
+
+- title: Experimental Methods
+  navbar: Experimental
+  contents:
+  - bonds
+  - matrix_factorization
+  - causal
+
 

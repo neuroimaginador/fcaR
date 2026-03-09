@@ -33,6 +33,13 @@ print(my_bonds[[1]])
 \section{Super classes}{
 \code{\link[fcaR:ConceptSet]{fcaR::ConceptSet}} -> \code{\link[fcaR:ConceptLattice]{fcaR::ConceptLattice}} -> \code{BondLattice}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{elapsed}}{(numeric) Time elapsed during bond computation (C++ level)}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
