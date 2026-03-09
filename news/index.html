@@ -21,26 +21,29 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Basics</h6></li>
     <li><a class="dropdown-item" href="../articles/creating_contexts.html">Creating Formal Contexts in fcaR</a></li>
-    <li><a class="dropdown-item" href="../articles/json_export_import.html">JSON Export and Import</a></li>
     <li><a class="dropdown-item" href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a></li>
     <li><a class="dropdown-item" href="../articles/implications.html">Working with ImplicationSets</a></li>
+    <li><a class="dropdown-item" href="../articles/fuzzy_fca.html">Fuzzy formal concept analysis</a></li>
     <li><a class="dropdown-item" href="../articles/fcaR_dplyr.html">Data Manipulation with fcaR and dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/lattice_visualization.html">Visualizing concept lattices: from R to LaTeX</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/conceptual-scaling.html">Conceptual Scaling</a></li>
-    <li><a class="dropdown-item" href="../articles/fuzzy_fca.html">Fuzzy formal concept analysis</a></li>
-    <li><a class="dropdown-item" href="../articles/matrix_factorization.html">Matrix Factorization</a></li>
+    <li><a class="dropdown-item" href="../articles/random_contexts.html">Advanced Random Contexts</a></li>
+    <li><a class="dropdown-item" href="../articles/json_export_import.html">JSON Export and Import</a></li>
     <li><a class="dropdown-item" href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a></li>
-    <li><a class="dropdown-item" href="../articles/causal.html">Mining Causal Association Rules</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Metrics</h6></li>
     <li><a class="dropdown-item" href="../articles/lattice_properties.html">Lattice properties</a></li>
     <li><a class="dropdown-item" href="../articles/advanced_lattice_metrics.html">Advanced lattice metrics</a></li>
-    <li><a class="dropdown-item" href="../articles/random_contexts.html">Advanced Random Contexts</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Extensions</h6></li>
     <li><a class="dropdown-item" href="../articles/arules.html">Integration with the arules package</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Experimental</h6></li>
+    <li><a class="dropdown-item" href="../articles/bonds.html">Working with Bonds</a></li>
+    <li><a class="dropdown-item" href="../articles/matrix_factorization.html">Matrix Factorization</a></li>
+    <li><a class="dropdown-item" href="../articles/causal.html">Mining Causal Association Rules</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -64,31 +67,23 @@
 <ul><li>
 <strong>New Dataset:</strong> Added the <code>guesswho</code> dataset, based on the classic board game, containing 24 characters and their binary attributes. Ideal for demonstrating concept lattices and implications in binary contexts.</li>
 <li>
-<strong>Bonds between Formal Contexts:</strong> Added <code>compute_bonds()</code> function and <code>BondLattice</code> class to compute and analyze the bonds between two formal contexts. Bonds are dual-closure-compatible relations that capture structural similarities between contexts at the lattice level.</li>
-<li>
-<strong>BondLattice Similarity Metrics:</strong> The <code>BondLattice</code> class provides a rich suite of similarity and complexity metrics via the <code>similarity()</code> method, including:
+<strong>Bonds between Formal Contexts:</strong> Added <code><a href="../reference/bonds.html">bonds()</a></code> function and <code>BondLattice</code> class to compute and analyze the bonds between two formal contexts.
 <ul><li>
-<code>"log-bond"</code>: Logarithmic bond ratio measuring logical affinity.</li>
+<strong>Optimized Solvers:</strong> Includes two native C++ implementations: <code>"conexp"</code> (default, implication-based) and <code>"mcis"</code> (backtracking over pre-computed concepts).</li>
 <li>
-<code>"top-density"</code>: Density of the bond lattice relative to total possible bonds.</li>
-<li>
-<code>"complexity"</code>: Structural complexity ratio (join-irreducibles / bonds).</li>
-<li>
-<code>"core-agreement"</code>: Proportion of shared core structural elements.</li>
-<li>
-<code>"entropy"</code>: Interaction entropy of the bond distribution.</li>
-<li>
-<code>"stability"</code>, <code>"width"</code>, <code>"dimension"</code>, <code>"width-index"</code>, <code>"dimension-index"</code>: Order-theoretic metrics derived from the bond lattice structure.</li>
+<strong>BondLattice Similarity Metrics:</strong> The <code>BondLattice</code> class provides 10 similarity and complexity metrics via the <code>similarity()</code> method: <code>"log-bond"</code>, <code>"top-density"</code>, <code>"complexity"</code>, <code>"core-agreement"</code>, <code>"entropy"</code>, <code>"stability"</code>, <code>"width"</code>, <code>"dimension"</code>, <code>"width-index"</code>, and <code>"dimension-index"</code>.</li>
 </ul></li>
 <li>
-<strong>Dilworth’s Width:</strong> Added <code>width()</code> method to <code>ConceptLattice</code> and <code>BondLattice</code>, computing the maximum antichain size via an efficient C++ implementation. This measures the “maximum parallelism” in the lattice.</li>
+<strong>Dilworth’s Width:</strong> Added <code>width()</code> method to <code>ConceptLattice</code> and <code>BondLattice</code>, computing the maximum antichain size via an efficient C++ implementation.</li>
 <li>
-<strong>Order Dimension:</strong> Added <code>dimension()</code> method to <code>ConceptLattice</code> and <code>BondLattice</code>, computing a heuristic estimate of the order dimension (minimum number of linear extensions needed to represent the partial order) via C++.</li>
+<strong>Order Dimension:</strong> Added <code>dimension()</code> method to <code>ConceptLattice</code> and <code>BondLattice</code>, computing a heuristic estimate of the order dimension via C++.</li>
 </ul><p>Improvements:</p>
 <ul><li>
-<strong>LinCbO Stability Fix:</strong> Fixed a symbol collision between the <code>FastBitset</code> class used internally by <code>LinCbO</code> and other translation units. The solver now uses the shared <code>fcaR::FastBitset</code> from <code>fcaR_bitset.h</code>, eliminating segfaults that could occur during implication mining. LinCbO remains up to 40x faster than NextClosure on large contexts (~10,000+ implications).</li>
+<strong>LinCbO Stability Fix:</strong> Fixed a symbol collision between the <code>FastBitset</code> class used internally by <code>LinCbO</code> and other translation units.</li>
 <li>
-<strong>Expanded Test Coverage:</strong> Added comprehensive test suite (<code>test-coverage_sniper.R</code>) covering edge cases for C++ operations, fuzzy logic, background implication completion, RuleSet methods, advanced scaling, and poset metrics.</li>
+<strong>New Documentation:</strong> Added a comprehensive <code>bonds</code> vignette in English, explaining the theory and usage of bonds, metrics, and visualization.</li>
+<li>
+<strong>Expanded Test Coverage:</strong> Added 17 new unit tests specifically for bond calculation, metrics, and verification (<code>test-bonds.R</code>). Also added <code>test-coverage_sniper.R</code> for general edge cases.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.5.0" id="fcar-150">fcaR 1.5.0<a class="anchor" aria-label="anchor" href="#fcar-150"></a></h2><p class="text-muted">CRAN release: 2026-02-13</p>

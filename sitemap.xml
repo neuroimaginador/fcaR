@@ -7,6 +7,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/SUPPORT.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/advanced_lattice_metrics.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/arules.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/articles/bonds.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/causal.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/concept_lattice.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/articles/conceptual-scaling.html</loc></url>
@@ -37,6 +38,8 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_vector.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/bonds.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/bonds_mcis.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/bonds_standard.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_density.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_grades.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/calculate_separation.html</loc></url>

@@ -28,6 +28,10 @@
   : Convert Set to vector
 - [`bonds()`](https://neuroimaginador.github.io/fcaR/reference/bonds.md)
   : Compute bonds between two formal contexts
+- [`bonds_mcis()`](https://neuroimaginador.github.io/fcaR/reference/bonds_mcis.md)
+  : Compute bonds via MCIS (backtracking on pre-computed concepts)
+- [`bonds_standard()`](https://neuroimaginador.github.io/fcaR/reference/bonds_standard.md)
+  : Compute bonds via standard implication-based method
 - [`calculate_density()`](https://neuroimaginador.github.io/fcaR/reference/calculate_density.md)
   : Calculate Fuzzy Density
 - [`calculate_grades()`](https://neuroimaginador.github.io/fcaR/reference/calculate_grades.md)

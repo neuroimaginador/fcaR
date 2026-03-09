@@ -7,7 +7,7 @@ the relation is closed under the derivation operators of both contexts.
 ## Usage
 
 ``` r
-bonds(fc1, fc2)
+bonds(fc1, fc2, method = c("conexp", "mcis"), verbose = FALSE)
 ```
 
 ## Arguments
@@ -19,6 +19,17 @@ bonds(fc1, fc2)
 - fc2:
 
   (`FormalContext`) The second formal context.
+
+- method:
+
+  (character) The method to use. `"conexp"` uses implication-based
+  closed set enumeration on the tensor product. `"mcis"` uses a
+  backtracking algorithm based on pre-computed concepts (extents of C1
+  and intents of C2). Default is `"conexp"`.
+
+- verbose:
+
+  (logical) If TRUE, print progress information.
 
 ## Value
 
@@ -40,18 +51,11 @@ colnames(mat2) <- paste0("B", 1:3)
 fc2 <- FormalContext$new(mat2)
 
 # Compute bonds returning a lattice
-bonds_lattice <- bonds(fc1, fc2)
+bonds_lattice <- bonds(fc1, fc2, method = "conexp")
 bonds_lattice$print()
 #> Bond Lattice between two formal contexts:
 #> - Context 1 (G1): 5 objects (O1, O2...)
 #> - Context 2 (M2): 3 attributes (B1, B2...)
 #> - Total Bonds: 65 
-#> - Logical Affinity (Log-Bond): 0.9947 
-#> - Interaction Entropy: 0.4944 
-#> - Structural Complexity (JI/Bonds): 0.1385 
-#> - Core Agreement Ratio: 0 
-#> - Average Bond Stability: 0.2599 
-#> - Dilworth's Width: 13 (Index: 0.2000)
-#> - Order Dimension: 10 (Index: 1.6605)
 # }
 ```

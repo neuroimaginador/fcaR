@@ -66,16 +66,16 @@ fc_uni <- RandomContext(10, 5, density = 0.2)
 print(fc_uni)
 #> FormalContext with 10 objects and 5 attributes.
 #>      A1  A2  A3  A4  A5  
-#>   O1                     
-#>   O2          X       X  
-#>   O3                  X  
-#>   O4  X       X          
-#>   O5      X           X  
-#>   O6              X      
+#>   O1              X      
+#>   O2                     
+#>   O3  X           X      
+#>   O4          X   X      
+#>   O5  X               X  
+#>   O6                     
 #>   O7                     
-#>   O8  X                  
+#>   O8          X          
 #>   O9                     
-#>  O10          X          
+#>  O10      X       X      
 
 # 2. Dirichlet Random Context (Mimicking real data structure)
 # Objects will have varying 'sizes' (number of attributes)
@@ -83,14 +83,14 @@ fc_dir <- RandomContext(10, 5, distribution = "dirichlet", alpha = 0.5)
 print(fc_dir)
 #> FormalContext with 10 objects and 5 attributes.
 #>      A1  A2  A3  A4  A5  
-#>   O1  X   X           X  
-#>   O2  X           X   X  
-#>   O3  X       X       X  
-#>   O4      X       X   X  
-#>   O5                  X  
-#>   O6      X       X   X  
-#>   O7  X   X       X      
-#>   O8  X   X           X  
-#>   O9  X           X   X  
-#>  O10              X      
+#>   O1      X           X  
+#>   O2      X           X  
+#>   O3  X   X   X   X   X  
+#>   O4  X   X           X  
+#>   O5  X   X   X   X   X  
+#>   O6              X   X  
+#>   O7                     
+#>   O8              X   X  
+#>   O9              X   X  
+#>  O10                     
 ```

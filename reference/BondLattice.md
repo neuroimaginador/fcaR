@@ -13,6 +13,12 @@ FormalContexts.
 [`fcaR::ConceptLattice`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.md)
 -\> `BondLattice`
 
+## Public fields
+
+- `elapsed`:
+
+  (numeric) Time elapsed during bond computation (C++ level)
+
 ## Methods
 
 ### Public methods
@@ -260,10 +266,10 @@ my_bonds <- bl$get_bonds()
 print(my_bonds[[1]])
 #> FormalContext with 5 objects and 3 attributes.
 #>     B1  B2  B3  
-#>  O1  X   X   X  
-#>  O2  X   X   X  
-#>  O3  X   X   X  
-#>  O4  X   X   X  
-#>  O5  X   X   X  
+#>  O1             
+#>  O2             
+#>  O3             
+#>  O4             
+#>  O5             
 # }
 ```

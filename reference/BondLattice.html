@@ -27,26 +27,29 @@ and provides specific methods to extract bonds as matrices and FormalContexts.">
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Basics</h6></li>
     <li><a class="dropdown-item" href="../articles/creating_contexts.html">Creating Formal Contexts in fcaR</a></li>
-    <li><a class="dropdown-item" href="../articles/json_export_import.html">JSON Export and Import</a></li>
     <li><a class="dropdown-item" href="../articles/concept_lattice.html">Using FormalContexts and ConceptLattices</a></li>
     <li><a class="dropdown-item" href="../articles/implications.html">Working with ImplicationSets</a></li>
+    <li><a class="dropdown-item" href="../articles/fuzzy_fca.html">Fuzzy formal concept analysis</a></li>
     <li><a class="dropdown-item" href="../articles/fcaR_dplyr.html">Data Manipulation with fcaR and dplyr</a></li>
     <li><a class="dropdown-item" href="../articles/lattice_visualization.html">Visualizing concept lattices: from R to LaTeX</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced</h6></li>
     <li><a class="dropdown-item" href="../articles/conceptual-scaling.html">Conceptual Scaling</a></li>
-    <li><a class="dropdown-item" href="../articles/fuzzy_fca.html">Fuzzy formal concept analysis</a></li>
-    <li><a class="dropdown-item" href="../articles/matrix_factorization.html">Matrix Factorization</a></li>
+    <li><a class="dropdown-item" href="../articles/random_contexts.html">Advanced Random Contexts</a></li>
+    <li><a class="dropdown-item" href="../articles/json_export_import.html">JSON Export and Import</a></li>
     <li><a class="dropdown-item" href="../articles/extending_equivalence.html">Extending fcaR: Equivalence Rules for Implications</a></li>
-    <li><a class="dropdown-item" href="../articles/causal.html">Mining Causal Association Rules</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Metrics</h6></li>
     <li><a class="dropdown-item" href="../articles/lattice_properties.html">Lattice properties</a></li>
     <li><a class="dropdown-item" href="../articles/advanced_lattice_metrics.html">Advanced lattice metrics</a></li>
-    <li><a class="dropdown-item" href="../articles/random_contexts.html">Advanced Random Contexts</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Extensions</h6></li>
     <li><a class="dropdown-item" href="../articles/arules.html">Integration with the arules package</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Experimental</h6></li>
+    <li><a class="dropdown-item" href="../articles/bonds.html">Working with Bonds</a></li>
+    <li><a class="dropdown-item" href="../articles/matrix_factorization.html">Matrix Factorization</a></li>
+    <li><a class="dropdown-item" href="../articles/causal.html">Mining Causal Association Rules</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -76,6 +79,14 @@ and provides specific methods to extract bonds as matrices and FormalContexts.</
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
     <p><code><a href="ConceptSet.html">fcaR::ConceptSet</a></code> -&gt; <code><a href="ConceptLattice.html">fcaR::ConceptLattice</a></code> -&gt; <code>BondLattice</code></p>
+    </div>
+    <div class="section level2">
+    <h2 id="public-fields">Public fields<a class="anchor" aria-label="anchor" href="#public-fields"></a></h2>
+    <p></p><div class="r6-fields"><dl><dt><code>elapsed</code></dt>
+<dd><p>(numeric) Time elapsed during bond computation (C++ level)</p></dd>
+
+
+</dl><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="methods">Methods<a class="anchor" aria-label="anchor" href="#methods"></a></h2>
@@ -301,11 +312,11 @@ and provides specific methods to extract bonds as matrices and FormalContexts.</
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">my_bonds</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FormalContext with 5 objects and 3 attributes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     B1  B2  B3  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  O1  X   X   X  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  O2  X   X   X  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  O3  X   X   X  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  O4  X   X   X  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  O5  X   X   X  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  O1             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  O2             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  O3             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  O4             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  O5             </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
