@@ -201,7 +201,9 @@ operations.</p>
 <h3 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h3>
 <p>You can plot the Hasse diagram of the bond lattice:</p>
-<p><code>{r bl$plot()</code></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bl</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bonds_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="extracting-bonds">Extracting Bonds<a class="anchor" aria-label="anchor" href="#extracting-bonds"></a>
@@ -209,7 +211,7 @@ operations.</p>
 <p>Each node in the bond lattice represents a specific bond (a
 relation). You can extract these relations as individual
 <code>FormalContext</code> objects:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get all bonds as a list of FormalContexts</span></span>
 <span><span class="va">all_bonds</span> <span class="op">&lt;-</span> <span class="va">bl</span><span class="op">$</span><span class="fu">get_bonds</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">all_bonds</span><span class="op">)</span></span>
@@ -231,10 +233,10 @@ relation). You can extract these relations as individual
 <p>The “Core” bond is the intersection of all bonds (the infimum of the
 lattice). It represents the most fundamental consensus between the two
 contexts.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">core</span> <span class="op">&lt;-</span> <span class="va">bl</span><span class="op">$</span><span class="fu">get_core</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">core</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bonds_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="700"></p>
+<p><img src="bonds_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 </div>
 <div class="section level2">
@@ -243,7 +245,7 @@ contexts.</p>
 <p>If you have a relation (as a matrix or a <code>FormalContext</code>)
 and want to check if it satisfies the mathematical definition of a bond
 between two contexts:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Take an existing bond and check it</span></span>
 <span><span class="va">mat_bond</span> <span class="op">&lt;-</span> <span class="fu">methods</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/methods/as.html" class="external-link">as</a></span><span class="op">(</span><span class="va">all_bonds</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span>, <span class="st">"matrix"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/is_bond.html">is_bond</a></span><span class="op">(</span><span class="va">fc1</span>, <span class="va">fc2</span>, <span class="va">mat_bond</span><span class="op">)</span></span>
@@ -312,7 +314,7 @@ measures interaction entropy as:
 </ul>
 <p>The <code>similarity()</code> method returns a named vector of these
 metrics.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 1. Logical Affinity (Log-Bond)</span></span>
 <span><span class="co"># Measures how much the two contexts share a common logical structure.</span></span>
 <span><span class="co"># 1.0 means perfect affinity.</span></span>
@@ -349,7 +351,7 @@ in the bond lattice.</li>
 <strong>Order Dimension</strong>: The minimum number of linear
 orders whose intersection is the bond lattice.</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Dilworth's Width</span></span>
 <span><span class="va">bl</span><span class="op">$</span><span class="fu">similarity</span><span class="op">(</span><span class="st">"width"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 4</span></span>
@@ -369,7 +371,7 @@ lattice size:</p>
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Dimension-Index</mtext><mo>=</mo><mfrac><mrow><mtext mathvariant="normal">Dimension</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>L</mi><mn>12</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><msub><mo>log</mo><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>L</mi><mn>12</mn></msub><mo stretchy="true" form="postfix">|</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex"> \text{Dimension-Index} = \frac{\text{Dimension}(L_{12})}{\log_2(|L_{12}|)} </annotation></semantics></math>
 </li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bl</span><span class="op">$</span><span class="fu">similarity</span><span class="op">(</span><span class="st">"width-index"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.25</span></span>
 <span><span class="va">bl</span><span class="op">$</span><span class="fu">similarity</span><span class="op">(</span><span class="st">"dimension-index"</span><span class="op">)</span></span>

@@ -104,7 +104,11 @@ is an object of class `BondLattice`. Since this class inherits from
 
 You can plot the Hasse diagram of the bond lattice:
 
-`{r bl$plot()`
+``` r
+bl$plot()
+```
+
+![](bonds_files/figure-html/unnamed-chunk-6-1.png)
 
 ### Extracting Bonds
 
@@ -139,7 +143,7 @@ core <- bl$get_core()
 core$plot()
 ```
 
-![](bonds_files/figure-html/unnamed-chunk-7-1.png)
+![](bonds_files/figure-html/unnamed-chunk-8-1.png)
 
 ## Verifying Bonds
 
