@@ -8,6 +8,7 @@ vignette: >
 ---
 
 ```{r}
+#| echo: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
