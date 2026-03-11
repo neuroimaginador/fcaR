@@ -1,6 +1,13 @@
 # Working with Bonds
 
-`{r, knitr::opts_chunk$set( collapse = TRUE, comment = "#>", warning = FALSE, message = FALSE )`
+``` r
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
 
 ## Introduction
 
@@ -43,42 +50,37 @@ rownames(mat1) <- paste0("O", 1:4)
 colnames(mat1) <- paste0("A", 1:4)
 fc1 <- FormalContext$new(mat1)
 print(fc1)
-```
+#> FormalContext with 4 objects and 4 attributes.
+#>     A1  A2  A3  A4  
+#>  O1      X          
+#>  O2      X   X   X  
+#>  O3      X          
+#>  O4      X   X
 
-    ## FormalContext with 4 objects and 4 attributes.
-    ##     A1  A2  A3  A4  
-    ##  O1      X          
-    ##  O2      X   X   X  
-    ##  O3      X          
-    ##  O4      X   X
-
-``` r
 # Context 2
 mat2 <- matrix(sample(0:1, 16, replace = TRUE), nrow = 4, ncol = 4)
 rownames(mat2) <- paste0("P", 1:4)
 colnames(mat2) <- paste0("B", 1:4)
 fc2 <- FormalContext$new(mat2)
 print(fc2)
+#> FormalContext with 4 objects and 4 attributes.
+#>     B1  B2  B3  B4  
+#>  P1  X              
+#>  P2  X       X      
+#>  P3  X           X  
+#>  P4  X           X
 ```
-
-    ## FormalContext with 4 objects and 4 attributes.
-    ##     B1  B2  B3  B4  
-    ##  P1  X              
-    ##  P2  X       X      
-    ##  P3  X           X  
-    ##  P4  X           X
 
 To compute the bond lattice:
 
 ``` r
 bl <- bonds(fc1, fc2, method = "conexp")
 bl
+#> Bond Lattice between two formal contexts:
+#> - Context 1 (G1): 4 objects (O1, O2...)
+#> - Context 2 (M2): 4 attributes (B1, B2...)
+#> - Total Bonds: 16
 ```
-
-    ## Bond Lattice between two formal contexts:
-    ## - Context 1 (G1): 4 objects (O1, O2...)
-    ## - Context 2 (M2): 4 attributes (B1, B2...)
-    ## - Total Bonds: 16
 
 ### Computation Methods
 
@@ -97,9 +99,8 @@ function provides two optimized C++ methods:
 # Using the backtracking method
 bl_mcis <- bonds(fc1, fc2, method = "mcis")
 bl_mcis$size()
+#> [1] 16
 ```
-
-    ## [1] 16
 
 ## The BondLattice Object
 
@@ -123,22 +124,18 @@ You can extract these relations as individual `FormalContext` objects:
 # Get all bonds as a list of FormalContexts
 all_bonds <- bl$get_bonds()
 length(all_bonds)
-```
+#> [1] 16
 
-    ## [1] 16
-
-``` r
 # Inspect the first non-trivial bond
 # (Note: Bond 1 is usually the "Core" or minimal bond)
 all_bonds[[1]]
+#> FormalContext with 4 objects and 4 attributes.
+#>     B1  B2  B3  B4  
+#>  O1  X              
+#>  O2  X              
+#>  O3  X              
+#>  O4  X
 ```
-
-    ## FormalContext with 4 objects and 4 attributes.
-    ##     B1  B2  B3  B4  
-    ##  O1  X              
-    ##  O2  X              
-    ##  O3  X              
-    ##  O4  X
 
 ### The Core Bond
 
@@ -151,7 +148,7 @@ core <- bl$get_core()
 core$plot()
 ```
 
-![](bonds_files/figure-html/unnamed-chunk-6-1.png)
+![](bonds_files/figure-html/unnamed-chunk-7-1.png)
 
 ## Verifying Bonds
 
@@ -163,17 +160,13 @@ contexts:
 # Take an existing bond and check it
 mat_bond <- methods::as(all_bonds[[1]]$incidence(), "matrix")
 is_bond(fc1, fc2, mat_bond)
-```
+#> [1] TRUE
 
-    ## [1] TRUE
-
-``` r
 # Check an arbitrary (likely invalid) relation
 random_rel <- matrix(0, nrow = nrow(mat_bond), ncol = ncol(mat_bond))
 is_bond(fc1, fc2, random_rel)
+#> [1] FALSE
 ```
-
-    ## [1] FALSE
 
 ## Similarity and Complexity Metrics
 
@@ -210,34 +203,24 @@ The `similarity()` method returns a named vector of these metrics.
 # Measures how much the two contexts share a common logical structure.
 # 1.0 means perfect affinity.
 bl$similarity("log-bond")
-```
+#> [1] 0.9620358
 
-    ## [1] 0.9620358
-
-``` r
 # 2. Structural Complexity
 # Ratio of irreducible bonds to total bonds.
 # Lower values indicate more emergent structural properties.
 bl$similarity("complexity")
-```
+#> [1] 0.375
 
-    ## [1] 0.375
-
-``` r
 # 3. Core Agreement
 # Ratio of filled cells in the Core bond versus the Top (largest) bond.
 bl$similarity("core-agreement")
-```
+#> [1] 0.25
 
-    ## [1] 0.25
-
-``` r
 # 4. Interaction Entropy
 # Based on the log-size of the lattices.
 bl$similarity("entropy")
+#> [1] 0.4806578
 ```
-
-    ## [1] 0.4806578
 
 ## Order-Theoretic Properties
 
@@ -252,16 +235,12 @@ between contexts using measures like **Width** and **Dimension**.
 ``` r
 # Dilworth's Width
 bl$similarity("width")
-```
+#> [1] 4
 
-    ## [1] 4
-
-``` r
 # Order Dimension (estimated via heuristic)
 bl$similarity("dimension")
+#> [1] 2
 ```
-
-    ## [1] 2
 
 These measures can also be expressed as indices normalized by the
 lattice size:
@@ -273,15 +252,10 @@ lattice size:
 
 ``` r
 bl$similarity("width-index")
-```
-
-    ## [1] 0.25
-
-``` r
+#> [1] 0.25
 bl$similarity("dimension-index")
+#> [1] 0.5
 ```
-
-    ## [1] 0.5
 
 ## Summary
 
