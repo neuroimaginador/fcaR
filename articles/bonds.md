@@ -1,14 +1,5 @@
 # Working with Bonds
 
-``` r
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  warning = FALSE,
-  message = FALSE
-)
-```
-
 ## Introduction
 
 In Formal Concept Analysis (FCA), a **bond** between two formal contexts
