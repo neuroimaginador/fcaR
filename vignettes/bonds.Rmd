@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r,
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 # Introduction
 
 In Formal Concept Analysis (FCA), a **bond** between two formal contexts $K_1 = (G_1, M_1, I_1)$ and $K_2 = (G_2, M_2, I_2)$ is a relation $R \subseteq G_1 \times M_2$ such that:
+
 - For every object $g \in G_1$, the set of attributes $\{m \in M_2 \mid (g, m) \in R\}$ is an intent of $K_2$.
 - For every attribute $m \in M_2$, the set of objects $\{g \in G_1 \mid (g, m) \in R\}$ is an extent of $K_1$.
 
@@ -26,7 +27,7 @@ Bonds represent "compatible" relations between the objects of one context and th
 
 In `fcaR`, bonds are treated as first-class citizens with a dedicated `BondLattice` class that extends the standard `ConceptLattice`.
 
-```{r setup}
+```{r}
 library(fcaR)
 ```
 
@@ -43,13 +44,16 @@ mat1 <- matrix(sample(0:1, 16, replace = TRUE), nrow = 4, ncol = 4)
 rownames(mat1) <- paste0("O", 1:4)
 colnames(mat1) <- paste0("A", 1:4)
 fc1 <- FormalContext$new(mat1)
+print(fc1)
 
 # Context 2
 mat2 <- matrix(sample(0:1, 16, replace = TRUE), nrow = 4, ncol = 4)
 rownames(mat2) <- paste0("P", 1:4)
 colnames(mat2) <- paste0("B", 1:4)
 fc2 <- FormalContext$new(mat2)
+print(fc2)
 ```
+
 
 To compute the bond lattice:
 
@@ -58,17 +62,20 @@ bl <- bonds(fc1, fc2, method = "conexp")
 bl
 ```
 
+
 ## Computation Methods
 
 The `bonds()` function provides two optimized C++ methods:
-1.  `"conexp"` (Default): Uses an implication-based approach on a tensor product of the contexts. It is generally the fastest for dense or moderately sized contexts.
-2.  `"mcis"`: A backtracking algorithm that operates directly on the pre-computed concept sets of both contexts. It can be more efficient in specific structural configurations.
+
+1. `"conexp"` (Default): Uses an implication-based approach on a tensor product of the contexts. It is generally the fastest for dense or moderately sized contexts.
+2. `"mcis"`: A backtracking algorithm that operates directly on the pre-computed concept sets of both contexts. It can be more efficient in specific structural configurations.
 
 ```{r}
 # Using the backtracking method
 bl_mcis <- bonds(fc1, fc2, method = "mcis")
 bl_mcis$size()
 ```
+
 
 # The BondLattice Object
 
@@ -78,7 +85,7 @@ The result of `bonds()` is an object of class `BondLattice`. Since this class in
 
 You can plot the Hasse diagram of the bond lattice:
 
-```{r fig.width=7, fig.height=5}
+```{r
 bl$plot()
 ```
 
@@ -96,6 +103,7 @@ length(all_bonds)
 all_bonds[[1]]
 ```
 
+
 ## The Core Bond
 
 The "Core" bond is the intersection of all bonds (the infimum of the lattice). It represents the most fundamental consensus between the two contexts.
@@ -104,6 +112,7 @@ The "Core" bond is the intersection of all bonds (the infimum of the lattice). I
 core <- bl$get_core()
 core$plot()
 ```
+
 
 # Verifying Bonds
 
@@ -119,9 +128,24 @@ random_rel <- matrix(0, nrow = nrow(mat_bond), ncol = ncol(mat_bond))
 is_bond(fc1, fc2, random_rel)
 ```
 
+
 # Similarity and Complexity Metrics
 
 The `BondLattice` class provides a `similarity()` method to compute various metrics that describe the relationship between the two formal contexts.
+
+The following metrics are available. Let $L_{12}$ be the bond lattice between $K_1$ and $K_2$, and $L_{11}$ and $L_{22}$ be the bond lattices of $K_1$ and $K_2$ with themselves, respectively. We denote the size (number of concepts) of a lattice $L$ as $|L|$.
+
+- `log-bond`: Measures how much the two contexts share a common logical structure. It is calculated as the normalized log-ratio of bonds:
+  $$ \text{Log-Bond} = \frac{\log(|L_{12}|)}{\sqrt{\log(|L_{11}|) \cdot \log(|L_{22}|)}} $$
+- `complexity`: Ratio of irreducible bonds to total bonds. Lower values indicate more emergent structural properties. Let $JI(L_{12})$ be the set of join-irreducible elements of the bond lattice:
+  $$ \text{Complexity} = \frac{|JI(L_{12})|}{|L_{12}|} $$
+- `core-agreement`: Ratio of filled cells in the Core bond versus the Top (largest) bond. If $B_{core}$ is the Core bond and $B_{top}$ is the Top bond, and $|B|$ represents the number of elements in the relation (filled cells):
+  $$ \text{Core-Agreement} = \frac{|B_{core}|}{|B_{top}|} $$
+- `entropy`: Based on the log-size of the lattices. It measures interaction entropy as:
+  $$ \text{Entropy} = \frac{\log(|L_{12}|)}{\log(|L_{11}|) + \log(|L_{22}|)} $$
+
+
+The `similarity()` method returns a named vector of these metrics.
 
 ```{r}
 # 1. Logical Affinity (Log-Bond)
@@ -130,7 +154,7 @@ The `BondLattice` class provides a `similarity()` method to compute various metr
 bl$similarity("log-bond")
 
 # 2. Structural Complexity
-# Ratio of irreducible bonds to total bonds. 
+# Ratio of irreducible bonds to total bonds.
 # Lower values indicate more emergent structural properties.
 bl$similarity("complexity")
 
@@ -142,6 +166,7 @@ bl$similarity("core-agreement")
 # Based on the log-size of the lattices.
 bl$similarity("entropy")
 ```
+
 
 # Order-Theoretic Properties
 
@@ -158,12 +183,19 @@ bl$similarity("width")
 bl$similarity("dimension")
 ```
 
+
 These measures can also be expressed as indices normalized by the lattice size:
+
+- **Width Index**:
+  $$ \text{Width-Index} = \frac{\text{Width}(L_{12})}{|L_{12}|} $$
+- **Dimension Index**:
+  $$ \text{Dimension-Index} = \frac{\text{Dimension}(L_{12})}{\log_2(|L_{12}|)} $$
 
 ```{r}
 bl$similarity("width-index")
 bl$similarity("dimension-index")
 ```
+
 
 # Summary
 
