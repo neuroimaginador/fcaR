@@ -86,7 +86,7 @@ The result of `bonds()` is an object of class `BondLattice`. Since this class in
 
 You can plot the Hasse diagram of the bond lattice:
 
-```{r
+```{r}
 bl$plot()
 ```
 
