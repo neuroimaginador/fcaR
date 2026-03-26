@@ -74,9 +74,15 @@ ConceptLattice <- R6::R6Class(
     #'   \item \code{"attributes"}: Nodes show only their intent (attributes).
     #'   \item \code{"empty"}: Nodes are drawn as points without labels. Recommended for very large lattices (>50 concepts).
     #' }
-    #' @param ...          Other parameters passed to the internal plotting function (e.g., graphical parameters for \code{ggraph}).
+    #' @param viewer       (character) The viewer to use for plotting. Options are:
+    #' \itemize{
+    #'   \item \code{"ggraph"} (default): Use \code{ggraph} for drawing.
+    #'   \item \code{"base"}: Use R base graphics. This is a lightweight alternative that supports themes.
+    #' }
+    #' @param theme        (character) The color theme to use for the \code{"base"} viewer. Options are: \code{"standard"}, \code{"nord"}, \code{"latex"}, \code{"vibrant"}.
+    #' @param ...          Other parameters passed to the internal plotting function (e.g., graphical parameters for \code{ggraph} or \code{base}).
     #'
-    #' @return If \code{to_latex} is \code{FALSE}, it returns (invisibly) the \code{ggplot2} object representing the graph.
+    #' @return If \code{to_latex} is \code{FALSE}, it returns (invisibly) the \code{ggplot2} object representing the graph (for \code{ggraph}) or \code{NULL} (for \code{base}).
     #' If \code{to_latex} is \code{TRUE}, it returns a \code{tikz_code} object containing the LaTeX code.
     #' @export
     plot = function(
@@ -84,6 +90,8 @@ ConceptLattice <- R6::R6Class(
       to_latex = FALSE,
       method = c("sugiyama", "force"),
       mode = NULL,
+      viewer = c("ggraph", "base"),
+      theme = "standard",
       ...
     ) {
       # 1. Verificación de estado
@@ -111,6 +119,7 @@ ConceptLattice <- R6::R6Class(
       # 3. Delegación a lattice_plot
       # Pasamos los datos privados necesarios (matriz, objetos, atributos)
       method <- match.arg(method)
+      viewer <- match.arg(viewer)
       lattice_plot(
         nodes_df = nodes_df,
         cover_matrix = private$covering_matrix,
@@ -125,6 +134,8 @@ ConceptLattice <- R6::R6Class(
         intents = intents_list,
         object_names = self$objects,
         to_latex = to_latex,
+        viewer = viewer,
+        theme = theme,
         ...
       )
     },

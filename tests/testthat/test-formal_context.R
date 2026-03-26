@@ -574,6 +574,7 @@ test_that("fcaR computes the standard context", {
 
   expect_error(fc2 <- fc$standardize())
 
+  expect_error(fc$find_concepts(), NA)
   expect_error(fc$find_implications(), NA)
   expect_error(fc2 <- fc$standardize(), NA)
 
@@ -787,7 +788,7 @@ test_that("fcaR setters/getters and error handling work", {
   # Usamos un contexto multivaluado para esto
   I_mv <- data.frame(A = c(1, 2))
   fc_mv <- FormalContext$new(I_mv)
-  expect_error(fc_mv$reduce(), "not binary")
+  expect_error(fc_mv$reduce(), "many-valued")
 })
 
 

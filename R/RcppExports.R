@@ -85,6 +85,19 @@ bonds_mcis_cpp <- function(extents, intents, verbose = FALSE) {
     .Call(`_fcaR_bonds_mcis_cpp`, extents, intents, verbose)
 }
 
+#' @title compute_arrow_relations_cpp
+#' @description Computes the arrow relations (swarrow, nearrow, and double arrow)
+#' for a binary formal context.
+#' @param I (IntegerMatrix) The binary incidence matrix of the formal context.
+#' @return An IntegerMatrix where:
+#'   - 1: \swarrow
+#'   - 2: \nearrow
+#'   - 3: \updownarrow
+#' @noRd
+compute_arrow_relations_cpp <- function(I) {
+    .Call(`_fcaR_compute_arrow_relations_cpp`, I)
+}
+
 print_matrix <- function(I) {
     invisible(.Call(`_fcaR_print_matrix`, I))
 }
@@ -177,8 +190,8 @@ calculate_grades_rcpp <- function(concept_ids, edge_from, edge_to) {
     .Call(`_fcaR_calculate_grades_rcpp`, concept_ids, edge_from, edge_to)
 }
 
-calculate_lattice_layout_rcpp <- function(concept_ids, grades, edge_from, edge_to, method) {
-    .Call(`_fcaR_calculate_lattice_layout_rcpp`, concept_ids, grades, edge_from, edge_to, method)
+calculate_lattice_layout_rcpp <- function(concept_ids, layers_vec, y_coords_vec, edge_from, edge_to, method) {
+    .Call(`_fcaR_calculate_lattice_layout_rcpp`, concept_ids, layers_vec, y_coords_vec, edge_from, edge_to, method)
 }
 
 binary_lincbo_implications <- function(I, save_concepts = FALSE, verbose = FALSE) {

@@ -62,10 +62,10 @@ FormalContext <- R6::R6Class(
     expanded_grades_set = NULL,
 
     #' @field concepts The concept lattice associated to the formal context as a \code{\link{ConceptLattice}}.
-    concepts = "Not computed yet",
+    concepts = NULL,
 
     #' @field implications A set of implications on the formal context as an \code{\link{ImplicationSet}}.
-    implications = "Not computed yet",
+    implications = NULL,
 
     #' @field description An optional description of the dataset
     description = character(0),
@@ -733,88 +733,57 @@ FormalContext <- R6::R6Class(
     #' Reduce a formal context
     #'
     #' @param copy   (logical) If \code{TRUE}, a new \code{FormalContext} object is created with the clarified and reduced context, otherwise the current one is overwritten.
+    #' @param method (character) The method to use for reduction. One of \code{"arrows"} (default, uses arrow relations, only for binary contexts) or \code{"concepts"} (uses irreducible concepts, works for fuzzy).
     #'
     #' @return The clarified and reduced \code{FormalContext}.
     #'
     #' @export
-    reduce = function(copy = FALSE) {
-      if (!private$is_binary) {
-        stop(
-          "This FormalContext is not binary. Reduction is not implemented for fuzzy contexts.",
-          call. = FALSE
-        )
+    reduce = function(copy = FALSE, method = c("arrows", "concepts")) {
+      private$check_empty()
+
+      if (private$is_many_valued) {
+        error_many_valued()
       }
 
-      # Make a copy with the clarified context
-      fc2 <- self$clarify(TRUE)
+      method <- match.arg(method)
 
-      my_I <- Matrix::as.matrix(Matrix::t(fc2$I))
+      if (method == "arrows") {
+        if (!private$is_binary) {
+          stop("Arrow relations are only defined for binary contexts. Use method = 'concepts' for fuzzy contexts.", call. = FALSE)
+        }
+        res <- self$reduce_arrows()
+      } else {
+        if (self$concepts$is_empty()) {
+          stop("Concepts must be computed before reducing by 'concepts'.")
+        }
+        if (self$concepts$is_empty()) {
+          stop("Concept lattice is empty. Compute concepts before reducing.")
+        }
 
-      att <- fc2$attributes
+        join_irr <- self$concepts$join_irreducibles()$to_list()
+        meet_irr <- self$concepts$meet_irreducibles()$to_list()
 
-      Z <- Set$new(attributes = att)
+        nj <- length(join_irr)
+        nm <- length(meet_irr)
 
-      for (y in att) {
-        R <- Set$new(attributes = fc2$objects)
-        R$assign(
-          attributes = fc2$objects,
-          values = rep(1, length(fc2$objects))
-        )
+        I_new <- matrix(0, nrow = nj, ncol = nm)
 
-        R <- R$get_vector()
-
-        yv <- Set$new(attributes = att)
-        yv$assign(attributes = y, values = 1)
-        y_down <- fc2$extent(yv)
-
-        for (yp in setdiff(att, y)) {
-          ypv <- Set$new(attributes = att)
-          ypv$assign(attributes = yp, values = 1)
-          yp_down <- fc2$extent(ypv)
-
-          S <- .subset(
-            y_down$get_vector(),
-            yp_down$get_vector()
-          )
-
-          if (S[1]) {
-            R[Matrix::which(
-              yp_down$get_vector() < R
-            )] <- yp_down$get_vector()[Matrix::which(yp_down$get_vector() < R)]
+        for (i in seq(nj)) {
+          for (j in seq(nm)) {
+            I_new[i, j] <- ifelse(join_irr[[i]] %<=% meet_irr[[j]], 1, 0)
           }
         }
 
-        if (!.equal_sets(R, y_down$get_vector())[1]) {
-          Z$assign(attributes = y, values = 1)
-        }
+        colnames(I_new) <- paste0("M", seq(nm))
+        rownames(I_new) <- paste0("J", seq(nj))
+
+        res <- FormalContext$new(I_new)
       }
 
-      new_att <- Z$get_attributes()[Matrix::which(Z$get_vector() > 0)]
-
-      idx <- match(new_att, att)
-
-      # if (length(idx) == 1) {
-      #
-      #   my_I <- .extract_column(my_I, idx)
-      #
-      # } else {
-      #
-      #   my_I <- my_I[, idx]
-      #
-      # }
-
-      my_I <- matrix(my_I[, idx], ncol = length(idx))
-
-      colnames(my_I) <- new_att
-      rownames(my_I) <- fc2$objects
-
       if (copy) {
-        fc3 <- FormalContext$new(my_I)
-
-        return(fc3)
+        return(res)
       } else {
-        self$initialize(my_I)
-
+        self$initialize(res$incidence())
         return(invisible(self))
       }
     },
@@ -823,38 +792,15 @@ FormalContext <- R6::R6Class(
     #' Build the Standard Context
     #'
     #' @details
-    #' All concepts must be previously computed.
+    #' This is a wrapper around \code{reduce(copy = TRUE, method = "arrows")} for binary contexts,
+    #' or \code{reduce(copy = TRUE, method = "concepts")} for fuzzy contexts.
     #'
     #' @return
     #' The standard context using the join- and meet- irreducible elements.
     #' @export
     standardize = function() {
-      if (private$is_many_valued) {
-        error_many_valued()
-      }
-
-      if (self$concepts$is_empty()) {
-        stop("Concepts must be computed beforehand.\n", call. = FALSE)
-      }
-
-      join_irr <- self$concepts$join_irreducibles()$to_list()
-      meet_irr <- self$concepts$meet_irreducibles()$to_list()
-
-      nj <- length(join_irr)
-      nm <- length(meet_irr)
-
-      I <- matrix(0, nrow = nj, ncol = nm)
-
-      for (i in seq(nj)) {
-        for (j in seq(nm)) {
-          I[i, j] <- ifelse(join_irr[[i]] %<=% meet_irr[[j]], 1, 0)
-        }
-      }
-
-      colnames(I) <- paste0("M", seq(nm))
-      rownames(I) <- paste0("J", seq(nj))
-
-      return(FormalContext$new(I))
+      method <- if (private$is_binary) "arrows" else "concepts"
+      return(self$reduce(copy = TRUE, method = method))
     },
 
     #' @description
@@ -1608,7 +1554,11 @@ FormalContext <- R6::R6Class(
         I <- Matrix::as.matrix(Matrix::t(self$I))
 
         if (private$is_binary) {
-          I <- .print_binary(I, latex = FALSE)
+          if (!is.null(private$arrow_rels)) {
+            I <- .print_arrows(I, private$arrow_rels, latex = FALSE)
+          } else {
+            I <- .print_binary(I, latex = FALSE)
+          }
         }
 
         objects <- self$objects
@@ -1676,6 +1626,124 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
+    #' Calculate arrow relations for a binary context.
+    #'
+    #' @details
+    #' This method computes the arrow relations (swarrow, nearrow, and double arrow).
+    #'
+    #' @return Nothing, updates the internal state.
+    #' @export
+    calculate_arrow_relations = function() {
+      private$check_empty()
+
+      if (!private$is_binary) {
+        stop("Arrow relations are only defined for binary contexts.",
+             call. = FALSE)
+      }
+
+      I_mat <- self$incidence()
+      # Ensure it is integer binary matrix for C++
+      I_mat <- matrix(as.integer(I_mat > 0),
+                      nrow = nrow(I_mat),
+                      ncol = ncol(I_mat))
+
+      private$arrow_rels <- compute_arrow_relations_cpp(I_mat)
+      invisible(self)
+    },
+
+    #' @description
+    #' Get arrow relations
+    #'
+    #' @return An integer matrix with the arrow relations.
+    #' @export
+    get_arrow_relations = function() {
+      if (is.null(private$arrow_rels)) {
+        self$calculate_arrow_relations()
+      }
+      res <- private$arrow_rels
+      dimnames(res) <- list(self$objects, self$attributes)
+      return(res)
+    },
+
+    #' @description
+    #' Get irreducible objects
+    #'
+    #' @return A character vector with the names of the irreducible objects.
+    #' @export
+    get_irreducible_objects = function() {
+      if (is.null(private$arrow_rels)) {
+        self$calculate_arrow_relations()
+      }
+
+      # Irreducible objects: those with at least one arrow swarrow (1) or double (3)
+      irr <- rowSums(private$arrow_rels == 1 | private$arrow_rels == 3) > 0
+      return(self$objects[irr])
+    },
+
+    #' @description
+    #' Get irreducible attributes
+    #'
+    #' @return A character vector with the names of the irreducible attributes.
+    #' @export
+    get_irreducible_attributes = function() {
+      if (is.null(private$arrow_rels)) {
+        self$calculate_arrow_relations()
+      }
+
+      # Irreducible attributes: those with at least one arrow nearrow (2) or double (3)
+      irr <- colSums(private$arrow_rels == 2 | private$arrow_rels == 3) > 0
+      return(self$attributes[irr])
+    },
+
+    #' @description
+    #' Check if the context (and its lattice) is distributive
+    #'
+    #' @return Logical: \code{TRUE} if the lattice is distributive.
+    #' @export
+    is_distributive = function() {
+      private$check_empty()
+      if (self$concepts$is_empty()) {
+         self$find_concepts()
+      }
+      return(self$concepts$is_distributive())
+    },
+
+    #' @description
+    #' Reduce the formal context using arrow relations
+    #'
+    #' @return A new \code{FormalContext} object that is clarified and reduced.
+    #' @export
+    reduce_arrows = function() {
+      private$check_empty()
+
+      # 1. Clarify (removes redundant duplicates)
+      fc <- self$clarify(copy = TRUE)
+
+      # 2. Calculate arrows on clarified context
+      fc$calculate_arrow_relations()
+
+      # 3. Identify irreducibles
+      objs <- fc$get_irreducible_objects()
+      atts <- fc$get_irreducible_attributes()
+
+      # 4. Extract submatrix
+      return(fc$subcontext(objects = objs, attributes = atts))
+    },
+
+    #' @description
+    #' Get the Core of the Formal Context
+    #'
+    #' @details
+    #' The core is the minimal subcontext that generates the same concept lattice.
+    #' For binary contexts, this is equivalent to \code{standardize()}.
+    #'
+    #' @return A new \code{FormalContext} object containing only irreducible rows and columns.
+    #' @export
+    get_core = function() {
+      return(self$reduce(copy = TRUE, method = "arrows"))
+    },
+
+    #' @description
     #' Write the context in LaTeX format
     #'
     #' @param table (logical) If \code{TRUE}, surrounds everything between \code{\\begin{table}} and \code{\\end{table}}.
@@ -1700,7 +1768,11 @@ FormalContext <- R6::R6Class(
       I <- Matrix::as.matrix(Matrix::t(self$I))
 
       if (private$is_binary) {
-        I <- .print_binary(I, latex = TRUE)
+        if (!is.null(private$arrow_rels)) {
+          I <- .print_arrows(I, private$arrow_rels, latex = TRUE)
+        } else {
+          I <- .print_binary(I, latex = TRUE)
+        }
       } else {
         if (fraction != "none") {
           I <- .to_fraction(I, latex = TRUE, type = fraction)
@@ -1975,6 +2047,7 @@ FormalContext <- R6::R6Class(
   ),
   private = list(
     logic = "Zadeh",
+    arrow_rels = NULL,
     connection = "standard",
     is_binary = FALSE,
     is_many_valued = FALSE,

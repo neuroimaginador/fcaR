@@ -128,6 +128,8 @@ Plot the concept lattice
   to_latex = FALSE,
   method = c("sugiyama", "force"),
   mode = NULL,
+  viewer = c("ggraph", "base"),
+  theme = "standard",
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -153,12 +155,20 @@ Plot the concept lattice
 \item \code{"empty"}: Nodes are drawn as points without labels. Recommended for very large lattices (>50 concepts).
 }}
 
-\item{\code{...}}{Other parameters passed to the internal plotting function (e.g., graphical parameters for \code{ggraph}).}
+\item{\code{viewer}}{(character) The viewer to use for plotting. Options are:
+\itemize{
+\item \code{"ggraph"} (default): Use \code{ggraph} for drawing.
+\item \code{"base"}: Use R base graphics. This is a lightweight alternative that supports themes.
+}}
+
+\item{\code{theme}}{(character) The color theme to use for the \code{"base"} viewer. Options are: \code{"standard"}, \code{"nord"}, \code{"latex"}, \code{"vibrant"}.}
+
+\item{\code{...}}{Other parameters passed to the internal plotting function (e.g., graphical parameters for \code{ggraph} or \code{base}).}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-If \code{to_latex} is \code{FALSE}, it returns (invisibly) the \code{ggplot2} object representing the graph.
+If \code{to_latex} is \code{FALSE}, it returns (invisibly) the \code{ggplot2} object representing the graph (for \code{ggraph}) or \code{NULL} (for \code{base}).
 If \code{to_latex} is \code{TRUE}, it returns a \code{tikz_code} object containing the LaTeX code.
 }
 }

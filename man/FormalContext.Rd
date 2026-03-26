@@ -150,6 +150,13 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-FormalContext-dim}{\code{FormalContext$dim()}}
 \item \href{#method-FormalContext-to_json}{\code{FormalContext$to_json()}}
 \item \href{#method-FormalContext-print}{\code{FormalContext$print()}}
+\item \href{#method-FormalContext-calculate_arrow_relations}{\code{FormalContext$calculate_arrow_relations()}}
+\item \href{#method-FormalContext-get_arrow_relations}{\code{FormalContext$get_arrow_relations()}}
+\item \href{#method-FormalContext-get_irreducible_objects}{\code{FormalContext$get_irreducible_objects()}}
+\item \href{#method-FormalContext-get_irreducible_attributes}{\code{FormalContext$get_irreducible_attributes()}}
+\item \href{#method-FormalContext-is_distributive}{\code{FormalContext$is_distributive()}}
+\item \href{#method-FormalContext-reduce_arrows}{\code{FormalContext$reduce_arrows()}}
+\item \href{#method-FormalContext-get_core}{\code{FormalContext$get_core()}}
 \item \href{#method-FormalContext-to_latex}{\code{FormalContext$to_latex()}}
 \item \href{#method-FormalContext-incidence}{\code{FormalContext$incidence()}}
 \item \href{#method-FormalContext-subcontext}{\code{FormalContext$subcontext()}}
@@ -533,13 +540,15 @@ The clarified \code{FormalContext}.
 \subsection{Method \code{reduce()}}{
 Reduce a formal context
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$reduce(copy = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$reduce(copy = FALSE, method = c("arrows", "concepts"))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{copy}}{(logical) If \code{TRUE}, a new \code{FormalContext} object is created with the clarified and reduced context, otherwise the current one is overwritten.}
+
+\item{\code{method}}{(character) The method to use for reduction. One of \code{"arrows"} (default, uses arrow relations, only for binary contexts) or \code{"concepts"} (uses irreducible concepts, works for fuzzy).}
 }
 \if{html}{\out{</div>}}
 }
@@ -557,7 +566,8 @@ Build the Standard Context
 }
 
 \subsection{Details}{
-All concepts must be previously computed.
+This is a wrapper around \code{reduce(copy = TRUE, method = "arrows")} for binary contexts,
+or \code{reduce(copy = TRUE, method = "concepts")} for fuzzy contexts.
 }
 
 \subsection{Returns}{
@@ -803,6 +813,106 @@ Prints the formal context
 
 \subsection{Returns}{
 Prints information regarding the formal context.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-calculate_arrow_relations"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-calculate_arrow_relations}{}}}
+\subsection{Method \code{calculate_arrow_relations()}}{
+Calculate arrow relations for a binary context.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$calculate_arrow_relations()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+This method computes the arrow relations (swarrow, nearrow, and double arrow).
+}
+
+\subsection{Returns}{
+Nothing, updates the internal state.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-get_arrow_relations"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-get_arrow_relations}{}}}
+\subsection{Method \code{get_arrow_relations()}}{
+Get arrow relations
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_arrow_relations()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+An integer matrix with the arrow relations.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-get_irreducible_objects"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-get_irreducible_objects}{}}}
+\subsection{Method \code{get_irreducible_objects()}}{
+Get irreducible objects
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_irreducible_objects()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A character vector with the names of the irreducible objects.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-get_irreducible_attributes"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-get_irreducible_attributes}{}}}
+\subsection{Method \code{get_irreducible_attributes()}}{
+Get irreducible attributes
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_irreducible_attributes()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A character vector with the names of the irreducible attributes.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-is_distributive"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-is_distributive}{}}}
+\subsection{Method \code{is_distributive()}}{
+Check if the context (and its lattice) is distributive
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_distributive()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Logical: \code{TRUE} if the lattice is distributive.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-reduce_arrows"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-reduce_arrows}{}}}
+\subsection{Method \code{reduce_arrows()}}{
+Reduce the formal context using arrow relations
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$reduce_arrows()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A new \code{FormalContext} object that is clarified and reduced.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormalContext-get_core"></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-get_core}{}}}
+\subsection{Method \code{get_core()}}{
+Get the Core of the Formal Context
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$get_core()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+The core is the minimal subcontext that generates the same concept lattice.
+For binary contexts, this is equivalent to \code{standardize()}.
+}
+
+\subsection{Returns}{
+A new \code{FormalContext} object containing only irreducible rows and columns.
 }
 }
 \if{html}{\out{<hr>}}

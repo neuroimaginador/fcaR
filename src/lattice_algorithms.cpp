@@ -127,16 +127,16 @@ IntegerVector calculate_grades_rcpp(const IntegerVector &concept_ids,
 // understanding of hierarchical system structures. This implementation focuses
 // on minimizing crossings by barycenter ordering and centering nodes.
 void apply_sugiyama_layout(std::map<int, Node> &nodes_map,
-                           const IntegerVector &concept_ids, int max_grade) {
+                           const IntegerVector &concept_ids, int max_layer) {
 
   // 1. Layering
-  std::vector<std::vector<int>> layers(max_grade + 1);
+  std::vector<std::vector<int>> layers(max_layer + 1);
   for (int id : concept_ids) {
     int g = nodes_map.at(id).grade;
     if (g < 0)
       g = 0;
-    if (g > max_grade)
-      g = max_grade;
+    if (g > max_layer)
+      g = max_layer;
     layers[g].push_back(id);
   }
 
@@ -157,7 +157,7 @@ void apply_sugiyama_layout(std::map<int, Node> &nodes_map,
   for (int iter = 0; iter < iterations; ++iter) {
 
     // Top-Down (Improve X positions based on parents/predecessors)
-    for (int k = 1; k <= max_grade; ++k) {
+    for (int k = 1; k <= max_layer; ++k) {
       std::vector<int> &current_layer = layers[k];
       if (current_layer.empty())
         continue;
@@ -195,7 +195,7 @@ void apply_sugiyama_layout(std::map<int, Node> &nodes_map,
     }
 
     // Bottom-Up (Improve X positions based on children/successors)
-    for (int k = max_grade - 1; k >= 0; --k) {
+    for (int k = max_layer - 1; k >= 0; --k) {
       std::vector<int> &current_layer = layers[k];
       if (current_layer.empty())
         continue;
@@ -223,10 +223,10 @@ void apply_sugiyama_layout(std::map<int, Node> &nodes_map,
     }
   }
 
-  // Finalize Y coordinates
-  for (auto &pair : nodes_map) {
-    pair.second.y_coord = (double)pair.second.grade;
-  }
+  // Finalize Y coordinates: PRESERVE y_coord (balanced grades from R)
+  // for (auto &pair : nodes_map) {
+  //   pair.second.y_coord = (double)pair.second.grade;
+  // }
 }
 
 // --- B. FORCE-DIRECTED (Organic) ---
@@ -308,7 +308,8 @@ void apply_force_directed_layout(std::map<int, Node> &nodes_map,
 
 // [[Rcpp::export]]
 DataFrame calculate_lattice_layout_rcpp(const IntegerVector &concept_ids,
-                                        const IntegerVector &grades,
+                                        const IntegerVector &layers_vec,
+                                        const NumericVector &y_coords_vec,
                                         const IntegerVector &edge_from,
                                         const IntegerVector &edge_to,
                                         const std::string &method) {
@@ -320,16 +321,16 @@ DataFrame calculate_lattice_layout_rcpp(const IntegerVector &concept_ids,
   }
 
   std::map<int, Node> nodes_map;
-  int max_grade = 0;
+  int max_layer = 0;
 
   for (int i = 0; i < N; ++i) {
     int id = concept_ids[i];
-    int g = grades[i];
-    if (g < 0)
-      g = 0;
-    nodes_map[id] = Node(id, g, 0.0);
-    if (g > max_grade)
-      max_grade = g;
+    int l = layers_vec[i];
+    double y = y_coords_vec[i];
+    nodes_map[id] = Node(id, l, 0.0);
+    nodes_map[id].y_coord = y;
+    if (l > max_layer)
+      max_layer = l;
   }
 
   int E = edge_from.size();
@@ -348,7 +349,7 @@ DataFrame calculate_lattice_layout_rcpp(const IntegerVector &concept_ids,
     apply_force_directed_layout(nodes_map, concept_ids);
   } else {
     // Sugiyama mejorado (centrado)
-    apply_sugiyama_layout(nodes_map, concept_ids, max_grade);
+    apply_sugiyama_layout(nodes_map, concept_ids, max_layer);
   }
 
   NumericVector x_coords(N);

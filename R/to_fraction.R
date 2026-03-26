@@ -74,6 +74,27 @@
   return(A)
 }
 
+.print_arrows <- function(I, arrows, latex = FALSE) {
+  if (is.character(I)) {
+    return(I)
+  }
+
+  A_chr <- I
+  A_chr[] <- " "
+
+  x_chr <- ifelse(latex, "$\\times$", "X")
+  sw_chr <- ifelse(latex, "$\\swarrow$", "↙")
+  ne_chr <- ifelse(latex, "$\\nearrow$", "↗")
+  up_chr <- ifelse(latex, "$\\updownarrow$", "↕")
+
+  A_chr[I == 1] <- x_chr
+  A_chr[arrows == 1] <- sw_chr
+  A_chr[arrows == 2] <- ne_chr
+  A_chr[arrows == 3] <- up_chr
+
+  return(A_chr)
+}
+
 .print_matrix <- function(
   M,
   objects = rownames(M),

@@ -15,6 +15,8 @@ lattice_plot(
   to_latex = FALSE,
   extents = NULL,
   intents = NULL,
+  viewer = c("ggraph", "base"),
+  theme = "standard",
   ...
 )
 }
@@ -38,6 +40,10 @@ lattice_plot(
 \item{extents}{List of extents.}
 
 \item{intents}{List of intents.}
+
+\item{viewer}{The viewer to use for plotting: "ggraph" (default) or "base" (experimental, R base graphics).}
+
+\item{theme}{The theme to use for the "base" viewer ("standard", "nord", "latex", "vibrant").}
 
 \item{...}{Extra args.}
 }

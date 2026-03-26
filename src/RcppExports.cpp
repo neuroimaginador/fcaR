@@ -288,6 +288,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// compute_arrow_relations_cpp
+IntegerMatrix compute_arrow_relations_cpp(IntegerMatrix I);
+RcppExport SEXP _fcaR_compute_arrow_relations_cpp(SEXP ISEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type I(ISEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_arrow_relations_cpp(I));
+    return rcpp_result_gen;
+END_RCPP
+}
 // print_matrix
 void print_matrix(NumericMatrix I);
 RcppExport SEXP _fcaR_print_matrix(SEXP ISEXP) {
@@ -612,17 +623,18 @@ BEGIN_RCPP
 END_RCPP
 }
 // calculate_lattice_layout_rcpp
-DataFrame calculate_lattice_layout_rcpp(const IntegerVector& concept_ids, const IntegerVector& grades, const IntegerVector& edge_from, const IntegerVector& edge_to, const std::string& method);
-RcppExport SEXP _fcaR_calculate_lattice_layout_rcpp(SEXP concept_idsSEXP, SEXP gradesSEXP, SEXP edge_fromSEXP, SEXP edge_toSEXP, SEXP methodSEXP) {
+DataFrame calculate_lattice_layout_rcpp(const IntegerVector& concept_ids, const IntegerVector& layers_vec, const NumericVector& y_coords_vec, const IntegerVector& edge_from, const IntegerVector& edge_to, const std::string& method);
+RcppExport SEXP _fcaR_calculate_lattice_layout_rcpp(SEXP concept_idsSEXP, SEXP layers_vecSEXP, SEXP y_coords_vecSEXP, SEXP edge_fromSEXP, SEXP edge_toSEXP, SEXP methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerVector& >::type concept_ids(concept_idsSEXP);
-    Rcpp::traits::input_parameter< const IntegerVector& >::type grades(gradesSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type layers_vec(layers_vecSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type y_coords_vec(y_coords_vecSEXP);
     Rcpp::traits::input_parameter< const IntegerVector& >::type edge_from(edge_fromSEXP);
     Rcpp::traits::input_parameter< const IntegerVector& >::type edge_to(edge_toSEXP);
     Rcpp::traits::input_parameter< const std::string& >::type method(methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(calculate_lattice_layout_rcpp(concept_ids, grades, edge_from, edge_to, method));
+    rcpp_result_gen = Rcpp::wrap(calculate_lattice_layout_rcpp(concept_ids, layers_vec, y_coords_vec, edge_from, edge_to, method));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1130,6 +1142,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_randomize_rewire_cpp", (DL_FUNC) &_fcaR_randomize_rewire_cpp, 2},
     {"_fcaR_reduce_transitivity_cpp", (DL_FUNC) &_fcaR_reduce_transitivity_cpp, 3},
     {"_fcaR_bonds_mcis_cpp", (DL_FUNC) &_fcaR_bonds_mcis_cpp, 3},
+    {"_fcaR_compute_arrow_relations_cpp", (DL_FUNC) &_fcaR_compute_arrow_relations_cpp, 1},
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
@@ -1153,7 +1166,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 4},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
     {"_fcaR_calculate_grades_rcpp", (DL_FUNC) &_fcaR_calculate_grades_rcpp, 3},
-    {"_fcaR_calculate_lattice_layout_rcpp", (DL_FUNC) &_fcaR_calculate_lattice_layout_rcpp, 5},
+    {"_fcaR_calculate_lattice_layout_rcpp", (DL_FUNC) &_fcaR_calculate_lattice_layout_rcpp, 6},
     {"_fcaR_binary_lincbo_implications", (DL_FUNC) &_fcaR_binary_lincbo_implications, 3},
     {"_fcaR_calculate_stability_sparse_rcpp", (DL_FUNC) &_fcaR_calculate_stability_sparse_rcpp, 1},
     {"_fcaR_calculate_density_rcpp", (DL_FUNC) &_fcaR_calculate_density_rcpp, 3},
