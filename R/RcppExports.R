@@ -142,6 +142,10 @@ binary_closure_cpp <- function(S_mat, LHS_mat, RHS_mat) {
     .Call(`_fcaR_binary_closure_cpp`, S_mat, LHS_mat, RHS_mat)
 }
 
+bonds_closure_cpp <- function(J_in, I_in) {
+    .Call(`_fcaR_bonds_closure_cpp`, J_in, I_in)
+}
+
 FastCbO_binary <- function(I, attrs, verbose = FALSE) {
     .Call(`_fcaR_FastCbO_binary`, I, attrs, verbose)
 }

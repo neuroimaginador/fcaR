@@ -83,9 +83,9 @@
   A_chr[] <- " "
 
   x_chr <- ifelse(latex, "$\\times$", "X")
-  sw_chr <- ifelse(latex, "$\\swarrow$", "↙")
-  ne_chr <- ifelse(latex, "$\\nearrow$", "↗")
-  up_chr <- ifelse(latex, "$\\updownarrow$", "↕")
+  sw_chr <- ifelse(latex, "$\\swarrow$", "\u2199")
+  ne_chr <- ifelse(latex, "$\\nearrow$", "\u2197")
+  up_chr <- ifelse(latex, "$\\updownarrow$", "\u2195")
 
   A_chr[I == 1] <- x_chr
   A_chr[arrows == 1] <- sw_chr
