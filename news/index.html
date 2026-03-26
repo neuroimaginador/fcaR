@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,43 @@
       <small>Source: <a href="https://github.com/Malaga-FCA-group/fcaR/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.7.0" id="fcar-170">fcaR 1.7.0<a class="anchor" aria-label="anchor" href="#fcar-170"></a></h2>
+<p>New Functionality:</p>
+<ul><li>
+<strong>Arrow Relations:</strong> Added <code>calculate_arrow_relations()</code> method to <code>FormalContext</code> to compute the arrow relations (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>↙</mo><annotation encoding="application/x-tex">\swarrow</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>↗</mo><annotation encoding="application/x-tex">\nearrow</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>↕</mo><annotation encoding="application/x-tex">\updownarrow</annotation></semantics></math>) of a binary formal context using a high-performance C++ implementation based on bitsets.</li>
+<li>
+<strong>Structural Analysis:</strong> Added new methods to <code>FormalContext</code> for advanced structural analysis based on arrow relations:
+<ul><li>
+<code>is_distributive()</code>: Efficiently check if the concept lattice is distributive without computing it.</li>
+<li>
+<code>get_irreducible_objects()</code> / <code>get_irreducible_attributes()</code>: Identify the core elements needed to reconstruct the lattice.</li>
+<li>
+<code>get_core()</code>: Extract the smallest context that generates the same lattice.</li>
+</ul></li>
+<li>
+<strong>Optimized Reduction:</strong> Added <code>reduce_arrows()</code> to <code>FormalContext</code>. This method clarifies and reduces a context using arrow relations, which is significantly faster than traditional methods for large contexts.</li>
+<li>
+<strong>Lattice Plotting Enhancements:</strong>
+<ul><li>
+<strong>Grade Balancing:</strong> New <code>balance_grades</code> algorithm to improve visual symmetry in Hasse diagrams (e.g., for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>N</mi><mn>5</mn></msub><annotation encoding="application/x-tex">N_5</annotation></semantics></math>).</li>
+<li>
+<strong>Base R Viewer:</strong> Added <code>viewer = "base"</code> to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>, providing a lightweight alternative to <code>ggraph</code> with support for themes (<code>"standard"</code>, <code>"nord"</code>, <code>"vibrant"</code>, <code>"latex"</code>).</li>
+<li>
+<strong>Vertical Alignment:</strong> Sugiyama layout now correctly aligns single-node chains vertically.</li>
+</ul></li>
+</ul><p>Improvements:</p>
+<ul><li>
+<strong>Refactored <code>standardize()</code> and <code>reduce()</code></strong>: These methods now use <code>reduce_arrows()</code> internally, removing the dependency on pre-calculating the concept lattice and improving performance while preserving original labels.</li>
+<li>
+<strong>C++ Layout Engine</strong>: Updated <code>calculate_lattice_layout_rcpp</code> to support numeric (decimal) Y coordinates for smooth vertical positioning.</li>
+<li>
+<strong>Internal helpers:</strong> Added <code>.print_arrows()</code> to handle symbol mapping for both CLI (Unicode) and LaTeX output.</li>
+<li>
+<strong>Expanded Documentation:</strong> Updated the <code>lattice_properties</code> vignette with a detailed section on arrow relations.</li>
+<li>
+<strong>Enhanced Testing:</strong> Added <code>test-arrow_relations.R</code> and <code>test-arrow_advanced.R</code> with comprehensive unit tests.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.6.0" id="fcar-160">fcaR 1.6.0<a class="anchor" aria-label="anchor" href="#fcar-160"></a></h2>
 <p>New Functionality:</p>

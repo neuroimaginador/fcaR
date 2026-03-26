@@ -375,12 +375,12 @@ object:
 ``` r
 fc_planets$standardize()
 #> FormalContext with 5 objects and 7 attributes.
-#>     M1  M2  M3  M4  M5  M6  M7  
-#>  J1  X   X   X                  
-#>  J2  X   X       X              
-#>  J3  X   X           X          
-#>  J4                  X   X   X  
-#>  J5  X               X   X
+#>                    small  medium  large  near  far  moon  no_moon  
+#>              Pluto   X                          X     X            
+#>   [Mercury, Venus]   X                     X                 X     
+#>      [Earth, Mars]   X                     X          X            
+#>  [Jupiter, Saturn]                  X           X     X            
+#>  [Uranus, Neptune]           X                  X     X
 fc_I$standardize()
 #> FormalContext with 9 objects and 9 attributes.
 #>     M1  M2  M3  M4  M5  M6  M7  M8  M9  

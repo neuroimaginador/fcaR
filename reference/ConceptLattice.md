@@ -126,6 +126,8 @@ Plot the concept lattice
       to_latex = FALSE,
       method = c("sugiyama", "force"),
       mode = NULL,
+      viewer = c("ggraph", "base"),
+      theme = "standard",
       ...
     )
 
@@ -169,16 +171,31 @@ Plot the concept lattice
   - `"empty"`: Nodes are drawn as points without labels. Recommended for
     very large lattices (\>50 concepts).
 
+- `viewer`:
+
+  (character) The viewer to use for plotting. Options are:
+
+  - `"ggraph"` (default): Use `ggraph` for drawing.
+
+  - `"base"`: Use R base graphics. This is a lightweight alternative
+    that supports themes.
+
+- `theme`:
+
+  (character) The color theme to use for the `"base"` viewer. Options
+  are: `"standard"`, `"nord"`, `"latex"`, `"vibrant"`.
+
 - `...`:
 
   Other parameters passed to the internal plotting function (e.g.,
-  graphical parameters for `ggraph`).
+  graphical parameters for `ggraph` or `base`).
 
 #### Returns
 
 If `to_latex` is `FALSE`, it returns (invisibly) the `ggplot2` object
-representing the graph. If `to_latex` is `TRUE`, it returns a
-`tikz_code` object containing the LaTeX code.
+representing the graph (for `ggraph`) or `NULL` (for `base`). If
+`to_latex` is `TRUE`, it returns a `tikz_code` object containing the
+LaTeX code.
 
 ------------------------------------------------------------------------
 

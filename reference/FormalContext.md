@@ -118,6 +118,20 @@ Stat Softw*, *14*, 1-25.
 
 - [`FormalContext$print()`](#method-FormalContext-print)
 
+- [`FormalContext$calculate_arrow_relations()`](#method-FormalContext-calculate_arrow_relations)
+
+- [`FormalContext$get_arrow_relations()`](#method-FormalContext-get_arrow_relations)
+
+- [`FormalContext$get_irreducible_objects()`](#method-FormalContext-get_irreducible_objects)
+
+- [`FormalContext$get_irreducible_attributes()`](#method-FormalContext-get_irreducible_attributes)
+
+- [`FormalContext$is_distributive()`](#method-FormalContext-is_distributive)
+
+- [`FormalContext$reduce_arrows()`](#method-FormalContext-reduce_arrows)
+
+- [`FormalContext$get_core()`](#method-FormalContext-get_core)
+
 - [`FormalContext$to_latex()`](#method-FormalContext-to_latex)
 
 - [`FormalContext$incidence()`](#method-FormalContext-incidence)
@@ -518,7 +532,7 @@ Reduce a formal context
 
 #### Usage
 
-    FormalContext$reduce(copy = FALSE)
+    FormalContext$reduce(copy = FALSE, method = c("arrows", "concepts"))
 
 #### Arguments
 
@@ -527,6 +541,12 @@ Reduce a formal context
   (logical) If `TRUE`, a new `FormalContext` object is created with the
   clarified and reduced context, otherwise the current one is
   overwritten.
+
+- `method`:
+
+  (character) The method to use for reduction. One of `"arrows"`
+  (default, uses arrow relations, only for binary contexts) or
+  `"concepts"` (uses irreducible concepts, works for fuzzy).
 
 #### Returns
 
@@ -544,7 +564,9 @@ Build the Standard Context
 
 #### Details
 
-All concepts must be previously computed.
+This is a wrapper around `reduce(copy = TRUE, method = "arrows")` for
+binary contexts, or `reduce(copy = TRUE, method = "concepts")` for fuzzy
+contexts.
 
 #### Returns
 
@@ -822,6 +844,115 @@ Prints the formal context
 #### Returns
 
 Prints information regarding the formal context.
+
+------------------------------------------------------------------------
+
+### Method `calculate_arrow_relations()`
+
+Calculate arrow relations for a binary context.
+
+#### Usage
+
+    FormalContext$calculate_arrow_relations()
+
+#### Details
+
+This method computes the arrow relations (swarrow, nearrow, and double
+arrow).
+
+#### Returns
+
+Nothing, updates the internal state.
+
+------------------------------------------------------------------------
+
+### Method `get_arrow_relations()`
+
+Get arrow relations
+
+#### Usage
+
+    FormalContext$get_arrow_relations()
+
+#### Returns
+
+An integer matrix with the arrow relations.
+
+------------------------------------------------------------------------
+
+### Method `get_irreducible_objects()`
+
+Get irreducible objects
+
+#### Usage
+
+    FormalContext$get_irreducible_objects()
+
+#### Returns
+
+A character vector with the names of the irreducible objects.
+
+------------------------------------------------------------------------
+
+### Method `get_irreducible_attributes()`
+
+Get irreducible attributes
+
+#### Usage
+
+    FormalContext$get_irreducible_attributes()
+
+#### Returns
+
+A character vector with the names of the irreducible attributes.
+
+------------------------------------------------------------------------
+
+### Method `is_distributive()`
+
+Check if the context (and its lattice) is distributive
+
+#### Usage
+
+    FormalContext$is_distributive()
+
+#### Returns
+
+Logical: `TRUE` if the lattice is distributive.
+
+------------------------------------------------------------------------
+
+### Method `reduce_arrows()`
+
+Reduce the formal context using arrow relations
+
+#### Usage
+
+    FormalContext$reduce_arrows()
+
+#### Returns
+
+A new `FormalContext` object that is clarified and reduced.
+
+------------------------------------------------------------------------
+
+### Method `get_core()`
+
+Get the Core of the Formal Context
+
+#### Usage
+
+    FormalContext$get_core()
+
+#### Details
+
+The core is the minimal subcontext that generates the same concept
+lattice. For binary contexts, this is equivalent to `standardize()`.
+
+#### Returns
+
+A new `FormalContext` object containing only irreducible rows and
+columns.
 
 ------------------------------------------------------------------------
 

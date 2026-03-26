@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -839,12 +839,12 @@ where the concept lattice has been found, and it produces a new
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc_planets</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; FormalContext with 5 objects and 7 attributes.</span></span>
-<span><span class="co">#&gt;     M1  M2  M3  M4  M5  M6  M7  </span></span>
-<span><span class="co">#&gt;  J1  X   X   X                  </span></span>
-<span><span class="co">#&gt;  J2  X   X       X              </span></span>
-<span><span class="co">#&gt;  J3  X   X           X          </span></span>
-<span><span class="co">#&gt;  J4                  X   X   X  </span></span>
-<span><span class="co">#&gt;  J5  X               X   X</span></span>
+<span><span class="co">#&gt;                    small  medium  large  near  far  moon  no_moon  </span></span>
+<span><span class="co">#&gt;              Pluto   X                          X     X            </span></span>
+<span><span class="co">#&gt;   [Mercury, Venus]   X                     X                 X     </span></span>
+<span><span class="co">#&gt;      [Earth, Mars]   X                     X          X            </span></span>
+<span><span class="co">#&gt;  [Jupiter, Saturn]                  X           X     X            </span></span>
+<span><span class="co">#&gt;  [Uranus, Neptune]           X                  X     X</span></span>
 <span><span class="va">fc_I</span><span class="op">$</span><span class="fu">standardize</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; FormalContext with 9 objects and 9 attributes.</span></span>
 <span><span class="co">#&gt;     M1  M2  M3  M4  M5  M6  M7  M8  M9  </span></span>

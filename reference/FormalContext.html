@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,6 +145,13 @@
 <li><p><a href="#method-FormalContext-dim"><code>FormalContext$dim()</code></a></p></li>
 <li><p><a href="#method-FormalContext-to_json"><code>FormalContext$to_json()</code></a></p></li>
 <li><p><a href="#method-FormalContext-print"><code>FormalContext$print()</code></a></p></li>
+<li><p><a href="#method-FormalContext-calculate_arrow_relations"><code>FormalContext$calculate_arrow_relations()</code></a></p></li>
+<li><p><a href="#method-FormalContext-get_arrow_relations"><code>FormalContext$get_arrow_relations()</code></a></p></li>
+<li><p><a href="#method-FormalContext-get_irreducible_objects"><code>FormalContext$get_irreducible_objects()</code></a></p></li>
+<li><p><a href="#method-FormalContext-get_irreducible_attributes"><code>FormalContext$get_irreducible_attributes()</code></a></p></li>
+<li><p><a href="#method-FormalContext-is_distributive"><code>FormalContext$is_distributive()</code></a></p></li>
+<li><p><a href="#method-FormalContext-reduce_arrows"><code>FormalContext$reduce_arrows()</code></a></p></li>
+<li><p><a href="#method-FormalContext-get_core"><code>FormalContext$get_core()</code></a></p></li>
 <li><p><a href="#method-FormalContext-to_latex"><code>FormalContext$to_latex()</code></a></p></li>
 <li><p><a href="#method-FormalContext-incidence"><code>FormalContext$incidence()</code></a></p></li>
 <li><p><a href="#method-FormalContext-subcontext"><code>FormalContext$subcontext()</code></a></p></li>
@@ -519,13 +526,17 @@ extracted from the application of scales.</p>
 <h3 id="method-reduce-">Method <code>reduce()</code><a class="anchor" aria-label="anchor" href="#method-reduce-"></a></h3>
 <p>Reduce a formal context</p><div class="section">
 <h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span>copy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">reduce</span><span class="op">(</span>copy <span class="op">=</span> <span class="cn">FALSE</span>, method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"arrows"</span>, <span class="st">"concepts"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>copy</code></dt>
 <dd><p>(logical) If <code>TRUE</code>, a new <code>FormalContext</code> object is created with the clarified and reduced context, otherwise the current one is overwritten.</p></dd>
+
+
+<dt><code>method</code></dt>
+<dd><p>(character) The method to use for reduction. One of <code>"arrows"</code> (default, uses arrow relations, only for binary contexts) or <code>"concepts"</code> (uses irreducible concepts, works for fuzzy).</p></dd>
 
 
 </dl><p></p></div>
@@ -544,7 +555,8 @@ extracted from the application of scales.</p>
 
 <div class="section">
 <h4 id="details-2">Details<a class="anchor" aria-label="anchor" href="#details-2"></a></h4>
-<p>All concepts must be previously computed.</p>
+<p>This is a wrapper around <code>reduce(copy = TRUE, method = "arrows")</code> for binary contexts,
+or <code>reduce(copy = TRUE, method = "concepts")</code> for fuzzy contexts.</p>
 </div>
 
 <div class="section">
@@ -803,10 +815,105 @@ extracted from the application of scales.</p>
 <p>Prints information regarding the formal context.</p>
 </div>
 
+</div><p></p><hr><a id="method-FormalContext-calculate_arrow_relations"></a><div class="section">
+<h3 id="method-calculate-arrow-relations-">Method <code>calculate_arrow_relations()</code><a class="anchor" aria-label="anchor" href="#method-calculate-arrow-relations-"></a></h3>
+<p>Calculate arrow relations for a binary context.</p><div class="section">
+<h4 id="usage-29">Usage<a class="anchor" aria-label="anchor" href="#usage-29"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">calculate_arrow_relations</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="details-5">Details<a class="anchor" aria-label="anchor" href="#details-5"></a></h4>
+<p>This method computes the arrow relations (swarrow, nearrow, and double arrow).</p>
+</div>
+
+<div class="section">
+<h4 id="returns-29">Returns<a class="anchor" aria-label="anchor" href="#returns-29"></a></h4>
+<p>Nothing, updates the internal state.</p>
+</div>
+
+</div><p></p><hr><a id="method-FormalContext-get_arrow_relations"></a><div class="section">
+<h3 id="method-get-arrow-relations-">Method <code>get_arrow_relations()</code><a class="anchor" aria-label="anchor" href="#method-get-arrow-relations-"></a></h3>
+<p>Get arrow relations</p><div class="section">
+<h4 id="usage-30">Usage<a class="anchor" aria-label="anchor" href="#usage-30"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">get_arrow_relations</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-30">Returns<a class="anchor" aria-label="anchor" href="#returns-30"></a></h4>
+<p>An integer matrix with the arrow relations.</p>
+</div>
+
+</div><p></p><hr><a id="method-FormalContext-get_irreducible_objects"></a><div class="section">
+<h3 id="method-get-irreducible-objects-">Method <code>get_irreducible_objects()</code><a class="anchor" aria-label="anchor" href="#method-get-irreducible-objects-"></a></h3>
+<p>Get irreducible objects</p><div class="section">
+<h4 id="usage-31">Usage<a class="anchor" aria-label="anchor" href="#usage-31"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">get_irreducible_objects</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-31">Returns<a class="anchor" aria-label="anchor" href="#returns-31"></a></h4>
+<p>A character vector with the names of the irreducible objects.</p>
+</div>
+
+</div><p></p><hr><a id="method-FormalContext-get_irreducible_attributes"></a><div class="section">
+<h3 id="method-get-irreducible-attributes-">Method <code>get_irreducible_attributes()</code><a class="anchor" aria-label="anchor" href="#method-get-irreducible-attributes-"></a></h3>
+<p>Get irreducible attributes</p><div class="section">
+<h4 id="usage-32">Usage<a class="anchor" aria-label="anchor" href="#usage-32"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">get_irreducible_attributes</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-32">Returns<a class="anchor" aria-label="anchor" href="#returns-32"></a></h4>
+<p>A character vector with the names of the irreducible attributes.</p>
+</div>
+
+</div><p></p><hr><a id="method-FormalContext-is_distributive"></a><div class="section">
+<h3 id="method-is-distributive-">Method <code>is_distributive()</code><a class="anchor" aria-label="anchor" href="#method-is-distributive-"></a></h3>
+<p>Check if the context (and its lattice) is distributive</p><div class="section">
+<h4 id="usage-33">Usage<a class="anchor" aria-label="anchor" href="#usage-33"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">is_distributive</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-33">Returns<a class="anchor" aria-label="anchor" href="#returns-33"></a></h4>
+<p>Logical: <code>TRUE</code> if the lattice is distributive.</p>
+</div>
+
+</div><p></p><hr><a id="method-FormalContext-reduce_arrows"></a><div class="section">
+<h3 id="method-reduce-arrows-">Method <code>reduce_arrows()</code><a class="anchor" aria-label="anchor" href="#method-reduce-arrows-"></a></h3>
+<p>Reduce the formal context using arrow relations</p><div class="section">
+<h4 id="usage-34">Usage<a class="anchor" aria-label="anchor" href="#usage-34"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">reduce_arrows</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-34">Returns<a class="anchor" aria-label="anchor" href="#returns-34"></a></h4>
+<p>A new <code>FormalContext</code> object that is clarified and reduced.</p>
+</div>
+
+</div><p></p><hr><a id="method-FormalContext-get_core"></a><div class="section">
+<h3 id="method-get-core-">Method <code>get_core()</code><a class="anchor" aria-label="anchor" href="#method-get-core-"></a></h3>
+<p>Get the Core of the Formal Context</p><div class="section">
+<h4 id="usage-35">Usage<a class="anchor" aria-label="anchor" href="#usage-35"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">get_core</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="details-6">Details<a class="anchor" aria-label="anchor" href="#details-6"></a></h4>
+<p>The core is the minimal subcontext that generates the same concept lattice.
+For binary contexts, this is equivalent to <code>standardize()</code>.</p>
+</div>
+
+<div class="section">
+<h4 id="returns-35">Returns<a class="anchor" aria-label="anchor" href="#returns-35"></a></h4>
+<p>A new <code>FormalContext</code> object containing only irreducible rows and columns.</p>
+</div>
+
 </div><p></p><hr><a id="method-FormalContext-to_latex"></a><div class="section">
 <h3 id="method-to-latex-">Method <code>to_latex()</code><a class="anchor" aria-label="anchor" href="#method-to-latex-"></a></h3>
 <p>Write the context in LaTeX format</p><div class="section">
-<h4 id="usage-29">Usage<a class="anchor" aria-label="anchor" href="#usage-29"></a></h4>
+<h4 id="usage-36">Usage<a class="anchor" aria-label="anchor" href="#usage-36"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span>table <span class="op">=</span> <span class="cn">TRUE</span>, label <span class="op">=</span> <span class="st">""</span>, caption <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -831,19 +938,19 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-29">Returns<a class="anchor" aria-label="anchor" href="#returns-29"></a></h4>
+<h4 id="returns-36">Returns<a class="anchor" aria-label="anchor" href="#returns-36"></a></h4>
 <p>A table environment in LaTeX.</p>
 </div>
 
 </div><p></p><hr><a id="method-FormalContext-incidence"></a><div class="section">
 <h3 id="method-incidence-">Method <code>incidence()</code><a class="anchor" aria-label="anchor" href="#method-incidence-"></a></h3>
 <p>Incidence matrix of the formal context</p><div class="section">
-<h4 id="usage-30">Usage<a class="anchor" aria-label="anchor" href="#usage-30"></a></h4>
+<h4 id="usage-37">Usage<a class="anchor" aria-label="anchor" href="#usage-37"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-30">Returns<a class="anchor" aria-label="anchor" href="#returns-30"></a></h4>
+<h4 id="returns-37">Returns<a class="anchor" aria-label="anchor" href="#returns-37"></a></h4>
 <p>The incidence matrix of the formal context</p>
 </div>
 <div class="section">
@@ -856,7 +963,7 @@ extracted from the application of scales.</p>
 </div><p></p><hr><a id="method-FormalContext-subcontext"></a><div class="section">
 <h3 id="method-subcontext-">Method <code>subcontext()</code><a class="anchor" aria-label="anchor" href="#method-subcontext-"></a></h3>
 <p>Generates a new FormalContext restricted to a subset of objects and/or attributes.</p><div class="section">
-<h4 id="usage-31">Usage<a class="anchor" aria-label="anchor" href="#usage-31"></a></h4>
+<h4 id="usage-38">Usage<a class="anchor" aria-label="anchor" href="#usage-38"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">subcontext</span><span class="op">(</span><span class="va">objects</span>, <span class="va">attributes</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -873,7 +980,7 @@ extracted from the application of scales.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-31">Returns<a class="anchor" aria-label="anchor" href="#returns-31"></a></h4>
+<h4 id="returns-38">Returns<a class="anchor" aria-label="anchor" href="#returns-38"></a></h4>
 <p>A new <code>FormalContext</code> object representing the subcontext.</p>
 </div>
 <div class="section">
@@ -886,7 +993,7 @@ extracted from the application of scales.</p>
 </div><p></p><hr><a id="method-FormalContext-bracket"></a><div class="section">
 <h3 id="method-">Method <code>[()</code><a class="anchor" aria-label="anchor" href="#method-"></a></h3>
 <p>Subcontext of the formal context</p><div class="section">
-<h4 id="usage-32">Usage<a class="anchor" aria-label="anchor" href="#usage-32"></a></h4>
+<h4 id="usage-39">Usage<a class="anchor" aria-label="anchor" href="#usage-39"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code>FormalContext$[(objects, attributes)</code></pre></div><p></p></div>
 </div>
 
@@ -905,7 +1012,7 @@ to keep.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="details-5">Details<a class="anchor" aria-label="anchor" href="#details-5"></a></h4>
+<h4 id="details-7">Details<a class="anchor" aria-label="anchor" href="#details-7"></a></h4>
 <p>A warning will be issued if any of the names is not present
 in the list of objects or attributes of the formal context.</p>
 <p>If <code>objects</code> or <code>attributes</code> is empty, then it is
@@ -914,7 +1021,7 @@ of the original formal context.</p>
 </div>
 
 <div class="section">
-<h4 id="returns-32">Returns<a class="anchor" aria-label="anchor" href="#returns-32"></a></h4>
+<h4 id="returns-39">Returns<a class="anchor" aria-label="anchor" href="#returns-39"></a></h4>
 <p>Another <code>FormalContext</code> that is a subcontext
 of the original one, with only the objects and attributes
 selected.</p>
@@ -929,7 +1036,7 @@ selected.</p>
 </div><p></p><hr><a id="method-FormalContext-plot"></a><div class="section">
 <h3 id="method-plot-">Method <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code><a class="anchor" aria-label="anchor" href="#method-plot-"></a></h3>
 <p>Plot the formal context table</p><div class="section">
-<h4 id="usage-33">Usage<a class="anchor" aria-label="anchor" href="#usage-33"></a></h4>
+<h4 id="usage-40">Usage<a class="anchor" aria-label="anchor" href="#usage-40"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">plot</span><span class="op">(</span>to_latex <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -946,20 +1053,20 @@ selected.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="details-6">Details<a class="anchor" aria-label="anchor" href="#details-6"></a></h4>
+<h4 id="details-8">Details<a class="anchor" aria-label="anchor" href="#details-8"></a></h4>
 <p>Particular parameters that control the size of the <code>tikz</code> output are: <code>width</code>, <code>height</code> (both in inches), and <code>pointsize</code> (in points), that should be set to the font size used in the <code>documentclass</code> header in the <code>LaTeX</code> file where the code is to be inserted.</p>
 <p>If a <code>caption</code> is provided, the whole <code>tikz</code> picture will be wrapped by a <code>figure</code> environment and the caption set.</p>
 </div>
 
 <div class="section">
-<h4 id="returns-33">Returns<a class="anchor" aria-label="anchor" href="#returns-33"></a></h4>
+<h4 id="returns-40">Returns<a class="anchor" aria-label="anchor" href="#returns-40"></a></h4>
 <p>If <code>to_latex</code> is <code>FALSE</code>, it returns nothing, just plots the graph of the formal context. Otherwise, this function returns the <code>LaTeX</code> code to reproduce the formal context plot.</p>
 </div>
 
 </div><p></p><hr><a id="method-FormalContext-use_logic"></a><div class="section">
 <h3 id="method-use-logic-">Method <code>use_logic()</code><a class="anchor" aria-label="anchor" href="#method-use-logic-"></a></h3>
 <p>Sets the logic to use</p><div class="section">
-<h4 id="usage-34">Usage<a class="anchor" aria-label="anchor" href="#usage-34"></a></h4>
+<h4 id="usage-41">Usage<a class="anchor" aria-label="anchor" href="#usage-41"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">use_logic</span><span class="op">(</span>name <span class="op">=</span> <span class="fu">available_logics</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -975,19 +1082,19 @@ selected.</p>
 </div><p></p><hr><a id="method-FormalContext-get_logic"></a><div class="section">
 <h3 id="method-get-logic-">Method <code>get_logic()</code><a class="anchor" aria-label="anchor" href="#method-get-logic-"></a></h3>
 <p>Gets the logic used</p><div class="section">
-<h4 id="usage-35">Usage<a class="anchor" aria-label="anchor" href="#usage-35"></a></h4>
+<h4 id="usage-42">Usage<a class="anchor" aria-label="anchor" href="#usage-42"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">get_logic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-34">Returns<a class="anchor" aria-label="anchor" href="#returns-34"></a></h4>
+<h4 id="returns-41">Returns<a class="anchor" aria-label="anchor" href="#returns-41"></a></h4>
 <p>A string with the name of the logic.</p>
 </div>
 
 </div><p></p><hr><a id="method-FormalContext-use_connection"></a><div class="section">
 <h3 id="method-use-connection-">Method <code>use_connection()</code><a class="anchor" aria-label="anchor" href="#method-use-connection-"></a></h3>
 <p>Sets the name of the Galois connection to use</p><div class="section">
-<h4 id="usage-36">Usage<a class="anchor" aria-label="anchor" href="#usage-36"></a></h4>
+<h4 id="usage-43">Usage<a class="anchor" aria-label="anchor" href="#usage-43"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">use_connection</span><span class="op">(</span><span class="va">connection</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -1003,19 +1110,19 @@ selected.</p>
 </div><p></p><hr><a id="method-FormalContext-get_connection"></a><div class="section">
 <h3 id="method-get-connection-">Method <code>get_connection()</code><a class="anchor" aria-label="anchor" href="#method-get-connection-"></a></h3>
 <p>Gets the name of the Galois connection</p><div class="section">
-<h4 id="usage-37">Usage<a class="anchor" aria-label="anchor" href="#usage-37"></a></h4>
+<h4 id="usage-44">Usage<a class="anchor" aria-label="anchor" href="#usage-44"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">get_connection</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-35">Returns<a class="anchor" aria-label="anchor" href="#returns-35"></a></h4>
+<h4 id="returns-42">Returns<a class="anchor" aria-label="anchor" href="#returns-42"></a></h4>
 <p>A string with the name of the Galois connection</p>
 </div>
 
 </div><p></p><hr><a id="method-FormalContext-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-38">Usage<a class="anchor" aria-label="anchor" href="#usage-38"></a></h4>
+<h4 id="usage-45">Usage<a class="anchor" aria-label="anchor" href="#usage-45"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">FormalContext</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 

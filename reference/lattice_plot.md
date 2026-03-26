@@ -16,6 +16,8 @@ lattice_plot(
   to_latex = FALSE,
   extents = NULL,
   intents = NULL,
+  viewer = c("ggraph", "base"),
+  theme = "standard",
   ...
 )
 ```
@@ -61,6 +63,16 @@ lattice_plot(
 - intents:
 
   List of intents.
+
+- viewer:
+
+  The viewer to use for plotting: "ggraph" (default) or "base"
+  (experimental, R base graphics).
+
+- theme:
+
+  The theme to use for the "base" viewer ("standard", "nord", "latex",
+  "vibrant").
 
 - ...:
 

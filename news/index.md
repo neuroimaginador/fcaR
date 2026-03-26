@@ -1,5 +1,51 @@
 # Changelog
 
+## fcaR 1.7.0
+
+New Functionality:
+
+- **Arrow Relations:** Added `calculate_arrow_relations()` method to
+  `FormalContext` to compute the arrow relations ($\swarrow$,
+  $\nearrow$, $\updownarrow$) of a binary formal context using a
+  high-performance C++ implementation based on bitsets.
+- **Structural Analysis:** Added new methods to `FormalContext` for
+  advanced structural analysis based on arrow relations:
+  - `is_distributive()`: Efficiently check if the concept lattice is
+    distributive without computing it.
+  - `get_irreducible_objects()` / `get_irreducible_attributes()`:
+    Identify the core elements needed to reconstruct the lattice.
+  - `get_core()`: Extract the smallest context that generates the same
+    lattice.
+- **Optimized Reduction:** Added `reduce_arrows()` to `FormalContext`.
+  This method clarifies and reduces a context using arrow relations,
+  which is significantly faster than traditional methods for large
+  contexts.
+- **Lattice Plotting Enhancements:**
+  - **Grade Balancing:** New `balance_grades` algorithm to improve
+    visual symmetry in Hasse diagrams (e.g., for $N_{5}$).
+  - **Base R Viewer:** Added `viewer = "base"` to
+    [`plot()`](https://rdrr.io/r/graphics/plot.default.html), providing
+    a lightweight alternative to `ggraph` with support for themes
+    (`"standard"`, `"nord"`, `"vibrant"`, `"latex"`).
+  - **Vertical Alignment:** Sugiyama layout now correctly aligns
+    single-node chains vertically.
+
+Improvements:
+
+- **Refactored `standardize()` and `reduce()`**: These methods now use
+  `reduce_arrows()` internally, removing the dependency on
+  pre-calculating the concept lattice and improving performance while
+  preserving original labels.
+- **C++ Layout Engine**: Updated `calculate_lattice_layout_rcpp` to
+  support numeric (decimal) Y coordinates for smooth vertical
+  positioning.
+- **Internal helpers:** Added `.print_arrows()` to handle symbol mapping
+  for both CLI (Unicode) and LaTeX output.
+- **Expanded Documentation:** Updated the `lattice_properties` vignette
+  with a detailed section on arrow relations.
+- **Enhanced Testing:** Added `test-arrow_relations.R` and
+  `test-arrow_advanced.R` with comprehensive unit tests.
+
 ## fcaR 1.6.0
 
 New Functionality:
