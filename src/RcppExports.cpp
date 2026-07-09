@@ -238,6 +238,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rsf_es_attr_cpp
+Rcpp::List rsf_es_attr_cpp(Rcpp::LogicalMatrix R);
+RcppExport SEXP _fcaR_rsf_es_attr_cpp(SEXP RSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::LogicalMatrix >::type R(RSEXP);
+    rcpp_result_gen = Rcpp::wrap(rsf_es_attr_cpp(R));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rsf_attr_cpp
+Rcpp::List rsf_attr_cpp(Rcpp::LogicalMatrix R);
+RcppExport SEXP _fcaR_rsf_attr_cpp(SEXP RSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::LogicalMatrix >::type R(RSEXP);
+    rcpp_result_gen = Rcpp::wrap(rsf_attr_cpp(R));
+    return rcpp_result_gen;
+END_RCPP
+}
 // randomize_swap_cpp
 IntegerMatrix randomize_swap_cpp(IntegerMatrix I, int iterations);
 RcppExport SEXP _fcaR_randomize_swap_cpp(SEXP ISEXP, SEXP iterationsSEXP) {
@@ -296,6 +318,21 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type I(ISEXP);
     rcpp_result_gen = Rcpp::wrap(compute_arrow_relations_cpp(I));
+    return rcpp_result_gen;
+END_RCPP
+}
+// asso_bitwise_cpp
+List asso_bitwise_cpp(LogicalMatrix I_in, int k_max, double threshold, double w_pos, double w_neg);
+RcppExport SEXP _fcaR_asso_bitwise_cpp(SEXP I_inSEXP, SEXP k_maxSEXP, SEXP thresholdSEXP, SEXP w_posSEXP, SEXP w_negSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I_in(I_inSEXP);
+    Rcpp::traits::input_parameter< int >::type k_max(k_maxSEXP);
+    Rcpp::traits::input_parameter< double >::type threshold(thresholdSEXP);
+    Rcpp::traits::input_parameter< double >::type w_pos(w_posSEXP);
+    Rcpp::traits::input_parameter< double >::type w_neg(w_negSEXP);
+    rcpp_result_gen = Rcpp::wrap(asso_bitwise_cpp(I_in, k_max, threshold, w_pos, w_neg));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -578,6 +615,54 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// grecond_cpp
+List grecond_cpp(LogicalMatrix I, int no_of_factors);
+RcppExport SEXP _fcaR_grecond_cpp(SEXP ISEXP, SEXP no_of_factorsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I(ISEXP);
+    Rcpp::traits::input_parameter< int >::type no_of_factors(no_of_factorsSEXP);
+    rcpp_result_gen = Rcpp::wrap(grecond_cpp(I, no_of_factors));
+    return rcpp_result_gen;
+END_RCPP
+}
+// greess_cpp
+List greess_cpp(LogicalMatrix I_in);
+RcppExport SEXP _fcaR_greess_cpp(SEXP I_inSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I_in(I_inSEXP);
+    rcpp_result_gen = Rcpp::wrap(greess_cpp(I_in));
+    return rcpp_result_gen;
+END_RCPP
+}
+// hyper_inclose_cpp
+List hyper_inclose_cpp(LogicalMatrix I_mat, int min_support);
+RcppExport SEXP _fcaR_hyper_inclose_cpp(SEXP I_matSEXP, SEXP min_supportSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I_mat(I_matSEXP);
+    Rcpp::traits::input_parameter< int >::type min_support(min_supportSEXP);
+    rcpp_result_gen = Rcpp::wrap(hyper_inclose_cpp(I_mat, min_support));
+    return rcpp_result_gen;
+END_RCPP
+}
+// hyper_plus_optimized_cpp
+List hyper_plus_optimized_cpp(LogicalMatrix I_mat, List hyper_res, double beta);
+RcppExport SEXP _fcaR_hyper_plus_optimized_cpp(SEXP I_matSEXP, SEXP hyper_resSEXP, SEXP betaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I_mat(I_matSEXP);
+    Rcpp::traits::input_parameter< List >::type hyper_res(hyper_resSEXP);
+    Rcpp::traits::input_parameter< double >::type beta(betaSEXP);
+    rcpp_result_gen = Rcpp::wrap(hyper_plus_optimized_cpp(I_mat, hyper_res, beta));
+    return rcpp_result_gen;
+END_RCPP
+}
 // InClose
 List InClose(NumericMatrix I, NumericVector grades_set, StringVector attrs, String connection, String name, bool verbose);
 RcppExport SEXP _fcaR_InClose(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
@@ -813,6 +898,57 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< StringVector >::type attrs(attrsSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
     rcpp_result_gen = Rcpp::wrap(get_closed_sets_implications(lhs, rhs, attrs, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
+// panda_plus_unified_cpp
+List panda_plus_unified_cpp(LogicalMatrix I_in, int k_max, std::string cost_func, double rho);
+RcppExport SEXP _fcaR_panda_plus_unified_cpp(SEXP I_inSEXP, SEXP k_maxSEXP, SEXP cost_funcSEXP, SEXP rhoSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I_in(I_inSEXP);
+    Rcpp::traits::input_parameter< int >::type k_max(k_maxSEXP);
+    Rcpp::traits::input_parameter< std::string >::type cost_func(cost_funcSEXP);
+    Rcpp::traits::input_parameter< double >::type rho(rhoSEXP);
+    rcpp_result_gen = Rcpp::wrap(panda_plus_unified_cpp(I_in, k_max, cost_func, rho));
+    return rcpp_result_gen;
+END_RCPP
+}
+// panda_plus_jp_cpp
+List panda_plus_jp_cpp(LogicalMatrix I_in, int k_max);
+RcppExport SEXP _fcaR_panda_plus_jp_cpp(SEXP I_inSEXP, SEXP k_maxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I_in(I_inSEXP);
+    Rcpp::traits::input_parameter< int >::type k_max(k_maxSEXP);
+    rcpp_result_gen = Rcpp::wrap(panda_plus_jp_cpp(I_in, k_max));
+    return rcpp_result_gen;
+END_RCPP
+}
+// panda_plus_ja_cpp
+List panda_plus_ja_cpp(LogicalMatrix I_in, int k_max);
+RcppExport SEXP _fcaR_panda_plus_ja_cpp(SEXP I_inSEXP, SEXP k_maxSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I_in(I_inSEXP);
+    Rcpp::traits::input_parameter< int >::type k_max(k_maxSEXP);
+    rcpp_result_gen = Rcpp::wrap(panda_plus_ja_cpp(I_in, k_max));
+    return rcpp_result_gen;
+END_RCPP
+}
+// panda_plus_jprho_cpp
+List panda_plus_jprho_cpp(LogicalMatrix I_in, int k_max, double rho);
+RcppExport SEXP _fcaR_panda_plus_jprho_cpp(SEXP I_inSEXP, SEXP k_maxSEXP, SEXP rhoSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type I_in(I_inSEXP);
+    Rcpp::traits::input_parameter< int >::type k_max(k_maxSEXP);
+    Rcpp::traits::input_parameter< double >::type rho(rhoSEXP);
+    rcpp_result_gen = Rcpp::wrap(panda_plus_jprho_cpp(I_in, k_max, rho));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1150,11 +1286,14 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_available_logics", (DL_FUNC) &_fcaR_available_logics, 0},
     {"_fcaR_grecond_plus_cpp", (DL_FUNC) &_fcaR_grecond_plus_cpp, 4},
     {"_fcaR_asso_cpp", (DL_FUNC) &_fcaR_asso_cpp, 4},
+    {"_fcaR_rsf_es_attr_cpp", (DL_FUNC) &_fcaR_rsf_es_attr_cpp, 1},
+    {"_fcaR_rsf_attr_cpp", (DL_FUNC) &_fcaR_rsf_attr_cpp, 1},
     {"_fcaR_randomize_swap_cpp", (DL_FUNC) &_fcaR_randomize_swap_cpp, 2},
     {"_fcaR_randomize_rewire_cpp", (DL_FUNC) &_fcaR_randomize_rewire_cpp, 2},
     {"_fcaR_reduce_transitivity_cpp", (DL_FUNC) &_fcaR_reduce_transitivity_cpp, 3},
     {"_fcaR_bonds_mcis_cpp", (DL_FUNC) &_fcaR_bonds_mcis_cpp, 3},
     {"_fcaR_compute_arrow_relations_cpp", (DL_FUNC) &_fcaR_compute_arrow_relations_cpp, 1},
+    {"_fcaR_asso_bitwise_cpp", (DL_FUNC) &_fcaR_asso_bitwise_cpp, 5},
     {"_fcaR_print_matrix", (DL_FUNC) &_fcaR_print_matrix, 1},
     {"_fcaR_print_vector", (DL_FUNC) &_fcaR_print_vector, 2},
     {"_fcaR_get_element_array", (DL_FUNC) &_fcaR_get_element_array, 4},
@@ -1175,6 +1314,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_run_monotonic_incremental_rcpp_optimized", (DL_FUNC) &_fcaR_run_monotonic_incremental_rcpp_optimized, 7},
     {"_fcaR_run_priority_refinement_rcpp_optimized", (DL_FUNC) &_fcaR_run_priority_refinement_rcpp_optimized, 7},
     {"_fcaR_run_direct_optimal_sp_single_pass_rcpp_optimized", (DL_FUNC) &_fcaR_run_direct_optimal_sp_single_pass_rcpp_optimized, 7},
+    {"_fcaR_grecond_cpp", (DL_FUNC) &_fcaR_grecond_cpp, 2},
+    {"_fcaR_greess_cpp", (DL_FUNC) &_fcaR_greess_cpp, 1},
+    {"_fcaR_hyper_inclose_cpp", (DL_FUNC) &_fcaR_hyper_inclose_cpp, 2},
+    {"_fcaR_hyper_plus_optimized_cpp", (DL_FUNC) &_fcaR_hyper_plus_optimized_cpp, 3},
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
     {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 4},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},
@@ -1193,6 +1336,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_next_closure_concepts", (DL_FUNC) &_fcaR_next_closure_concepts, 7},
     {"_fcaR_binary_next_closure_concepts", (DL_FUNC) &_fcaR_binary_next_closure_concepts, 2},
     {"_fcaR_get_closed_sets_implications", (DL_FUNC) &_fcaR_get_closed_sets_implications, 4},
+    {"_fcaR_panda_plus_unified_cpp", (DL_FUNC) &_fcaR_panda_plus_unified_cpp, 4},
+    {"_fcaR_panda_plus_jp_cpp", (DL_FUNC) &_fcaR_panda_plus_jp_cpp, 2},
+    {"_fcaR_panda_plus_ja_cpp", (DL_FUNC) &_fcaR_panda_plus_ja_cpp, 2},
+    {"_fcaR_panda_plus_jprho_cpp", (DL_FUNC) &_fcaR_panda_plus_jprho_cpp, 3},
     {"_fcaR_calculate_width_cpp", (DL_FUNC) &_fcaR_calculate_width_cpp, 3},
     {"_fcaR_calculate_dimension_heuristic_cpp", (DL_FUNC) &_fcaR_calculate_dimension_heuristic_cpp, 3},
     {"_fcaR_find_protoconcepts_cpp", (DL_FUNC) &_fcaR_find_protoconcepts_cpp, 4},

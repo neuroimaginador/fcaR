@@ -682,7 +682,8 @@ A \code{RuleSet} object containing the discovered causal rules and their quality
 \if{html}{\out{<a id="method-FormalContext-factorize"></a>}}
 \if{latex}{\out{\hypertarget{method-FormalContext-factorize}{}}}
 \subsection{Method \code{factorize()}}{
-Factorize the formal context using Boolean/Fuzzy Matrix Factorization algorithms.
+Factorize the formal context using Boolean Matrix Factorization (BMF) algorithms.
+Note: Fuzzy contexts are currently not supported and will result in an error.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormalContext$factorize(method = "GreConD", ...)}\if{html}{\out{</div>}}
 }
@@ -690,12 +691,17 @@ Factorize the formal context using Boolean/Fuzzy Matrix Factorization algorithms
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{method}}{(character) The algorithm to use. Currently supported: "GreConD", "ASSO".}
+\item{\code{method}}{(character) The algorithm to use. Supported algorithms:
+"RSF", "RSF-ES", "GreConD", "GreEss", "ASSO", "PaNDa+ MDL", "PaNDa+ ASSO-style",
+"PaNDa+ Weighted", "Hyper", "Hyper+".}
 
-\item{\code{...}}{Additional arguments:
+\item{\code{...}}{Additional arguments depending on the method:
 \itemize{
-\item For \code{GreConD}: \code{w} (weight, default 1.0), \code{stop_threshold_ratio} (error tolerance, default 0.0).
-\item For \code{ASSO}: \code{threshold} (confidence threshold, default 0.7), \code{w_pos} (reward), \code{w_neg} (penalty).
+\item \code{GreConD}, \code{PaNDa+ *}, \code{ASSO}: \code{k} (integer) maximum factors to extract.
+\item \code{ASSO}: \code{threshold} (default 0.6), \code{w_pos} (default 1.0), \code{w_neg} (default 1.0).
+\item \code{PaNDa+ Weighted}: \code{rho} (default 1.0).
+\item \code{Hyper}, \code{Hyper+}: \code{min_support} (ratio, default 0.05).
+\item \code{Hyper+}: \code{beta} (default 0.1).
 }}
 }
 \if{html}{\out{</div>}}
@@ -703,8 +709,8 @@ Factorize the formal context using Boolean/Fuzzy Matrix Factorization algorithms
 \subsection{Returns}{
 A list with two \code{FormalContext} objects:
 \itemize{
-\item \code{object_factor}: The context mapping Objects to Factors (Matrix A).
-\item \code{factor_attribute}: The context mapping Factors to Attributes (Matrix B).
+\item \code{object_factor}: The context mapping Objects to Factors (Matrix A / U).
+\item \code{factor_attribute}: The context mapping Factors to Attributes (Matrix B / V).
 }
 }
 }

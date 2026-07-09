@@ -1,5 +1,9 @@
 # fcaR 1.7.1
 
+* **Matrix Factorization Update:** Removed fuzzy matrix factorization. Matrix factorization is now exclusively supported for Boolean contexts. Attempting to factorize fuzzy contexts now yields a clean error.
+* **Documentation & Vignettes:** Updated the `matrix_factorization` vignette to focus on Boolean Matrix Factorization (BMF) using a clear binary dog breed example.
+* **Unit Tests:** Refactored `test-factorization.R` to test various Boolean factorization methods and check correct error handling on fuzzy contexts.
+
 # fcaR 1.7.0
 
 New Functionality:

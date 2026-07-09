@@ -69,6 +69,14 @@ asso_cpp <- function(I, threshold = 0.7, w_pos = 1.0, w_neg = 1.0) {
     .Call(`_fcaR_asso_cpp`, I, threshold, w_pos, w_neg)
 }
 
+rsf_es_attr_cpp <- function(R) {
+    .Call(`_fcaR_rsf_es_attr_cpp`, R)
+}
+
+rsf_attr_cpp <- function(R) {
+    .Call(`_fcaR_rsf_attr_cpp`, R)
+}
+
 randomize_swap_cpp <- function(I, iterations) {
     .Call(`_fcaR_randomize_swap_cpp`, I, iterations)
 }
@@ -96,6 +104,10 @@ bonds_mcis_cpp <- function(extents, intents, verbose = FALSE) {
 #' @noRd
 compute_arrow_relations_cpp <- function(I) {
     .Call(`_fcaR_compute_arrow_relations_cpp`, I)
+}
+
+asso_bitwise_cpp <- function(I_in, k_max, threshold, w_pos, w_neg) {
+    .Call(`_fcaR_asso_bitwise_cpp`, I_in, k_max, threshold, w_pos, w_neg)
 }
 
 print_matrix <- function(I) {
@@ -178,6 +190,22 @@ run_direct_optimal_sp_single_pass_rcpp_optimized <- function(lhs_in, rhs_in, att
     .Call(`_fcaR_run_direct_optimal_sp_single_pass_rcpp_optimized`, lhs_in, rhs_in, attributes, L, logic_name, use_pruning, verbose)
 }
 
+grecond_cpp <- function(I, no_of_factors = -1L) {
+    .Call(`_fcaR_grecond_cpp`, I, no_of_factors)
+}
+
+greess_cpp <- function(I_in) {
+    .Call(`_fcaR_greess_cpp`, I_in)
+}
+
+hyper_inclose_cpp <- function(I_mat, min_support = 1L) {
+    .Call(`_fcaR_hyper_inclose_cpp`, I_mat, min_support)
+}
+
+hyper_plus_optimized_cpp <- function(I_mat, hyper_res, beta = 0.1) {
+    .Call(`_fcaR_hyper_plus_optimized_cpp`, I_mat, hyper_res, beta)
+}
+
 InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }
@@ -248,6 +276,22 @@ binary_next_closure_concepts <- function(I, verbose = FALSE) {
 
 get_closed_sets_implications <- function(lhs, rhs, attrs, verbose = FALSE) {
     .Call(`_fcaR_get_closed_sets_implications`, lhs, rhs, attrs, verbose)
+}
+
+panda_plus_unified_cpp <- function(I_in, k_max, cost_func = "J_P", rho = 1.0) {
+    .Call(`_fcaR_panda_plus_unified_cpp`, I_in, k_max, cost_func, rho)
+}
+
+panda_plus_jp_cpp <- function(I_in, k_max) {
+    .Call(`_fcaR_panda_plus_jp_cpp`, I_in, k_max)
+}
+
+panda_plus_ja_cpp <- function(I_in, k_max) {
+    .Call(`_fcaR_panda_plus_ja_cpp`, I_in, k_max)
+}
+
+panda_plus_jprho_cpp <- function(I_in, k_max, rho) {
+    .Call(`_fcaR_panda_plus_jprho_cpp`, I_in, k_max, rho)
 }
 
 calculate_width_cpp <- function(i_idx, p_idx, n) {

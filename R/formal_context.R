@@ -1159,19 +1159,25 @@ FormalContext <- R6::R6Class(
     },
 
     #' @description
-    #' Factorize the formal context using Boolean/Fuzzy Matrix Factorization algorithms.
+    #' Factorize the formal context using Boolean Matrix Factorization (BMF) algorithms.
+    #' Note: Fuzzy contexts are currently not supported and will result in an error.
     #'
-    #' @param method (character) The algorithm to use. Currently supported: "GreConD", "ASSO".
-    #' @param ... Additional arguments:
+    #' @param method (character) The algorithm to use. Supported algorithms:
+    #' "RSF", "RSF-ES", "GreConD", "GreEss", "ASSO", "PaNDa+ MDL", "PaNDa+ ASSO-style",
+    #' "PaNDa+ Weighted", "Hyper", "Hyper+".
+    #' @param ... Additional arguments depending on the method:
     #' \itemize{
-    #'   \item For \code{GreConD}: \code{w} (weight, default 1.0), \code{stop_threshold_ratio} (error tolerance, default 0.0).
-    #'   \item For \code{ASSO}: \code{threshold} (confidence threshold, default 0.7), \code{w_pos} (reward), \code{w_neg} (penalty).
+    #'   \item \code{GreConD}, \code{PaNDa+ *}, \code{ASSO}: \code{k} (integer) maximum factors to extract.
+    #'   \item \code{ASSO}: \code{threshold} (default 0.6), \code{w_pos} (default 1.0), \code{w_neg} (default 1.0).
+    #'   \item \code{PaNDa+ Weighted}: \code{rho} (default 1.0).
+    #'   \item \code{Hyper}, \code{Hyper+}: \code{min_support} (ratio, default 0.05).
+    #'   \item \code{Hyper+}: \code{beta} (default 0.1).
     #' }
     #'
     #' @return A list with two \code{FormalContext} objects:
     #' \itemize{
-    #'   \item \code{object_factor}: The context mapping Objects to Factors (Matrix A).
-    #'   \item \code{factor_attribute}: The context mapping Factors to Attributes (Matrix B).
+    #'   \item \code{object_factor}: The context mapping Objects to Factors (Matrix A / U).
+    #'   \item \code{factor_attribute}: The context mapping Factors to Attributes (Matrix B / V).
     #' }
     #' @export
     factorize = function(method = "GreConD", ...) {
@@ -1179,64 +1185,99 @@ FormalContext <- R6::R6Class(
         stop("Context is empty.")
       }
 
-      # Convertir a densa para algoritmos numéricos complejos
       I_mat <- as.matrix(self$incidence())
 
-      dots <- list(...)
-      factors_list <- NULL
-
-      if (method == "GreConD" || method == "GreConD+") {
-        w <- ifelse(is.null(dots$w), 1.0, dots$w)
-        stop_ratio <- ifelse(
-          is.null(dots$stop_threshold_ratio),
-          0.0,
-          dots$stop_threshold_ratio
-        )
-
-        # --- INTEGRACIÓN DIFUSA ---
-        # Recuperamos la lógica actual del objeto
-        current_logic <- self$get_logic()
-
-        factors_list <- grecond_plus_cpp(I_mat, w, stop_ratio, current_logic)
-      } else if (method == "ASSO") {
-        threshold <- ifelse(is.null(dots$threshold), 0.7, dots$threshold)
-        w_pos <- ifelse(is.null(dots$w_pos), 1.0, dots$w_pos)
-        w_neg <- ifelse(is.null(dots$w_neg), 1.0, dots$w_neg)
-
-        factors_list <- asso_cpp(I_mat, threshold, w_pos, w_neg)
-      } else {
-        stop(paste("Unknown factorization method:", method))
+      # Verificamos si la matriz es difusa (tiene valores > 0 y < 1)
+      if (any(I_mat > 0 & I_mat < 1)) {
+        stop("Current context is fuzzy. Factorization is currently only supported for Boolean contexts. Please binarize the context first.")
       }
 
-      if (length(factors_list) == 0) {
+      # Forzamos conversión a matriz lógica para Rcpp
+      storage.mode(I_mat) <- "logical"
+
+      # Estrategia de transposición para optimizar rendimiento:
+      # Si hay más atributos que objetos, operamos sobre la matriz transpuesta.
+      needs_transpose <- nrow(I_mat) < ncol(I_mat)
+      if (needs_transpose) {
+        I_mat <- t(I_mat)
+      }
+
+      dots <- list(...)
+      res <- NULL
+
+      # Enrutamiento de algoritmos
+      if (method == "RSF") {
+        res <- rsf_attr_cpp(I_mat)
+      } else if (method == "RSF-ES") {
+        res <- rsf_es_attr_cpp(I_mat)
+      } else if (method == "GreConD") {
+        k <- ifelse(is.null(dots$k), -1L, as.integer(dots$k))
+        res <- grecond_cpp(I_mat, no_of_factors = k)
+      } else if (method == "GreEss") {
+        res <- greess_cpp(I_mat)
+      } else if (method == "ASSO") {
+        k <- ifelse(is.null(dots$k), 5000L, as.integer(dots$k))
+        threshold <- ifelse(is.null(dots$threshold), 0.6, as.numeric(dots$threshold))
+        w_pos <- ifelse(is.null(dots$w_pos), 1.0, as.numeric(dots$w_pos))
+        w_neg <- ifelse(is.null(dots$w_neg), 1.0, as.numeric(dots$w_neg))
+        res <- asso_bitwise_cpp(I_mat, k_max = k, threshold = threshold, w_pos = w_pos, w_neg = w_neg)
+      } else if (method == "PaNDa+ MDL") {
+        k <- ifelse(is.null(dots$k), 5000L, as.integer(dots$k))
+        res <- panda_plus_jp_cpp(I_mat, k_max = k)
+      } else if (method == "PaNDa+ ASSO-style") {
+        k <- ifelse(is.null(dots$k), 5000L, as.integer(dots$k))
+        res <- panda_plus_ja_cpp(I_mat, k_max = k)
+      } else if (method == "PaNDa+ Weighted") {
+        k <- ifelse(is.null(dots$k), 5000L, as.integer(dots$k))
+        rho <- ifelse(is.null(dots$rho), 1.0, as.numeric(dots$rho))
+        res <- panda_plus_jprho_cpp(I_mat, k_max = k, rho = rho)
+      } else if (method == "Hyper" || method == "Hyper+") {
+        min_support <- ifelse(is.null(dots$min_support), 0.05, as.numeric(dots$min_support))
+        min_support_count <- max(1L, as.integer(floor(nrow(I_mat) * min_support)))
+
+        res_h <- hyper_inclose_cpp(I_mat, min_support = min_support_count)
+
+        if (method == "Hyper") {
+          res <- res_h
+        } else {
+          beta <- ifelse(is.null(dots$beta), 0.1, as.numeric(dots$beta))
+          res <- hyper_plus_optimized_cpp(I_mat, res_h, beta = beta)
+        }
+      } else {
+        stop(sprintf("Unknown factorization method: '%s'. Supported methods are: RSF, RSF-ES, GreConD, GreEss, ASSO, PaNDa+ MDL, PaNDa+ ASSO-style, PaNDa+ Weighted, Hyper, Hyper+.", method))
+      }
+
+      # Comprobamos validez de la salida
+      if (is.null(res) || ncol(res$U) == 0) {
         warning("No factors found.")
         return(NULL)
       }
 
-      # Reconstruir Contextos de Factores
-      n_factors <- length(factors_list)
-      factor_names <- paste0("F", seq_len(n_factors))
-
-      A <- matrix(0, nrow = length(self$objects), ncol = n_factors)
-      rownames(A) <- self$objects
-      colnames(A) <- factor_names
-
-      B <- matrix(0, nrow = n_factors, ncol = length(self$attributes))
-      rownames(B) <- factor_names
-      colnames(B) <- self$attributes
-
-      for (k in seq_len(n_factors)) {
-        f <- factors_list[[k]]
-        A[, k] <- f$extent
-        B[k, ] <- f$intent
+      # Restaurar las dimensiones originales si se aplicó transposición
+      if (needs_transpose) {
+        tmp <- t(res$U)
+        res$U <- t(res$V)
+        res$V <- tmp
       }
 
-      # Crear nuevos objetos con la MISMA configuración de lógica que el padre
-      ctx_A <- FormalContext$new(A)
-      ctx_B <- FormalContext$new(B)
+      # Construimos los objetos FormalContext usando sparse matrices por eficiencia
+      # Convertimos a numérico primero porque lgCMatrix -> ngCMatrix falla en versiones recientes de Matrix
+      U_num <- matrix(as.numeric(res$U), nrow = nrow(res$U), ncol = ncol(res$U))
+      V_num <- matrix(as.numeric(res$V), nrow = nrow(res$V), ncol = ncol(res$V))
 
-      ctx_A$use_logic(self$get_logic())
-      ctx_B$use_logic(self$get_logic())
+      U_sparse <- methods::as(Matrix::Matrix(U_num, sparse = TRUE), "ngCMatrix")
+      V_sparse <- methods::as(Matrix::Matrix(V_num, sparse = TRUE), "ngCMatrix")
+
+      n_factors <- ncol(U_sparse)
+      factor_names <- paste0("F", seq_len(n_factors))
+
+      rownames(U_sparse) <- self$objects
+      colnames(U_sparse) <- factor_names
+      rownames(V_sparse) <- factor_names
+      colnames(V_sparse) <- self$attributes
+
+      ctx_A <- FormalContext$new(U_sparse)
+      ctx_B <- FormalContext$new(V_sparse)
 
       return(list(
         object_factor = ctx_A,
