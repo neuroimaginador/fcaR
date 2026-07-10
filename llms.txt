@@ -67,15 +67,16 @@ Let us start with a fuzzy dataset (stored in a matrix I) as follows:
 | O5  | 0.0 | 0.0 | 1.0 | 0.5 | 0.0 |   0 |
 | O6  | 0.5 | 0.0 | 0.0 | 0.0 | 0.0 |   0 |
 
-Here, a value $x$ in the intersection of a row and a column indicates
+Here, a value $`x`$ in the intersection of a row and a column indicates
 that the object of the corresponding row possesses the attribute in the
-column in a degree of at least $x$ (if $x = 0$, the attribute is absent
-in the object, and if $x = 1$, the attribute is fully present in the
-object).
+column in a degree of at least $`x`$ (if $`x = 0`$, the attribute is
+absent in the object, and if $`x = 1`$, the attribute is fully present
+in the object).
 
 We can build a FormalContext object:
 
 ``` r
+
 fc <- FormalContext$new(I)
 
 print(fc)
@@ -92,6 +93,7 @@ print(fc)
 With a single function, we can compute the set of concepts:
 
 ``` r
+
 # Compute all concepts
 fc$find_concepts()
 
@@ -108,6 +110,7 @@ fc$concepts$plot()
 We can also extract implications from the formal context:
 
 ``` r
+
 # Extract implications
 fc$find_implications()
 
@@ -139,6 +142,7 @@ the formal context have been implemented:
 Also, one can compute the support of both implications and concepts:
 
 ``` r
+
 fc$implications$support()
 #>  [1] 0.1666667 0.3333333 0.1666667 0.0000000 0.1666667 0.3333333 0.0000000
 #>  [8] 0.0000000 0.1666667 0.1666667 0.1666667 0.0000000
@@ -156,6 +160,7 @@ rules by removing redundancies, as well as computing the closure of a
 given fuzzy attribute set.
 
 ``` r
+
 # Reduce the number of implications using two simple
 # rules. The algorithm applies the specified rules
 # in batches, if the number of rules is high.
@@ -225,7 +230,7 @@ Improvements:
   `Matrix` package.
 - **Metadata Preservation:** Rewritten `[` and related methods of
   `ImplicationSet`. These ensure that critical context metadata (such as
-  the number of objects $N$ for support calculation) is preserved when
+  the number of objects $`N`$ for support calculation) is preserved when
   filtering or sorting rules, fixing previous issues where metadata was
   lost.
 - **Data Safety:** Enhanced type safety in internal functions to

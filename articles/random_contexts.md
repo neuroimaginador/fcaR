@@ -1,6 +1,7 @@
 # Advanced Random Contexts
 
 ``` r
+
 library(fcaR)
 ```
 
@@ -8,7 +9,7 @@ library(fcaR)
 
 Creating synthetic datasets is essential for testing algorithms and
 validating results in Formal Concept Analysis. However, simple uniform
-random generation (where every cell has a fixed probability $p$ of
+random generation (where every cell has a fixed probability $`p`$ of
 being 1) often fails to capture the structure of real-world data.
 
 `fcaR` now implements advanced generation methods, allowing for more
@@ -21,9 +22,10 @@ have many attributes, while others have very few. A uniform distribution
 creates rows that are all roughly the same size (Binomial distribution).
 
 To mimic real variability, we use a **Dirichlet Distribution** to sample
-the probability of an object having $k$ attributes.
+the probability of an object having $`k`$ attributes.
 
 ``` r
+
 # Uniform Context (Standard)
 # All objects have roughly 20% of attributes
 fc_uni <- RandomContext(n_objects = 20, n_attributes = 10, density = 0.2, distribution = "uniform")
@@ -41,6 +43,7 @@ barplot(rowSums(fc_uni$incidence()), main = "Uniform: Row Sums", ylim = c(0, 10)
 ![](random_contexts_files/figure-html/dirichlet-1.png)
 
 ``` r
+
 barplot(rowSums(fc_dir$incidence()), main = "Dirichlet: Row Sums", ylim = c(0, 10))
 ```
 
@@ -61,6 +64,7 @@ This is achieved by **Edge Swapping** (also known as the Curveball
 algorithm). It swaps connections without altering the marginal sums.
 
 ``` r
+
 data(planets)
 fc <- FormalContext$new(planets)
 
@@ -98,6 +102,7 @@ The function `RandomDistributiveContext` generates a random Poset and
 builds its associated formal context.
 
 ``` r
+
 # Generate a random distributive context based on a Poset with 15 elements
 fc_dist <- RandomDistributiveContext(n_elements = 15, density = 0.2)
 fc_dist$find_concepts()

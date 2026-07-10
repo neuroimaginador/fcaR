@@ -9,6 +9,7 @@ concepts, in FCA.
 We load the `fcaR` package by:
 
 ``` r
+
 library(fcaR)
 ```
 
@@ -23,6 +24,7 @@ context, presented in
 > Hierarchies of Concepts.” In Ordered Sets, pp. 445–470. Springer.
 
 ``` r
+
 knitr::kable(planets, format = "html", booktabs = TRUE)
 ```
 
@@ -42,6 +44,7 @@ The other formal context is fuzzy and is defined by the following matrix
 I:
 
 ``` r
+
 knitr::kable(I, format = "html", booktabs = TRUE)
 ```
 
@@ -63,6 +66,7 @@ information related to the context.
 In our examples, we create two objects:
 
 ``` r
+
 fc_planets <- FormalContext$new(planets)
 fc_I <- FormalContext$new(I)
 ```
@@ -79,6 +83,7 @@ as heatmaps (with functions
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html)):
 
 ``` r
+
 print(fc_planets)
 #> FormalContext with 9 objects and 7 attributes.
 #>          small  medium  large  near  far  moon  no_moon  
@@ -103,12 +108,14 @@ print(fc_I)
 ```
 
 ``` r
+
 fc_planets$plot()
 ```
 
 ![](concept_lattice_files/figure-html/unnamed-chunk-7-1.png)
 
 ``` r
+
 fc_I$plot()
 ```
 
@@ -117,6 +124,7 @@ fc_I$plot()
 Also, we can export the formal context as a LaTeX table:
 
 ``` r
+
 fc_planets$to_latex()
 #> \begin{table} \caption{}\label{} \centering \begin{tabular}{r|ccccccc}
 #>   & $\mathrm{small}$ & $\mathrm{medium}$ & $\mathrm{large}$ & $\mathrm{near}$ & $\mathrm{far}$ & $\mathrm{moon}$ & $\mathrm{no\_moon}$\\ 
@@ -140,6 +148,7 @@ One can also create `FormalContext`s by importing RDS, CSV or CXT files
 directly:
 
 ``` r
+
 # Read CSV
 filename <- system.file("contexts", "airlines.csv",
   package = "fcaR"
@@ -183,6 +192,7 @@ We can compute the dual formal context of a given one by using the
 `dual()` method:
 
 ``` r
+
 fc_dual <- fc_planets$dual()
 fc_dual
 #> FormalContext with 7 objects and 9 attributes.
@@ -208,6 +218,7 @@ The intent of a (probably fuzzy) set of objects is the set of their
 common attributes:
 
 ``` r
+
 # Define a set of objects
 S <- Set$new(attributes = fc_planets$objects)
 S$assign(Earth = 1, Mars = 1)
@@ -223,6 +234,7 @@ Analogously, the extent of a set of attributes is the set of objects
 which possess all the attributes in the given set:
 
 ``` r
+
 # Define a set of objects
 S <- Set$new(attributes = fc_planets$attributes)
 S$assign(moon = 1, large = 1)
@@ -238,6 +250,7 @@ The composition of intent and extent is the closure of a set of
 attributes:
 
 ``` r
+
 # Compute the closure of S
 Sc <- fc_planets$closure(S)
 Sc
@@ -251,6 +264,7 @@ We can check whether a set is closed (that is, it is equal to its
 closure), using `is_closed()`:
 
 ``` r
+
 fc_planets$is_closed(S)
 #> [1] FALSE
 fc_planets$is_closed(Sc)
@@ -268,6 +282,7 @@ dependent attributes, but only on binary formal contexts. The resulting
 `FormalContext` is equivalent to the original one in both cases.
 
 ``` r
+
 fc_planets$reduce(TRUE)
 #> FormalContext with 5 objects and 7 attributes.
 #>                    small  medium  large  near  far  moon  no_moon  
@@ -302,6 +317,7 @@ It can be used both for binary and fuzzy formal contexts, resulting in
 binary or fuzzy concepts and implications:
 
 ``` r
+
 fc_planets$find_implications()
 
 fc_I$find_implications()
@@ -311,6 +327,7 @@ fc_I$find_implications()
 We can inspect the results as:
 
 ``` r
+
 # Concepts
 fc_planets$concepts
 #> A set of 12 concepts:
@@ -345,14 +362,15 @@ fc_planets$implications
 ### Protoconcepts
 
 In addition to concepts, one can compute *protoconcepts*. A protoconcept
-is a pair $(A,B)$ of object and attribute sets such that
-$A\prime = B''$. This definition generalizes concepts (where
-$A\prime = B$ and $B\prime = A$, which implies $A\prime = B''$) and is
-useful in certain applications.
+is a pair $`(A, B)`$ of object and attribute sets such that
+$`A' = B''`$. This definition generalizes concepts (where $`A' = B`$ and
+$`B' = A`$, which implies $`A' = B''`$) and is useful in certain
+applications.
 
 To find all protoconcepts, use `find_protoconcepts()`:
 
 ``` r
+
 P <- fc_planets$find_protoconcepts()
 length(P)
 #> [1] 679
@@ -364,7 +382,7 @@ matches a concept or a protoconcept.
 ### Standard Context
 
 Once we have computed the concepts, we can build the *standard context*
-(J, M, $\leq$), where J is the set of join-irreducible concepts and M
+(J, M, $`\le`$), where J is the set of join-irreducible concepts and M
 are the meet-irreducible ones. Join and meet are another name for
 supremum and infimum operations in the concept lattice.
 
@@ -373,6 +391,7 @@ concept lattice has been found, and it produces a new `FormalContext`
 object:
 
 ``` r
+
 fc_planets$standardize()
 #> FormalContext with 5 objects and 7 attributes.
 #>                    small  medium  large  near  far  moon  no_moon  
@@ -407,12 +426,14 @@ efficient than the base
 [`readRDS()`](https://rdrr.io/r/base/readRDS.html).
 
 ``` r
+
 fc$save(filename = "./fc.rds")
 ```
 
 In order to load a previously saved `FormalContext`, it suffices to do:
 
 ``` r
+
 fc2 <- FormalContext$new("./fc.rds")
 ```
 
@@ -430,12 +451,14 @@ function [`plot()`](https://rdrr.io/r/graphics/plot.default.html) inside
 the `ConceptLattice` component:
 
 ``` r
+
 fc_planets$concepts$plot()
 ```
 
 ![](concept_lattice_files/figure-html/unnamed-chunk-22-1.png)
 
 ``` r
+
 fc_I$concepts$plot()
 ```
 
@@ -445,6 +468,7 @@ If one desires to get the list of concepts printed, or in LaTeX format,
 just:
 
 ``` r
+
 # Printing
 fc_planets$concepts
 #> A set of 12 concepts:
@@ -487,6 +511,7 @@ For a `ConceptLattice`, one may want to retrieve particular concepts,
 using a subsetting as in `R`:
 
 ``` r
+
 fc_planets$concepts[2:3]
 #> A set of 2 concepts:
 #> 1: ({Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto}, {moon})
@@ -497,6 +522,7 @@ Or get all the extents and all the intents of all concepts, as sparse
 matrices:
 
 ``` r
+
 fc_planets$concepts$extents()
 fc_planets$concepts$intents()
 ```
@@ -507,6 +533,7 @@ The support of concepts can be computed using the function
 [`support()`](https://rdrr.io/pkg/arules/man/support.html):
 
 ``` r
+
 fc_planets$concepts$support()
 #>  [1] 1.0000000 0.7777778 0.5555556 0.2222222 0.2222222 0.5555556 0.3333333
 #>  [8] 0.1111111 0.4444444 0.2222222 0.2222222 0.0000000
@@ -522,6 +549,7 @@ For instance, to build the sublattice of those concepts with support
 greater than 0.5, we can do:
 
 ``` r
+
 # Get the index of those concepts with support
 # greater than the threshold
 idx <- which(fc_I$concepts$support() > 0.2)
@@ -554,6 +582,7 @@ sublattice
 And we can plot just the sublattice:
 
 ``` r
+
 sublattice$plot()
 ```
 
@@ -566,6 +595,7 @@ Given a concept, we can compute all its subconcepts and all its
 superconcepts:
 
 ``` r
+
 # The fifth concept
 C <- fc_planets$concepts$sub(5)
 C
@@ -589,6 +619,7 @@ greatest common subconcept of all the given concepts, and the lowest
 common superconcept of them, and can be computed by:
 
 ``` r
+
 # A list of concepts
 C <- fc_planets$concepts[5:7]
 C
@@ -611,6 +642,7 @@ Also irreducible elements with respect to join (supremum) and meet
 (infimum) can be computed for a given concept lattice:
 
 ``` r
+
 fc_planets$concepts$join_irreducibles()
 #> A set of 5 concepts:
 #> 1: ({Jupiter, Saturn}, {large, far, moon})

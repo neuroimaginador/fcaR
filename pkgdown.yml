@@ -1,5 +1,5 @@
-pandoc: 3.1.11
-pkgdown: 2.2.0
+pandoc: 3.8.3
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   advanced_lattice_metrics: advanced_lattice_metrics.html
@@ -18,7 +18,7 @@ articles:
   lattice_visualization: lattice_visualization.html
   matrix_factorization: matrix_factorization.html
   random_contexts: random_contexts.html
-last_built: 2026-03-26T21:49Z
+last_built: 2026-07-10T15:19Z
 urls:
   reference: https://neuroimaginador.github.io/fcaR/reference
   article: https://neuroimaginador.github.io/fcaR/articles

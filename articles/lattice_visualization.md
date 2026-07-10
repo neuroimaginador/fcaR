@@ -1,6 +1,7 @@
 # Visualizing concept lattices: from R to LaTeX
 
 ``` r
+
 library(fcaR)
 ```
 
@@ -16,6 +17,7 @@ In this guide, we will use the classic `planets` dataset included in the
 package.
 
 ``` r
+
 # Load the context and find concepts
 fc <- FormalContext$new(planets)
 fc$find_concepts()
@@ -28,6 +30,7 @@ The simplest way to visualize the lattice is by using the
 concepts object.
 
 ``` r
+
 fc$concepts$plot()
 ```
 
@@ -49,6 +52,7 @@ in horizontal layers based on their generality (grade) and minimizes
 edge crossings. It is ideal for classic **Hasse diagrams**.
 
 ``` r
+
 fc$concepts$plot(method = "sugiyama")
 ```
 
@@ -62,6 +66,7 @@ useful for very large, dense lattices or when the strict hierarchy makes
 the graph too wide.
 
 ``` r
+
 fc$concepts$plot(method = "force")
 ```
 
@@ -96,6 +101,7 @@ The color code helps identify the nature of the node:
   concepts).
 
 ``` r
+
 fc$concepts$plot(mode = "reduced")
 ```
 
@@ -107,6 +113,7 @@ For educational purposes or very small lattices, it can be useful to see
 the full extent (objects) and intent (attributes) in each node.
 
 ``` r
+
 fc$concepts$plot(mode = "full")
 ```
 
@@ -118,6 +125,7 @@ For large lattices (\> 50 concepts), text labels can overlap and obscure
 the structure. The `"empty"` mode draws only the nodes and edges.
 
 ``` r
+
 fc$concepts$plot(mode = "empty")
 ```
 
@@ -135,6 +143,7 @@ not** draw the plot in R, but returns a special object with the source
 code.
 
 ``` r
+
 # Generate TikZ code
 tikz_code <- fc$concepts$plot(to_latex = TRUE)
 
@@ -186,6 +195,7 @@ You can save the code directly to a `.tex` file using the
 function and the R pipe operator:
 
 ``` r
+
 # Save to a local file
 fc$concepts$plot(to_latex = TRUE) |> 
   save_tikz("lattice_diagram.tex")

@@ -8,6 +8,7 @@ integrate with the `arules` package. This means that any one using the
 more precisely, `FormalContext` and `ImplicationSet` objects.
 
 ``` r
+
 library(arules)
 #> Loading required package: Matrix
 #> 
@@ -29,6 +30,7 @@ For these examples, we are using two binary datasets, `Mushroom` (from
 the `arules` package) and `planets` (from `fcaR`).
 
 ``` r
+
 data("Mushroom", package = "arules")
 ```
 
@@ -38,6 +40,7 @@ must restrict ourselves to the binary case.
 Let us create a `FormalContext` object for the `planets` dataset:
 
 ``` r
+
 fc_planets <- FormalContext$new(planets)
 ```
 
@@ -51,6 +54,7 @@ It suffices to initialize a `FormalContext` object with the transactions
 dataset:
 
 ``` r
+
 fc <- FormalContext$new(Mushroom)
 fc
 #> FormalContext with 8124 objects and 114 attributes.
@@ -79,6 +83,7 @@ The `to_transactions()` function enables us to export a formal context
 to a format compatible with the `arules` package:
 
 ``` r
+
 fc_planets$to_transactions()
 #> transactions in sparse format with
 #>  9 transactions (rows) and
@@ -101,6 +106,7 @@ dataset using the
 [`apriori()`](https://rdrr.io/pkg/arules/man/apriori.html) function:
 
 ``` r
+
 mushroom_rules <- apriori(Mushroom, parameter = list(conf = 1), control = list(verbose = FALSE))
 ```
 
@@ -108,6 +114,7 @@ Once we have created the `fc` object storing the `Mushroom` dataset, we
 simply add the implications to it as:
 
 ``` r
+
 fc$implications$add(mushroom_rules)
 ```
 
@@ -119,6 +126,7 @@ If we want to export the implications extracted for a binary formal
 context, we can use:
 
 ``` r
+
 fc_planets$find_implications()
 fc_planets$implications$to_arules(quality = TRUE)
 #> set of 10 rules

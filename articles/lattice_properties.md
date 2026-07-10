@@ -1,6 +1,7 @@
 # Lattice properties
 
 ``` r
+
 library(fcaR)
 ```
 
@@ -24,6 +25,7 @@ C++ for performance.
 Let’s use the built-in `planets` dataset as an example:
 
 ``` r
+
 fc <- FormalContext$new(planets)
 fc$find_concepts()
 
@@ -44,25 +46,26 @@ print(paste("Is Atomic?",       fc$concepts$is_atomic()))
 ### Understanding the properties
 
 - **Distributive:** A lattice is distributive if the operations of join
-  ($\vee$) and meet ($\land$) distribute over each other. Distributive
-  lattices are isomorphic to rings of sets (Birkhoff’s Representation
-  Theorem).
+  ($`\vee`$) and meet ($`\wedge`$) distribute over each other.
+  Distributive lattices are isomorphic to rings of sets (Birkhoff’s
+  Representation Theorem).
 - **Modular:** A generalization of distributivity. In a modular lattice,
-  if $x \leq z$, then $x \vee (y \land z) = (x \vee y) \land z$. All
-  distributive lattices are modular.
-- **Upper Semimodular:** If $x$ covers $x \land y$, then $x \vee y$
-  covers $y$. This property ensures the lattice is *graded* (all maximal
-  chains have the same length).
+  if $`x \le z`$, then $`x \vee (y \wedge z) = (x \vee y) \wedge z`$.
+  All distributive lattices are modular.
+- **Upper Semimodular:** If $`x`$ covers $`x \wedge y`$, then
+  $`x \vee y`$ covers $`y`$. This property ensures the lattice is
+  *graded* (all maximal chains have the same length).
 - **Atomic:** Every element (except the bottom) lies above some *atom*
   (an element that covers the bottom). In FCA, atoms often correspond to
   object concepts.
 
-### Example: A non-distributive lattice ($M_{3}$)
+### Example: A non-distributive lattice ($`M_3`$)
 
-The “Diamond” lattice ($M_{3}$) is the smallest non-distributive
+The “Diamond” lattice ($`M_3`$) is the smallest non-distributive
 lattice. Let’s create it manually to verify our checks.
 
 ``` r
+
 # Context for M3 (The Diamond)
 # 3 objects, 3 attributes. Objects have 2 attributes each.
 I_m3 <- matrix(c(
@@ -88,11 +91,10 @@ and attributes in a binary formal context. They are particularly useful
 for identifying irreducible elements and understanding the lattice
 structure.
 
-For a pair $(g,m) \notin I$: - $\left. g\swarrow m \right.$ iff
-$g\prime$ is maximal among intents not containing $m$. -
-$\left. g\nearrow m \right.$ iff $m\prime$ is maximal among extents not
-containing $g$. - $\left. g\updownarrow m \right.$ iff both
-$\left. g\swarrow m \right.$ and $\left. g\nearrow m \right.$.
+For a pair $`(g, m) \notin I`$: - $`g \swarrow m`$ iff $`g'`$ is maximal
+among intents not containing $`m`$. - $`g \nearrow m`$ iff $`m'`$ is
+maximal among extents not containing $`g`$. - $`g \updownarrow m`$ iff
+both $`g \swarrow m`$ and $`g \nearrow m`$.
 
 In `fcaR`, you can compute these relations using the
 `calculate_arrow_relations()` method. Once computed, the
@@ -100,6 +102,7 @@ In `fcaR`, you can compute these relations using the
 will display the arrows:
 
 ``` r
+
 # Use the planets dataset
 fc <- FormalContext$new(planets)
 fc$calculate_arrow_relations()

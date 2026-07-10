@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Using FormalContexts and ConceptLattices • fcaR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Using FormalContexts and ConceptLattices">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -806,15 +806,15 @@ in binary or fuzzy concepts and implications:</p>
 </h3>
 <p>In addition to concepts, one can compute <em>protoconcepts</em>. A
 protoconcept is a pair
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(A, B)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(A, B)</annotation></semantics></math>
 of object and attribute sets such that
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>′</mi><mo>=</mo><mi>B</mi><mi>″</mi></mrow><annotation encoding="application/x-tex">A' = B''</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>′</mo></msup><mo>=</mo><msup><mi>B</mi><mo>″</mo></msup></mrow><annotation encoding="application/x-tex">A' = B''</annotation></semantics></math>.
 This definition generalizes concepts (where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>′</mi><mo>=</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A' = B</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>′</mo></msup><mo>=</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A' = B</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>′</mi><mo>=</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">B' = A</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>B</mi><mo>′</mo></msup><mo>=</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">B' = A</annotation></semantics></math>,
 which implies
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>′</mi><mo>=</mo><mi>B</mi><mi>″</mi></mrow><annotation encoding="application/x-tex">A' = B''</annotation></semantics></math>)
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>′</mo></msup><mo>=</mo><msup><mi>B</mi><mo>″</mo></msup></mrow><annotation encoding="application/x-tex">A' = B''</annotation></semantics></math>)
 and is useful in certain applications.</p>
 <p>To find all protoconcepts, use <code>find_protoconcepts()</code>:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -1077,7 +1077,7 @@ mentioned above.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

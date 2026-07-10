@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Fuzzy formal concept analysis • fcaR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fuzzy formal concept analysis">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,7 @@ often graded. For instance, a user might like a movie to a certain
 degree, or a patient might show a symptom with a specific intensity.</p>
 <p><strong>Fuzzy FCA</strong> generalizes the theory to handle degrees
 of membership in the interval
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[0, 1]</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[0, 1]</annotation></semantics></math>.
 <code>fcaR</code> natively implements this framework, allowing the user
 to select the underlying fuzzy logic that governs the reasoning
 process.</p>
@@ -143,7 +143,7 @@ logic is defined by an adjoint pair of operators:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>T-norm
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⊗</mo><annotation encoding="application/x-tex">\otimes</annotation></semantics></math>):</strong>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⊗</mi><annotation encoding="application/x-tex">\otimes</annotation></semantics></math>):</strong>
 Models the conjunction (AND).</li>
 <li>
 <strong>Residuum
@@ -153,7 +153,7 @@ Models the implication (IF…THEN).</li>
 <p>While the <strong>intersection</strong> of fuzzy sets (used for the
 infimum in the lattice) is typically modeled by the minimum, the
 derivation operators that form the concepts rely on the residuum:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>↑</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><munder><mo>⋀</mo><mrow><mi>g</mi><mo>∈</mo><mi>G</mi></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>g</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>→</mo><mi>I</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>g</mi><mo>,</mo><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A^\uparrow(m) = \bigwedge_{g \in G} (A(g) \to I(g, m))</annotation></semantics></math></p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>↑</mo></msup><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><munder><mo>⋀</mo><mrow><mi>g</mi><mo>∈</mo><mi>G</mi></mrow></munder><mo stretchy="false" form="prefix">(</mo><mi>A</mi><mo stretchy="false" form="prefix">(</mo><mi>g</mi><mo stretchy="false" form="postfix">)</mo><mo>→</mo><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>g</mi><mo>,</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">A^\uparrow(m) = \bigwedge_{g \in G} (A(g) \to I(g, m))</annotation></semantics></math></p>
 <p><code>fcaR</code> implements the following logics:</p>
 <div class="section level3">
 <h3 id="available-logics">Available logics<a class="anchor" aria-label="anchor" href="#available-logics"></a>
@@ -164,11 +164,11 @@ derivation operators that form the concepts rely on the residuum:
 <ul>
 <li>
 <strong>T-norm:</strong>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>⊗</mo><mi>y</mi><mo>=</mo><mo>max</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">x \otimes y = \max(0, x + y - 1)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>⊗</mo><mi>y</mi><mo>=</mo><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x \otimes y = \max(0, x + y - 1)</annotation></semantics></math>
 </li>
 <li>
 <strong>Residuum:</strong>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>→</mo><mi>y</mi><mo>=</mo><mo>min</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">x \to y = \min(1, 1 - x + y)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>→</mo><mi>y</mi><mo>=</mo><mrow><mi mathvariant="normal">min</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x \to y = \min(1, 1 - x + y)</annotation></semantics></math>
 </li>
 <li>
 <em>Use case:</em> Ideal for capturing precise graded dependencies
@@ -181,7 +181,7 @@ and avoiding drastic information loss.</li>
 <ul>
 <li>
 <strong>T-norm:</strong>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>⊗</mo><mi>y</mi><mo>=</mo><mo>min</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">x \otimes y = \min(x, y)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>⊗</mo><mi>y</mi><mo>=</mo><mrow><mi mathvariant="normal">min</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">x \otimes y = \min(x, y)</annotation></semantics></math>
 </li>
 <li>
 <strong>Residuum:</strong>
@@ -230,9 +230,9 @@ discovered.</p>
 </h2>
 <p>We compute the concept lattice using the selected logic. A fuzzy
 concept is a pair
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(A, B)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(A, B)</annotation></semantics></math>
 of fuzzy sets (vectors of values in
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[0,1]</annotation></semantics></math>)
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">[0,1]</annotation></semantics></math>)
 closed under the derivation operators.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc</span><span class="op">$</span><span class="fu">find_concepts</span><span class="op">(</span><span class="op">)</span></span>
@@ -430,15 +430,15 @@ of the system.</p>
 <thead><tr class="header">
 <th align="left">Logic (“Name”)</th>
 <th align="left">T-Norm
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⊗</mo><annotation encoding="application/x-tex">\otimes</annotation></semantics></math>)</th>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⊗</mi><annotation encoding="application/x-tex">\otimes</annotation></semantics></math>)</th>
 <th align="left">Implication
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>→</mo><annotation encoding="application/x-tex">\to</annotation></semantics></math>)</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left"><strong>Lukasiewicz</strong></td>
-<td align="left"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>max</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\max(0, x+y-1)</annotation></semantics></math></td>
-<td align="left"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>min</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\min(1, 1-x+y)</annotation></semantics></math></td>
+<td align="left"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\max(0, x+y-1)</annotation></semantics></math></td>
+<td align="left"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">min</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\min(1, 1-x+y)</annotation></semantics></math></td>
 </tr>
 <tr class="even">
 <td align="left"><strong>Product</strong></td>
@@ -453,7 +453,7 @@ else
 </tr>
 <tr class="odd">
 <td align="left"><strong>Gödel</strong></td>
-<td align="left"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>min</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\min(x, y)</annotation></semantics></math></td>
+<td align="left"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">min</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\min(x, y)</annotation></semantics></math></td>
 <td align="left">
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
 if
@@ -479,7 +479,7 @@ the results of <code>find_concepts()</code> and
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

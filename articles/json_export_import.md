@@ -15,6 +15,7 @@ First, ensure you have the `jsonlite` package installed, as it is
 required for these features.
 
 ``` r
+
 library(fcaR)
 # install.packages("jsonlite")
 ```
@@ -31,6 +32,7 @@ datasets efficiently.
 Let’s load a sample dataset and create a `FormalContext`.
 
 ``` r
+
 data("planets")
 fc <- FormalContext$new(planets)
 print(fc)
@@ -50,6 +52,7 @@ print(fc)
 To export the context to a JSON string:
 
 ``` r
+
 json_str <- fc$to_json()
 cat(substr(json_str, 1, 200), "...") # Print first 200 chars
 #> {"type":"FormalContext","objects":["Mercury","Venus","Earth","Mars","Jupiter","Saturn","Uranus","Neptune","Pluto"],"attributes":["small","medium","large","near","far","moon","no_moon"],"I":{"indices": ...
@@ -58,6 +61,7 @@ cat(substr(json_str, 1, 200), "...") # Print first 200 chars
 You can also save it directly to a file:
 
 ``` r
+
 fc$to_json(file = "context.json")
 ```
 
@@ -68,6 +72,7 @@ To verify the export, we can import the JSON string back into a new
 [`context_from_json()`](https://neuroimaginador.github.io/fcaR/reference/context_from_json.md):
 
 ``` r
+
 fc2 <- context_from_json(json_str)
 print(fc2)
 #> FormalContext with 9 objects and 7 attributes.
@@ -86,6 +91,7 @@ print(fc2)
 We can check that the original and reconstructed contexts are identical:
 
 ``` r
+
 all(fc$objects == fc2$objects)
 #> [1] TRUE
 all(fc$attributes == fc2$attributes)
@@ -101,6 +107,7 @@ computed concepts or implications, they will be nested within the
 exported JSON.
 
 ``` r
+
 fc$find_concepts()
 fc$find_implications()
 
@@ -123,6 +130,7 @@ fc_full$concepts$size()
 You can also export a `ConceptLattice` independently.
 
 ``` r
+
 cl <- fc$concepts
 json_lattice <- cl$to_json()
 ```
@@ -131,6 +139,7 @@ And import it using
 [`lattice_from_json()`](https://neuroimaginador.github.io/fcaR/reference/lattice_from_json.md):
 
 ``` r
+
 cl2 <- lattice_from_json(json_lattice)
 print(cl2)
 #> A set of 12 concepts:
@@ -157,6 +166,7 @@ the lattice structure.
 Similarly, sets of implications can be exported and imported.
 
 ``` r
+
 imps <- fc$implications
 json_imps <- imps$to_json()
 ```
@@ -165,6 +175,7 @@ Import using
 [`implications_from_json()`](https://neuroimaginador.github.io/fcaR/reference/implications_from_json.md):
 
 ``` r
+
 imps2 <- implications_from_json(json_imps)
 print(imps2)
 #> Implication set with 10 implications.
@@ -185,6 +196,7 @@ print(imps2)
 Association rules (including causal rules) are also supported.
 
 ``` r
+
 # Assuming we have a RuleSet, e.g. from arules or created manually
 # Here we'll just demonstrate the syntax
 rs <- RuleSet$new(attributes = fc$attributes)
@@ -199,9 +211,9 @@ The new JSON functionality ensures that you can easily move your FCA
 models out of R for visualization, storage, or integration with web
 services.
 
-| Class            | Export Method | Import Function                                                                                          |
-|------------------|---------------|----------------------------------------------------------------------------------------------------------|
-| `FormalContext`  | `$to_json()`  | [`context_from_json()`](https://neuroimaginador.github.io/fcaR/reference/context_from_json.md)           |
-| `ConceptLattice` | `$to_json()`  | [`lattice_from_json()`](https://neuroimaginador.github.io/fcaR/reference/lattice_from_json.md)           |
-| `ImplicationSet` | `$to_json()`  | [`implications_from_json()`](https://neuroimaginador.github.io/fcaR/reference/implications_from_json.md) |
-| `RuleSet`        | `$to_json()`  | [`rules_from_json()`](https://neuroimaginador.github.io/fcaR/reference/rules_from_json.md)               |
+| Class | Export Method | Import Function |
+|----|----|----|
+| `FormalContext` | `$to_json()` | [`context_from_json()`](https://neuroimaginador.github.io/fcaR/reference/context_from_json.md) |
+| `ConceptLattice` | `$to_json()` | [`lattice_from_json()`](https://neuroimaginador.github.io/fcaR/reference/lattice_from_json.md) |
+| `ImplicationSet` | `$to_json()` | [`implications_from_json()`](https://neuroimaginador.github.io/fcaR/reference/implications_from_json.md) |
+| `RuleSet` | `$to_json()` | [`rules_from_json()`](https://neuroimaginador.github.io/fcaR/reference/rules_from_json.md) |

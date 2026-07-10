@@ -1,6 +1,7 @@
 # Fuzzy formal concept analysis
 
 ``` r
+
 library(fcaR)
 ```
 
@@ -12,9 +13,9 @@ often graded. For instance, a user might like a movie to a certain
 degree, or a patient might show a symptom with a specific intensity.
 
 **Fuzzy FCA** generalizes the theory to handle degrees of membership in
-the interval $\lbrack 0,1\rbrack$. `fcaR` natively implements this
-framework, allowing the user to select the underlying fuzzy logic that
-governs the reasoning process.
+the interval $`[0, 1]`$. `fcaR` natively implements this framework,
+allowing the user to select the underlying fuzzy logic that governs the
+reasoning process.
 
 ## 1. Creating a fuzzy formal context
 
@@ -25,6 +26,7 @@ Let us consider a dataset representing user preferences for different
 movie genres:
 
 ``` r
+
 # Matrix with membership degrees
 I <- matrix(c(
   0.9, 0.1, 0.8, 0.0,
@@ -52,13 +54,15 @@ In Fuzzy FCA, the structure of the lattice and the validity of
 implications depend on the choice of the **fuzzy logic**. A logic is
 defined by an adjoint pair of operators:
 
-1.  **T-norm ($\otimes$):** Models the conjunction (AND).
-2.  **Residuum ($\rightarrow$):** Models the implication (IF…THEN).
+1.  **T-norm ($`\otimes`$):** Models the conjunction (AND).
+2.  **Residuum ($`\to`$):** Models the implication (IF…THEN).
 
 While the **intersection** of fuzzy sets (used for the infimum in the
 lattice) is typically modeled by the minimum, the derivation operators
 that form the concepts rely on the residuum:
-$$A^{\uparrow}(m) = \bigwedge\limits_{g \in G}\left( A(g)\rightarrow I(g,m) \right)$$
+``` math
+A^\uparrow(m) = \bigwedge_{g \in G} (A(g) \to I(g, m))
+```
 
 `fcaR` implements the following logics:
 
@@ -66,28 +70,24 @@ $$A^{\uparrow}(m) = \bigwedge\limits_{g \in G}\left( A(g)\rightarrow I(g,m) \rig
 
 1.  **Lukasiewicz**:
 
-    - **T-norm:** $x \otimes y = \max(0,x + y - 1)$
-    - **Residuum:** $\left. x\rightarrow y = \min(1,1 - x + y) \right.$
+    - **T-norm:** $`x \otimes y = \max(0, x + y - 1)`$
+    - **Residuum:** $`x \to y = \min(1, 1 - x + y)`$
     - *Use case:* Ideal for capturing precise graded dependencies and
       avoiding drastic information loss.
 
 2.  **Gödel** (also referred to as **Zadeh** in `fcaR`):
 
-    - **T-norm:** $x \otimes y = \min(x,y)$
-    - **Residuum:** $\left. x\rightarrow y = \begin{cases}
-      1 & {{\text{if}\mspace{6mu}}x \leq y} \\
-      y & {{\text{if}\mspace{6mu}}x > y}
-      \end{cases} \right.$
+    - **T-norm:** $`x \otimes y = \min(x, y)`$
+    - **Residuum:**
+      $`x \to y = \begin{cases} 1 & \text{if } x \le y \\ y & \text{if } x > y \end{cases}`$
     - *Use case:* Useful when only the order of values matters, not
       their exact magnitude.
 
 3.  **Product** (Goguen):
 
-    - **T-norm:** $x \otimes y = x \cdot y$
-    - **Residuum:** $\left. x\rightarrow y = \begin{cases}
-      1 & {{\text{if}\mspace{6mu}}x \leq y} \\
-      {y/x} & {{\text{if}\mspace{6mu}}x > y}
-      \end{cases} \right.$
+    - **T-norm:** $`x \otimes y = x \cdot y`$
+    - **Residuum:**
+      $`x \to y = \begin{cases} 1 & \text{if } x \le y \\ y/x & \text{if } x > y \end{cases}`$
 
 By default, `fcaR` uses **Zadeh** (Gödel) logic.
 
@@ -97,22 +97,24 @@ For rigorous analysis where magnitude differences matter,
 **Lukasiewicz** is often the standard recommendation.
 
 ``` r
+
 # Switch to Lukasiewicz logic
 fc$use_logic("Lukasiewicz")
 fc$get_logic()
 #> [1] "Lukasiewicz"
 ```
 
-Changing the logic changes the definition of $\rightarrow$, and
-therefore, the concepts and implications that will be discovered.
+Changing the logic changes the definition of $`\to`$, and therefore, the
+concepts and implications that will be discovered.
 
 ## 3. Mining fuzzy concepts
 
 We compute the concept lattice using the selected logic. A fuzzy concept
-is a pair $(A,B)$ of fuzzy sets (vectors of values in
-$\lbrack 0,1\rbrack$) closed under the derivation operators.
+is a pair $`(A, B)`$ of fuzzy sets (vectors of values in $`[0,1]`$)
+closed under the derivation operators.
 
 ``` r
+
 fc$find_concepts()
 fc$concepts
 #> A set of 44 concepts:
@@ -166,6 +168,7 @@ We can inspect the membership degrees of a specific concept. Note that
 an object can now belong “partially” to a concept.
 
 ``` r
+
 # Select a concept (e.g., the 4th one)
 C <- fc$concepts$sub(4)
 
@@ -185,6 +188,7 @@ hierarchical structure is preserved based on the inclusion of fuzzy
 sets.
 
 ``` r
+
 fc$concepts$plot(mode = "reduced", method = "sugiyama")
 ```
 
@@ -192,14 +196,15 @@ fc$concepts$plot(mode = "reduced", method = "sugiyama")
 
 ## 5. Fuzzy implications
 
-Fuzzy implications take the form $\left. A\Rightarrow B \right.$, where
-$A$ and $B$ are fuzzy sets of attributes. The validity of these rules
-depends on the selected logic.
+Fuzzy implications take the form $`A \Rightarrow B`$, where $`A`$ and
+$`B`$ are fuzzy sets of attributes. The validity of these rules depends
+on the selected logic.
 
 `fcaR` uses advanced algorithms (such as GreConD) adapted to handle
 degrees of confidence.
 
 ``` r
+
 fc$find_implications()
 #> LinCbO is only available for binary contexts. Falling back to NextClosure.FALSE
 fc$implications
@@ -244,15 +249,16 @@ In the fuzzy setting:
 
 - **Support:** The sum (or average) of degrees to which objects satisfy
   the antecedent.
-- **Confidence:** The degree of truth of the implication
-  $\left. A\rightarrow B \right.$ accumulated over all objects.
+- **Confidence:** The degree of truth of the implication $`A \to B`$
+  accumulated over all objects.
 
 With Lukasiewicz logic, confidence measures “how much is lost” when
-passing from $A$ to $B$. A confidence of 1 means that for every object,
-the degree of $A$ is less than or equal to the degree of $B$ (plus the
-residuum adjustment).
+passing from $`A`$ to $`B`$. A confidence of 1 means that for every
+object, the degree of $`A`$ is less than or equal to the degree of $`B`$
+(plus the residuum adjustment).
 
 ``` r
+
 # Filter strong rules
 fc$implications[fc$implications$support() > 0.2]
 #> Implication set with 17 implications.
@@ -282,6 +288,7 @@ of attributes (e.g., a new user profile), we can compute which other
 attributes should be present according to the logic of the system.
 
 ``` r
+
 # Define a new user profile
 S <- Set$new(attributes = fc$attributes)
 # Likes Action very much, Drama somewhat
@@ -298,11 +305,11 @@ print(closure_S)
 
 ## Summary of formulas
 
-| Logic (“Name”)  | T-Norm ($\otimes$)  | Implication ($\rightarrow$)   |
-|:----------------|:--------------------|:------------------------------|
-| **Lukasiewicz** | $\max(0,x + y - 1)$ | $\min(1,1 - x + y)$           |
-| **Product**     | $x \cdot y$         | $1$ if $x \leq y$, else $y/x$ |
-| **Gödel**       | $\min(x,y)$         | $1$ if $x \leq y$, else $y$   |
+| Logic (“Name”)  | T-Norm ($`\otimes`$) | Implication ($`\to`$)              |
+|:----------------|:---------------------|:-----------------------------------|
+| **Lukasiewicz** | $`\max(0, x+y-1)`$   | $`\min(1, 1-x+y)`$                 |
+| **Product**     | $`x \cdot y`$        | $`1`$ if $`x \le y`$, else $`y/x`$ |
+| **Gödel**       | $`\min(x, y)`$       | $`1`$ if $`x \le y`$, else $`y`$   |
 
 Selecting the appropriate logic is vital for correctly interpreting the
 results of `find_concepts()` and `closure()`.

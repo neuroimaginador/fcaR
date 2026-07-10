@@ -3,14 +3,13 @@
 ## Introduction
 
 In Formal Concept Analysis (FCA), a **bond** between two formal contexts
-$K_{1} = \left( G_{1},M_{1},I_{1} \right)$ and
-$K_{2} = \left( G_{2},M_{2},I_{2} \right)$ is a relation
-$R \subseteq G_{1} \times M_{2}$ such that:
+$`K_1 = (G_1, M_1, I_1)`$ and $`K_2 = (G_2, M_2, I_2)`$ is a relation
+$`R \subseteq G_1 \times M_2`$ such that:
 
-- For every object $g \in G_{1}$, the set of attributes
-  $\{ m \in M_{2} \mid (g,m) \in R\}$ is an intent of $K_{2}$.
-- For every attribute $m \in M_{2}$, the set of objects
-  $\{ g \in G_{1} \mid (g,m) \in R\}$ is an extent of $K_{1}$.
+- For every object $`g \in G_1`$, the set of attributes
+  $`\{m \in M_2 \mid (g, m) \in R\}`$ is an intent of $`K_2`$.
+- For every attribute $`m \in M_2`$, the set of objects
+  $`\{g \in G_1 \mid (g, m) \in R\}`$ is an extent of $`K_1`$.
 
 Bonds represent “compatible” relations between the objects of one
 context and the attributes of another. Mathematically, the set of all
@@ -21,6 +20,7 @@ In `fcaR`, bonds are treated as first-class citizens with a dedicated
 `BondLattice` class that extends the standard `ConceptLattice`.
 
 ``` r
+
 library(fcaR)
 ```
 
@@ -31,9 +31,10 @@ The main function to compute bonds is
 It takes two `FormalContext` objects as input.
 
 To keep this example fast, we will generate two small random formal
-contexts ($4 \times 4$).
+contexts ($`4 \times 4`$).
 
 ``` r
+
 set.seed(42)
 # Context 1
 mat1 <- matrix(sample(0:1, 16, replace = TRUE), nrow = 4, ncol = 4)
@@ -65,6 +66,7 @@ print(fc2)
 To compute the bond lattice:
 
 ``` r
+
 bl <- bonds(fc1, fc2, method = "conexp")
 bl
 #> Bond Lattice between two formal contexts:
@@ -87,6 +89,7 @@ function provides two optimized C++ methods:
     in specific structural configurations.
 
 ``` r
+
 # Using the backtracking method
 bl_mcis <- bonds(fc1, fc2, method = "mcis")
 bl_mcis$size()
@@ -105,6 +108,7 @@ is an object of class `BondLattice`. Since this class inherits from
 You can plot the Hasse diagram of the bond lattice:
 
 ``` r
+
 bl$plot()
 ```
 
@@ -116,6 +120,7 @@ Each node in the bond lattice represents a specific bond (a relation).
 You can extract these relations as individual `FormalContext` objects:
 
 ``` r
+
 # Get all bonds as a list of FormalContexts
 all_bonds <- bl$get_bonds()
 length(all_bonds)
@@ -139,6 +144,7 @@ lattice). It represents the most fundamental consensus between the two
 contexts.
 
 ``` r
+
 core <- bl$get_core()
 core$plot()
 ```
@@ -152,6 +158,7 @@ check if it satisfies the mathematical definition of a bond between two
 contexts:
 
 ``` r
+
 # Take an existing bond and check it
 mat_bond <- methods::as(all_bonds[[1]]$incidence(), "matrix")
 is_bond(fc1, fc2, mat_bond)
@@ -169,31 +176,39 @@ The `BondLattice` class provides a `similarity()` method to compute
 various metrics that describe the relationship between the two formal
 contexts.
 
-The following metrics are available. Let $L_{12}$ be the bond lattice
-between $K_{1}$ and $K_{2}$, and $L_{11}$ and $L_{22}$ be the bond
-lattices of $K_{1}$ and $K_{2}$ with themselves, respectively. We denote
-the size (number of concepts) of a lattice $L$ as $|L|$.
+The following metrics are available. Let $`L_{12}`$ be the bond lattice
+between $`K_1`$ and $`K_2`$, and $`L_{11}`$ and $`L_{22}`$ be the bond
+lattices of $`K_1`$ and $`K_2`$ with themselves, respectively. We denote
+the size (number of concepts) of a lattice $`L`$ as $`|L|`$.
 
 - `log-bond`: Measures how much the two contexts share a common logical
   structure. It is calculated as the normalized log-ratio of bonds:
-  $$\text{Log-Bond} = \frac{\log\left( \left| L_{12} \right| \right)}{\sqrt{\log\left( \left| L_{11} \right| \right) \cdot \log\left( \left| L_{22} \right| \right)}}$$
+  ``` math
+   \text{Log-Bond} = \frac{\log(|L_{12}|)}{\sqrt{\log(|L_{11}|) \cdot \log(|L_{22}|)}} 
+  ```
 - `complexity`: Ratio of irreducible bonds to total bonds. Lower values
-  indicate more emergent structural properties. Let
-  $JI\left( L_{12} \right)$ be the set of join-irreducible elements of
-  the bond lattice:
-  $$\text{Complexity} = \frac{\left| JI\left( L_{12} \right) \right|}{\left| L_{12} \right|}$$
+  indicate more emergent structural properties. Let $`JI(L_{12})`$ be
+  the set of join-irreducible elements of the bond lattice:
+  ``` math
+   \text{Complexity} = \frac{|JI(L_{12})|}{|L_{12}|} 
+  ```
 - `core-agreement`: Ratio of filled cells in the Core bond versus the
-  Top (largest) bond. If $B_{core}$ is the Core bond and $B_{top}$ is
-  the Top bond, and $|B|$ represents the number of elements in the
+  Top (largest) bond. If $`B_{core}`$ is the Core bond and $`B_{top}`$
+  is the Top bond, and $`|B|`$ represents the number of elements in the
   relation (filled cells):
-  $$\text{Core-Agreement} = \frac{\left| B_{core} \right|}{\left| B_{top} \right|}$$
+  ``` math
+   \text{Core-Agreement} = \frac{|B_{core}|}{|B_{top}|} 
+  ```
 - `entropy`: Based on the log-size of the lattices. It measures
   interaction entropy as:
-  $$\text{Entropy} = \frac{\log\left( \left| L_{12} \right| \right)}{\log\left( \left| L_{11} \right| \right) + \log\left( \left| L_{22} \right| \right)}$$
+  ``` math
+   \text{Entropy} = \frac{\log(|L_{12}|)}{\log(|L_{11}|) + \log(|L_{22}|)} 
+  ```
 
 The `similarity()` method returns a named vector of these metrics.
 
 ``` r
+
 # 1. Logical Affinity (Log-Bond)
 # Measures how much the two contexts share a common logical structure.
 # 1.0 means perfect affinity.
@@ -228,6 +243,7 @@ between contexts using measures like **Width** and **Dimension**.
   intersection is the bond lattice.
 
 ``` r
+
 # Dilworth's Width
 bl$similarity("width")
 #> [1] 4
@@ -241,11 +257,16 @@ These measures can also be expressed as indices normalized by the
 lattice size:
 
 - **Width Index**:
-  $$\text{Width-Index} = \frac{\text{Width}\left( L_{12} \right)}{\left| L_{12} \right|}$$
+  ``` math
+   \text{Width-Index} = \frac{\text{Width}(L_{12})}{|L_{12}|} 
+  ```
 - **Dimension Index**:
-  $$\text{Dimension-Index} = \frac{\text{Dimension}\left( L_{12} \right)}{\log_{2}\left( \left| L_{12} \right| \right)}$$
+  ``` math
+   \text{Dimension-Index} = \frac{\text{Dimension}(L_{12})}{\log_2(|L_{12}|)} 
+  ```
 
 ``` r
+
 bl$similarity("width-index")
 #> [1] 0.25
 bl$similarity("dimension-index")

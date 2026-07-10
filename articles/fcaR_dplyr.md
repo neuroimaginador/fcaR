@@ -18,6 +18,7 @@ This integration provides S3 methods for:
 First, load the necessary packages and the example dataset `planets`.
 
 ``` r
+
 library(fcaR)
 library(dplyr)
 
@@ -42,6 +43,7 @@ particularly powerful for **conceptual scaling** or creating
 higher-level abstractions.
 
 ``` r
+
 # Let's clean up the context
 fc_clean <- fc %>% 
   rename(
@@ -71,6 +73,7 @@ We can filter the *objects* (rows) and select *attributes* (columns) to
 focus our analysis on a specific subset of the domain.
 
 ``` r
+
 # Focus only on 'extreme' sized planets and keep specific attributes
 fc_focused <- fc_clean %>%
   filter(extreme_size == 1) %>% 
@@ -94,6 +97,7 @@ Once the context is clean, we extract the implications (association
 rules).
 
 ``` r
+
 # We use the original context for more results
 fc$find_implications()
 rules <- fc$implications
@@ -109,6 +113,7 @@ quality measures: `support`, `lhs_size` (number of attributes in the
 premise), `rhs_size`, and `size`.
 
 ``` r
+
 # Get strong rules (support > 0.2) that are not trivial (size > 2)
 strong_rules <- rules %>% 
   filter(support > 0.2, size > 2) %>% 
@@ -134,6 +139,7 @@ available only inside
 - `lhs_any("A", "B")`: The LHS must contain either “A” or “B”.
 
 ``` r
+
 # Find rules that imply 'moon'
 moon_rules <- rules %>% 
   filter(rhs("moon"))
@@ -156,6 +162,7 @@ single pipeline. This allows for very specific queries like:
 > not concern distance.”
 
 ``` r
+
 specific_rules <- rules %>% 
   filter(
     lhs("large"),     # Must be about large planets

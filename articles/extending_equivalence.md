@@ -9,12 +9,14 @@ provided in the `fcaR` package: define new operations on an
 First, we load the `fcaR` package by:
 
 ``` r
+
 library(fcaR)
 ```
 
 Let us use the `planets` dataset included in the package:
 
 ``` r
+
 fc <- FormalContext$new(planets)
 fc$find_implications()
 ```
@@ -31,6 +33,7 @@ This registry is called `equivalencesRegistry` and one can inspect its
 contents by:
 
 ``` r
+
 equivalencesRegistry$get_entry_names()
 #> [1] "Composition"          "Generalization"       "Reduction"           
 #> [4] "Simplification"       "Right Simplification" "Reorder"
@@ -41,6 +44,7 @@ default, and are used to index those methods. Every method is
 accompanied by a description, so we can see its definition:
 
 ``` r
+
 equivalencesRegistry$get_entry("Composition")
 #>      method Composition
 #>         fun <<function>>
@@ -50,6 +54,7 @@ equivalencesRegistry$get_entry("Composition")
 We can even use abbreviated names to refer to the method:
 
 ``` r
+
 equivalencesRegistry$get_entry("comp")
 #>      method Composition
 #>         fun <<function>>
@@ -63,6 +68,7 @@ use any of these methods by using the `apply_rules()` method in the
 `ImplicationSet`:
 
 ``` r
+
 fc$implications$apply_rules(c("comp", "simp"))
 ```
 
@@ -74,6 +80,7 @@ equivalence operators and include them in the registry.
 In order to add a new method, we use:
 
 ``` r
+
 equivalencesRegistry$set_entry(
   method = "Method name",
   fun = method_function,
@@ -84,6 +91,7 @@ equivalencesRegistry$set_entry(
 where `method_function()` must be a function with the following scheme:
 
 ``` r
+
 method_function <- function(LHS, RHS, attributes) {
   # LHS and RHS are the sparse matrices of the left-hand and
   # right-hand sides of the implications
@@ -113,6 +121,7 @@ Evidently, this operation provides an equivalent `ImplicationSet`.
 In this case, we begin by defining the method function:
 
 ``` r
+
 random_reorder <- function(LHS, RHS, attributes) {
   # Remember: attributes are in rows, implications are
   # in columns.
@@ -130,6 +139,7 @@ random_reorder <- function(LHS, RHS, attributes) {
 Once we have defined the function, we add the method to the registry:
 
 ``` r
+
 equivalencesRegistry$set_entry(
   method = "Randomize",
   fun = random_reorder,
@@ -141,6 +151,7 @@ If we inspect the registry, we obtain the list of the methods, including
 the one we have just inserted:
 
 ``` r
+
 equivalencesRegistry$get_entry_names()
 #> [1] "Composition"          "Generalization"       "Reduction"           
 #> [4] "Simplification"       "Right Simplification" "Reorder"             
@@ -150,6 +161,7 @@ equivalencesRegistry$get_entry_names()
 We can apply the new method:
 
 ``` r
+
 # Original implications
 fc$implications
 #> Implication set with 10 implications.
@@ -166,11 +178,13 @@ fc$implications
 ```
 
 ``` r
+
 # Apply the randomize method
 fc$implications$apply_rules("randomize")
 ```
 
 ``` r
+
 # Reordered implications
 fc$implications
 #> Implication set with 10 implications.

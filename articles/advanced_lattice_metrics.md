@@ -1,6 +1,7 @@
 # Advanced lattice metrics
 
 ``` r
+
 library(fcaR)
 ```
 
@@ -21,11 +22,14 @@ especially in fuzzy settings.
 Intensional stability is defined as the probability that the intent of a
 concept is preserved when a random subset of its extent is removed.
 
-$$\sigma(C) = \frac{\left| \{ A \subseteq \text{Ext}(C) \mid A\prime = \text{Int}(C)\} \right|}{2^{|\text{Ext}{(C)}|}}$$
+``` math
+ \sigma(C) = \frac{|\{ A \subseteq \text{Ext}(C) \mid A' = \text{Int}(C) \}|}{2^{|\text{Ext}(C)|}} 
+```
 
 Let’s compute it for the `planets` dataset:
 
 ``` r
+
 fc <- FormalContext$new(planets)
 fc$find_concepts()
 
@@ -39,13 +43,16 @@ patterns), while those near 0 are unstable (likely artifacts).
 
 ## Separation
 
-Separation measures how many objects are “unique” to a concept $C$,
-i.e., they are covered by $C$ but not by any of its direct subconcepts
+Separation measures how many objects are “unique” to a concept $`C`$,
+i.e., they are covered by $`C`$ but not by any of its direct subconcepts
 (descendants).
 
-$$\text{Sep}(C) = \left| \text{Ext}(C) \right| - \left| \bigcup\limits_{K \prec C}\text{Ext}(K) \right|$$
+``` math
+ \text{Sep}(C) = |\text{Ext}(C)| - |\bigcup_{K \prec C} \text{Ext}(K)| 
+```
 
 ``` r
+
 sep <- fc$concepts$separation()
 head(sep)
 #> [1] 1 0 2 2 2 0
@@ -58,11 +65,14 @@ set of new objects into the hierarchy.
 
 In Fuzzy FCA, concepts are “rectangles” of high values in the matrix,
 but not necessarily all 1s. Density measures the average value of the
-relation $I$ within the concept.
+relation $`I`$ within the concept.
 
-$$\rho(C) = \frac{\sum\limits_{g \in \text{Ext}{(C)},m \in \text{Int}{(C)}}I(g,m)}{\left| \text{Ext}(C) \right| \cdot \left| \text{Int}(C) \right|}$$
+``` math
+ \rho(C) = \frac{\sum_{g \in \text{Ext}(C), m \in \text{Int}(C)} I(g, m)}{|\text{Ext}(C)| \cdot |\text{Int}(C)|} 
+```
 
 ``` r
+
 # For binary data, density is always 1 (or 0 for empty concepts)
 # We need to pass the original matrix I
 dens <- fc$concepts$density(I = fc$incidence())
@@ -75,6 +85,7 @@ head(dens)
 We can combine these metrics to filter and analyze the lattice.
 
 ``` r
+
 df <- data.frame(
   Concept = 1:fc$concepts$size(),
   Support = fc$concepts$support(),

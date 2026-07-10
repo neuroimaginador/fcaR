@@ -701,8 +701,9 @@ quality metrics.
 
 ### Method `factorize()`
 
-Factorize the formal context using Boolean/Fuzzy Matrix Factorization
-algorithms.
+Factorize the formal context using Boolean Matrix Factorization (BMF)
+algorithms. Note: Fuzzy contexts are currently not supported and will
+result in an error.
 
 #### Usage
 
@@ -712,27 +713,35 @@ algorithms.
 
 - `method`:
 
-  (character) The algorithm to use. Currently supported: "GreConD",
-  "ASSO".
+  (character) The algorithm to use. Supported algorithms: "RSF",
+  "RSF-ES", "GreConD", "GreEss", "ASSO", "PaNDa+ MDL", "PaNDa+
+  ASSO-style", "PaNDa+ Weighted", "Hyper", "Hyper+".
 
 - `...`:
 
-  Additional arguments:
+  Additional arguments depending on the method:
 
-  - For `GreConD`: `w` (weight, default 1.0), `stop_threshold_ratio`
-    (error tolerance, default 0.0).
+  - `GreConD`, `PaNDa+ *`, `ASSO`: `k` (integer) maximum factors to
+    extract.
 
-  - For `ASSO`: `threshold` (confidence threshold, default 0.7), `w_pos`
-    (reward), `w_neg` (penalty).
+  - `ASSO`: `threshold` (default 0.6), `w_pos` (default 1.0), `w_neg`
+    (default 1.0).
+
+  - `PaNDa+ Weighted`: `rho` (default 1.0).
+
+  - `Hyper`, `Hyper+`: `min_support` (ratio, default 0.05).
+
+  - `Hyper+`: `beta` (default 0.1).
 
 #### Returns
 
 A list with two `FormalContext` objects:
 
-- `object_factor`: The context mapping Objects to Factors (Matrix A).
+- `object_factor`: The context mapping Objects to Factors (Matrix A /
+  U).
 
 - `factor_attribute`: The context mapping Factors to Attributes (Matrix
-  B).
+  B / V).
 
 ------------------------------------------------------------------------
 

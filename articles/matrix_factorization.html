@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Matrix Factorization • fcaR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Matrix Factorization">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,161 +95,186 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p><strong>Matrix Factorization</strong> (also known as Decomposition)
-is a technique used to reduce a complex dataset into a smaller set of
-fundamental “factors” or patterns. In the context of Formal Concept
-Analysis (FCA), this corresponds to finding a small subset of concepts
-that can explain or reconstruct the original data with minimal
-error.</p>
-<p>Given an object-attribute matrix
+<p><strong>Boolean Matrix Factorization (BMF)</strong> is a technique
+used to decompose a binary matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math>
-of size
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">n \times m</annotation></semantics></math>,
-we seek to factorize it into two matrices:</p>
+(representing a formal context) into two smaller binary matrices:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Object-Factor Matrix
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>)</strong>
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">n \times k</annotation></semantics></math>):
-Describes to what degree each object possesses each factor.</li>
+Describes to what degree each object belongs to or possesses each
+factor.</li>
 <li>
 <strong>Factor-Attribute Matrix
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>)</strong>
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>×</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">k \times m</annotation></semantics></math>):
-Describes to what degree each factor manifests as specific
+Describes to what degree each factor exhibits or manifests as specific
 attributes.</li>
 </ol>
-<p>The goal is that the composition of these matrices approximates the
-original data:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>≈</mo><mi>A</mi><mo>∘</mo><mi>B</mi></mrow><annotation encoding="application/x-tex"> I \approx A \circ B </annotation></semantics></math></p>
-<p><code>fcaR</code> implements two powerful algorithms for this
-purpose:</p>
-<ul>
-<li>
-<strong>GreConD+:</strong> A state-of-the-art algorithm for
-<strong>fuzzy</strong> and boolean data. It finds an exact or
-approximate decomposition based on Formal Concepts (Belohlavek,
-2010).</li>
-<li>
-<strong>ASSO:</strong> A heuristic algorithm for
-<strong>binary</strong> (boolean) data based on association rules. It is
-often faster but approximate (Miettinen et al., 2008).</li>
-</ul>
+<p>The goal is that the Boolean product of these matrices approximates
+the original data:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>≈</mo><mi>A</mi><mo>∘</mo><mi>B</mi></mrow><annotation encoding="application/x-tex"> I \approx A \circ B </annotation></semantics></math>
+where the composition
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>∘</mi><annotation encoding="application/x-tex">\circ</annotation></semantics></math>
+is the standard Boolean matrix product (i.e., using logical OR for
+addition and logical AND for multiplication). In the context of Formal
+Concept Analysis (FCA), this corresponds to finding a small subset of
+formal concepts (which act as factors) that can explain or reconstruct
+the original data.</p>
+<blockquote>
+<p>[!NOTE] Currently, <code>fcaR</code> only supports factorization for
+Boolean (binary) contexts. If you have a fuzzy context, you must
+binarize it first.</p>
+</blockquote>
+<p><code>fcaR</code> implements several state-of-the-art Boolean Matrix
+Factorization algorithms: * <strong>GreConD:</strong> A greedy algorithm
+that extracts factors sequentially based on formal concepts. *
+<strong>ASSO:</strong> An association rules-based heuristic algorithm. *
+<strong>RSF / RSF-ES:</strong> Algorithms that construct factors based
+on the reduction of support. * <strong>GreEss:</strong> An algorithm
+focusing on essential entries of the matrix. * <strong>PaNDa+:</strong>
+Algorithms (MDL, ASSO-style, and Weighted) that use the Minimum
+Description Length principle. * <strong>Hyper / Hyper+:</strong>
+Lattice-based factorization methods.</p>
+<hr>
 </div>
 <div class="section level2">
-<h2 id="fuzzy-matrix-factorization-grecond">1. Fuzzy Matrix Factorization (GreConD+)<a class="anchor" aria-label="anchor" href="#fuzzy-matrix-factorization-grecond"></a>
+<h2 id="boolean-matrix-factorization-with-grecond">1. Boolean Matrix Factorization with GreConD<a class="anchor" aria-label="anchor" href="#boolean-matrix-factorization-with-grecond"></a>
 </h2>
-<p>Let’s use a fuzzy dataset describing different dog breeds and their
+<p>Let’s use a binary dataset describing different dog breeds and their
 characteristics. We want to see if we can reduce these breeds to a few
 “archetypes” (factors).</p>
+<div class="section level3">
+<h3 id="dataset-creation">Dataset Creation<a class="anchor" aria-label="anchor" href="#dataset-creation"></a>
+</h3>
+<p>We define a binary matrix where each row represents a dog breed and
+each column represents a characteristic:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create a fuzzy matrix (6 breeds x 5 attributes)</span></span>
+<code class="sourceCode R"><span><span class="co"># Create a binary matrix (5 breeds x 5 attributes)</span></span>
 <span><span class="va">I</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.2</span>, <span class="co"># Labrador</span></span>
-<span>  <span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">0.1</span>, <span class="fl">0.0</span>, <span class="fl">0.1</span>, <span class="co"># Golden Ret.</span></span>
-<span>  <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="fl">0.8</span>, <span class="co"># German Shepherd</span></span>
-<span>  <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="co"># Rottweiler</span></span>
-<span>  <span class="fl">0.9</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="co"># Beagle</span></span>
-<span>  <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.9</span>  <span class="co"># Chihuahua</span></span>
-<span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">6</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="co"># Labrador: Friendly, Playful</span></span>
+<span>  <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="co"># Golden Retriever: Friendly, Playful</span></span>
+<span>  <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="co"># German Shepherd: Guard, Aggressive</span></span>
+<span>  <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="co"># Rottweiler: Guard, Aggressive</span></span>
+<span>  <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>  <span class="co"># Chihuahua: Friendly, Small</span></span>
+<span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">I</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Labrador"</span>, <span class="st">"Golden Ret."</span>, <span class="st">"G. Shepherd"</span>, <span class="st">"Rottweiler"</span>, <span class="st">"Beagle"</span>, <span class="st">"Chihuahua"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">I</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Labrador"</span>, <span class="st">"Golden Ret."</span>, <span class="st">"G. Shepherd"</span>, <span class="st">"Rottweiler"</span>, <span class="st">"Chihuahua"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">I</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Friendly"</span>, <span class="st">"Playful"</span>, <span class="st">"Guard"</span>, <span class="st">"Aggressive"</span>, <span class="st">"Small"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Initialize the FormalContext</span></span>
 <span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I</span><span class="op">)</span></span>
-<span><span class="co"># Use Lukasiewicz logic for fuzzy operations</span></span>
-<span><span class="va">fc</span><span class="op">$</span><span class="fu">use_logic</span><span class="op">(</span><span class="st">"Lukasiewicz"</span><span class="op">)</span> </span></code></pre></div>
-<p>We apply <strong>GreConD+</strong>. We can tune the weight
-<code>w</code> (penalty for overcovering) or the stopping threshold.</p>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; FormalContext with 5 objects and 5 attributes.</span></span>
+<span><span class="co">#&gt;              Friendly  Playful  Guard  Aggressive  Small  </span></span>
+<span><span class="co">#&gt;     Labrador     X        X                               </span></span>
+<span><span class="co">#&gt;  Golden Ret.     X        X                               </span></span>
+<span><span class="co">#&gt;  G. Shepherd                      X         X             </span></span>
+<span><span class="co">#&gt;   Rottweiler                      X         X             </span></span>
+<span><span class="co">#&gt;    Chihuahua     X                                   X</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="performing-factorization">Performing Factorization<a class="anchor" aria-label="anchor" href="#performing-factorization"></a>
+</h3>
+<p>We apply the <strong>GreConD</strong> algorithm to decompose the
+context:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Factorize using GreConD+</span></span>
-<span><span class="va">factors</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="fu">factorize</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"GreConD"</span>, w <span class="op">=</span> <span class="fl">1.0</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Factorize using GreConD</span></span>
+<span><span class="va">factors</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="fu">factorize</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"GreConD"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in Matrix.DeprecatedCoerce(cd1, cd2): 'as(&lt;dgCMatrix&gt;, "ngCMatrix")' is deprecated.</span></span>
+<span><span class="co">#&gt; Use 'as(., "nMatrix")' instead.</span></span>
+<span><span class="co">#&gt; See help("Deprecated") and help("Matrix-deprecated").</span></span>
 <span></span>
 <span><span class="co"># The result contains two new FormalContext objects</span></span>
 <span><span class="va">A</span> <span class="op">&lt;-</span> <span class="va">factors</span><span class="op">$</span><span class="va">object_factor</span></span>
-<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va">factors</span><span class="op">$</span><span class="va">factor_attribute</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Matrix A (Object-Factor):"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Matrix A (Object-Factor):"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;              F1  F2  F3  F4  F5  F6  F7</span></span>
-<span><span class="co">#&gt; Labrador    0.2 1.0 0.3 1.0 0.1 1.0 0.1</span></span>
-<span><span class="co">#&gt; Golden Ret. 0.3 0.9 0.2 0.9 0.1 1.0 0.2</span></span>
-<span><span class="co">#&gt; G. Shepherd 1.0 0.3 0.9 0.3 1.0 0.3 1.0</span></span>
-<span><span class="co">#&gt; Rottweiler  1.0 0.2 1.0 0.2 1.0 0.2 0.9</span></span>
-<span><span class="co">#&gt; Beagle      0.4 0.3 0.3 1.0 0.2 0.3 0.3</span></span>
-<span><span class="co">#&gt; Chihuahua   0.3 0.2 1.0 0.3 0.2 0.2 0.2</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Matrix B (Factor-Attribute):"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Matrix B (Factor-Attribute):"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    Friendly Playful Guard Aggressive Small</span></span>
-<span><span class="co">#&gt; F1      0.1     0.1   0.8        0.7   0.8</span></span>
-<span><span class="co">#&gt; F2      0.9     0.9   0.0        0.0   0.2</span></span>
-<span><span class="co">#&gt; F3      0.1     0.1   0.1        0.1   0.9</span></span>
-<span><span class="co">#&gt; F4      0.9     0.2   0.0        0.0   0.2</span></span>
-<span><span class="co">#&gt; F5      0.1     0.1   0.8        0.9   0.8</span></span>
-<span><span class="co">#&gt; F6      0.8     0.9   0.0        0.0   0.1</span></span>
-<span><span class="co">#&gt; F7      0.2     0.2   0.9        0.8   0.8</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="interpretation">Interpretation<a class="anchor" aria-label="anchor" href="#interpretation"></a>
-</h3>
-<ul>
-<li>
-<strong>Factor 1:</strong> Likely represents “Companion/Family Dogs”
-(High in Friendly, Playful).</li>
-<li>
-<strong>Factor 2:</strong> Likely represents “Guard Dogs” (High in
-Guard, Aggressive).</li>
-<li>
-<strong>Factor 3:</strong> Likely represents “Small Dogs” (High in
-Small).</li>
-</ul>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="va">factors</span><span class="op">$</span><span class="va">factor_attribute</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="verification">Verification<a class="anchor" aria-label="anchor" href="#verification"></a>
+<h3 id="interpreting-the-factors">Interpreting the Factors<a class="anchor" aria-label="anchor" href="#interpreting-the-factors"></a>
 </h3>
-<p>We can verify the quality of the decomposition by reconstructing the
-matrix using the Lukasiewicz product
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>∘</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A \circ B</annotation></semantics></math>).</p>
+<p>Let’s print the two factor matrices to see how they describe our
+data:</p>
+<div class="section level4">
+<h4 id="the-object-factor-matrix-a">The Object-Factor Matrix
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>)<a class="anchor" aria-label="anchor" href="#the-object-factor-matrix-a"></a>
+</h4>
+<p>This matrix connects the original dog breeds (objects) to the
+discovered latent factors:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Reconstruct I' = A o B</span></span>
-<span><span class="va">rec_I</span> <span class="op">&lt;-</span> <span class="va">A</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span> <span class="co"># Note: standard matrix product is just an approximation</span></span>
-<span><span class="co"># For exact fuzzy reconstruction we would loop using the T-norm, but let's check the error:</span></span>
-<span></span>
-<span><span class="co"># (In a real scenario, we use the logic's operators)</span></span>
-<span><span class="va">mae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">I</span> <span class="op">-</span> <span class="va">A</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">B</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># Simplified check</span></span>
-<span><span class="co"># For exact reconstruction, GreConD+ guarantees I &lt;= A o B if w is high.</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">A</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             F1 F2 F3</span></span>
+<span><span class="co">#&gt; Labrador     1  0  0</span></span>
+<span><span class="co">#&gt; Golden Ret.  1  0  0</span></span>
+<span><span class="co">#&gt; G. Shepherd  0  1  0</span></span>
+<span><span class="co">#&gt; Rottweiler   0  1  0</span></span>
+<span><span class="co">#&gt; Chihuahua    0  0  1</span></span></code></pre></div>
+<ul>
+<li>
+<strong>Factor 1 (<code>F1</code>)</strong> is present in
+<code>Labrador</code>, <code>Golden Ret.</code>, and
+<code>Chihuahua</code>.</li>
+<li>
+<strong>Factor 2 (<code>F2</code>)</strong> is present in
+<code>G. Shepherd</code> and <code>Rottweiler</code>.</li>
+<li>
+<strong>Factor 3 (<code>F3</code>)</strong> is present only in
+<code>Chihuahua</code>.</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="the-factor-attribute-matrix-b">The Factor-Attribute Matrix
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>)<a class="anchor" aria-label="anchor" href="#the-factor-attribute-matrix-b"></a>
+</h4>
+<p>This matrix connects the latent factors to the original
+characteristics (attributes):</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Friendly Playful Guard Aggressive Small</span></span>
+<span><span class="co">#&gt; F1        1       1     0          0     0</span></span>
+<span><span class="co">#&gt; F2        0       0     1          1     0</span></span>
+<span><span class="co">#&gt; F3        1       0     0          0     1</span></span></code></pre></div>
+<ul>
+<li>
+<strong>Factor 1 (<code>F1</code>)</strong> is characterized by the
+attribute <code>Friendly</code>.</li>
+<li>
+<strong>Factor 2 (<code>F2</code>)</strong> is characterized by the
+attributes <code>Guard</code> and <code>Aggressive</code>.</li>
+<li>
+<strong>Factor 3 (<code>F3</code>)</strong> is characterized by the
+attribute <code>Small</code>.</li>
+</ul>
+<p>Combining these observations: 1. <strong>Factor 1
+(<code>F1</code>)</strong> represents the archetype of a
+<strong>“Friendly Dog”</strong> (which Labradors, Goldens, and
+Chihuahuas are). 2. <strong>Factor 2 (<code>F2</code>)</strong>
+represents the archetype of a <strong>“Guard/Protective Dog”</strong>
+(exhibited by German Shepherds and Rottweilers). 3. <strong>Factor 3
+(<code>F3</code>)</strong> represents the archetype of a <strong>“Small
+Dog”</strong> (which distinguishes the Chihuahua from the others).</p>
+<hr>
+</div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="boolean-matrix-factorization-asso">2. Boolean Matrix Factorization (ASSO)<a class="anchor" aria-label="anchor" href="#boolean-matrix-factorization-asso"></a>
+<h2 id="other-algorithms-asso">2. Other Algorithms: ASSO<a class="anchor" aria-label="anchor" href="#other-algorithms-asso"></a>
 </h2>
 <p>For large binary datasets, <strong>ASSO</strong> is a classic
-heuristic. It uses pairwise association confidence to generate candidate
-factors.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create a binary dataset</span></span>
-<span><span class="va">I_bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>,</span>
-<span>  <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>,</span>
-<span>  <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>,</span>
-<span>  <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span></span>
-<span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">I_bin</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"O"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">I_bin</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
+alternative heuristic. It uses pairwise association confidence to
+generate candidate factors.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Factorize using ASSO</span></span>
+<span><span class="va">res_asso</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="fu">factorize</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"ASSO"</span>, threshold <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">fc_bin</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/FormalContext.html">FormalContext</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">I_bin</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Factorize using ASSO</span></span>
-<span><span class="co"># threshold: confidence threshold for candidate generation</span></span>
-<span><span class="va">res_asso</span> <span class="op">&lt;-</span> <span class="va">fc_bin</span><span class="op">$</span><span class="fu">factorize</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"ASSO"</span>, threshold <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
-<span></span>
+<span><span class="co"># Print the resulting factor-attribute matrix</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_asso</span><span class="op">$</span><span class="va">factor_attribute</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    A1 A2 A3 A4 A5</span></span>
-<span><span class="co">#&gt; F1  1  1  1  0  0</span></span>
-<span><span class="co">#&gt; F2  0  0  0  1  1</span></span></code></pre></div>
+<span><span class="co">#&gt;    Friendly Playful Guard Aggressive Small</span></span>
+<span><span class="co">#&gt; F1        1       1     0          0     0</span></span>
+<span><span class="co">#&gt; F2        0       0     1          1     0</span></span>
+<span><span class="co">#&gt; F3        1       0     0          0     1</span></span></code></pre></div>
+<hr>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -281,7 +306,7 @@ Transactions on Knowledge and Data Engineering</em>, 20(10),
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -3,10 +3,10 @@
 ## Introduction
 
 Standard association rules (or implications in Formal Concept Analysis)
-identify correlations between attributes
-($\left. A\rightarrow B \right.$). However, correlation does not imply
-causation. A rule $\left. A\rightarrow B \right.$ might be strong simply
-because both $A$ and $B$ are caused by a third confounding variable $C$.
+identify correlations between attributes ($`A \to B`$). However,
+correlation does not imply causation. A rule $`A \to B`$ might be strong
+simply because both $`A`$ and $`B`$ are caused by a third confounding
+variable $`C`$.
 
 The `fcaR` package now supports **Mining Causal Association Rules**,
 implementing a method to identify likely causal relationships by
@@ -14,21 +14,22 @@ controlling for confounding variables. This considers the “Fair Odds
 Ratio” calculated on a “Fair Data Set” of matched pairs.
 
 ``` r
+
 library(fcaR)
 ```
 
 ## The Approach
 
-To check if $\left. A\rightarrow B \right.$ is causal, the algorithm:
+To check if $`A \to B`$ is causal, the algorithm:
 
 1.  Identifies potential **confounders** (controlled variables) that are
-    not part of the premise $A$, the conclusion $B$, or variables
-    irrelevant to $B$.
+    not part of the premise $`A`$, the conclusion $`B`$, or variables
+    irrelevant to $`B`$.
 2.  Constructs a **Fair Data Set** by finding **matched pairs** of
-    objects. Two objects $(u,v)$ form a matched pair if:
+    objects. Two objects $`(u, v)`$ form a matched pair if:
     - They have the same values for all controlled variables.
-    - One object has the premise ($u$ has property $A$).
-    - The other object does not ($v$ does not have property $A$).
+    - One object has the premise ($`u`$ has property $`A`$).
+    - The other object does not ($`v`$ does not have property $`A`$).
 3.  Computes the **Fair Odds Ratio** on these matched pairs.
 4.  Considers the rule “Causal” if the lower bound of the Confidence
     Interval for the Fair Odds Ratio is greater than 1.
@@ -38,6 +39,7 @@ To check if $\left. A\rightarrow B \right.$ is causal, the algorithm:
 Let’s consider a simple case where **Treatment** causes **Recovery**.
 
 ``` r
+
 # 100 Patients
 # 50 Treated, 50 Untreated
 # Treated: 90% Recovery
@@ -56,6 +58,7 @@ fc <- FormalContext$new(I)
 We can mine for causal rules targeting “Recovery”:
 
 ``` r
+
 rules <- fc$find_causal_rules(
     response_var = "Recovery",
     min_support = 0.1,
@@ -90,6 +93,7 @@ However, a naive frequent itemset mining might find
 Let’s simulate this:
 
 ``` r
+
 set.seed(123)
 n <- 200
 # Heat: 50% Hot, 50% Cold
@@ -121,6 +125,7 @@ random (w.r.t Drowning causal mechanism) and doesn’t increase drowning
 risk further. - The odds ratio should be near 1.
 
 ``` r
+
 causal_rules <- fc_spurious$find_causal_rules(
     response_var = "Drowning",
     min_support = 0.5

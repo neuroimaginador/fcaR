@@ -1,13 +1,14 @@
 # Creating Formal Contexts in fcaR
 
 ``` r
+
 library(fcaR)
 ```
 
 The starting point of any Formal Concept Analysis (FCA) workflow is the
-**Formal Context**. A formal context is a triple $K = (G,M,I)$, where
-$G$ is a set of objects, $M$ is a set of attributes, and
-$I \subseteq G \times M$ is a binary relation between them.
+**Formal Context**. A formal context is a triple $`K = (G, M, I)`$,
+where $`G`$ is a set of objects, $`M`$ is a set of attributes, and
+$`I \subseteq G \times M`$ is a binary relation between them.
 
 In `fcaR`, formal contexts are managed by the `FormalContext` R6 class.
 This vignette demonstrates the multiple ways to create or import a
@@ -24,6 +25,7 @@ You can manually define a matrix where rows represent objects and
 columns represent attributes.
 
 ``` r
+
 # Create a binary matrix
 M <- matrix(c(1, 0, 1,
               1, 1, 0,
@@ -54,6 +56,7 @@ binary matrix. This is useful if your data is already loaded in R from
 another source.
 
 ``` r
+
 df <- data.frame(
   has_wings = c(TRUE, TRUE, FALSE),
   can_fly   = c(TRUE, FALSE, FALSE),
@@ -82,6 +85,7 @@ The Burmeister format (`.cxt`) is the standard for many classic FCA
 tools like ConExp.
 
 ``` r
+
 # We use an example file included in the package
 cxt_file <- system.file("contexts", "lives_in_water.cxt", package = "fcaR")
 
@@ -109,6 +113,7 @@ the first column contains object names and the header contains attribute
 names.
 
 ``` r
+
 # We use an example file included in the package
 csv_file <- system.file("contexts", "airlines.csv", package = "fcaR")
 
@@ -133,6 +138,7 @@ available contexts and see their metadata (dimensions, description,
 source) directly from the console.
 
 ``` r
+
 # Get the list of available contexts
 meta <- get_fcarepository_contexts()
 
@@ -254,6 +260,7 @@ or `"animals_en.cxt"`), you can download it using
 This function handles the download, parsing, and error checking for you.
 
 ``` r
+
 # Download and load the 'Planets' context
 fc_planets <- fetch_context("planets_en.cxt")
 #> ℹ Attempting to fetch "planets_en.cxt" from repository...
@@ -285,6 +292,7 @@ You have two options:
 2.  **Via console:** Run the following command:
 
 ``` r
+
 select_repository_context_addin()
 ```
 
@@ -303,10 +311,10 @@ quickly.
 
 ## Summary of Methods
 
-| Source                    | Function / Method                   | Description                             |
-|:--------------------------|:------------------------------------|:----------------------------------------|
-| **R Matrix / Data Frame** | `FormalContext$new(x)`              | Direct creation from in-memory objects. |
-| **Local File (.cxt)**     | `FormalContext$new("file.cxt")`     | Loads Burmeister format files.          |
-| **Local File (.csv)**     | `FormalContext$new("file.csv")`     | Loads CSV files (expects binary data).  |
-| **FCA Repository (Code)** | `fetch_context("name.cxt")`         | Downloads and loads from the web.       |
-| **FCA Repository (GUI)**  | `select_repository_context_addin()` | Graphical interface to search and load. |
+| Source | Function / Method | Description |
+|:---|:---|:---|
+| **R Matrix / Data Frame** | `FormalContext$new(x)` | Direct creation from in-memory objects. |
+| **Local File (.cxt)** | `FormalContext$new("file.cxt")` | Loads Burmeister format files. |
+| **Local File (.csv)** | `FormalContext$new("file.csv")` | Loads CSV files (expects binary data). |
+| **FCA Repository (Code)** | `fetch_context("name.cxt")` | Downloads and loads from the web. |
+| **FCA Repository (GUI)** | `select_repository_context_addin()` | Graphical interface to search and load. |

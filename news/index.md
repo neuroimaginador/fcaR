@@ -1,12 +1,25 @@
 # Changelog
 
+## fcaR 1.7.1
+
+- **Matrix Factorization Update:** Removed fuzzy matrix factorization.
+  Matrix factorization is now exclusively supported for Boolean
+  contexts. Attempting to factorize fuzzy contexts now yields a clean
+  error.
+- **Documentation & Vignettes:** Updated the `matrix_factorization`
+  vignette to focus on Boolean Matrix Factorization (BMF) using a clear
+  binary dog breed example.
+- **Unit Tests:** Refactored `test-factorization.R` to test various
+  Boolean factorization methods and check correct error handling on
+  fuzzy contexts.
+
 ## fcaR 1.7.0
 
 New Functionality:
 
 - **Arrow Relations:** Added `calculate_arrow_relations()` method to
-  `FormalContext` to compute the arrow relations ($\swarrow$,
-  $\nearrow$, $\updownarrow$) of a binary formal context using a
+  `FormalContext` to compute the arrow relations ($`\swarrow`$,
+  $`\nearrow`$, $`\updownarrow`$) of a binary formal context using a
   high-performance C++ implementation based on bitsets.
 - **Structural Analysis:** Added new methods to `FormalContext` for
   advanced structural analysis based on arrow relations:
@@ -22,7 +35,7 @@ New Functionality:
   contexts.
 - **Lattice Plotting Enhancements:**
   - **Grade Balancing:** New `balance_grades` algorithm to improve
-    visual symmetry in Hasse diagrams (e.g., for $N_{5}$).
+    visual symmetry in Hasse diagrams (e.g., for $`N_5`$).
   - **Base R Viewer:** Added `viewer = "base"` to
     [`plot()`](https://rdrr.io/r/graphics/plot.default.html), providing
     a lightweight alternative to `ggraph` with support for themes
@@ -121,8 +134,8 @@ Improvements:
 New Functionality:
 
 - **Protoconcepts:** Added `find_protoconcepts()` method to
-  `FormalContext` to compute protoconcepts (pairs $(A,B)$ such that
-  $A\prime = B''$) using an efficient C++ implementation.
+  `FormalContext` to compute protoconcepts (pairs $`(A, B)`$ such that
+  $`A' = B''`$) using an efficient C++ implementation.
 
 ## fcaR 1.4.1
 
@@ -180,7 +193,7 @@ Improvements:
   `Matrix` package.
 - **Metadata Preservation:** Rewritten `[` and related methods of
   `ImplicationSet`. These ensure that critical context metadata (such as
-  the number of objects $N$ for support calculation) is preserved when
+  the number of objects $`N`$ for support calculation) is preserved when
   filtering or sorting rules, fixing previous issues where metadata was
   lost.
 - **Data Safety:** Enhanced type safety in internal functions to

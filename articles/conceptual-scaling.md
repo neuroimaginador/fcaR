@@ -29,7 +29,7 @@ numerical attributes.
 
 In such formal context, we cannot derive concepts and implications
 directly, we need to transform the formal context into one where each
-attribute is in the interval $\lbrack 0,1\rbrack$.
+attribute is in the interval $`[0, 1]`$.
 
 ## Types of Scaling
 
@@ -125,23 +125,23 @@ In our example, the attribute `Agreement` is interordinal:
 
 and can be transformed into:
 
-|           | Agreement \<= strongly disagree | Agreement \<= disagree | Agreement \<= neither agree nor disagree | Agreement \<= agree | Agreement \<= strongly agree | Agreement \>= strongly disagree | Agreement \>= disagree | Agreement \>= neither agree nor disagree | Agreement \>= agree | Agreement \>= strongly agree |
-|:----------|:-------------------------------:|:----------------------:|:----------------------------------------:|:-------------------:|:----------------------------:|:-------------------------------:|:----------------------:|:----------------------------------------:|:-------------------:|:----------------------------:|
-| Student 1 |                0                |           0            |                    0                     |          1          |              1               |                1                |           1            |                    1                     |          1          |              0               |
-| Student 2 |                0                |           0            |                    0                     |          0          |              1               |                1                |           1            |                    1                     |          1          |              1               |
-| Student 3 |                0                |           0            |                    1                     |          1          |              1               |                1                |           1            |                    1                     |          0          |              0               |
-| Student 4 |                0                |           0            |                    0                     |          1          |              1               |                1                |           1            |                    1                     |          1          |              0               |
-| Student 5 |                0                |           1            |                    1                     |          1          |              1               |                1                |           1            |                    0                     |          0          |              0               |
+|  | Agreement \<= strongly disagree | Agreement \<= disagree | Agreement \<= neither agree nor disagree | Agreement \<= agree | Agreement \<= strongly agree | Agreement \>= strongly disagree | Agreement \>= disagree | Agreement \>= neither agree nor disagree | Agreement \>= agree | Agreement \>= strongly agree |
+|:---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| Student 1 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
+| Student 2 | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 |
+| Student 3 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 |
+| Student 4 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
+| Student 5 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 |
 
 using the following scale:
 
-|                            | Agreement \<= strongly disagree | Agreement \<= disagree | Agreement \<= neither agree nor disagree | Agreement \<= agree | Agreement \<= strongly agree | Agreement \>= strongly disagree | Agreement \>= disagree | Agreement \>= neither agree nor disagree | Agreement \>= agree | Agreement \>= strongly agree |
-|:---------------------------|:-------------------------------:|:----------------------:|:----------------------------------------:|:-------------------:|:----------------------------:|:-------------------------------:|:----------------------:|:----------------------------------------:|:-------------------:|:----------------------------:|
-| strongly disagree          |                1                |           1            |                    1                     |          1          |              1               |                1                |           0            |                    0                     |          0          |              0               |
-| disagree                   |                0                |           1            |                    1                     |          1          |              1               |                1                |           1            |                    0                     |          0          |              0               |
-| neither agree nor disagree |                0                |           0            |                    1                     |          1          |              1               |                1                |           1            |                    1                     |          0          |              0               |
-| agree                      |                0                |           0            |                    0                     |          1          |              1               |                1                |           1            |                    1                     |          1          |              0               |
-| strongly agree             |                0                |           0            |                    0                     |          0          |              1               |                1                |           1            |                    1                     |          1          |              1               |
+|  | Agreement \<= strongly disagree | Agreement \<= disagree | Agreement \<= neither agree nor disagree | Agreement \<= agree | Agreement \<= strongly agree | Agreement \>= strongly disagree | Agreement \>= disagree | Agreement \>= neither agree nor disagree | Agreement \>= agree | Agreement \>= strongly agree |
+|:---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| strongly disagree | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
+| disagree | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 |
+| neither agree nor disagree | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 |
+| agree | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
+| strongly agree | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 |
 
 ### Biordinal scaling
 
@@ -163,22 +163,22 @@ In our example, the attribute `Attitude` is biordinal:
 
 and can be transformed into:
 
-|           | Attitude \<= hard working | Attitude \<= working | Attitude \>= lazy | Attitude \>= very lazy |
-|:----------|:-------------------------:|:--------------------:|:-----------------:|:----------------------:|
-| Student 1 |             0             |          1           |         0         |           0            |
-| Student 2 |             1             |          1           |         0         |           0            |
-| Student 3 |             0             |          1           |         0         |           0            |
-| Student 4 |             0             |          1           |         0         |           0            |
-| Student 5 |             0             |          0           |         1         |           0            |
+|  | Attitude \<= hard working | Attitude \<= working | Attitude \>= lazy | Attitude \>= very lazy |
+|:---|:--:|:--:|:--:|:--:|
+| Student 1 | 0 | 1 | 0 | 0 |
+| Student 2 | 1 | 1 | 0 | 0 |
+| Student 3 | 0 | 1 | 0 | 0 |
+| Student 4 | 0 | 1 | 0 | 0 |
+| Student 5 | 0 | 0 | 1 | 0 |
 
 using the following scale:
 
-|              | Attitude \<= hard working | Attitude \<= working | Attitude \>= lazy | Attitude \>= very lazy |
-|:-------------|:-------------------------:|:--------------------:|:-----------------:|:----------------------:|
-| hard working |             1             |          1           |         0         |           0            |
-| working      |             0             |          1           |         0         |           0            |
-| lazy         |             0             |          0           |         1         |           0            |
-| very lazy    |             0             |          0           |         1         |           1            |
+|  | Attitude \<= hard working | Attitude \<= working | Attitude \>= lazy | Attitude \>= very lazy |
+|:---|:--:|:--:|:--:|:--:|
+| hard working | 1 | 1 | 0 | 0 |
+| working | 0 | 1 | 0 | 0 |
+| lazy | 0 | 0 | 1 | 0 |
+| very lazy | 0 | 0 | 1 | 1 |
 
 ### Interval scaling
 
@@ -197,9 +197,9 @@ In our example, the attribute `Score` is continuous:
 and can be categorized into intervals corresponding to the following
 marks:
 
-- *A*: score in the interval $(4,5\rbrack$.
-- *B*: score in the interval $(3,4\rbrack$.
-- *C*: score in the interval $(2,3\rbrack$.
+- *A*: score in the interval $`(4, 5]`$.
+- *B*: score in the interval $`(3, 4]`$.
+- *C*: score in the interval $`(2, 3]`$.
   |           | Score is C | Score is B | Score is A |
   |:----------|:----------:|:----------:|:----------:|
   | Student 1 |     1      |     0      |     0      |
@@ -228,6 +228,7 @@ The available scales are stored in a `registry` object called
 types of scaling:
 
 ``` r
+
 scalingRegistry$get_entry_names()
 #> [1] "Nominal"      "Ordinal"      "Interordinal" "Biordinal"    "Interval"    
 #> [6] "Implication"
@@ -246,6 +247,7 @@ For instance, if we call `fc` the formal context of the example at the
 beginning of this document, we can replicate the above scales:
 
 ``` r
+
 fc$scale("Grant", type = "nominal")
 fc
 #> FormalContext with 5 objects and 6 attributes.
@@ -266,6 +268,7 @@ In order to apply the *ordinal* scaling to the `Intern` attribute, we
 do:
 
 ``` r
+
 fc$scale("Intern", type = "ordinal")
 fc
 #> FormalContext with 5 objects and 10 attributes.
@@ -285,6 +288,7 @@ Now, the `Agreement` attribute can be scaled using and interordinal
 scaling:
 
 ``` r
+
 fc$scale("Agreement",
   type = "interordinal",
   values = c(
@@ -312,6 +316,7 @@ it represents two poles: the first is given by values “hard working” and
 do:
 
 ``` r
+
 fc$scale("Attitude",
   type = "biordinal",
   values_le = c("hard working", "working"),
@@ -332,6 +337,7 @@ The last attribute was the `Score`, that can be grouped in intervals
 using:
 
 ``` r
+
 fc$scale("Score",
   type = "interval",
   values = c(2, 3, 4, 5),
@@ -352,6 +358,7 @@ In order to see the transformation (the *scale* context) used for any of
 the attributes, we use the `get_scales()` method of a `FormalContext`:
 
 ``` r
+
 fc$get_scales(c("Grant", "Score"))
 #> $Grant
 #> FormalContext with 2 objects and 2 attributes.
@@ -381,6 +388,7 @@ This *background knowledge* is computed after each scaling is performed,
 and can be printed with:
 
 ``` r
+
 fc$background_knowledge()
 #> Implication set with 0 implications.
 ```
@@ -406,6 +414,7 @@ been post-processed to remove redundant information with respect to the
 In our example, the resulting implications are:
 
 ``` r
+
 fc$find_implications()
 fc$implications
 #> Implication set with 26 implications.
@@ -526,6 +535,7 @@ Let us consider the following context of attributes of aromatic
 molecules:
 
 ``` r
+
 filename <- system.file("contexts",
   "aromatic.csv",
   package = "fcaR"
@@ -535,6 +545,7 @@ fc <- FormalContext$new(filename)
 ```
 
 ``` r
+
 fc$incidence() |>
   knitr::kable(
     format = "html",
@@ -568,6 +579,7 @@ We can transform this context into a binary one by means of the
 following scalings:
 
 ``` r
+
 fc$scale(
   attributes = "nitro",
   type = "ordinal",
@@ -587,24 +599,25 @@ fc$scale(
 
 The final formal context is:
 
-|                | ring = hex | ring = penta | OS = O | OS = S | nitro \>= 1 | nitro \>= 2 | nitro \>= 3 |
-|:---------------|:----------:|:------------:|:------:|:------:|:-----------:|:-----------:|:-----------:|
-| Benzene        |     1      |      0       |   0    |   0    |      0      |      0      |      0      |
-| Furan          |     0      |      1       |   1    |   0    |      0      |      0      |      0      |
-| Imidazole      |     0      |      1       |   0    |   0    |      1      |      1      |      0      |
-| 1-3-Oxazole    |     0      |      1       |   1    |   0    |      1      |      0      |      0      |
-| Pyrazine       |     1      |      0       |   0    |   0    |      1      |      1      |      0      |
-| Pyrazole       |     0      |      1       |   0    |   0    |      1      |      1      |      0      |
-| Pyridine       |     1      |      0       |   0    |   0    |      1      |      0      |      0      |
-| Pyrimidine     |     1      |      0       |   0    |   0    |      1      |      1      |      0      |
-| Pyrrole        |     0      |      1       |   0    |   0    |      1      |      0      |      0      |
-| Thiazole       |     0      |      1       |   0    |   1    |      1      |      0      |      0      |
-| Thiophene      |     0      |      1       |   0    |   1    |      0      |      0      |      0      |
-| 1-3-5-Triazine |     1      |      0       |   0    |   0    |      1      |      1      |      1      |
+|  | ring = hex | ring = penta | OS = O | OS = S | nitro \>= 1 | nitro \>= 2 | nitro \>= 3 |
+|:---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| Benzene | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Furan | 0 | 1 | 1 | 0 | 0 | 0 | 0 |
+| Imidazole | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
+| 1-3-Oxazole | 0 | 1 | 1 | 0 | 1 | 0 | 0 |
+| Pyrazine | 1 | 0 | 0 | 0 | 1 | 1 | 0 |
+| Pyrazole | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
+| Pyridine | 1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| Pyrimidine | 1 | 0 | 0 | 0 | 1 | 1 | 0 |
+| Pyrrole | 0 | 1 | 0 | 0 | 1 | 0 | 0 |
+| Thiazole | 0 | 1 | 0 | 1 | 1 | 0 | 0 |
+| Thiophene | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
+| 1-3-5-Triazine | 1 | 0 | 0 | 0 | 1 | 1 | 1 |
 
 The implications derived from the scales are:
 
 ``` r
+
 fc$background_knowledge()
 #> Implication set with 0 implications.
 ```
@@ -613,6 +626,7 @@ Also, we can compute the implications that are not represented by the
 *background knowledge*:
 
 ``` r
+
 fc$find_implications()
 fc$implications
 #> Implication set with 8 implications.
@@ -633,6 +647,7 @@ fc$implications
 and the concepts:
 
 ``` r
+
 fc$concepts
 #> A set of 15 concepts:
 #> 1: ({Benzene, Furan, Imidazole, 1-3-Oxazole, Pyrazine, Pyrazole, Pyridine, Pyrimidine, Pyrrole, Thiazole, Thiophene, 1-3-5-Triazine}, {})

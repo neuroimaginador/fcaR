@@ -8,6 +8,7 @@ structures of the `fcaR` package when working with implications in FCA.
 We load the `fcaR` package by:
 
 ``` r
+
 library(fcaR)
 ```
 
@@ -22,6 +23,7 @@ context, presented in
 > Hierarchies of Concepts.” In Ordered Sets, pp. 445–470. Springer.
 
 ``` r
+
 knitr::kable(planets, format = "html", booktabs = TRUE)
 ```
 
@@ -41,6 +43,7 @@ The other formal context is fuzzy and is defined by the following matrix
 I:
 
 ``` r
+
 knitr::kable(I, format = "html", booktabs = TRUE)
 ```
 
@@ -63,6 +66,7 @@ Thus, let us create different formal contexts with the previous
 datasets:
 
 ``` r
+
 fc_planets <- FormalContext$new(planets)
 fc_I <- FormalContext$new(I)
 ```
@@ -73,6 +77,7 @@ The function `find_implications()` use the NextClosure algorithm in a
 formal context to extract the canonical basis of implications:
 
 ``` r
+
 fc_planets$find_implications()
 fc_I$find_implications()
 #> LinCbO is only available for binary contexts. Falling back to NextClosure.FALSE
@@ -81,6 +86,7 @@ fc_I$find_implications()
 We can inspect the implications by doing:
 
 ``` r
+
 fc_planets$implications
 #> Implication set with 10 implications.
 #> Rule 1: {no_moon} -> {small, near}
@@ -114,6 +120,7 @@ left-hand sides and the other for the right-hand sides of the rules). We
 can get these (sparse) matrices as:
 
 ``` r
+
 fc_planets$implications$get_LHS_matrix()
 #> 7 x 10 sparse Matrix of class "dgCMatrix"
 #>   [[ suppressing 10 column names '1', '2', '3' ... ]]
@@ -142,6 +149,7 @@ The main practical use of an `ImplicationSet` is to compute the closure
 of a set of attributes, by using the `closure()` function:
 
 ``` r
+
 # Let us build a set of attributes
 S <- Set$new(attributes = fc_planets$attributes)
 S$assign(large = 1, far = 1)
@@ -158,6 +166,7 @@ We can check if an `ImplicationSet` holds in a `FormalContext` by using
 the `%holds_in%` operator:
 
 ``` r
+
 # Let us clone the implication basis
 imps <- fc_planets$implications$clone()
 imps %holds_in% fc_planets
@@ -173,6 +182,7 @@ Conversely, we can check if a list of attribute sets (or a formal
 context) respects an `ImplicationSet`, via the `%respects%` operator:
 
 ``` r
+
 fc_planets %respects% imps
 #> 9 x 10 sparse Matrix of class "lgCMatrix"
 #>   [[ suppressing 10 column names 'imp_01', 'imp_02', 'imp_03' ... ]]
@@ -201,6 +211,7 @@ Some quantities can be computed for an `ImplicationSet`:
 - Cardinality: the number of implications in the set
 
 ``` r
+
 fc_planets$implications$cardinality()
 #> [1] 10
 ```
@@ -209,6 +220,7 @@ fc_planets$implications$cardinality()
   implication
 
 ``` r
+
 sizes <- fc_planets$implications$size()
 # Total number of attributes in the LHS and the RHS
 colSums(sizes)
@@ -220,6 +232,7 @@ colSums(sizes)
   attributes contain the LHS of a particular rule
 
 ``` r
+
 fc_planets$implications$support()
 #>  [1] 0.2222222 0.5555556 0.4444444 0.2222222 0.2222222 0.0000000 0.0000000
 #>  [8] 0.0000000 0.0000000 0.0000000
@@ -231,6 +244,7 @@ A nice feature is the ability to export an `ImplicationSet` to LaTeX
 format:
 
 ``` r
+
 fc_planets$implications$to_latex()
 #> Note: You must include the following commands in you LaTeX document:
 #> \usepackage{amsmath}\newcommand{\el}[2]{\ensuremath{^{#2\!\!}/{#1}}}
@@ -254,6 +268,7 @@ Sometimes it is needed to work with a subset of the implications, using
 only the implications that fulfill certain conditions:
 
 ``` r
+
 # Implications with P1 and P2 in the LHS and P5 in the RHS
 fc_I$implications$filter(
   lhs = c("P1", "P2"),
@@ -274,6 +289,7 @@ First, some simplification rules have been developed, named *reduction*,
 applied using the `apply_rules()` function:
 
 ``` r
+
 fc_I$implications$apply_rules(rules = c(
   "composition",
   "simplification"
@@ -288,6 +304,7 @@ used in the computation of the closure of a set, to provide a reduced
 set of implications that is inferred from the set of attributes:
 
 ``` r
+
 # Let us build a set of attributes
 S <- Set$new(attributes = fc_planets$attributes)
 S$assign(large = 1, far = 1)
@@ -311,6 +328,7 @@ fc_planets$implications$closure(S, reduce = TRUE)
 We can check if a given `ImplicationSet` follows from another one:
 
 ``` r
+
 # imps is the basis
 imps <- fc_planets$implications$clone()
 imps2 <- imps$clone()
@@ -330,6 +348,7 @@ imps2 %entails% imps
 We can also check if the two sets of implications are equivalent:
 
 ``` r
+
 imps %~% imps2
 #> [1] TRUE
 # If we remove any implication from imps2,
@@ -346,6 +365,7 @@ context**. This context has the meet-irreducible closed sets of the
 implication set as objects, and the original attributes as attributes:
 
 ``` r
+
 # Get the standard context from the implications of the planets context
 sc <- fc_planets$implications$get_standard_context()
 
@@ -372,6 +392,7 @@ system would infer the value to other attribute. This is done by the
 attribute set:
 
 ``` r
+
 S <- Set$new(attributes = fc_I$attributes)
 S$assign(P1 = 1, P4 = 0.5)
 
