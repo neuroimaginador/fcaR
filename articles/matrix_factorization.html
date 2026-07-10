@@ -129,15 +129,49 @@ Boolean (binary) contexts. If you have a fuzzy context, you must
 binarize it first.</p>
 </blockquote>
 <p><code>fcaR</code> implements several state-of-the-art Boolean Matrix
-Factorization algorithms: * <strong>GreConD:</strong> A greedy algorithm
-that extracts factors sequentially based on formal concepts. *
-<strong>ASSO:</strong> An association rules-based heuristic algorithm. *
-<strong>RSF / RSF-ES:</strong> Algorithms that construct factors based
-on the reduction of support. * <strong>GreEss:</strong> An algorithm
-focusing on essential entries of the matrix. * <strong>PaNDa+:</strong>
-Algorithms (MDL, ASSO-style, and Weighted) that use the Minimum
-Description Length principle. * <strong>Hyper / Hyper+:</strong>
-Lattice-based factorization methods.</p>
+Factorization algorithms:</p>
+<ul>
+<li>
+<strong>RSF / RSF-ES:</strong> <em>Rice-Siff Factorization</em>
+algorithms based on agglomerative clustering and a state-dependent
+semi-metric (Antoni et al., 2026). Rather than doing an exhaustive
+search of the attribute space, RSF guides factor selection by merging
+concepts dynamically. <strong>RSF-ES</strong> (Early Stopping)
+accelerates this by filtering out zero-coverage concepts and stopping
+when the distance reaches
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.0</mn><annotation encoding="application/x-tex">1.0</annotation></semantics></math>
+(disjoint connected components), achieving up to a 10x speedup while
+preserving exactness.</li>
+<li>
+<strong>GreConD:</strong> <em>Greedy Concept on Demand</em>
+(Belohlavek &amp; Vychodil, 2010). An exact BMF solver that greedily
+computes and selects formal concepts as factors to cover the remaining
+ones in the incidence relation.</li>
+<li>
+<strong>ASSO:</strong> A classic heuristic BMF algorithm based on
+association rules (Miettinen et al., 2008). It generates candidate
+factors using pairwise association confidence and is often fast, but it
+is approximate and allows overcovering (reconstructing a 1 where the
+original matrix had a 0).</li>
+<li>
+<strong>GreEss:</strong> A greedy BMF solver based on essential
+elements (Belohlavek &amp; Trnecka, 2015). It restricts factor search
+strictly to mandatory submatrices (intervals) derived from essential
+entries of the context, producing a more parsimonious
+factorization.</li>
+<li>
+<strong>PaNDa+:</strong> A unifying framework for mining approximate
+top-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+binary patterns based on the Minimum Description Length (MDL) principle
+(Lucchese et al., 2013). It extracts components that minimize data
+description complexity, adjusting to noise and pattern complexity.</li>
+<li>
+<strong>Hyper / Hyper+:</strong> Overlapped hyperrectangles
+summarization methods (Xiang et al., 2011). Hyper extracts closed
+patterns, and Hyper+ optimizes the representation cost under a false
+positive error budget. If the error budget is set to zero, it works as
+an exact BMF solver.</li>
+</ul>
 <hr>
 </div>
 <div class="section level2">
@@ -213,8 +247,7 @@ discovered latent factors:</p>
 <ul>
 <li>
 <strong>Factor 1 (<code>F1</code>)</strong> is present in
-<code>Labrador</code>, <code>Golden Ret.</code>, and
-<code>Chihuahua</code>.</li>
+<code>Labrador</code> and <code>Golden Ret.</code>.</li>
 <li>
 <strong>Factor 2 (<code>F2</code>)</strong> is present in
 <code>G. Shepherd</code> and <code>Rottweiler</code>.</li>
@@ -238,33 +271,97 @@ characteristics (attributes):</p>
 <ul>
 <li>
 <strong>Factor 1 (<code>F1</code>)</strong> is characterized by the
-attribute <code>Friendly</code>.</li>
+attributes <code>Friendly</code> and <code>Playful</code>.</li>
 <li>
 <strong>Factor 2 (<code>F2</code>)</strong> is characterized by the
 attributes <code>Guard</code> and <code>Aggressive</code>.</li>
 <li>
 <strong>Factor 3 (<code>F3</code>)</strong> is characterized by the
-attribute <code>Small</code>.</li>
+attributes <code>Friendly</code> and <code>Small</code>.</li>
 </ul>
 <p>Combining these observations: 1. <strong>Factor 1
 (<code>F1</code>)</strong> represents the archetype of a
-<strong>“Friendly Dog”</strong> (which Labradors, Goldens, and
-Chihuahuas are). 2. <strong>Factor 2 (<code>F2</code>)</strong>
+<strong>“Friendly and Playful Dog”</strong> (exhibited by Labradors and
+Golden Retrievers). 2. <strong>Factor 2 (<code>F2</code>)</strong>
 represents the archetype of a <strong>“Guard/Protective Dog”</strong>
 (exhibited by German Shepherds and Rottweilers). 3. <strong>Factor 3
 (<code>F3</code>)</strong> represents the archetype of a <strong>“Small
-Dog”</strong> (which distinguishes the Chihuahua from the others).</p>
+and Friendly Dog”</strong> (exhibited by Chihuahuas).</p>
 <hr>
 </div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="other-algorithms-asso">2. Other Algorithms: ASSO<a class="anchor" aria-label="anchor" href="#other-algorithms-asso"></a>
+<h2 id="rice-siff-factorization-rsf-and-rsf-es">2. Rice-Siff Factorization (RSF and RSF-ES)<a class="anchor" aria-label="anchor" href="#rice-siff-factorization-rsf-and-rsf-es"></a>
+</h2>
+<p>The <strong>Rice-Siff Factorization (RSF)</strong> family represents
+a hybrid BMF approach. Instead of performing an exhaustive combinatorial
+sweep of the attribute space (like GreConD), it guides the greedy
+selection of factors using a hierarchical agglomerative clustering
+method derived from the Rice-Siff algorithm.</p>
+<p>The core of the RSF algorithm relies on a state-dependent semi-metric
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ρ</mi><mrow><mi>u</mi><mi>n</mi></mrow></msub><annotation encoding="application/x-tex">\rho_{un}</annotation></semantics></math>,
+which quantifies the distance between candidate concepts based on the
+currently uncovered cells in the residual relation
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mrow><mi>u</mi><mi>n</mi></mrow></msub><annotation encoding="application/x-tex">R_{un}</annotation></semantics></math>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ρ</mi><mrow><mi>u</mi><mi>n</mi></mrow></msub><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>2</mn></msub><mo>,</mo><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>×</mo><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>∩</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>2</mn></msub><mo>×</mo><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>∩</mo><msub><mi>R</mi><mrow><mi>u</mi><mi>n</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo></mrow><mrow><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><mo>×</mo><msub><mi>Y</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>∪</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mn>2</mn></msub><mo>×</mo><msub><mi>Y</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex"> \rho_{un}((X_1, Y_1), (X_2, Y_2)) = 1 - \frac{|(X_1 \times Y_1) \cap (X_2 \times Y_2) \cap R_{un}|}{|(X_1 \times Y_1) \cup (X_2 \times Y_2)|} </annotation></semantics></math></p>
+<p>By prioritizing merges that overlap on remaining uncovered cells, the
+agglomeration natively converges to formal concepts that maximize the
+coverage of the residual matrix.</p>
+<div class="section level3">
+<h3 id="rsf-with-early-stopping-rsf-es">RSF with Early Stopping (RSF-ES)<a class="anchor" aria-label="anchor" href="#rsf-with-early-stopping-rsf-es"></a>
+</h3>
+<p>To prevent the combinatorial explosion in high-dimensional contexts,
+<strong>RSF-ES</strong> introduces two key optimizations: 1.
+<strong>Zero-weight Filtering:</strong> Candidates whose generating
+components have no coverage on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mrow><mi>u</mi><mi>n</mi></mrow></msub><annotation encoding="application/x-tex">R_{un}</annotation></semantics></math>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">w = 0</annotation></semantics></math>)
+are pruned early. 2. <strong>Topological Pruning:</strong> The
+agglomerative loop is immediately broken when the minimum distance
+reaches
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ρ</mi><mrow><mi>u</mi><mi>n</mi></mrow></msub><mo>=</mo><mn>1.0</mn></mrow><annotation encoding="application/x-tex">\rho_{un} = 1.0</annotation></semantics></math>.
+In graph-theoretic terms, a distance of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1.0</mn><annotation encoding="application/x-tex">1.0</annotation></semantics></math>
+indicates that the candidates belong to disjoint connected components in
+the residual relation. Fusing them would restrict the resulting formal
+intent without yielding any structural gain, making further merging
+redundant.</p>
+<p>These optimizations allow RSF-ES to achieve up to a <strong>10x
+speedup</strong> on dense or high-dimensional matrices compared to
+standard RSF while maintaining mathematical exactness.</p>
+</div>
+<div class="section level3">
+<h3 id="performing-rsf-factorization">Performing RSF Factorization<a class="anchor" aria-label="anchor" href="#performing-rsf-factorization"></a>
+</h3>
+<p>You can use both <code>RSF</code> and <code>RSF-ES</code> directly
+inside the <code>factorize</code> method:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Factorize using RSF</span></span>
+<span><span class="va">res_rsf</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="fu">factorize</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"RSF"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_rsf</span><span class="op">$</span><span class="va">factor_attribute</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Friendly Playful Guard Aggressive Small</span></span>
+<span><span class="co">#&gt; F1        1       1     0          0     0</span></span>
+<span><span class="co">#&gt; F2        0       0     1          1     0</span></span>
+<span><span class="co">#&gt; F3        1       0     0          0     1</span></span>
+<span></span>
+<span><span class="co"># Factorize using RSF-ES (Highly optimized)</span></span>
+<span><span class="va">res_rsfes</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="fu">factorize</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"RSF-ES"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res_rsfes</span><span class="op">$</span><span class="va">factor_attribute</span><span class="op">$</span><span class="fu">incidence</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Friendly Playful Guard Aggressive Small</span></span>
+<span><span class="co">#&gt; F1        1       1     0          0     0</span></span>
+<span><span class="co">#&gt; F2        0       0     1          1     0</span></span>
+<span><span class="co">#&gt; F3        1       0     0          0     1</span></span></code></pre></div>
+<hr>
+</div>
+</div>
+<div class="section level2">
+<h2 id="other-algorithms-asso">3. Other Algorithms: ASSO<a class="anchor" aria-label="anchor" href="#other-algorithms-asso"></a>
 </h2>
 <p>For large binary datasets, <strong>ASSO</strong> is a classic
 alternative heuristic. It uses pairwise association confidence to
 generate candidate factors.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Factorize using ASSO</span></span>
 <span><span class="va">res_asso</span> <span class="op">&lt;-</span> <span class="va">fc</span><span class="op">$</span><span class="fu">factorize</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"ASSO"</span>, threshold <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span>
 <span></span>
@@ -277,9 +374,25 @@ generate candidate factors.</p>
 <hr>
 </div>
 <div class="section level2">
+<h2 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+</h2>
+<p>The authors are grateful to <strong>Dr. Martin Trnecka</strong>, from
+Palacký University Olomouc, for his generosity in sharing the original
+source code and granting permission for its porting to R and C/C++. This
+contribution was pivotal in enabling the high-performance implementation
+of these algorithms and the subsequent rigorous comparative
+analysis.</p>
+<hr>
+</div>
+<div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <ol style="list-style-type: decimal">
+<li>
+<strong>Antoni, L., Kotlárová, D., Krídlo, O., López-Rodríguez, D.,
+&amp; Ojeda-Aciego, M. (2026).</strong> Effective greedy Boolean matrix
+factorization via the Rice-Siff algorithm. <em>International Journal of
+Approximate Reasoning</em>, 197, 109747.</li>
 <li>
 <strong>Belohlavek, R. (2010).</strong> Discovery of optimal factors
 in binary data via a novel method of matrix decomposition. <em>Journal
@@ -289,10 +402,25 @@ of Computer and System Sciences</em>, 76(1), 3-20.</li>
 decomposition of finite fuzzy relations: The problem and the GreConD
 algorithm. <em>Information Sciences</em>, 309, 133-157.</li>
 <li>
+<strong>Belohlavek, R., &amp; Trnecka, M. (2015).</strong>
+From-below approximations in Boolean matrix factorization: Geometry and
+new algorithm. <em>Journal of Computer and System Sciences</em>, 81(8),
+1678-1714.</li>
+<li>
+<strong>Lucchese, C., Orlando, S., &amp; Perego, R. (2013).</strong>
+A unifying framework for mining approximate top-k binary patterns.
+<em>IEEE Transactions on Knowledge and Data Engineering</em>, 26(12),
+2900-2913.</li>
+<li>
 <strong>Miettinen, P., Mielikainen, T., Gionis, A., Das, G., &amp;
 Mannila, H. (2008).</strong> The discrete basis problem. <em>IEEE
 Transactions on Knowledge and Data Engineering</em>, 20(10),
 1348-1362.</li>
+<li>
+<strong>Xiang, Y., Jin, R., Fuhry, D., &amp; Dragan, F. F.
+(2011).</strong> Summarizing transactional databases with overlapped
+hyperrectangles. <em>Data Mining and Knowledge Discovery</em>, 23(2),
+215-251.</li>
 </ol>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
