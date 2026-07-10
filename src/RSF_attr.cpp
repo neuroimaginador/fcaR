@@ -3,14 +3,45 @@
 #include <cstdint>
 #include <algorithm>
 #include <chrono>
+#ifdef __APPLE__
 #include <mach/mach.h>
-
 inline double get_current_mem_mb() {
     struct mach_task_basic_info info;
     mach_msg_type_number_t infoCount = MACH_TASK_BASIC_INFO_COUNT;
     if (task_info(mach_task_self(), MACH_TASK_BASIC_INFO, (task_info_t)&info, &infoCount) != KERN_SUCCESS) return 0.0;
     return (double)info.resident_size / (1024.0 * 1024.0);
 }
+#elif defined(__linux__)
+#include <unistd.h>
+#include <ios>
+#include <iostream>
+#include <fstream>
+#include <string>
+inline double get_current_mem_mb() {
+    double resident_set = 0.0;
+    std::ifstream stat_stream("/proc/self/stat", std::ios_in);
+    if (!stat_stream.fail()) {
+        std::string pid, comm, state, ppid, pgrp, session, tty_nr;
+        std::string tpgid, flags, minflt, cminflt, majflt, cmajflt;
+        std::string utime, stime, cutime, cstime, priority, nice;
+        std::string O, itrealvalue, starttime;
+        unsigned long vsize;
+        long rss;
+        stat_stream >> pid >> comm >> state >> ppid >> pgrp >> session >> tty_nr
+                    >> tpgid >> flags >> minflt >> cminflt >> majflt >> cmajflt
+                    >> utime >> stime >> cutime >> cstime >> priority >> nice
+                    >> O >> itrealvalue >> starttime >> vsize >> rss;
+        stat_stream.close();
+        long page_size_kb = sysconf(_SC_PAGE_SIZE) / 1024;
+        resident_set = rss * page_size_kb / 1024.0;
+    }
+    return resident_set;
+}
+#else
+inline double get_current_mem_mb() {
+    return 0.0;
+}
+#endif
 
 typedef std::vector<uint64_t> Bitset64;
 
