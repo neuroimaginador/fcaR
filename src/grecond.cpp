@@ -67,10 +67,7 @@ List grecond_cpp(LogicalMatrix I, int no_of_factors = -1) {
             bool any = false;
             for (int i = 0; i < m; i++) {
                 if (get_bit(Cols[j], i)) {
-                    for (int w = 0; w < wA; w++) if (U[i][w] & Rows[i][w]) { // This is slightly wrong, should be U[i] & (1<<j)
-                        // Wait, check if attribute j is set in U[i]
-                        if (get_bit(U[i], j)) { any = true; break; }
-                    }
+                    if (get_bit(U[i], j)) { any = true; break; }
                 }
                 if (any) break;
             }

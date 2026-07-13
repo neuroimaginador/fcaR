@@ -25,14 +25,6 @@ check_atomicity_sparse <- function(adj_i, adj_p, cov_i, cov_p, dim) {
     .Call(`_fcaR_check_atomicity_sparse`, adj_i, adj_p, cov_i, cov_p, dim)
 }
 
-tnorm_Zadeh <- function(x, y) {
-    .Call(`_fcaR_tnorm_Zadeh`, x, y)
-}
-
-implication_Zadeh <- function(x, y) {
-    .Call(`_fcaR_implication_Zadeh`, x, y)
-}
-
 tnorm_Lukasiewicz <- function(x, y) {
     .Call(`_fcaR_tnorm_Lukasiewicz`, x, y)
 }
@@ -162,7 +154,7 @@ FastCbO_binary <- function(I, attrs, verbose = FALSE) {
     .Call(`_fcaR_FastCbO_binary`, I, attrs, verbose)
 }
 
-FuzzyFCbO <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
+FuzzyFCbO <- function(I, grades_set, attrs, connection = "standard", name = "Godel", verbose = FALSE) {
     .Call(`_fcaR_FuzzyFCbO`, I, grades_set, attrs, connection, name, verbose)
 }
 
@@ -206,7 +198,7 @@ hyper_plus_optimized_cpp <- function(I_mat, hyper_res, beta = 0.1) {
     .Call(`_fcaR_hyper_plus_optimized_cpp`, I_mat, hyper_res, beta)
 }
 
-InClose <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE) {
+InClose <- function(I, grades_set, attrs, connection = "standard", name = "Godel", verbose = FALSE) {
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }
 
@@ -262,11 +254,11 @@ test_intent_new <- function(A, I) {
     .Call(`_fcaR_test_intent_new`, A, I)
 }
 
-next_closure_implications <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", save_concepts = TRUE, verbose = FALSE) {
+next_closure_implications <- function(I, grades_set, attrs, connection = "standard", name = "Godel", save_concepts = TRUE, verbose = FALSE) {
     .Call(`_fcaR_next_closure_implications`, I, grades_set, attrs, connection, name, save_concepts, verbose)
 }
 
-next_closure_concepts <- function(I, grades_set, attrs, connection = "standard", name = "Zadeh", verbose = FALSE, ret = TRUE) {
+next_closure_concepts <- function(I, grades_set, attrs, connection = "standard", name = "Godel", verbose = FALSE, ret = TRUE) {
     .Call(`_fcaR_next_closure_concepts`, I, grades_set, attrs, connection, name, verbose, ret)
 }
 
@@ -302,7 +294,7 @@ calculate_dimension_heuristic_cpp <- function(i_idx, p_idx, n) {
     .Call(`_fcaR_calculate_dimension_heuristic_cpp`, i_idx, p_idx, n)
 }
 
-find_protoconcepts_cpp <- function(I, connection = "standard", name = "Zadeh", verbose = FALSE) {
+find_protoconcepts_cpp <- function(I, connection = "standard", name = "Godel", verbose = FALSE) {
     .Call(`_fcaR_find_protoconcepts_cpp`, I, connection, name, verbose)
 }
 

@@ -7,7 +7,7 @@
   proper_code <- if (proper) 1 else 2
 
   # --- DETECCIÓN DE TIPO ---
-  is_binary <- inherits(x, "ngCMatrix") && inherits(y, "ngCMatrix")
+  is_binary <- inherits(x, "nMatrix") && inherits(y, "nMatrix")
 
   if (!is_binary) {
     if (!("x" %in% slotNames(x))) x <- as(x, "dgCMatrix")
@@ -53,7 +53,7 @@
   if (is.null(y)) y <- x
   if (!inherits(y, "CsparseMatrix")) y <- as(y, "CsparseMatrix")
 
-  is_binary <- inherits(x, "nMatrix") && inherits(y, "ngCMatrix")
+  is_binary <- inherits(x, "nMatrix") && inherits(y, "nMatrix")
 
   if (!is_binary) {
     if (!("x" %in% slotNames(x))) x <- as(x, "dgCMatrix")

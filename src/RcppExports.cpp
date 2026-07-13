@@ -104,30 +104,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// tnorm_Zadeh
-double tnorm_Zadeh(double x, double y);
-RcppExport SEXP _fcaR_tnorm_Zadeh(SEXP xSEXP, SEXP ySEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< double >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(tnorm_Zadeh(x, y));
-    return rcpp_result_gen;
-END_RCPP
-}
-// implication_Zadeh
-double implication_Zadeh(double x, double y);
-RcppExport SEXP _fcaR_implication_Zadeh(SEXP xSEXP, SEXP ySEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< double >::type x(xSEXP);
-    Rcpp::traits::input_parameter< double >::type y(ySEXP);
-    rcpp_result_gen = Rcpp::wrap(implication_Zadeh(x, y));
-    return rcpp_result_gen;
-END_RCPP
-}
 // tnorm_Lukasiewicz
 double tnorm_Lukasiewicz(double x, double y);
 RcppExport SEXP _fcaR_tnorm_Lukasiewicz(SEXP xSEXP, SEXP ySEXP) {
@@ -1275,8 +1251,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_check_modularity_sparse", (DL_FUNC) &_fcaR_check_modularity_sparse, 7},
     {"_fcaR_check_semimodularity_sparse", (DL_FUNC) &_fcaR_check_semimodularity_sparse, 9},
     {"_fcaR_check_atomicity_sparse", (DL_FUNC) &_fcaR_check_atomicity_sparse, 5},
-    {"_fcaR_tnorm_Zadeh", (DL_FUNC) &_fcaR_tnorm_Zadeh, 2},
-    {"_fcaR_implication_Zadeh", (DL_FUNC) &_fcaR_implication_Zadeh, 2},
     {"_fcaR_tnorm_Lukasiewicz", (DL_FUNC) &_fcaR_tnorm_Lukasiewicz, 2},
     {"_fcaR_implication_Lukasiewicz", (DL_FUNC) &_fcaR_implication_Lukasiewicz, 2},
     {"_fcaR_tnorm_Godel", (DL_FUNC) &_fcaR_tnorm_Godel, 2},
