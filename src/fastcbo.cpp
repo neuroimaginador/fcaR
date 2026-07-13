@@ -200,7 +200,7 @@ void FuzzyFastGenerateFrom4(
 
 // [[Rcpp::export]]
 List FuzzyFCbO(NumericMatrix I, NumericVector grades_set, StringVector attrs,
-               String connection = "standard", String name = "Zadeh",
+               String connection = "standard", String name = "Godel",
                bool verbose = false) {
 
   Timer timer;

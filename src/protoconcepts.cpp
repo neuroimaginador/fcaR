@@ -92,7 +92,7 @@ SparseVector subset_to_sparse(unsigned long long subset_mask, int size) {
 }
 
 // [[Rcpp::export]]
-List find_protoconcepts_cpp(NumericMatrix I, String connection = "standard", String name = "Zadeh", bool verbose = false) {
+List find_protoconcepts_cpp(NumericMatrix I, String connection = "standard", String name = "Godel", bool verbose = false) {
   
   GaloisOperator intent_f = get_intent_function(connection);
   GaloisOperator extent_f = get_extent_function(connection);

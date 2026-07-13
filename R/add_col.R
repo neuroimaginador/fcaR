@@ -8,7 +8,7 @@ add_col <- function(M, sparse_v) {
   newM@p <- c(newM@p, max(newM@p) + length(sparse_v@i))
   newM@Dim[2] <- as.integer(newM@Dim[2] + 1)
 
-  if (!methods::is(M, "ngCMatrix")) {
+  if (!methods::is(M, "nMatrix")) {
 
     newM@x <- c(newM@x, sparse_v@x)
 

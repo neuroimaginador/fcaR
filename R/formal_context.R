@@ -1265,8 +1265,8 @@ FormalContext <- R6::R6Class(
       U_num <- matrix(as.numeric(res$U), nrow = nrow(res$U), ncol = ncol(res$U))
       V_num <- matrix(as.numeric(res$V), nrow = nrow(res$V), ncol = ncol(res$V))
 
-      U_sparse <- methods::as(Matrix::Matrix(U_num, sparse = TRUE), "ngCMatrix")
-      V_sparse <- methods::as(Matrix::Matrix(V_num, sparse = TRUE), "ngCMatrix")
+      U_sparse <- methods::as(Matrix::Matrix(U_num, sparse = TRUE), "nMatrix")
+      V_sparse <- methods::as(Matrix::Matrix(V_num, sparse = TRUE), "nMatrix")
 
       n_factors <- ncol(U_sparse)
       factor_names <- paste0("F", seq_len(n_factors))
@@ -2087,7 +2087,7 @@ FormalContext <- R6::R6Class(
     }
   ),
   private = list(
-    logic = "Zadeh",
+    logic = "Godel",
     arrow_rels = NULL,
     connection = "standard",
     is_binary = FALSE,

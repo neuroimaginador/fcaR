@@ -413,7 +413,7 @@ void inclose_core(double *I, double *grades_set, int r, int y, int gr,
 
 // [[Rcpp::export]]
 List InClose(NumericMatrix I, NumericVector grades_set, StringVector attrs,
-             String connection = "standard", String name = "Zadeh",
+             String connection = "standard", String name = "Godel",
              bool verbose = false) {
 
   Timer timer;

@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <queue>
+#include <memory>
 
 using namespace Rcpp;
 
@@ -74,15 +75,15 @@ List hyper_plus_optimized_cpp(LogicalMatrix I_mat, List hyper_res, double beta =
     LogicalMatrix res_U = hyper_res["U"], res_V = hyper_res["V"];
     int k_in = res_U.ncol();
     
-    std::vector<HyperRect*> active_scdb;
-    std::vector<HyperRect*> rect_by_id; // O(1) LOOKUP
+    std::vector<std::shared_ptr<HyperRect>> active_scdb;
+    std::vector<std::shared_ptr<HyperRect>> rect_by_id; // O(1) LOOKUP
     rect_by_id.reserve(k_in + 50000); 
 
     std::vector<std::vector<int>> item_to_rects(num_items);
     std::vector<std::vector<int>> tx_to_rects(num_tx);
     
     for (int f = 0; f < k_in; f++) {
-        HyperRect* hr = new HyperRect(f, wB, wA);
+        auto hr = std::make_shared<HyperRect>(f, wB, wA);
         for (int t = 0; t < num_tx; t++) if (res_U(t, f)) { hr->T.push_back(t); set_bit(hr->T_mask, t); tx_to_rects[t].push_back(f); }
         for (int j = 0; j < num_items; j++) if (res_V(f, j)) { hr->I.push_back(j); set_bit(hr->I_mask, j); item_to_rects[j].push_back(f); }
         
@@ -95,7 +96,7 @@ List hyper_plus_optimized_cpp(LogicalMatrix I_mat, List hyper_res, double beta =
     }
 
     std::vector<Bitset64> Covered(num_tx, Bitset64(wA, 0ULL));
-    for (auto* hr : active_scdb) {
+    for (const auto& hr : active_scdb) {
         for (int t : hr->T) for (int w : hr->active_wA) Covered[t][w] |= hr->I_mask[w];
     }
     long long current_fp = 0;
@@ -104,7 +105,7 @@ List hyper_plus_optimized_cpp(LogicalMatrix I_mat, List hyper_res, double beta =
     std::priority_queue<MergeCandidate> pq;
     std::vector<bool> seen(k_in + 50000, false);
 
-    auto add_candidates = [&](HyperRect* m) {
+    auto add_candidates = [&](const std::shared_ptr<HyperRect>& m) {
         if (m->id >= (int)seen.size()) seen.resize(m->id + 10000, false);
         std::fill(seen.begin(), seen.end(), false);
         seen[m->id] = true;
@@ -114,19 +115,20 @@ List hyper_plus_optimized_cpp(LogicalMatrix I_mat, List hyper_res, double beta =
             seen[nid] = true;
             
             if (nid >= (int)rect_by_id.size()) return;
-            HyperRect* other = rect_by_id[nid];
+            auto other = rect_by_id[nid];
             if (!other || !other->active) return;
 
             int st = 0; for(int w : m->active_wB) st += __builtin_popcountll(m->T_mask[w] & other->T_mask[w]);
             int si = 0; for(int w : m->active_wA) si += __builtin_popcountll(m->I_mask[w] & other->I_mask[w]);
             int sav = st + si;
             if(sav > 0) {
-                // Use fast stack arrays (no heap allocation, no recomputation)
-                uint64_t Tu_arr[wB], Iu_arr[wA];
+                // Use standard std::vector instead of VLAs (CRAN compliant)
+                std::vector<uint64_t> Tu_arr(wB);
+                std::vector<uint64_t> Iu_arr(wA);
                 for(int w=0; w<wB; w++) Tu_arr[w] = m->T_mask[w] | other->T_mask[w];
                 for(int w=0; w<wA; w++) Iu_arr[w] = m->I_mask[w] | other->I_mask[w];
                 
-                long long nfp = compute_local_new_fp_fast(Tu_arr, Iu_arr, DB, Covered, wA, wB);
+                long long nfp = compute_local_new_fp_fast(Tu_arr.data(), Iu_arr.data(), DB, Covered, wA, wB);
                 if ((double)(current_fp + nfp) / total_ones <= beta) {
                     double r = (nfp == 0) ? (double)sav * 1e12 : (double)sav / (double)nfp;
                     pq.push({m->id, other->id, m->version, other->version, r, sav});
@@ -138,23 +140,25 @@ List hyper_plus_optimized_cpp(LogicalMatrix I_mat, List hyper_res, double beta =
         for (int tx : m->T) for (int nid : tx_to_rects[tx]) process_neighbor(nid);
     };
 
-    for(auto* h : active_scdb) add_candidates(h);
+    for(const auto& h : active_scdb) add_candidates(h);
 
     int next_id = k_in;
     while (!pq.empty()) {
         MergeCandidate top = pq.top(); pq.pop();
         
-        HyperRect *h1 = rect_by_id[top.id1];
-        HyperRect *h2 = rect_by_id[top.id2];
+        auto h1 = rect_by_id[top.id1];
+        auto h2 = rect_by_id[top.id2];
         
         if (!h1 || !h2 || !h1->active || !h2->active) continue;
         if (h1->version != top.v1 || h2->version != top.v2) continue;
 
-        uint64_t Tu_arr[wB], Iu_arr[wA];
+        // Use standard std::vector instead of VLAs
+        std::vector<uint64_t> Tu_arr(wB);
+        std::vector<uint64_t> Iu_arr(wA);
         for(int w=0; w<wB; w++) Tu_arr[w] = h1->T_mask[w] | h2->T_mask[w];
         for(int w=0; w<wA; w++) Iu_arr[w] = h1->I_mask[w] | h2->I_mask[w];
         
-        long long real_nfp = compute_local_new_fp_fast(Tu_arr, Iu_arr, DB, Covered, wA, wB);
+        long long real_nfp = compute_local_new_fp_fast(Tu_arr.data(), Iu_arr.data(), DB, Covered, wA, wB);
         if ((double)(current_fp + real_nfp) / total_ones > beta) continue;
         double real_ratio = (real_nfp == 0) ? (double)top.savings * 1e12 : (double)top.savings / (double)real_nfp;
         
@@ -164,7 +168,7 @@ List hyper_plus_optimized_cpp(LogicalMatrix I_mat, List hyper_res, double beta =
         }
 
         h1->active = false; h2->active = false;
-        HyperRect* m = new HyperRect(next_id++, wB, wA);
+        auto m = std::make_shared<HyperRect>(next_id++, wB, wA);
         
         for (int wb = 0; wb < wB; wb++) {
             m->T_mask[wb] = h1->T_mask[wb] | h2->T_mask[wb];
@@ -212,11 +216,6 @@ List hyper_plus_optimized_cpp(LogicalMatrix I_mat, List hyper_res, double beta =
     for (int f = 0; f < k_out; f++) {
         for (int t : active_scdb[f]->T) U_mat(t, f) = true;
         for (int j : active_scdb[f]->I) V_mat(f, j) = true;
-    }
-    
-    // Free allocated memory
-    for (auto* ptr : rect_by_id) {
-        delete ptr;
     }
     
     return List::create(Named("U") = U_mat, Named("V") = V_mat, Named("n_factors") = k_out);

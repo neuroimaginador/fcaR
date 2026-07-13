@@ -28,10 +28,7 @@ void zadeh_I(double x, SparseVector *A);
 
 void intersect(SparseVector *A, SparseVector B);
 
-double tnorm_Zadeh(double x, double y);
-double implication_Zadeh(double x, double y);
-double tnorm_Lukasiewicz(double x, double y);
-double implication_Lukasiewicz(double x, double y);
+
 
 S4 DenseArrayToS4(const DoubleArray& data, int nrow);
 #endif // AUX_FUNCTIONS_H

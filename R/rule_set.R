@@ -165,11 +165,11 @@ RuleSet <- R6::R6Class(
         attributes = private$attributes
       )
 
-      LHS <- as(L$lhs, "ngCMatrix")
+      LHS <- as(L$lhs, "nMatrix")
       LHS <- as(LHS, "itemMatrix")
       itemLabels(LHS) <- private$attributes
 
-      RHS <- as(L$rhs, "ngCMatrix")
+      RHS <- as(L$rhs, "nMatrix")
       RHS <- as(RHS, "itemMatrix")
       itemLabels(RHS) <- private$attributes
 

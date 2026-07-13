@@ -1,7 +1,7 @@
 # Variable, global to package's namespace.
 # This function is not exported to user space and does not need to be documented.
 MYPKGOPTIONS <- settings::options_manager(
-  logic = "Zadeh",
+  logic = "Godel",
   Galois_connection = "standard",
   decimal_places = 2,
   latex_size = "normalsize",
@@ -13,7 +13,7 @@ MYPKGOPTIONS <- settings::options_manager(
   latex_fraction = "none",
   .allowed = list(
     latex_fraction = settings::inlist("none", "frac", "dfrac", "sfrac", "nicefrac"),
-    logic = settings::inlist("Zadeh", "Lukasiewicz"),
+    logic = settings::inlist("Godel", "Lukasiewicz"),
     Galois_connection = settings::inlist("standard", "benevolent1", "benevolent2"),
     latex_size = settings::inlist("tiny",
                                   "scriptsize",
