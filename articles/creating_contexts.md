@@ -145,111 +145,6 @@ meta <- get_fcarepository_contexts()
 # Print a detailed summary to the console
 # (Shows Title, Dimensions, and Description for each entry)
 print_repo_details(meta)
-#> Found 20 formal contexts in the repository:
-#> ======================================== 
-#> 
-#> * animals_en.cxt
-#>     Title:        Animals
-#>     Dimensions:   35 objects x 11 attributes
-#>     Description:  animals and their characteristics
-#> 
-#> * binary_relations_en.cxt
-#>     Title:        Properties of binary relations
-#>     Dimensions:   14 objects x 9 attributes
-#>     Description:  Properties of binary relations
-#> 
-#> * bodiesofwater_de.cxt
-#>     Title:        Gewässer
-#>     Dimensions:   8 objects x 6 attributes
-#>     Description:  bodies of water and their properties
-#> 
-#> * bodiesofwater_en.cxt
-#>     Title:        Bodies of water
-#>     Dimensions:   17 objects x 5 attributes
-#>     Description:  bodies of water and their properties
-#> 
-#> * driveconcepts_de.cxt
-#>     Title:        Drive Concepts
-#>     Dimensions:   5 objects x 25 attributes
-#>     Description:  drive concepts for motorcars
-#> 
-#> * driveconcepts_en.cxt
-#>     Title:        Drive concepts
-#>     Dimensions:   5 objects x 25 attributes
-#>     Description:  drive concepts for motorcars
-#> 
-#> * famous_animals_en.cxt
-#>     Title:        Famous Animals
-#>     Dimensions:   5 objects x 6 attributes
-#>     Description:  famous animals and their characteristics
-#> 
-#> * forum_romanum_en.cxt
-#>     Title:        Forum Romanum
-#>     Dimensions:   14 objects x 7 attributes
-#>     Description:  Ratings of monuments on the Forum Romanum in different
-#>                travel guides.
-#> 
-#> * livingbeings_de.cxt
-#>     Title:        Lebewesen und Wasser
-#>     Dimensions:   8 objects x 9 attributes
-#>     Description:  conditions different living beings need
-#> 
-#> * livingbeings_en.cxt
-#>     Title:        Living beings and water
-#>     Dimensions:   8 objects x 9 attributes
-#>     Description:  conditions different living beings need
-#> 
-#> * missmarple_de.cxt
-#>     Title:        Mordmethoden in Miss-Marple-Romanen
-#>     Dimensions:   12 objects x 6 attributes
-#>     Description:  methods of murder in Miss Marple novels (not short
-#>                stories!)
-#> 
-#> * missmarple_en.cxt
-#>     Title:        Methods of murder in Miss Marple novels
-#>     Dimensions:   12 objects x 6 attributes
-#>     Description:  methods of murder in Miss Marple novels (not short
-#>                stories!)
-#> 
-#> * music_en.cxt
-#>     Title:        Music
-#>     Dimensions:   31 objects x 11 attributes
-#>     Description:  music and their characteristics
-#> 
-#> * newzealand_en.cxt
-#>     Title:        New Zealand Leasure
-#>     Dimensions:   13 objects x 8 attributes
-#>     Description:  Places in New Zealand and offered activities
-#> 
-#> * officesupplies_de.cxt
-#>     Title:        Bürobedarf
-#>     Dimensions:   8 objects x 5 attributes
-#>     Description:  service offers of an office supplies business
-#> 
-#> * officesupplies_en.cxt
-#>     Title:        Office supply services
-#>     Dimensions:   8 objects x 5 attributes
-#>     Description:  Office supply services
-#> 
-#> * planets_en.cxt
-#>     Title:        Planets
-#>     Dimensions:   9 objects x 7 attributes
-#>     Description:  size and distance of planets
-#> 
-#> * seasoningplanner_de.cxt
-#>     Title:        Gewürzplaner
-#>     Dimensions:   56 objects x 37 attributes
-#>     Description:  spices and herbs together and the meals they match
-#> 
-#> * tealady.cxt
-#>     Title:        Tea Ladies
-#>     Dimensions:   18 objects x 14 attributes
-#>     Description:  participation of social events by some ladies in Old City
-#> 
-#> * triangles_en.cxt
-#>     Title:        Triangles
-#>     Dimensions:   7 objects x 7 attributes
-#>     Description:  Properties of triangles.
 ```
 
 ### Downloading a Specific Context
@@ -263,17 +158,10 @@ This function handles the download, parsing, and error checking for you.
 
 # Download and load the 'Planets' context
 fc_planets <- fetch_context("planets_en.cxt")
-#> ℹ Attempting to fetch "planets_en.cxt" from repository...
-#> ✔ Context loaded successfully.
-#> 
-#> - Title: Planets
-#> - Description: Size and distance of planets
-#> - Source: Anggraini, D. (2011). Analisis Perubahan Kelompok Berdasarkan Perubahan Nilai Jual Pada Bloomberg Market Data dengan Menggunakan Formal Concept Analysis, p. 7
 
 # The object is ready for analysis
 fc_planets$find_concepts()
 fc_planets$concepts$size()
-#> [1] 12
 ```
 
 ## 4. Interactive Use: The RStudio Addin

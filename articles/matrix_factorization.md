@@ -112,9 +112,6 @@ We apply the **GreConD** algorithm to decompose the context:
 
 # Factorize using GreConD
 factors <- fc$factorize(method = "GreConD")
-#> Warning in Matrix.DeprecatedCoerce(cd1, cd2): 'as(<dgCMatrix>, "ngCMatrix")' is deprecated.
-#> Use 'as(., "nMatrix")' instead.
-#> See help("Deprecated") and help("Matrix-deprecated").
 
 # The result contains two new FormalContext objects
 A <- factors$object_factor
