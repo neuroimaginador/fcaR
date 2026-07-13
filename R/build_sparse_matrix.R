@@ -1,10 +1,17 @@
 build_sparse_matrix <- function(i, p, x = NULL, dims) {
 
-  res <- structure(.Data = list(), i = i, p = p, x = x,
-                   Dim = dims, Dimnames = vector(mode = "list",
-                                                 length = length(dims)),
-                   factors = list(),
-                   class = ifelse(is.null(x), "ngCMatrix", "dgCMatrix"))
+  if (is.null(x)) {
+    # Boolean (pattern) matrix — no x slot
+    res <- Matrix::sparseMatrix(
+      i = i, p = p, index1 = FALSE,
+      dims = dims
+    )
+  } else {
+    res <- Matrix::sparseMatrix(
+      i = i, p = p, x = x, index1 = FALSE,
+      dims = dims
+    )
+  }
 
   return(res)
 

@@ -58,10 +58,6 @@ List panda_plus_unified_cpp(LogicalMatrix I_in, int k_max, std::string cost_func
     if (cost_func == "J_A") c_type = 1;
     else if (cost_func == "J_P_rho") c_type = 2;
 
-    double current_factors_cost = 0;
-    double current_error_cost = 0;
-    for(int i=0; i<m; i++) current_error_cost += count_bits(I[i]);
-
     for (int k = 0; k < k_max; ++k) {
         Rcpp::checkUserInterrupt();
 

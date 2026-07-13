@@ -104,17 +104,13 @@ int calculate_dimension_heuristic_cpp(IntegerVector i_idx, IntegerVector p_idx, 
         // Add u < v and its transitive closure
         // New reach R' is: x R' y if (x R y) OR (x R u AND v R y)
         std::vector<bool> next_reach = current_reach;
-        bool changed = false;
         
         // Optimized transitive closure update for adding one edge (u, v)
         for(int x = 0; x < n; ++x) {
           if (current_reach[u * n + x]) { // x <= u
             for(int y = 0; y < n; ++y) {
               if (current_reach[y * n + v]) { // v <= y
-                if (!current_reach[y * n + x]) {
-                  next_reach[y * n + x] = true;
-                  changed = true;
-                }
+                next_reach[y * n + x] = true;
               }
             }
           }

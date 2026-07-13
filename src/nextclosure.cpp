@@ -420,7 +420,7 @@ void compute_next_closure(SparseVector A, int i, int imax,
 List next_closure_implications(NumericMatrix I, List grades_set,
                                StringVector attrs,
                                String connection = "standard",
-                               String name = "Zadeh", bool save_concepts = true,
+                               String name = "Godel", bool save_concepts = true,
                                bool verbose = false) {
 
   auto start = std::chrono::high_resolution_clock::now(); // Marca de inicio
@@ -433,7 +433,6 @@ List next_closure_implications(NumericMatrix I, List grades_set,
   int n_attributes = attrs.size();
   int n_objects = I.nrow();
 
-  int n_imp = 0;
 
   SparseVector concepts;
   SparseVector extents;
@@ -477,7 +476,6 @@ List next_closure_implications(NumericMatrix I, List grades_set,
       // Rcout << std::endl << std::endl;
       // printImpl(empty, A, attrs);
 
-      n_imp++;
     }
   }
 
@@ -508,7 +506,6 @@ List next_closure_implications(NumericMatrix I, List grades_set,
 
   int count = 0;
 
-  double pctg, old_pctg = 0;
 
   while ((cardinal(A) < n_attributes)) {
 
@@ -630,49 +627,6 @@ List next_closure_implications(NumericMatrix I, List grades_set,
   return res;
 }
 
-// SparseVector compute_next_intent(SparseVector A,
-//                                  NumericMatrix I,
-//                                  int i,
-//                                  int imax,
-//                                  ListOf<NumericVector> grades_set,
-//                                  int* closure_count) {
-//
-//
-//   SparseVector candB;
-//   initVector(&candB, A.length);
-//
-//   int n_grades = grades_set.size();
-//   SparseVector candB2;
-//   initVector(&candB2, A.length);
-//
-//   for (int a_i = i - 1; a_i >= 0; a_i--) {
-//
-//     n_grades = grades_set[a_i].size();
-//
-//     for (int grade_idx = 1; grade_idx < n_grades; grade_idx++) {
-//
-//       compute_direct_sum(A, a_i, grades_set[a_i][grade_idx], imax, &candB);
-//
-//       candB2 = compute_closure(candB, I);
-//       cloneVector(&candB, candB2);
-//       freeVector(&candB2);
-//       (*closure_count)++;
-//
-//       if (is_set_preceding(A, candB, a_i, grades_set[a_i][grade_idx])) {
-//
-//         return candB;
-//
-//       }
-//
-//     }
-//
-//   }
-//
-//   Rprintf("Something went wrong...\n");
-//
-//   return candB;
-//
-// }
 
 void compute_next_intent(SparseVector *candB, SparseVector A, NumericMatrix I,
                          int i, int imax, ListOf<NumericVector> grades_set,
@@ -757,7 +711,7 @@ void compute_next_intent(SparseVector *candB, SparseVector A, NumericMatrix I,
 // [[Rcpp::export]]
 List next_closure_concepts(NumericMatrix I, ListOf<NumericVector> grades_set,
                            StringVector attrs, String connection = "standard",
-                           String name = "Zadeh", bool verbose = false,
+                           String name = "Godel", bool verbose = false,
                            bool ret = true) {
 
   int n_objects = I.nrow();

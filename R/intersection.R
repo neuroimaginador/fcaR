@@ -4,7 +4,9 @@
   i <- intersects_C(x@p, x@i, x@Dim,
                     y@p, y@i, y@Dim, p)
 
-  Matrix::t(methods::new("ngCMatrix", p = p, i = i,
-                         Dim = c(y@Dim[2], x@Dim[2])))
+  Matrix::t(Matrix::sparseMatrix(
+    i = i, p = p, index1 = FALSE,
+    dims = c(y@Dim[2], x@Dim[2])
+  ))
 
 }

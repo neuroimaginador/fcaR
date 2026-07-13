@@ -106,7 +106,7 @@ dim(fc_csv)
 
 You don't need to know the filenames by heart. You can browse the available contexts and see their metadata (dimensions, description, source) directly from the console.
 
-```{r repo_browse}
+```{r repo_browse, eval=FALSE}
 # Get the list of available contexts
 meta <- get_fcarepository_contexts()
 
@@ -119,7 +119,7 @@ print_repo_details(meta)
 
 Once you have identified a context of interest (e.g., `"planets_en.cxt"` or `"animals_en.cxt"`), you can download it using `fetch_context()`. This function handles the download, parsing, and error checking for you.
 
-```{r fetch}
+```{r fetch, eval=FALSE}
 # Download and load the 'Planets' context
 fc_planets <- fetch_context("planets_en.cxt")
 

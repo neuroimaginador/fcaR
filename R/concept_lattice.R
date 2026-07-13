@@ -786,7 +786,7 @@ ConceptLattice <- R6::R6Class(
       }
 
       if (is.null(private$subconcept_matrix)) {
-        private$subconcept_matrix <- as(.subset(private$pr_extents), "nMatrix")
+        private$subconcept_matrix <- .subset(private$pr_extents)
       }
 
       invisible(self)
@@ -802,7 +802,7 @@ ConceptLattice <- R6::R6Class(
       if (is.null(private$covering_matrix)) {
         private$covering_matrix <- as(
           .reduce_transitivity(private$subconcept_matrix),
-          "ngCMatrix"
+          "nMatrix"
         )
       }
 

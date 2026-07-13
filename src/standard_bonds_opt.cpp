@@ -166,7 +166,6 @@ List bonds_standard_opt_cpp(IntegerMatrix I1, IntegerMatrix I2, bool verbose = f
 
     int g1 = I1.nrow();
     int m1 = I1.ncol();
-    int g2 = I2.nrow();
     int m2 = I2.ncol();
 
     // 1. Dual of I1

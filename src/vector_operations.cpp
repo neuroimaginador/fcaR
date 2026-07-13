@@ -34,17 +34,14 @@ void insertArray(IntArray *a, int element) {
     a->size *= 2;
     int* tmp = (int *)realloc(a->array, a->size * sizeof(int));
 
-    if (tmp != NULL) {
-
-      a->array = tmp;
+    if (tmp == NULL) {
+      Rcpp::stop("insertArray (int): memory reallocation failed");
     }
+    a->array = tmp;
 
     for (size_t i = a->used; i < a->size; i++) {
-
       a->array[i] = 0;
-
     }
-
   }
   a->array[a->used++] = element;
 }
@@ -112,18 +109,14 @@ void insertArray(DoubleArray *a, double element) {
     a->size *= 2;
     double* tmp = (double *)realloc(a->array, a->size * sizeof(double));
 
-    if (tmp != NULL) {
-
-      a->array = tmp;
-
+    if (tmp == NULL) {
+      Rcpp::stop("insertArray (double): memory reallocation failed");
     }
+    a->array = tmp;
 
     for (size_t i = a->used; i < a->size; i++) {
-
       a->array[i] = 0;
-
     }
-
   }
   a->array[a->used++] = element;
 }
@@ -161,12 +154,12 @@ void initVector(SparseVector *a, size_t initialSize) {
 }
 
 void initMatrix(SparseVector *a, size_t nrow) {
-
-  initArray(&(a->p), nrow * 100000);
-  initArray(&(a->i), nrow * 100000);
-  initArray(&(a->x), nrow * 100000);
+  // Use a modest initial capacity; insertArray will realloc as needed.
+  size_t initial_cap = (nrow < 8) ? 64 : nrow * 64;
+  initArray(&(a->p), nrow + 1);
+  initArray(&(a->i), initial_cap);
+  initArray(&(a->x), initial_cap);
   a->length = nrow;
-
 }
 
 void reinitVector(SparseVector *a) {
@@ -225,43 +218,6 @@ void printVector(SparseVector A, Rcpp::StringVector attrs) {
 }
 
 
-// void printVector(SparseVector A) {
-//
-//   Rprintf("{");
-//
-//   for (size_t i = 0; i < A.i.used - 1; i++) {
-//
-//     if (A.x.array[i] < 1) {
-//
-//       Rcout << attrs[A.i.array[i]] << " [" << A.x.array[i] << "], ";
-//
-//     } else {
-//
-//       Rcout << attrs[A.i.array[i]] << ", ";
-//
-//     }
-//
-//   }
-//
-//   int end = A.i.used - 1;
-//
-//   if (end >= 0) {
-//
-//     if (A.x.array[end] < 1) {
-//
-//       Rcout << attrs[A.i.array[end]] << " [" << A.x.array[end] << "]";
-//
-//     } else {
-//
-//       Rcout << attrs[A.i.array[end]];
-//
-//     }
-//
-//   }
-//
-//   Rprintf("}");
-//
-// }
 
 void printImpl(SparseVector A,
                SparseVector B,
@@ -711,8 +667,6 @@ SparseVector set_intersection_sparse1(IntegerVector xi,
     int init_y = yp[0], end_y = yp[1];
 
     for (size_t i = init_x; i < end_x; i++) {
-
-      bool add = false;
 
       for (size_t j = init_y; j < end_y; j++) {
 
