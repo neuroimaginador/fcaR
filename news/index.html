@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,20 @@
       <small>Source: <a href="https://github.com/Malaga-FCA-group/fcaR/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.0.0" id="fcar-200">fcaR 2.0.0<a class="anchor" aria-label="anchor" href="#fcar-200"></a></h2>
+<ul><li>
+<strong>New Interactive Addin (<code>fcaRviz</code>):</strong> Introduced a brand new RStudio Addin and interactive Shiny application called <code>fcaRviz</code> to visually explore and analyze formal contexts, concept lattices, and implication sets. Run it using <code><a href="../reference/run_fcaRviz.html">run_fcaRviz()</a></code> or from the RStudio Addins menu.</li>
+<li>
+<strong>Codebase Modernization:</strong>
+<ul><li>
+<strong>Matrix Coercions:</strong> Updated sparse matrix coercions from deprecated <code>"ngCMatrix"</code> to the modern <code>"nMatrix"</code> to align with the latest versions of the <code>Matrix</code> package.</li>
+<li>
+<strong>C++ Memory Safety:</strong> Fixed compiler warnings regarding Variable Length Arrays (VLAs) and improved memory safety by using smart pointers (<code>std::shared_ptr</code>) to prevent memory leaks during user interrupts.</li>
+<li>
+<strong>Code Cleanup:</strong> Removed extensive dead and commented-out C++ code.</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.7.1" id="fcar-171">fcaR 1.7.1<a class="anchor" aria-label="anchor" href="#fcar-171"></a></h2>
 <ul><li>

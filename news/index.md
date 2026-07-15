@@ -1,5 +1,23 @@
 # Changelog
 
+## fcaR 2.0.0
+
+- **New Interactive Addin (`fcaRviz`):** Introduced a brand new RStudio
+  Addin and interactive Shiny application called `fcaRviz` to visually
+  explore and analyze formal contexts, concept lattices, and implication
+  sets. Run it using
+  [`run_fcaRviz()`](https://neuroimaginador.github.io/fcaR/reference/run_fcaRviz.md)
+  or from the RStudio Addins menu.
+- **Codebase Modernization:**
+  - **Matrix Coercions:** Updated sparse matrix coercions from
+    deprecated `"ngCMatrix"` to the modern `"nMatrix"` to align with the
+    latest versions of the `Matrix` package.
+  - **C++ Memory Safety:** Fixed compiler warnings regarding Variable
+    Length Arrays (VLAs) and improved memory safety by using smart
+    pointers (`std::shared_ptr`) to prevent memory leaks during user
+    interrupts.
+  - **Code Cleanup:** Removed extensive dead and commented-out C++ code.
+
 ## fcaR 1.7.1
 
 - **Matrix Factorization Update:** Removed fuzzy matrix factorization.

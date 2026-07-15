@@ -403,6 +403,8 @@ Journal of Approximate Reasoning*, *70*, 51-67.
   : Randomize an Existing Formal Context
 - [`rules_from_json()`](https://neuroimaginador.github.io/fcaR/reference/rules_from_json.md)
   : Import RuleSet from JSON
+- [`run_fcaRviz()`](https://neuroimaginador.github.io/fcaR/reference/run_fcaRviz.md)
+  : Launch the fcaRviz Interactive Viewer
 - [`save_tikz()`](https://neuroimaginador.github.io/fcaR/reference/save_tikz.md)
   : Save TikZ Code to File
 - [`scalingRegistry`](https://neuroimaginador.github.io/fcaR/reference/scalingRegistry.md)
