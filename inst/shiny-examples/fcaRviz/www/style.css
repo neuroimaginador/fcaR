@@ -1,0 +1,310 @@
+/* ==============================================================================
+   fcaRViz - PREMIUM MODERN STYLING SYSTEM
+   Glassmorphism, Micro-animations, Custom Scrollbars, and Adaptive Dark Mode
+   ============================================================================== */
+
+/* --- ROOT VARIABLES --- */
+:root {
+  --glass-bg-light: rgba(255, 255, 255, 0.45);
+  --glass-bg-dark: rgba(25, 28, 36, 0.65);
+  --glass-border-light: rgba(255, 255, 255, 0.25);
+  --glass-border-dark: rgba(255, 255, 255, 0.08);
+  --glass-shadow-light: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+  --glass-shadow-dark: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  
+  --primary-glow: rgba(52, 152, 219, 0.45);
+  --border-radius-premium: 14px;
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* --- BASE BODY TRANSITION --- */
+body {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* --- PREMIUM CLASS GLASSMORPHIC CARDS --- */
+.card {
+  background: var(--glass-bg-light) !important;
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid var(--glass-border-light) !important;
+  border-radius: var(--border-radius-premium) !important;
+  box-shadow: var(--glass-shadow-light) !important;
+  transition: var(--transition-smooth) !important;
+}
+
+/* Card Hover Micro-animations */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.12) !important;
+  border-color: rgba(52, 152, 219, 0.35) !important;
+}
+
+/* Card Header/Footer Clean Styling */
+.card-header {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-bottom: 1px solid var(--glass-border-light) !important;
+  border-top-left-radius: var(--border-radius-premium) !important;
+  border-top-right-radius: var(--border-radius-premium) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.card-footer {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-top: 1px solid var(--glass-border-light) !important;
+  border-bottom-left-radius: var(--border-radius-premium) !important;
+  border-bottom-right-radius: var(--border-radius-premium) !important;
+}
+
+/* --- DUSTY/BASIC ACCORDION MODERNIZATION --- */
+.accordion-item {
+  background: transparent !important;
+  border: none !important;
+  margin-bottom: 8px;
+}
+
+.accordion-button {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid var(--glass-border-light) !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  color: #2c3e50 !important;
+  box-shadow: none !important;
+  transition: var(--transition-smooth);
+}
+
+.accordion-button:not(.collapsed) {
+  background: rgba(52, 152, 219, 0.15) !important;
+  border-color: rgba(52, 152, 219, 0.3) !important;
+  color: #2980b9 !important;
+}
+
+.accordion-body {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border: 1px solid var(--glass-border-light);
+  border-top: none;
+}
+
+/* --- HIGH-END SCROLLBARS --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(44, 62, 80, 0.15);
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(44, 62, 80, 0.3);
+}
+
+/* --- BUTTONS & CONTROLS PREMIUM TOUCH --- */
+.btn {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.btn-primary, .btn-success {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+.btn-primary:hover, .btn-success:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.25) !important;
+}
+
+/* --- SIDEBAR GLOW & STYLING --- */
+.sidebar {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: var(--transition-smooth);
+}
+
+/* Main Navigation vertical buttons */
+.btn-group-vertical > .btn {
+  text-align: left !important;
+  padding: 12px 16px !important;
+  border: none !important;
+  margin-bottom: 4px;
+  border-radius: 10px !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.btn-group-vertical > .btn:hover {
+  background-color: rgba(52, 152, 219, 0.1) !important;
+  transform: translateX(4px);
+}
+
+.btn-group-vertical > .btn.active {
+  background: linear-gradient(135deg, #2c3e50, #1a252f) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+}
+
+
+/* ==============================================================================
+   DARK MODE OVERRIDES (.dark-mode active class)
+   ============================================================================== */
+
+body.dark-mode {
+  background-color: #0f111a !important;
+  color: #e2e8f0 !important;
+}
+
+/* Dark Cards Glassmorphism */
+body.dark-mode .card {
+  background: var(--glass-bg-dark) !important;
+  border: 1px solid var(--glass-border-dark) !important;
+  box-shadow: var(--glass-shadow-dark) !important;
+}
+
+body.dark-mode .card:hover {
+  box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.65) !important;
+  border-color: rgba(52, 152, 219, 0.4) !important;
+}
+
+body.dark-mode .card-header {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-bottom: 1px solid var(--glass-border-dark) !important;
+}
+
+body.dark-mode .card-footer {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-top: 1px solid var(--glass-border-dark) !important;
+}
+
+/* Dark Sidebar */
+body.dark-mode .sidebar {
+  background: rgba(18, 22, 33, 0.8) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-mode .btn-group-vertical > .btn {
+  color: #a0aec0 !important;
+}
+
+body.dark-mode .btn-group-vertical > .btn:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #fff !important;
+}
+
+body.dark-mode .btn-group-vertical > .btn.active {
+  background: linear-gradient(135deg, #34495e, #2c3e50) !important;
+  color: white !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+}
+
+/* Dark Scrollbars */
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Dark Accordion */
+body.dark-mode .accordion-button {
+  background: rgba(0, 0, 0, 0.25) !important;
+  border: 1px solid var(--glass-border-dark) !important;
+  color: #e2e8f0 !important;
+}
+
+body.dark-mode .accordion-button:not(.collapsed) {
+  background: rgba(52, 152, 219, 0.2) !important;
+  border-color: rgba(52, 152, 219, 0.4) !important;
+  color: #5dade2 !important;
+}
+
+body.dark-mode .accordion-body {
+  background: rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid var(--glass-border-dark);
+  border-top: none;
+}
+
+/* Data Tables inside Dark Mode */
+body.dark-mode .dataTables_wrapper,
+body.dark-mode table.dataTable,
+body.dark-mode table.dataTable th,
+body.dark-mode table.dataTable td {
+  color: #e2e8f0 !important;
+  border-color: var(--glass-border-dark) !important;
+}
+
+body.dark-mode table.dataTable tbody tr {
+  background-color: transparent !important;
+}
+
+body.dark-mode table.dataTable.hover tbody tr:hover, 
+body.dark-mode table.dataTable.display tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Inputs and Selectors in Dark Mode */
+body.dark-mode select, 
+body.dark-mode input, 
+body.dark-mode textarea,
+body.dark-mode .selectize-input,
+body.dark-mode .selectize-dropdown {
+  background-color: #1a1d24 !important;
+  color: #e2e8f0 !important;
+  border: 1px solid var(--glass-border-dark) !important;
+}
+
+body.dark-mode .selectize-input.focus {
+  border-color: #3498db !important;
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25) !important;
+}
+
+body.dark-mode .selectize-dropdown .active {
+  background-color: #34495e !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .selectize-dropdown .create {
+  color: #fff !important;
+}
+
+body.dark-mode .selectize-input .item {
+  background: #2c3e50 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px;
+}
+
+/* --- EXPLORATION WIZARD ARROW --- */
+.exploration-arrow {
+  color: #3498db !important; /* Vibrant primary brand blue, highly visible in Light Mode */
+  font-weight: bold;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 4px rgba(52, 152, 219, 0.2));
+  transition: var(--transition-smooth);
+}
+
+.exploration-arrow:hover {
+  transform: scale(1.25);
+  filter: drop-shadow(0 4px 10px rgba(52, 152, 219, 0.5));
+  color: #2980b9 !important; /* Darker blue on hover for interactive feel */
+}
+
+body.dark-mode .exploration-arrow {
+  color: #5dade2 !important; /* Brighter high-contrast cyan/sky blue in Dark Mode */
+}
+
+body.dark-mode .exploration-arrow:hover {
+  color: #85c1e9 !important; /* Even brighter cyan on hover in Dark Mode */
+}
+
