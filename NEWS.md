@@ -1,3 +1,5 @@
+# fcaR 2.0.0
+
 # fcaR 1.7.1
 
 * **Matrix Factorization Update:** Removed fuzzy matrix factorization. Matrix factorization is now exclusively supported for Boolean contexts. Attempting to factorize fuzzy contexts now yields a clean error.
