@@ -65,8 +65,6 @@ Useful links:
 Authors:
 \itemize{
   \item Angel Mora \email{amorabonilla@gmail.com}
-  \item Jesus Dominguez
-  \item Ana Villalon
 }
 
 }

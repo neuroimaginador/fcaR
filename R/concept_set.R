@@ -77,19 +77,30 @@ ConceptSet <- R6::R6Class(
     #' The extents of all concepts, as a \code{dgCMatrix}.
     #'
     #' @export
-    extents = function() {
-      return(private$pr_extents)
+    extents = function(as_list = FALSE) {
+      if (isTRUE(as_list)) {
+        if (self$is_empty()) {
+          return(list())
+        }
+        lapply(seq_len(ncol(private$pr_extents)), function(j) {
+          Set$new(attributes = private$objects, M = private$pr_extents[, j, drop = FALSE])
+        })
+      } else {
+        return(private$pr_extents)
+      }
     },
 
-    #' @description
-    #' Concept Intents
-    #'
-    #' @return
-    #' The intents of all concepts, as a \code{dgCMatrix}.
-    #'
-    #' @export
-    intents = function() {
-      return(private$pr_intents)
+    intents = function(as_list = FALSE) {
+      if (isTRUE(as_list)) {
+        if (self$is_empty()) {
+          return(list())
+        }
+        lapply(seq_len(ncol(private$pr_intents)), function(j) {
+          Set$new(attributes = private$attributes, M = private$pr_intents[, j, drop = FALSE])
+        })
+      } else {
+        return(private$pr_intents)
+      }
     },
 
     #' @description

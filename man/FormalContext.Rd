@@ -160,7 +160,7 @@ Hahsler M, Grun B, Hornik K (2005). “arules - a computational environment for 
 \item \href{#method-FormalContext-to_latex}{\code{FormalContext$to_latex()}}
 \item \href{#method-FormalContext-incidence}{\code{FormalContext$incidence()}}
 \item \href{#method-FormalContext-subcontext}{\code{FormalContext$subcontext()}}
-\item \href{#method-FormalContext-bracket}{\code{FormalContext$[()}}
+\item \href{#method-FormalContext-[}{\code{FormalContext$[()}}
 \item \href{#method-FormalContext-plot}{\code{FormalContext$plot()}}
 \item \href{#method-FormalContext-use_logic}{\code{FormalContext$use_logic()}}
 \item \href{#method-FormalContext-get_logic}{\code{FormalContext$get_logic()}}
@@ -340,7 +340,7 @@ A \code{FormalContext} where objects and attributes have interchanged their role
 \subsection{Method \code{intent()}}{
 Get the intent of a fuzzy set of objects
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$intent(S)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$intent(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -380,7 +380,7 @@ A \code{Set} with the intent.
 \subsection{Method \code{extent()}}{
 Get the extent of a fuzzy set of attributes
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$extent(S)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$extent(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -420,7 +420,7 @@ A \code{Set} with the intent.
 \subsection{Method \code{closure()}}{
 Get the closure of a fuzzy set of attributes
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$closure(S)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$closure(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -500,7 +500,7 @@ Is a Concept?
 \subsection{Method \code{is_closed()}}{
 Testing closure of attribute sets
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_closed(S)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormalContext$is_closed(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -1001,8 +1001,8 @@ fc$subcontext(attributes = c("moon", "no_moon"))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FormalContext-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-FormalContext-bracket}{}}}
+\if{html}{\out{<a id="method-FormalContext-["></a>}}
+\if{latex}{\out{\hypertarget{method-FormalContext-[}{}}}
 \subsection{Method \code{[()}}{
 Subcontext of the formal context
 \subsection{Usage}{

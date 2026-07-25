@@ -13,12 +13,13 @@ managing, filtering, and exporting rules.
 \itemize{
 \item \href{#method-RuleSet-new}{\code{RuleSet$new()}}
 \item \href{#method-RuleSet-get_attributes}{\code{RuleSet$get_attributes()}}
-\item \href{#method-RuleSet-bracket}{\code{RuleSet$[()}}
+\item \href{#method-RuleSet-[}{\code{RuleSet$[()}}
 \item \href{#method-RuleSet-to_arules}{\code{RuleSet$to_arules()}}
 \item \href{#method-RuleSet-add}{\code{RuleSet$add()}}
 \item \href{#method-RuleSet-cardinality}{\code{RuleSet$cardinality()}}
 \item \href{#method-RuleSet-is_empty}{\code{RuleSet$is_empty()}}
 \item \href{#method-RuleSet-size}{\code{RuleSet$size()}}
+\item \href{#method-RuleSet-total_size}{\code{RuleSet$total_size()}}
 \item \href{#method-RuleSet-print}{\code{RuleSet$print()}}
 \item \href{#method-RuleSet-get_quality}{\code{RuleSet$get_quality()}}
 \item \href{#method-RuleSet-to_latex}{\code{RuleSet$to_latex()}}
@@ -69,8 +70,8 @@ A character vector with the names of the attributes used in the rules.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RuleSet-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-RuleSet-bracket}{}}}
+\if{html}{\out{<a id="method-RuleSet-["></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-[}{}}}
 \subsection{Method \code{[()}}{
 Get a subset of the rule set
 \subsection{Usage}{
@@ -165,6 +166,19 @@ Size: number of attributes in each of LHS and RHS
 
 \subsection{Returns}{
 A matrix with two columns: the number of attributes present in each of the LHS and RHS of each rule.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-RuleSet-total_size"></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-total_size}{}}}
+\subsection{Method \code{total_size()}}{
+Total Size: cumulative sum of attributes in LHS and RHS
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RuleSet$total_size()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A named numeric vector of length 2: LHS and RHS sizes.
 }
 }
 \if{html}{\out{<hr>}}

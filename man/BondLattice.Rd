@@ -55,7 +55,7 @@ print(my_bonds[[1]])
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-bracket'><code>fcaR::ConceptSet$[()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-['><code>fcaR::ConceptSet$[()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-extents'><code>fcaR::ConceptSet$extents()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-intents'><code>fcaR::ConceptSet$intents()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-is_empty'><code>fcaR::ConceptSet$is_empty()</code></a></span></li>
@@ -82,6 +82,7 @@ print(my_bonds[[1]])
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptLattice" data-id="stability"><a href='../../fcaR/html/ConceptLattice.html#method-ConceptLattice-stability'><code>fcaR::ConceptLattice$stability()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptLattice" data-id="subconcepts"><a href='../../fcaR/html/ConceptLattice.html#method-ConceptLattice-subconcepts'><code>fcaR::ConceptLattice$subconcepts()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptLattice" data-id="sublattice"><a href='../../fcaR/html/ConceptLattice.html#method-ConceptLattice-sublattice'><code>fcaR::ConceptLattice$sublattice()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptLattice" data-id="sublattice_from"><a href='../../fcaR/html/ConceptLattice.html#method-ConceptLattice-sublattice_from'><code>fcaR::ConceptLattice$sublattice_from()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptLattice" data-id="superconcepts"><a href='../../fcaR/html/ConceptLattice.html#method-ConceptLattice-superconcepts'><code>fcaR::ConceptLattice$superconcepts()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptLattice" data-id="supremum"><a href='../../fcaR/html/ConceptLattice.html#method-ConceptLattice-supremum'><code>fcaR::ConceptLattice$supremum()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptLattice" data-id="to_json"><a href='../../fcaR/html/ConceptLattice.html#method-ConceptLattice-to_json'><code>fcaR::ConceptLattice$to_json()</code></a></span></li>

@@ -393,9 +393,16 @@ FormalContext <- R6::R6Class(
     #' @return A \code{Set} with the intent.
     #'
     #' @export
-    intent = function(S) {
+    intent = function(...) {
       if (private$is_many_valued) {
         error_many_valued()
+      }
+
+      dots <- list(...)
+      if (length(dots) == 1 && (inherits(dots[[1]], "Set") || is.numeric(dots[[1]]) || inherits(dots[[1]], "Matrix") || inherits(dots[[1]], "matrix"))) {
+        S <- dots[[1]]
+      } else {
+        S <- object_set(self, ...)
       }
 
       if (inherits(S, "Set")) {
@@ -471,11 +478,18 @@ FormalContext <- R6::R6Class(
     #' @return A \code{Set} with the intent.
     #'
     #' @export
-    extent = function(S) {
+    extent = function(...) {
       # TODO: Apply scales to Sets.
 
       if (private$is_many_valued) {
         error_many_valued()
+      }
+
+      dots <- list(...)
+      if (length(dots) == 1 && (inherits(dots[[1]], "Set") || is.numeric(dots[[1]]) || inherits(dots[[1]], "Matrix") || inherits(dots[[1]], "matrix"))) {
+        S <- dots[[1]]
+      } else {
+        S <- attribute_set(self, ...)
       }
 
       if (inherits(S, "Set")) {
@@ -551,9 +565,16 @@ FormalContext <- R6::R6Class(
     #' @return A \code{Set} with the closure.
     #'
     #' @export
-    closure = function(S) {
+    closure = function(...) {
       if (private$is_many_valued) {
         error_many_valued()
+      }
+
+      dots <- list(...)
+      if (length(dots) == 1 && (inherits(dots[[1]], "Set") || is.numeric(dots[[1]]) || inherits(dots[[1]], "Matrix") || inherits(dots[[1]], "matrix"))) {
+        S <- dots[[1]]
+      } else {
+        S <- attribute_set(self, ...)
       }
 
       if (inherits(S, "Set")) {
@@ -685,7 +706,13 @@ FormalContext <- R6::R6Class(
     #' @return
     #' \code{TRUE} if the set \code{S} is closed in this formal context.
     #' @export
-    is_closed = function(S) {
+    is_closed = function(...) {
+      dots <- list(...)
+      if (length(dots) == 1 && (inherits(dots[[1]], "Set") || is.numeric(dots[[1]]) || inherits(dots[[1]], "Matrix") || inherits(dots[[1]], "matrix"))) {
+        S <- dots[[1]]
+      } else {
+        S <- attribute_set(self, ...)
+      }
       Sc <- self$closure(S)
       return(S %==% Sc)
     },

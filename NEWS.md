@@ -1,3 +1,15 @@
+# fcaR 2.1.0
+
+* **Dynamic Method Signatures (`intent`, `extent`, `closure`, `is_closed`):** Updated `FormalContext` methods to natively support both `Set` objects and comma-separated character vectors/names (`...`).
+* **Enhanced ConceptSet Retrieval (`intents`, `extents`):** Added `as_list = FALSE` parameter. Setting it to `TRUE` returns a list of `Set` objects instead of a sparse matrix.
+* **Integrated Lattice and RuleSet Methods:**
+  * Added `ConceptLattice$sublattice_from()` to generate sublattices based on support, attributes, and rank limits.
+  * Added `RuleSet$total_size()` to easily retrieve the total LHS and RHS sizes across a rule set.
+* **New Package-Level Helper Functions:**
+  * Added `attribute_set()` and `object_set()` for quick `Set` initialization from character names.
+  * Added `recommendation_table()` to format recommendations into clean, sorted data frames.
+  * Added `iterative_recommender()` for interactive attribute exploration and recommendations.
+
 # fcaR 2.0.0
 
 * **New Interactive Addin (`fcaRviz`):** Introduced a brand new RStudio Addin and interactive Shiny application called `fcaRviz` to visually explore and analyze formal contexts, concept lattices, and implication sets. Run it using `run_fcaRviz()` or from the RStudio Addins menu.

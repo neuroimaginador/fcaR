@@ -29,7 +29,7 @@ fc_planets$concepts$meet_irreducibles()
 \item \href{#method-ConceptSet-print}{\code{ConceptSet$print()}}
 \item \href{#method-ConceptSet-to_latex}{\code{ConceptSet$to_latex()}}
 \item \href{#method-ConceptSet-to_list}{\code{ConceptSet$to_list()}}
-\item \href{#method-ConceptSet-bracket}{\code{ConceptSet$[()}}
+\item \href{#method-ConceptSet-[}{\code{ConceptSet$[()}}
 \item \href{#method-ConceptSet-sub}{\code{ConceptSet$sub()}}
 \item \href{#method-ConceptSet-support}{\code{ConceptSet$support()}}
 \item \href{#method-ConceptSet-stability}{\code{ConceptSet$stability()}}
@@ -96,7 +96,7 @@ Is the lattice empty?
 \subsection{Method \code{extents()}}{
 Concept Extents
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptSet$extents()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptSet$extents(as_list = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
@@ -107,14 +107,10 @@ The extents of all concepts, as a \code{dgCMatrix}.
 \if{html}{\out{<a id="method-ConceptSet-intents"></a>}}
 \if{latex}{\out{\hypertarget{method-ConceptSet-intents}{}}}
 \subsection{Method \code{intents()}}{
-Concept Intents
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConceptSet$intents()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConceptSet$intents(as_list = FALSE)}\if{html}{\out{</div>}}
 }
 
-\subsection{Returns}{
-The intents of all concepts, as a \code{dgCMatrix}.
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-ConceptSet-print"></a>}}
@@ -169,8 +165,8 @@ A list of concepts.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ConceptSet-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-ConceptSet-bracket}{}}}
+\if{html}{\out{<a id="method-ConceptSet-["></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptSet-[}{}}}
 \subsection{Method \code{[()}}{
 Subsets a ConceptSet
 \subsection{Usage}{

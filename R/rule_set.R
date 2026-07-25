@@ -278,6 +278,19 @@ RuleSet <- R6::R6Class(
     },
 
     #' @description
+    #' Total Size: cumulative sum of attributes in LHS and RHS
+    #'
+    #' @return A named numeric vector of length 2: LHS and RHS sizes.
+    #' @export
+    total_size = function() {
+      s <- self$size()
+      if (is.null(s) || length(s) == 0L) {
+        return(c(LHS = 0, RHS = 0))
+      }
+      return(colSums(s))
+    },
+
+    #' @description
     #' Print all rules to text
     #'
     #' @return A string with all the rules in the set.

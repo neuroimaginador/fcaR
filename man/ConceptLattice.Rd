@@ -48,6 +48,7 @@ fc$concepts$bottom()
 \item \href{#method-ConceptLattice-new}{\code{ConceptLattice$new()}}
 \item \href{#method-ConceptLattice-plot}{\code{ConceptLattice$plot()}}
 \item \href{#method-ConceptLattice-sublattice}{\code{ConceptLattice$sublattice()}}
+\item \href{#method-ConceptLattice-sublattice_from}{\code{ConceptLattice$sublattice_from()}}
 \item \href{#method-ConceptLattice-top}{\code{ConceptLattice$top()}}
 \item \href{#method-ConceptLattice-bottom}{\code{ConceptLattice$bottom()}}
 \item \href{#method-ConceptLattice-join_irreducibles}{\code{ConceptLattice$join_irreducibles()}}
@@ -76,7 +77,7 @@ fc$concepts$bottom()
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-bracket'><code>fcaR::ConceptSet$[()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="["><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-['><code>fcaR::ConceptSet$[()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="extents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-extents'><code>fcaR::ConceptSet$extents()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="intents"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-intents'><code>fcaR::ConceptSet$intents()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="fcaR" data-topic="ConceptSet" data-id="is_empty"><a href='../../fcaR/html/ConceptSet.html#method-ConceptSet-is_empty'><code>fcaR::ConceptSet$is_empty()</code></a></span></li>
@@ -194,6 +195,40 @@ As argument, one can provide both integer indices or \code{Concepts}, separated 
 
 \subsection{Returns}{
 The generated sublattice as a new \code{ConceptLattice} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConceptLattice-sublattice_from"></a>}}
+\if{latex}{\out{\hypertarget{method-ConceptLattice-sublattice_from}{}}}
+\subsection{Method \code{sublattice_from()}}{
+Build a sublattice from selected concepts
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConceptLattice$sublattice_from(
+  attributes = NULL,
+  match = c("all", "any"),
+  min_support = 0,
+  top_n = 7L,
+  verbose = TRUE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{attributes}}{Character vector of attribute names, or \code{NULL} (default).}
+
+\item{\code{match}}{\code{"all"} (default) or \code{"any"}: how to combine several attributes.}
+
+\item{\code{min_support}}{Numeric in \eqn{[0, 1]}. Discard concepts with smaller support.}
+
+\item{\code{top_n}}{Integer or \code{NULL}. Keep the \code{top_n} concepts with highest support.}
+
+\item{\code{verbose}}{Logical; print a short summary.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{ConceptLattice} object.
 }
 }
 \if{html}{\out{<hr>}}
