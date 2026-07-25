@@ -1,8 +1,6 @@
-# uiImplications.R - (Versión 4.2: Wrapped in output.isContextLoaded check)
-
 uiImplications <- tagList(
-  conditionalPanel(
-    condition = "!output.isContextLoaded",
+  div(id = "impl_no_ctx",
+
     card(
       class = "border-0 shadow-sm py-5 text-center text-muted",
       div(class="py-5",
@@ -13,8 +11,8 @@ uiImplications <- tagList(
     )
   ),
 
-  conditionalPanel(
-    condition = "output.isContextLoaded",
+  div(id = "impl_content", style = "display:none;",
+
     div(class = "d-flex justify-content-between align-items-center mb-3",
         div(class = "d-flex align-items-center gap-2",
             h2("Implications & Rules"),
@@ -43,9 +41,8 @@ uiImplications <- tagList(
         )
     ),
 
-    # --- VISTA SI NO HAY IMPLICACIONES CALCULADAS ---
-    conditionalPanel(
-      condition = "!output.has_implications",
+    # --- NO IMPLICATIONS PANEL ---
+    div(id = "impl_no_imps_panel",
       card(
         class = "text-center py-5 border-dashed shadow-sm",
         div(
@@ -57,10 +54,9 @@ uiImplications <- tagList(
       )
     ),
 
-    # --- VISTA SI HAY IMPLICACIONES CALCULADAS ---
-    conditionalPanel(
-      condition = "output.has_implications",
-      
+    # --- HAS IMPLICATIONS PANEL ---
+    div(id = "impl_has_imps_panel", style = "display:none;",
+
       # --- ACCORDEÓN 1: FILTRADO Y CALIDAD DE LAS REGLAS ---
       accordion(
         open = "Rule filtering and quality metrics",
@@ -295,7 +291,7 @@ uiImplications <- tagList(
             )
           )
         )
+        )
       )
-    )
-  )
-)
+  ) # end impl_content
+) # end tagList

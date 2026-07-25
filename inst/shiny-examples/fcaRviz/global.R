@@ -3,31 +3,37 @@
 # ==============================================================================
 
 # 1. CARGA DE LIBRERÍAS
-library(shiny)
-library(bslib)
-library(DT)
-library(igraph)
-library(visNetwork)
-library(fcaR)
-library(Matrix)
-library(httr)
-library(jsonlite)
-library(dplyr)
-library(glue)
-library(shinycssloaders)
-library(shinyWidgets)
-library(shinyalert)
-library(datamods)
-library(xml2)
-library(readxl)
-library(rmarkdown)
-library(shinyjs)
-library(rhandsontable)
-
-# Librerías de Reglas
-library(arules)
-library(arulesViz)
-library(plotly)
+suppressPackageStartupMessages({
+  library(shiny)
+  library(bslib)
+  library(DT)
+  library(igraph)
+  library(visNetwork)
+  library(fcaR)
+  library(Matrix)
+  library(httr)
+  library(jsonlite)
+  library(dplyr)
+  library(glue)
+  library(shinycssloaders)
+  library(shinyWidgets)
+  library(shinyalert)
+  library(datamods)
+  library(xml2)
+  library(readxl)
+  library(rmarkdown)
+  library(shinyjs)
+  library(rhandsontable)
+  
+  # Librerías de Reglas
+  library(arules)
+  library(arulesViz)
+  library(plotly)
+  
+  # Paralelismo
+  library(future)
+  library(promises)
+})
 
 source("uiUploadData.R")
 source("uiBasicOperations.R")
@@ -35,9 +41,6 @@ source("uiImplications.R")
 source("uiConcepts.R")
 source("scaling_helpers.R")
 
-# Paralelismo
-library(future)
-library(promises)
 plan(multisession)
 
 # TEMA

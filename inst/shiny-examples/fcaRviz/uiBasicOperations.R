@@ -2,8 +2,7 @@ library(DT)
 library(shinycssloaders)
 
 uiBasicOperations <- tagList(
-  conditionalPanel(
-    condition = "!output.isContextLoaded",
+  div(id = "basic_no_ctx",
     card(
       class = "border-0 shadow-sm py-5 text-center text-muted",
       div(class="py-5",
@@ -14,8 +13,8 @@ uiBasicOperations <- tagList(
     )
   ),
   
-  conditionalPanel(
-    condition = "output.isContextLoaded",
+  div(id = "basic_content", style = "display:none;",
+
     layout_columns(
       col_widths = c(6, 6),
   
@@ -75,7 +74,7 @@ uiBasicOperations <- tagList(
                           uiOutput("closureResult")
           )
         )
-      )
+        )
     )
-  )
-)
+  ) # end basic_content
+) # end tagList

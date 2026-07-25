@@ -6,7 +6,6 @@ library(visNetwork)
 library(shinyWidgets)
 
 uiConcepts <- tagList(
-  useShinyjs(),
   tags$head(
     tags$script(HTML("
       (function() {
@@ -296,8 +295,7 @@ uiConcepts <- tagList(
     '))
   ),
 
-  conditionalPanel(
-    condition = "!output.isContextLoaded",
+  div(id = "concepts_no_ctx",
     card(
       class = "border-0 shadow-sm py-5 text-center text-muted",
       div(
@@ -312,8 +310,8 @@ uiConcepts <- tagList(
     )
   ),
 
-  conditionalPanel(
-    condition = "output.isContextLoaded",
+  div(id = "concepts_content", style = "display:none;",
+
     div(class = "d-flex justify-content-between align-items-center mb-3",
       h2("Concept Lattice Exploration"),
       div(class = "btn-group",
@@ -541,7 +539,7 @@ uiConcepts <- tagList(
                   )
                 )
               )
-    )
-    )
-  )
-)
+              )
+            )
+  ) # end concepts_content
+) # end tagList

@@ -8,10 +8,10 @@ source("uiConcepts.R")
 ui <- page_sidebar(
   title = "fcaRviz",
   theme = my_theme,
+  shinyjs::useShinyjs(),
 
   # Custom CSS Head and Shinyjs
   tags$head(
-    shinyjs::useShinyjs(),
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css"),
     tags$style(HTML("
       /* Estilos adicionales personalizados para FCA */

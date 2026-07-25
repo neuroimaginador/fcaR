@@ -225,11 +225,71 @@ server <- function(input, output, session) {
     updateSelectizeInput(session, "filterAttsTab", choices = atts, server = TRUE)
   })
 
-  # --- REACTIVE STATE FOR LOADED CONTEXT VIEW ---
-  output$isContextLoaded <- reactive({
-    !is.null(vals$fc)
+  # --- BROADCAST CONTEXT STATE TO JS (used by all conditionalPanels) ---
+  observe({
+    if (is.null(vals$fc)) {
+      shinyjs::runjs("Shiny.setInputValue('contextLoaded', false, {priority: 'event'});")
+    } else {
+      shinyjs::runjs("Shiny.setInputValue('contextLoaded', true, {priority: 'event'});")
+    }
   })
-  outputOptions(output, "isContextLoaded", suspendWhenHidden = FALSE)
+
+  # --- SHOW/HIDE CONTEXT TABS AND PLACEHOLDER ---
+
+  output$noContextPlaceholderUI <- renderUI({
+    if (is.null(vals$fc)) {
+      card(
+        class = "border-0 shadow-sm py-5 text-center text-muted",
+        div(class = "py-5",
+            icon("table", class = "fa-5x mb-4 text-muted"),
+            h3("No Formal Context Loaded", class = "fw-bold text-dark"),
+            p(class = "text-muted fs-5 px-4",
+              "Choose an option from the 'Context origin' menu at the top right to import, connect, or generate a context.")
+        )
+      )
+    }
+  })
+
+  # Single observer: show/hide all context-gated divs across all tabs
+  observe({
+    if (is.null(vals$fc)) {
+      shinyjs::show("impl_no_ctx");   shinyjs::hide("impl_content")
+      shinyjs::show("basic_no_ctx");  shinyjs::hide("basic_content")
+      shinyjs::show("concepts_no_ctx"); shinyjs::hide("concepts_content")
+      shinyjs::hide("contextTabsWrapper")
+    } else {
+      shinyjs::hide("impl_no_ctx");   shinyjs::show("impl_content")
+      shinyjs::hide("basic_no_ctx");  shinyjs::show("basic_content")
+      shinyjs::hide("concepts_no_ctx"); shinyjs::show("concepts_content")
+      shinyjs::show("contextTabsWrapper")
+    }
+  })
+
+  # Show/hide edit vs view panels inside the context tabs
+  observe({
+    req(vals$fc)
+    if (isTRUE(input$editMode)) {
+      shinyjs::hide("viewModePanel")
+      shinyjs::show("editModePanel")
+    } else {
+      shinyjs::show("viewModePanel")
+      shinyjs::hide("editModePanel")
+    }
+  })
+
+  # Hide Multivalued Scaling tab unless multivalued data is present
+  observe({
+    req(vals$fc)
+    shinyjs::delay(300, {
+      if (is.null(vals$multivalued_df)) {
+        bslib::nav_hide(id = "data_management_tabs", target = "Multivalued Scaling")
+      } else {
+        bslib::nav_show(id = "data_management_tabs", target = "Multivalued Scaling", select = FALSE)
+      }
+    })
+  })
+
+
 
   # ===========================================================================
   # 2. GESTIÓN DE DATOS (UPLOAD, SAVE, EDITOR)
@@ -407,7 +467,6 @@ server <- function(input, output, session) {
                          "This CSV contains non-binary numerical or categorical columns. Configure your scaling options in the 'Multivalued Scaling' tab to binarize it.", 
                          type = "info")
               
-              nav_select("data_management_tabs", selected = "Multivalued Scaling")
             }
           } else {
             vals$fc <- FormalContext$new(input$file$datapath)
@@ -827,14 +886,7 @@ server <- function(input, output, session) {
   })
 
 
-  # Dynamically show/hide Multivalued Scaling tab
-  observe({
-    if (is.null(vals$multivalued_df)) {
-      hideTab(inputId = "data_management_tabs", target = "Multivalued Scaling")
-    } else {
-      showTab(inputId = "data_management_tabs", target = "Multivalued Scaling")
-    }
-  })
+
 
 
   # --- MULTIVALUED SCALING WIZARD SERVER LOGIC ---
@@ -3009,33 +3061,42 @@ server <- function(input, output, session) {
   observeEvent(input$btnExecuteMining, {
     req(vals$fc)
     removeModal()
-    withProgress(message = "Mining implications...", value = 0.5, {
-      tryCatch({
-        mat <- t(as.matrix(vals$fc$I))
-        trans <- as(mat, "transactions")
-        params <- list(supp = input$mineSupp, conf = 1.0, minlen = input$mineMinLen, maxlen = input$mineMaxLen)
-        
-        rules_found <- apriori(trans, parameter = params, control = list(verbose = FALSE))
-        
-        n_rules <- if (is.null(rules_found)) 0L else length(rules_found)
-        if (n_rules > 0) {
-          vals$fc$implications <- convert_rules_to_fcaR_safe(rules_found, vals$fc)
-          vals$stats_orig <- list(
-            count = vals$fc$implications$cardinality(),
-            size_lhs = sum(vals$fc$implications$get_LHS_matrix()),
-            size_rhs = sum(vals$fc$implications$get_RHS_matrix())
-          )
-          vals$filtered_imps <- vals$fc$implications
-          implications_df(get_implications_dataframe(vals$fc$implications))
-          vals$trigger <- vals$trigger + 1
-          shinyalert("Success", paste("Successfully mined", length(rules_found), "implications."), type = "success")
-        } else {
-          shinyalert("No Rules", "No implications satisfied the specified support threshold.", type = "warning")
-        }
-      }, error = function(e) {
-        shinyalert("Mining Error", e$message, type = "error")
-      })
+    
+    showNotification("Mining implications in the background... You can continue browsing.", 
+                     type = "message", id = "bg_mining_notif", duration = NULL)
+    
+    mat <- t(as.matrix(vals$fc$I))
+    supp_val <- input$mineSupp
+    minlen_val <- input$mineMinLen
+    maxlen_val <- input$mineMaxLen
+    
+    future({
+      library(arules)
+      trans <- as(mat, "transactions")
+      params <- list(supp = supp_val, conf = 1.0, minlen = minlen_val, maxlen = maxlen_val)
+      apriori(trans, parameter = params, control = list(verbose = FALSE))
+    }, seed = TRUE) %...>% (function(rules_found) {
+      removeNotification("bg_mining_notif")
+      n_rules <- if (is.null(rules_found)) 0L else length(rules_found)
+      if (n_rules > 0) {
+        vals$fc$implications <- convert_rules_to_fcaR_safe(rules_found, vals$fc)
+        vals$stats_orig <- list(
+          count = vals$fc$implications$cardinality(),
+          size_lhs = sum(vals$fc$implications$get_LHS_matrix()),
+          size_rhs = sum(vals$fc$implications$get_RHS_matrix())
+        )
+        vals$filtered_imps <- vals$fc$implications
+        implications_df(get_implications_dataframe(vals$fc$implications))
+        vals$trigger <- vals$trigger + 1
+        shinyalert("Success", paste("Successfully mined", length(rules_found), "implications."), type = "success")
+      } else {
+        shinyalert("No Rules", "No implications satisfied the specified support threshold.", type = "warning")
+      }
+    }) %...!% (function(e) {
+      removeNotification("bg_mining_notif")
+      shinyalert("Mining Error", e$message, type = "error")
     })
+    NULL
   })
 
   # 3. Import from File Option (Show Modal)
@@ -3210,12 +3271,18 @@ server <- function(input, output, session) {
   })
 
   # --- IMPLICATIONS PRESENCE TRACKING & BUTTON STATE ---
-  output$has_implications <- reactive({
+  # Broadcast via shinyjs for reliable cross-tab state
+  observe({
     vals$trigger
-    req(vals$fc)
-    tryCatch(vals$fc$implications$cardinality() > 0, error = function(e) FALSE)
+    has_imps <- if (is.null(vals$fc)) FALSE else tryCatch(vals$fc$implications$cardinality() > 0, error = function(e) FALSE)
+    if (has_imps) {
+      shinyjs::hide("impl_no_imps_panel")
+      shinyjs::show("impl_has_imps_panel")
+    } else {
+      shinyjs::show("impl_no_imps_panel")
+      shinyjs::hide("impl_has_imps_panel")
+    }
   })
-  outputOptions(output, "has_implications", suspendWhenHidden = FALSE)
 
   observe({
     vals$trigger
@@ -3249,14 +3316,34 @@ server <- function(input, output, session) {
   # --- BASE COMPUTATION TAB HANDLERS ---
   observeEvent(input$btnComputeBasis, {
     req(vals$fc)
-    withProgress(message = "Reducing to canonical basis...", value = 0.5, {
-      tryCatch({
-        run_canonical_basis(from_context = FALSE)
-        shinyalert("Success", "Implication set reduced to canonical basis.", type = "success")
-      }, error = function(e) {
-        shinyalert("Error", paste("Failed to compute canonical basis:", e$message), type = "error")
-      })
+    shinyjs::disable("btnComputeBasis")
+    showNotification("Reducing to canonical basis in the background... You can continue browsing.", 
+                     type = "message", id = "bg_basis_notif", duration = NULL)
+    
+    fc_clon <- vals$fc$clone()
+    future({
+      library(fcaR)
+      source("global.R")
+      
+      has_imps <- tryCatch(fc_clon$implications$cardinality() > 0, error = function(e) FALSE)
+      if (has_imps) {
+        fc_clon$implications <- fc_clon$implications$to_basis()
+      } else {
+        safe_find_implications(fc_clon)
+      }
+      fc_clon
+    }, seed = TRUE) %...>% (function(res_fc) {
+      vals$fc <- res_fc
+      sync_implications_ui()
+      removeNotification("bg_basis_notif")
+      shinyjs::enable("btnComputeBasis")
+      shinyalert("Success", "Implication set reduced to canonical basis.", type = "success")
+    }) %...!% (function(e) {
+      removeNotification("bg_basis_notif")
+      shinyjs::enable("btnComputeBasis")
+      shinyalert("Error", paste("Failed to compute canonical basis:", e$message), type = "error")
     })
+    NULL
   })
 
   observeEvent(input$btnComputeDirectOptimal, {
@@ -3265,18 +3352,29 @@ server <- function(input, output, session) {
       shinyalert("No Implications", "Please compute implications first.", type = "warning")
       return()
     }
-    withProgress(message = "Computing direct-optimal system...", value = 0.5, {
-      tryCatch({
-        # Correct assignment: to_direct_optimal() returns a new ImplicationSet, assign it back
-        vals$fc$implications <- vals$fc$implications$to_direct_optimal()
-        vals$trigger <- vals$trigger + 1
-        vals$filtered_imps <- vals$fc$implications
-        implications_df(get_implications_dataframe(vals$fc$implications))
-        shinyalert("Success", "Direct-optimal system computed successfully.", type = "success")
-      }, error = function(e) {
-        shinyalert("Error", paste("Failed to compute direct-optimal system:", e$message), type = "error")
-      })
+    shinyjs::disable("btnComputeDirectOptimal")
+    showNotification("Computing direct-optimal system in the background... You can continue browsing.", 
+                     type = "message", id = "bg_direct_notif", duration = NULL)
+    
+    fc_clon <- vals$fc$clone()
+    future({
+      library(fcaR)
+      fc_clon$implications <- fc_clon$implications$to_direct_optimal()
+      fc_clon
+    }, seed = TRUE) %...>% (function(res_fc) {
+      vals$fc <- res_fc
+      vals$trigger <- vals$trigger + 1
+      vals$filtered_imps <- vals$fc$implications
+      implications_df(get_implications_dataframe(vals$fc$implications))
+      removeNotification("bg_direct_notif")
+      shinyjs::enable("btnComputeDirectOptimal")
+      shinyalert("Success", "Direct-optimal system computed successfully.", type = "success")
+    }) %...!% (function(e) {
+      removeNotification("bg_direct_notif")
+      shinyjs::enable("btnComputeDirectOptimal")
+      shinyalert("Error", paste("Failed to compute direct-optimal system:", e$message), type = "error")
     })
+    NULL
   })
 
   observeEvent(input$btnApplyLogic, { req(vals$fc, input$selectRulesImplications); rules_sel <- input$selectRulesImplications; avail <- fcaR::equivalencesRegistry$get_entry_names(); to_apply <- if ("all" %in% rules_sel) avail else intersect(rules_sel, avail); withProgress(message = "Applying Rules...", value = 0.5, { if(length(to_apply) > 0){ vals$fc$implications$apply_rules(rules = to_apply, batch_size = input$batchSize, parallelize = FALSE, reorder = isTRUE(input$reorder)); vals$trigger <- vals$trigger + 1; vals$filtered_imps <- vals$fc$implications; implications_df(get_implications_dataframe(vals$fc$implications)); showNotification("Rules applied.", type = "message") } }) })
@@ -3955,21 +4053,37 @@ server <- function(input, output, session) {
   # --- Start and Reset Observers ---
   observeEvent(input$btnStartExploration, {
     req(vals$fc)
+    shinyjs::disable("btnStartExploration")
+    showNotification("Initializing Attribute Exploration in the background...", 
+                     type = "message", id = "bg_expl_notif", duration = NULL)
+    
     vals$exploration_active <- TRUE
     vals$exploration_complete <- FALSE
     vals$is_refuting <- FALSE
     vals$confirmed_rules <- character(0)
     vals$refuted_rules <- character(0)
     
-    # Find implications of the current context to start
-    withProgress(message = "Initializing Attribute Exploration...", value = 0.5, {
-      safe_find_implications(vals$fc)
+    fc_clon <- vals$fc$clone()
+    future({
+      library(fcaR)
+      source("global.R")
+      safe_find_implications(fc_clon)
+      fc_clon
+    }, seed = TRUE) %...>% (function(res_fc) {
+      vals$fc <- res_fc
+      implications_df(NULL)
+      vals$trigger <- vals$trigger + 1
+      
+      removeNotification("bg_expl_notif")
+      shinyjs::enable("btnStartExploration")
+      shinyalert("Exploration Started", "Systematic knowledge acquisition is now active. Answer the questions on the right panel.", type = "info")
+    }) %...!% (function(e) {
+      vals$exploration_active <- FALSE
+      removeNotification("bg_expl_notif")
+      shinyjs::enable("btnStartExploration")
+      shinyalert("Error", paste("Failed to initialize exploration:", e$message), type = "error")
     })
-    
-    implications_df(NULL)
-    vals$trigger <- vals$trigger + 1
-    
-    shinyalert("Exploration Started", "Systematic knowledge acquisition is now active. Answer the questions on the right panel.", type = "info")
+    NULL
   })
   
   observeEvent(input$btnResetExploration, {
