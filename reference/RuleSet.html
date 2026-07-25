@@ -11,7 +11,7 @@ managing, filtering, and exporting rules."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,12 +81,13 @@ managing, filtering, and exporting rules.</p>
 
 <ul><li><p><a href="#method-RuleSet-new"><code>RuleSet$new()</code></a></p></li>
 <li><p><a href="#method-RuleSet-get_attributes"><code>RuleSet$get_attributes()</code></a></p></li>
-<li><p><a href="#method-RuleSet-bracket"><code>RuleSet$[()</code></a></p></li>
+<li><p><a href="#method-RuleSet-%5B"><code>RuleSet$[()</code></a></p></li>
 <li><p><a href="#method-RuleSet-to_arules"><code>RuleSet$to_arules()</code></a></p></li>
 <li><p><a href="#method-RuleSet-add"><code>RuleSet$add()</code></a></p></li>
 <li><p><a href="#method-RuleSet-cardinality"><code>RuleSet$cardinality()</code></a></p></li>
 <li><p><a href="#method-RuleSet-is_empty"><code>RuleSet$is_empty()</code></a></p></li>
 <li><p><a href="#method-RuleSet-size"><code>RuleSet$size()</code></a></p></li>
+<li><p><a href="#method-RuleSet-total_size"><code>RuleSet$total_size()</code></a></p></li>
 <li><p><a href="#method-RuleSet-print"><code>RuleSet$print()</code></a></p></li>
 <li><p><a href="#method-RuleSet-get_quality"><code>RuleSet$get_quality()</code></a></p></li>
 <li><p><a href="#method-RuleSet-to_latex"><code>RuleSet$to_latex()</code></a></p></li>
@@ -133,7 +134,7 @@ managing, filtering, and exporting rules.</p>
 <p>A character vector with the names of the attributes used in the rules.</p>
 </div>
 
-</div><p></p><hr><a id="method-RuleSet-bracket"></a><div class="section">
+</div><p></p><hr><a id="method-RuleSet-["></a><div class="section">
 <h3 id="method-">Method <code>[()</code><a class="anchor" aria-label="anchor" href="#method-"></a></h3>
 <p>Get a subset of the rule set</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -229,34 +230,46 @@ managing, filtering, and exporting rules.</p>
 <p>A matrix with two columns: the number of attributes present in each of the LHS and RHS of each rule.</p>
 </div>
 
-</div><p></p><hr><a id="method-RuleSet-print"></a><div class="section">
-<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
-<p>Print all rules to text</p><div class="section">
+</div><p></p><hr><a id="method-RuleSet-total_size"></a><div class="section">
+<h3 id="method-total-size-">Method <code>total_size()</code><a class="anchor" aria-label="anchor" href="#method-total-size-"></a></h3>
+<p>Total Size: cumulative sum of attributes in LHS and RHS</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">total_size</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<p>A named numeric vector of length 2: LHS and RHS sizes.</p>
+</div>
+
+</div><p></p><hr><a id="method-RuleSet-print"></a><div class="section">
+<h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
+<p>Print all rules to text</p><div class="section">
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
 <p>A string with all the rules in the set.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-get_quality"></a><div class="section">
 <h3 id="method-get-quality-">Method <code>get_quality()</code><a class="anchor" aria-label="anchor" href="#method-get-quality-"></a></h3>
 <p>Get quality metrics</p><div class="section">
-<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">get_quality</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
 <p>A data.frame with the quality metrics for each rule.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-to_latex"></a><div class="section">
 <h3 id="method-to-latex-">Method <code>to_latex()</code><a class="anchor" aria-label="anchor" href="#method-to-latex-"></a></h3>
 <p>Export to LaTeX</p><div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">to_latex</span><span class="op">(</span></span>
 <span>  print <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ncols <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -286,38 +299,38 @@ managing, filtering, and exporting rules.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
+<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
 <p>A string in LaTeX format that prints nicely all the rules.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-get_LHS_matrix"></a><div class="section">
 <h3 id="method-get-lhs-matrix-">Method <code>get_LHS_matrix()</code><a class="anchor" aria-label="anchor" href="#method-get-lhs-matrix-"></a></h3>
 <p>Get internal LHS matrix</p><div class="section">
-<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">get_LHS_matrix</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
 <p>A sparse matrix representing the LHS of the rules in the set.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-get_RHS_matrix"></a><div class="section">
 <h3 id="method-get-rhs-matrix-">Method <code>get_RHS_matrix()</code><a class="anchor" aria-label="anchor" href="#method-get-rhs-matrix-"></a></h3>
 <p>Get internal RHS matrix</p><div class="section">
-<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">get_RHS_matrix</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
 <p>A sparse matrix representing the RHS of the rules in the set.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-filter"></a><div class="section">
 <h3 id="method-filter-">Method <code><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter()</a></code><a class="anchor" aria-label="anchor" href="#method-filter-"></a></h3>
 <p>Filter rules by attributes in LHS and RHS</p><div class="section">
-<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
+<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">filter</span><span class="op">(</span></span>
 <span>  lhs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  not_lhs <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -352,50 +365,50 @@ managing, filtering, and exporting rules.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
+<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
 <p>A <code>RuleSet</code> (or subclass) that is a subset of the current set, only with those rules which have the attributes in <code>lhs</code> and <code>rhs</code> in their LHS and RHS, respectively.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-get_implications"></a><div class="section">
 <h3 id="method-get-implications-">Method <code>get_implications()</code><a class="anchor" aria-label="anchor" href="#method-get-implications-"></a></h3>
 <p>Extract the implications with confidence 1</p><div class="section">
-<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
+<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">get_implications</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
+<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
 <p>An <code>ImplicationSet</code> object containing only the rules with confidence 1.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-support"></a><div class="section">
 <h3 id="method-support-">Method <code>support()</code><a class="anchor" aria-label="anchor" href="#method-support-"></a></h3>
 <p>Compute support of each rule</p><div class="section">
-<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
+<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">support</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
+<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
 <p>A vector with the support of each rule.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-confidence"></a><div class="section">
 <h3 id="method-confidence-">Method <code>confidence()</code><a class="anchor" aria-label="anchor" href="#method-confidence-"></a></h3>
 <p>Compute the confidence of each rule</p><div class="section">
-<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
+<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">confidence</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
+<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
 <p>A numeric vector with the confidence of each rule.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-to_json"></a><div class="section">
 <h3 id="method-to-json-">Method <code>to_json()</code><a class="anchor" aria-label="anchor" href="#method-to-json-"></a></h3>
 <p>Export the rule set to JSON</p><div class="section">
-<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
+<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">to_json</span><span class="op">(</span>file <span class="op">=</span> <span class="cn">NULL</span>, return_list <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -412,14 +425,14 @@ managing, filtering, and exporting rules.</p>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
+<h4 id="returns-18">Returns<a class="anchor" aria-label="anchor" href="#returns-18"></a></h4>
 <p>A JSON string representing the rule set, or a list if <code>return_list</code> is TRUE.</p>
 </div>
 
 </div><p></p><hr><a id="method-RuleSet-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
+<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RuleSet</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -441,7 +454,7 @@ managing, filtering, and exporting rules.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p>Developed by Domingo Lopez Rodriguez, Angel Mora.</p>
 </div>
 
 <div class="pkgdown-footer-right">

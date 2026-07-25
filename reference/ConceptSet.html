@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@
 <li><p><a href="#method-ConceptSet-print"><code>ConceptSet$print()</code></a></p></li>
 <li><p><a href="#method-ConceptSet-to_latex"><code>ConceptSet$to_latex()</code></a></p></li>
 <li><p><a href="#method-ConceptSet-to_list"><code>ConceptSet$to_list()</code></a></p></li>
-<li><p><a href="#method-ConceptSet-bracket"><code>ConceptSet$[()</code></a></p></li>
+<li><p><a href="#method-ConceptSet-%5B"><code>ConceptSet$[()</code></a></p></li>
 <li><p><a href="#method-ConceptSet-sub"><code>ConceptSet$sub()</code></a></p></li>
 <li><p><a href="#method-ConceptSet-support"><code>ConceptSet$support()</code></a></p></li>
 <li><p><a href="#method-ConceptSet-stability"><code>ConceptSet$stability()</code></a></p></li>
@@ -150,7 +150,7 @@
 <h3 id="method-extents-">Method <code>extents()</code><a class="anchor" aria-label="anchor" href="#method-extents-"></a></h3>
 <p>Concept Extents</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">extents</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">extents</span><span class="op">(</span>as_list <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -160,15 +160,12 @@
 
 </div><p></p><hr><a id="method-ConceptSet-intents"></a><div class="section">
 <h3 id="method-intents-">Method <code>intents()</code><a class="anchor" aria-label="anchor" href="#method-intents-"></a></h3>
-<p>Concept Intents</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">intents</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
 
 <div class="section">
-<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
-<p>The intents of all concepts, as a <code>dgCMatrix</code>.</p>
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptSet</span><span class="op">$</span><span class="fu">intents</span><span class="op">(</span>as_list <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
+
 
 </div><p></p><hr><a id="method-ConceptSet-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
@@ -178,7 +175,7 @@
 </div>
 
 <div class="section">
-<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
+<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
 <p>Nothing, just prints the concepts</p>
 </div>
 
@@ -210,7 +207,7 @@
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
+<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
 <p>The <code>LaTeX</code> code to list all concepts.</p>
 </div>
 
@@ -222,11 +219,11 @@
 </div>
 
 <div class="section">
-<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
+<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
 <p>A list of concepts.</p>
 </div>
 
-</div><p></p><hr><a id="method-ConceptSet-bracket"></a><div class="section">
+</div><p></p><hr><a id="method-ConceptSet-["></a><div class="section">
 <h3 id="method-">Method <code>[()</code><a class="anchor" aria-label="anchor" href="#method-"></a></h3>
 <p>Subsets a ConceptSet</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
@@ -242,7 +239,7 @@
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
 <p>Another ConceptSet.</p>
 </div>
 
@@ -262,7 +259,7 @@
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
 <p>The Concept.</p>
 </div>
 
@@ -274,7 +271,7 @@
 </div>
 
 <div class="section">
-<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
 <p>A vector with the support of each concept.</p>
 </div>
 
@@ -286,7 +283,7 @@
 </div>
 
 <div class="section">
-<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
 <p>A numeric vector with the stability of each concept.</p>
 </div>
 
@@ -343,7 +340,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p>Developed by Domingo Lopez Rodriguez, Angel Mora.</p>
 </div>
 
 <div class="pkgdown-footer-right">

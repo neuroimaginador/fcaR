@@ -37,6 +37,7 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_Set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/as_vector.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/attribute_set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/bonds.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/bonds_mcis.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/bonds_standard.html</loc></url>
@@ -71,14 +72,17 @@
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/implications_from_json.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/index.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/is_bond.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/iterative_recommender.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/lattice_from_json.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/lattice_plot.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/object_set.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/parse_implication.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/parse_implications.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/planets.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/print.tikz_code.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/print_repo_details.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/randomize_context.html</loc></url>
+<url><loc>https://neuroimaginador.github.io/fcaR/reference/recommendation_table.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/rules_from_json.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/run_fcaRviz.html</loc></url>
 <url><loc>https://neuroimaginador.github.io/fcaR/reference/save_tikz.html</loc></url>

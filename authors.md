@@ -7,23 +7,18 @@
 
 - **Angel Mora**. Author.
 
-- **Jesus Dominguez**. Author.
-
-- **Ana Villalon**. Author.
-
 ## Citation
 
 Source:
 [`DESCRIPTION`](https://github.com/Malaga-FCA-group/fcaR/blob/master/DESCRIPTION)
 
-Lopez Rodriguez D, Mora A, Dominguez J, Villalon A (2026). *fcaR: Formal
-Concept Analysis*. R package version 2.0.0,
-<https://github.com/Malaga-FCA-group/fcaR>.
+Lopez Rodriguez D, Mora A (2026). *fcaR: Formal Concept Analysis*. R
+package version 2.1.0, <https://github.com/Malaga-FCA-group/fcaR>.
 
     @Manual{,
       title = {fcaR: Formal Concept Analysis},
-      author = {Domingo {Lopez Rodriguez} and Angel Mora and Jesus Dominguez and Ana Villalon},
+      author = {Domingo {Lopez Rodriguez} and Angel Mora},
       year = {2026},
-      note = {R package version 2.0.0},
+      note = {R package version 2.1.0},
       url = {https://github.com/Malaga-FCA-group/fcaR},
     }

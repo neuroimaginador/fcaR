@@ -138,7 +138,7 @@ Stat Softw*, *14*, 1-25.
 
 - [`FormalContext$subcontext()`](#method-FormalContext-subcontext)
 
-- [`FormalContext$[()`](#method-FormalContext-bracket)
+- [`FormalContext$[()`](#method-FormalContext-%5B)
 
 - [`FormalContext$plot()`](#method-FormalContext-plot)
 
@@ -331,7 +331,7 @@ Get the intent of a fuzzy set of objects
 
 #### Usage
 
-    FormalContext$intent(S)
+    FormalContext$intent(...)
 
 #### Arguments
 
@@ -371,7 +371,7 @@ Get the extent of a fuzzy set of attributes
 
 #### Usage
 
-    FormalContext$extent(S)
+    FormalContext$extent(...)
 
 #### Arguments
 
@@ -411,7 +411,7 @@ Get the closure of a fuzzy set of attributes
 
 #### Usage
 
-    FormalContext$closure(S)
+    FormalContext$closure(...)
 
 #### Arguments
 
@@ -491,7 +491,7 @@ Testing closure of attribute sets
 
 #### Usage
 
-    FormalContext$is_closed(S)
+    FormalContext$is_closed(...)
 
 #### Arguments
 

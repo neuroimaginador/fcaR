@@ -22,7 +22,7 @@ This class implements the data structure and methods for concept sets.
 
 - [`ConceptSet$to_list()`](#method-ConceptSet-to_list)
 
-- [`ConceptSet$[()`](#method-ConceptSet-bracket)
+- [`ConceptSet$[()`](#method-ConceptSet-%5B)
 
 - [`ConceptSet$sub()`](#method-ConceptSet-sub)
 
@@ -104,7 +104,7 @@ Concept Extents
 
 #### Usage
 
-    ConceptSet$extents()
+    ConceptSet$extents(as_list = FALSE)
 
 #### Returns
 
@@ -114,15 +114,9 @@ The extents of all concepts, as a `dgCMatrix`.
 
 ### Method `intents()`
 
-Concept Intents
-
 #### Usage
 
-    ConceptSet$intents()
-
-#### Returns
-
-The intents of all concepts, as a `dgCMatrix`.
+    ConceptSet$intents(as_list = FALSE)
 
 ------------------------------------------------------------------------
 

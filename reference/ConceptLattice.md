@@ -18,6 +18,8 @@ lattices.
 
 - [`ConceptLattice$sublattice()`](#method-ConceptLattice-sublattice)
 
+- [`ConceptLattice$sublattice_from()`](#method-ConceptLattice-sublattice_from)
+
 - [`ConceptLattice$top()`](#method-ConceptLattice-top)
 
 - [`ConceptLattice$bottom()`](#method-ConceptLattice-bottom)
@@ -222,6 +224,48 @@ sublattice.
 #### Returns
 
 The generated sublattice as a new `ConceptLattice` object.
+
+------------------------------------------------------------------------
+
+### Method `sublattice_from()`
+
+Build a sublattice from selected concepts
+
+#### Usage
+
+    ConceptLattice$sublattice_from(
+      attributes = NULL,
+      match = c("all", "any"),
+      min_support = 0,
+      top_n = 7L,
+      verbose = TRUE
+    )
+
+#### Arguments
+
+- `attributes`:
+
+  Character vector of attribute names, or `NULL` (default).
+
+- `match`:
+
+  `"all"` (default) or `"any"`: how to combine several attributes.
+
+- `min_support`:
+
+  Numeric in \\\[0, 1\]\\. Discard concepts with smaller support.
+
+- `top_n`:
+
+  Integer or `NULL`. Keep the `top_n` concepts with highest support.
+
+- `verbose`:
+
+  Logical; print a short summary.
+
+#### Returns
+
+A `ConceptLattice` object.
 
 ------------------------------------------------------------------------
 

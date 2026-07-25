@@ -66,6 +66,7 @@ Inherited methods
 - [`fcaR::ConceptLattice$stability()`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html#method-stability)
 - [`fcaR::ConceptLattice$subconcepts()`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html#method-subconcepts)
 - [`fcaR::ConceptLattice$sublattice()`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html#method-sublattice)
+- [`fcaR::ConceptLattice$sublattice_from()`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html#method-sublattice_from)
 - [`fcaR::ConceptLattice$superconcepts()`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html#method-superconcepts)
 - [`fcaR::ConceptLattice$supremum()`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html#method-supremum)
 - [`fcaR::ConceptLattice$to_json()`](https://neuroimaginador.github.io/fcaR/reference/ConceptLattice.html#method-to_json)

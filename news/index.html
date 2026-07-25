@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,24 @@
       <small>Source: <a href="https://github.com/Malaga-FCA-group/fcaR/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.1.0" id="fcar-210">fcaR 2.1.0<a class="anchor" aria-label="anchor" href="#fcar-210"></a></h2>
+<ul><li>
+<strong>Dynamic Method Signatures (<code>intent</code>, <code>extent</code>, <code>closure</code>, <code>is_closed</code>):</strong> Updated <code>FormalContext</code> methods to natively support both <code>Set</code> objects and comma-separated character vectors/names (<code>...</code>).</li>
+<li>
+<strong>Enhanced ConceptSet Retrieval (<code>intents</code>, <code>extents</code>):</strong> Added <code>as_list = FALSE</code> parameter. Setting it to <code>TRUE</code> returns a list of <code>Set</code> objects instead of a sparse matrix.</li>
+<li>
+<strong>Integrated Lattice and RuleSet Methods:</strong>
+<ul><li>Added <code>ConceptLattice$sublattice_from()</code> to generate sublattices based on support, attributes, and rank limits.</li>
+<li>Added <code>RuleSet$total_size()</code> to easily retrieve the total LHS and RHS sizes across a rule set.</li>
+</ul></li>
+<li>
+<strong>New Package-Level Helper Functions:</strong>
+<ul><li>Added <code><a href="../reference/attribute_set.html">attribute_set()</a></code> and <code><a href="../reference/object_set.html">object_set()</a></code> for quick <code>Set</code> initialization from character names.</li>
+<li>Added <code><a href="../reference/recommendation_table.html">recommendation_table()</a></code> to format recommendations into clean, sorted data frames.</li>
+<li>Added <code><a href="../reference/iterative_recommender.html">iterative_recommender()</a></code> for interactive attribute exploration and recommendations.</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.0" id="fcar-200">fcaR 2.0.0<a class="anchor" aria-label="anchor" href="#fcar-200"></a></h2>
 <ul><li>
@@ -364,7 +382,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p>Developed by Domingo Lopez Rodriguez, Angel Mora.</p>
 </div>
 
 <div class="pkgdown-footer-right">

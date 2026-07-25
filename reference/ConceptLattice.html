@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fcaR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,6 +80,7 @@
 <ul><li><p><a href="#method-ConceptLattice-new"><code>ConceptLattice$new()</code></a></p></li>
 <li><p><a href="#method-ConceptLattice-plot"><code>ConceptLattice$plot()</code></a></p></li>
 <li><p><a href="#method-ConceptLattice-sublattice"><code>ConceptLattice$sublattice()</code></a></p></li>
+<li><p><a href="#method-ConceptLattice-sublattice_from"><code>ConceptLattice$sublattice_from()</code></a></p></li>
 <li><p><a href="#method-ConceptLattice-top"><code>ConceptLattice$top()</code></a></p></li>
 <li><p><a href="#method-ConceptLattice-bottom"><code>ConceptLattice$bottom()</code></a></p></li>
 <li><p><a href="#method-ConceptLattice-join_irreducibles"><code>ConceptLattice$join_irreducibles()</code></a></p></li>
@@ -235,15 +236,57 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 <p>The generated sublattice as a new <code>ConceptLattice</code> object.</p>
 </div>
 
+</div><p></p><hr><a id="method-ConceptLattice-sublattice_from"></a><div class="section">
+<h3 id="method-sublattice-from-">Method <code>sublattice_from()</code><a class="anchor" aria-label="anchor" href="#method-sublattice-from-"></a></h3>
+<p>Build a sublattice from selected concepts</p><div class="section">
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">sublattice_from</span><span class="op">(</span></span>
+<span>  attributes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  match <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"any"</span><span class="op">)</span>,</span>
+<span>  min_support <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  top_n <span class="op">=</span> <span class="fl">7L</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>attributes</code></dt>
+<dd><p>Character vector of attribute names, or <code>NULL</code> (default).</p></dd>
+
+
+<dt><code>match</code></dt>
+<dd><p><code>"all"</code> (default) or <code>"any"</code>: how to combine several attributes.</p></dd>
+
+
+<dt><code>min_support</code></dt>
+<dd><p>Numeric in \([0, 1]\). Discard concepts with smaller support.</p></dd>
+
+
+<dt><code>top_n</code></dt>
+<dd><p>Integer or <code>NULL</code>. Keep the <code>top_n</code> concepts with highest support.</p></dd>
+
+
+<dt><code>verbose</code></dt>
+<dd><p>Logical; print a short summary.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<p>A <code>ConceptLattice</code> object.</p>
+</div>
+
 </div><p></p><hr><a id="method-ConceptLattice-top"></a><div class="section">
 <h3 id="method-top-">Method <code>top()</code><a class="anchor" aria-label="anchor" href="#method-top-"></a></h3>
 <p>Top of a Lattice</p><div class="section">
-<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">top</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
 <p>The top of the Concept Lattice</p>
 </div>
 <div class="section">
@@ -258,12 +301,12 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </div><p></p><hr><a id="method-ConceptLattice-bottom"></a><div class="section">
 <h3 id="method-bottom-">Method <code>bottom()</code><a class="anchor" aria-label="anchor" href="#method-bottom-"></a></h3>
 <p>Bottom of a Lattice</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">bottom</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
+<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
 <p>The bottom of the Concept Lattice</p>
 </div>
 <div class="section">
@@ -278,36 +321,36 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </div><p></p><hr><a id="method-ConceptLattice-join_irreducibles"></a><div class="section">
 <h3 id="method-join-irreducibles-">Method <code>join_irreducibles()</code><a class="anchor" aria-label="anchor" href="#method-join-irreducibles-"></a></h3>
 <p>Join-irreducible Elements</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">join_irreducibles</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
+<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
 <p>The join-irreducible elements in the concept lattice.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-meet_irreducibles"></a><div class="section">
 <h3 id="method-meet-irreducibles-">Method <code>meet_irreducibles()</code><a class="anchor" aria-label="anchor" href="#method-meet-irreducibles-"></a></h3>
 <p>Meet-irreducible Elements</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">meet_irreducibles</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
+<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
 <p>The meet-irreducible elements in the concept lattice.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-decompose"></a><div class="section">
 <h3 id="method-decompose-">Method <code><a href="https://rdrr.io/r/stats/decompose.html" class="external-link">decompose()</a></code><a class="anchor" aria-label="anchor" href="#method-decompose-"></a></h3>
 <p>Decompose a concept as the supremum of meet-irreducible concepts</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">decompose</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>C</code></dt>
 <dd><p>A list of <code>Concept</code>s</p></dd>
 
@@ -315,19 +358,19 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
+<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
 <p>A list, each field is the set of meet-irreducible elements whose supremum is the corresponding element in <code>C</code>.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-supremum"></a><div class="section">
 <h3 id="method-supremum-">Method <code>supremum()</code><a class="anchor" aria-label="anchor" href="#method-supremum-"></a></h3>
 <p>Supremum of Concepts</p><div class="section">
-<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">supremum</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>See Details.</p></dd>
 
@@ -340,19 +383,19 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </div>
 
 <div class="section">
-<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
 <p>The supremum of the list of concepts.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-infimum"></a><div class="section">
 <h3 id="method-infimum-">Method <code>infimum()</code><a class="anchor" aria-label="anchor" href="#method-infimum-"></a></h3>
 <p>Infimum of Concepts</p><div class="section">
-<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">infimum</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>...</code></dt>
 <dd><p>See Details.</p></dd>
 
@@ -365,19 +408,19 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </div>
 
 <div class="section">
-<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
 <p>The infimum of the list of concepts.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-subconcepts"></a><div class="section">
 <h3 id="method-subconcepts-">Method <code>subconcepts()</code><a class="anchor" aria-label="anchor" href="#method-subconcepts-"></a></h3>
 <p>Subconcepts of a Concept</p><div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">subconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>C</code></dt>
 <dd><p>(numeric or <code>SparseConcept</code>) The concept to which determine all its subconcepts.</p></dd>
 
@@ -385,19 +428,19 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
+<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
 <p>A list with the subconcepts.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-superconcepts"></a><div class="section">
 <h3 id="method-superconcepts-">Method <code>superconcepts()</code><a class="anchor" aria-label="anchor" href="#method-superconcepts-"></a></h3>
 <p>Superconcepts of a Concept</p><div class="section">
-<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">superconcepts</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>C</code></dt>
 <dd><p>(numeric or <code>SparseConcept</code>) The concept to which determine all its superconcepts.</p></dd>
 
@@ -405,19 +448,19 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
 <p>A list with the superconcepts.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-lower_neighbours"></a><div class="section">
 <h3 id="method-lower-neighbours-">Method <code>lower_neighbours()</code><a class="anchor" aria-label="anchor" href="#method-lower-neighbours-"></a></h3>
 <p>Lower Neighbours of a Concept</p><div class="section">
-<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">lower_neighbours</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
+<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>C</code></dt>
 <dd><p>(<code>SparseConcept</code>) The concept to which find its lower neighbours</p></dd>
 
@@ -425,19 +468,19 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
 <p>A list with the lower neighbours of <code>C</code>.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-upper_neighbours"></a><div class="section">
 <h3 id="method-upper-neighbours-">Method <code>upper_neighbours()</code><a class="anchor" aria-label="anchor" href="#method-upper-neighbours-"></a></h3>
 <p>Upper Neighbours of a Concept</p><div class="section">
-<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
+<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">upper_neighbours</span><span class="op">(</span><span class="va">C</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
+<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>C</code></dt>
 <dd><p>(<code>SparseConcept</code>) The concept to which find its upper neighbours</p></dd>
 
@@ -445,19 +488,19 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
+<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
 <p>A list with the upper neighbours of <code>C</code>.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-stability"></a><div class="section">
 <h3 id="method-stability-">Method <code>stability()</code><a class="anchor" aria-label="anchor" href="#method-stability-"></a></h3>
 <p>Computes the stability of each concept.</p><div class="section">
-<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
+<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">stability</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
+<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
 <p>A numeric vector with the stability of each concept.</p>
 </div>
 
@@ -465,24 +508,24 @@ If <code>to_latex</code> is <code>TRUE</code>, it returns a <code>tikz_code</cod
 <h3 id="method-separation-">Method <code>separation()</code><a class="anchor" aria-label="anchor" href="#method-separation-"></a></h3>
 <p>Computes the separation of each concept.
 Separation is the number of objects covered by the concept but not by any of its immediate subconcepts.</p><div class="section">
-<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
+<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">separation</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
+<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
 <p>A numeric vector with the separation of each concept.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-density"></a><div class="section">
 <h3 id="method-density-">Method <code><a href="https://rdrr.io/r/stats/density.html" class="external-link">density()</a></code><a class="anchor" aria-label="anchor" href="#method-density-"></a></h3>
 <p>Computes the fuzzy density of each concept.</p><div class="section">
-<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
+<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">density</span><span class="op">(</span>I <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
+<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>I</code></dt>
 <dd><p>(Optional) The original incidence matrix. If NULL, it tries to access it from the parent FormalContext if linked.</p></dd>
 
@@ -490,7 +533,7 @@ Separation is the number of objects covered by the concept but not by any of its
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
+<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
 <p>A numeric vector with the density of each concept.</p>
 </div>
 
@@ -498,12 +541,12 @@ Separation is the number of objects covered by the concept but not by any of its
 <h3 id="method-is-distributive-">Method <code>is_distributive()</code><a class="anchor" aria-label="anchor" href="#method-is-distributive-"></a></h3>
 <p>Check if the lattice is distributive.
 A lattice is distributive if \(x \wedge (y \vee z) = (x \wedge y) \vee (x \wedge z)\) for all elements.</p><div class="section">
-<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
+<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">is_distributive</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
+<h4 id="returns-18">Returns<a class="anchor" aria-label="anchor" href="#returns-18"></a></h4>
 <p>Logical.</p>
 </div>
 
@@ -512,12 +555,12 @@ A lattice is distributive if \(x \wedge (y \vee z) = (x \wedge y) \vee (x \wedge
 <p>Check if the lattice is modular.
 A lattice is modular if \(x \le z \implies x \vee (y \wedge z) = (x \vee y) \wedge z\).
 Distributive lattices are always modular.</p><div class="section">
-<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
+<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">is_modular</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-18">Returns<a class="anchor" aria-label="anchor" href="#returns-18"></a></h4>
+<h4 id="returns-19">Returns<a class="anchor" aria-label="anchor" href="#returns-19"></a></h4>
 <p>Logical.</p>
 </div>
 
@@ -525,12 +568,12 @@ Distributive lattices are always modular.</p><div class="section">
 <h3 id="method-is-semimodular-">Method <code>is_semimodular()</code><a class="anchor" aria-label="anchor" href="#method-is-semimodular-"></a></h3>
 <p>Check if the lattice is upper semimodular.
 A lattice is upper semimodular if for every \(x, y\): if \(x\) covers \(x \wedge y\), then \(x \vee y\) covers \(y\).</p><div class="section">
-<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
+<h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">is_semimodular</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-19">Returns<a class="anchor" aria-label="anchor" href="#returns-19"></a></h4>
+<h4 id="returns-20">Returns<a class="anchor" aria-label="anchor" href="#returns-20"></a></h4>
 <p>Logical.</p>
 </div>
 
@@ -539,12 +582,12 @@ A lattice is upper semimodular if for every \(x, y\): if \(x\) covers \(x \wedge
 <p>Check if the lattice is atomic.
 A lattice is atomic if for every element \(x &gt; \bot\), there exists an atom \(a\) such that \(a \le x\).
 Atoms are elements that cover the bottom element.</p><div class="section">
-<h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
+<h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">is_atomic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-20">Returns<a class="anchor" aria-label="anchor" href="#returns-20"></a></h4>
+<h4 id="returns-21">Returns<a class="anchor" aria-label="anchor" href="#returns-21"></a></h4>
 <p>Logical.</p>
 </div>
 
@@ -552,21 +595,8 @@ Atoms are elements that cover the bottom element.</p><div class="section">
 <h3 id="method-width-">Method <code>width()</code><a class="anchor" aria-label="anchor" href="#method-width-"></a></h3>
 <p>Computes the Dilworth's width of the lattice.
 The width is the size of the largest antichain.</p><div class="section">
-<h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">width</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="returns-21">Returns<a class="anchor" aria-label="anchor" href="#returns-21"></a></h4>
-<p>Integer.</p>
-</div>
-
-</div><p></p><hr><a id="method-ConceptLattice-dimension"></a><div class="section">
-<h3 id="method-dimension-">Method <code>dimension()</code><a class="anchor" aria-label="anchor" href="#method-dimension-"></a></h3>
-<p>Computes the order dimension (Dushnik-Miller) of the lattice.
-Note: This uses a heuristic and may return an estimate for large lattices.</p><div class="section">
 <h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">dimension</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">width</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -574,15 +604,28 @@ Note: This uses a heuristic and may return an estimate for large lattices.</p><d
 <p>Integer.</p>
 </div>
 
+</div><p></p><hr><a id="method-ConceptLattice-dimension"></a><div class="section">
+<h3 id="method-dimension-">Method <code>dimension()</code><a class="anchor" aria-label="anchor" href="#method-dimension-"></a></h3>
+<p>Computes the order dimension (Dushnik-Miller) of the lattice.
+Note: This uses a heuristic and may return an estimate for large lattices.</p><div class="section">
+<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">dimension</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-23">Returns<a class="anchor" aria-label="anchor" href="#returns-23"></a></h4>
+<p>Integer.</p>
+</div>
+
 </div><p></p><hr><a id="method-ConceptLattice-set_state"></a><div class="section">
 <h3 id="method-set-state-">Method <code>set_state()</code><a class="anchor" aria-label="anchor" href="#method-set-state-"></a></h3>
 <p>Internal method to set state from JSON import</p><div class="section">
-<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
+<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">set_state</span><span class="op">(</span><span class="va">state</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
+<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>state</code></dt>
 <dd><p>List of internal state variables</p></dd>
 
@@ -593,12 +636,12 @@ Note: This uses a heuristic and may return an estimate for large lattices.</p><d
 </div><p></p><hr><a id="method-ConceptLattice-to_json"></a><div class="section">
 <h3 id="method-to-json-">Method <code>to_json()</code><a class="anchor" aria-label="anchor" href="#method-to-json-"></a></h3>
 <p>Export the concept lattice to JSON</p><div class="section">
-<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
+<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">to_json</span><span class="op">(</span>file <span class="op">=</span> <span class="cn">NULL</span>, return_list <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
+<h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>file</code></dt>
 <dd><p>(character) The path of the file to save the JSON to.</p></dd>
 
@@ -610,19 +653,19 @@ Note: This uses a heuristic and may return an estimate for large lattices.</p><d
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-23">Returns<a class="anchor" aria-label="anchor" href="#returns-23"></a></h4>
+<h4 id="returns-24">Returns<a class="anchor" aria-label="anchor" href="#returns-24"></a></h4>
 <p>A JSON string representing the concept lattice, or a list if <code>return_list</code> is TRUE.</p>
 </div>
 
 </div><p></p><hr><a id="method-ConceptLattice-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
+<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">ConceptLattice</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
+<h4 id="arguments-14">Arguments<a class="anchor" aria-label="anchor" href="#arguments-14"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 
@@ -692,7 +735,7 @@ Note: This uses a heuristic and may return an estimate for large lattices.</p><d
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Domingo Lopez Rodriguez, Angel Mora, Jesus Dominguez, Ana Villalon.</p>
+  <p>Developed by Domingo Lopez Rodriguez, Angel Mora.</p>
 </div>
 
 <div class="pkgdown-footer-right">

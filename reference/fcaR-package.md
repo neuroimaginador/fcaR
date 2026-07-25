@@ -83,10 +83,6 @@ Authors:
 
 - Angel Mora <amorabonilla@gmail.com>
 
-- Jesus Dominguez
-
-- Ana Villalon
-
 ## Examples
 
 ``` r

@@ -12,7 +12,7 @@ managing, filtering, and exporting rules.
 
 - [`RuleSet$get_attributes()`](#method-RuleSet-get_attributes)
 
-- [`RuleSet$[()`](#method-RuleSet-bracket)
+- [`RuleSet$[()`](#method-RuleSet-%5B)
 
 - [`RuleSet$to_arules()`](#method-RuleSet-to_arules)
 
@@ -23,6 +23,8 @@ managing, filtering, and exporting rules.
 - [`RuleSet$is_empty()`](#method-RuleSet-is_empty)
 
 - [`RuleSet$size()`](#method-RuleSet-size)
+
+- [`RuleSet$total_size()`](#method-RuleSet-total_size)
 
 - [`RuleSet$print()`](#method-RuleSet-print)
 
@@ -187,6 +189,20 @@ Size: number of attributes in each of LHS and RHS
 
 A matrix with two columns: the number of attributes present in each of
 the LHS and RHS of each rule.
+
+------------------------------------------------------------------------
+
+### Method `total_size()`
+
+Total Size: cumulative sum of attributes in LHS and RHS
+
+#### Usage
+
+    RuleSet$total_size()
+
+#### Returns
+
+A named numeric vector of length 2: LHS and RHS sizes.
 
 ------------------------------------------------------------------------
 

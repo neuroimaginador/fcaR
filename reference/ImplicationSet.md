@@ -62,6 +62,7 @@ Inherited methods
 - [`fcaR::RuleSet$is_empty()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-is_empty)
 - [`fcaR::RuleSet$size()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-size)
 - [`fcaR::RuleSet$to_latex()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-to_latex)
+- [`fcaR::RuleSet$total_size()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-total_size)
 
 ------------------------------------------------------------------------
 
