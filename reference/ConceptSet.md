@@ -106,17 +106,37 @@ Concept Extents
 
     ConceptSet$extents(as_list = FALSE)
 
+#### Arguments
+
+- `as_list`:
+
+  Logical. If `TRUE`, returns a list of `Set`s; otherwise, a sparse
+  matrix.
+
 #### Returns
 
-The extents of all concepts, as a `dgCMatrix`.
+The extents of all concepts.
 
 ------------------------------------------------------------------------
 
 ### Method `intents()`
 
+Concept Intents
+
 #### Usage
 
     ConceptSet$intents(as_list = FALSE)
+
+#### Arguments
+
+- `as_list`:
+
+  Logical. If `TRUE`, returns a list of `Set`s; otherwise, a sparse
+  matrix.
+
+#### Returns
+
+The intents of all concepts.
 
 ------------------------------------------------------------------------
 

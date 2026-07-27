@@ -335,9 +335,9 @@ Get the intent of a fuzzy set of objects
 
 #### Arguments
 
-- `S`:
+- `...`:
 
-  (`Set`) The set of objects to compute the intent for.
+  A `Set` of objects, or object names.
 
 #### Returns
 
@@ -375,9 +375,9 @@ Get the extent of a fuzzy set of attributes
 
 #### Arguments
 
-- `S`:
+- `...`:
 
-  (`Set`) The set of attributes to compute the extent for.
+  A `Set` of attributes, or attribute names.
 
 #### Returns
 
@@ -415,9 +415,9 @@ Get the closure of a fuzzy set of attributes
 
 #### Arguments
 
-- `S`:
+- `...`:
 
-  (`Set`) The set of attributes to compute the closure for.
+  A `Set` of attributes, or attribute names.
 
 #### Returns
 
@@ -495,9 +495,9 @@ Testing closure of attribute sets
 
 #### Arguments
 
-- `S`:
+- `...`:
 
-  A `Set` of attributes
+  A `Set` of attributes, or attribute names.
 
 #### Returns
 
