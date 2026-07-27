@@ -73,8 +73,10 @@ ConceptSet <- R6::R6Class(
     #' @description
     #' Concept Extents
     #'
+    #' @param as_list Logical. If \code{TRUE}, returns a list of \code{Set}s; otherwise, a sparse matrix.
+    #'
     #' @return
-    #' The extents of all concepts, as a \code{dgCMatrix}.
+    #' The extents of all concepts.
     #'
     #' @export
     extents = function(as_list = FALSE) {
@@ -90,6 +92,15 @@ ConceptSet <- R6::R6Class(
       }
     },
 
+    #' @description
+    #' Concept Intents
+    #'
+    #' @param as_list Logical. If \code{TRUE}, returns a list of \code{Set}s; otherwise, a sparse matrix.
+    #'
+    #' @return
+    #' The intents of all concepts.
+    #'
+    #' @export
     intents = function(as_list = FALSE) {
       if (isTRUE(as_list)) {
         if (self$is_empty()) {

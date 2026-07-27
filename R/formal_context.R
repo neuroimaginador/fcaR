@@ -388,7 +388,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Get the intent of a fuzzy set of objects
     #'
-    #' @param S   (\code{Set}) The set of objects to compute the intent for.
+    #' @param ... A \code{Set} of objects, or object names.
     #'
     #' @return A \code{Set} with the intent.
     #'
@@ -473,7 +473,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Get the extent of a fuzzy set of attributes
     #'
-    #' @param S   (\code{Set}) The set of attributes to compute the extent for.
+    #' @param ... A \code{Set} of attributes, or attribute names.
     #'
     #' @return A \code{Set} with the intent.
     #'
@@ -560,7 +560,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Get the closure of a fuzzy set of attributes
     #'
-    #' @param S   (\code{Set}) The set of attributes to compute the closure for.
+    #' @param ... A \code{Set} of attributes, or attribute names.
     #'
     #' @return A \code{Set} with the closure.
     #'
@@ -701,7 +701,7 @@ FormalContext <- R6::R6Class(
     #' @description
     #' Testing closure of attribute sets
     #'
-    #' @param S A \code{Set} of attributes
+    #' @param ... A \code{Set} of attributes, or attribute names.
     #'
     #' @return
     #' \code{TRUE} if the set \code{S} is closed in this formal context.

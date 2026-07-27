@@ -346,7 +346,7 @@ Get the intent of a fuzzy set of objects
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(\code{Set}) The set of objects to compute the intent for.}
+\item{\code{...}}{A \code{Set} of objects, or object names.}
 }
 \if{html}{\out{</div>}}
 }
@@ -386,7 +386,7 @@ Get the extent of a fuzzy set of attributes
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(\code{Set}) The set of attributes to compute the extent for.}
+\item{\code{...}}{A \code{Set} of attributes, or attribute names.}
 }
 \if{html}{\out{</div>}}
 }
@@ -426,7 +426,7 @@ Get the closure of a fuzzy set of attributes
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{(\code{Set}) The set of attributes to compute the closure for.}
+\item{\code{...}}{A \code{Set} of attributes, or attribute names.}
 }
 \if{html}{\out{</div>}}
 }
@@ -506,7 +506,7 @@ Testing closure of attribute sets
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{S}}{A \code{Set} of attributes}
+\item{\code{...}}{A \code{Set} of attributes, or attribute names.}
 }
 \if{html}{\out{</div>}}
 }
