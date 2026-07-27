@@ -12,7 +12,7 @@ managing, filtering, and exporting rules.
 
 - [`RuleSet$get_attributes()`](#method-RuleSet-get_attributes)
 
-- [`RuleSet$[()`](#method-RuleSet-%5B)
+- [`RuleSet$[()`](#method-RuleSet-bracket)
 
 - [`RuleSet$to_arules()`](#method-RuleSet-to_arules)
 
