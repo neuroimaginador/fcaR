@@ -21,7 +21,7 @@ S
 \itemize{
 \item \href{#method-Set-new}{\code{Set$new()}}
 \item \href{#method-Set-assign}{\code{Set$assign()}}
-\item \href{#method-Set-[}{\code{Set$[()}}
+\item \href{#method-Set-bracket}{\code{Set$[()}}
 \item \href{#method-Set-cardinal}{\code{Set$cardinal()}}
 \item \href{#method-Set-get_vector}{\code{Set$get_vector()}}
 \item \href{#method-Set-get_attributes}{\code{Set$get_attributes()}}
@@ -87,8 +87,8 @@ One can use both of:
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Set-["></a>}}
-\if{latex}{\out{\hypertarget{method-Set-[}{}}}
+\if{html}{\out{<a id="method-Set-bracket"></a>}}
+\if{latex}{\out{\hypertarget{method-Set-bracket}{}}}
 \subsection{Method \code{[()}}{
 Get elements by index
 \subsection{Usage}{
