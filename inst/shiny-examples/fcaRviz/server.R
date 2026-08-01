@@ -13,12 +13,96 @@ server <- function(input, output, session) {
   # ===========================================================================
   # 1. CONFIGURACIÓN GENERAL Y NAVEGACIÓN
   # ===========================================================================
-  observeEvent(input$main_nav, { nav_select("hidden_tabs", selected = input$main_nav) })
+  observeEvent(input$main_nav, {
+    req(input$main_nav)
+    updateRadioGroupButtons(session, "audit_nav", selected = character(0))
+    nav_select("hidden_tabs", selected = input$main_nav)
+  })
+
+  observeEvent(input$audit_nav, {
+    req(input$audit_nav)
+    updateRadioGroupButtons(session, "main_nav", selected = character(0))
+    nav_select("hidden_tabs", selected = input$audit_nav)
+  })
+
+  current_theme <- reactiveVal("Zephyr")
+
+  # --- GUIDED TOUR LOGIC & AUTO-START ON LAUNCH ---
+  run_guided_tour <- function() {
+    tour_steps <- data.frame(
+      element = c(
+        "#app_title_brand",
+        "#btn_context_origin",
+        "#main_nav",
+        "#main_nav",
+        "#main_nav",
+        "#main_nav",
+        "#main_nav",
+        "#audit_nav",
+        "#btnOpenSettings"
+      ),
+      intro = c(
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Overview</span><h5 class='introjs-title'>👋 Welcome to fcaRviz</h5></div><p>A state-of-the-art visual environment for Formal Concept Analysis in R. Let's take a quick guided walkthrough of your analytical workspace.</p>",
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Data Ingestion</span><h5 class='introjs-title'>📥 Context Origin</h5></div><p>Load or create Formal Contexts from multiple sources:</p><ul class='ps-3 mb-0 small'><li><b>Session Packages:</b> Restore complete <code>.fcarviz</code> archives.</li><li><b>Standard Formats:</b> Import <code>.csv</code>, <code>.cxt</code>, <code>.cex</code>, or <code>.rds</code>.</li><li><b>Repositories & Synthetic:</b> Connect online or generate random matrices.</li></ul>",
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Workspace</span><h5 class='introjs-title'>📊 Formal Contexts</h5></div><p>Inspect your binary incidence grid or edit matrix cells live. Transform multi-valued attributes automatically using the <b>Conceptual Scaling Wizard</b>.</p>",
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Algebraic Core</span><h5 class='introjs-title'>🎛️ Basic Operations</h5></div><p>Compute fundamental operators:</p><ul class='ps-3 mb-0 small'><li><b>Derivations & Closures:</b> Calculate exact Intents, Extents, and Closures.</li><li><b>Clarify & Reduce:</b> Eliminate redundant rows and columns to find the core.</li></ul>",
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Visualization</span><h5 class='introjs-title'>🕸️ Concepts Lattice</h5></div><p>Generate and interactively explore concept lattices in 2D/3D. Filter by specific objects or attributes, analyze <b>Stability</b>, and inspect <b>Irreducibles</b>.</p>",
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Rule Mining</span><h5 class='introjs-title'>📜 Implications</h5></div><p>Extract logical knowledge:</p><ul class='ps-3 mb-0 small'><li><b>Canonical Basis:</b> Compute Duquenne-Guigues minimal implication sets.</li><li><b>Logic Simplification:</b> Condense rule bases with equivalence rules.</li><li><b>Hypothesis Testing:</b> Validate arbitrary implication rules.</li></ul>",
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Decomposition</span><h5 class='introjs-title'>🧪 Labs (BMF Factorization)</h5></div><p>Decompose binary matrices into $k$ interpretable formal factors ($I \\approx A \\circ B$) using native algorithms: <b>GreConD</b>, <b>GreEss</b>, <b>RSF</b>, <b>ASSO</b>, and <b>Hyper</b>.</p>",
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Governance</span><h5 class='introjs-title'>📋 Project Info & Audit</h5></div><p>Review the timestamped timeline audit log, restore session states, or download clean, self-contained, reproducible R scripts.</p>",
+        "<div class='introjs-tooltip-header'><span class='introjs-badge'>Personalization</span><h5 class='introjs-title'>⚙️ Settings & Appearance</h5></div><p>Customize your visual palette dynamically at any time. Switch between light themes (<i>Zephyr</i>, <i>Flatly</i>) and dark modes (<i>Darkly</i>, <i>Slate</i>).</p>"
+      ),
+      position = c("right", "bottom", "right", "right", "right", "right", "right", "right", "bottom"),
+      stringsAsFactors = FALSE
+    )
+    
+    rintrojs::introjs(session, options = list(
+      steps = tour_steps,
+      scrollToElement = TRUE,
+      showBullets = TRUE,
+      showProgress = FALSE,
+      nextLabel = "Next ▶",
+      prevLabel = "◀ Back",
+      skipLabel = "✕",
+      doneLabel = "Done ✓"
+    ))
+  }
+
+  # Trigger via button
+  observeEvent(input$btnStartTour, {
+    run_guided_tour()
+  })
+
+  # Force Zephyr theme explicitly on session start
+  session$setCurrentTheme(bs_theme(version = 5, bootswatch = "zephyr"))
+
+  # Trigger automatically once when UI finishes loading on startup
+  session$onFlushed(function() {
+    run_guided_tour()
+  }, once = TRUE)
+
+  observeEvent(input$btnOpenSettings, {
+    showModal(modalDialog(
+      title = tagList(icon("sliders", class = "text-primary me-2"), "fcaRviz Settings & Appearance"),
+      easyClose = TRUE,
+      footer = modalButton("Close"),
+      
+      div(class = "p-2",
+          h6(class = "fw-bold text-uppercase text-muted small mb-3", "Application Visual Theme"),
+          selectInput("theme_selector", "Select Bootswatch Theme:",
+                      choices = c("Zephyr", "Flatly", "Yeti", "Minty", "Cosmo", "Pulse", "Sandstone", "United", "Darkly", "Slate", "Cyborg", "Superhero"),
+                      selected = current_theme(), width = "100%"),
+          p(class = "text-muted small mt-2 mb-0", icon("info-circle", class = "me-1"),
+            "Changing the theme updates the entire UI palette dynamically.")
+      )
+    ))
+  })
 
   observeEvent(input$theme_selector, {
     req(input$theme_selector)
+    current_theme(input$theme_selector)
     theme_name <- tolower(input$theme_selector)
-    new_theme <- bs_theme_update(my_theme, bootswatch = theme_name)
+    new_theme <- bs_theme(version = 5, bootswatch = theme_name)
     session$setCurrentTheme(new_theme)
     
     if (theme_name %in% c("darkly", "slate", "cyborg", "superhero")) {
@@ -26,7 +110,7 @@ server <- function(input, output, session) {
     } else {
       shinyjs::removeClass(selector = "body", class = "dark-mode")
     }
-  })
+  }, ignoreInit = TRUE)
 
   output$dataHeaderTitle <- renderText({ if(input$editMode) "Data Editor" else "Data Viewer" })
 
@@ -128,16 +212,20 @@ server <- function(input, output, session) {
         vals$trigger <- vals$trigger + 1
         
         if (type == "concepts") {
+          n_c <- tryCatch(vals$fc$concepts$size(), error = function(e) 0)
+          append_to_history_log(paste0("Computed concept lattice (", n_c, " concepts, elapsed: ", elapsed, "s)"))
           shinyalert("Done!", "Concepts computed successfully.", type = "success")
         } else {
           # Update implications statistics & cached objects
+          n_imp <- tryCatch(vals$fc$implications$cardinality(), error = function(e) 0)
           vals$stats_orig <- list(
-            count = vals$fc$implications$cardinality(),
+            count = n_imp,
             size_lhs = sum(vals$fc$implications$get_LHS_matrix()),
             size_rhs = sum(vals$fc$implications$get_RHS_matrix())
           )
           vals$filtered_imps <- vals$fc$implications
           implications_df(get_implications_dataframe(vals$fc$implications))
+          append_to_history_log(paste0("Computed implications (", n_imp, " rules, elapsed: ", elapsed, "s)"))
           shinyalert("Done!", "Implications computed successfully.", type = "success")
         }
       }, error = function(e) {
@@ -177,6 +265,43 @@ server <- function(input, output, session) {
     vals$stats_orig <- NULL
     vals$filtered_imps <- NULL
     implications_df(NULL)
+  }
+
+  # Undo stack for restoring previous context states
+  snapshot_stack <- reactiveVal(list())
+
+  push_context_snapshot <- function() {
+    if (!is.null(vals$fc)) {
+      stack <- snapshot_stack()
+      # Limit undo stack size to last 5 states
+      if (length(stack) >= 5) stack <- stack[-1]
+      
+      snapshot <- list(
+        fc = vals$fc$clone(),
+        multivalued_df = vals$multivalued_df,
+        current_doc = vals$current_doc
+      )
+      snapshot_stack(c(stack, list(snapshot)))
+    }
+  }
+
+  append_to_history_log <- function(message_text) {
+    timestamped_msg <- paste0(message_text, " at ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"))
+    current_history <- if (!is.null(vals$current_doc$history_log)) vals$current_doc$history_log else list()
+    current_history <- c(current_history, timestamped_msg)
+    
+    if (is.null(vals$current_doc)) {
+      vals$current_doc <- list(
+        title = "Active Formal Context",
+        description = "Context modified in fcaRviz session.",
+        source = "fcaRviz Session",
+        creation_method = "Interactive Session",
+        timestamp = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
+        history_log = current_history
+      )
+    } else {
+      vals$current_doc$history_log <- current_history
+    }
   }
 
   # Reset force_interactive_render flag on any dataset/context change
@@ -256,11 +381,15 @@ server <- function(input, output, session) {
       shinyjs::show("impl_no_ctx");   shinyjs::hide("impl_content")
       shinyjs::show("basic_no_ctx");  shinyjs::hide("basic_content")
       shinyjs::show("concepts_no_ctx"); shinyjs::hide("concepts_content")
+      shinyjs::show("labs_no_ctx");    shinyjs::hide("labs_content")
+      shinyjs::show("project_audit_no_ctx"); shinyjs::hide("project_audit_content")
       shinyjs::hide("contextTabsWrapper")
     } else {
       shinyjs::hide("impl_no_ctx");   shinyjs::show("impl_content")
       shinyjs::hide("basic_no_ctx");  shinyjs::show("basic_content")
       shinyjs::hide("concepts_no_ctx"); shinyjs::show("concepts_content")
+      shinyjs::hide("labs_no_ctx");    shinyjs::show("labs_content")
+      shinyjs::hide("project_audit_no_ctx"); shinyjs::show("project_audit_content")
       shinyjs::show("contextTabsWrapper")
     }
   })
@@ -302,9 +431,9 @@ server <- function(input, output, session) {
       size = "m",
       easyClose = TRUE,
       footer = modalButton("Close"),
-      fileInput("file", "Select file (.csv, .rds, .cxt, .cex):", accept = c(".csv", ".rds", ".cxt", ".cex"),
+      fileInput("file", "Select file (.fcarviz, .rds, .csv, .cxt, .cex):", accept = c(".fcarviz", ".rds", ".csv", ".cxt", ".cex"),
                 buttonLabel = "Load...", placeholder = "No file selected", width="100%"),
-      helpText("Upload a full state (.rds), binary/multivalued table (.csv), CXT context (.cxt), or ConExp (.cex).")
+      helpText("Upload a full project bundle archive (.fcarviz), native R object (.rds), binary/multivalued table (.csv), CXT context (.cxt), or ConExp (.cex).")
     ))
   })
 
@@ -408,19 +537,33 @@ server <- function(input, output, session) {
     req(input$file); ext <- tolower(tools::file_ext(input$file$name))
     withProgress(message = 'Loading...', value = 0.5, {
       tryCatch({
-        if (ext == "rds") {
+        if (ext %in% c("rds", "fcarviz")) {
           loaded_obj <- readRDS(input$file$datapath)
           vals$multivalued_df <- NULL
-          if(inherits(loaded_obj, "FormalContext")) {
+          
+          # Check if loaded object is a full fcaRviz project bundle
+          if (is.list(loaded_obj) && !is.null(loaded_obj$fc) && isTRUE(loaded_obj$is_fcarviz_bundle)) {
+            vals$fc <- loaded_obj$fc
+            if (!is.null(loaded_obj$current_doc)) vals$current_doc <- loaded_obj$current_doc
+            if (!is.null(loaded_obj$history_stack)) snapshot_stack(loaded_obj$history_stack)
+            if (!is.null(loaded_obj$bmf_results)) bmf_result_data(loaded_obj$bmf_results)
+            
+            if (!is.null(vals$fc$implications) && vals$fc$implications$cardinality() > 0)
+              implications_df(get_implications_dataframe(vals$fc$implications))
+            
+            append_to_history_log("Restored full fcaRviz project bundle state from archive.")
+            removeModal()
+            shinyalert("Project Bundle Restored", "Entire interactive session state (context, lattice, implications, BMF & history) restored successfully.", type = "success")
+          } else if(inherits(loaded_obj, "FormalContext")) {
             vals$fc <- loaded_obj
             if(!is.null(vals$fc$implications) && vals$fc$implications$cardinality() > 0)
               implications_df(get_implications_dataframe(vals$fc$implications))
             removeModal()
-            shinyalert("Project Loaded", "Context restored.", type = "success")
+            shinyalert("Project Loaded", "Native FormalContext object loaded.", type = "success")
           } else { 
             vals$fc <- FormalContext$new(loaded_obj)
             removeModal()
-            shinyalert("Data Loaded", "Matrix loaded.", type = "success") 
+            shinyalert("Data Loaded", "Incidence matrix loaded.", type = "success") 
           }
         } else if (ext == "cxt") {
           clean_path <- file.path(tempdir(), paste0("upload_", as.numeric(Sys.time()), ".cxt"))
@@ -570,6 +713,7 @@ server <- function(input, output, session) {
   # --- HANDLER PARA PERTURBACIÓN / ALEATORIZACIÓN ---
   observeEvent(input$btnPerturbCurrent, {
     req(vals$fc, input$pert_method)
+    push_context_snapshot()
     
     withProgress(message = "Randomizing current context...", value = 0.5, {
       tryCatch({
@@ -656,12 +800,57 @@ server <- function(input, output, session) {
 
   output$saveProject <- downloadHandler(
     filename = function() { paste0("fcaR_project_", format(Sys.time(), "%Y%m%d_%H%M"), ".rds") },
-    content = function(file) { req(vals$fc); saveRDS(vals$fc, file) }
+    content = function(file) {
+      req(vals$fc)
+      saveRDS(vals$fc, file)
+      append_to_history_log("Saved complete project state (.rds)")
+    }
   )
 
   output$exportCex <- downloadHandler(
     filename = function() { paste0("fcaR_context_", format(Sys.time(), "%Y%m%d_%H%M"), ".cex") },
-    content = function(file) { req(vals$fc); export_cex(vals$fc, file) }
+    content = function(file) {
+      req(vals$fc)
+      export_cex(vals$fc, file)
+      append_to_history_log("Exported formal context to ConExp (.cex)")
+    }
+  )
+
+  output$exportCxt <- downloadHandler(
+    filename = function() { paste0("fcaR_context_burmeister_", format(Sys.time(), "%Y%m%d_%H%M"), ".cxt") },
+    content = function(file) {
+      req(vals$fc)
+      if (exists("export_cxt", where = "package:fcaR")) {
+        export_cxt(vals$fc, file)
+      } else {
+        # Custom fallback for Burmeister format export
+        mat <- t(as.matrix(vals$fc$I))
+        objs <- rownames(mat)
+        atts <- colnames(mat)
+        lines <- c(
+          "B",
+          "",
+          length(objs),
+          length(atts),
+          "",
+          objs,
+          atts,
+          apply(mat, 1, function(row) paste(ifelse(row > 0, "X", "."), collapse = ""))
+        )
+        writeLines(lines, file)
+      }
+      append_to_history_log("Exported formal context to Burmeister format (.cxt)")
+    }
+  )
+
+  output$exportCsvMatrix <- downloadHandler(
+    filename = function() { paste0("fcaR_incidence_matrix_", format(Sys.time(), "%Y%m%d_%H%M"), ".csv") },
+    content = function(file) {
+      req(vals$fc)
+      mat <- t(as.matrix(vals$fc$I))
+      write.csv(mat, file, row.names = TRUE)
+      append_to_history_log("Exported incidence matrix to CSV (.csv)")
+    }
   )
 
   output$hot_context <- renderRHandsontable({
@@ -703,6 +892,7 @@ server <- function(input, output, session) {
         
         current_mat <- t(as.matrix(vals$fc$I))
         if (!identical(current_mat, mat_bin)) {
+          push_context_snapshot()
           vals$fc <- FormalContext$new(mat_bin)
           vals$trigger <- vals$trigger + 1
           implications_df(NULL)
@@ -809,48 +999,102 @@ server <- function(input, output, session) {
     # Calculate current dimensions dynamically from vals$fc
     cur_objs <- if(!is.null(vals$fc) && !is.null(vals$fc$objects)) length(vals$fc$objects) else 0
     cur_atts <- if(!is.null(vals$fc) && !is.null(vals$fc$attributes)) length(vals$fc$attributes) else 0
+
+    # Calculate context density metrics dynamically from vals$fc
+    density_val <- if (!is.null(vals$fc) && !is.null(vals$fc$I)) {
+      mat_bin <- as.matrix(vals$fc$I)
+      if (length(mat_bin) > 0) round(mean(mat_bin) * 100, 1) else 0
+    } else 0
+    
+    n_concepts_val <- if (!is.null(vals$fc) && !is.null(vals$fc$concepts) && !vals$fc$concepts$is_empty()) {
+      vals$fc$concepts$size()
+    } else NULL
+    
+    n_imps_val <- if (!is.null(vals$fc) && !is.null(vals$fc$implications) && vals$fc$implications$cardinality() > 0) {
+      vals$fc$implications$cardinality()
+    } else NULL
     
     # Metadata badges
     lang_badge <- if(!is.null(doc$language)) span(doc$language, class="badge bg-info text-white fs-6") else NULL
-    objs_badge <- span(paste0(cur_objs, " objects"), class="badge bg-secondary fs-6")
-    atts_badge <- span(paste0(cur_atts, " attributes"), class="badge bg-secondary fs-6")
-    
-    # History log list rendering
+    objs_badge <- span(icon("cube", class="me-1"), paste0(cur_objs, " objects"), class="badge bg-secondary fs-6")
+    atts_badge <- span(icon("tags", class="me-1"), paste0(cur_atts, " attributes"), class="badge bg-secondary fs-6")
+    density_badge <- span(icon("percent", class="me-1"), paste0("Density: ", density_val, "%"), class="badge bg-dark fs-6")
+    concepts_badge <- if (!is.null(n_concepts_val)) span(icon("project-diagram", class="me-1"), paste0(n_concepts_val, " concepts"), class="badge bg-success fs-6") else NULL
+    imps_badge <- span(icon("list-check", class="me-1"), paste0(if (!is.null(n_imps_val)) n_imps_val else 0, " rules"), class="badge bg-primary fs-6")
+
+    # History log list rendering as visual timeline
     history_items <- NULL
     if (!is.null(doc$history_log) && length(doc$history_log) > 0) {
-      history_items <- tags$ul(
-        class = "list-group list-group-flush border rounded mb-3",
-        lapply(doc$history_log, function(item) {
-          tags$li(class = "list-group-item py-2 px-3 small d-flex align-items-center gap-2",
-                  icon("clock", class="text-muted"),
-                  span(item))
+      history_items <- tags$div(
+        class = "timeline-container border rounded p-3 bg-white mb-3",
+        style = "max-height: 400px; overflow-y: auto;",
+        lapply(rev(doc$history_log), function(item) {
+          # Classify icon and badge color based on action string
+          icon_name <- "clock"
+          badge_class <- "bg-secondary"
+          
+          if (grepl("Imported|Created|Loaded|Generated", item, ignore.case = TRUE)) {
+            icon_name <- "file-import"
+            badge_class <- "bg-primary"
+          } else if (grepl("Clarified|Reduced|Edited|Perturbed|scaling|Added|Removed", item, ignore.case = TRUE)) {
+            icon_name <- "sliders"
+            badge_class <- "bg-warning text-dark"
+          } else if (grepl("Computed concept|Computed implications|Validated", item, ignore.case = TRUE)) {
+            icon_name <- "cogs"
+            badge_class <- "bg-success"
+          } else if (grepl("Exported|Saved|Generated and downloaded", item, ignore.case = TRUE)) {
+            icon_name <- "file-export"
+            badge_class <- "bg-info text-white"
+          } else if (grepl("Applied rule|Cleared all", item, ignore.case = TRUE)) {
+            icon_name <- "filter"
+            badge_class <- "bg-dark"
+          }
+          
+          tags$div(
+            class = "d-flex align-items-start gap-3 py-2 border-bottom",
+            span(class = paste("badge rounded-circle p-2", badge_class), icon(icon_name)),
+            div(
+              class = "flex-grow-1",
+              div(class = "small text-dark fw-medium", item)
+            )
+          )
         })
       )
     }
     
     tagList(
-      div(class="border-bottom pb-3 mb-4",
-          h3(class="fw-bold text-primary mb-1", if(!is.null(doc$title)) doc$title else "Dataset Metadata"),
-          div(class="d-flex gap-2 mt-2", lang_badge, objs_badge, atts_badge)
+      div(class="border-bottom pb-3 mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3",
+          div(class="flex-grow-1",
+              h3(class="fw-bold text-primary mb-2", if(!is.null(doc$title)) doc$title else "Dataset Metadata"),
+              div(class="d-flex gap-2 flex-wrap align-items-center", lang_badge, objs_badge, atts_badge, density_badge, concepts_badge, imps_badge)
+          ),
+          actionButton("btnOpenReportModal", 
+                       label = tagList(
+                         icon("file-lines", class = "me-1"),
+                         span("Generate Report", class = "fw-semibold")
+                       ), 
+                       class = "btn btn-success btn-sm shadow-sm border-0 py-2 px-3",
+                       style = "border-radius: 8px; background: linear-gradient(135deg, #198754, #146c43);")
       ),
       
       # Audit Grid Card
       card(
-        class = "mb-4 border-0 bg-light shadow-sm",
+        class = "mb-4 border shadow-sm bg-white p-3",
         card_body(
+          class = "p-0",
           layout_columns(
             col_widths = c(4, 4, 4),
             div(
-              h6(class="fw-bold text-uppercase text-muted small mb-1", "Creation Method"),
-              p(class="text-dark fw-semibold mb-0", if(!is.null(doc$creation_method)) doc$creation_method else "N/A")
+              h6(class="fw-bold text-uppercase text-muted small mb-2", "Creation Method"),
+              div(class="p-2 bg-light rounded border text-dark fw-semibold", if(!is.null(doc$creation_method)) doc$creation_method else "N/A")
             ),
             div(
-              h6(class="fw-bold text-uppercase text-muted small mb-1", "Source Origin"),
-              p(class="text-dark mb-0 truncate-text", if(!is.null(doc$source)) doc$source else "N/A", style="max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;")
+              h6(class="fw-bold text-uppercase text-muted small mb-2", "Source Origin"),
+              div(class="p-2 bg-light rounded border text-dark fw-semibold text-break", if(!is.null(doc$source)) doc$source else "N/A")
             ),
             div(
-              h6(class="fw-bold text-uppercase text-muted small mb-1", "Creation Time"),
-              p(class="text-dark mb-0", if(!is.null(doc$timestamp)) doc$timestamp else "N/A")
+              h6(class="fw-bold text-uppercase text-muted small mb-2", "Creation Time"),
+              div(class="p-2 bg-light rounded border text-dark fw-semibold", if(!is.null(doc$timestamp)) as.character(doc$timestamp) else "N/A")
             )
           )
         )
@@ -875,15 +1119,154 @@ server <- function(input, output, session) {
         )
       } else NULL,
       
-      # History Log Timeline
-      if(!is.null(history_items)) {
-        div(class="mb-3",
-            h6(class="fw-bold text-uppercase text-muted small mb-2", "Audit & History Log"),
-            history_items
-        )
-      } else NULL
+      # History Log Timeline with Export Actions next to title
+      div(class="mb-3",
+          div(class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2",
+              div(class = "d-flex align-items-center gap-2",
+                  h6(class="fw-bold text-uppercase text-muted small mb-0", "Audit & History Timeline"),
+                  span(class="badge bg-light text-muted border", paste(length(doc$history_log), "events"))
+              ),
+              div(class = "d-flex gap-2",
+                  downloadButton("downloadAuditLogText", "Export Log (.txt)", class = "btn-outline-secondary btn-sm fw-semibold", icon = icon("download")),
+                  downloadButton("downloadRScript", "Export R Script (.R)", class = "btn-outline-primary btn-sm fw-semibold", icon = icon("code"))
+              )
+          ),
+          if(!is.null(history_items)) history_items else div(class="text-muted italic small", "No history events recorded yet.")
+      )
     )
   })
+
+  output$downloadAuditLogText <- downloadHandler(
+    filename = function() {
+      paste0("fcaRviz_audit_log_", format(Sys.time(), "%Y%m%d_%H%M"), ".txt")
+    },
+    content = function(file) {
+      doc <- vals$current_doc
+      log_lines <- c(
+        "==================================================",
+        "fcaRviz Dataset Audit & History Log",
+        "==================================================",
+        paste0("Dataset Title: ", if(!is.null(doc$title)) doc$title else "Untitled"),
+        paste0("Creation Method: ", if(!is.null(doc$creation_method)) doc$creation_method else "N/A"),
+        paste0("Source Origin: ", if(!is.null(doc$source)) doc$source else "N/A"),
+        paste0("Creation Timestamp: ", if(!is.null(doc$timestamp)) doc$timestamp else "N/A"),
+        paste0("Current Objects: ", if(!is.null(vals$fc$objects)) length(vals$fc$objects) else 0),
+        paste0("Current Attributes: ", if(!is.null(vals$fc$attributes)) length(vals$fc$attributes) else 0),
+        "==================================================",
+        "HISTORY TIMELINE (CHRONOLOGICAL ORDER):",
+        "--------------------------------------------------"
+      )
+      
+      if (!is.null(doc$history_log) && length(doc$history_log) > 0) {
+        log_lines <- c(log_lines, unlist(doc$history_log))
+      } else {
+        log_lines <- c(log_lines, "No history events recorded.")
+      }
+      
+      writeLines(log_lines, file)
+    }
+  )
+
+  output$downloadRScript <- downloadHandler(
+    filename = function() {
+      paste0("reproduce_fcaR_pipeline_", format(Sys.time(), "%Y%m%d_%H%M"), ".R")
+    },
+    content = function(file) {
+      req(vals$fc)
+      doc <- vals$current_doc
+      
+      script <- c(
+        "# ==========================================================================",
+        "# Reproducible R Script generated by fcaRviz",
+        paste0("# Generated at: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S")),
+        paste0("# Dataset Title: ", if(!is.null(doc$title)) doc$title else "Formal Context"),
+        "# ==========================================================================",
+        "",
+        "# 1. Load required library",
+        "library(fcaR)",
+        "",
+        "# 2. Reconstruct incidence matrix from current state",
+        "incidence_matrix <- matrix(c("
+      )
+      
+      mat <- t(as.matrix(vals$fc$I))
+      vec_vals <- as.vector(mat)
+      script <- c(script, paste0("  ", paste(vec_vals, collapse = ", ")))
+      script <- c(script,
+        "),",
+        paste0("  nrow = ", nrow(mat), ", ncol = ", ncol(mat), ", byrow = FALSE,"),
+        paste0("  dimnames = list(c(", paste(sapply(rownames(mat), function(x) paste0('"', x, '"')), collapse = ", "), "),"),
+        paste0("                  c(", paste(sapply(colnames(mat), function(x) paste0('"', x, '"')), collapse = ", "), "))"),
+        ")",
+        "",
+        "# Initialize FormalContext object",
+        "fc <- FormalContext$new(incidence_matrix)",
+        "print(fc)",
+        ""
+      )
+      
+      # Include history log operations as R comments and code equivalents
+      script <- c(script, "# 3. Executed Pipeline Steps (from Audit Log):")
+      if (!is.null(doc$history_log) && length(doc$history_log) > 0) {
+        for (item in unlist(doc$history_log)) {
+          script <- c(script, paste0("# Audit Event: ", item))
+          if (grepl("Clarified context", item, ignore.case = TRUE)) {
+            script <- c(script, "fc$clarify()")
+          } else if (grepl("Reduced context", item, ignore.case = TRUE)) {
+            script <- c(script, "fc$reduce()")
+          } else if (grepl("Arrow-based reduction", item, ignore.case = TRUE)) {
+            script <- c(script, "fc <- fc$reduce_arrows()")
+          } else if (grepl("Computed concept lattice", item, ignore.case = TRUE)) {
+            script <- c(script, "fc$find_concepts()")
+          } else if (grepl("Reduced implication set to canonical basis|Computed canonical basis", item, ignore.case = TRUE)) {
+            script <- c(script, "fc$implications <- fc$implications$to_basis()")
+          } else if (grepl("Computed direct-optimal system", item, ignore.case = TRUE)) {
+            script <- c(script, "fc$implications <- fc$implications$to_direct_optimal()")
+          } else if (grepl("Applied equivalence logic rules", item, ignore.case = TRUE)) {
+            rules_match <- regmatches(item, regexec("\\[([^\\]]+)\\]", item))[[1]]
+            rules_list <- if (length(rules_match) > 1) rules_match[2] else ""
+            script <- c(script, paste0("fc$implications$apply_rules(rules = c(", paste(sapply(strsplit(rules_list, ",\\s*")[[1]], function(r) paste0("'", r, "'")), collapse = ", "), "))"))
+          } else if (grepl("Attribute Exploration: Refuted", item, ignore.case = TRUE)) {
+            cex_match <- regmatches(item, regexec("adding counterexample object '([^']+)'", item))[[1]]
+            cex_name <- if (length(cex_match) > 1) cex_match[2] else "Counterexample"
+            script <- c(script, paste0("# Counterexample added during Attribute Exploration: ", cex_name))
+          } else if (grepl("Attribute Exploration: Confirmed rule", item, ignore.case = TRUE)) {
+            rule_match <- regmatches(item, regexec("Confirmed rule '([^']+)'", item))[[1]]
+            rule_name <- if (length(rule_match) > 1) rule_match[2] else ""
+            script <- c(script, paste0("# Confirmed domain rule: ", rule_name))
+          } else if (grepl("Executed native BMF factorization|Executed BMF", item, ignore.case = TRUE)) {
+            # Extract algorithm name if present
+            alg_match <- regmatches(item, regexec("\\((GreConD|GreEss|RSF|RSF-ES|ASSO|Hyper)", item, ignore.case = TRUE))[[1]]
+            alg_name <- if (length(alg_match) > 1) alg_match[2] else "GreConD"
+            script <- c(script, paste0("bmf_res <- fc$factorize(method = '", alg_name, "')"))
+          } else if (grepl("intent for object subset", item, ignore.case = TRUE)) {
+            objs_str <- sub(".*\\{([^}]+)\\}.*", "\\1", item)
+            script <- c(script, paste0("fc$intent(Set$new(attributes = c(), objects = c(", paste(sapply(strsplit(objs_str, ",\\s*")[[1]], function(x) paste0("'", x, "'")), collapse = ", "), ")))"))
+          } else if (grepl("extent for attribute subset", item, ignore.case = TRUE)) {
+            atts_str <- sub(".*\\{([^}]+)\\}.*", "\\1", item)
+            script <- c(script, paste0("fc$extent(Set$new(attributes = c(", paste(sapply(strsplit(atts_str, ",\\s*")[[1]], function(x) paste0("'", x, "'")), collapse = ", "), "), objects = c()))"))
+          } else if (grepl("closure for attribute subset", item, ignore.case = TRUE)) {
+            atts_str <- sub(".*\\{([^}]+)\\}.*", "\\1", item)
+            script <- c(script, paste0("fc$closure(Set$new(attributes = c(", paste(sapply(strsplit(atts_str, ",\\s*")[[1]], function(x) paste0("'", x, "'")), collapse = ", "), "), objects = c()))"))
+          } else if (grepl("Validated hypothesis", item, ignore.case = TRUE)) {
+            rule_part <- sub(".*Validated hypothesis\\s+([^()]+).*", "\\1", item)
+            script <- c(script, paste0("# Validate rule: ", trimws(rule_part)))
+          } else if (grepl("scaling|Scaled", item, ignore.case = TRUE)) {
+            script <- c(script, "# Context scaling applied during data import")
+          }
+        }
+      }
+      
+      script <- c(script,
+        "",
+        "# 4. Print final summary",
+        "cat('Formal Context Pipeline Execution Finished!\\n')",
+        "print(fc)"
+      )
+      
+      writeLines(script, file)
+    }
+  )
 
 
 
@@ -1061,8 +1444,51 @@ server <- function(input, output, session) {
     context_table_dt(vals$fc, show_arrows = isTRUE(vals$show_arrows))
   })
   output$formalContext <- renderText({ vals$trigger; req(vals$fc); paste(capture.output(print(vals$fc)), collapse = "\n") })
-  observeEvent(input$clarify, { req(vals$fc); vals$fc$clarify(); vals$trigger <- vals$trigger + 1; reset_context_derived_state() })
-  observeEvent(input$reduce, { req(vals$fc); vals$fc$reduce(); vals$trigger <- vals$trigger + 1; reset_context_derived_state() })
+  # Observer for Undo Last Transformation button
+  observeEvent(input$btnUndoTransformation, {
+    stack <- snapshot_stack()
+    if (length(stack) == 0) {
+      shinyalert("Nothing to Undo", "No previous context states are saved in history.", type = "info")
+      return()
+    }
+    
+    last_snapshot <- stack[[length(stack)]]
+    snapshot_stack(stack[-length(stack)])
+    
+    vals$fc <- last_snapshot$fc
+    vals$multivalued_df <- last_snapshot$multivalued_df
+    vals$current_doc <- last_snapshot$current_doc
+    vals$trigger <- vals$trigger + 1
+    reset_context_derived_state()
+    
+    append_to_history_log("Undid last transformation and restored previous state")
+    shinyalert("Undo Successful", "Restored previous context state.", type = "success")
+  })
+
+  observeEvent(input$clarify, {
+    req(vals$fc)
+    push_context_snapshot()
+    n_objs_before <- length(vals$fc$objects)
+    n_atts_before <- length(vals$fc$attributes)
+    vals$fc$clarify()
+    vals$trigger <- vals$trigger + 1
+    reset_context_derived_state()
+    append_to_history_log(sprintf("Clarified context (dimensions: %dx%d → %dx%d)",
+                                  n_objs_before, n_atts_before,
+                                  length(vals$fc$objects), length(vals$fc$attributes)))
+  })
+  observeEvent(input$reduce, {
+    req(vals$fc)
+    push_context_snapshot()
+    n_objs_before <- length(vals$fc$objects)
+    n_atts_before <- length(vals$fc$attributes)
+    vals$fc$reduce()
+    vals$trigger <- vals$trigger + 1
+    reset_context_derived_state()
+    append_to_history_log(sprintf("Reduced context (dimensions: %dx%d → %dx%d)",
+                                  n_objs_before, n_atts_before,
+                                  length(vals$fc$objects), length(vals$fc$attributes)))
+  })
   observeEvent(input$reduceArrows, {
     req(vals$fc)
     if (!has_arrow_relations_api(vals$fc)) {
@@ -1074,11 +1500,15 @@ server <- function(input, output, session) {
       return()
     }
     tryCatch({
+      push_context_snapshot()
       n_objs_before <- length(vals$fc$objects)
       n_atts_before <- length(vals$fc$attributes)
       vals$fc <- vals$fc$reduce_arrows()
       vals$trigger <- vals$trigger + 1
       reset_context_derived_state()
+      append_to_history_log(sprintf("Arrow-based reduction (dimensions: %dx%d → %dx%d)",
+                                    n_objs_before, n_atts_before,
+                                    length(vals$fc$objects), length(vals$fc$attributes)))
       shinyalert(
         "Context reduced",
         sprintf(
@@ -1090,13 +1520,231 @@ server <- function(input, output, session) {
       )
     }, error = function(e) shinyalert("Reduce arrows failed", conditionMessage(e), type = "error"))
   })
-  output$intentResult <- renderUI({ req(input$intentOptions, vals$fc); S <- Set$new(vals$fc$objects); sapply(input$intentOptions, function(x) do.call(S$assign, setNames(list(1), x))); res <- vals$fc$intent(S); HTML(paste("<pre>", paste(capture.output(print(res)), collapse = "\n"), "</pre>")) })
-  output$extentResult <- renderUI({ req(input$extentOptions, vals$fc); S <- Set$new(vals$fc$attributes); sapply(input$extentOptions, function(x) do.call(S$assign, setNames(list(1), x))); res <- vals$fc$extent(S); HTML(paste("<pre>", paste(capture.output(print(res)), collapse = "\n"), "</pre>")) })
-  output$closureResult <- renderUI({ req(input$closureOptions, vals$fc); S <- Set$new(vals$fc$attributes); sapply(input$closureOptions, function(x) do.call(S$assign, setNames(list(1), x))); res <- vals$fc$closure(S); HTML(paste("<pre>", paste(capture.output(print(res)), collapse = "\n"), "</pre>")) })
+  output$intentResult <- renderUI({
+    req(input$intentOptions, vals$fc)
+    S <- Set$new(vals$fc$objects)
+    sapply(input$intentOptions, function(x) do.call(S$assign, setNames(list(1), x)))
+    res <- vals$fc$intent(S)
+    append_to_history_log(paste0("Computed intent for object subset: {", paste(input$intentOptions, collapse = ", "), "}"))
+    HTML(paste("<pre>", paste(capture.output(print(res)), collapse = "\n"), "</pre>"))
+  })
+  output$extentResult <- renderUI({
+    req(input$extentOptions, vals$fc)
+    S <- Set$new(vals$fc$attributes)
+    sapply(input$extentOptions, function(x) do.call(S$assign, setNames(list(1), x)))
+    res <- vals$fc$extent(S)
+    append_to_history_log(paste0("Computed extent for attribute subset: {", paste(input$extentOptions, collapse = ", "), "}"))
+    HTML(paste("<pre>", paste(capture.output(print(res)), collapse = "\n"), "</pre>"))
+  })
+  output$closureResult <- renderUI({
+    req(input$closureOptions, vals$fc)
+    S <- Set$new(vals$fc$attributes)
+    sapply(input$closureOptions, function(x) do.call(S$assign, setNames(list(1), x)))
+    res <- vals$fc$closure(S)
+    append_to_history_log(paste0("Computed closure for attribute subset: {", paste(input$closureOptions, collapse = ", "), "}"))
+    HTML(paste("<pre>", paste(capture.output(print(res)), collapse = "\n"), "</pre>"))
+  })
   observeEvent(input$createLatex, { showModal(modalDialog(title = "LaTeX Code", verbatimTextOutput("latexTable"), easyClose = TRUE)) })
   output$latexTable <- renderText({ req(vals$fc); vals$fc$to_latex() })
-  output$downloadRds <- downloadHandler(filename = function() { "context.rds" }, content = function(file) { vals$fc$save(filename = "./fc.rds"); file.copy("./fc.rds", file) })
-  output$downloadReport <- downloadHandler(filename = function() { paste("fca_report_", Sys.Date(), ".html", sep="") }, content = function(file) { req(vals$fc); id <- showNotification("Generating...", duration = NULL, closeButton = FALSE); on.exit(removeNotification(id), add = TRUE); tempReport <- file.path(tempdir(), "report.Rmd"); if(!file.exists("report.Rmd")) { writeLines(c("---", "title: 'Report'", "output: html_document", "---", "# Report", "Context loaded."), tempReport) } else { file.copy("report.Rmd", tempReport, overwrite = TRUE) }; rmarkdown::render(tempReport, output_file = file, params = list(fc = vals$fc), envir = new.env(parent = globalenv())) })
+
+  # Modified button with reduced size and custom styling
+  output$reportButtonUI <- renderUI({
+    actionButton("btnOpenReportModal", 
+                 label = tagList(
+                   icon("file-lines", class = "me-1"),
+                   span("Report", class = "fw-semibold")
+                 ), 
+                 class = "btn btn-success btn-sm shadow-sm border-0",
+                 style = "border-radius: 6px; background: linear-gradient(135deg, #198754, #146c43);")
+  })
+
+  output$downloadRds <- downloadHandler(
+    filename = function() { "context.rds" },
+    content = function(file) {
+      vals$fc$save(filename = "./fc.rds")
+      file.copy("./fc.rds", file)
+      append_to_history_log("Exported context state as RDS file")
+    }
+  )
+  # Modal for Report Configuration
+  observeEvent(input$btnOpenReportModal, {
+    req(vals$fc)
+    showModal(modalDialog(
+      title = tagList(icon("file-lines", class = "text-success me-2"), "Generate Executive Report"),
+      easyClose = TRUE,
+      footer = tagList(
+        modalButton("Cancel"),
+        downloadButton("generateExecutiveReportHTML", "Generate HTML Report", class = "btn btn-success fw-semibold", icon = icon("gears"))
+      ),
+      
+      div(class = "p-2",
+          p(class = "text-muted small mb-3", "Select the sections and components to include in your standalone HTML executive report:"),
+          
+          checkboxGroupInput("report_sections", "Report Sections:",
+                             choices = c(
+                               "Formal Context Incidence Matrix" = "matrix",
+                               "Concept Lattice Plot (Hasse Diagram)" = "lattice",
+                               "Implication Rules & Canonical Basis" = "implications",
+                               "Audit & Action History Timeline" = "audit"
+                             ),
+                             selected = c("matrix", "lattice", "implications", "audit")),
+          
+          hr(class = "my-2"),
+          div(class = "alert alert-info py-2 small mb-0",
+              icon("circle-info", class = "me-1"),
+              "The report will be compiled into a single self-contained HTML file for easy viewing and sharing."
+          )
+      )
+    ))
+  })
+
+  output$generateExecutiveReportHTML <- downloadHandler(
+    filename = function() { 
+      title_clean <- if (!is.null(vals$current_doc$title)) gsub("[^A-Za-z0-9_-]", "_", vals$current_doc$title) else "fcaRviz_report"
+      paste0(title_clean, "_", format(Sys.Date(), "%Y%m%d"), ".html") 
+    },
+    content = function(file) {
+      req(vals$fc)
+      id <- showNotification("Compiling executive report...", duration = NULL, closeButton = FALSE, type = "message")
+      
+      fc_obj <- vals$fc
+      curr_doc <- vals$current_doc
+      sections_sel <- if (!is.null(input$report_sections)) input$report_sections else c("matrix", "lattice", "implications", "audit")
+      
+      doc_title <- if (!is.null(curr_doc$title)) curr_doc$title else "Formal Context Analysis"
+      
+      tempReport <- file.path(tempdir(), "report.Rmd")
+      
+      # Build dynamic Rmd content
+      rmd_lines <- c(
+        "---",
+        paste0("title: 'fcaRviz Executive Report: ", doc_title, "'"),
+        paste0("subtitle: 'Formal Concept Analysis & Knowledge Discovery Summary'"),
+        paste0("date: '", format(Sys.time(), "%B %d, %Y - %H:%M"), "'"),
+        "output:",
+        "  html_document:",
+        "    theme: flatly",
+        "    toc: true",
+        "    toc_float: true",
+        "    self_contained: true",
+        "---",
+        "",
+        "<style>",
+        "  body { font-family: 'Segoe UI', sans-serif; }",
+        "  pre { background-color: #f8f9fa; border-left: 4px solid #198754; }",
+        "</style>",
+        "",
+        "```{r setup, include=FALSE}",
+        "knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)",
+        "library(fcaR)",
+        "```",
+        "",
+        "## Executive Summary",
+        "",
+        "This automated report summarizes the mathematical structure, formal concept lattice, and logical implication rules extracted from the dataset using the **fcaRviz** graphical environment.",
+        "",
+        "### Dataset Profile",
+        "",
+        paste0("* **Dataset Title:** ", doc_title),
+        paste0("* **Creation Method:** ", if(!is.null(curr_doc$creation_method)) curr_doc$creation_method else "Uploaded Matrix"),
+        paste0("* **Source Origin:** ", if(!is.null(curr_doc$source)) curr_doc$source else "Direct Data Ingestion"),
+        paste0("* **Formal Context Size:** ", length(fc_obj$objects), " Objects ($G$) $\\times$ ", length(fc_obj$attributes), " Attributes ($M$)"),
+        paste0("* **Incidence Matrix Density:** ", round((sum(as.matrix(fc_obj$I)) / (length(fc_obj$objects) * length(fc_obj$attributes))) * 100, 1), "%"),
+        ""
+      )
+      
+      if (!is.null(curr_doc$description) && curr_doc$description != "") {
+        rmd_lines <- c(rmd_lines,
+          "### Description & Context",
+          "",
+          curr_doc$description,
+          ""
+        )
+      }
+      
+      if ("matrix" %in% sections_sel) {
+        rmd_lines <- c(rmd_lines,
+          "## Formal Context Matrix",
+          "",
+          "The binary relation $I \\subseteq G \\times M$ represents the incidence between objects and attributes.",
+          "",
+          "```{r}",
+          "mat <- t(as.matrix(fc_obj$I))",
+          "knitr::kable(mat, caption = 'Incidence Matrix (1 = Presence, 0 = Absence)')",
+          "```",
+          ""
+        )
+      }
+      
+      if ("lattice" %in% sections_sel) {
+        rmd_lines <- c(rmd_lines,
+          "## Concept Lattice Diagram",
+          "",
+          "The line diagram (Hasse diagram) represents the complete partial order structure $\\mathfrak{B}(G, M, I)$ formed by all formal concepts $(A, B)$ where $A' = B$ and $B' = A$.",
+          "",
+          "```{r, fig.width=8, fig.height=6, fig.align='center'}",
+          "if (is.null(fc_obj$concepts) || fc_obj$concepts$is_empty()) {",
+          "  fc_obj$find_concepts()",
+          "}",
+          "plot(fc_obj$concepts)",
+          "```",
+          ""
+        )
+      }
+      
+      if ("implications" %in% sections_sel) {
+        rmd_lines <- c(rmd_lines,
+          "## Implication Rules & Canonical Basis",
+          "",
+          "An implication $A \\Rightarrow B$ holds in the context if every object possessing all attributes in $A$ also possesses all attributes in $B$.",
+          "",
+          "```{r}",
+          "if (!is.null(fc_obj$implications) && fc_obj$implications$cardinality() > 0) {",
+          "  df_imp <- get_implications_dataframe(fc_obj$implications)",
+          "  knitr::kable(df_imp, caption = 'Extracted Implication Rules Set')",
+          "} else {",
+          "  cat('No implications computed for this context.')",
+          "}",
+          "```",
+          ""
+        )
+      }
+      
+      if ("audit" %in% sections_sel) {
+        rmd_lines <- c(rmd_lines,
+          "## Reproducibility & Audit History Log",
+          "",
+          "Below is the chronological sequence of operations and transformations executed during this analytical session:",
+          "",
+          "```{r}",
+          "if (!is.null(curr_doc$history_log) && length(curr_doc$history_log) > 0) {",
+          "  df_hist <- data.frame(Event = unlist(curr_doc$history_log))",
+          "  knitr::kable(df_hist, col.names = c('Audit Event Description'))",
+          "} else {",
+          "  cat('No audit events recorded.')",
+          "}",
+          "```",
+          ""
+        )
+      }
+      
+      tryCatch({
+        writeLines(rmd_lines, tempReport)
+        render_env <- new.env(parent = globalenv())
+        render_env$fc_obj <- fc_obj
+        render_env$curr_doc <- curr_doc
+        render_env$get_implications_dataframe <- get_implications_dataframe
+        
+        rmarkdown::render(tempReport, output_file = file, envir = render_env)
+        removeNotification(id)
+        removeModal()
+        append_to_history_log("Generated and downloaded executive HTML analysis report")
+      }, error = function(e) {
+        removeNotification(id)
+        shinyalert("Report Error", paste("Failed to compile HTML report:", e$message), type = "error")
+      })
+    }
+  )
 
   # ===========================================================================
   # 4. CONCEPTOS Y RETÍCULO
@@ -2827,7 +3475,13 @@ server <- function(input, output, session) {
     div(style = "max-height: 450px; overflow-y: auto; padding-right: 5px;", timeline_items)
   })
 
-  output$downloadRdsConp <- downloadHandler(filename = function() { "concepts.rds" }, content = function(file) { saveRDS(vals$fc$concepts, file) })
+  output$downloadRdsConp <- downloadHandler(
+    filename = function() { "concepts.rds" },
+    content = function(file) {
+      saveRDS(vals$fc$concepts, file)
+      append_to_history_log("Exported concept lattice as RDS file")
+    }
+  )
 
   # --- ADVANCED EXPORT DOWNLOAD HANDLERS ---
   output$downloadSVG <- downloadHandler(
@@ -3027,6 +3681,8 @@ server <- function(input, output, session) {
     withProgress(message = "Computing canonical basis...", value = 0.5, {
       tryCatch({
         run_canonical_basis(from_context = TRUE)
+        n_imps <- tryCatch(vals$fc$implications$cardinality(), error = function(e) 0)
+        append_to_history_log(paste0("Computed canonical basis (", n_imps, " rules)"))
         shinyalert("Success", "Canonical basis computed successfully.", type = "success")
       }, error = function(e) {
         shinyalert("Error", e$message, type = "error")
@@ -3088,6 +3744,7 @@ server <- function(input, output, session) {
         vals$filtered_imps <- vals$fc$implications
         implications_df(get_implications_dataframe(vals$fc$implications))
         vals$trigger <- vals$trigger + 1
+        append_to_history_log(paste0("Mined ", n_rules, " implications (minSupp=", supp_val, ")"))
         shinyalert("Success", paste("Successfully mined", length(rules_found), "implications."), type = "success")
       } else {
         shinyalert("No Rules", "No implications satisfied the specified support threshold.", type = "warning")
@@ -3113,6 +3770,7 @@ server <- function(input, output, session) {
   # Execute File Import
   observeEvent(input$fileImportImps, {
     req(input$fileImportImps, vals$fc)
+    file_name <- input$fileImportImps$name
     removeModal()
     tryCatch({
       obj <- readRDS(input$fileImportImps$datapath)
@@ -3127,14 +3785,16 @@ server <- function(input, output, session) {
         stop("Unsupported file object. File must contain an ImplicationSet (fcaR) or rules (arules).")
       }
       
+      n_imps <- vals$fc$implications$cardinality()
       vals$stats_orig <- list(
-        count = vals$fc$implications$cardinality(),
+        count = n_imps,
         size_lhs = sum(vals$fc$implications$get_LHS_matrix()),
         size_rhs = sum(vals$fc$implications$get_RHS_matrix())
       )
       vals$filtered_imps <- vals$fc$implications
       implications_df(get_implications_dataframe(vals$fc$implications))
       vals$trigger <- vals$trigger + 1
+      append_to_history_log(paste0("Imported ", n_imps, " implications from file '", file_name, "'"))
     }, error = function(e) {
       shinyalert("Import Error", e$message, type = "error")
     })
@@ -3301,7 +3961,19 @@ server <- function(input, output, session) {
   output$dynamicRulesUI <- renderUI({ available_rules <- tryCatch(fcaR::equivalencesRegistry$get_entry_names(), error = function(e) c("Composition", "Generalization", "Simplification", "Reduction")); checkboxGroupInput("selectRulesImplications", "Equivalence Rules:", choices = c("ALL RULES"="all", setNames(available_rules, available_rules)), selected = c("Composition"), inline = TRUE, width = "100%") })
   output$fcImplications <- renderTable({ if (isTRUE(input$ignoreFilters)) { req(vals$fc); get_implications_dataframe(vals$fc$implications) } else { req(implications_df()); implications_df() } })
   output$fcImplicationsTop <- renderTable({ req(implications_df()); implications_df() })
-  observeEvent(input$btnApplyFilters, { req(vals$fc); imp <- vals$fc$implications; if(input$support > 0) { indx <- which(vals$fc$implications$support() >= input$support); imp <- vals$fc$implications[indx] }; filtered <- imp$filter(lhs = c(input$selectLHS), not_lhs = c(input$selectNotLHS), rhs = c(input$selectRHS), not_rhs = c(input$selectNotRHS)); vals$filtered_imps <- filtered; implications_df(get_implications_dataframe(filtered)) })
+  observeEvent(input$btnApplyFilters, {
+    req(vals$fc)
+    imp <- vals$fc$implications
+    if(input$support > 0) {
+      indx <- which(vals$fc$implications$support() >= input$support)
+      imp <- vals$fc$implications[indx]
+    }
+    filtered <- imp$filter(lhs = c(input$selectLHS), not_lhs = c(input$selectNotLHS), rhs = c(input$selectRHS), not_rhs = c(input$selectNotRHS))
+    vals$filtered_imps <- filtered
+    implications_df(get_implications_dataframe(filtered))
+    n_filt <- tryCatch(filtered$cardinality(), error = function(e) 0)
+    append_to_history_log(paste0("Applied rule filters (", n_filt, " of ", vals$fc$implications$cardinality(), " rules retained)"))
+  })
   observeEvent(input$btnClearFilters, {
     req(vals$fc)
     updateSelectInput(session, "selectLHS", selected = character(0))
@@ -3312,6 +3984,7 @@ server <- function(input, output, session) {
     updateNumericInput(session, "minLift", value = 1.0)
     vals$filtered_imps <- vals$fc$implications
     implications_df(get_implications_dataframe(vals$fc$implications))
+    append_to_history_log("Cleared all rule filters")
   })
   # --- BASE COMPUTATION TAB HANDLERS ---
   observeEvent(input$btnComputeBasis, {
@@ -3337,6 +4010,8 @@ server <- function(input, output, session) {
       sync_implications_ui()
       removeNotification("bg_basis_notif")
       shinyjs::enable("btnComputeBasis")
+      n_imps <- tryCatch(vals$fc$implications$cardinality(), error = function(e) 0)
+      append_to_history_log(paste0("Reduced implication set to canonical basis (", n_imps, " rules retained)"))
       shinyalert("Success", "Implication set reduced to canonical basis.", type = "success")
     }) %...!% (function(e) {
       removeNotification("bg_basis_notif")
@@ -3368,6 +4043,8 @@ server <- function(input, output, session) {
       implications_df(get_implications_dataframe(vals$fc$implications))
       removeNotification("bg_direct_notif")
       shinyjs::enable("btnComputeDirectOptimal")
+      n_imps <- tryCatch(vals$fc$implications$cardinality(), error = function(e) 0)
+      append_to_history_log(paste0("Computed direct-optimal system (", n_imps, " rules)"))
       shinyalert("Success", "Direct-optimal system computed successfully.", type = "success")
     }) %...!% (function(e) {
       removeNotification("bg_direct_notif")
@@ -3377,7 +4054,23 @@ server <- function(input, output, session) {
     NULL
   })
 
-  observeEvent(input$btnApplyLogic, { req(vals$fc, input$selectRulesImplications); rules_sel <- input$selectRulesImplications; avail <- fcaR::equivalencesRegistry$get_entry_names(); to_apply <- if ("all" %in% rules_sel) avail else intersect(rules_sel, avail); withProgress(message = "Applying Rules...", value = 0.5, { if(length(to_apply) > 0){ vals$fc$implications$apply_rules(rules = to_apply, batch_size = input$batchSize, parallelize = FALSE, reorder = isTRUE(input$reorder)); vals$trigger <- vals$trigger + 1; vals$filtered_imps <- vals$fc$implications; implications_df(get_implications_dataframe(vals$fc$implications)); showNotification("Rules applied.", type = "message") } }) })
+  observeEvent(input$btnApplyLogic, {
+    req(vals$fc, input$selectRulesImplications)
+    rules_sel <- input$selectRulesImplications
+    avail <- fcaR::equivalencesRegistry$get_entry_names()
+    to_apply <- if ("all" %in% rules_sel) avail else intersect(rules_sel, avail)
+    withProgress(message = "Applying Rules...", value = 0.5, {
+      if(length(to_apply) > 0){
+        vals$fc$implications$apply_rules(rules = to_apply, batch_size = input$batchSize, parallelize = FALSE, reorder = isTRUE(input$reorder))
+        vals$trigger <- vals$trigger + 1
+        vals$filtered_imps <- vals$fc$implications
+        implications_df(get_implications_dataframe(vals$fc$implications))
+        n_imps <- tryCatch(vals$fc$implications$cardinality(), error = function(e) 0)
+        append_to_history_log(paste0("Applied equivalence logic rules: [", paste(to_apply, collapse = ", "), "] (", n_imps, " rules remaining)"))
+        showNotification("Rules applied.", type = "message")
+      }
+    })
+  })
   output$logicStats <- renderUI({ vals$trigger; req(vals$fc); imp <- vals$fc$implications; tagList(h4(paste("Rules:", imp$cardinality())), p(class="text-muted", paste("Original:", if(!is.null(vals$stats_orig)) vals$stats_orig$count else imp$cardinality()))) })
   output$implicationsForClosurePreview <- renderTable({ if(isTRUE(input$ignoreFiltersClosure)) { req(vals$fc); get_implications_dataframe(vals$fc$implications) } else { req(implications_df()); implications_df() } })
   closure_result <- reactiveVal(NULL); get_imp_set_closure <- function() { if(isTRUE(input$ignoreFiltersClosure)) return(vals$fc$implications); if(!is.null(vals$filtered_imps)) return(vals$filtered_imps); return(vals$fc$implications) }
@@ -3398,7 +4091,13 @@ server <- function(input, output, session) {
       div(style = "max-height: 65vh; overflow-y: auto;", verbatimTextOutput("latexImplicationsText"))
     ))
   })
-  output$downloadRdsImp <- downloadHandler(filename = function() { "implications.rds" }, content = function(file) { saveRDS(vals$fc$implications, file) })
+  output$downloadRdsImp <- downloadHandler(
+    filename = function() { "implications.rds" },
+    content = function(file) {
+      saveRDS(vals$fc$implications, file)
+      append_to_history_log("Exported implications set as RDS file")
+    }
+  )
   output$validationReportUI <- renderUI({
     div(class="text-center py-5 text-muted",
         icon("flask", class="fa-4x mb-3"),
@@ -3445,6 +4144,9 @@ server <- function(input, output, session) {
         }
       }
     }
+    
+    rule_str <- paste0("{", paste(input$hypLHS, collapse=", "), "} → {", paste(input$hypRHS, collapse=", "), "}")
+    append_to_history_log(paste0("Validated hypothesis ", rule_str, " (Result: ", if(holds) "Holds" else "Refuted", ")"))
     
     output$validationReportUI <- renderUI({
       if (holds) {
@@ -3542,12 +4244,14 @@ server <- function(input, output, session) {
   arules_filtered <- reactive({
     req(arules_data())
     rules <- arules_data()
-    if (!is.null(input$selectLHS)) rules <- subset(rules, subset = lhs %ain% input$selectLHS)
-    if (!is.null(input$selectNotLHS)) rules <- subset(rules, subset = !(lhs %in% input$selectNotLHS))
-    if (!is.null(input$selectRHS)) rules <- subset(rules, subset = rhs %ain% input$selectRHS)
-    if (!is.null(input$selectNotRHS)) rules <- subset(rules, subset = !(rhs %in% input$selectNotRHS))
-    if (!is.null(input$minLift) && input$minLift > 0) rules <- subset(rules, subset = lift >= input$minLift)
-    if (!is.null(input$support) && input$support > 0) rules <- subset(rules, subset = support >= input$support)
+    suppressWarnings({
+      if (!is.null(input$selectLHS)) rules <- subset(rules, subset = lhs %ain% input$selectLHS)
+      if (!is.null(input$selectNotLHS)) rules <- subset(rules, subset = !(lhs %in% input$selectNotLHS))
+      if (!is.null(input$selectRHS)) rules <- subset(rules, subset = rhs %ain% input$selectRHS)
+      if (!is.null(input$selectNotRHS)) rules <- subset(rules, subset = !(rhs %in% input$selectNotRHS))
+      if (!is.null(input$minLift) && input$minLift > 0) rules <- subset(rules, subset = lift >= input$minLift)
+      if (!is.null(input$support) && input$support > 0) rules <- subset(rules, subset = support >= input$support)
+    })
     return(rules)
   })
   output$arulesPlotContainer <- renderUI({
@@ -4054,8 +4758,7 @@ server <- function(input, output, session) {
   observeEvent(input$btnStartExploration, {
     req(vals$fc)
     shinyjs::disable("btnStartExploration")
-    showNotification("Initializing Attribute Exploration in the background...", 
-                     type = "message", id = "bg_expl_notif", duration = NULL)
+    push_context_snapshot()
     
     vals$exploration_active <- TRUE
     vals$exploration_complete <- FALSE
@@ -4063,27 +4766,20 @@ server <- function(input, output, session) {
     vals$confirmed_rules <- character(0)
     vals$refuted_rules <- character(0)
     
-    fc_clon <- vals$fc$clone()
-    future({
-      library(fcaR)
-      source("global.R")
-      safe_find_implications(fc_clon)
-      fc_clon
-    }, seed = TRUE) %...>% (function(res_fc) {
-      vals$fc <- res_fc
-      implications_df(NULL)
-      vals$trigger <- vals$trigger + 1
-      
-      removeNotification("bg_expl_notif")
-      shinyjs::enable("btnStartExploration")
-      shinyalert("Exploration Started", "Systematic knowledge acquisition is now active. Answer the questions on the right panel.", type = "info")
-    }) %...!% (function(e) {
-      vals$exploration_active <- FALSE
-      removeNotification("bg_expl_notif")
-      shinyjs::enable("btnStartExploration")
-      shinyalert("Error", paste("Failed to initialize exploration:", e$message), type = "error")
+    withProgress(message = "Initializing Attribute Exploration...", value = 0.5, {
+      tryCatch({
+        safe_find_implications(vals$fc)
+        implications_df(NULL)
+        vals$trigger <- vals$trigger + 1
+        shinyjs::enable("btnStartExploration")
+        append_to_history_log("Started Ganter Attribute Exploration session.")
+        shinyalert("Exploration Started", "Systematic knowledge acquisition is now active. Answer the questions on the right panel.", type = "info")
+      }, error = function(e) {
+        vals$exploration_active <- FALSE
+        shinyjs::enable("btnStartExploration")
+        shinyalert("Error", paste("Failed to initialize exploration:", e$message), type = "error")
+      })
     })
-    NULL
   })
   
   observeEvent(input$btnResetExploration, {
@@ -4094,6 +4790,7 @@ server <- function(input, output, session) {
     vals$refuted_rules <- character(0)
     vals$current_question <- NULL
     
+    append_to_history_log("Reset Attribute Exploration state.")
     shinyalert("Exploration Reset", "The interactive exploration state has been cleared.", type = "warning")
   })
 
@@ -4144,6 +4841,7 @@ server <- function(input, output, session) {
       
       implications_df(get_implications_dataframe(vals$fc$implications))
       vals$trigger <- vals$trigger + 1
+      append_to_history_log(paste0("Attribute Exploration completed (Confirmed: ", length(vals$confirmed_rules), " rules, Refuted: ", length(vals$refuted_rules), " rules)"))
     } else {
       idx <- unconfirmed_idx[1]
       vals$exploration_complete <- FALSE
@@ -4163,6 +4861,7 @@ server <- function(input, output, session) {
     req(vals$exploration_active, vals$current_question)
     q <- vals$current_question
     vals$confirmed_rules <- c(vals$confirmed_rules, q$key)
+    append_to_history_log(paste0("Attribute Exploration: Confirmed rule '", q$key, "'"))
     showNotification("Implication confirmed as domain rule!", type = "message")
   })
 
@@ -4212,6 +4911,8 @@ server <- function(input, output, session) {
       return()
     }
     
+    push_context_snapshot()
+    
     # All good! Update the context
     mat <- t(as.matrix(vals$fc$I))
     new_row <- matrix(0, nrow = 1, ncol = ncol(mat))
@@ -4240,6 +4941,7 @@ server <- function(input, output, session) {
     implications_df(NULL)
     vals$stats_orig <- NULL
     
+    append_to_history_log(paste0("Attribute Exploration: Refuted '", q$key, "' by adding counterexample object '", cex_name, "'"))
     shinyalert("Counterexample Added", paste0("Object '", cex_name, "' has been added to your formal context."), type = "success")
   })
 
@@ -4501,5 +5203,402 @@ server <- function(input, output, session) {
     # Close modal
     removeModal()
     shinyalert("Counterexample Added", paste0("Attribute '", cex_attr_name, "' has been added to your formal context."), type = "success")
+  })
+
+  # ===========================================================================
+  # 6. LABS: BOOLEAN MATRIX FACTORIZATION (BMF)
+  # ===========================================================================
+  bmf_result_data <- reactiveVal(NULL)
+
+  output$bmfResultsUI <- renderUI({
+    res <- bmf_result_data()
+    if (is.null(res)) {
+      return(div(
+        class = "text-center py-5 text-muted",
+        icon("flask", class = "fa-4x mb-3 text-muted"),
+        h5("No BMF Factorization Executed"),
+        p("Select an algorithm and press 'Execute BMF Factorization' to decompose the binary context.")
+      ))
+    }
+
+    tagList(
+      # --- HEADER TOOLBAR & DOWNLOAD BUTTONS ---
+      div(class = "d-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded border shadow-sm",
+          div(class = "d-flex align-items-center gap-2",
+              icon("circle-check", class = "text-success fs-4"),
+              div(
+                strong(class = "fs-6", paste0("BMF Factorization Results (", toupper(res$algorithm), ")")),
+                div(class = "text-muted small", paste0("Calculated ", res$k, " factors | ", res$coverage, "% reconstruction coverage"))
+              )
+          ),
+          div(class = "d-flex gap-2",
+              downloadButton("btnDownloadBMFRDS", "Download RDS Bundle", class = "btn btn-outline-primary btn-sm fw-bold", icon = icon("download")),
+              downloadButton("btnDownloadBMFZIP", "Download Matrices (ZIP / CSV)", class = "btn btn-primary btn-sm fw-bold", icon = icon("file-zipper"))
+          )
+      ),
+      
+      # --- KPI SUMMARY CARDS ---
+      layout_columns(
+        col_widths = c(4, 4, 4),
+        card(
+          class = "bg-light p-3 border-0 shadow-sm mb-3",
+          div(class = "d-flex justify-content-between align-items-center",
+              div(
+                h6(class = "fw-bold text-uppercase text-muted small mb-1", "Reconstruction Coverage"),
+                div(class = "display-6 fw-bold text-primary", paste0(res$coverage, "%")),
+                span(class = "text-muted small", paste0(res$covered_ones, " of ", res$total_ones, " ones covered"))
+              ),
+              icon("chart-pie", class = "fa-3x text-primary opacity-50")
+          )
+        ),
+        card(
+          class = "bg-light p-3 border-0 shadow-sm mb-3",
+          div(class = "d-flex justify-content-between align-items-center",
+              div(
+                h6(class = "fw-bold text-uppercase text-muted small mb-1", "Residual Uncovered Ones"),
+                div(class = "display-6 fw-bold text-danger", res$uncovered_cells),
+                span(class = "text-muted small", "Uncovered incidence cells")
+              ),
+              icon("triangle-exclamation", class = "fa-3x text-danger opacity-50")
+          )
+        ),
+        card(
+          class = "bg-light p-3 border-0 shadow-sm mb-3",
+          div(class = "d-flex justify-content-between align-items-center",
+              div(
+                h6(class = "fw-bold text-uppercase text-muted small mb-1", "Extracted Factors (k)"),
+                div(class = "display-6 fw-bold text-success", res$k),
+                span(class = "text-muted small", paste0("Algorithm: ", toupper(res$algorithm)))
+              ),
+              icon("cubes", class = "fa-3x text-success opacity-50")
+          )
+        )
+      ),
+      
+      # --- FACTOR MATRICES VISUALIZATION TABS ---
+      navset_card_tab(
+        id = "bmf_visualizer_tabs",
+        height = "520px",
+        
+        # TAB 1: FACTOR MATRICES (A & B)
+        nav_panel(
+          title = "Factor Matrices (A & B)",
+          icon = icon("table-cells"),
+          card_body(
+            p(class = "text-muted small mb-3", 
+              "Matrix ", tags$code("A (Objects x Factors)"), " indicates which objects belong to each factor. ",
+              "Matrix ", tags$code("B (Factors x Attributes)"), " indicates which attributes define each factor."),
+            layout_columns(
+              col_widths = c(6, 6),
+              card(
+                class = "border-0 bg-light p-2",
+                h6(class = "fw-bold text-primary mb-2", icon("cube", class="me-1"), "Matrix A: Objects × Factors"),
+                div(style = "max-height: 360px; overflow: auto;",
+                    DT::renderDT({
+                      mat_a <- res$matrix_A
+                      DT::datatable(
+                        mat_a,
+                        options = list(pageLength = 10, scrollX = TRUE, dom = 't', ordering = FALSE),
+                        class = "cell-border stripe compact"
+                      ) %>% DT::formatStyle(
+                        columns = colnames(mat_a),
+                        backgroundColor = DT::styleEqual(c(0, 1), c('#ffffff', '#c2e0ff')),
+                        fontWeight = DT::styleEqual(c(0, 1), c('normal', 'bold'))
+                      )
+                    })
+                )
+              ),
+              card(
+                class = "border-0 bg-light p-2",
+                h6(class = "fw-bold text-primary mb-2", icon("tags", class="me-1"), "Matrix B: Factors × Attributes"),
+                div(style = "max-height: 360px; overflow: auto;",
+                    DT::renderDT({
+                      mat_b <- res$matrix_B
+                      DT::datatable(
+                        mat_b,
+                        options = list(pageLength = 10, scrollX = TRUE, dom = 't', ordering = FALSE),
+                        class = "cell-border stripe compact"
+                      ) %>% DT::formatStyle(
+                        columns = colnames(mat_b),
+                        backgroundColor = DT::styleEqual(c(0, 1), c('#ffffff', '#d1e7dd')),
+                        fontWeight = DT::styleEqual(c(0, 1), c('normal', 'bold'))
+                      )
+                    })
+                )
+              )
+            )
+          )
+        ),
+        
+        # TAB 2: INTERPRETABLE FACTOR CARDS
+        nav_panel(
+          title = "Interpretability Cards",
+          icon = icon("id-card"),
+          card_body(
+            div(style = "max-height: 420px; overflow-y: auto;",
+                lapply(1:length(res$factors), function(i) {
+                  f <- res$factors[[i]]
+                  card(
+                    class = "mb-3 border-0 shadow-sm bg-light",
+                    card_header(class = "bg-white fw-bold d-flex justify-content-between align-items-center",
+                                span(icon("cube", class="text-primary me-2"), paste0("Factor ", i, " (Formal Concept)")),
+                                span(class = "badge bg-secondary", paste(length(f$extent), "objs |", length(f$intent), "atts"))
+                    ),
+                    card_body(
+                      div(class = "mb-2",
+                          strong(class = "text-muted small uppercase me-2", "Extent (Objects - Matrix A):"),
+                          if (length(f$extent) > 0) {
+                            lapply(f$extent, function(o) span(o, class = "badge bg-dark me-1"))
+                          } else span("Empty", class = "text-muted italic")
+                      ),
+                      div(
+                        strong(class = "text-muted small uppercase me-2", "Intent (Attributes - Matrix B):"),
+                        if (length(f$intent) > 0) {
+                          lapply(f$intent, function(a) span(a, class = "badge bg-success me-1"))
+                        } else span("Empty", class = "text-muted italic")
+                      )
+                    )
+                  )
+                })
+            )
+          )
+        ),
+        
+        # TAB 3: RECONSTRUCTION & RESIDUAL MATRIX
+        nav_panel(
+          title = "Reconstruction Matrix (I vs A ∘ B)",
+          icon = icon("layer-group"),
+          card_body(
+            p(class = "text-muted small mb-2",
+              "Original matrix ", tags$code("I"), " vs Boolean product ", tags$code("A ∘ B"), ". ",
+              "Green = Correctly covered 1s | Red = Uncovered residual 1s."),
+            div(style = "max-height: 380px; overflow: auto;",
+                DT::renderDT({
+                  rec_df <- as.data.frame(res$rec_matrix)
+                  DT::datatable(
+                    rec_df,
+                    options = list(pageLength = 15, scrollX = TRUE, dom = 't', ordering = FALSE),
+                    class = "cell-border stripe compact"
+                  ) %>% DT::formatStyle(
+                    columns = colnames(rec_df),
+                    backgroundColor = DT::styleEqual(c("0", "1 (Covered)", "1 (Uncovered)"), c('#ffffff', '#d1e7dd', '#f8d7da')),
+                    color = DT::styleEqual(c("0", "1 (Covered)", "1 (Uncovered)"), c('#888888', '#0f5132', '#842029')),
+                    fontWeight = DT::styleEqual(c("0", "1 (Covered)", "1 (Uncovered)"), c('normal', 'bold', 'bold'))
+                  )
+                })
+            )
+          )
+        )
+      )
+    )
+  })
+
+  observeEvent(input$btnRunBMF, {
+    req(vals$fc, input$bmf_algorithm)
+    
+    withProgress(message = "Executing BMF Factorization...", value = 0.5, {
+      tryCatch({
+        alg <- input$bmf_algorithm
+        
+        # Execute native fcaR factorization method
+        res_factorize <- vals$fc$factorize(method = alg)
+        
+        fc_A <- res_factorize$object_factor
+        fc_B <- res_factorize$factor_attribute
+        
+        # Extract matrices: A (objects x factors), B (factors x attributes)
+        matrix_A <- t(as.matrix(fc_A$I))
+        matrix_B <- t(as.matrix(fc_B$I))
+        
+        objs <- rownames(matrix_A)
+        factor_names <- colnames(matrix_A)
+        atts <- colnames(matrix_B)
+        
+        n_objs <- length(objs)
+        n_atts <- length(atts)
+        actual_k <- length(factor_names)
+        
+        # Reconstructed matrix: I_hat = A ∘ B (Boolean product)
+        # matrix_A is (objects x k), matrix_B is (k x attributes)
+        I_hat_bool <- (matrix_A %*% matrix_B) > 0
+        
+        # Original matrix (objects x attributes)
+        mat_orig <- t(as.matrix(vals$fc$I))
+        total_ones <- sum(mat_orig == 1)
+        covered_ones <- sum(mat_orig == 1 & I_hat_bool == 1)
+        cov_pct <- if (total_ones > 0) round((covered_ones / total_ones) * 100, 1) else 100
+        uncovered <- total_ones - covered_ones
+        
+        # Construct factors list for interpretability cards
+        factors_list <- list()
+        for (i in 1:actual_k) {
+          ext_o <- objs[matrix_A[, i] > 0]
+          int_a <- atts[matrix_B[i, ] > 0]
+          factors_list[[i]] <- list(extent = ext_o, intent = int_a)
+        }
+        
+        # Build display reconstruction matrix
+        rec_display <- matrix("0", nrow = n_objs, ncol = n_atts, dimnames = list(objs, atts))
+        for (r in 1:n_objs) {
+          for (c in 1:n_atts) {
+            if (mat_orig[r, c] == 1) {
+              if (I_hat_bool[r, c]) {
+                rec_display[r, c] <- "1 (Covered)"
+              } else {
+                rec_display[r, c] <- "1 (Uncovered)"
+              }
+            }
+          }
+        }
+        
+        bmf_result_data(list(
+          algorithm = alg,
+          k = actual_k,
+          coverage = cov_pct,
+          total_ones = total_ones,
+          covered_ones = covered_ones,
+          uncovered_cells = uncovered,
+          factors = factors_list,
+          matrix_A = matrix_A,
+          matrix_B = matrix_B,
+          rec_matrix = rec_display,
+          object_factor = fc_A,
+          factor_attribute = fc_B
+        ))
+        
+        append_to_history_log(paste0("Executed native BMF factorization (", toupper(alg), ", k=", actual_k, ", coverage=", cov_pct, "%)"))
+        shinyalert("BMF Complete", paste0("Decomposition complete using ", toupper(alg), " (k=", actual_k, ") with ", cov_pct, "% coverage."), type = "success")
+      }, error = function(e) {
+        shinyalert("BMF Error", e$message, type = "error")
+      })
+    })
+  })
+
+  # --- BMF DOWNLOAD HANDLERS ---
+  output$btnDownloadBMFRDS <- downloadHandler(
+    filename = function() {
+      paste0("bmf_factorization_", tolower(bmf_result_data()$algorithm), "_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".rds")
+    },
+    content = function(file) {
+      req(bmf_result_data())
+      res <- bmf_result_data()
+      saveRDS(list(
+        algorithm = res$algorithm,
+        k = res$k,
+        coverage = res$coverage,
+        matrix_A = res$matrix_A,
+        matrix_B = res$matrix_B,
+        object_factor = res$object_factor,
+        factor_attribute = res$factor_attribute,
+        factors = res$factors
+      ), file)
+    }
+  )
+
+  output$btnDownloadBMFZIP <- downloadHandler(
+    filename = function() {
+      paste0("bmf_matrices_csv_", tolower(bmf_result_data()$algorithm), "_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".zip")
+    },
+    content = function(file) {
+      req(bmf_result_data())
+      res <- bmf_result_data()
+      
+      tmpdir <- tempfile()
+      dir.create(tmpdir)
+      
+      file_a <- file.path(tmpdir, "matrix_A_objects_factors.csv")
+      file_b <- file.path(tmpdir, "matrix_B_factors_attributes.csv")
+      file_rec <- file.path(tmpdir, "reconstruction_matrix.csv")
+      
+      write.csv(res$matrix_A, file_a, row.names = TRUE)
+      write.csv(res$matrix_B, file_b, row.names = TRUE)
+      write.csv(res$rec_matrix, file_rec, row.names = TRUE)
+      
+      zip::zipr(zipfile = file, files = c(file_a, file_b, file_rec), recurse = FALSE)
+    }
+  )
+
+  # ===========================================================================
+  # PROJECT PERSISTENCE: SAVE / RESTORE FULL PROJECT STATE (.fcarviz / .rds)
+  # ===========================================================================
+
+  save_project_bundle_handler <- function(file) {
+    req(vals$fc)
+    bundle <- list(
+      is_fcarviz_bundle = TRUE,
+      version = "1.1",
+      timestamp = Sys.time(),
+      fc = vals$fc,
+      current_doc = vals$current_doc,
+      history_stack = snapshot_stack(),
+      bmf_results = bmf_result_data()
+    )
+    saveRDS(bundle, file)
+  }
+
+  output$btnSaveProjectBundle <- downloadHandler(
+    filename = function() {
+      title_clean <- if (!is.null(vals$current_doc$title)) {
+        gsub("[^A-Za-z0-9_-]", "_", vals$current_doc$title)
+      } else "fcaRviz_project"
+      paste0(title_clean, "_", format(Sys.time(), "%Y%m%d_%H%M"), ".fcarviz")
+    },
+    content = function(file) {
+      save_project_bundle_handler(file)
+    }
+  )
+
+  output$btnSaveProjectBundleTop <- downloadHandler(
+    filename = function() {
+      title_clean <- if (!is.null(vals$current_doc$title)) {
+        gsub("[^A-Za-z0-9_-]", "_", vals$current_doc$title)
+      } else "fcaRviz_project"
+      paste0(title_clean, "_", format(Sys.time(), "%Y%m%d_%H%M"), ".fcarviz")
+    },
+    content = function(file) {
+      save_project_bundle_handler(file)
+    }
+  )
+
+  restore_project_file_handler <- function(file_info) {
+    req(file_info)
+    ext <- tolower(tools::file_ext(file_info$name))
+    withProgress(message = 'Restoring project state...', value = 0.5, {
+      tryCatch({
+        loaded_obj <- readRDS(file_info$datapath)
+        vals$multivalued_df <- NULL
+        
+        if (is.list(loaded_obj) && !is.null(loaded_obj$fc) && isTRUE(loaded_obj$is_fcarviz_bundle)) {
+          vals$fc <- loaded_obj$fc
+          if (!is.null(loaded_obj$current_doc)) vals$current_doc <- loaded_obj$current_doc
+          if (!is.null(loaded_obj$history_stack)) snapshot_stack(loaded_obj$history_stack)
+          if (!is.null(loaded_obj$bmf_results)) bmf_result_data(loaded_obj$bmf_results)
+          
+          if (!is.null(vals$fc$implications) && vals$fc$implications$cardinality() > 0)
+            implications_df(get_implications_dataframe(vals$fc$implications))
+          
+          append_to_history_log("Restored full fcaRviz project bundle state from Project Audit panel.")
+          shinyalert("Project Restored", "Entire session state restored from .fcarviz package.", type = "success")
+        } else if (inherits(loaded_obj, "FormalContext")) {
+          vals$fc <- loaded_obj
+          if (!is.null(vals$fc$implications) && vals$fc$implications$cardinality() > 0)
+            implications_df(get_implications_dataframe(vals$fc$implications))
+          shinyalert("Context Restored", "FormalContext object restored successfully.", type = "success")
+        } else {
+          vals$fc <- FormalContext$new(loaded_obj)
+          shinyalert("Matrix Loaded", "Context matrix imported successfully.", type = "success")
+        }
+      }, error = function(e) {
+        shinyalert("Restore Error", paste0("Failed to restore project file: ", e$message), type = "error")
+      })
+    })
+  }
+
+  observeEvent(input$btnRestoreProjectFile, {
+    restore_project_file_handler(input$btnRestoreProjectFile)
+  })
+
+  observeEvent(input$btnRestoreProjectFileNoCtx, {
+    restore_project_file_handler(input$btnRestoreProjectFileNoCtx)
   })
 }

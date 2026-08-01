@@ -24,6 +24,7 @@ suppressPackageStartupMessages({
   library(rmarkdown)
   library(shinyjs)
   library(rhandsontable)
+  library(rintrojs)
   
   # Librerías de Reglas
   library(arules)
@@ -39,6 +40,8 @@ source("uiUploadData.R")
 source("uiBasicOperations.R")
 source("uiImplications.R")
 source("uiConcepts.R")
+source("uiLabs.R")
+source("uiProjectAudit.R")
 source("scaling_helpers.R")
 
 plan(multisession)
@@ -47,9 +50,7 @@ plan(multisession)
 my_theme <- bs_theme(
   version = 5,
   bootswatch = "zephyr",
-  base_font = font_google("Inter"),
-  heading_font = font_google("Playfair Display"),
-  primary = "#2c3e50",
+  primary = "#0d6efd",
   "enable-rounded" = TRUE
 )
 

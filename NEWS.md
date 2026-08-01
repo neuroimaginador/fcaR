@@ -1,3 +1,7 @@
+# fcaR 2.1.1
+
+* **`fcaRviz` App Enhancements:** Improved the interactive `fcaRviz` Shiny application and RStudio Addin for smoother exploration and visual analytics of formal contexts, concept lattices, and implication sets.
+
 # fcaR 2.1.0
 
 * **Dynamic Method Signatures (`intent`, `extent`, `closure`, `is_closed`):** Updated `FormalContext` methods to natively support both `Set` objects and comma-separated character vectors/names (`...`).

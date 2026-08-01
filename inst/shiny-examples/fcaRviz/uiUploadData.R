@@ -13,7 +13,7 @@ uiUploadData <- tagList(
       ),
       div(class = "d-flex gap-2",
           div(class = "dropdown",
-              tags$button(class = "btn btn-primary dropdown-toggle", type = "button",
+              tags$button(id = "btn_context_origin", class = "btn btn-primary dropdown-toggle", type = "button",
                           `data-bs-toggle` = "dropdown", `aria-expanded` = "false",
                           icon("table"), " Context origin"),
               tags$ul(class = "dropdown-menu dropdown-menu-end",
@@ -51,9 +51,24 @@ uiUploadData <- tagList(
                 materialSwitch(inputId = "ask_before_calc", label = "Ask before calculating",
                                value = TRUE, status = "info", right = FALSE)
             ),
-            div(
-                actionButton("btnRandomizeLoaded", "Randomize Context",
-                             icon = icon("dice"), class = "btn-outline-secondary btn-sm")
+            div(class = "d-flex gap-2",
+                actionButton("btnUndoTransformation", "Undo",
+                             icon = icon("rotate-left"), class = "btn-outline-danger btn-sm"),
+                actionButton("btnRandomizeLoaded", "Randomize",
+                             icon = icon("dice"), class = "btn-outline-secondary btn-sm"),
+                div(class = "dropdown",
+                    tags$button(class = "btn btn-info btn-sm dropdown-toggle text-white fw-semibold", type = "button",
+                                `data-bs-toggle` = "dropdown", `aria-expanded` = "false",
+                                icon("floppy-disk"), " Export & Save"),
+                    tags$ul(class = "dropdown-menu dropdown-menu-end shadow-sm",
+                            tags$li(downloadLink("btnSaveProjectBundleTop", tagList(icon("box-archive", class = "me-2 text-info"), "Save Full Project (.fcarviz)"), class = "dropdown-item fw-semibold")),
+                            tags$li(tags$hr(class = "dropdown-divider")),
+                            tags$li(downloadLink("exportCxt", tagList(icon("file-lines", class = "me-2 text-warning"), "Export Burmeister (.cxt)"), class = "dropdown-item")),
+                            tags$li(downloadLink("exportCex", tagList(icon("file-export", class = "me-2 text-primary"), "Export ConExp (.cex)"), class = "dropdown-item")),
+                            tags$li(downloadLink("exportCsvMatrix", tagList(icon("file-csv", class = "me-2 text-success"), "Export Incidence Matrix (.csv)"), class = "dropdown-item")),
+                            tags$li(downloadLink("saveProject", tagList(icon("file-code", class = "me-2 text-secondary"), "Export Context RDS (.rds)"), class = "dropdown-item"))
+                    )
+                )
             )
         ),
 
@@ -72,12 +87,6 @@ uiUploadData <- tagList(
                 actionButton("btnUpdateContext", "Apply Changes & Update FC",
                              class = "btn-warning", icon = icon("sync"))
             )
-        ),
-
-        card_footer(
-          class = "bg-white border-top-0 d-flex justify-content-end gap-2 py-3",
-          downloadButton("saveProject", "Save Project (.rds)", class = "btn-success btn-sm"),
-          downloadButton("exportCex", "Export to ConExp (.cex)", class = "btn-outline-info btn-sm")
         )
       ),
 
@@ -94,12 +103,6 @@ uiUploadData <- tagList(
           actionButton("btnPerformScaling", "Scale Context & Import to fcaRViz",
                        class = "btn-success w-100 py-2 fw-bold", icon = icon("cogs"))
         )
-      ),
-
-      nav_panel(
-        title = "Context Metadata",
-        icon = icon("circle-info"),
-        card_body(uiOutput("datasetDocumentationUI"))
       )
     )
   )

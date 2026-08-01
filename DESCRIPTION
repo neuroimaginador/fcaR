@@ -1,6 +1,6 @@
 Package: fcaR
 Title: Formal Concept Analysis
-Version: 2.1.0
+Version: 2.1.1
 Authors@R: 
     c(person(given = "Domingo",
              family = "Lopez Rodriguez",
