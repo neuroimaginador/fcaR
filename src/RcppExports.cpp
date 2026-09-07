@@ -639,6 +639,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// check_equal_implications_trie_cpp
+bool check_equal_implications_trie_cpp(S4 lhs1, S4 rhs1, S4 lhs2, S4 rhs2);
+RcppExport SEXP _fcaR_check_equal_implications_trie_cpp(SEXP lhs1SEXP, SEXP rhs1SEXP, SEXP lhs2SEXP, SEXP rhs2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< S4 >::type lhs1(lhs1SEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs1(rhs1SEXP);
+    Rcpp::traits::input_parameter< S4 >::type lhs2(lhs2SEXP);
+    Rcpp::traits::input_parameter< S4 >::type rhs2(rhs2SEXP);
+    rcpp_result_gen = Rcpp::wrap(check_equal_implications_trie_cpp(lhs1, rhs1, lhs2, rhs2));
+    return rcpp_result_gen;
+END_RCPP
+}
 // InClose
 List InClose(NumericMatrix I, NumericVector grades_set, StringVector attrs, String connection, String name, bool verbose);
 RcppExport SEXP _fcaR_InClose(SEXP ISEXP, SEXP grades_setSEXP, SEXP attrsSEXP, SEXP connectionSEXP, SEXP nameSEXP, SEXP verboseSEXP) {
@@ -1247,6 +1261,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_fcaR_greess_cpp", (DL_FUNC) &_fcaR_greess_cpp, 1},
     {"_fcaR_hyper_inclose_cpp", (DL_FUNC) &_fcaR_hyper_inclose_cpp, 2},
     {"_fcaR_hyper_plus_optimized_cpp", (DL_FUNC) &_fcaR_hyper_plus_optimized_cpp, 3},
+    {"_fcaR_check_equal_implications_trie_cpp", (DL_FUNC) &_fcaR_check_equal_implications_trie_cpp, 4},
     {"_fcaR_InClose", (DL_FUNC) &_fcaR_InClose, 6},
     {"_fcaR_InClose_Reorder", (DL_FUNC) &_fcaR_InClose_Reorder, 4},
     {"_fcaR_InClose_binary", (DL_FUNC) &_fcaR_InClose_binary, 3},

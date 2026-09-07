@@ -13,8 +13,9 @@ managing, filtering, and exporting rules.
 \itemize{
 \item \href{#method-RuleSet-new}{\code{RuleSet$new()}}
 \item \href{#method-RuleSet-get_attributes}{\code{RuleSet$get_attributes()}}
-\item \href{#method-RuleSet-bracket}{\code{RuleSet$[()}}
+\item \href{#method-RuleSet-[}{\code{RuleSet$[()}}
 \item \href{#method-RuleSet-to_arules}{\code{RuleSet$to_arules()}}
+\item \href{#method-RuleSet-equals}{\code{RuleSet$equals()}}
 \item \href{#method-RuleSet-add}{\code{RuleSet$add()}}
 \item \href{#method-RuleSet-cardinality}{\code{RuleSet$cardinality()}}
 \item \href{#method-RuleSet-is_empty}{\code{RuleSet$is_empty()}}
@@ -70,8 +71,8 @@ A character vector with the names of the attributes used in the rules.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RuleSet-bracket"></a>}}
-\if{latex}{\out{\hypertarget{method-RuleSet-bracket}{}}}
+\if{html}{\out{<a id="method-RuleSet-["></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-[}{}}}
 \subsection{Method \code{[()}}{
 Get a subset of the rule set
 \subsection{Usage}{
@@ -107,6 +108,26 @@ Convert to arules format
 }
 \subsection{Returns}{
 A \code{rules} object as used by package \code{arules}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-RuleSet-equals"></a>}}
+\if{latex}{\out{\hypertarget{method-RuleSet-equals}{}}}
+\subsection{Method \code{equals()}}{
+Check equality with another rule/implication set
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RuleSet$equals(other)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{other}}{A \code{RuleSet} or \code{ImplicationSet}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\code{TRUE} if both sets are identical regardless of ordering.
 }
 }
 \if{html}{\out{<hr>}}

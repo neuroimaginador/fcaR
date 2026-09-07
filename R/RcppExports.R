@@ -198,6 +198,19 @@ hyper_plus_optimized_cpp <- function(I_mat, hyper_res, beta = 0.1) {
     .Call(`_fcaR_hyper_plus_optimized_cpp`, I_mat, hyper_res, beta)
 }
 
+#' @title Check equality of two implication sets using a Prefix Tree (Trie)
+#' @description Tests if two sets of implications (given by their sparse LHS and RHS matrices)
+#' are syntactically identical, regardless of the order of the implications.
+#' @param lhs1 Sparse matrix (dgCMatrix) of LHS for set 1.
+#' @param rhs1 Sparse matrix (dgCMatrix) of RHS for set 1.
+#' @param lhs2 Sparse matrix (dgCMatrix) of LHS for set 2.
+#' @param rhs2 Sparse matrix (dgCMatrix) of RHS for set 2.
+#' @return Logical TRUE if sets are identical, FALSE otherwise.
+#' @noRd
+check_equal_implications_trie_cpp <- function(lhs1, rhs1, lhs2, rhs2) {
+    .Call(`_fcaR_check_equal_implications_trie_cpp`, lhs1, rhs1, lhs2, rhs2)
+}
+
 InClose <- function(I, grades_set, attrs, connection = "standard", name = "Godel", verbose = FALSE) {
     .Call(`_fcaR_InClose`, I, grades_set, attrs, connection, name, verbose)
 }

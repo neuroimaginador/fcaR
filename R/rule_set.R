@@ -195,6 +195,18 @@ RuleSet <- R6::R6Class(
     },
 
     #' @description
+    #' Check equality with another rule/implication set
+    #'
+    #' @param other A \code{RuleSet} or \code{ImplicationSet}
+    #'
+    #' @return \code{TRUE} if both sets are identical regardless of ordering.
+    #'
+    #' @export
+    equals = function(other) {
+      equal_implications(self, other)
+    },
+
+    #' @description
     #' Add a precomputed rule set
     #'
     #' @param ...   A \code{RuleSet} object, or a pair \code{lhs}, \code{rhs} of \code{dgCMatrix}.

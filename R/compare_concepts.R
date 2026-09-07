@@ -80,8 +80,73 @@
 
   }
 
-  stop("Only implemented for Concepts and Sets.\n",
+  if (inherits(C1, "RuleSet") &&
+      inherits(C2, "RuleSet")) {
+
+    return(equal_implications(C1, C2))
+
+  }
+
+  stop("Only implemented for Concepts, Sets, and RuleSets/ImplicationSets.\n",
        call. = FALSE)
+
+}
+
+#' @title Equality of sets of implications
+#'
+#' @description
+#' Tests whether two \code{ImplicationSet} or \code{RuleSet} objects represent
+#' the exact same set of implications, regardless of the order in which they appear.
+#' It uses a prefix tree (Trie) over the premises (LHS) for fast matching.
+#'
+#' @param imps1 (\code{RuleSet} or \code{ImplicationSet}) The first set of implications.
+#' @param imps2 (\code{RuleSet} or \code{ImplicationSet}) The second set of implications.
+#'
+#' @return \code{TRUE} if both sets contain the exact same implications, \code{FALSE} otherwise.
+#'
+#' @export
+#'
+#' @examples
+#' fc <- FormalContext$new(planets)
+#' fc$find_implications()
+#' imps1 <- fc$implications$clone()
+#' # Shuffle the implications
+#' imps2 <- imps1[sample(imps1$cardinality())]
+#' equal_implications(imps1, imps2)
+#' imps1 %==% imps2
+equal_implications <- function(imps1, imps2) {
+
+  if (!inherits(imps1, "RuleSet") || !inherits(imps2, "RuleSet")) {
+    stop("Both arguments must be of class ImplicationSet or RuleSet.", call. = FALSE)
+  }
+
+  if (imps1$cardinality() != imps2$cardinality()) {
+    return(FALSE)
+  }
+
+  if (imps1$cardinality() == 0) {
+    return(TRUE)
+  }
+
+  attrs1 <- imps1$get_attributes()
+  attrs2 <- imps2$get_attributes()
+
+  if (!setequal(attrs1, attrs2)) {
+    return(FALSE)
+  }
+
+  lhs1 <- imps1$get_LHS_matrix()
+  rhs1 <- imps1$get_RHS_matrix()
+  lhs2 <- imps2$get_LHS_matrix()
+  rhs2 <- imps2$get_RHS_matrix()
+
+  if (!identical(attrs1, attrs2)) {
+    perm <- match(attrs1, attrs2)
+    lhs2 <- lhs2[perm, , drop = FALSE]
+    rhs2 <- rhs2[perm, , drop = FALSE]
+  }
+
+  check_equal_implications_trie_cpp(lhs1, rhs1, lhs2, rhs2)
 
 }
 
