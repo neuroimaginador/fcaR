@@ -10,7 +10,7 @@ This class implements the data structure and methods for fuzzy sets.
 
 - [`Set$assign()`](#method-Set-assign)
 
-- [`Set$[()`](#method-Set-bracket)
+- [`Set$[()`](#method-Set-%5B)
 
 - [`Set$cardinal()`](#method-Set-cardinal)
 

@@ -22,7 +22,7 @@ This class implements the data structure and methods for concept sets.
 
 - [`ConceptSet$to_list()`](#method-ConceptSet-to_list)
 
-- [`ConceptSet$[()`](#method-ConceptSet-bracket)
+- [`ConceptSet$[()`](#method-ConceptSet-%5B)
 
 - [`ConceptSet$sub()`](#method-ConceptSet-sub)
 

@@ -85,6 +85,9 @@
 - [`select(`*`<FormalContext>`*`)`](https://neuroimaginador.github.io/fcaR/reference/dplyr_verbs.md)
   : dplyr verbs for FormalContext
 
+- [`equal_implications()`](https://neuroimaginador.github.io/fcaR/reference/equal_implications.md)
+  : Equality of sets of implications
+
 - [`equivalencesRegistry`](https://neuroimaginador.github.io/fcaR/reference/equivalencesRegistry.md)
   : Equivalence Rules Registry
 

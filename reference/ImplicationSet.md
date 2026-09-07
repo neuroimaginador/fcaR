@@ -53,6 +53,7 @@ Inherited methods
 - [`fcaR::RuleSet$[()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-%5B)
 - [`fcaR::RuleSet$cardinality()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-cardinality)
 - [`fcaR::RuleSet$confidence()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-confidence)
+- [`fcaR::RuleSet$equals()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-equals)
 - [`fcaR::RuleSet$filter()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-filter)
 - [`fcaR::RuleSet$get_LHS_matrix()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-get_LHS_matrix)
 - [`fcaR::RuleSet$get_RHS_matrix()`](https://neuroimaginador.github.io/fcaR/reference/RuleSet.html#method-get_RHS_matrix)

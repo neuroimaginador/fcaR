@@ -12,9 +12,11 @@ managing, filtering, and exporting rules.
 
 - [`RuleSet$get_attributes()`](#method-RuleSet-get_attributes)
 
-- [`RuleSet$[()`](#method-RuleSet-bracket)
+- [`RuleSet$[()`](#method-RuleSet-%5B)
 
 - [`RuleSet$to_arules()`](#method-RuleSet-to_arules)
+
+- [`RuleSet$equals()`](#method-RuleSet-equals)
 
 - [`RuleSet$add()`](#method-RuleSet-add)
 
@@ -126,6 +128,26 @@ Convert to arules format
 #### Returns
 
 A `rules` object as used by package `arules`.
+
+------------------------------------------------------------------------
+
+### Method `equals()`
+
+Check equality with another rule/implication set
+
+#### Usage
+
+    RuleSet$equals(other)
+
+#### Arguments
+
+- `other`:
+
+  A `RuleSet` or `ImplicationSet`
+
+#### Returns
+
+`TRUE` if both sets are identical regardless of ordering.
 
 ------------------------------------------------------------------------
 
