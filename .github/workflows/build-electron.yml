@@ -23,17 +23,49 @@ jobs:
           - { os: macos-15-intel, platform: mac, arch: x64 }
           - { os: windows-latest, platform: win, arch: x64 }
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
 
-      - name: Build the Electron app
-        uses: coatless-actions/shiny-to-electron@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
-          appdir: inst/shiny-examples/fcaRviz
-          app-name: fcaRviz
-          platform: ${{ matrix.platform }}
-          arch: ${{ matrix.arch }}
-          runtime-strategy: bundled
-          sign: 'false'
+          r-version: 'release'
+          use-public-rspm: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install shinyelectron
+        shell: Rscript {0}
+        run: |
+          if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak", repos = "https://cloud.r-project.org")
+          pak::pak("coatless-rpkg/shinyelectron")
+
+      - name: Build Electron app
+        shell: Rscript {0}
+        run: |
+          appdir <- normalizePath(file.path(Sys.getenv("GITHUB_WORKSPACE"), "inst/shiny-examples/fcaRviz"), winslash = "/", mustWork = TRUE)
+          destdir <- normalizePath(file.path(Sys.getenv("RUNNER_TEMP"), "fcarviz-build"), winslash = "/", mustWork = FALSE)
+          shinyelectron::export(
+            appdir = appdir,
+            destdir = destdir,
+            app_name = "fcaRviz",
+            platform = "${{ matrix.platform }}",
+            arch = "${{ matrix.arch }}",
+            runtime_strategy = "bundled",
+            sign = FALSE,
+            overwrite = TRUE
+          )
+
+      - name: Upload installer artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: fcarviz-${{ matrix.platform }}-${{ matrix.arch }}
+          path: |
+            ${{ runner.temp }}/fcarviz-build/electron-app/dist/*.dmg
+            ${{ runner.temp }}/fcarviz-build/electron-app/dist/*.exe
+            ${{ runner.temp }}/fcarviz-build/electron-app/dist/*.blockmap
+            ${{ runner.temp }}/fcarviz-build/electron-app/dist/latest*.yml
+          if-no-files-found: error
 
   release:
     name: Create Release
@@ -44,14 +76,15 @@ jobs:
       contents: write
     steps:
       - name: Download all build artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v4
         with:
           path: artifacts
+          merge-multiple: true
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/**/*
+          files: artifacts/*
           generate_release_notes: true
           prerelease: ${{ contains(github.ref, '-alpha') || contains(github.ref, '-beta') }}
           body: |
