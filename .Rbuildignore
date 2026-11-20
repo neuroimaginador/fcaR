@@ -32,3 +32,8 @@
 ^index\.qmd$
 ^vignettes/articles$
 ^llms\.txt$
+^\.claude$
+^inst/shiny-examples/fcaRviz/_shinyelectron\.yml$
+^inst/shiny-examples/fcaRviz/package-lock\.json$
+^inst/shiny-examples/fcaRviz/icons$
+^dist-electron$

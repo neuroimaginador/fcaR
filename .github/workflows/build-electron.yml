@@ -1,0 +1,64 @@
+# GitHub Actions workflow for building fcaRviz as a native Electron desktop app
+# Produces macOS (arm64, x64) and Windows (x64) bundled installers and attaches
+# them to a GitHub Release on fcaRviz-v* or v* tags.
+
+name: Build fcaRviz Desktop App
+
+on:
+  push:
+    tags:
+      - 'fcaRviz-v*'
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build (${{ matrix.platform }}-${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-latest,   platform: mac, arch: arm64 }
+          - { os: macos-15-intel, platform: mac, arch: x64 }
+          - { os: windows-latest, platform: win, arch: x64 }
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build the Electron app
+        uses: coatless-actions/shiny-to-electron@v1
+        with:
+          appdir: inst/shiny-examples/fcaRviz
+          app-name: fcaRviz
+          platform: ${{ matrix.platform }}
+          arch: ${{ matrix.arch }}
+          runtime-strategy: bundled
+          sign: 'false'
+
+  release:
+    name: Create Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref, '-alpha') || contains(github.ref, '-beta') }}
+          body: |
+            ## fcaRviz Desktop Installers (macOS & Windows)
+
+            Standalone desktop builds bundled with R and all required packages (offline-ready).
+
+            > **Note on unsigned binaries:**
+            > - **macOS:** Right-click `fcaRviz.app` → **Open** on first launch (or run `xattr -cr /Applications/fcaRviz.app` in Terminal if Gatekeeper reports it as damaged).
+            > - **Windows:** On the SmartScreen prompt, click **More info** → **Run anyway**.

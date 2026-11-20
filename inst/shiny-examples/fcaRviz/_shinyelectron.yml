@@ -1,0 +1,178 @@
+# shinyelectron configuration file
+# Documentation: https://r-pkg.thecoatlessprofessor.com/shinyelectron/
+
+app:
+  name: "fcaRviz"
+  # The slug is the app identity: package name, app ID, user data folder,
+  # and installer file names. Keep it once the app has shipped, even if
+  # the name changes.
+  slug: "fcarviz"
+  version: "1.1.0"
+  # Uncomment to describe the app in Help > About and the installer metadata
+  description: "Interactive Formal Concept Analysis Environment"
+  author: "Domingo López Rodríguez, Ángel Mora Bonilla (Universidad de Málaga) <dominlopez78@gmail.com>"
+  homepage: "https://github.com/Malaga-FCA-group/fcaR"
+  copyright: "Copyright 2026 Domingo López Rodríguez & Ángel Mora Bonilla (Universidad de Málaga)"
+
+# Uncomment to configure logging (app.log_dir and app.log_level also work)
+# logging:
+#   log_dir: null            # null = default log directory
+#   log_level: "info"        # "debug", "info", "warn", "error"
+
+build:
+  # type is autodetected from files in the app directory (app.R, ui.R/server.R, or app.py).
+  # Uncomment to pin explicitly: "r-shiny" or "py-shiny".
+  # type: "r-shiny"
+  # runtime_strategy controls how R or Python reaches the end user.
+  # Default is "shinylive" (in-browser WebAssembly, no runtime on disk).
+  # Other options: "bundled", "system", "auto-download", "container".
+  runtime_strategy: "bundled"
+  # Uncomment to specify target platforms and architectures (default: those
+  # of the machine running export()). macOS builds need a Mac, and the
+  # bundled and auto-download strategies take one platform and one
+  # architecture.
+  # platforms:
+  #   - mac
+  #   - win
+  #   - linux
+  # architectures:
+  #   - x64
+  #   - arm64
+
+window:
+  width: 1200
+  height: 800
+
+server:
+  port: 3838
+
+# Uncomment to specify custom icons (platform-specific).
+# File paths in this file are relative to the directory that holds it.
+icons:
+  mac: "icons/icon.icns"
+  win: "icons/icon.ico"
+
+nodejs:
+  # Version to install (null = latest LTS)
+  version: null
+
+# Dependency configuration
+# Controls R and Python package dependencies, the bundled Electron version, and container system packages.
+dependencies:
+  auto_detect: true
+  r:
+    repos:
+      - "https://cloud.r-project.org"
+    prune: true
+#   python:
+#     # null = the maintained latest pin; "latest" = always newest; "3.12.0" = exact pin
+#     version: null
+#     packages: []           # Extra Python packages
+#     index_urls:
+#       - "https://pypi.org/simple"
+#   electron:
+#     # null = maintained pin; "latest" = newest; "41.0.0" = exact. Sets the
+#     # Electron runtime bundled in the desktop app.
+#     version: null
+#   # system_packages: list of apt package names (container strategy only)
+#   # system_packages:
+#   #   - libssl-dev
+#   #   - libcurl4-openssl-dev
+
+# Container configuration (used when runtime_strategy is "container")
+# container:
+#   engine: "docker"         # "docker" or "podman"
+#   image: null              # Docker image to use (null = auto-select)
+#   tag: "latest"
+#   pull_on_start: true      # Pull latest image when app starts
+#   volumes:                 # Host-to-container volume map (not a list)
+#     "/host/path": "/container/path"
+#   env:                     # Environment variable map (not a list)
+#     KEY: "value"
+
+# Splash screen configuration
+# Shown briefly while the runtime starts up
+splash:
+  enabled: true
+  duration: 1500
+  image: "icons/splash.png"
+  text: "Starting fcaRviz..."
+  text_color: "#333333"
+
+tray:
+  enabled: true
+  minimize_to_tray: true
+  close_to_tray: false
+  tooltip: "fcaRviz"
+  icon: "icons/tray.png"
+
+# Application menu configuration
+# menu:
+#   enabled: true
+#   template: "default"     # "default" or "minimal"
+#   show_dev_tools: false
+#   help_url: null
+
+# Auto-update configuration
+# Enables automatic app updates via GitHub Releases, S3, or HTTP
+updates:
+  enabled: true
+  provider: "github"
+  check_on_startup: true
+  auto_download: false
+  auto_install: false
+  github:
+    owner: "neuroimaginador"
+    repo: "fcaR"
+    private: false
+
+# Preloader configuration
+# Shown after the splash, while the runtime emits status events
+# preloader:
+#   style: "spinner"        # "spinner", "bar", or "dots"
+#   message: "Loading application..."
+#   background: null        # null = inherit from _brand.yml; or hex/CSS colour
+
+## Code Signing
+## Set sign to true for distribution builds.
+## macOS requires an Apple Developer account ($99/year) for code signing
+## and notarization. Without it, Gatekeeper will block the app.
+## Secrets are provided via environment variables:
+##   APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID (macOS)
+##   CSC_LINK, CSC_KEY_PASSWORD (macOS/Windows certificate)
+##   GPG_KEY (Linux)
+# signing:
+#   sign: false
+#   mac:
+#     identity: null            # "Developer ID Application: Your Name (TEAMID)"
+#     team_id: null             # Apple Team ID
+#     notarize: false           # Notarize for Gatekeeper
+#   win:
+#     certificate_file: null    # Path to .pfx certificate, relative to this file
+#   linux:
+#     gpg_sign: false           # GPG-sign AppImage
+
+## Installer Branding
+## Customize the installer appearance and behavior.
+# installer:
+#   app_id: null                  # null = "com.shinyelectron.<slug>"
+#   license_file: null            # Windows installer license page; path relative to the app dir
+#   one_click: true               # Windows: true = silent install, false = wizard
+#   # true adds a page for choosing the install directory; requires one_click: false
+#   allow_to_change_installation_directory: null
+#   # true = install for all users (admin prompt on every update). Unset or
+#   # false: the one-click installer installs per user; the wizard lets the user choose.
+#   per_machine: null
+
+## Lifecycle UI
+## Controls the startup, loading, error, and shutdown experience.
+lifecycle:
+  show_phase_details: true
+  error_show_logs: true
+  startup_timeout: 180000
+  shutdown_timeout: 10000
+#   custom_splash_html: null
+#   custom_error_html: null
+#   prompt_before_install: false  # true = ask before installing packages
+#   prompt_runtime_version: false # true = ask which R/Python version to use
+

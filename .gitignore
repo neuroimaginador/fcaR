@@ -24,3 +24,7 @@ _quarto.yml
 papers
 examples
 scripts_dev
+.fuzzy_factorization_workspace/
+dist-electron/
+inst/shiny-examples/fcaRviz/node_modules/
+inst/shiny-examples/fcaRviz/dist/
